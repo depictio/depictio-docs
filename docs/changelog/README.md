@@ -8,6 +8,30 @@ hide:
 
 # Changelog
 
+## **[v1.19.2](https://github.com/depictio/depictio/releases/tag/v1.19.2)** (October 23, 2026)
+
+!!! success "Patch: a switch between two reference databases, and volcano groups named"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.19.2
+ghcr.io/depictio/depictio-viewer:1.19.2
+ghcr.io/depictio/depictio-worker:1.19.2
+ghcr.io/depictio/depictio-cli:1.19.2
+```
+
+### **✨ New Features**
+
+* **Option cards on a segmented control**, which can sit at the top of the tab. See [SegmentedControl](../features/components.md#segmentedcontrol) ([#1264](https://github.com/depictio/depictio/pull/1264)).
+* **ANCOM-BC for two reference databases** in the ampliseq template, switched from the top of the tab. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md#dashboard-tabs) ([#1264](https://github.com/depictio/depictio/pull/1264)).
+
+### **🚀 Improvements**
+
+* **Volcano and DA barplot name the groups of a contrast**, with shapes or colours per group. See [Volcano](../features/components.md#volcano) ([#1264](https://github.com/depictio/depictio/pull/1264)).
+
+---
+
 ## **[v1.19.1](https://github.com/depictio/depictio/releases/tag/v1.19.1)** (October 16, 2026)
 
 !!! success "Patch: protein tabs on one screen, and exports that keep card strips"
