@@ -2611,14 +2611,14 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
    contents stay version-free. Used by the Advanced visualizations page. */
 .md-typeset .ver-badge {
     display: inline-block;
-    padding: 0 0.6em;
+    padding: 0 0.45em;
     border: 1px solid #d1c4e9;
     border-radius: 999px;
     background: #f3eefc;
     color: #5e35b1;
-    font-size: 0.72rem;
+    font-size: 0.6rem;
     font-weight: 600;
-    line-height: 1.7;
+    line-height: 1.5;
     white-space: nowrap;
     vertical-align: middle;
 }

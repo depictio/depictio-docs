@@ -52,26 +52,26 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div class="viz-grid" markdown>
 
 <div markdown>
-![Volcano](../images/guides/advanced-visualizations/volcano_light.webp#only-light){ loading=lazy }
-![Volcano](../images/guides/advanced-visualizations/volcano_dark.webp#only-dark){ loading=lazy }
+![Volcano](../images/guides/advanced-visualizations/volcano_light.webp#only-light){ data-title="Volcano" loading=lazy }
+![Volcano](../images/guides/advanced-visualizations/volcano_dark.webp#only-dark){ data-title="Volcano" loading=lazy }
 [Volcano](#volcano){ .viz-grid__name }
 </div>
 
 <div markdown>
-![DA barplot](../images/guides/advanced-visualizations/da_barplot_light.webp#only-light){ loading=lazy }
-![DA barplot](../images/guides/advanced-visualizations/da_barplot_dark.webp#only-dark){ loading=lazy }
+![DA barplot](../images/guides/advanced-visualizations/da_barplot_light.webp#only-light){ data-title="DA barplot" loading=lazy }
+![DA barplot](../images/guides/advanced-visualizations/da_barplot_dark.webp#only-dark){ data-title="DA barplot" loading=lazy }
 [DA barplot](#da-barplot){ .viz-grid__name }
 </div>
 
 <div markdown>
-![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_light.webp#only-light){ loading=lazy }
-![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_dark.webp#only-dark){ loading=lazy }
+![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_light.webp#only-light){ data-title="GSEA running score" loading=lazy }
+![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_dark.webp#only-dark){ data-title="GSEA running score" loading=lazy }
 [GSEA running score](#gsea-running-score){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Group compare](../images/guides/advanced-visualizations/group_compare_light.webp#only-light){ loading=lazy }
-![Group compare](../images/guides/advanced-visualizations/group_compare_dark.webp#only-dark){ loading=lazy }
+![Group compare](../images/guides/advanced-visualizations/group_compare_light.webp#only-light){ data-title="Group compare" loading=lazy }
+![Group compare](../images/guides/advanced-visualizations/group_compare_dark.webp#only-dark){ data-title="Group compare" loading=lazy }
 [Group compare](#group-compare){ .viz-grid__name }
 </div>
 
@@ -82,20 +82,20 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div class="viz-grid" markdown>
 
 <div markdown>
-![Embedding](../images/guides/advanced-visualizations/embedding_light.webp#only-light){ loading=lazy }
-![Embedding](../images/guides/advanced-visualizations/embedding_dark.webp#only-dark){ loading=lazy }
+![Embedding](../images/guides/advanced-visualizations/embedding_light.webp#only-light){ data-title="Embedding" loading=lazy }
+![Embedding](../images/guides/advanced-visualizations/embedding_dark.webp#only-dark){ data-title="Embedding" loading=lazy }
 [Embedding](#embedding){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Dot plot](../images/guides/advanced-visualizations/dot_plot_light.webp#only-light){ loading=lazy }
-![Dot plot](../images/guides/advanced-visualizations/dot_plot_dark.webp#only-dark){ loading=lazy }
+![Dot plot](../images/guides/advanced-visualizations/dot_plot_light.webp#only-light){ data-title="Dot plot" loading=lazy }
+![Dot plot](../images/guides/advanced-visualizations/dot_plot_dark.webp#only-dark){ data-title="Dot plot" loading=lazy }
 [Dot plot](#dot-plot){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Knee plot](../images/guides/advanced-visualizations/knee_plot_light.webp#only-light){ loading=lazy }
-![Knee plot](../images/guides/advanced-visualizations/knee_plot_dark.webp#only-dark){ loading=lazy }
+![Knee plot](../images/guides/advanced-visualizations/knee_plot_light.webp#only-light){ data-title="Knee plot" loading=lazy }
+![Knee plot](../images/guides/advanced-visualizations/knee_plot_dark.webp#only-dark){ data-title="Knee plot" loading=lazy }
 [Knee plot](#knee-plot){ .viz-grid__name }
 </div>
 
@@ -106,44 +106,44 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div class="viz-grid" markdown>
 
 <div markdown>
-![Coverage track](../images/guides/advanced-visualizations/coverage_track_light.webp#only-light){ loading=lazy }
-![Coverage track](../images/guides/advanced-visualizations/coverage_track_dark.webp#only-dark){ loading=lazy }
+![Coverage track](../images/guides/advanced-visualizations/coverage_track_light.webp#only-light){ data-title="Coverage track" loading=lazy }
+![Coverage track](../images/guides/advanced-visualizations/coverage_track_dark.webp#only-dark){ data-title="Coverage track" loading=lazy }
 [Coverage track](#coverage-track){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Genome view](../images/guides/advanced-visualizations/genome_view_light.webp#only-light){ loading=lazy }
-![Genome view](../images/guides/advanced-visualizations/genome_view_dark.webp#only-dark){ loading=lazy }
+![Genome view](../images/guides/advanced-visualizations/genome_view_light.webp#only-light){ data-title="Genome view" loading=lazy }
+![Genome view](../images/guides/advanced-visualizations/genome_view_dark.webp#only-dark){ data-title="Genome view" loading=lazy }
 [Genome view](#genome-view){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_light.webp#only-light){ loading=lazy }
-![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_dark.webp#only-dark){ loading=lazy }
+![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_light.webp#only-light){ data-title="Copy-number profile" loading=lazy }
+![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_dark.webp#only-dark){ data-title="Copy-number profile" loading=lazy }
 [Copy-number profile](#cnv-profile){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Contact map](../images/guides/advanced-visualizations/contact_map_light.webp#only-light){ loading=lazy }
-![Contact map](../images/guides/advanced-visualizations/contact_map_dark.webp#only-dark){ loading=lazy }
+![Contact map](../images/guides/advanced-visualizations/contact_map_light.webp#only-light){ data-title="Contact map" loading=lazy }
+![Contact map](../images/guides/advanced-visualizations/contact_map_dark.webp#only-dark){ data-title="Contact map" loading=lazy }
 [Contact map](#contact-map){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_light.webp#only-light){ loading=lazy }
-![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_dark.webp#only-dark){ loading=lazy }
+![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_light.webp#only-light){ data-title="Transcript structure" loading=lazy }
+![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_dark.webp#only-dark){ data-title="Transcript structure" loading=lazy }
 [Transcript structure](#transcript-structure){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Sashimi](../images/guides/advanced-visualizations/sashimi_light.webp#only-light){ loading=lazy }
-![Sashimi](../images/guides/advanced-visualizations/sashimi_dark.webp#only-dark){ loading=lazy }
+![Sashimi](../images/guides/advanced-visualizations/sashimi_light.webp#only-light){ data-title="Sashimi" loading=lazy }
+![Sashimi](../images/guides/advanced-visualizations/sashimi_dark.webp#only-dark){ data-title="Sashimi" loading=lazy }
 [Sashimi](#sashimi){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_light.webp#only-light){ loading=lazy }
-![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_dark.webp#only-dark){ loading=lazy }
+![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_light.webp#only-light){ data-title="Gene arrow track" loading=lazy }
+![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_dark.webp#only-dark){ data-title="Gene arrow track" loading=lazy }
 [Gene arrow track](#gene-arrow-track){ .viz-grid__name }
 </div>
 
@@ -154,32 +154,32 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div class="viz-grid" markdown>
 
 <div markdown>
-![Manhattan](../images/guides/advanced-visualizations/manhattan_light.webp#only-light){ loading=lazy }
-![Manhattan](../images/guides/advanced-visualizations/manhattan_dark.webp#only-dark){ loading=lazy }
+![Manhattan](../images/guides/advanced-visualizations/manhattan_light.webp#only-light){ data-title="Manhattan" loading=lazy }
+![Manhattan](../images/guides/advanced-visualizations/manhattan_dark.webp#only-dark){ data-title="Manhattan" loading=lazy }
 [Manhattan](#manhattan){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Lollipop](../images/guides/advanced-visualizations/lollipop_light.webp#only-light){ loading=lazy }
-![Lollipop](../images/guides/advanced-visualizations/lollipop_dark.webp#only-dark){ loading=lazy }
+![Lollipop](../images/guides/advanced-visualizations/lollipop_light.webp#only-light){ data-title="Lollipop" loading=lazy }
+![Lollipop](../images/guides/advanced-visualizations/lollipop_dark.webp#only-dark){ data-title="Lollipop" loading=lazy }
 [Lollipop](#lollipop){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Oncoplot](../images/guides/advanced-visualizations/oncoplot_light.webp#only-light){ loading=lazy }
-![Oncoplot](../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark){ loading=lazy }
+![Oncoplot](../images/guides/advanced-visualizations/oncoplot_light.webp#only-light){ data-title="Oncoplot" loading=lazy }
+![Oncoplot](../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark){ data-title="Oncoplot" loading=lazy }
 [Oncoplot](#oncoplot){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Genome chord](../images/guides/advanced-visualizations/genome_chord_light.webp#only-light){ loading=lazy }
-![Genome chord](../images/guides/advanced-visualizations/genome_chord_dark.webp#only-dark){ loading=lazy }
+![Genome chord](../images/guides/advanced-visualizations/genome_chord_light.webp#only-light){ data-title="Genome chord" loading=lazy }
+![Genome chord](../images/guides/advanced-visualizations/genome_chord_dark.webp#only-dark){ data-title="Genome chord" loading=lazy }
 [Genome chord](#genome-chord){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_light.webp#only-light){ loading=lazy }
-![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_dark.webp#only-dark){ loading=lazy }
+![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_light.webp#only-light){ data-title="Fusion structure" loading=lazy }
+![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_dark.webp#only-dark){ data-title="Fusion structure" loading=lazy }
 [Fusion structure](#fusion-structure){ .viz-grid__name }
 </div>
 
@@ -190,20 +190,20 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div class="viz-grid" markdown>
 
 <div markdown>
-![Profile](../images/guides/advanced-visualizations/profile_light.webp#only-light){ loading=lazy }
-![Profile](../images/guides/advanced-visualizations/profile_dark.webp#only-dark){ loading=lazy }
+![Profile](../images/guides/advanced-visualizations/profile_light.webp#only-light){ data-title="Profile" loading=lazy }
+![Profile](../images/guides/advanced-visualizations/profile_dark.webp#only-dark){ data-title="Profile" loading=lazy }
 [Profile](#profile){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_light.webp#only-light){ loading=lazy }
-![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_dark.webp#only-dark){ loading=lazy }
+![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_light.webp#only-light){ data-title="Signal matrix" loading=lazy }
+![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_dark.webp#only-dark){ data-title="Signal matrix" loading=lazy }
 [Signal matrix](#signal-matrix){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Damage profile](../images/guides/advanced-visualizations/damage_profile_light.webp#only-light){ loading=lazy }
-![Damage profile](../images/guides/advanced-visualizations/damage_profile_dark.webp#only-dark){ loading=lazy }
+![Damage profile](../images/guides/advanced-visualizations/damage_profile_light.webp#only-light){ data-title="Damage profile" loading=lazy }
+![Damage profile](../images/guides/advanced-visualizations/damage_profile_dark.webp#only-dark){ data-title="Damage profile" loading=lazy }
 [Damage profile](#damage-profile){ .viz-grid__name }
 </div>
 
@@ -214,26 +214,26 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div class="viz-grid" markdown>
 
 <div markdown>
-![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light){ loading=lazy }
-![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark){ loading=lazy }
+![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light){ data-title="Stacked taxonomy" loading=lazy }
+![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark){ data-title="Stacked taxonomy" loading=lazy }
 [Stacked taxonomy](#stacked-taxonomy){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Sunburst](../images/guides/advanced-visualizations/sunburst_light.webp#only-light){ loading=lazy }
-![Sunburst](../images/guides/advanced-visualizations/sunburst_dark.webp#only-dark){ loading=lazy }
+![Sunburst](../images/guides/advanced-visualizations/sunburst_light.webp#only-light){ data-title="Sunburst" loading=lazy }
+![Sunburst](../images/guides/advanced-visualizations/sunburst_dark.webp#only-dark){ data-title="Sunburst" loading=lazy }
 [Sunburst](#sunburst){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Rarefaction](../images/guides/advanced-visualizations/rarefaction_light.webp#only-light){ loading=lazy }
-![Rarefaction](../images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark){ loading=lazy }
+![Rarefaction](../images/guides/advanced-visualizations/rarefaction_light.webp#only-light){ data-title="Rarefaction" loading=lazy }
+![Rarefaction](../images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark){ data-title="Rarefaction" loading=lazy }
 [Rarefaction](#rarefaction){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light){ loading=lazy }
-![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark){ loading=lazy }
+![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light){ data-title="Phylogenetic tree" loading=lazy }
+![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark){ data-title="Phylogenetic tree" loading=lazy }
 [Phylogenetic tree](#phylogenetic){ .viz-grid__name }
 </div>
 
@@ -244,38 +244,38 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div class="viz-grid" markdown>
 
 <div markdown>
-![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_light.webp#only-light){ loading=lazy }
-![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_dark.webp#only-dark){ loading=lazy }
+![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_light.webp#only-light){ data-title="Scatter (X/Y)" loading=lazy }
+![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_dark.webp#only-dark){ data-title="Scatter (X/Y)" loading=lazy }
 [Scatter (X/Y)](#scatter-xy){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light){ loading=lazy }
-![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark){ loading=lazy }
+![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light){ data-title="Hierarchical heatmap" loading=lazy }
+![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark){ data-title="Hierarchical heatmap" loading=lazy }
 [Hierarchical heatmap](#hierarchical-heatmap){ .viz-grid__name }
 </div>
 
 <div markdown>
-![UpSet](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light){ loading=lazy }
-![UpSet](../images/guides/advanced-visualizations/upset_plot_dark.webp#only-dark){ loading=lazy }
+![UpSet](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light){ data-title="UpSet" loading=lazy }
+![UpSet](../images/guides/advanced-visualizations/upset_plot_dark.webp#only-dark){ data-title="UpSet" loading=lazy }
 [UpSet](#upset){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Sankey](../images/guides/advanced-visualizations/sankey_light.webp#only-light){ loading=lazy }
-![Sankey](../images/guides/advanced-visualizations/sankey_dark.webp#only-dark){ loading=lazy }
+![Sankey](../images/guides/advanced-visualizations/sankey_light.webp#only-light){ data-title="Sankey" loading=lazy }
+![Sankey](../images/guides/advanced-visualizations/sankey_dark.webp#only-dark){ data-title="Sankey" loading=lazy }
 [Sankey](#sankey){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_light.webp#only-light){ loading=lazy }
-![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_dark.webp#only-dark){ loading=lazy }
+![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_light.webp#only-light){ data-title="Parallel coordinates" loading=lazy }
+![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_dark.webp#only-dark){ data-title="Parallel coordinates" loading=lazy }
 [Parallel coordinates](#parallel-coordinates){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Record card](../images/guides/advanced-visualizations/record_card_light.webp#only-light){ loading=lazy }
-![Record card](../images/guides/advanced-visualizations/record_card_dark.webp#only-dark){ loading=lazy }
+![Record card](../images/guides/advanced-visualizations/record_card_light.webp#only-light){ data-title="Record card" loading=lazy }
+![Record card](../images/guides/advanced-visualizations/record_card_dark.webp#only-dark){ data-title="Record card" loading=lazy }
 [Record card](#record-card){ .viz-grid__name }
 </div>
 
@@ -286,20 +286,20 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div class="viz-grid" markdown>
 
 <div markdown>
-![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_light.webp#only-light){ loading=lazy }
-![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_dark.webp#only-dark){ loading=lazy }
+![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_light.webp#only-light){ data-title="PR benchmark" loading=lazy }
+![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_dark.webp#only-dark){ data-title="PR benchmark" loading=lazy }
 [PR benchmark](#pr-benchmark){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_light.webp#only-light){ loading=lazy }
-![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_dark.webp#only-dark){ loading=lazy }
+![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_light.webp#only-light){ data-title="Confusion matrix" loading=lazy }
+![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_dark.webp#only-dark){ data-title="Confusion matrix" loading=lazy }
 [Confusion matrix](#confusion-matrix){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_light.webp#only-light){ loading=lazy }
-![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_dark.webp#only-dark){ loading=lazy }
+![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_light.webp#only-light){ data-title="Metric with CI" loading=lazy }
+![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_dark.webp#only-dark){ data-title="Metric with CI" loading=lazy }
 [Metric with CI](#metric-ci-bars){ .viz-grid__name }
 </div>
 
@@ -310,50 +310,50 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div class="viz-grid" markdown>
 
 <div markdown>
-![3D structure](../images/guides/advanced-visualizations/molecule_3d_light.webp#only-light){ loading=lazy }
-![3D structure](../images/guides/advanced-visualizations/molecule_3d_dark.webp#only-dark){ loading=lazy }
+![3D structure](../images/guides/advanced-visualizations/molecule_3d_light.webp#only-light){ data-title="3D structure" loading=lazy }
+![3D structure](../images/guides/advanced-visualizations/molecule_3d_dark.webp#only-dark){ data-title="3D structure" loading=lazy }
 [3D structure](#molecule-3d){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Alignment](../images/guides/advanced-visualizations/msa_light.webp#only-light){ loading=lazy }
-![Alignment](../images/guides/advanced-visualizations/msa_dark.webp#only-dark){ loading=lazy }
+![Alignment](../images/guides/advanced-visualizations/msa_light.webp#only-light){ data-title="Alignment" loading=lazy }
+![Alignment](../images/guides/advanced-visualizations/msa_dark.webp#only-dark){ data-title="Alignment" loading=lazy }
 [Alignment](#msa){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Sequence track](../images/guides/advanced-visualizations/sequence_track_light.webp#only-light){ loading=lazy }
-![Sequence track](../images/guides/advanced-visualizations/sequence_track_dark.webp#only-dark){ loading=lazy }
+![Sequence track](../images/guides/advanced-visualizations/sequence_track_light.webp#only-light){ data-title="Sequence track" loading=lazy }
+![Sequence track](../images/guides/advanced-visualizations/sequence_track_dark.webp#only-dark){ data-title="Sequence track" loading=lazy }
 [Sequence track](#sequence-track){ .viz-grid__name }
 </div>
 
 <div markdown>
-![HMM logo](../images/guides/advanced-visualizations/hmm_logo_light.webp#only-light){ loading=lazy }
-![HMM logo](../images/guides/advanced-visualizations/hmm_logo_dark.webp#only-dark){ loading=lazy }
+![HMM logo](../images/guides/advanced-visualizations/hmm_logo_light.webp#only-light){ data-title="HMM logo" loading=lazy }
+![HMM logo](../images/guides/advanced-visualizations/hmm_logo_dark.webp#only-dark){ data-title="HMM logo" loading=lazy }
 [HMM logo](#hmm-logo){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_light.webp#only-light){ loading=lazy }
-![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_dark.webp#only-dark){ loading=lazy }
+![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_light.webp#only-light){ data-title="Domain architecture" loading=lazy }
+![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_dark.webp#only-dark){ data-title="Domain architecture" loading=lazy }
 [Domain architecture](#domain-architecture){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_light.webp#only-light){ loading=lazy }
-![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_dark.webp#only-dark){ loading=lazy }
+![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_light.webp#only-light){ data-title="Secondary structure" loading=lazy }
+![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_dark.webp#only-dark){ data-title="Secondary structure" loading=lazy }
 [Secondary structure](#secondary-structure){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_light.webp#only-light){ loading=lazy }
-![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_dark.webp#only-dark){ loading=lazy }
+![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_light.webp#only-light){ data-title="Predicted aligned error" loading=lazy }
+![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_dark.webp#only-dark){ data-title="Predicted aligned error" loading=lazy }
 [Predicted aligned error](#pae-matrix){ .viz-grid__name }
 </div>
 
 <div markdown>
-![Ramachandran](../images/guides/advanced-visualizations/ramachandran_light.webp#only-light){ loading=lazy }
-![Ramachandran](../images/guides/advanced-visualizations/ramachandran_dark.webp#only-dark){ loading=lazy }
+![Ramachandran](../images/guides/advanced-visualizations/ramachandran_light.webp#only-light){ data-title="Ramachandran" loading=lazy }
+![Ramachandran](../images/guides/advanced-visualizations/ramachandran_dark.webp#only-dark){ data-title="Ramachandran" loading=lazy }
 [Ramachandran](#ramachandran){ .viz-grid__name }
 </div>
 
@@ -378,18 +378,18 @@ where they go <span class="ver-badge">v1.13.0+</span>:
 
 === "popover"
 
-    ![Volcano tile with its controls in the settings popover](../images/guides/advanced-visualizations/controls_popover_light.webp#only-light){ .viz-shot loading=lazy }
-    ![Volcano tile with its controls in the settings popover](../images/guides/advanced-visualizations/controls_popover_dark.webp#only-dark){ .viz-shot loading=lazy }
+    ![Volcano tile with its controls in the settings popover](../images/guides/advanced-visualizations/controls_popover_light.webp#only-light){ data-title="Volcano tile with its controls in the settings popover" .viz-shot loading=lazy }
+    ![Volcano tile with its controls in the settings popover](../images/guides/advanced-visualizations/controls_popover_dark.webp#only-dark){ data-title="Volcano tile with its controls in the settings popover" .viz-shot loading=lazy }
 
 === "header"
 
-    ![Volcano tile with its primary controls under the title](../images/guides/advanced-visualizations/controls_header_light.webp#only-light){ .viz-shot loading=lazy }
-    ![Volcano tile with its primary controls under the title](../images/guides/advanced-visualizations/controls_header_dark.webp#only-dark){ .viz-shot loading=lazy }
+    ![Volcano tile with its primary controls under the title](../images/guides/advanced-visualizations/controls_header_light.webp#only-light){ data-title="Volcano tile with its primary controls under the title" .viz-shot loading=lazy }
+    ![Volcano tile with its primary controls under the title](../images/guides/advanced-visualizations/controls_header_dark.webp#only-dark){ data-title="Volcano tile with its primary controls under the title" .viz-shot loading=lazy }
 
 === "rail"
 
-    ![Volcano tile with its controls in a rail beside the plot](../images/guides/advanced-visualizations/controls_rail_light.webp#only-light){ .viz-shot loading=lazy }
-    ![Volcano tile with its controls in a rail beside the plot](../images/guides/advanced-visualizations/controls_rail_dark.webp#only-dark){ .viz-shot loading=lazy }
+    ![Volcano tile with its controls in a rail beside the plot](../images/guides/advanced-visualizations/controls_rail_light.webp#only-light){ data-title="Volcano tile with its controls in a rail beside the plot" .viz-shot loading=lazy }
+    ![Volcano tile with its controls in a rail beside the plot](../images/guides/advanced-visualizations/controls_rail_dark.webp#only-dark){ data-title="Volcano tile with its controls in a rail beside the plot" .viz-shot loading=lazy }
 
 - A docked panel shows the first three controls and folds the rest under **More options**.
   The component-level `controls_placement` (`auto`, `right`, `top`, `popover`), the builder's
@@ -440,8 +440,8 @@ folded. A badge says what a suggestion rests on:
 
 Effect size against significance for a differential test. The same table also reads as an MA plot and a QQ plot from the view switch.
 
-![Volcano](../images/guides/advanced-visualizations/volcano_light.webp#only-light){ .viz-shot loading=lazy }
-![Volcano](../images/guides/advanced-visualizations/volcano_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Volcano](../images/guides/advanced-visualizations/volcano_light.webp#only-light){ data-title="Volcano" .viz-shot loading=lazy }
+![Volcano](../images/guides/advanced-visualizations/volcano_dark.webp#only-dark){ data-title="Volcano" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -482,8 +482,8 @@ Effect size against significance for a differential test. The same table also re
 
 Ranked signed log fold changes per feature, one panel per contrast or one contrast at a time.
 
-![DA barplot](../images/guides/advanced-visualizations/da_barplot_light.webp#only-light){ .viz-shot loading=lazy }
-![DA barplot](../images/guides/advanced-visualizations/da_barplot_dark.webp#only-dark){ .viz-shot loading=lazy }
+![DA barplot](../images/guides/advanced-visualizations/da_barplot_light.webp#only-light){ data-title="DA barplot" .viz-shot loading=lazy }
+![DA barplot](../images/guides/advanced-visualizations/da_barplot_dark.webp#only-dark){ data-title="DA barplot" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -521,8 +521,8 @@ Ranked signed log fold changes per feature, one panel per contrast or one contra
 
 The running enrichment score along the ranked gene list, one curve per gene set, with the set members as a rug.
 
-![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_light.webp#only-light){ .viz-shot loading=lazy }
-![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_dark.webp#only-dark){ .viz-shot loading=lazy }
+![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_light.webp#only-light){ data-title="GSEA running score" .viz-shot loading=lazy }
+![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_dark.webp#only-dark){ data-title="GSEA running score" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -562,8 +562,8 @@ The running enrichment score along the ranked gene list, one curve per gene set,
 
 Two groups of rows tested feature by feature on demand, drawn as a volcano over a ranked table. The groups come from the dashboard's [selection groups](interactive-selection-filtering.md#selection-groups) or from `group` values.
 
-![Group compare](../images/guides/advanced-visualizations/group_compare_light.webp#only-light){ .viz-shot loading=lazy }
-![Group compare](../images/guides/advanced-visualizations/group_compare_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Group compare](../images/guides/advanced-visualizations/group_compare_light.webp#only-light){ data-title="Group compare" .viz-shot loading=lazy }
+![Group compare](../images/guides/advanced-visualizations/group_compare_dark.webp#only-dark){ data-title="Group compare" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -605,8 +605,8 @@ Two groups of rows tested feature by feature on demand, drawn as a volcano over 
 
 Samples or cells in 2D or 3D, from precomputed coordinates or a PCA, UMAP, t-SNE or PCoA computed live on the server.
 
-![Embedding](../images/guides/advanced-visualizations/embedding_light.webp#only-light){ .viz-shot loading=lazy }
-![Embedding](../images/guides/advanced-visualizations/embedding_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Embedding](../images/guides/advanced-visualizations/embedding_light.webp#only-light){ data-title="Embedding" .viz-shot loading=lazy }
+![Embedding](../images/guides/advanced-visualizations/embedding_dark.webp#only-dark){ data-title="Embedding" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -645,8 +645,8 @@ Samples or cells in 2D or 3D, from precomputed coordinates or a PCA, UMAP, t-SNE
 
 Marker genes by cluster: size is the fraction expressing, colour the mean expression. The `enrichment` view draws the same marks over a gene-set table.
 
-![Dot plot](../images/guides/advanced-visualizations/dot_plot_light.webp#only-light){ .viz-shot loading=lazy }
-![Dot plot](../images/guides/advanced-visualizations/dot_plot_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Dot plot](../images/guides/advanced-visualizations/dot_plot_light.webp#only-light){ data-title="Dot plot" .viz-shot loading=lazy }
+![Dot plot](../images/guides/advanced-visualizations/dot_plot_dark.webp#only-dark){ data-title="Dot plot" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -687,8 +687,8 @@ Marker genes by cluster: size is the fraction expressing, colour the mean expres
 
 Barcode rank against UMI count, one curve per library, with the cell-calling cutoff.
 
-![Knee plot](../images/guides/advanced-visualizations/knee_plot_light.webp#only-light){ .viz-shot loading=lazy }
-![Knee plot](../images/guides/advanced-visualizations/knee_plot_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Knee plot](../images/guides/advanced-visualizations/knee_plot_light.webp#only-light){ data-title="Knee plot" .viz-shot loading=lazy }
+![Knee plot](../images/guides/advanced-visualizations/knee_plot_dark.webp#only-dark){ data-title="Knee plot" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -728,8 +728,8 @@ Barcode rank against UMI count, one curve per library, with the cell-calling cut
 
 Depth or signal along a chromosome, per sample or as a cohort median. The `locus` view redraws it as a zoomable GenomeSpy track.
 
-![Coverage track](../images/guides/advanced-visualizations/coverage_track_light.webp#only-light){ .viz-shot loading=lazy }
-![Coverage track](../images/guides/advanced-visualizations/coverage_track_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Coverage track](../images/guides/advanced-visualizations/coverage_track_light.webp#only-light){ data-title="Coverage track" .viz-shot loading=lazy }
+![Coverage track](../images/guides/advanced-visualizations/coverage_track_dark.webp#only-dark){ data-title="Coverage track" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -769,8 +769,8 @@ Depth or signal along a chromosome, per sample or as a cohort median. The `locus
 
 A [GenomeSpy](https://genomespy.app/){ target="_blank" } track on a chromosome axis: scroll to zoom, drag to pan, brush or type a locus to filter the dashboard by region.
 
-![Genome view](../images/guides/advanced-visualizations/genome_view_light.webp#only-light){ .viz-shot loading=lazy }
-![Genome view](../images/guides/advanced-visualizations/genome_view_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Genome view](../images/guides/advanced-visualizations/genome_view_light.webp#only-light){ data-title="Genome view" .viz-shot loading=lazy }
+![Genome view](../images/guides/advanced-visualizations/genome_view_dark.webp#only-dark){ data-title="Genome view" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -812,8 +812,8 @@ A [GenomeSpy](https://genomespy.app/){ target="_blank" } track on a chromosome a
 
 Log2 ratio per bin with the called segments over it and the B-allele frequency underneath. The `locus` view draws the allele-specific layout.
 
-![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_light.webp#only-light){ .viz-shot loading=lazy }
-![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_light.webp#only-light){ data-title="Copy-number profile" .viz-shot loading=lazy }
+![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_dark.webp#only-dark){ data-title="Copy-number profile" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -855,8 +855,8 @@ Log2 ratio per bin with the called segments over it and the B-allele frequency u
 
 A binned Hi-C matrix, square or as a triangle under a genome track. Zooming re-reads the best resolution for the window.
 
-![Contact map](../images/guides/advanced-visualizations/contact_map_light.webp#only-light){ .viz-shot loading=lazy }
-![Contact map](../images/guides/advanced-visualizations/contact_map_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Contact map](../images/guides/advanced-visualizations/contact_map_light.webp#only-light){ data-title="Contact map" .viz-shot loading=lazy }
+![Contact map](../images/guides/advanced-visualizations/contact_map_dark.webp#only-dark){ data-title="Contact map" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -896,8 +896,8 @@ A binned Hi-C matrix, square or as a triangle under a genome track. Zooming re-r
 
 The isoforms of one gene, one lane per transcript, exons as blocks and coding parts taller.
 
-![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_light.webp#only-light){ .viz-shot loading=lazy }
-![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_light.webp#only-light){ data-title="Transcript structure" .viz-shot loading=lazy }
+![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_dark.webp#only-dark){ data-title="Transcript structure" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -938,8 +938,8 @@ The isoforms of one gene, one lane per transcript, exons as blocks and coding pa
 
 Splice junctions as arcs over a region, weighted by read support, with coverage and an exon model underneath.
 
-![Sashimi](../images/guides/advanced-visualizations/sashimi_light.webp#only-light){ .viz-shot loading=lazy }
-![Sashimi](../images/guides/advanced-visualizations/sashimi_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Sashimi](../images/guides/advanced-visualizations/sashimi_light.webp#only-light){ data-title="Sashimi" .viz-shot loading=lazy }
+![Sashimi](../images/guides/advanced-visualizations/sashimi_dark.webp#only-dark){ data-title="Sashimi" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -979,8 +979,8 @@ Splice junctions as arcs over a region, weighted by read support, with coverage 
 
 One arrow per coding sequence along a contig, the way a gene cluster or a resistance cassette is read.
 
-![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_light.webp#only-light){ .viz-shot loading=lazy }
-![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_light.webp#only-light){ data-title="Gene arrow track" .viz-shot loading=lazy }
+![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_dark.webp#only-dark){ data-title="Gene arrow track" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1024,8 +1024,8 @@ One arrow per coding sequence along a contig, the way a gene cluster or a resist
 
 A score along the genome, chromosomes end to end. `mode: rainfall` plots the distance between variants instead, so mutation clusters sink.
 
-![Manhattan](../images/guides/advanced-visualizations/manhattan_light.webp#only-light){ .viz-shot loading=lazy }
-![Manhattan](../images/guides/advanced-visualizations/manhattan_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Manhattan](../images/guides/advanced-visualizations/manhattan_light.webp#only-light){ data-title="Manhattan" .viz-shot loading=lazy }
+![Manhattan](../images/guides/advanced-visualizations/manhattan_dark.webp#only-dark){ data-title="Manhattan" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1066,8 +1066,8 @@ A score along the genome, chromosomes end to end. `mode: rainfall` plots the dis
 
 Variants as stems along a gene or protein, coloured by consequence. With `selection_enabled` a click also picks the residue for the [protein tiles](#residue-selection).
 
-![Lollipop](../images/guides/advanced-visualizations/lollipop_light.webp#only-light){ .viz-shot loading=lazy }
-![Lollipop](../images/guides/advanced-visualizations/lollipop_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Lollipop](../images/guides/advanced-visualizations/lollipop_light.webp#only-light){ data-title="Lollipop" .viz-shot loading=lazy }
+![Lollipop](../images/guides/advanced-visualizations/lollipop_dark.webp#only-dark){ data-title="Lollipop" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1105,8 +1105,8 @@ Variants as stems along a gene or protein, coloured by consequence. With `select
 
 A sample by gene mutation matrix, cells coloured by mutation type, with frequency strips.
 
-![Oncoplot](../images/guides/advanced-visualizations/oncoplot_light.webp#only-light){ .viz-shot loading=lazy }
-![Oncoplot](../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Oncoplot](../images/guides/advanced-visualizations/oncoplot_light.webp#only-light){ data-title="Oncoplot" .viz-shot loading=lazy }
+![Oncoplot](../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark){ data-title="Oncoplot" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1139,8 +1139,8 @@ A sample by gene mutation matrix, cells coloured by mutation type, with frequenc
 
 Chromosomes on a ring, one chord per link between two loci: fusions, breakends, translocations.
 
-![Genome chord](../images/guides/advanced-visualizations/genome_chord_light.webp#only-light){ .viz-shot loading=lazy }
-![Genome chord](../images/guides/advanced-visualizations/genome_chord_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Genome chord](../images/guides/advanced-visualizations/genome_chord_light.webp#only-light){ data-title="Genome chord" .viz-shot loading=lazy }
+![Genome chord](../images/guides/advanced-visualizations/genome_chord_dark.webp#only-dark){ data-title="Genome chord" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1180,8 +1180,8 @@ Chromosomes on a ring, one chord per link between two loci: fusions, breakends, 
 
 A fusion drawn as its two partners, with the protein domains kept or lost at the breakpoint.
 
-![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_light.webp#only-light){ .viz-shot loading=lazy }
-![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_light.webp#only-light){ data-title="Fusion structure" .viz-shot loading=lazy }
+![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_dark.webp#only-dark){ data-title="Fusion structure" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1225,8 +1225,8 @@ A fusion drawn as its two partners, with the protein domains kept or lost at the
 
 One curve per series over an ordered numeric axis, with an optional band. A TSS profile, a fragment-length ladder or a per-residue pLDDT curve.
 
-![Profile](../images/guides/advanced-visualizations/profile_light.webp#only-light){ .viz-shot loading=lazy }
-![Profile](../images/guides/advanced-visualizations/profile_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Profile](../images/guides/advanced-visualizations/profile_light.webp#only-light){ data-title="Profile" .viz-shot loading=lazy }
+![Profile](../images/guides/advanced-visualizations/profile_dark.webp#only-dark){ data-title="Profile" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1263,8 +1263,8 @@ One curve per series over an ordered numeric axis, with an optional band. A TSS 
 
 The heatmap under a profile: one row per region, one column per offset, rows ordered by signal.
 
-![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_light.webp#only-light){ .viz-shot loading=lazy }
-![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_light.webp#only-light){ data-title="Signal matrix" .viz-shot loading=lazy }
+![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_dark.webp#only-dark){ data-title="Signal matrix" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1301,8 +1301,8 @@ The heatmap under a profile: one row per region, one column per offset, rows ord
 
 Ancient-DNA misincorporation by distance from the read end. C>T at 5' and G>A at 3' are highlighted.
 
-![Damage profile](../images/guides/advanced-visualizations/damage_profile_light.webp#only-light){ .viz-shot loading=lazy }
-![Damage profile](../images/guides/advanced-visualizations/damage_profile_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Damage profile](../images/guides/advanced-visualizations/damage_profile_light.webp#only-light){ data-title="Damage profile" .viz-shot loading=lazy }
+![Damage profile](../images/guides/advanced-visualizations/damage_profile_dark.webp#only-dark){ data-title="Damage profile" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1342,8 +1342,8 @@ Ancient-DNA misincorporation by distance from the read end. C>T at 5' and G>A at
 
 Per-sample composition at one taxonomic rank, the tail folded into `Other`, with optional metadata strips.
 
-![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light){ .viz-shot loading=lazy }
-![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light){ data-title="Stacked taxonomy" .viz-shot loading=lazy }
+![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark){ data-title="Stacked taxonomy" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1380,8 +1380,8 @@ Per-sample composition at one taxonomic rank, the tail folded into `Other`, with
 
 A taxonomy or pathway hierarchy as rings from root to leaf, each ring a shade of its lineage.
 
-![Sunburst](../images/guides/advanced-visualizations/sunburst_light.webp#only-light){ .viz-shot loading=lazy }
-![Sunburst](../images/guides/advanced-visualizations/sunburst_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Sunburst](../images/guides/advanced-visualizations/sunburst_light.webp#only-light){ data-title="Sunburst" .viz-shot loading=lazy }
+![Sunburst](../images/guides/advanced-visualizations/sunburst_dark.webp#only-dark){ data-title="Sunburst" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1414,8 +1414,8 @@ A taxonomy or pathway hierarchy as rings from root to leaf, each ring a shade of
 
 Alpha diversity against sequencing depth, one curve per sample, mean and SE over iterations.
 
-![Rarefaction](../images/guides/advanced-visualizations/rarefaction_light.webp#only-light){ .viz-shot loading=lazy }
-![Rarefaction](../images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Rarefaction](../images/guides/advanced-visualizations/rarefaction_light.webp#only-light){ data-title="Rarefaction" .viz-shot loading=lazy }
+![Rarefaction](../images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark){ data-title="Rarefaction" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1454,8 +1454,8 @@ Alpha diversity against sequencing depth, one curve per sample, mean and SE over
 
 A Newick tree with tip metadata, five layouts, clade selection, filter and collapse. `collapse_rank` turns it into a summary by rank.
 
-![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light){ .viz-shot loading=lazy }
-![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light){ data-title="Phylogenetic tree" .viz-shot loading=lazy }
+![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark){ data-title="Phylogenetic tree" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1498,8 +1498,8 @@ A Newick tree with tip metadata, five layouts, clade selection, filter and colla
 
 Numeric against numeric, with a size column, a reference line, log axes and a selection key.
 
-![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_light.webp#only-light){ .viz-shot loading=lazy }
-![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_light.webp#only-light){ data-title="Scatter (X/Y)" .viz-shot loading=lazy }
+![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_dark.webp#only-dark){ data-title="Scatter (X/Y)" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1538,8 +1538,8 @@ Numeric against numeric, with a size column, a reference line, log axes and a se
 
 A clustered matrix with dendrograms and annotation tracks, computed on the server.
 
-![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light){ .viz-shot loading=lazy }
-![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light){ data-title="Hierarchical heatmap" .viz-shot loading=lazy }
+![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark){ data-title="Hierarchical heatmap" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1575,8 +1575,8 @@ A clustered matrix with dendrograms and annotation tracks, computed on the serve
 
 Set intersections as bars over a dot matrix: the readable alternative to a Venn diagram.
 
-![UpSet](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light){ .viz-shot loading=lazy }
-![UpSet](../images/guides/advanced-visualizations/upset_plot_dark.webp#only-dark){ .viz-shot loading=lazy }
+![UpSet](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light){ data-title="UpSet" .viz-shot loading=lazy }
+![UpSet](../images/guides/advanced-visualizations/upset_plot_dark.webp#only-dark){ data-title="UpSet" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1609,8 +1609,8 @@ Set intersections as bars over a dot matrix: the readable alternative to a Venn 
 
 Categorical flow across ordered levels, such as sample to lineage to clade.
 
-![Sankey](../images/guides/advanced-visualizations/sankey_light.webp#only-light){ .viz-shot loading=lazy }
-![Sankey](../images/guides/advanced-visualizations/sankey_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Sankey](../images/guides/advanced-visualizations/sankey_light.webp#only-light){ data-title="Sankey" .viz-shot loading=lazy }
+![Sankey](../images/guides/advanced-visualizations/sankey_dark.webp#only-dark){ data-title="Sankey" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1642,8 +1642,8 @@ Categorical flow across ordered levels, such as sample to lineage to clade.
 
 One polyline per sample across many metric axes. A brush on an axis becomes a range filter.
 
-![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_light.webp#only-light){ .viz-shot loading=lazy }
-![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_light.webp#only-light){ data-title="Parallel coordinates" .viz-shot loading=lazy }
+![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_dark.webp#only-dark){ data-title="Parallel coordinates" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1678,8 +1678,8 @@ One polyline per sample across many metric axes. A brush on an axis becomes a ra
 
 One row of a collection as labelled fields and links, following a selection made in another tile.
 
-![Record card](../images/guides/advanced-visualizations/record_card_light.webp#only-light){ .viz-shot loading=lazy }
-![Record card](../images/guides/advanced-visualizations/record_card_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Record card](../images/guides/advanced-visualizations/record_card_light.webp#only-light){ data-title="Record card" .viz-shot loading=lazy }
+![Record card](../images/guides/advanced-visualizations/record_card_dark.webp#only-dark){ data-title="Record card" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1723,8 +1723,8 @@ One row of a collection as labelled fields and links, following a selection made
 
 Each callset at its precision and recall, with F1 contours. The `roc` view sweeps a threshold into curves.
 
-![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_light.webp#only-light){ .viz-shot loading=lazy }
-![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_dark.webp#only-dark){ .viz-shot loading=lazy }
+![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_light.webp#only-light){ data-title="PR benchmark" .viz-shot loading=lazy }
+![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_dark.webp#only-dark){ data-title="PR benchmark" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1762,8 +1762,8 @@ Each callset at its precision and recall, with F1 contours. The `roc` view sweep
 
 True positives, false positives and false negatives per callset as a heatmap.
 
-![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_light.webp#only-light){ .viz-shot loading=lazy }
-![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_light.webp#only-light){ data-title="Confusion matrix" .viz-shot loading=lazy }
+![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_dark.webp#only-dark){ data-title="Confusion matrix" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1799,8 +1799,8 @@ True positives, false positives and false negatives per callset as a heatmap.
 
 One metric per callset with its 95% confidence interval, as a forest plot.
 
-![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_light.webp#only-light){ .viz-shot loading=lazy }
-![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_light.webp#only-light){ data-title="Metric with CI" .viz-shot loading=lazy }
+![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_dark.webp#only-dark){ data-title="Metric with CI" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1847,8 +1847,8 @@ alignment behind it and per-residue facts. Eight kinds draw them and stay
 
 The model in [3Dmol.js](https://3dmol.csb.pitt.edu/){ target="_blank" }, coloured by confidence, chain or a value, variants as spheres. A click picks a residue, shift-click a range.
 
-![3D structure](../images/guides/advanced-visualizations/molecule_3d_light.webp#only-light){ .viz-shot loading=lazy }
-![3D structure](../images/guides/advanced-visualizations/molecule_3d_dark.webp#only-dark){ .viz-shot loading=lazy }
+![3D structure](../images/guides/advanced-visualizations/molecule_3d_light.webp#only-light){ data-title="3D structure" .viz-shot loading=lazy }
+![3D structure](../images/guides/advanced-visualizations/molecule_3d_dark.webp#only-dark){ data-title="3D structure" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1888,8 +1888,8 @@ The model in [3Dmol.js](https://3dmol.csb.pitt.edu/){ target="_blank" }, coloure
 
 A multiple sequence alignment with consensus and conservation rows. A row click selects a sequence, a column brush picks residues.
 
-![Alignment](../images/guides/advanced-visualizations/msa_light.webp#only-light){ .viz-shot loading=lazy }
-![Alignment](../images/guides/advanced-visualizations/msa_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Alignment](../images/guides/advanced-visualizations/msa_light.webp#only-light){ data-title="Alignment" .viz-shot loading=lazy }
+![Alignment](../images/guides/advanced-visualizations/msa_dark.webp#only-dark){ data-title="Alignment" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1925,8 +1925,8 @@ A multiple sequence alignment with consensus and conservation rows. A row click 
 
 The sequence on a ruler with a value lane, secondary structure, domains and variants. One strip per chain on a complex.
 
-![Sequence track](../images/guides/advanced-visualizations/sequence_track_light.webp#only-light){ .viz-shot loading=lazy }
-![Sequence track](../images/guides/advanced-visualizations/sequence_track_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Sequence track](../images/guides/advanced-visualizations/sequence_track_light.webp#only-light){ data-title="Sequence track" .viz-shot loading=lazy }
+![Sequence track](../images/guides/advanced-visualizations/sequence_track_dark.webp#only-dark){ data-title="Sequence track" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -1966,8 +1966,8 @@ The sequence on a ruler with a value lane, secondary structure, domains and vari
 
 The logo of a profile HMM with insert and occupancy lanes, and where `hmmsearch` hits land on it. `profile_source: msa` computes it from an alignment instead.
 
-![HMM logo](../images/guides/advanced-visualizations/hmm_logo_light.webp#only-light){ .viz-shot loading=lazy }
-![HMM logo](../images/guides/advanced-visualizations/hmm_logo_dark.webp#only-dark){ .viz-shot loading=lazy }
+![HMM logo](../images/guides/advanced-visualizations/hmm_logo_light.webp#only-light){ data-title="HMM logo" .viz-shot loading=lazy }
+![HMM logo](../images/guides/advanced-visualizations/hmm_logo_dark.webp#only-dark){ data-title="HMM logo" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -2007,8 +2007,8 @@ The logo of a profile HMM with insert and occupancy lanes, and where `hmmsearch`
 
 The domains of many proteins, one row each, or grouped by architecture. A partial match has a zigzag edge.
 
-![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_light.webp#only-light){ .viz-shot loading=lazy }
-![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_light.webp#only-light){ data-title="Domain architecture" .viz-shot loading=lazy }
+![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_dark.webp#only-dark){ data-title="Domain architecture" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -2048,8 +2048,8 @@ The domains of many proteins, one row each, or grouped by architecture. A partia
 
 Helices, strands and coil as a ribbon, with the probabilities behind the call and the agreement between sources.
 
-![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_light.webp#only-light){ .viz-shot loading=lazy }
-![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_light.webp#only-light){ data-title="Secondary structure" .viz-shot loading=lazy }
+![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_dark.webp#only-dark){ data-title="Secondary structure" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -2090,8 +2090,8 @@ Helices, strands and coil as a ribbon, with the probabilities behind the call an
 
 A model's PAE matrix with pLDDT strips. A low-error block on the diagonal is a confident domain. A brush picks the scored range.
 
-![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_light.webp#only-light){ .viz-shot loading=lazy }
-![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_light.webp#only-light){ data-title="Predicted aligned error" .viz-shot loading=lazy }
+![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_dark.webp#only-dark){ data-title="Predicted aligned error" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
@@ -2128,8 +2128,8 @@ A model's PAE matrix with pLDDT strips. A low-error block on the diagonal is a c
 
 Backbone phi and psi of the model, computed in the browser from the 3D tile's file. The favoured regions are a guide, not MolProbity contours.
 
-![Ramachandran](../images/guides/advanced-visualizations/ramachandran_light.webp#only-light){ .viz-shot loading=lazy }
-![Ramachandran](../images/guides/advanced-visualizations/ramachandran_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Ramachandran](../images/guides/advanced-visualizations/ramachandran_light.webp#only-light){ data-title="Ramachandran" .viz-shot loading=lazy }
+![Ramachandran](../images/guides/advanced-visualizations/ramachandran_dark.webp#only-dark){ data-title="Ramachandran" .viz-shot loading=lazy }
 
 | Role | Need | Type |
 |------|------|------|
