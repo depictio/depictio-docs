@@ -8,6 +8,21 @@ hide:
 
 # Changelog
 
+## **[v1.18.1](https://github.com/depictio/depictio/releases/tag/v1.18.1)** (October 14, 2026)
+
+!!! success "Patch: SAML loads in the API image, and genome tracks work with sign-in"
+
+### Docker Images
+
+No images were published for v1.18.1: the API image failed to build ([#1244](https://github.com/depictio/depictio/pull/1244)). Use v1.19.0.
+
+### **🐛 Bug Fixes**
+
+* **SAML loads in the API image**, where every SAML route answered 500 in 1.18.0. See [Single sign-on (SAML)](../installation/sso.md) ([#1243](https://github.com/depictio/depictio/pull/1243)).
+* **File-backed genome tracks render with sign-in on**. See [Genome view](../features/components.md#genome-view) ([#1242](https://github.com/depictio/depictio/pull/1242)).
+
+---
+
 ## **[v1.18.0](https://github.com/depictio/depictio/releases/tag/v1.18.0)** (October 14, 2026)
 
 !!! success "Minor: SAML sign-in, user groups, and filters that stay and travel as a link"
