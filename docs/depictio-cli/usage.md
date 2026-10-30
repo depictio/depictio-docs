@@ -298,6 +298,11 @@ If the project already exists, `ingest` changes nothing, says how to go on, and 
 
 A project not on the server yet is created by `--update-config`, so a script can pass it every time.
 
+**What the browser added** <small>(v1.18.0+)</small>. A refresh merges the project file into
+the stored project instead of writing it back whole: workflows and data collections the
+file does not mention are kept, so a collection added in the web UI survives. One the file
+mentions is updated from it.
+
 Here a third run is added to a project ingested from a project YAML: a dry run, then the refresh, which keeps its dashboard:
 
 <div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-refresh.cast" data-poster="npt:0:48" data-idle-time-limit="2.5"></div>

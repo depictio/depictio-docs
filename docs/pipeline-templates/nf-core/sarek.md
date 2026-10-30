@@ -36,7 +36,7 @@ call and gene by gene rather than only by how many calls each made:
 - :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
 - :material-chart-box-outline: **Data & QC**: read, mapping and recalibration panels from the pipeline's own MultiQC report, and the depth over the intervals with an X against Y sex check
 - :material-set-merge: **Variant calls**: what each caller called and of what kind, how clean each callset looks, and which calls the callers share
-- :material-dna: **Annotation**: SnpEff's consequences recomputed per call, the genes that carry the calls, and depth and calls at one region on one axis
+- :material-dna: **Annotation**: SnpEff's consequences recomputed per call, the genes that carry the calls, the coding variants on the protein and its predicted structure, and depth and calls at one region on one axis
 
 The persistent `Sample filters` (status, patient, sample) sit in the left panel,
 and a pick there reaches every per-sample collection and the MultiQC panels
@@ -108,7 +108,7 @@ recipes keep one pass per sample, so no tile counts a sample twice.
     to pruned or unparsed data collections are hidden, tabs left with no real
     visualizations are dropped entirely, and the remaining components are
     re-packed so there are no empty rows. A run without SnpEff in `--tools`
-    drops the Consequences and Genes tabs instead of failing to ingest.
+    drops the Consequences, Genes and Protein tabs instead of failing to ingest.
 
 <div class="tpl-version-block" data-version="3.10.0" markdown>
 
@@ -120,7 +120,7 @@ recipes keep one pass per sample, so no tile counts a sample twice.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-One dashboard: the **Overview**, then eight child tabs in three groups, read as a
+One dashboard: the **Overview**, then nine child tabs in three groups, read as a
 funnel from the reads to the genes the calls hit and one region of the genome.
 Each tab below carries the **same icon and colour the dashboard gives it**, so the
 page and the app read alike.
@@ -129,7 +129,7 @@ page and the app read alike.
 |---|---|
 | Data & QC | MultiQC, Coverage |
 | Variant calls | Variant yield, Call quality, Caller concordance |
-| Annotation | Consequences, Genes, Locus |
+| Annotation | Consequences, Genes, Protein, Locus |
 
 Each child tab opens with a short intro and a strip of four cards, then at most
 three open sections; tables follow, collapsed. The template has no group column:
@@ -184,7 +184,7 @@ collapsed, to the bottom of every child tab.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample ID`, read from the MultiQC report.
+        **Filters** · the pinned sample filters narrow its panels.
 
         | Section | What it holds |
         |---|---|
@@ -355,7 +355,7 @@ collapsed, to the bottom of every child tab.
 
 === ":material-dna:{ .mc-pink } Genes"
 
-    **Annotation** · *Which genes carry the calls, and where on the protein?*
+    **Annotation** · *Which genes carry the calls, and which do the callers share?*
 
     [![Genes dashboard](../../images/pipeline-templates/nf-core/sarek/genes_light.webp#only-light){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/genes_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
@@ -365,23 +365,57 @@ collapsed, to the bottom of every child tab.
     variants by caller, the top gene burden (the most HIGH or MODERATE variants on
     one gene, the callers' maxima) and the protein changes by impact class. Then
     the gene by callset burden heatmap, coloured by log(1 + variants) so one long
-    gene does not wash out the rest, the UpSet of genes the callers share (fixed),
-    and the coding variants along the protein, one lane per gene. A high burden is
-    often a long, repetitive or poorly mappable gene before it is a biological
-    signal. The per-gene burden and protein position tables are collapsed.
+    gene does not wash out the rest, and the UpSet of genes the callers share
+    (fixed). A high burden is often a long, repetitive or poorly mappable gene
+    before it is a biological signal. The per-gene burden table is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Biotype` and `Caller` on `snpeff_genes`, and `Impact
-        class` on `snpeff_protein_lollipop`.
+        **Filters** · `Biotype` and `Caller` on `snpeff_genes`.
 
         | Section | What it holds |
         |---|---|
         | Genes at a glance | 4 cards |
         | Burden across callsets | 1 advanced visualization |
         | Genes the callers share | 1 advanced visualization |
+        | Gene table (collapsed) | *Per-gene variant burden* |
+
+=== ":material-molecule:{ .mc-violet } Protein"
+
+    **Annotation** · *Where on the protein do the coding variants sit?*
+
+    [![Protein dashboard](../../images/pipeline-templates/nf-core/sarek/protein_light.webp){ loading=lazy }](../../images/pipeline-templates/nf-core/sarek/protein_light.webp){ .tpl-shot target="_blank" rel="noopener" }
+
+    Only variants whose protein change SnpEff could compute appear here. The genes
+    on the protein view (a bar by the worst impact class on each), the coding calls
+    by caller, the median share of a gene's calls that two or more callers made and
+    the allele fraction. Then a scatter of the genes, distinct coding variants on a
+    log axis against the share of calls two or more callers made, coloured by the
+    worst impact class: the gene you pick loads its predicted structure beside it,
+    over its written sequence, with the same variants as spheres on their residues,
+    coloured by impact class. Then the lollipop, one lane per gene, narrowed to the
+    picked gene. The coding variants with a protein position are collapsed. A gene
+    low on the scatter carries variants one caller sees, which is often a mapping
+    or repeat artefact.
+
+    ??? abstract ":material-tune-variant: Filters and components"
+
+        **Filters** · `Caller` and `Impact class` on `snpeff_protein_lollipop`.
+        The scatter and two of the cards read a per-gene summary of the whole run,
+        so the sample and caller pickers do not narrow them; a gene picked on the
+        scatter does.
+
+        | Section | What it holds |
+        |---|---|
+        | Protein at a glance | 4 cards |
+        | Genes and structure | 2 advanced visualizations: the gene scatter and the coding variants on the predicted structure |
         | Along the protein | 1 advanced visualization |
-        | Gene tables (collapsed) | *Per-gene variant burden*, *Coding variants with a protein position* |
+        | Coding variant table (collapsed) | *Coding variants with a protein position* |
+
+    !!! info "Structure resolver"
+        The structure tile looks the gene up in AlphaFold DB, which needs the
+        [structure resolver](../../features/protein-tiles.md#structure-resolver)
+        on the server; without it the tile says so and the rest of the tab works.
 
 === ":material-map-marker-outline:{ .mc-indigo } Locus"
 
@@ -414,7 +448,8 @@ Tables and point views select on their entity column: the sample sheet on
 sex-check scatter on `sample`; the bcftools and SnpEff summary tables on
 `caller`; the rainfall plot, the impact scatter and the call tables on
 `variant_key`; the per-gene table on `gene_name`, which reaches the protein
-lollipop. A pick narrows the other tiles of its collection and follows the
+lollipop, and the gene scatter on Protein on `gene`, which moves the structure and
+the lollipop to that gene. A pick narrows the other tiles of its collection and follows the
 project links to the collections downstream of it. The variant record on
 Consequences shows the call picked in the scatter beside it.
 

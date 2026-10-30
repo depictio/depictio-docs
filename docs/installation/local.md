@@ -376,12 +376,15 @@ SSH, open the server through the `ssh -L` tunnel that `up` prints, and mind the
 
 `up` does not pass the `DEPICTIO_*` variables of your shell to the server, since
 they usually target another instance (`DEPICTIO_LOCAL_HOME` is read by
-`depictio local` itself). There are two exceptions. `DEPICTIO_TELEMETRY_*`:
+`depictio local` itself). There are three exceptions. `DEPICTIO_TELEMETRY_*`:
 `DEPICTIO_TELEMETRY_ENABLED=false` (or `DO_NOT_TRACK=1`) turns
 [telemetry](../features/telemetry.md) off for the local server too. And, since
 v1.16.0, `DEPICTIO_REMOTE_*`, the
 [remote data settings](env-reference.md#remote-data-sources): the hosts and
-buckets the server may read. The `AWS_*` variables are not passed on, so the
+buckets the server may read. And, since v1.19.0, `DEPICTIO_STRUCTURE_RESOLVER_*`:
+`DEPICTIO_STRUCTURE_RESOLVER_ENABLED=true depictio local up` lets the
+[protein tiles](../features/protein-tiles.md#structure-resolver) fetch models from
+AlphaFold DB and ESMFold. The `AWS_*` variables are not passed on, so the
 services never reach another S3 store with your shell's keys. A bucket on
 `DEPICTIO_REMOTE_CREDENTIALED_S3_BUCKETS` is then read with the default profile
 of your `~/.aws` files or the machine's role, never with `AWS_*` variables.

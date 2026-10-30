@@ -383,7 +383,7 @@ The CLI executes this pipeline:
 
 ## Managing Data Collections from the viewer (v0.12.0+)
 
-Data Collections can be created and managed directly from the viewer — no YAML edits or CLI runs required. Available for Basic projects today; some flows also work on Advanced projects.
+Data Collections can be created and managed directly from the viewer — no YAML edits or CLI runs required. Since **v1.18.0** every project offers **Create Data Collection** on its page, a project made by the CLI included: what you may do depends on your role, not on the project type. A later CLI refresh keeps what was added in the browser (see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project)).
 
 !!! info "Available from v0.12.0"
     All flows in this section require Depictio **v0.12.0 or later**. See the [changelog](../../changelog/README.md#v0120-may-15-2026) for the full release notes.
@@ -538,6 +538,12 @@ figures and tables read rows, and an `indexed_file` DC has none. Its consumer is
 track reading files directly: a [Genome view](../../features/components.md#genome-view)
 tile with `source: file`.
 
+Since **v1.19.0** `format` also takes `pdb` and `mmcif` (aliases `ent`, `cif`) for protein
+structures and `pae` for predicted aligned error matrices (`.pae.tsv`, `.pae.json`), each
+optionally gzipped. These need no index: the file is fetched whole by a
+[protein tile](../../features/protein-tiles.md#the-data), and the sample id the scan derives
+must equal the `entity` value of the residue tables.
+
 ##### Storage the browser can read <small>(v1.13.0+)</small> { #indexed-file-storage }
 
 The bytes of an indexed file never pass through the API: the browser reads them from the
@@ -636,7 +642,7 @@ Choose the right project type for your workflow:
 
 | Feature                  | Basic Projects                         | Advanced Projects             | Template Projects                         |
 | ------------------------ | -------------------------------------- | ----------------------------- | ----------------------------------------- |
-| **Setup Complexity**     | Minimal - Web UI or CLI                | CLI only today (WebUI planned), YAML config required    | Single CLI command, no YAML needed (WebUI planned)            |
+| **Setup Complexity**     | Minimal - Web UI or CLI                | CLI and YAML config; data collections can be added in the Web UI (v1.18.0+) | Single CLI command, no YAML needed (WebUI planned)            |
 | **Data Sources**         | UI File upload or CLI-based processing | CLI-based processing          | CLI-based (pipeline output)               |
 | **File Organization**    | Simple file management                 | Structured directory patterns | Fixed structure per template              |
 | **Multi-sample Support** | Single datasets                        | Multi samples support         | Full support (template-specific)          |
@@ -666,7 +672,7 @@ Choose a **Template** when:
 - ✅ You want instant project + dashboards without writing YAML
 - ✅ Reproducibility and template provenance tracking matter
 
-## <span style="color: #45B8AC;">:material-lock:</span> Project Permissions
+## <span style="color: #45B8AC;">:material-lock:</span> Project Permissions { #project-permissions }
 
 Depictio implements a comprehensive role-based permission system:
 
@@ -677,6 +683,21 @@ Depictio implements a comprehensive role-based permission system:
 | **Owner**  | Full control - edit, delete, manage permissions |
 | **Editor** | Modify project data, create/edit dashboards     |
 | **Viewer** | Read-only access to project and dashboards      |
+
+Since **v1.18.0** a role can be given to a person or to a whole
+[group](../administration/groups.md), from the **Groups** section of the project's
+**Permissions** page. A person's role is the highest of their own and their groups': a
+direct viewer whose group owns the project is an owner. Writing a data collection needs
+**editor**, deleting one **owner**. The project settings no longer change who has access:
+sharing goes through **Permissions** only.
+
+### Everyone with access <small>(v1.19.0+)</small> { #everyone-with-access }
+
+The **Permissions** page sums direct and group grants into **Everyone with access**: one row
+per person, highest role first, with every grant behind it. Typing a group's name in the add
+box previews its members before **Add group**, flagging those who already have access. Both
+show members' emails, so only those who may change the sharing see them: owners, system
+admins and the admins of an owning group.
 
 ### Public Projects
 

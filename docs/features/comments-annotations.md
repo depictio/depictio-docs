@@ -52,7 +52,7 @@ editor.
 |-----|--------------------------|
 | Project **owners** and **editors** | Read and write every thread on the project's dashboards |
 | Instance **admins** | Same as owners |
-| Project **viewers** | No threads, no badge, no drawer. They see only the annotations switched to **Visible to viewers**, as a shape and a label |
+| Project **viewers** | No threads, no badge, no drawer. They see only the annotations switched to **Visible to viewers**, as a shape and a label. With [viewers can comment](#viewers-can-comment) on, they read and write threads |
 | Visitors of a **public** project, anonymous users | Same as viewers: published annotations only, never a discussion |
 | **Single-user mode** | The session is the instance admin, so everything is available |
 
@@ -61,17 +61,34 @@ shape, its colour and its label, nothing else.
 
 Thread actions follow the author:
 
-- anyone who can comment can reply, resolve, reopen, edit an annotation and change its
+- an editor or owner can reply, resolve, reopen, edit an annotation and change its
   visibility;
 - you can edit or delete **your own** comments; a project owner can also delete anyone's
   comment (it is replaced by *Comment deleted*);
 - a whole thread can be deleted by its author, a project owner or an admin.
 
+### Viewers can comment <small>(v1.17.2+)</small> { #viewers-can-comment }
+
+A showcase instance may want remarks from the people it shows a dashboard to, without
+giving them edit rights. `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT=true` (default `false`)
+lets anyone with viewer access to a project read and write its threads:
+
+- a viewer replies, edits or deletes their own comments, and deletes their own threads;
+- resolving or reopening a thread, publishing or editing an annotation, annotate mode and
+  agent proposals stay with editors and owners; a viewer never sees proposals or
+  rejected threads;
+- anonymous visitors and the temporary accounts of public mode never comment. Since
+  v1.17.3 a guest is offered to [sign in](../usage/guides/authentication-modes.md#guest-sign-in) instead.
+
+Commenters see each other's email addresses. On Kubernetes, the setting is the
+`backend.env` key of the same name.
+
 ---
 
 ## :material-comment-search-outline: The comments drawer
 
-There are two ways in, both visible only to editors and owners:
+There are two ways in, both visible only to editors and owners (and to viewers when
+[they may comment](#viewers-can-comment)):
 
 - the **Comments** button in the dashboard header opens every thread of the current tab.
   Its badge counts open threads (or, when there are none, proposals awaiting review), and

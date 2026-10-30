@@ -175,8 +175,9 @@ table and the group filters go; the library and assay filters remain.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample ID`, read from the MultiQC report, and `Read layout`
-        on the sample sheet, so both work on a run without a design table.
+        **Filters** · the pinned sample filters narrow its panels, and its own
+        `Read layout` filter reads the sample sheet, so both work on a run without
+        a design table.
 
         | Section | What it holds |
         |---|---|

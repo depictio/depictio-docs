@@ -420,6 +420,14 @@ Every advanced viz consumes a **tabular DC** (CSV / TSV / Parquet → polars) wi
 | :material-circle-double: [Genome chord](#genome-chord) | Chromosomes on a ring, one chord per link between two loci. | **Manta**, **TIDDIT** or **SvABA** breakends, **arriba** or **STAR-Fusion** fusions |
 | :material-chart-line-variant: [Parallel coordinates](#parallel-coordinates) | One polyline per sample across many metric axes, brushable per axis. | Any per-sample QC table (MultiQC general statistics) |
 | :material-card-account-details-outline: [Record card](#record-card) | One record of a collection as labelled fields and links, following a selection made elsewhere. | Any table with an identifier column |
+| :material-molecule: [3D structure](protein-tiles.md#molecule-3d) (v1.19.0+) | A protein model in 3D, coloured by confidence, chain or value, variants as spheres. | **AlphaFold**, **ColabFold** or **ESMFold** PDB / mmCIF, or fetched from AlphaFold DB |
+| :material-text-box-outline: [Alignment](protein-tiles.md#msa) (v1.19.0+) | A multiple sequence alignment with consensus and conservation. | **proteinfold** MSAs, A3M, Stockholm or aligned FASTA |
+| :material-format-letter-matches: [Sequence track](protein-tiles.md#sequence-track) (v1.19.0+) | A protein sequence with a value lane, secondary structure, domains and variants. | Per-residue table (`entity`, `position`, pLDDT) |
+| :material-format-letter-case: [HMM logo](protein-tiles.md#hmm-logo) (v1.19.0+) | The logo of a profile HMM and where search hits land on it. | **HMMER** `hmmbuild` profile and `hmmsearch` domain table |
+| :material-view-sequential-outline: [Domain architecture](protein-tiles.md#domain-architecture) (v1.19.0+) | The domains of many proteins, one row each or grouped by architecture. | **InterProScan** or **hmmsearch** domain hits |
+| :material-cosine-wave: [Secondary structure](protein-tiles.md#secondary-structure) (v1.19.0+) | Helices, strands and coil with their probabilities, sources compared. | **S4PRED** `.ss2` |
+| :material-grid: [Predicted aligned error](protein-tiles.md#pae-matrix) (v1.19.0+) | A model's PAE matrix with pLDDT strips. | **proteinfold** PAE TSV, AlphaFold DB or ColabFold JSON |
+| :material-scatter-plot-outline: [Ramachandran](protein-tiles.md#ramachandran) (v1.19.0+) | Backbone phi and psi of the model, computed in the browser. | The structure file the 3D tile reads |
 
 !!! info "Reading the schema tables"
     Each viz subsection lists its **required** column roles (must be bound for the viz to render) and **optional** roles (extra colour / size / label dimensions). Types use polars dtype families — `Float` accepts `Float32` / `Float64`, `Int` accepts `Int8`–`Int64` and unsigned widths, `String` accepts `String` / `Utf8`, `Numeric` is `Int` ∪ `Float`. The dashboard builder validates the binding via `validate_binding()` and surfaces dtype mismatches in-place.
@@ -672,6 +680,7 @@ Needle / variant track along a gene — each gene body as a horizontal line, eac
 | `scale_points_by_effect` / `show_stems` / `marker_outline` | bool | `true` / `true` / `false` | Size heads by `effect`, draw the stems, outline the heads |
 | `palette` | `tab10` \| `tab20` | `tab10` | Palette of the consequence categories |
 | `top_n_labels` | int (≥0) | `0` | Label the most extreme points per gene; 0 draws none |
+| `selection_enabled` / `selection_column` <small>(v1.19.0+)</small> | bool / str \| null | `false` / `null` | A click on a stem picks that residue for the [protein tiles](protein-tiles.md#residue-selection) (shift-click extends the range), plus a selection on `selection_column`, else `label_col` |
 
 **Filtering / row tagging**
 
@@ -770,6 +779,9 @@ Per-sample stacked relative-abundance bar with a rank dropdown.
 | `annotation_strips` | list[dict] \| null | `null` | Per-sample categorical annotation strips drawn above or below the stacked bars. Each entry is a dict with: `column` (str, required), `label` (str, optional — defaults to column name), `position` (`top` \| `bottom`, default `bottom`), `palette` (`{value: hex}`, optional). Reusable across any per-sample categorical metadata (habitat, batch, treatment, timepoint) — renderer pulls the columns automatically, no recipe change needed. |
 | `show_legend` / `log_y` | bool | `true` / `false` | Taxon legend; log y axis, only offered when `normalise_to_one` is off |
 | `taxon_palette` | dict[str, str] \| null | `null` | `{taxon: hex}` colours pinned for the bars. Unlisted taxa keep the default cycle, which repeats past twelve taxa (v1.12.0+) |
+| `hidden_controls` <small>(v1.19.0+)</small> | list \| null | `null` | Controls the tile does not offer, among `rank`, `sample_sort`, `top_n`, `normalise`; their config values still apply |
+| `rank_label` / `x_title` <small>(v1.19.0+)</small> | str \| null | `null` | Label of the rank picker (*Rank*), and of the sample axis (*Sample*, an empty string for none), for a composition that is not a taxonomy |
+| `legend_pos` <small>(v1.19.0+)</small> | `right` \| `bottom` | `right` | Legend beside the bars or under them. Past 40 bars the sample labels are hidden |
 
 ??? example "Annotation strips YAML"
     ```yaml
