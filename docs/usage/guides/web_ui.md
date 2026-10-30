@@ -85,7 +85,8 @@ first, with dashboards you never opened last. It is kept per browser.
 
 The **Table display** menu <small>(v1.17.0+)</small> sets the row height, **Comfortable**
 or **Compact**, and which columns show, with **Show all** and **Reset**. The Projects
-listing has the same menu.
+listing has the same menu. On a narrow screen the actions column stays pinned to the
+right edge while the table scrolls <small>(v1.17.3+)</small>.
 
 Dashboards are grouped into sections, each dashboard in one only, in this order:
 **nf-core dashboards**, **Demo dashboards**, **Public**, **Accessed** and **Owned**.
