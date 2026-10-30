@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.17.4",
-    "x-generated-at": "2026-10-13T09:42:34Z",
-    "x-depictio-version": "v1.17.4"
+    "version": "1.19.1",
+    "x-generated-at": "2026-10-16T11:25:43Z",
+    "x-depictio-version": "v1.19.1"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -1604,6 +1604,107 @@
             "OAuth2PasswordBearer": []
           }
         ]
+      }
+    },
+    "/depictio/api/v1/projects/effective_access/{project_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Effective Access",
+        "description": "Everyone a grant gives access to, direct or through a group, one row each.\n\nGated like the edit itself: the rows carry the emails of group members, which\nthe group list withholds from people outside the group.",
+        "operationId": "get_effective_access_depictio_api_v1_projects_effective_access__project_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/group_members_preview/{project_id}/{group_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Preview Group Members",
+        "description": "Members of a group about to be shared with, before the grant is made.",
+        "operationId": "preview_group_members_depictio_api_v1_projects_group_members_preview__project_id___group_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/depictio/api/v1/projects/update_project_permissions": {
@@ -5250,6 +5351,188 @@
               "type": "integer",
               "default": 1000,
               "title": "Limit"
+            }
+          },
+          {
+            "name": "filter_expr",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Filter Expr"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/deltatables/ranked_values/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Ranked Values",
+        "description": "Return the distinct values of ``column`` ranked by the ``by`` column.\n\nBacks the default of an ``always_selected`` Select with ``default_by``: the\nSelect keeps its alphabetical list and starts on the first value of this one\n(see ``rank_values``).\n\nReturns:\n    ``{\"column\": str, \"by\": str, \"values\": list[str]}``, best first.\n\nRaises:\n    HTTPException: 404 if the data collection or a column is missing, 403 without\n    viewer access.",
+        "operationId": "get_ranked_values_depictio_api_v1_deltatables_ranked_values__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "column",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Column"
+            }
+          },
+          {
+            "name": "by",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "By"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string",
+              "default": "desc",
+              "title": "Order"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1000,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/deltatables/row_values/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Row Values",
+        "description": "Return ``columns`` of the first row where ``column`` equals ``value``.\n\nBacks the facts of a scope banner (``banner_facts`` on an ``always_selected``\nfilter): the banner names the picked value and reads a few of its attributes\nfrom the filter's own data collection (see ``row_values``).\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column compared with ``value``.\n    value: The picked value, as text.\n    columns: Columns to return (at most ``MAX_ROW_VALUE_COLUMNS``).\n    filter_expr: Optional Polars filter expression (string) applied before the\n        lookup, validated through ``depictio.models.components.filter_expr``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"row\": dict | None}``: None when no row matches.\n\nRaises:\n    HTTPException: 400 on too many columns or an invalid ``filter_expr``, 404 if\n    the data collection or a column is missing, 403 without viewer access.",
+        "operationId": "get_row_values_depictio_api_v1_deltatables_row_values__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "column",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Column"
+            }
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Value"
+            }
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "title": "Columns"
             }
           },
           {
@@ -9967,6 +10250,156 @@
         }
       }
     },
+    "/depictio/api/v1/dashboards/filter_state/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Get Filter State",
+        "description": "Return the caller's saved filter state. Absence is a normal answer, not a 404.",
+        "operationId": "get_filter_state_depictio_api_v1_dashboards_filter_state__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Filter State Depictio Api V1 Dashboards Filter State  Dashboard Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Put Filter State",
+        "description": "Upsert the caller's filter state (last write wins).",
+        "operationId": "put_filter_state_depictio_api_v1_dashboards_filter_state__dashboard_id__put",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DashboardFilterStatePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Put Filter State Depictio Api V1 Dashboards Filter State  Dashboard Id  Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Delete Filter State",
+        "description": "Drop the caller's saved state entirely (toggle OFF uses PUT so the preference roams).",
+        "operationId": "delete_filter_state_depictio_api_v1_dashboards_filter_state__dashboard_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/comments/access/{dashboard_id}": {
       "get": {
         "tags": [
@@ -11571,7 +12004,7 @@
           "Advanced Viz"
         ],
         "summary": "Get Phylogeny Newick",
-        "description": "Return the raw Newick string for a phylogeny DC.\n\nFirst tries the copy the CLI uploads at ingest, at\n``s3://<bucket>/phylogeny/<dc_id>/tree.nwk``: it is readable by any backend,\nwhichever machine ran the CLI. Any miss there falls through to the stored\npaths below, which is what reference seeds and older ingests rely on.\n\nThose stored paths are tried in three ways: (1) prefer the file registered\nby the CLI scan in ``files_collection``; (2) for reference datasets\n(seeded via db_init, never CLI-scanned), traverse the project document\nto find the matching DC under ``workflows[].data_collections[]`` and\nread its ``config.scan.scan_parameters.filename``. DCs are stored\nembedded in the project — there is no top-level ``data_collections``\ndocument for them — so we can't ``find_one({\"_id\": dc_oid})`` directly.\n(3) as a last resort, each stored path rewritten onto the container's\n``/app`` bind mount, which is what makes a host-run CLI ingest readable\nfrom the backend container.\n\nReturns local file contents directly; stream S3-hosted trees via boto3.",
+        "description": "Return the raw Newick string for a phylogeny DC.\n\nFirst tries the copy the CLI uploads at ingest, at\n``s3://<bucket>/phylogeny/<dc_id>/tree.nwk``: it is readable by any backend,\nwhichever machine ran the CLI. Any miss there falls through to the stored\npaths below, which is what reference seeds and older ingests rely on.\n\nThose stored paths are tried in three ways: (1) prefer the file registered\nby the CLI scan in ``files_collection``; (2) for reference datasets\n(seeded via db_init, never CLI-scanned), traverse the project document\nto find the matching DC under ``workflows[].data_collections[]`` and\nread its ``config.scan.scan_parameters.filename``. DCs are stored\nembedded in the project — there is no top-level ``data_collections``\ndocument for them — so we can't ``find_one({\"_id\": dc_oid})`` directly.\n(3) as a last resort, each stored path rewritten onto the container's\n``/app`` bind mount, which is what makes a host-run CLI ingest readable\nfrom the backend container.\n\nThe stored paths are user-supplied, so neither kind is read as is: an\n``s3://`` one goes through the remote-data resolution (never the instance\ncredentials, never the instance bucket), a local one only from the bundled\nreference projects or the local-data policy's folders. A refused candidate\nis skipped, and the response never names a path.",
         "operationId": "get_phylogeny_newick_depictio_api_v1_advanced_viz_phylogeny__data_collection_id__newick_get",
         "security": [
           {
@@ -11612,6 +12045,55 @@
             }
           }
         }
+      }
+    },
+    "/depictio/api/v1/advanced_viz/structure/resolve": {
+      "post": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Resolve Structure",
+        "description": "Presigned URL of a PDB model for a UniProt accession, a gene, or a sequence.\n\nMounted as ``POST /advanced_viz/structure/resolve`` by ``routes.py``.",
+        "operationId": "resolve_structure_depictio_api_v1_advanced_viz_structure_resolve_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StructureResolveRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Resolve Structure Depictio Api V1 Advanced Viz Structure Resolve Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/export/dashboards/{dashboard_id}/components": {
@@ -13053,6 +13535,568 @@
         ]
       }
     },
+    "/depictio/api/v1/groups/list": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "List Groups",
+        "description": "List all groups (sharing picker). Any authenticated non-anonymous user;\nsummaries only, so no member emails are leaked.",
+        "operationId": "list_groups_depictio_api_v1_groups_list_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GroupSummary"
+                  },
+                  "type": "array",
+                  "title": "Response List Groups Depictio Api V1 Groups List Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/groups/mine": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "My Groups",
+        "description": "Groups the caller belongs to, annotated with their role in each.",
+        "operationId": "my_groups_depictio_api_v1_groups_mine_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MyGroup"
+                  },
+                  "type": "array",
+                  "title": "Response My Groups Depictio Api V1 Groups Mine Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/groups/{group_id}": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Get Group",
+        "description": "Group detail incl. member list — sysadmin, group admins and members only.",
+        "operationId": "get_group_depictio_api_v1_groups__group_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Update Group",
+        "description": "Rename / re-describe a group (sysadmin or group admin). Renames are\npropagated into the denormalized permission snapshots.",
+        "operationId": "update_group_depictio_api_v1_groups__group_id__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Delete Group",
+        "description": "Delete a group (sysadmin only) and scrub its permission snapshots.",
+        "operationId": "delete_group_depictio_api_v1_groups__group_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/groups": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Create Group",
+        "description": "Create a group (sysadmin only). The optional P.I. becomes member + group admin.",
+        "operationId": "create_group_depictio_api_v1_groups_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/groups/{group_id}/members/{user_id}": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Add Group Member",
+        "description": "Add a member (sysadmin or group admin). Idempotent. Works on sso_managed\ngroups too (manual override) — the response carries ``sso_managed`` so the\nUI can warn.",
+        "operationId": "add_group_member_depictio_api_v1_groups__group_id__members__user_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Remove Group Member",
+        "description": "Remove a member (sysadmin or group admin). Idempotent. Also drops their\ngroup-admin role and clears pi_id if it was them.",
+        "operationId": "remove_group_member_depictio_api_v1_groups__group_id__members__user_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/groups/{group_id}/admins/{user_id}/{make_admin}": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Set Group Admin",
+        "description": "Promote/demote a group admin (sysadmin or group admin of THIS group).\n\nMirrors the /auth/turn_sysadmin guard rails: no self-demotion, and the\ngroup cannot be left admin-less unless the caller is a sysadmin.",
+        "operationId": "set_group_admin_depictio_api_v1_groups__group_id__admins__user_id___make_admin__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "User Id"
+            }
+          },
+          {
+            "name": "make_admin",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "title": "Make Admin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/groups/{group_id}/pi/{user_id}": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Set Group Pi",
+        "description": "Set the group's P.I. (sysadmin only). The P.I. becomes member + group admin.",
+        "operationId": "set_group_pi_depictio_api_v1_groups__group_id__pi__user_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/groups/{group_id}/pending-pi": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Set Group Pending Pi",
+        "description": "Park a P.I. designation on an email address (sysadmin only).\n\nLets an admin name the P.I. of a group before that person has ever signed\nin — the promotion is applied by ``claim_pending_pi_groups`` on their first\nlogin, in any auth mode. An address that already resolves to an account is\napplied immediately instead of parked. ``email=None`` clears the parking.",
+        "operationId": "set_group_pending_pi_depictio_api_v1_groups__group_id__pending_pi_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupPendingPIRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/auth/login": {
       "post": {
         "tags": [
@@ -13989,6 +15033,55 @@
         }
       }
     },
+    "/depictio/api/v1/auth/admin/create_user": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Admin Create User",
+        "description": "Create an account with an initial password. Admin-only.\n\nThe admin chooses the password and hands it over; by default the person is\nasked to replace it at their first sign-in (``must_change_password``).\nUnlike ``/register`` this is not gated by ``registration_disabled`` or\n``password_login_disabled``: an admin pre-creating accounts is how a closed\ninstance gets its users, and on an SSO-only instance the account is matched\nby email at the first SSO sign-in, the password never being used.\n\nA duplicate email is a 409 here: the caller is an admin, so there is no\nenumeration to hide.",
+        "operationId": "admin_create_user_depictio_api_v1_auth_admin_create_user_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestAdminCreateUser"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Admin Create User Depictio Api V1 Auth Admin Create User Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/auth/edit_password": {
       "post": {
         "tags": [
@@ -14562,6 +15655,96 @@
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/saml/login": {
+      "get": {
+        "tags": [
+          "SAML SSO"
+        ],
+        "summary": "Saml Login",
+        "description": "Start an SP-initiated SAML login: redirect the browser to the IdP.",
+        "operationId": "saml_login_depictio_api_v1_auth_saml_login_get",
+        "parameters": [
+          {
+            "name": "next",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Same-origin path to land on after login",
+              "title": "Next"
+            },
+            "description": "Same-origin path to land on after login"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/saml/callback": {
+      "post": {
+        "tags": [
+          "SAML SSO"
+        ],
+        "summary": "Saml Acs",
+        "description": "Assertion Consumer Service: validate the IdP response, mint a session ticket.",
+        "operationId": "saml_acs_depictio_api_v1_auth_saml_callback_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/saml/metadata": {
+      "get": {
+        "tags": [
+          "SAML SSO"
+        ],
+        "summary": "Saml Metadata",
+        "description": "Serve the SP metadata XML (import this in the IdP to register the client).",
+        "operationId": "saml_metadata_depictio_api_v1_auth_saml_metadata_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           }
@@ -17140,10 +18323,13 @@
               "bigbed",
               "gff3",
               "fasta",
-              "tabix"
+              "tabix",
+              "pdb",
+              "mmcif",
+              "pae"
             ],
             "title": "Format",
-            "description": "File format. Each maps to one GenomeSpy lazy data source: vcf, bam, bigwig, bigbed, gff3, fasta (indexedFasta) or tabix (any other bgzip-compressed, tabix-indexed interval file such as BED)."
+            "description": "File format. Each maps to one GenomeSpy lazy data source: vcf, bam, bigwig, bigbed, gff3, fasta (indexedFasta) or tabix (any other bgzip-compressed, tabix-indexed interval file such as BED). pdb and mmcif hold protein structures (.pdb, .cif, .mmcif, gzip allowed), one per entity, read whole by the molecule_3d viz. pae holds the predicted aligned error matrix of a structure (.pae.tsv, .pae.json, gzip allowed), one per entity, read whole by the pae_matrix viz."
           },
           "index_suffix": {
             "anyOf": [
@@ -17167,7 +18353,7 @@
               }
             ],
             "title": "Sample Regex",
-            "description": "Regular expression with a named group 'sample', matched against the scanned file path to name the sample. Null falls back to the file name with its format and compression suffixes stripped."
+            "description": "Regular expression matched against the scanned file path to name the sample: its named group 'sample', or, without one, its named groups joined with '__' in declaration order. Null falls back to the file name with its format and compression suffixes stripped."
           },
           "sample_col": {
             "type": "string",
@@ -17561,7 +18747,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -17971,6 +19157,26 @@
         "title": "DashboardData",
         "description": "Full dashboard model with MongoDB and auth fields.\n\nExtends DashboardDataLite with:\n- MongoDB document fields (id, project_id, dashboard_id)\n- Permissions (owners, editors, viewers)\n- Versioning and timestamps\n- Tab support"
       },
+      "DashboardFilterStatePayload": {
+        "properties": {
+          "filters": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Filters"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          }
+        },
+        "type": "object",
+        "title": "DashboardFilterStatePayload",
+        "description": "Body of ``PUT /dashboards/filter_state/{dashboard_id}``."
+      },
       "DashboardImportResult": {
         "properties": {
           "path": {
@@ -18028,7 +19234,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -18091,7 +19297,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -18501,7 +19707,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -18789,7 +19995,8 @@
                 "type": "string",
                 "enum": [
                   "grid",
-                  "strip"
+                  "strip",
+                  "linked"
                 ]
               },
               {
@@ -18797,7 +20004,7 @@
               }
             ],
             "title": "Display",
-            "description": "How a grid section lays out its members. Unset or `grid`: one tile each on the dashboard grid. `strip`: a filter bar -- the interactive components naming this section leave the left filter panel and render as one compact row of controls (label, chips or a thin slider, dividers between), ignoring their grid coordinates. Their values filter the whole tab, as the panel's do. Any non-interactive members still render as tiles below the bar. Grid sections only."
+            "description": "How a grid section lays out its members. Unset or `grid`: one tile each on the dashboard grid. `strip`: a filter bar -- the interactive components naming this section leave the left filter panel and render as one compact row of controls (label, chips or a thin slider, dividers between), ignoring their grid coordinates. Their values filter the whole tab, as the panel's do. Any non-interactive members still render as tiles below the bar. `linked`: holds the section's tiles within one screen height so linked views stay side by side (grid sections of tiles only). `linked` falls back to a normal stacked section on narrow screens. Grid sections only."
           },
           "filter_bar": {
             "anyOf": [
@@ -19738,6 +20945,305 @@
         ],
         "title": "GranularityConfig",
         "description": "Configuration for handling granularity mismatches between joined tables.\n\nWhen joining tables at different levels (e.g., samples vs cells), this\nconfiguration specifies how to aggregate data to the target granularity.\n\nExample:\n    DC A (samples): one row per sample\n    DC B (cells): multiple rows per sample (cells within samples)\n\n    When joining with granularity=\"sample\", DC B data will be aggregated\n    per sample using the specified aggregation functions."
+      },
+      "GroupBase": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "objectid",
+            "title": "Id",
+            "default": "6ad209b2f4bfc42c87c7f11f"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "flexible_metadata": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flexible Metadata"
+          },
+          "hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hash"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "GroupBase",
+        "description": "Denormalized group snapshot embedded in Permission documents.\n\nMirrors UserBase's role: only identity fields (id, name) are stored inside\npermissions.group_* arrays; membership is always resolved live from the\ngroups collection."
+      },
+      "GroupCreateRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "pi_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "objectid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pi Id"
+          },
+          "pi_email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pi Email"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "GroupCreateRequest"
+      },
+      "GroupDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "sso_managed": {
+            "type": "boolean",
+            "title": "Sso Managed",
+            "default": false
+          },
+          "pi_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pi Id"
+          },
+          "pending_pi_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Pi Email"
+          },
+          "admin_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Admin Ids"
+          },
+          "members": {
+            "items": {
+              "$ref": "#/components/schemas/GroupMemberOut"
+            },
+            "type": "array",
+            "title": "Members"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "GroupDetail"
+      },
+      "GroupMemberOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "is_group_admin": {
+            "type": "boolean",
+            "title": "Is Group Admin"
+          },
+          "is_pi": {
+            "type": "boolean",
+            "title": "Is Pi"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "is_group_admin",
+          "is_pi"
+        ],
+        "title": "GroupMemberOut"
+      },
+      "GroupPendingPIRequest": {
+        "properties": {
+          "email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          }
+        },
+        "type": "object",
+        "title": "GroupPendingPIRequest",
+        "description": "Park (or, with ``email=None``, clear) a group's deferred P.I."
+      },
+      "GroupSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "member_count": {
+            "type": "integer",
+            "title": "Member Count"
+          },
+          "sso_managed": {
+            "type": "boolean",
+            "title": "Sso Managed",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "member_count"
+        ],
+        "title": "GroupSummary",
+        "description": "Minimal group info for pickers/lists — no member identities leaked."
+      },
+      "GroupUpdateRequest": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "title": "GroupUpdateRequest"
       },
       "HTTPValidationError": {
         "properties": {
@@ -22253,7 +23759,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -22418,6 +23924,56 @@
         "title": "MultiQCReportsListResponse",
         "description": "Response model for list of MultiQC reports."
       },
+      "MyGroup": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "member_count": {
+            "type": "integer",
+            "title": "Member Count"
+          },
+          "sso_managed": {
+            "type": "boolean",
+            "title": "Sso Managed",
+            "default": false
+          },
+          "is_group_admin": {
+            "type": "boolean",
+            "title": "Is Group Admin"
+          },
+          "is_pi": {
+            "type": "boolean",
+            "title": "Is Pi"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "member_count",
+          "is_group_admin",
+          "is_pi"
+        ],
+        "title": "MyGroup",
+        "description": "A group the caller belongs to, annotated with their role in it."
+      },
       "Permission": {
         "properties": {
           "owners": {
@@ -22449,6 +24005,30 @@
             },
             "type": "array",
             "title": "Viewers",
+            "default": []
+          },
+          "group_owners": {
+            "items": {
+              "$ref": "#/components/schemas/GroupBase"
+            },
+            "type": "array",
+            "title": "Group Owners",
+            "default": []
+          },
+          "group_editors": {
+            "items": {
+              "$ref": "#/components/schemas/GroupBase"
+            },
+            "type": "array",
+            "title": "Group Editors",
+            "default": []
+          },
+          "group_viewers": {
+            "items": {
+              "$ref": "#/components/schemas/GroupBase"
+            },
+            "type": "array",
+            "title": "Group Viewers",
             "default": []
           }
         },
@@ -22541,7 +24121,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -23236,6 +24816,50 @@
         },
         "type": "object",
         "title": "RenameVersionRequest"
+      },
+      "RequestAdminCreateUser": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 8,
+            "title": "Password"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "title": "Is Admin",
+            "default": false
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "must_change_password": {
+            "type": "boolean",
+            "title": "Must Change Password",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "RequestAdminCreateUser",
+        "description": "An admin creating an account with a password the person will change."
       },
       "RequestEditPassword": {
         "properties": {
@@ -24275,6 +25899,51 @@
         ],
         "title": "StorageTestResult"
       },
+      "StructureResolveRequest": {
+        "properties": {
+          "uniprot": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uniprot"
+          },
+          "gene": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gene"
+          },
+          "taxon": {
+            "type": "integer",
+            "title": "Taxon",
+            "default": 9606
+          },
+          "sequence": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sequence"
+          }
+        },
+        "type": "object",
+        "title": "StructureResolveRequest",
+        "description": "Body of ``POST /advanced_viz/structure/resolve`` (at least one identifier)."
+      },
       "TableJoinConfig": {
         "properties": {
           "on_columns": {
@@ -24838,7 +26507,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -24944,7 +26613,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -25177,7 +26846,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6acdfd04a786543cd67c6e43"
+            "default": "6ad209b2f4bfc42c87c7f120"
           }
         },
         "type": "object",
@@ -25490,7 +27159,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -25590,6 +27259,55 @@
             ],
             "title": "Registration Date"
           },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "login": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Login"
+          },
+          "sso_provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sso Provider"
+          },
+          "must_change_password": {
+            "type": "boolean",
+            "title": "Must Change Password",
+            "default": false
+          },
           "password": {
             "type": "string",
             "title": "Password"
@@ -25609,7 +27327,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -25691,7 +27409,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -25777,7 +27495,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -25876,6 +27594,55 @@
               }
             ],
             "title": "Registration Date"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "login": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Login"
+          },
+          "sso_provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sso Provider"
+          },
+          "must_change_password": {
+            "type": "boolean",
+            "title": "Must Change Password",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -25991,7 +27758,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -26166,7 +27933,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -26283,7 +28050,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -26388,7 +28155,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [

@@ -342,6 +342,22 @@ remote and manifest collections can read a private bucket.
   credentials from the database rather than receiving them through the task
   broker.
 
+### External structure services <small>(v1.19.0+)</small> { #structure-resolver }
+
+The [protein tiles](protein-tiles.md#structure-resolver) can fetch a model the run did not
+publish. The resolver is **off by default** (`DEPICTIO_STRUCTURE_RESOLVER_ENABLED`), because
+once on, exactly the accession, the gene and taxon, or the protein sequence leaves the
+server, to EBI's AlphaFold DB, UniProt or Meta's ESM Atlas. For an unpublished sequence that
+is a disclosure.
+
+- Only the three configured hosts are contacted, redirects included and each re-checked.
+- A model is capped in size (`MAX_BYTES`), each call and each request in time, and a body
+  with no `ATOM` record is refused.
+- Anonymous visitors of a public instance get a 403, so only signed-in users trigger calls.
+- Models are cached in the instance bucket; failures are not.
+- The tile names the service it called, with the endpoint under *Technical details*, and
+  credits the model.
+
 ---
 
 ## Content Security Policy { #content-security-policy }

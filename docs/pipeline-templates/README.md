@@ -391,6 +391,105 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
+
+  <a class="template-card" href="nf-core/proteinfamilies/" data-tpl-name="nf-core/proteinfamilies" data-tpl-status="draft" data-tpl-version="2.5.0" data-tpl-keywords="proteinfamilies protein families clustering mmseqs hmmer profile hmm logo alignment famsa structure">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/proteinfamilies/master/docs/images/nf-core-proteinfamilies_logo_dark.png" alt="nf-core/proteinfamilies">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/proteinfamilies/master/docs/images/nf-core-proteinfamilies_logo_light.png" alt="nf-core/proteinfamilies">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Protein families: how the input clustered, the families built or extended, and each family's alignment, conservation, structure and profile HMM.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.5.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/proteinannotator/" data-tpl-name="nf-core/proteinannotator" data-tpl-status="draft" data-tpl-version="1.1.0" data-tpl-keywords="proteinannotator protein annotation domains interproscan hmmer pfam s4pred secondary structure esmfold">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/proteinannotator/master/docs/images/nf-core-proteinannotator_logo_dark.png" alt="nf-core/proteinannotator">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/proteinannotator/master/docs/images/nf-core-proteinannotator_logo_light.png" alt="nf-core/proteinannotator">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Protein annotation: domains from HMM libraries and InterProScan, predicted secondary structure, and structures folded on demand.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.1.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/proteinfold/" data-tpl-name="nf-core/proteinfold" data-tpl-status="draft" data-tpl-version="2.1.0" data-tpl-keywords="proteinfold structure prediction alphafold colabfold esmfold plddt pae ramachandran protein">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/proteinfold/master/docs/images/nf-core-proteinfold_logo_dark.png" alt="nf-core/proteinfold">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/proteinfold/master/docs/images/nf-core-proteinfold_logo_light.png" alt="nf-core/proteinfold">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Structure prediction: model confidence per engine, pLDDT along the chain, the predicted aligned error and where the engines agree.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.1.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/oncoanalyser/" data-tpl-name="nf-core/oncoanalyser" data-tpl-status="draft" data-tpl-version="3.0.0" data-tpl-keywords="oncoanalyser cancer tumor somatic wigits purple linx sage cuppa lilac copy number structural variants drivers">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/oncoanalyser/master/docs/images/nf-core-oncoanalyser_logo_dark.png" alt="nf-core/oncoanalyser">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/oncoanalyser/master/docs/images/nf-core-oncoanalyser_logo_light.png" alt="nf-core/oncoanalyser">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Cancer genomics: QC, purity and ploidy, copy number, structural variants, drivers, protein changes on the structure and immune context.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.0.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/crisprseq/" data-tpl-name="nf-core/crisprseq" data-tpl-status="draft" data-tpl-version="2.3.0" data-tpl-keywords="crisprseq crispr gene editing guides indels cut site amplicon substitutions">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/crisprseq/master/docs/images/nf-core-crisprseq_logo_dark.png" alt="nf-core/crisprseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/crisprseq/master/docs/images/nf-core-crisprseq_logo_light.png" alt="nf-core/crisprseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Gene editing: read accounting, edit outcomes per library and per guide, and the indels and substitutions around the cut site.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.3.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/isoseq/" data-tpl-name="nf-core/isoseq" data-tpl-status="draft" data-tpl-version="3.0.1" data-tpl-keywords="isoseq iso-seq pacbio long read isoforms transcripts ccs lima tama">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/isoseq/master/docs/images/nf-core-isoseq_logo_dark.png" alt="nf-core/isoseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/isoseq/master/docs/images/nf-core-isoseq_logo_light.png" alt="nf-core/isoseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Iso-Seq: CCS and primer QC, the full-length read funnel, isoform categories and structures per gene.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.0.1</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/pairgenomealign/" data-tpl-name="nf-core/pairgenomealign" data-tpl-status="draft" data-tpl-version="3.0.4" data-tpl-keywords="pairgenomealign genome alignment last synteny divergence assemblies">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/pairgenomealign/master/docs/images/nf-core-pairgenomealign_logo_dark.png" alt="nf-core/pairgenomealign">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/pairgenomealign/master/docs/images/nf-core-pairgenomealign_logo_light.png" alt="nf-core/pairgenomealign">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Pairwise genome alignment: coverage and identity of each query on the target, divergence, assembly contiguity and synteny.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.0.4</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 <div class="tpl-catalog-table" data-tpl-table hidden></div>

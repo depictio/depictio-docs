@@ -286,6 +286,17 @@ navigating, gives a multi-track locus view.
 
 ---
 
+## :material-molecule: Residue selection <small>(v1.19.0+)</small> { #residue-selection }
+
+The [protein tiles](protein-tiles.md) publish a pick the way a genome view publishes a
+region: a click or brush in a 3D model, an alignment, a logo or a PAE matrix becomes a filter
+on the entity column and a `position` range, plus the chain on a complex. Every table with
+those columns narrows, the last gesture wins, and cards and filter option lists ignore it as
+[they ignore a region](#region-scope). A hover marks the residue in every protein tile without
+filtering anything. See [Linked by residue](protein-tiles.md#residue-selection).
+
+---
+
 ## :material-card-account-details-outline: Record cards and their source { #record-cards }
 
 A [Record card](components.md#record-card) shows **one record** of a collection as labelled

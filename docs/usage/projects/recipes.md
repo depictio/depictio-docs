@@ -569,6 +569,12 @@ one pipeline's layout: the helper receives frames, column names and parameters, 
 recipe keeps the paths and the output schema. Tests for a helper go under
 `depictio/tests/recipes/`, beside the recipe edge-case tests.
 
+Since **v1.19.0** the protein helpers build the tables the
+[protein tiles](../../features/protein-tiles.md#the-data) read: `protein_structure` (residues
+and pLDDT from a PDB), `msa` (A3M, Stockholm, aligned FASTA), `hmm` (a profile HMM and its
+reference numbering), `secondary_structure` (S4PRED `.ss2`) and `pae` (PAE matrices). They use
+the standard library and Polars only.
+
 ---
 
 ## Additional Resources
