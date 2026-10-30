@@ -16,34 +16,6 @@ Pick one over a generic [Figure](components.md#figure-components) when your tabl
 known shape (the output of DESeq2, mosdepth, QIIME2, AlphaFold...). Pick a Figure for a plain
 plot of any columns.
 
-**How to use one**
-
-1. In the dashboard editor, add a component, pick a data collection, then the **Advanced viz** type.
-2. Pick a kind. The builder ranks the kinds by how well they fit the collection (see [the kind picker](#kind-picker)).
-3. Bind each role to a column under **Column bindings**. Required roles must be bound; the builder checks the column types.
-4. Optionally choose where the controls go under **Viz controls**, then add the tile.
-
-In a [dashboard YAML file](yaml-sync.md), the same tile is a `component_type: advanced_viz`
-entry. A role `x` binds through the `config` key `x_col`:
-
-```yaml
-- tag: viz-de
-  component_type: advanced_viz
-  workflow_tag: my_workflow
-  data_collection_tag: de_results
-  viz_kind: volcano
-  config:
-    viz_kind: volcano
-    feature_id_col: gene_id
-    effect_size_col: log2FoldChange
-    significance_col: padj
-```
-
-Every entry below follows the same layout: a version badge (<span class="ver-badge">v1.19.0+</span>
-means available since that release), a screenshot, a few rows of the input table it expects
-(column names as in its YAML example, <small>optional</small> marks a column it can do
-without), the tools whose output fits, its controls and a YAML example.
-
 ## :material-view-grid-outline: Catalog { #catalog }
 
 Click a thumbnail to enlarge it, or its name to jump to the entry.
@@ -361,6 +333,34 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 </div>
 
 ---
+
+## :material-cursor-default-click-outline: How to use one { #how-to-use }
+
+1. In the dashboard editor, add a component, pick a data collection, then the **Advanced viz** type.
+2. Pick a kind. The builder ranks the kinds by how well they fit the collection (see [the kind picker](#kind-picker)).
+3. Bind each role to a column under **Column bindings**. Required roles must be bound; the builder checks the column types.
+4. Optionally choose where the controls go under **Viz controls**, then add the tile.
+
+In a [dashboard YAML file](yaml-sync.md), the same tile is a `component_type: advanced_viz`
+entry. A role `x` binds through the `config` key `x_col`:
+
+```yaml
+- tag: viz-de
+  component_type: advanced_viz
+  workflow_tag: my_workflow
+  data_collection_tag: de_results
+  viz_kind: volcano
+  config:
+    viz_kind: volcano
+    feature_id_col: gene_id
+    effect_size_col: log2FoldChange
+    significance_col: padj
+```
+
+Every entry below follows the same layout: a version badge (<span class="ver-badge">v1.19.0+</span>
+means available since that release), a screenshot, a few rows of the input table it expects
+(column names as in its YAML example, <small>optional</small> marks a column it can do
+without), the tools whose output fits, its controls and a YAML example.
 
 ## :material-tune-variant: Shared settings { #shared-settings }
 
