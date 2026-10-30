@@ -1529,6 +1529,11 @@ A Newick tree with tip metadata, five layouts, clade selection, filter and colla
 ![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light){ data-title="Phylogenetic tree" .viz-shot loading=lazy }
 ![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark){ data-title="Phylogenetic tree" .viz-shot loading=lazy }
 
+Summary by rank (**View**: Summary by rank, **Collapse to**: Genus, **Top N**: 12):
+
+![Phylogenetic tree, summary by rank](../images/guides/advanced-visualizations/phylogenetic_summary_light.webp#only-light){ data-title="Phylogenetic tree, summary by rank" .viz-shot loading=lazy }
+![Phylogenetic tree, summary by rank](../images/guides/advanced-visualizations/phylogenetic_summary_dark.webp#only-dark){ data-title="Phylogenetic tree, summary by rank" .viz-shot loading=lazy }
+
 **Input:** a Newick tree (a `phylogeny` collection, `tree_dc_tag`) plus a tip table, one row per tip.
 
 | taxon | Phylum <small>optional</small> |
@@ -1543,7 +1548,7 @@ A Newick tree with tip metadata, five layouts, clade selection, filter and colla
 
 **Controls**
 
-- Primary: View (Full tree, Summary), Colour by, Search tip, Layout, Ladderise; summary: Collapse to, Top N
+- Primary: View (Full tree, Summary by rank), Colour by, Search tip, Layout, Ladderise; summary: Collapse to, Top N
 - Cosmetic: Label by, metadata strips, legend, support values, scale bar; toolbar: undo, redo, zoom and pan, reset, focus mode
 
 ??? example "YAML"
