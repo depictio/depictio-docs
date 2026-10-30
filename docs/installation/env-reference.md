@@ -114,7 +114,7 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_VIEWER_EXTERNAL_HOST` | `localhost` | - |
 | `DEPICTIO_VIEWER_EXTERNAL_PORT` | `5080` | Host-side port mapped to the viewer container |
 | `DEPICTIO_VIEWER_EXTERNAL_PROTOCOL` | `http` | - |
-| `DEPICTIO_VIEWER_PUBLIC_URL` | - | - |
+| `DEPICTIO_VIEWER_PUBLIC_URL` | - | Public URL of the viewer, where magic links and the [SAML](sso.md) hand-off land |
 | `DEPICTIO_VIEWER_EXTERNAL_SERVICE` | `false` | - |
 | `DEPICTIO_VIEWER_HOST` | `0.0.0.0` | - |
 | `DEPICTIO_VIEWER_WORKERS` | `4` | Gunicorn worker processes |
@@ -273,7 +273,7 @@ by hand. See [From a run folder](../usage/projects/remote-data.md#from-a-run-fol
 **Config Class:** `AuthConfig`
 **Environment Prefix:** `DEPICTIO_AUTH_`
 
-Authentication and authorization settings including JWT configuration, unauthenticated mode, and Google OAuth integration.
+Authentication and authorization settings including JWT configuration, unauthenticated mode, Google OAuth and SAML single sign-on. Empty SAML values count as unset.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -295,6 +295,20 @@ Authentication and authorization settings including JWT configuration, unauthent
 | `DEPICTIO_AUTH_REGISTRATION_DISABLED` | `false` | Block self-service registration: `/register` returns 403 and the Register UI is hidden, so only pre-provisioned accounts can log in. Independent of public/single-user mode |
 | `DEPICTIO_AUTH_PROVISIONING_API_KEY` | - | Shared secret for pipeline-side user provisioning (`POST /auth/provision_user`). Scoped to provisioning only, kept separate from the internal API key. Also accepted as `DEPICTIO_AUTH_PROVISIONING_API_KEY_ENV`. **The provisioning endpoints are disabled while this is unset.** See [Pipeline provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113) |
 | `DEPICTIO_AUTH_MAGIC_LINK_EXPIRY_MINUTES` | `15` | Lifetime of a single-use magic-link login ticket |
+| `DEPICTIO_AUTH_SAML_ENABLED` | `false` | Turn on SAML 2.0 single sign-on (v1.18.0+). See [Single sign-on (SAML)](sso.md) |
+| `DEPICTIO_AUTH_SAML_IDP_ENTITY_ID` | - | The identity provider's entity ID |
+| `DEPICTIO_AUTH_SAML_IDP_SSO_URL` | - | The identity provider's SSO endpoint (HTTP-Redirect binding) |
+| `DEPICTIO_AUTH_SAML_IDP_CERT` | - | The identity provider's signing certificate, as inline PEM or a path to a PEM file |
+| `DEPICTIO_AUTH_SAML_SP_ENTITY_ID` | - | Depictio's entity ID (the Client ID) as registered with the identity provider |
+| `DEPICTIO_AUTH_SAML_SP_BASE_URL` | _(API external URL)_ | Public base URL of the API, used to build the ACS URL |
+| `DEPICTIO_AUTH_SAML_NAME_ID_FORMAT` | `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress` | Requested NameID format |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_EMAIL` | - | Attribute carrying the email. Unset, the NameID is used |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_USERNAME` | - | Attribute carrying the username (informational) |
+| `DEPICTIO_AUTH_SAML_LOGIN_LABEL` | `Sign in with SSO` | Label of the SSO button |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS` | - | Attribute carrying the user's groups, mirrored as SSO-managed groups at each sign-in. See [Group and profile sync](sso.md#group-and-profile-sync) |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_TITLE` | - | Attribute carrying the user's title |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_DISPLAY_NAME` | - | Attribute carrying the user's display name |
+| `DEPICTIO_AUTH_SAML_ATTRIBUTE_LOGIN` | - | Attribute carrying the user's login |
 
 ---
 

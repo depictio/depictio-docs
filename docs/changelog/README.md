@@ -8,6 +8,51 @@ hide:
 
 # Changelog
 
+## **[v1.18.0](https://github.com/depictio/depictio/releases/tag/v1.18.0)** (October 14, 2026)
+
+!!! success "Minor: SAML sign-in, user groups, and filters that stay and travel as a link"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.18.0
+ghcr.io/depictio/depictio-viewer:1.18.0
+ghcr.io/depictio/depictio-worker:1.18.0
+ghcr.io/depictio/depictio-cli:1.18.0
+```
+
+### **♻️ Migration**
+
+* **A project update no longer changes access**: sharing goes through **Permissions**. See [Project permissions](../usage/projects/guide.md#project-permissions) ([#972](https://github.com/depictio/depictio/pull/972)).
+* **Data-collection writes follow the role**: editor to rename or edit, owner to delete. See [Group-Based Access](../features/security.md#group-based-access) ([#972](https://github.com/depictio/depictio/pull/972)).
+
+### **✨ New Features**
+
+* **SAML 2.0 sign-in**, off until `DEPICTIO_AUTH_SAML_ENABLED` is set. Use v1.19.0 or later. See [Single sign-on (SAML)](../installation/sso.md) ([#968](https://github.com/depictio/depictio/pull/968)).
+* **User groups**: share a project with a whole lab, and let group admins manage their members. See [Groups](../usage/administration/groups.md) ([#972](https://github.com/depictio/depictio/pull/972)).
+* **Groups from the identity provider** with `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS`. See [Group and profile sync](../installation/sso.md#group-and-profile-sync) ([#972](https://github.com/depictio/depictio/pull/972)).
+* **Remembered filters**: a dashboard reopens on the filters you left. See [Remembered filters](../usage/guides/dashboard_usage.md#remembered-filters) ([#967](https://github.com/depictio/depictio/pull/967)).
+* **Filter links**: the address bar carries the active filters. See [Filter links](../usage/guides/dashboard_usage.md#filter-links) ([#967](https://github.com/depictio/depictio/pull/967)).
+
+### **🚀 Improvements**
+
+* **Create Data Collection works on projects made by the CLI**. See [Managing Data Collections from the viewer](../usage/projects/guide.md#managing-data-collections-from-the-viewer-v0120) ([#1039](https://github.com/depictio/depictio/pull/1039)).
+* **Log & Task for administrators on a public instance**. See [Monitoring](../usage/administration/monitoring.md) ([#1236](https://github.com/depictio/depictio/pull/1236)).
+
+### **🔒 Security**
+
+* **One permission check for every resource**. See [Group-Based Access](../features/security.md#group-based-access) ([#972](https://github.com/depictio/depictio/pull/972)).
+* **SAML sign-in ends on a single-use ticket**. See [SAML sign-in](../features/security.md#saml-sign-in) ([#968](https://github.com/depictio/depictio/pull/968)).
+* **A phylogeny tree is read only from allowed locations**. See [Folders on the server's disk](../features/security.md#folders-on-the-servers-disk) ([#1237](https://github.com/depictio/depictio/pull/1237)).
+
+### **🐛 Bug Fixes**
+
+* **A CLI refresh keeps the data collections added in the browser**. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1038](https://github.com/depictio/depictio/pull/1038)).
+* **The release check runs again after an upgrade**. See [Release check](../usage/guides/web_ui.md#release-check) ([#1236](https://github.com/depictio/depictio/pull/1236)).
+* **A database wipe keeps the telemetry ID**. See [Telemetry](../features/telemetry.md#what-is-sent) ([#1237](https://github.com/depictio/depictio/pull/1237)).
+
+---
+
 ## **[v1.17.4](https://github.com/depictio/depictio/releases/tag/v1.17.4)** (October 13, 2026)
 
 !!! success "Patch: a landing hint on dashboards, and Comments and Versions in the Guide"

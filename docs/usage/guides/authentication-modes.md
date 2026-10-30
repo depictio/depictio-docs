@@ -18,6 +18,7 @@ Depictio supports four authentication modes, each designed for a different deplo
 | **User management** | Full RBAC | Disabled | Disabled | Disabled |
 | **Temporary users (24h)** | No | No | Yes | Yes |
 | **Google OAuth** | Optional | Optional | Optional | Optional |
+| **[SAML SSO](../../installation/sso.md)** (v1.18.0+) | Optional | No | Optional | Optional |
 | **Guided tour** | No | No | Dashboards list | Yes |
 
 ## Auth Mode (Default)
@@ -180,7 +181,7 @@ DEPICTIO_AUTH_REGISTRATION_DISABLED=true
 **Behavior:**
 
 - `POST /auth/register` returns 403, and the Register view and the link to it are hidden
-- Google OAuth becomes a login-only door: a known email signs in, an unknown one is refused instead of being provisioned an account
+- Google OAuth, and [SAML](../../installation/sso.md) since v1.18.0, become login-only doors: a known email signs in, an unknown one is refused instead of being provisioned an account
 - Existing accounts, roles and permissions are untouched
 
 ### Password sign-in <small>(v1.8.2+)</small> { #password-login }

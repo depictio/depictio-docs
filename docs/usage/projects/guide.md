@@ -383,7 +383,7 @@ The CLI executes this pipeline:
 
 ## Managing Data Collections from the viewer (v0.12.0+)
 
-Data Collections can be created and managed directly from the viewer — no YAML edits or CLI runs required. Available for Basic projects today; some flows also work on Advanced projects.
+Data Collections can be created and managed directly from the viewer — no YAML edits or CLI runs required. Since **v1.18.0** every project offers **Create Data Collection** on its page, a project made by the CLI included: what you may do depends on your role, not on the project type. A later CLI refresh keeps what was added in the browser (see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project)).
 
 !!! info "Available from v0.12.0"
     All flows in this section require Depictio **v0.12.0 or later**. See the [changelog](../../changelog/README.md#v0120-may-15-2026) for the full release notes.
@@ -636,7 +636,7 @@ Choose the right project type for your workflow:
 
 | Feature                  | Basic Projects                         | Advanced Projects             | Template Projects                         |
 | ------------------------ | -------------------------------------- | ----------------------------- | ----------------------------------------- |
-| **Setup Complexity**     | Minimal - Web UI or CLI                | CLI only today (WebUI planned), YAML config required    | Single CLI command, no YAML needed (WebUI planned)            |
+| **Setup Complexity**     | Minimal - Web UI or CLI                | CLI and YAML config; data collections can be added in the Web UI (v1.18.0+) | Single CLI command, no YAML needed (WebUI planned)            |
 | **Data Sources**         | UI File upload or CLI-based processing | CLI-based processing          | CLI-based (pipeline output)               |
 | **File Organization**    | Simple file management                 | Structured directory patterns | Fixed structure per template              |
 | **Multi-sample Support** | Single datasets                        | Multi samples support         | Full support (template-specific)          |
@@ -666,7 +666,7 @@ Choose a **Template** when:
 - ✅ You want instant project + dashboards without writing YAML
 - ✅ Reproducibility and template provenance tracking matter
 
-## <span style="color: #45B8AC;">:material-lock:</span> Project Permissions
+## <span style="color: #45B8AC;">:material-lock:</span> Project Permissions { #project-permissions }
 
 Depictio implements a comprehensive role-based permission system:
 
@@ -677,6 +677,13 @@ Depictio implements a comprehensive role-based permission system:
 | **Owner**  | Full control - edit, delete, manage permissions |
 | **Editor** | Modify project data, create/edit dashboards     |
 | **Viewer** | Read-only access to project and dashboards      |
+
+Since **v1.18.0** a role can be given to a person or to a whole
+[group](../administration/groups.md), from the **Groups** section of the project's
+**Permissions** page. A person's role is the highest of their own and their groups': a
+direct viewer whose group owns the project is an owner. Writing a data collection needs
+**editor**, deleting one **owner**. The project settings no longer change who has access:
+sharing goes through **Permissions** only.
 
 ### Public Projects
 

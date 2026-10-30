@@ -225,6 +225,7 @@ nav:
       - CLI:
           - installation/cli.md
       - Configuration: installation/configuration.md
+      - Single sign-on (SAML): installation/sso.md
       - Environment Reference: installation/env-reference.md
 
   - Usage:
@@ -259,6 +260,7 @@ nav:
           - Backup & Restore: usage/administration/backup.md
           - Monitoring (Log & Task): usage/administration/monitoring.md
           - Branding: usage/administration/branding.md
+          - Groups: usage/administration/groups.md
       - Special Modes:
           - Authentication Modes: usage/guides/authentication-modes.md
           - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md
