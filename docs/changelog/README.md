@@ -10,16 +10,16 @@ hide:
 
 ## **[v1.18.1](https://github.com/depictio/depictio/releases/tag/v1.18.1)** (October 14, 2026)
 
-!!! success "Patch: SAML loads in the API image, and file-backed genome tracks work with sign-in"
+!!! success "Patch: SAML loads in the API image, and genome tracks work with sign-in"
 
 ### Docker Images
 
-No images were published for v1.18.1: the API image failed to build ([#1244](https://github.com/depictio/depictio/pull/1244)). Use v1.19.0, which carries both fixes.
+No images were published for v1.18.1: the API image failed to build ([#1244](https://github.com/depictio/depictio/pull/1244)). Use v1.19.0.
 
 ### **🐛 Bug Fixes**
 
-* **SAML loads in the API image**: `lxml` is built against the same `libxml2` as `xmlsec`, a mismatch that made every SAML route answer 500 in 1.18.0, and the build now fails if SAML cannot load. See [Single sign-on (SAML)](../installation/sso.md) ([#1243](https://github.com/depictio/depictio/pull/1243), [a22bd5c3](https://github.com/depictio/depictio/commit/a22bd5c3)).
-* **File-backed genome tracks render on instances with sign-in**, instead of *Indexed file manifest unavailable (401)*. See [Genome view](../features/components.md#genome-view) ([#1242](https://github.com/depictio/depictio/pull/1242), [0f38f506](https://github.com/depictio/depictio/commit/0f38f506)).
+* **SAML loads in the API image**, where every SAML route answered 500 in 1.18.0. See [Single sign-on (SAML)](../installation/sso.md) ([#1243](https://github.com/depictio/depictio/pull/1243)).
+* **File-backed genome tracks render with sign-in on**. See [Genome view](../features/components.md#genome-view) ([#1242](https://github.com/depictio/depictio/pull/1242)).
 
 ---
 
