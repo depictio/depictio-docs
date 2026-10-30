@@ -18,7 +18,7 @@ Depictio supports four authentication modes, each designed for a different deplo
 | **User management** | Full RBAC | Disabled | Disabled | Disabled |
 | **Temporary users (24h)** | No | No | Yes | Yes |
 | **Google OAuth** | Optional | Optional | Optional | Optional |
-| **Guided tour** | No | No | No | Yes |
+| **Guided tour** | No | No | Dashboards list | Yes |
 
 ## Auth Mode (Default)
 
@@ -84,6 +84,8 @@ DEPICTIO_AUTH_PUBLIC_MODE=true
   **read-only** access to public dashboards, without a login screen
 - With Google OAuth or another identity provider enabled, a guest can
   [sign in](#guest-sign-in) to a persistent account
+- A short tour of the dashboards list ends by picking a dashboard, where a
+  [landing hint](dashboard-guide.md#landing-hint) points to its Guide <small>(v1.17.4+)</small>
 - After sign-in, users can create dashboards, duplicate existing ones, and manage projects
 - Sidebar shows a "Public Mode" badge
 
