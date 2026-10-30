@@ -538,12 +538,6 @@ figures and tables read rows, and an `indexed_file` DC has none. Its consumer is
 track reading files directly: a [Genome view](../../features/components.md#genome-view)
 tile with `source: file`.
 
-Since **v1.19.0** `format` also takes `pdb` and `mmcif` (aliases `ent`, `cif`) for protein
-structures and `pae` for predicted aligned error matrices (`.pae.tsv`, `.pae.json`), each
-optionally gzipped. These need no index: the file is fetched whole by a
-[protein tile](../../features/protein-tiles.md#the-data), and the sample id the scan derives
-must equal the `entity` value of the residue tables.
-
 ##### Storage the browser can read <small>(v1.13.0+)</small> { #indexed-file-storage }
 
 The bytes of an indexed file never pass through the API: the browser reads them from the
@@ -628,6 +622,37 @@ components back, see [Cross-DC filtering](../../features/cross-dc-filtering.md#s
 
 For per-sample files read directly by a Genome view tile, with no manifest, see
 [Indexed-file DCs](#example-indexed-file-dcs).
+
+#### :material-molecule: Example: Protein structure DCs <small>(v1.19.0+)</small> { #example-protein-structure-dcs }
+
+Protein structures and predicted aligned error (PAE) matrices are `indexed_file` DCs too,
+one file per protein. They need no index: a
+[protein tile](../../features/protein-tiles.md#the-data) fetches the file whole.
+
+```yaml
+- data_collection_tag: "structures"
+  description: "Top-ranked predicted structure per target"
+  config:
+    type: "indexed_file"
+    metatype: "Metadata"
+    scan:
+      mode: "recursive"
+      scan_parameters:
+        regex_config:
+          pattern: ".*/top_ranked_structures/[^/]+\\.pdb$"
+    dc_specific_properties:
+      format: "pdb"            # pdb, mmcif or pae
+      sample_regex: "top_ranked_structures/(?P<sample>[^/]+?)\\.pdb$"
+```
+
+| `format` | Files |
+|----------|-------|
+| `pdb` | `.pdb`, `.ent`, gzipped or not. Predictors write pLDDT into the B-factor column |
+| `mmcif` | `.cif`, `.mmcif`, gzipped or not |
+| `pae` | `.pae.tsv` (proteinfold) or `.pae.json` (AlphaFold DB, ColabFold) |
+
+The sample id the scan derives must equal the `entity` value of the residue tables, which is
+how a tile finds the structure of the protein it shows.
 
 ## Template Projects
 
