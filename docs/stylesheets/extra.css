@@ -2691,3 +2691,36 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
     border: 1px solid var(--md-default-fg-color--lightest);
     border-radius: 6px;
 }
+
+/* Lightbox title: a gallery image carries data-title, shown centred above the
+   figure on the dark backdrop instead of GLightbox's small white strip below. */
+.glightbox-container .ginner-container.desc-bottom {
+    flex-direction: column-reverse !important;
+}
+
+.glightbox-container .gslide-description {
+    background: transparent !important;
+}
+
+.glightbox-container .gdesc-inner {
+    padding: 12px 0 !important;
+}
+
+.glightbox-container .gslide-title {
+    margin: 0 !important;
+    color: #fff !important;
+    font-family: var(--md-text-font-family, sans-serif);
+    font-size: 1.15rem !important;
+    font-weight: 600 !important;
+    text-align: center;
+    letter-spacing: 0.01em;
+}
+
+.glightbox-container .ginner-container.desc-bottom .gslide-image img {
+    max-height: calc(100vh - 70px) !important;
+    width: auto;
+}
+
+.glightbox-container .goverlay {
+    background: rgba(0, 0, 0, 0.96) !important;
+}
