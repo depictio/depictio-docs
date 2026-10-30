@@ -2646,6 +2646,14 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
     display: block;
 }
 
+/* A lightboxed screenshot is wrapped in a link, and any rule that sets the
+   image's display (the grid's below) beats Material's #only-light/#only-dark
+   hiding. Hide the off-theme link itself so one figure shows per theme. */
+[data-md-color-scheme="default"] .md-typeset a.glightbox:has(img[src$="#only-dark"]),
+[data-md-color-scheme="slate"] .md-typeset a.glightbox:has(img[src$="#only-light"]) {
+    display: none !important;
+}
+
 .md-typeset .viz-grid img {
     display: block;
     width: 100%;
