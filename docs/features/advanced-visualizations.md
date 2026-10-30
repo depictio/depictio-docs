@@ -27,25 +27,25 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div markdown>
 ![Volcano](../images/guides/advanced-visualizations/volcano_light.webp#only-light){ data-title="Volcano" loading=lazy }
 ![Volcano](../images/guides/advanced-visualizations/volcano_dark.webp#only-dark){ data-title="Volcano" loading=lazy }
-[Volcano](#volcano){ .viz-grid__name }
+[Volcano](#volcano){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![DA barplot](../images/guides/advanced-visualizations/da_barplot_light.webp#only-light){ data-title="DA barplot" loading=lazy }
 ![DA barplot](../images/guides/advanced-visualizations/da_barplot_dark.webp#only-dark){ data-title="DA barplot" loading=lazy }
-[DA barplot](#da-barplot){ .viz-grid__name }
+[DA barplot](#da-barplot){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_light.webp#only-light){ data-title="GSEA running score" loading=lazy }
 ![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_dark.webp#only-dark){ data-title="GSEA running score" loading=lazy }
-[GSEA running score](#gsea-running-score){ .viz-grid__name }
+[GSEA running score](#gsea-running-score){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
 </div>
 
 <div markdown>
 ![Group compare](../images/guides/advanced-visualizations/group_compare_light.webp#only-light){ data-title="Group compare" loading=lazy }
 ![Group compare](../images/guides/advanced-visualizations/group_compare_dark.webp#only-dark){ data-title="Group compare" loading=lazy }
-[Group compare](#group-compare){ .viz-grid__name }
+[Group compare](#group-compare){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
 </div>
 
 </div>
@@ -57,19 +57,19 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div markdown>
 ![Embedding](../images/guides/advanced-visualizations/embedding_light.webp#only-light){ data-title="Embedding" loading=lazy }
 ![Embedding](../images/guides/advanced-visualizations/embedding_dark.webp#only-dark){ data-title="Embedding" loading=lazy }
-[Embedding](#embedding){ .viz-grid__name }
+[Embedding](#embedding){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![Dot plot](../images/guides/advanced-visualizations/dot_plot_light.webp#only-light){ data-title="Dot plot" loading=lazy }
 ![Dot plot](../images/guides/advanced-visualizations/dot_plot_dark.webp#only-dark){ data-title="Dot plot" loading=lazy }
-[Dot plot](#dot-plot){ .viz-grid__name }
+[Dot plot](#dot-plot){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![Knee plot](../images/guides/advanced-visualizations/knee_plot_light.webp#only-light){ data-title="Knee plot" loading=lazy }
 ![Knee plot](../images/guides/advanced-visualizations/knee_plot_dark.webp#only-dark){ data-title="Knee plot" loading=lazy }
-[Knee plot](#knee-plot){ .viz-grid__name }
+[Knee plot](#knee-plot){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
 </div>
 
 </div>
@@ -81,43 +81,43 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div markdown>
 ![Coverage track](../images/guides/advanced-visualizations/coverage_track_light.webp#only-light){ data-title="Coverage track" loading=lazy }
 ![Coverage track](../images/guides/advanced-visualizations/coverage_track_dark.webp#only-dark){ data-title="Coverage track" loading=lazy }
-[Coverage track](#coverage-track){ .viz-grid__name }
+[Coverage track](#coverage-track){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![Genome view](../images/guides/advanced-visualizations/genome_view_light.webp#only-light){ data-title="Genome view" loading=lazy }
 ![Genome view](../images/guides/advanced-visualizations/genome_view_dark.webp#only-dark){ data-title="Genome view" loading=lazy }
-[Genome view](#genome-view){ .viz-grid__name }
+[Genome view](#genome-view){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
 </div>
 
 <div markdown>
 ![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_light.webp#only-light){ data-title="Copy-number profile" loading=lazy }
 ![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_dark.webp#only-dark){ data-title="Copy-number profile" loading=lazy }
-[Copy-number profile](#cnv-profile){ .viz-grid__name }
+[Copy-number profile](#cnv-profile){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
 </div>
 
 <div markdown>
 ![Contact map](../images/guides/advanced-visualizations/contact_map_light.webp#only-light){ data-title="Contact map" loading=lazy }
 ![Contact map](../images/guides/advanced-visualizations/contact_map_dark.webp#only-dark){ data-title="Contact map" loading=lazy }
-[Contact map](#contact-map){ .viz-grid__name }
+[Contact map](#contact-map){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
 </div>
 
 <div markdown>
 ![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_light.webp#only-light){ data-title="Transcript structure" loading=lazy }
 ![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_dark.webp#only-dark){ data-title="Transcript structure" loading=lazy }
-[Transcript structure](#transcript-structure){ .viz-grid__name }
+[Transcript structure](#transcript-structure){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
 </div>
 
 <div markdown>
 ![Sashimi](../images/guides/advanced-visualizations/sashimi_light.webp#only-light){ data-title="Sashimi" loading=lazy }
 ![Sashimi](../images/guides/advanced-visualizations/sashimi_dark.webp#only-dark){ data-title="Sashimi" loading=lazy }
-[Sashimi](#sashimi){ .viz-grid__name }
+[Sashimi](#sashimi){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
 </div>
 
 <div markdown>
 ![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_light.webp#only-light){ data-title="Gene arrow track" loading=lazy }
 ![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_dark.webp#only-dark){ data-title="Gene arrow track" loading=lazy }
-[Gene arrow track](#gene-arrow-track){ .viz-grid__name }
+[Gene arrow track](#gene-arrow-track){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
 </div>
 
 </div>
@@ -129,31 +129,31 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div markdown>
 ![Manhattan](../images/guides/advanced-visualizations/manhattan_light.webp#only-light){ data-title="Manhattan" loading=lazy }
 ![Manhattan](../images/guides/advanced-visualizations/manhattan_dark.webp#only-dark){ data-title="Manhattan" loading=lazy }
-[Manhattan](#manhattan){ .viz-grid__name }
+[Manhattan](#manhattan){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![Lollipop](../images/guides/advanced-visualizations/lollipop_light.webp#only-light){ data-title="Lollipop" loading=lazy }
 ![Lollipop](../images/guides/advanced-visualizations/lollipop_dark.webp#only-dark){ data-title="Lollipop" loading=lazy }
-[Lollipop](#lollipop){ .viz-grid__name }
+[Lollipop](#lollipop){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![Oncoplot](../images/guides/advanced-visualizations/oncoplot_light.webp#only-light){ data-title="Oncoplot" loading=lazy }
 ![Oncoplot](../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark){ data-title="Oncoplot" loading=lazy }
-[Oncoplot](#oncoplot){ .viz-grid__name }
+[Oncoplot](#oncoplot){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![Genome chord](../images/guides/advanced-visualizations/genome_chord_light.webp#only-light){ data-title="Genome chord" loading=lazy }
 ![Genome chord](../images/guides/advanced-visualizations/genome_chord_dark.webp#only-dark){ data-title="Genome chord" loading=lazy }
-[Genome chord](#genome-chord){ .viz-grid__name }
+[Genome chord](#genome-chord){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
 </div>
 
 <div markdown>
 ![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_light.webp#only-light){ data-title="Fusion structure" loading=lazy }
 ![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_dark.webp#only-dark){ data-title="Fusion structure" loading=lazy }
-[Fusion structure](#fusion-structure){ .viz-grid__name }
+[Fusion structure](#fusion-structure){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
 </div>
 
 </div>
@@ -165,19 +165,19 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div markdown>
 ![Profile](../images/guides/advanced-visualizations/profile_light.webp#only-light){ data-title="Profile" loading=lazy }
 ![Profile](../images/guides/advanced-visualizations/profile_dark.webp#only-dark){ data-title="Profile" loading=lazy }
-[Profile](#profile){ .viz-grid__name }
+[Profile](#profile){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
 </div>
 
 <div markdown>
 ![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_light.webp#only-light){ data-title="Signal matrix" loading=lazy }
 ![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_dark.webp#only-dark){ data-title="Signal matrix" loading=lazy }
-[Signal matrix](#signal-matrix){ .viz-grid__name }
+[Signal matrix](#signal-matrix){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
 </div>
 
 <div markdown>
 ![Damage profile](../images/guides/advanced-visualizations/damage_profile_light.webp#only-light){ data-title="Damage profile" loading=lazy }
 ![Damage profile](../images/guides/advanced-visualizations/damage_profile_dark.webp#only-dark){ data-title="Damage profile" loading=lazy }
-[Damage profile](#damage-profile){ .viz-grid__name }
+[Damage profile](#damage-profile){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
 </div>
 
 </div>
@@ -189,25 +189,25 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div markdown>
 ![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light){ data-title="Stacked taxonomy" loading=lazy }
 ![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark){ data-title="Stacked taxonomy" loading=lazy }
-[Stacked taxonomy](#stacked-taxonomy){ .viz-grid__name }
+[Stacked taxonomy](#stacked-taxonomy){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![Sunburst](../images/guides/advanced-visualizations/sunburst_light.webp#only-light){ data-title="Sunburst" loading=lazy }
 ![Sunburst](../images/guides/advanced-visualizations/sunburst_dark.webp#only-dark){ data-title="Sunburst" loading=lazy }
-[Sunburst](#sunburst){ .viz-grid__name }
+[Sunburst](#sunburst){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![Rarefaction](../images/guides/advanced-visualizations/rarefaction_light.webp#only-light){ data-title="Rarefaction" loading=lazy }
 ![Rarefaction](../images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark){ data-title="Rarefaction" loading=lazy }
-[Rarefaction](#rarefaction){ .viz-grid__name }
+[Rarefaction](#rarefaction){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light){ data-title="Phylogenetic tree" loading=lazy }
 ![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark){ data-title="Phylogenetic tree" loading=lazy }
-[Phylogenetic tree](#phylogenetic){ .viz-grid__name }
+[Phylogenetic tree](#phylogenetic){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 </div>
@@ -219,37 +219,37 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div markdown>
 ![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_light.webp#only-light){ data-title="Scatter (X/Y)" loading=lazy }
 ![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_dark.webp#only-dark){ data-title="Scatter (X/Y)" loading=lazy }
-[Scatter (X/Y)](#scatter-xy){ .viz-grid__name }
+[Scatter (X/Y)](#scatter-xy){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
 </div>
 
 <div markdown>
 ![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light){ data-title="Hierarchical heatmap" loading=lazy }
 ![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark){ data-title="Hierarchical heatmap" loading=lazy }
-[Hierarchical heatmap](#hierarchical-heatmap){ .viz-grid__name }
+[Hierarchical heatmap](#hierarchical-heatmap){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![UpSet](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light){ data-title="UpSet" loading=lazy }
 ![UpSet](../images/guides/advanced-visualizations/upset_plot_dark.webp#only-dark){ data-title="UpSet" loading=lazy }
-[UpSet](#upset){ .viz-grid__name }
+[UpSet](#upset){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![Sankey](../images/guides/advanced-visualizations/sankey_light.webp#only-light){ data-title="Sankey" loading=lazy }
 ![Sankey](../images/guides/advanced-visualizations/sankey_dark.webp#only-dark){ data-title="Sankey" loading=lazy }
-[Sankey](#sankey){ .viz-grid__name }
+[Sankey](#sankey){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
 </div>
 
 <div markdown>
 ![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_light.webp#only-light){ data-title="Parallel coordinates" loading=lazy }
 ![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_dark.webp#only-dark){ data-title="Parallel coordinates" loading=lazy }
-[Parallel coordinates](#parallel-coordinates){ .viz-grid__name }
+[Parallel coordinates](#parallel-coordinates){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
 </div>
 
 <div markdown>
 ![Record card](../images/guides/advanced-visualizations/record_card_light.webp#only-light){ data-title="Record card" loading=lazy }
 ![Record card](../images/guides/advanced-visualizations/record_card_dark.webp#only-dark){ data-title="Record card" loading=lazy }
-[Record card](#record-card){ .viz-grid__name }
+[Record card](#record-card){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
 </div>
 
 </div>
@@ -261,19 +261,19 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div markdown>
 ![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_light.webp#only-light){ data-title="PR benchmark" loading=lazy }
 ![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_dark.webp#only-dark){ data-title="PR benchmark" loading=lazy }
-[PR benchmark](#pr-benchmark){ .viz-grid__name }
+[PR benchmark](#pr-benchmark){ .viz-grid__name } <span class="ver-badge">v1.10.0+</span>
 </div>
 
 <div markdown>
 ![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_light.webp#only-light){ data-title="Confusion matrix" loading=lazy }
 ![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_dark.webp#only-dark){ data-title="Confusion matrix" loading=lazy }
-[Confusion matrix](#confusion-matrix){ .viz-grid__name }
+[Confusion matrix](#confusion-matrix){ .viz-grid__name } <span class="ver-badge">v1.10.0+</span>
 </div>
 
 <div markdown>
 ![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_light.webp#only-light){ data-title="Metric with CI" loading=lazy }
 ![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_dark.webp#only-dark){ data-title="Metric with CI" loading=lazy }
-[Metric with CI](#metric-ci-bars){ .viz-grid__name }
+[Metric with CI](#metric-ci-bars){ .viz-grid__name } <span class="ver-badge">v1.10.0+</span>
 </div>
 
 </div>
@@ -285,49 +285,49 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 <div markdown>
 ![3D structure](../images/guides/advanced-visualizations/molecule_3d_light.webp#only-light){ data-title="3D structure" loading=lazy }
 ![3D structure](../images/guides/advanced-visualizations/molecule_3d_dark.webp#only-dark){ data-title="3D structure" loading=lazy }
-[3D structure](#molecule-3d){ .viz-grid__name }
+[3D structure](#molecule-3d){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
 </div>
 
 <div markdown>
 ![Alignment](../images/guides/advanced-visualizations/msa_light.webp#only-light){ data-title="Alignment" loading=lazy }
 ![Alignment](../images/guides/advanced-visualizations/msa_dark.webp#only-dark){ data-title="Alignment" loading=lazy }
-[Alignment](#msa){ .viz-grid__name }
+[Alignment](#msa){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
 </div>
 
 <div markdown>
 ![Sequence track](../images/guides/advanced-visualizations/sequence_track_light.webp#only-light){ data-title="Sequence track" loading=lazy }
 ![Sequence track](../images/guides/advanced-visualizations/sequence_track_dark.webp#only-dark){ data-title="Sequence track" loading=lazy }
-[Sequence track](#sequence-track){ .viz-grid__name }
+[Sequence track](#sequence-track){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
 </div>
 
 <div markdown>
 ![HMM logo](../images/guides/advanced-visualizations/hmm_logo_light.webp#only-light){ data-title="HMM logo" loading=lazy }
 ![HMM logo](../images/guides/advanced-visualizations/hmm_logo_dark.webp#only-dark){ data-title="HMM logo" loading=lazy }
-[HMM logo](#hmm-logo){ .viz-grid__name }
+[HMM logo](#hmm-logo){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
 </div>
 
 <div markdown>
 ![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_light.webp#only-light){ data-title="Domain architecture" loading=lazy }
 ![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_dark.webp#only-dark){ data-title="Domain architecture" loading=lazy }
-[Domain architecture](#domain-architecture){ .viz-grid__name }
+[Domain architecture](#domain-architecture){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
 </div>
 
 <div markdown>
 ![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_light.webp#only-light){ data-title="Secondary structure" loading=lazy }
 ![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_dark.webp#only-dark){ data-title="Secondary structure" loading=lazy }
-[Secondary structure](#secondary-structure){ .viz-grid__name }
+[Secondary structure](#secondary-structure){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
 </div>
 
 <div markdown>
 ![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_light.webp#only-light){ data-title="Predicted aligned error" loading=lazy }
 ![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_dark.webp#only-dark){ data-title="Predicted aligned error" loading=lazy }
-[Predicted aligned error](#pae-matrix){ .viz-grid__name }
+[Predicted aligned error](#pae-matrix){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
 </div>
 
 <div markdown>
 ![Ramachandran](../images/guides/advanced-visualizations/ramachandran_light.webp#only-light){ data-title="Ramachandran" loading=lazy }
 ![Ramachandran](../images/guides/advanced-visualizations/ramachandran_dark.webp#only-dark){ data-title="Ramachandran" loading=lazy }
-[Ramachandran](#ramachandran){ .viz-grid__name }
+[Ramachandran](#ramachandran){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
 </div>
 
 </div>
@@ -433,7 +433,7 @@ folded. A badge says what a suggestion rests on:
 
 ---
 
-## Differential analysis { #differential-analysis }
+## :material-scale-unbalanced: Differential analysis { #differential-analysis }
 
 ### :material-chart-scatter-plot: Volcano { #volcano }
 
@@ -608,7 +608,7 @@ Every numeric column is a feature to test.
 
 ---
 
-## Single cell & embeddings { #single-cell }
+## :material-blur: Single cell & embeddings { #single-cell }
 
 ### :material-atom: Embedding { #embedding }
 
@@ -735,7 +735,7 @@ Barcode rank against UMI count, one curve per library, with the cell-calling cut
 
 ---
 
-## Genome tracks { #genome-tracks }
+## :material-dna: Genome tracks { #genome-tracks }
 
 ### :material-chart-areaspline: Coverage track { #coverage-track }
 
@@ -1055,7 +1055,7 @@ Also optional: `label_col` (`label` above), `region_start_col`, `region_end_col`
 
 ---
 
-## Variants & rearrangements { #variants }
+## :material-swap-horizontal-variant: Variants & rearrangements { #variants }
 
 ### :material-chart-histogram: Manhattan { #manhattan }
 
@@ -1269,7 +1269,7 @@ Also optional: `retained_col` (fraction kept, 0 to 1), `colour_by_col`.
 
 ---
 
-## Signal & read profiles { #profiles }
+## :material-chart-bell-curve-cumulative: Signal & read profiles { #profiles }
 
 ### :material-chart-bell-curve: Profile { #profile }
 
@@ -1397,7 +1397,7 @@ Ancient-DNA misincorporation by distance from the read end. C>T at 5' and G>A at
 
 ---
 
-## Microbiome & ecology { #microbiome }
+## :material-bacteria-outline: Microbiome & ecology { #microbiome }
 
 ### :material-chart-bar-stacked: Stacked taxonomy { #stacked-taxonomy }
 
@@ -1565,7 +1565,7 @@ A Newick tree with tip metadata, five layouts, clade selection, filter and colla
 
 ---
 
-## General purpose { #general }
+## :material-chart-box-outline: General purpose { #general }
 
 ### :material-scatter-plot: Scatter (X/Y) { #scatter-xy }
 
@@ -1817,7 +1817,7 @@ Every other column is a field; `sections` groups them, `link_templates` turns on
 
 ---
 
-## Benchmarking { #benchmarking }
+## :material-bullseye-arrow: Benchmarking { #benchmarking }
 
 ### :material-target: PR benchmark { #pr-benchmark }
 
@@ -1944,7 +1944,7 @@ One metric per callset with its 95% confidence interval, as a forest plot.
 
 ---
 
-## Proteins { #proteins }
+## :material-molecule: Proteins { #proteins }
 
 Structure prediction, protein annotation and protein family runs publish a model, the
 alignment behind it and per-residue facts. Eight kinds draw them and stay

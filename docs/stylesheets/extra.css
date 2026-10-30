@@ -2673,6 +2673,12 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
     text-align: center;
 }
 
+/* Version badge under each catalogue card, centred like the name. */
+.md-typeset .viz-grid .ver-badge {
+    display: table;
+    margin: 0.25rem auto 0;
+}
+
 .md-typeset .viz-grid__family {
     margin: 1rem 0 0;
     font-size: 0.78rem;
