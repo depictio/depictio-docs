@@ -8,6 +8,35 @@ hide:
 
 # Changelog
 
+## **[v1.17.2](https://github.com/depictio/depictio/releases/tag/v1.17.2)** (October 12, 2026)
+
+!!! success "Patch: viewers may comment, and pinned sample filters reach the MultiQC panels"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.17.2
+ghcr.io/depictio/depictio-viewer:1.17.2
+ghcr.io/depictio/depictio-worker:1.17.2
+ghcr.io/depictio/depictio-cli:1.17.2
+```
+
+### **✨ New Features**
+
+* **Viewers may comment** when `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT` is on. See [Viewers can comment](../features/comments-annotations.md#viewers-can-comment) ([#1204](https://github.com/depictio/depictio/pull/1204), [#1206](https://github.com/depictio/depictio/pull/1206)).
+
+### **🚀 Improvements**
+
+* **One sample filter for every tab**: 14 nf-core templates drop the sample filter of their MultiQC tab. See [Sections on every tab](../features/dashboards.md#persistent-sections) ([#1203](https://github.com/depictio/depictio/pull/1203)).
+
+### **🐛 Bug Fixes**
+
+* **A pinned filter narrows the MultiQC panels of another tab**. See [Supported target types](../features/cross-dc-filtering.md#supported-target-types) ([#1201](https://github.com/depictio/depictio/pull/1201), [#1202](https://github.com/depictio/depictio/pull/1202)).
+* **The nf-core section lists every nf-core dashboard**. See [Dashboards](../usage/guides/web_ui.md#dashboards-listing) ([#1199](https://github.com/depictio/depictio/pull/1199)).
+* **A refused Google sign-in shows a readable message** ([#1198](https://github.com/depictio/depictio/pull/1198)).
+
+---
+
 ## **[v1.17.1](https://github.com/depictio/depictio/releases/tag/v1.17.1)** (October 12, 2026)
 
 !!! success "Patch: section filter bars use their full width in the Paper look"
