@@ -757,7 +757,7 @@ Single-selection toggle:
 
 <span class="ver-badge">v1.19.2+</span> `option_cards`
 
-Draws each option of a SegmentedControl as a card, for a choice that changes the whole tab, such as a reference database.
+Draws each option of a SegmentedControl as a card, for a choice that changes the whole tab.
 
 ![Option cards: one card per option, with an icon, a label and a line of description](../images/guides/components/option_cards_light.webp#only-light){ .viz-shot loading=lazy }
 ![Option cards: one card per option, with an icon, a label and a line of description](../images/guides/components/option_cards_dark.webp#only-dark){ .viz-shot loading=lazy }
@@ -765,11 +765,11 @@ Draws each option of a SegmentedControl as a card, for a choice that changes the
 ```yaml
 - component_type: interactive
   interactive_component_type: SegmentedControl
-  column_name: taxonomy
+  column_name: database
   placement: top               # above the grid, stays in view
   option_cards:                # keyed by value; label, icon, description all optional
-    silva: {label: SILVA 138.2, icon: mdi:bacteria, description: Bacteria and archaea}
-    pr2: {label: PR2 5.0.0, icon: mdi:microscope, description: Eukaryotes}
+    pfam: {label: Pfam, icon: "mdi:dna", description: Curated families}
+    funfam: {label: FunFam, icon: "mdi:family-tree", description: CATH functional families}
 ```
 
 An `always_selected` Select takes `option_cards` too, for its [scope banner](dashboards.md#scope-banner). YAML only for now.
