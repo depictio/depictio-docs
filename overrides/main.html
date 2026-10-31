@@ -1,5 +1,27 @@
 {% extends "base.html" %}
 
+{% set docbot = config.extra.docbot %}
+
 {% block extrahead %}
   <link rel="preload" href="{{ 'fonts/Virgil.ttf' | url }}" as="font" type="font/ttf" crossorigin>
+  {% if docbot and docbot.enabled %}
+    <link rel="stylesheet" href="{{ docbot.sdk }}/dist/Chatbot-Modal.css">
+    <script src="{{ docbot.sdk }}/Chatbot-Modal.web.js" type="module"></script>
+  {% endif %}
+{% endblock %}
+
+{#-
+  The DocBot widget sits after the scripts, outside .md-container, so instant
+  navigation does not tear it down and an open conversation survives page
+  changes. The team selector is locked to the depictio knowledge base.
+-#}
+{% block scripts %}
+  {{ super() }}
+  {% if docbot and docbot.enabled %}
+    <docbot-modal
+      selectedteam="{{ docbot.team }}"
+      backendurl="{{ docbot.backend }}"
+      enableselector="false"
+    ></docbot-modal>
+  {% endif %}
 {% endblock %}
