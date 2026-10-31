@@ -358,9 +358,10 @@ entry. A role `x` binds through the `config` key `x_col`:
 ```
 
 Every entry below follows the same layout: a version badge (<span class="ver-badge">v1.19.0+</span>
-means available since that release), a screenshot, a few rows of the input table it expects
-(column names as in its YAML example, <small>optional</small> marks a column it can do
-without), the tools whose output fits, its controls and a YAML example.
+means available since that release), a screenshot, its input table (one row per column:
+the **Column** name as in its YAML example, the **Config key** that binds it, its **Need**
+(required or optional), the **Type** checked and an **Example** value), the tools whose output
+fits, its controls and a YAML example.
 
 ## :material-tune-variant: Shared settings { #shared-settings }
 
@@ -446,13 +447,15 @@ Effect size against significance for a differential test. The same table also re
 
 **Input:** one row per gene.
 
-| gene_id | log2FoldChange | padj | log2_baseMean <small>optional</small> | pvalue <small>optional</small> |
+| Column | Config key | Need | Type | Example |
 |---|---|---|---|---|
-| ENSG00000141510 | -1.84 | 3.2e-08 | 11.2 | 1.1e-09 |
-| ENSG00000146648 | 2.47 | 4.5e-12 | 9.8 | 8.0e-14 |
-| ENSG00000136997 | 0.31 | 0.42 | 12.6 | 0.21 |
-
-Also optional: `label_col`, `category_col`. `log2_baseMean` adds the MA view, `pvalue` the QQ view.
+| `gene_id` | `feature_id_col` | required | String | `ENSG00000141510` |
+| `log2FoldChange` | `effect_size_col` | required | Float | `-1.84`, `2.47` |
+| `padj` | `significance_col` | required | Float | `3.2e-08` |
+| `log2_baseMean` | `avg_log_intensity_col` | optional, adds the MA view | Float | `11.2` |
+| `pvalue` | `p_value_col` | optional, adds the QQ view | Float | `1.1e-09` |
+| `gene_name` | `label_col` | optional, hover label | String | `TP53` |
+| `contrast` | `category_col` | optional, point colour | String | `treated_vs_control` |
 
 **Compatible inputs:** DESeq2, limma or edgeR results tables, as nf-core/differentialabundance publishes them.
 
@@ -489,13 +492,13 @@ Ranked signed log fold changes per feature, one panel per contrast or one contra
 
 **Input:** one row per taxon and contrast (long format).
 
-| taxon | contrast | lfc | q_val <small>optional</small> |
-|---|---|---|---|
-| Bacteroides | treatment_vs_control | 1.92 | 0.003 |
-| Bacteroides | day14_vs_day0 | -0.41 | 0.38 |
-| Faecalibacterium | treatment_vs_control | -2.35 | 0.0007 |
-
-Also optional: `label_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `taxon` | `feature_id_col` | required | String | `Bacteroides` |
+| `contrast` | `contrast_col` | required | String | `treatment_vs_control` |
+| `lfc` | `lfc_col` | required | Float | `1.92`, `-2.35` |
+| `q_val` | `significance_col` | optional, significance threshold | Float | `0.003` |
+| `label` | `label_col` | optional, display label | String | `B. fragilis` |
 
 **Compatible inputs:** ANCOM-BC, ALDEx2 or MaAsLin2 differentials (nf-core/ampliseq).
 
@@ -531,13 +534,13 @@ The running enrichment score along the ranked gene list, one curve per gene set,
 
 **Input:** one row per gene set and rank.
 
-| gene_set | rank | running_es | member <small>optional</small> | metric <small>optional</small> |
+| Column | Config key | Need | Type | Example |
 |---|---|---|---|---|
-| HALLMARK_E2F_TARGETS | 1 | 0.012 | true | 3.21 |
-| HALLMARK_E2F_TARGETS | 2 | 0.010 | false | 3.05 |
-| HALLMARK_G2M_CHECKPOINT | 1 | 0.015 | true | 3.21 |
-
-`member` is a boolean or 0/1.
+| `gene_set` | `gene_set_col` | required | String | `HALLMARK_E2F_TARGETS` |
+| `rank` | `rank_col` | required | Numeric | `1`, `2` |
+| `running_es` | `running_es_col` | required | Float | `0.012` |
+| `member` | `member_col` | optional, the hit rug | Boolean or 0/1 | `true`, `false` |
+| `metric` | `metric_col` | optional, ranked metric panel | Float | `3.21` |
 
 **Compatible inputs:** GSEA output of nf-core/differentialabundance.
 
@@ -574,13 +577,11 @@ Two groups of rows tested feature by feature on demand, drawn as a volcano over 
 
 **Input:** one row per cell or sample, one numeric column per feature (wide format).
 
-| cell_id | cluster <small>optional</small> | CD3E | MS4A1 | LYZ | ... |
-|---|---|---|---|---|---|
-| AAACCTGAGAAGGCCT-1 | cluster_1 | 2.31 | 0.0 | 0.0 | ... |
-| AAACCTGAGACAGACC-1 | cluster_2 | 0.0 | 1.87 | 0.0 | ... |
-| AAACCTGAGCGATAGC-1 | cluster_3 | 0.0 | 0.0 | 3.45 | ... |
-
-Every numeric column is a feature to test.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `cell_id` | `index_col` | required | String | `AAACCTGAGAAGGCCT-1` |
+| `CD3E`, `MS4A1`, ... | none, every numeric column | required, each one is tested | Numeric | `2.31`, `0.0` |
+| `cluster` | `group_col` | optional, groups when no selection group is picked | String | `cluster_1` |
 
 **Compatible inputs:** Per-cell matrices from nf-core/scrnaseq, or per-sample normalised counts from nf-core/rnaseq.
 
@@ -626,13 +627,16 @@ The same kind on a sample PCA, with **Point size** at 25:
 
 **Input:** one row per cell or sample.
 
-| cell_id | umap_1 | umap_2 | cluster <small>optional</small> |
-|---|---|---|---|
-| AAACCTGAGAAGGCCT-1 | 4.12 | -1.37 | T cells |
-| AAACCTGAGACAGACC-1 | -6.80 | 2.95 | B cells |
-| AAACCTGAGCGATAGC-1 | 1.04 | 8.21 | Monocytes |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `cell_id` | `sample_id_col` | required | String | `AAACCTGAGAAGGCCT-1` |
+| `umap_1` | `dim_1_col` | required | Float | `4.12` |
+| `umap_2` | `dim_2_col` | required | Float | `-1.37` |
+| `cluster` | `cluster_col` | optional | String | `T cells` |
+| `umap_3` | `dim_3_col` | optional, adds the 3D view | Float | `0.58` |
+| `CD3E` | `color_col` | optional, colour by metadata or expression | Numeric or String | `2.31` |
 
-Also optional: `dim_3_col` (3D), `color_col`. With `compute_method` set, the coordinates are computed from the numeric columns instead.
+With `compute_method` set, the coordinates are computed from the numeric columns instead.
 
 **Compatible inputs:** scanpy or Seurat coordinates (nf-core/scrnaseq), or any sample by feature matrix with `compute_method` set.
 
@@ -668,13 +672,22 @@ Marker genes by cluster: size is the fraction expressing, colour the mean expres
 
 **Input:** one row per cluster and gene (long format).
 
-| cluster | gene | mean_expression | frac_expressing |
-|---|---|---|---|
-| T cells | CD3E | 2.14 | 0.87 |
-| T cells | MS4A1 | 0.05 | 0.03 |
-| B cells | MS4A1 | 1.92 | 0.81 |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `cluster` | `cluster_col` | required | String | `T cells`, `B cells` |
+| `gene` | `gene_col` | required | String | `CD3E`, `MS4A1` |
+| `mean_expression` | `mean_expression_col` | required | Float | `2.14` |
+| `frac_expressing` | `frac_expressing_col` | required | Float | `0.87` |
 
-The `enrichment` view reads one row per term instead: `term_col`, `nes_col`, optionally `padj_col`, `gene_count_col`, `source_col`.
+**Enrichment view**, one row per term:
+
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `term` | `term_col` | required | String | `HALLMARK_E2F_TARGETS` |
+| `nes` | `nes_col` | required | Float | `2.14` |
+| `padj` | `padj_col` | optional | Float | `0.0012` |
+| `gene_count` | `gene_count_col` | optional | Numeric | `196` |
+| `source` | `source_col` | optional | String | `GO_BP` |
 
 **Compatible inputs:** scanpy aggregates per cluster (`sc.get.aggregate`); clusterProfiler, GSEA or g:Profiler results for the enrichment view.
 
@@ -710,11 +723,12 @@ Barcode rank against UMI count, one curve per library, with the cell-calling cut
 
 **Input:** one row per library and barcode rank.
 
-| sample | rank | umi_count | is_cell <small>optional</small> |
-|---|---|---|---|
-| pbmc_1k | 1 | 48213 | true |
-| pbmc_1k | 2 | 45120 | true |
-| pbmc_1k | 1250 | 312 | false |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `sample` | `sample_col` | required | String | `pbmc_1k` |
+| `rank` | `rank_col` | required | Numeric | `1`, `1250` |
+| `umi_count` | `umi_count_col` | required | Numeric | `48213`, `312` |
+| `is_cell` | `is_cell_col` | optional, the cell-calling cutoff | Boolean or 0/1 | `true`, `false` |
 
 **Compatible inputs:** STARsolo, alevin-fry or Cell Ranger barcode counts (nf-core/scrnaseq).
 
@@ -753,13 +767,14 @@ Depth or signal along a chromosome, per sample or as a cohort median. The `locus
 
 **Input:** one row per sample and bin (or base).
 
-| chrom | start | end <small>optional</small> | depth | sample <small>optional</small> |
+| Column | Config key | Need | Type | Example |
 |---|---|---|---|---|
-| MN908947.3 | 0 | 100 | 812 | SAMPLE_01 |
-| MN908947.3 | 100 | 200 | 1450 | SAMPLE_01 |
-| MN908947.3 | 0 | 100 | 37 | SAMPLE_02 |
-
-Also optional: `category_col`.
+| `chrom` | `chromosome_col` | required | String | `MN908947.3` |
+| `start` | `position_col` | required | Integer | `0`, `100` |
+| `depth` | `value_col` | required | Numeric | `812` |
+| `end` | `end_col` | optional, bins as intervals | Integer | `100`, `200` |
+| `sample` | `sample_col` | optional | String | `SAMPLE_01` |
+| `amplicon` | `category_col` | optional, colour by | String | `nCoV-2019_1` |
 
 **Compatible inputs:** mosdepth per-base or per-bin depth (nf-core/viralrecon, sarek, rnaseq), bigWig-derived bins.
 
@@ -796,13 +811,15 @@ A [GenomeSpy](https://genomespy.app/){ target="_blank" } track on a chromosome a
 
 **Input:** one row per position, or per interval with `end`.
 
-| chrom | start | end <small>optional</small> | score | peak_class <small>optional</small> |
+| Column | Config key | Need | Type | Example |
 |---|---|---|---|---|
-| chr8 | 127735800 | 127736600 | 42.7 | promoter |
-| chr8 | 127790100 | 127790900 | 11.3 | enhancer |
-| chr8 | 127982400 | 127983000 | 6.9 | enhancer |
-
-Also optional: `feature_col`, `sample_col` (one lane per sample).
+| `chrom` | `chr_col` | required | String | `chr8` |
+| `start` | `pos_col` | required | Integer | `127735800` |
+| `score` | `score_col` | required | Float | `42.7` |
+| `end` | `end_col` | optional, rows as intervals | Integer | `127736600` |
+| `peak_class` | `category_col` | optional, mark colour | String | `promoter`, `enhancer` |
+| `feature` | `feature_col` | optional, hover name | String | `peak_00412` |
+| `sample` | `sample_col` | optional, one lane per sample | String | `H3K27ac_rep1` |
 
 **Compatible inputs:** Any chr / pos / score table: peaks, depth bins, association scores.
 
@@ -841,13 +858,17 @@ Log2 ratio per bin with the called segments over it and the B-allele frequency u
 
 **Input:** one row per bin or called segment, both in one table.
 
-| sample | chrom | start | end | log2 | segment <small>optional</small> |
-|---|---|---|---|---|---|
-| TUMOUR_A | chr1 | 1000000 | 1100000 | 0.14 | bin |
-| TUMOUR_A | chr1 | 1100000 | 1200000 | 0.06 | bin |
-| TUMOUR_A | chr1 | 1000000 | 52000000 | 0.10 | segment |
-
-Rows whose `segment` value is `segment` draw as segments, the rest as bins. Also optional: `baf_col`, `copy_number_col`, `label_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `sample` | `sample_col` | required | String | `TUMOUR_A` |
+| `chrom` | `chrom_col` | required | String | `chr1` |
+| `start` | `start_col` | required | Numeric | `1000000` |
+| `end` | `end_col` | required | Numeric | `1100000` |
+| `log2` | `log2_col` | required | Numeric | `0.14`, `0.06` |
+| `baf` | `baf_col` | optional, the BAF panel | Float | `0.48` |
+| `segment` | `segment_col` | optional, `segment` rows draw as segments, the rest as bins | String | `bin`, `segment` |
+| `copy_number` | `copy_number_col` | optional | Numeric | `2` |
+| `label` | `label_col` | optional, hover label | String | `TP53` |
 
 **Compatible inputs:** CNVkit, ASCAT or Control-FREEC bins and segments (nf-core/sarek).
 
@@ -886,13 +907,17 @@ A binned Hi-C matrix, square or as a triangle under a genome track. Zooming re-r
 
 **Input:** one row per pair of bins.
 
-| chrom | start | chrom2 | start2 | count | resolution <small>optional</small> |
-|---|---|---|---|---|---|
-| chr1 | 0 | chr1 | 0 | 2841 | 100000 |
-| chr1 | 0 | chr1 | 100000 | 932 | 100000 |
-| chr1 | 0 | chr1 | 0 | 10520 | 500000 |
-
-Also optional: `end1_col`, `end2_col`, `sample_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `chrom` | `chrom1_col` | required | String | `chr1` |
+| `start` | `start1_col` | required | Numeric | `0` |
+| `chrom2` | `chrom2_col` | required | String | `chr1` |
+| `start2` | `start2_col` | required | Numeric | `100000` |
+| `count` | `count_col` | required | Numeric | `2841`, `932` |
+| `resolution` | `resolution_col` | optional, one matrix per resolution | Numeric | `100000`, `500000` |
+| `end` | `end1_col` | optional | Numeric | `100000` |
+| `end2` | `end2_col` | optional | Numeric | `200000` |
+| `sample` | `sample_col` | optional | String | `HeLa_rep1` |
 
 **Compatible inputs:** cooler `.mcool` pixels dumped per resolution (nf-core/hic).
 
@@ -930,13 +955,19 @@ The isoforms of one gene, one lane per transcript, exons as blocks and coding pa
 
 **Input:** one row per exon or CDS block.
 
-| transcript_id | gene_id | chrom | start | end | feature | strand |
-|---|---|---|---|---|---|---|
-| ENST00000269305 | ENSG00000141510 | chr17 | 7661779 | 7662014 | exon | - |
-| ENST00000269305 | ENSG00000141510 | chr17 | 7669609 | 7669690 | CDS | - |
-| ENST00000413465 | ENSG00000141510 | chr17 | 7668421 | 7669690 | exon | - |
-
-Also optional: `transcript_class_col`, `sample_col`, `gene_name_col`, `expression_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `transcript_id` | `transcript_id_col` | required | String | `ENST00000269305` |
+| `gene_id` | `gene_id_col` | required | String | `ENSG00000141510` |
+| `chrom` | `chrom_col` | required | String | `chr17` |
+| `start` | `start_col` | required | Numeric | `7661779` |
+| `end` | `end_col` | required | Numeric | `7662014` |
+| `feature` | `feature_col` | required | String | `exon`, `CDS` |
+| `strand` | `strand_col` | required | String | `-` |
+| `transcript_class` | `transcript_class_col` | optional, lane colour | String | `known`, `novel` |
+| `sample` | `sample_col` | optional | String | `WT_REP1` |
+| `gene_name` | `gene_name_col` | optional | String | `TP53` |
+| `expression` | `expression_col` | optional, bar beside each lane | Numeric | `12.4` |
 
 **Compatible inputs:** StringTie or bambu GTF exon and CDS rows (nf-core/nanoseq, rnaseq).
 
@@ -975,13 +1006,24 @@ Splice junctions as arcs over a region, weighted by read support, with coverage 
 
 **Input:** one row per junction and sample.
 
-| chrom | start | end | count | sample <small>optional</small> | annotation <small>optional</small> |
-|---|---|---|---|---|---|
-| chr17 | 7670715 | 7673534 | 412 | WT_REP1 | known |
-| chr17 | 7673609 | 7673700 | 198 | WT_REP1 | known |
-| chr17 | 7670715 | 7673700 | 23 | KD_REP1 | novel |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `chrom` | `chr_col` | required | String | `chr17` |
+| `start` | `start_col` | required | Numeric | `7670715` |
+| `end` | `end_col` | required | Numeric | `7673534` |
+| `count` | `count_col` | required | Numeric | `412`, `23` |
+| `sample` | `sample_col` | optional | String | `WT_REP1` |
+| `annotation` | `annotation_col` | optional | String | `known`, `novel` |
 
-The optional coverage collection (`coverage_dc_tag`) has one row per bin: `chrom`, `start`, `end`, `depth`, `sample`, bound by the `coverage_*_col` keys.
+**Coverage** (`coverage_dc_tag`, optional), one row per bin:
+
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `chrom` | `coverage_chr_col` | required | String | `chr17` |
+| `start` | `coverage_position_col` | required | Numeric | `7670700` |
+| `depth` | `coverage_value_col` | required | Numeric | `388` |
+| `end` | `coverage_end_col` | optional | Numeric | `7670750` |
+| `sample` | `coverage_sample_col` | optional, matches the junction `sample` | String | `WT_REP1` |
 
 **Compatible inputs:** STAR `SJ.out.tab` junctions plus binned coverage (nf-core/rnaseq, rnafusion, nanoseq).
 
@@ -1025,13 +1067,17 @@ One arrow per coding sequence along a contig, the way a gene cluster or a resist
 
 **Input:** one row per gene.
 
-| contig | feature_id | start | end | strand | gene_class <small>optional</small> |
-|---|---|---|---|---|---|
-| NODE_12_length_84211 | PROKKA_01234 | 1200 | 2850 | + | biosynthetic |
-| NODE_12_length_84211 | PROKKA_01235 | 2990 | 4410 | + | transport |
-| NODE_12_length_84211 | PROKKA_01236 | 4620 | 5300 | - | regulatory |
-
-Also optional: `label_col` (`label` above), `region_start_col`, `region_end_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `contig` | `contig_col` | required | String | `NODE_12_length_84211` |
+| `feature_id` | `feature_id_col` | required | String | `PROKKA_01234` |
+| `start` | `start_col` | required | Numeric | `1200` |
+| `end` | `end_col` | required | Numeric | `2850` |
+| `strand` | `strand_col` | required | String | `+`, `-` |
+| `gene_class` | `class_col` | optional, arrow colour | String | `biosynthetic` |
+| `label` | `label_col` | optional, text above the arrow | String | `ermB` |
+| `region_start` | `region_start_col` | optional, the lane window | Numeric | `1000` |
+| `region_end` | `region_end_col` | optional, the lane window | Numeric | `25000` |
 
 **Compatible inputs:** antiSMASH or nf-core/funcscan BGC calls, Prokka or Bakta annotations (nf-core/mag, bacass).
 
@@ -1073,13 +1119,13 @@ A score along the genome, chromosomes end to end. `mode: rainfall` plots the dis
 
 **Input:** one row per variant.
 
-| chr | pos | score | feature <small>optional</small> |
-|---|---|---|---|
-| chr1 | 109274968 | 12.4 | rs12740374 |
-| chr19 | 44908684 | 30.2 | rs429358 |
-| chr2 | 21001429 | 4.1 | rs693 |
-
-`score` is usually -log10(p). Also optional: `effect_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `chr` | `chr_col` | required | String | `chr1`, `chr19` |
+| `pos` | `pos_col` | required | Integer | `109274968` |
+| `score` | `score_col` | required, usually -log10(p) | Float | `12.4` |
+| `feature` | `feature_col` | optional | String | `rs12740374` |
+| `beta` | `effect_col` | optional | Float | `0.21` |
 
 **Compatible inputs:** PLINK `.assoc`, GWAS or QTL summary statistics, somatic VCFs (nf-core/sarek).
 
@@ -1117,11 +1163,13 @@ Variants as stems along a gene or protein, coloured by consequence. With `select
 
 **Input:** one row per variant.
 
-| Hugo_Symbol | Protein_position | Variant_Classification | VAF <small>optional</small> | HGVSp_Short <small>optional</small> |
+| Column | Config key | Need | Type | Example |
 |---|---|---|---|---|
-| TP53 | 175 | Missense_Mutation | 0.42 | p.R175H |
-| TP53 | 196 | Nonsense_Mutation | 0.31 | p.R196* |
-| KRAS | 12 | Missense_Mutation | 0.21 | p.G12D |
+| `Hugo_Symbol` | `feature_id_col` | required | String | `TP53`, `KRAS` |
+| `Protein_position` | `position_col` | required | Integer | `175` |
+| `Variant_Classification` | `category_col` | required | String | `Missense_Mutation` |
+| `VAF` | `effect_col` | optional | Float | `0.42` |
+| `HGVSp_Short` | `label_col` | optional, names the stem | String | `p.R175H` |
 
 **Compatible inputs:** Mutation Annotation Format tables (maftools, vcf2maf) or VEP / snpEff annotated VCFs (nf-core/sarek).
 
@@ -1157,11 +1205,11 @@ A sample by gene mutation matrix, cells coloured by mutation type, with frequenc
 
 **Input:** one row per mutation (sample and gene).
 
-| Tumor_Sample_Barcode | Hugo_Symbol | Variant_Classification |
-|---|---|---|
-| TCGA-A1-A0SB-01 | TP53 | Missense_Mutation |
-| TCGA-A1-A0SB-01 | PIK3CA | Missense_Mutation |
-| TCGA-A2-A0CM-01 | TP53 | Frame_Shift_Del |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `Tumor_Sample_Barcode` | `sample_id_col` | required | String | `TCGA-A1-A0SB-01` |
+| `Hugo_Symbol` | `gene_col` | required | String | `TP53`, `PIK3CA` |
+| `Variant_Classification` | `mutation_type_col` | required | String | `Missense_Mutation` |
 
 **Compatible inputs:** Mutation Annotation Format tables: `Tumor_Sample_Barcode`, `Hugo_Symbol`, `Variant_Classification` (nf-core/sarek).
 
@@ -1195,13 +1243,16 @@ Chromosomes on a ring, one chord per link between two loci: fusions, breakends, 
 
 **Input:** one row per link between two loci.
 
-| chrom_a | pos_a | chrom_b | pos_b | support <small>optional</small> | sv_type <small>optional</small> |
-|---|---|---|---|---|---|
-| chr9 | 130714000 | chr22 | 23290000 | 54 | BND |
-| chr2 | 29223000 | chr2 | 42299000 | 18 | INV |
-| chr7 | 55019000 | chr7 | 55211000 | 9 | DEL |
-
-Also optional: `label_col`, `sample_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `chrom_a` | `chrom_a_col` | required | String | `chr9` |
+| `pos_a` | `pos_a_col` | required | Numeric | `130714000` |
+| `chrom_b` | `chrom_b_col` | required | String | `chr22` |
+| `pos_b` | `pos_b_col` | required | Numeric | `23290000` |
+| `support` | `weight_col` | optional, link weight | Numeric | `54` |
+| `sv_type` | `category_col` | optional, colour by | String | `BND`, `INV` |
+| `label` | `label_col` | optional | String | `BCR::ABL1` |
+| `sample` | `sample_col` | optional | String | `TUMOUR_A` |
 
 **Compatible inputs:** Manta, TIDDIT or SvABA breakends (nf-core/sarek), arriba or STAR-Fusion fusions (nf-core/rnafusion).
 
@@ -1239,13 +1290,16 @@ A fusion drawn as its two partners, with the protein domains kept or lost at the
 
 **Input:** one row per domain of each partner.
 
-| fusion_id | partner | feature | start | end | breakpoint <small>optional</small> |
-|---|---|---|---|---|---|
-| BCR::ABL1 | BCR | Bcr-Abl oncoprotein oligomerization | 1 | 72 | 426 |
-| BCR::ABL1 | ABL1 | SH3 | 61 | 121 | 27 |
-| BCR::ABL1 | ABL1 | Protein kinase | 242 | 493 | 27 |
-
-Also optional: `retained_col` (fraction kept, 0 to 1), `colour_by_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `fusion_id` | `fusion_id_col` | required | String | `BCR::ABL1` |
+| `partner` | `partner_col` | required | String | `BCR`, `ABL1` |
+| `feature` | `feature_col` | required | String | `SH3` |
+| `start` | `start_col` | required | Numeric | `61` |
+| `end` | `end_col` | required | Numeric | `121` |
+| `breakpoint` | `breakpoint_col` | optional | Numeric | `426` |
+| `retained` | `retained_col` | optional, fraction kept, 0 to 1 | Numeric | `1.0`, `0.4` |
+| `source` | `colour_by_col` | optional, domain colour | String | `Pfam` |
 
 **Compatible inputs:** Arriba or STAR-Fusion calls (nf-core/rnafusion).
 
@@ -1287,13 +1341,13 @@ One curve per series over an ordered numeric axis, with an optional band. A TSS 
 
 **Input:** one row per series and x value (long format).
 
-| sample | distance | signal |
-|---|---|---|
-| H3K4me3_rep1 | -1000 | 0.82 |
-| H3K4me3_rep1 | 0 | 6.41 |
-| Input | 0 | 0.95 |
-
-Also optional: `lower_col`, `upper_col` (the band).
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `sample` | `series_col` | required | String | `H3K4me3_rep1` |
+| `distance` | `x_col` | required | Numeric | `-1000`, `0` |
+| `signal` | `y_col` | required | Numeric | `6.41` |
+| `lower` | `lower_col` | optional, the band | Float | `5.90` |
+| `upper` | `upper_col` | optional, the band | Float | `6.92` |
 
 **Compatible inputs:** deepTools profiles (nf-core/atacseq, chipseq), riboWaltz, crisprseq.
 
@@ -1329,11 +1383,12 @@ The heatmap under a profile: one row per region, one column per offset, rows ord
 
 **Input:** one row per region and offset (long format).
 
-| region_id | position | value | group <small>optional</small> |
-|---|---|---|---|
-| peak_00412 | -500 | 1.2 | H3K27ac |
-| peak_00412 | 0 | 8.7 | H3K27ac |
-| peak_01877 | 0 | 5.3 | H3K4me1 |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `region_id` | `region_id_col` | required | String | `peak_00412` |
+| `position` | `position_col` | required | Numeric | `-500`, `0` |
+| `value` | `value_col` | required | Numeric | `8.7` |
+| `group` | `group_col` | optional | String | `H3K27ac` |
 
 **Compatible inputs:** deepTools `computeMatrix` output in long form (nf-core/atacseq, chipseq, cutandrun).
 
@@ -1369,13 +1424,14 @@ Ancient-DNA misincorporation by distance from the read end. C>T at 5' and G>A at
 
 **Input:** one row per sample, read end, position and substitution.
 
-| sample | end | position | base_change | frequency |
+| Column | Config key | Need | Type | Example |
 |---|---|---|---|---|
-| Lib_01 | 5p | 1 | C>T | 0.231 |
-| Lib_01 | 5p | 1 | G>A | 0.012 |
-| Lib_01 | 3p | 1 | G>A | 0.198 |
-
-`end` is `5p` or `3p`. Also optional: a `length_bin` column, read with `facet_by: length_bin`.
+| `sample` | `sample_col` | required | String | `Lib_01` |
+| `end` | `end_col` | required | String | `5p`, `3p` |
+| `position` | `position_col` | required | Numeric | `1` |
+| `base_change` | `base_change_col` | required | String | `C>T`, `G>A` |
+| `frequency` | `frequency_col` | required | Numeric | `0.231` |
+| `length_bin` | `length_bin_col` | optional, one lane per bin with `facet_by: length_bin` | String | `30-49` |
 
 **Compatible inputs:** DamageProfiler or mapDamage substitution tables (nf-core/eager).
 
@@ -1415,11 +1471,12 @@ Per-sample composition at one taxonomic rank, the tail folded into `Other`, with
 
 **Input:** one row per sample, taxon and rank (long format).
 
-| sample_id | taxon | rank | abundance |
-|---|---|---|---|
-| S01 | Bacteroidota | Phylum | 0.42 |
-| S01 | Bacillota | Phylum | 0.35 |
-| S01 | Bacteroides | Genus | 0.21 |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `sample_id` | `sample_id_col` | required | String | `S01` |
+| `taxon` | `taxon_col` | required | String | `Bacteroidota` |
+| `rank` | `rank_col` | required | String | `Phylum`, `Genus` |
+| `abundance` | `abundance_col` | required | Numeric | `0.42` |
 
 **Compatible inputs:** QIIME2 `taxa-collapse` tables (nf-core/ampliseq), taxprofiler or mag abundance tables.
 
@@ -1456,11 +1513,10 @@ A taxonomy or pathway hierarchy as rings from root to leaf, each ring a shade of
 
 **Input:** one row per leaf, one column per rank (wide format), root first.
 
-| Kingdom | Phylum | Class | ... | Genus | abundance |
-|---|---|---|---|---|---|
-| Bacteria | Bacteroidota | Bacteroidia | ... | Bacteroides | 1520 |
-| Bacteria | Bacillota | Clostridia | ... | Faecalibacterium | 980 |
-| Bacteria | Pseudomonadota | Gammaproteobacteria | ... | Escherichia | 211 |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `Kingdom`, `Phylum`, `Class`, `Order`, `Family`, `Genus` | `rank_cols` | required, root first | String | `Bacteria`, `Bacteroides` |
+| `abundance` | `abundance_col` | required | Numeric | `1520` |
 
 **Compatible inputs:** Kraken2 `.kreport` pivoted to rank columns, nf-core/ampliseq or taxprofiler classifications.
 
@@ -1493,13 +1549,14 @@ Alpha diversity against sequencing depth, one curve per sample, mean and SE over
 
 **Input:** one row per sample, depth and iteration, one column per metric.
 
-| sample_id | depth | iter <small>optional</small> | shannon | observed_features | habitat <small>optional</small> |
-|---|---|---|---|---|---|
-| S01 | 1000 | 1 | 3.82 | 212 | soil |
-| S01 | 1000 | 2 | 3.79 | 205 | soil |
-| S02 | 1000 | 1 | 2.41 | 98 | marine |
-
-Each name in `metric_options` (here also `faith_pd`) is a numeric column; `metric_col` is the one shown first.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `sample_id` | `sample_id_col` | required | String | `S01` |
+| `depth` | `depth_col` | required | Numeric | `1000` |
+| `shannon` | `metric_col` | required, the metric shown first | Numeric | `3.82` |
+| `observed_features`, `faith_pd` | `metric_options` | optional, the metric tabs | Numeric | `212` |
+| `iter` | `iter_col` | optional | Numeric | `1`, `2` |
+| `habitat` | `group_col` | optional, group by | String | `soil`, `marine` |
 
 **Compatible inputs:** QIIME2 `alpha-rarefaction` tables (nf-core/ampliseq).
 
@@ -1539,15 +1596,16 @@ Summary by rank (**View**: Summary by rank, **Collapse to**: Genus, **Top N**: 1
 ![Phylogenetic tree, summary by rank](../images/guides/advanced-visualizations/phylogenetic_summary_light.webp#only-light){ data-title="Phylogenetic tree, summary by rank" .viz-shot loading=lazy }
 ![Phylogenetic tree, summary by rank](../images/guides/advanced-visualizations/phylogenetic_summary_dark.webp#only-dark){ data-title="Phylogenetic tree, summary by rank" .viz-shot loading=lazy }
 
-**Input:** a Newick tree (a `phylogeny` collection, `tree_dc_tag`) plus a tip table, one row per tip.
+**Input:** a Newick tree (a `phylogeny` collection, `tree_dc_tag`) plus a tip table (`metadata_dc_tag`), one row per tip.
 
-| taxon | Phylum <small>optional</small> |
-|---|---|
-| ASV_0001 | Bacteroidota |
-| ASV_0002 | Bacillota |
-| ASV_0003 | Pseudomonadota |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `taxon` | `taxon_col` | required, matches the tree's tip labels | String | `ASV_0001` |
+| `Phylum` | `color_col` | optional, tip colour | Numeric or String | `Bacteroidota` |
+| `Genus` | `label_col` | optional, shown beside the tip label | String | `Bacteroides` |
+| `Class`, `Order` | `extra_color_cols` | optional, more **Colour by** choices | String | `Bacteroidia` |
 
-`taxon` matches the tip labels of the tree. Also optional: `label_col`, `extra_color_cols`, and an abundance table (`abundance_dc_tag`) to size a summary by reads.
+An abundance table (`abundance_dc_tag`, `abundance_col`, `abundance_sample_col`) can size a summary by reads.
 
 **Compatible inputs:** IQ-TREE or FastTree Newick plus a tip metadata table (nf-core/bactmap, pathogensurveillance, ampliseq).
 
@@ -1588,13 +1646,13 @@ Numeric against numeric, with a size column, a reference line, log axes and a se
 
 **Input:** one row per point.
 
-| rep_a | rep_b | gene <small>optional</small> | mean_expression <small>optional</small> |
-|---|---|---|---|
-| 812.4 | 790.1 | GAPDH | 801.3 |
-| 15.2 | 22.8 | IL6 | 19.0 |
-| 0.4 | 3.1 | FOXP3 | 1.8 |
-
-Also optional: `color_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `rep_a` | `x_col` | required | Numeric | `812.4`, `15.2` |
+| `rep_b` | `y_col` | required | Numeric | `790.1`, `22.8` |
+| `gene` | `label_col` | optional, hover and selection label | String | `GAPDH` |
+| `mean_expression` | `size_col` | optional, marker size | Numeric | `801.3` |
+| `biotype` | `color_col` | optional, marker colour | String | `protein_coding` |
 
 **Compatible inputs:** Any table with two numeric columns: replicate concordance, QC metric pairs.
 
@@ -1632,13 +1690,11 @@ A clustered matrix with dendrograms and annotation tracks, computed on the serve
 
 **Input:** one row per sample, one numeric column per gene (wide format).
 
-| sample_id | condition <small>optional</small> | TP53 | EGFR | MYC | ... |
-|---|---|---|---|---|---|
-| ctrl_1 | control | 9.81 | 7.42 | 11.03 | ... |
-| ctrl_2 | control | 9.76 | 7.55 | 10.96 | ... |
-| treat_1 | treated | 8.12 | 9.87 | 12.40 | ... |
-
-Every numeric column is a heatmap column, or only those listed in `value_columns`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `sample_id` | `index_column` | required | String | `ctrl_1`, `treat_1` |
+| `TP53`, `EGFR`, ... | `value_columns` | required, every numeric column when unset | Numeric | `9.81`, `7.42` |
+| `condition` | `row_annotation_cols` | optional, annotation strip | String | `control`, `treated` |
 
 **Compatible inputs:** A normalised count matrix such as DESeq2 `vst()` (nf-core/rnaseq, differentialabundance).
 
@@ -1673,13 +1729,9 @@ Set intersections as bars over a dot matrix: the readable alternative to a Venn 
 
 **Input:** one row per item, one 0/1 column per set.
 
-| contrastA | contrastB | contrastC |
-|---|---|---|
-| 1 | 0 | 1 |
-| 1 | 1 | 0 |
-| 0 | 0 | 1 |
-
-With `set_columns` unset, the 0/1 columns are detected.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `contrastA`, `contrastB`, `contrastC` | `set_columns` | required, the 0/1 columns when unset | Integer (0/1) | `1`, `0` |
 
 **Compatible inputs:** Any binary membership table: features called per contrast, taxa per site.
 
@@ -1713,13 +1765,10 @@ Categorical flow across ordered levels, such as sample to lineage to clade.
 
 **Input:** one row per item, one categorical column per level, in order.
 
-| qc_status | lineage | clade |
-|---|---|---|
-| pass | XBB.1.5 | 23A |
-| pass | JN.1 | 24A |
-| fail | unassigned | unassigned |
-
-Also optional: `value_col`, a numeric weight; unset counts rows.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `qc_status`, `lineage`, `clade` | `step_cols` | required, 2 or more, in order | String | `pass`, `XBB.1.5` |
+| `count` | `value_col` | optional, link weight; unset counts rows | Numeric | `12` |
 
 **Compatible inputs:** Any tidy table with ordered categorical columns (nf-core/viralrecon QC, Pangolin and Nextclade).
 
@@ -1751,13 +1800,11 @@ One polyline per sample across many metric axes. A brush on an axis becomes a ra
 
 **Input:** one row per sample.
 
-| sample | group <small>optional</small> | total_reads | percent_duplicates | percent_gc | percent_aligned |
-|---|---|---|---|---|---|
-| WT_REP1 | WT | 24813402 | 18.2 | 48.9 | 94.1 |
-| WT_REP2 | WT | 22104377 | 17.5 | 49.2 | 93.8 |
-| KO_REP1 | KO | 26990218 | 31.4 | 51.0 | 88.6 |
-
-With `metric_cols` unset, every numeric column is an axis.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `sample` | `sample_col` | required | String | `WT_REP1` |
+| `total_reads`, `percent_duplicates`, `percent_gc`, `percent_aligned` | `metric_cols` | required, every numeric column when unset | Numeric | `24813402`, `18.2` |
+| `group` | `group_col` | optional, line colour | String | `WT`, `KO` |
 
 **Compatible inputs:** Any per-sample QC table, such as MultiQC general statistics.
 
@@ -1791,13 +1838,12 @@ One row of a collection as labelled fields and links, following a selection made
 
 **Input:** one row per record.
 
-| feature_id | gene_symbol <small>optional</small> | biotype | chromosome | start | end |
-|---|---|---|---|---|---|
-| ENSG00000141510 | TP53 | protein_coding | 17 | 7661779 | 7687538 |
-| ENSG00000146648 | EGFR | protein_coding | 7 | 55019017 | 55211628 |
-| ENSG00000251562 | MALAT1 | lncRNA | 11 | 65497688 | 65506516 |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `feature_id` | `id_col` | required, matched against the selection | String | `ENSG00000141510` |
+| `gene_symbol` | `title_col` | optional, card heading | String | `TP53` |
 
-Every other column is a field; `sections` groups them, `link_templates` turns one into a link.
+Every other column (`biotype`, `chromosome`, `start`, `end`) is a field; `sections` groups them, `link_templates` turns one into a link.
 
 **Compatible inputs:** Any table with an identifier column.
 
@@ -1840,13 +1886,17 @@ Each callset at its precision and recall, with F1 contours. The `roc` view sweep
 
 **Input:** one row per callset.
 
-| tool | recall | precision | f1 | tp <small>optional</small> |
+| Column | Config key | Need | Type | Example |
 |---|---|---|---|---|
-| DeepVariant | 0.9962 | 0.9978 | 0.9970 | 3891204 |
-| GATK HaplotypeCaller | 0.9917 | 0.9941 | 0.9929 | 3873552 |
-| Strelka2 | 0.9893 | 0.9952 | 0.9922 | 3864180 |
-
-Also optional: `category_col`. The `roc` and `both` views need one row per callset and threshold, bound with `threshold_col` (and `fpr_col`, `group_col`).
+| `tool` | `label_col` | required | String | `DeepVariant` |
+| `recall` | `recall_col` | required | Float | `0.9962` |
+| `precision` | `precision_col` | required | Float | `0.9978` |
+| `f1` | `f1_col` | required | Float | `0.9970` |
+| `tp` | `support_col` | optional, point size | Numeric | `3891204` |
+| `variant_type` | `category_col` | optional | String | `SNP`, `INDEL` |
+| `threshold` | `threshold_col` | optional, the `roc` and `both` views (one row per callset and threshold) | Numeric | `0.5` |
+| `fpr` | `fpr_col` | optional, ROC x axis | Float | `0.002` |
+| `sample` | `group_col` | optional, one curve per group | String | `HG002` |
 
 **Compatible inputs:** hap.py or RTG vcfeval summaries (nf-core/variantbenchmarking, sarek).
 
@@ -1882,13 +1932,13 @@ True positives, false positives and false negatives per callset as a heatmap.
 
 **Input:** one row per callset.
 
-| tool | tp | fp | fn |
-|---|---|---|---|
-| DeepVariant | 3891204 | 8592 | 14810 |
-| GATK HaplotypeCaller | 3873552 | 22931 | 32462 |
-| Strelka2 | 3864180 | 18630 | 41834 |
-
-Also optional: `tn_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `tool` | `label_col` | required | String | `DeepVariant` |
+| `tp` | `tp_col` | required | Numeric | `3891204` |
+| `fp` | `fp_col` | required | Numeric | `8592` |
+| `fn` | `fn_col` | required | Numeric | `14810` |
+| `tn` | `tn_col` | optional | Numeric | `120533` |
 
 **Compatible inputs:** Benchmark counts as nf-core/variantbenchmarking reports them.
 
@@ -1923,11 +1973,12 @@ One metric per callset with its 95% confidence interval, as a forest plot.
 
 **Input:** one row per callset.
 
-| tool | precision | precision_lower | precision_upper |
-|---|---|---|---|
-| DeepVariant | 0.9978 | 0.9976 | 0.9980 |
-| GATK HaplotypeCaller | 0.9941 | 0.9938 | 0.9944 |
-| Strelka2 | 0.9952 | 0.9949 | 0.9955 |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `tool` | `label_col` | required | String | `DeepVariant` |
+| `precision` | `value_col` | required | Float | `0.9978` |
+| `precision_lower` | `lower_col` | required | Float | `0.9976` |
+| `precision_upper` | `upper_col` | required | Float | `0.9980` |
 
 **Compatible inputs:** Precision or recall intervals from hap.py, som.py or vcfeval counts (nf-core/variantbenchmarking).
 
@@ -1974,13 +2025,21 @@ The model in [3Dmol.js](https://3dmol.csb.pitt.edu/){ target="_blank" }, coloure
 
 **Input:** one PDB or mmCIF file per protein (`structure_dc_tag`, pLDDT in the B-factor column), plus a residue table, one row per residue.
 
-| entity | position |
-|---|---|
-| P04637 | 175 |
-| P04637 | 176 |
-| P00533 | 858 |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `position` | `position_col` | required | Numeric | `175`, `858` |
+| `entity` | `entity_col` | optional, the protein of the row | String | `P04637` |
+| `chain` | `chain_col` | optional | String | `A` |
+| `conservation` | `value_col` | optional, `color_mode: value` | Numeric | `0.82` |
+| `domain` | `category_col` | optional, `color_mode: category` | String | `DNA-binding` |
+| `ref_aa` | `ref_aa_col` | optional, variant spheres | String | `R` |
+| `alt_aa` | `alt_aa_col` | optional, variant spheres | String | `H` |
+| `label` | `label_col` | optional | String | `p.R175H` |
+| `uniprot` | `uniprot_col` | optional, `structure_source: resolve`, no file needed | String | `P04637` |
+| `gene` | `gene_col` | optional, `structure_source: resolve` | String | `TP53` |
+| `sequence` | `sequence_col` | optional, `structure_source: resolve` (ESMFold) | String | `MEEPQSDPSV` |
 
-Also optional: `chain_col`, `value_col`, `category_col`, `ref_aa_col`, `alt_aa_col`, `label_col`; `uniprot_col`, `gene_col` or `sequence_col` with `structure_source: resolve`, which needs no file. See [The data](#the-data).
+See [The data](#the-data).
 
 **Compatible inputs:** AlphaFold, ColabFold or ESMFold PDB / mmCIF (nf-core/proteinfold), or a model from AlphaFold DB.
 
@@ -2017,13 +2076,13 @@ A multiple sequence alignment with consensus and conservation rows. A row click 
 
 **Input:** one row per aligned sequence; rows of one `msa_id` have the same length.
 
-| msa_id | seq_id | aligned_sequence | rank <small>optional</small> |
-|---|---|---|---|
-| P04637 | query | MEEPQSDPSVEPPLSQETFSDLWKLL | 0 |
-| P04637 | UniRef90_P02340 | MEEPQSDLSVEPPLSQETFS-LWKLL | 1 |
-| P04637 | UniRef90_Q29537 | MEESQSDISLELPLSQETFS-LWKLL | 2 |
-
-Rank 0 is the query. Also optional: `identity_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `msa_id` | `msa_id_col` | required | String | `P04637` |
+| `seq_id` | `seq_id_col` | required | String | `query`, `UniRef90_P02340` |
+| `aligned_sequence` | `sequence_col` | required | String | `MEEPQSDLSVEPPLSQETFS-LWKLL` |
+| `rank` | `rank_col` | optional, 0 is the query | Numeric | `0`, `1` |
+| `identity` | `identity_col` | optional | Numeric | `0.92` |
 
 **Compatible inputs:** proteinfold MSAs, A3M, Stockholm or aligned FASTA.
 
@@ -2059,13 +2118,15 @@ The sequence on a ruler with a value lane, secondary structure, domains and vari
 
 **Input:** a residue table, one row per residue.
 
-| entity | position | residue | plddt <small>optional</small> |
-|---|---|---|---|
-| P04637 | 1 | M | 41.2 |
-| P04637 | 2 | E | 45.8 |
-| P04637 | 3 | E | 52.3 |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `position` | `position_col` | required | Numeric | `1`, `2` |
+| `entity` | `entity_col` | optional | String | `P04637` |
+| `residue` | `residue_col` | optional, the letters | String | `M`, `E` |
+| `plddt` | `value_col` | optional, the value lane | Numeric | `41.2` |
+| `region` | `category_col` | optional | String | `disordered` |
 
-Also optional: `category_col`; a domains table (`domains_dc_tag`: `start`, `end`, `label`) and a variants table (`variants_dc_tag`: `position`, `label`, `category`), as in [The data](#the-data).
+A domains table (`domains_dc_tag`: `start`, `end`, `label`) and a variants table (`variants_dc_tag`: `position`, `label`, `category`) add their lanes, as in [The data](#the-data).
 
 **Compatible inputs:** Per-residue tables built from a structure (pLDDT), S4PRED or domain hits.
 
@@ -2103,13 +2164,22 @@ The logo of a profile HMM with insert and occupancy lanes, and where `hmmsearch`
 
 **Input:** one row per match state and letter (long format).
 
-| hmm_name <small>optional</small> | hmm_position | hmm_letter | emission |
-|---|---|---|---|
-| Pkinase | 1 | A | 0.031 |
-| Pkinase | 1 | C | 0.012 |
-| Pkinase | 2 | A | 0.064 |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `hmm_position` | `state_col` | required | Numeric | `1`, `2` |
+| `hmm_letter` | `letter_col` | required | String | `A`, `C` |
+| `emission` | `emission_col` | required | Float | `0.031` |
+| `hmm_name` | `model_col` | optional, one logo per model | String | `Pkinase` |
+| `entity` | `entity_col` | optional | String | `P00533` |
+| `position` | `position_col` | optional, residue on the reference | Numeric | `712` |
+| `insert_prob` | `insert_prob_col` | optional, read when present | Float | `0.02` |
+| `insert_length` | `insert_length_col` | optional, read when present | Float | `1.4` |
+| `occupancy` | `occupancy_col` | optional, read when present | Float | `0.98` |
+| `consensus` | `consensus_col` | optional, read when present | String | `l` |
+| `rf` | `rf_col` | optional, read when present | String | `x` |
+| `cs` | `cs_col` | optional, read when present | String | `E` |
 
-Also optional, read when present: `entity`, `position`, `insert_prob`, `insert_length`, `occupancy`, `consensus`, `rf`, `cs`. The hits (`hits_dc_tag`) are a [domain hit table](#domain-architecture) with `hmm_from` and `hmm_to`. `profile_source: msa` reads an [alignment table](#msa) instead.
+The hits (`hits_dc_tag`) are a [domain hit table](#domain-architecture) with `hmm_from` and `hmm_to`. `profile_source: msa` reads an [alignment table](#msa) instead.
 
 **Compatible inputs:** HMMER `hmmbuild` profiles and `hmmsearch` domain tables (`hits_dc_tag`), nf-core/proteinfamilies.
 
@@ -2145,13 +2215,23 @@ The domains of many proteins, one row each, or grouped by architecture. A partia
 
 **Input:** one row per domain hit.
 
-| entity | start | end | label | protein_length <small>optional</small> |
+| Column | Config key | Need | Type | Example |
 |---|---|---|---|---|
-| P00533 | 57 | 167 | Recep_L_domain | 1210 |
-| P00533 | 712 | 968 | Pkinase_Tyr | 1210 |
-| P04637 | 95 | 288 | P53 | 393 |
+| `entity` | `entity_col` | required | String | `P00533` |
+| `start` | `start_col` | required | Numeric | `712` |
+| `end` | `end_col` | required | Numeric | `968` |
+| `label` | `label_col` | required | String | `Pkinase_Tyr` |
+| `protein_length` | `protein_length_col` | optional, backbone to scale | Numeric | `1210` |
+| `hmm_from` | `hmm_from_col` | optional, partial-match edge | Numeric | `1` |
+| `hmm_to` | `hmm_to_col` | optional, partial-match edge | Numeric | `259` |
+| `hmm_length` | `hmm_length_col` | optional | Numeric | `259` |
+| `hmm_coverage` | `hmm_coverage_col` | optional | Float | `0.96` |
+| `i_evalue` | `evalue_col` | optional, tooltip | Float | `3.1e-45` |
+| `source` | `source_col` | optional, `color_by: source` | String | `Pfam` |
+| `description` | `description_col` | optional, tooltip | String | `Protein tyrosine kinase` |
+| `accession` | `accession_col` | optional | String | `PF07714` |
 
-Also optional, read when present: `hmm_from`, `hmm_to`, `hmm_length`, `hmm_coverage`, `i_evalue`, `source`, `description`, `accession`.
+Every optional column is read when present.
 
 **Compatible inputs:** InterProScan or `hmmsearch` domain hits (nf-core/proteinannotator, proteinfamilies).
 
@@ -2188,13 +2268,17 @@ Helices, strands and coil as a ribbon, with the probabilities behind the call an
 
 **Input:** one row per residue, and per source when several are compared.
 
-| entity <small>optional</small> | position | ss_code | p_helix <small>optional</small> | p_strand <small>optional</small> | p_coil <small>optional</small> |
-|---|---|---|---|---|---|
-| P04637 | 110 | C | 0.08 | 0.21 | 0.71 |
-| P04637 | 111 | E | 0.04 | 0.83 | 0.13 |
-| P04637 | 112 | E | 0.03 | 0.88 | 0.09 |
-
-`ss_code` is a DSSP or S4PRED code (H, E, C). Also optional: `source_col` (`ss_source` above, one ribbon per source), `residue_col`, `confidence_col`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `position` | `position_col` | required | Numeric | `110`, `111` |
+| `ss_code` | `state_col` | required, a DSSP or S4PRED code | String | `C`, `E` |
+| `entity` | `entity_col` | optional | String | `P04637` |
+| `ss_source` | `source_col` | optional, one ribbon per source | String | `S4PRED` |
+| `residue` | `residue_col` | optional | String | `S` |
+| `p_helix` | `p_helix_col` | optional | Float | `0.08` |
+| `p_strand` | `p_strand_col` | optional | Float | `0.83` |
+| `p_coil` | `p_coil_col` | optional | Float | `0.13` |
+| `confidence` | `confidence_col` | optional, ribbon shading | Float | `0.71` |
 
 **Compatible inputs:** S4PRED `.ss2` predictions.
 
@@ -2233,13 +2317,14 @@ A model's PAE matrix with pLDDT strips. A low-error block on the diagonal is a c
 
 **Input:** one PAE file per protein (a `pae` file collection, `pae_dc_tag`), plus a residue table, one row per residue.
 
-| entity <small>optional</small> | position | plddt <small>optional</small> |
-|---|---|---|
-| P04637 | 1 | 41.2 |
-| P04637 | 2 | 45.8 |
-| P04637 | 3 | 52.3 |
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `position` | `position_col` | required | Numeric | `1`, `2` |
+| `entity` | `entity_col` | optional, picks the PAE file | String | `P04637` |
+| `plddt` | `value_col` | optional, the pLDDT strips | Numeric | `41.2` |
+| `chain` | `chain_col` | optional, chain boundaries | String | `A` |
 
-Also optional: `chain_col`. See [The data](#the-data).
+See [The data](#the-data).
 
 **Compatible inputs:** proteinfold PAE TSV, AlphaFold DB or ColabFold JSON.
 
@@ -2274,13 +2359,16 @@ Backbone phi and psi of the model, computed in the browser from the 3D tile's fi
 
 **Input:** the structure file of the [3D structure](#molecule-3d) tile, plus a residue table, one row per residue.
 
-| entity <small>optional</small> | position |
-|---|---|
-| P04637 | 175 |
-| P04637 | 176 |
-| P00533 | 858 |
-
-Also optional: `chain_col`, `value_col`, `category_col`; `uniprot_col`, `gene_col` or `sequence_col` with `structure_source: resolve`.
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `position` | `position_col` | required | Numeric | `175`, `858` |
+| `entity` | `entity_col` | optional | String | `P04637` |
+| `chain` | `chain_col` | optional | String | `A` |
+| `conservation` | `value_col` | optional, point colour | Numeric | `0.82` |
+| `domain` | `category_col` | optional, point colour | String | `DNA-binding` |
+| `uniprot` | `uniprot_col` | optional, `structure_source: resolve` | String | `P04637` |
+| `gene` | `gene_col` | optional, `structure_source: resolve` | String | `TP53` |
+| `sequence` | `sequence_col` | optional, `structure_source: resolve` | String | `MEEPQSDPSV` |
 
 **Compatible inputs:** The structure file the 3D tile reads.
 
