@@ -2084,8 +2084,8 @@ See [The data](#the-data).
 The 3D tile leaves the grid and floats over every tab, as a card you drag, resize, fold or
 dock. Only `molecule_3d` floats.
 
-![Floating structure: the 3D model as a card over the tab](../images/guides/advanced-visualizations/floating_structure_light.webp#only-light){ .viz-shot loading=lazy }
-![Floating structure: the 3D model as a card over the tab](../images/guides/advanced-visualizations/floating_structure_dark.webp#only-dark){ .viz-shot loading=lazy }
+![Floating structure: the 3D model as a card over the tab](../images/guides/advanced-visualizations/floating_structure_light.webp#only-light){ data-title="Floating structure" .viz-shot loading=lazy }
+![Floating structure: the 3D model as a card over the tab](../images/guides/advanced-visualizations/floating_structure_dark.webp#only-dark){ data-title="Floating structure" .viz-shot loading=lazy }
 
 ```yaml
 placement: floating             # grid (default) or floating
