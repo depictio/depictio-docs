@@ -18,34 +18,36 @@ plot of any columns.
 
 ## :material-view-grid-outline: Catalog { #catalog }
 
-Click a thumbnail to enlarge it, or its name to jump to the entry.
+Click a thumbnail to enlarge it, or a name to jump to its entry.
+
+<div class="viz-bento" markdown>
 
 <p class="viz-grid__family">Differential analysis</p>
 
 <div class="viz-grid" markdown>
 
-<div markdown>
-![Volcano](../images/guides/advanced-visualizations/volcano_light.webp#only-light){ data-title="Volcano" loading=lazy }
-![Volcano](../images/guides/advanced-visualizations/volcano_dark.webp#only-dark){ data-title="Volcano" loading=lazy }
-[Volcano](#volcano){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--f" markdown>
+[![Volcano](../images/guides/advanced-visualizations/thumbs/volcano_light.webp#only-light){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/volcano_light.webp){ .glightbox data-type="image" data-title="Volcano" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Volcano](../images/guides/advanced-visualizations/thumbs/volcano_dark.webp#only-dark){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/volcano_dark.webp){ .glightbox data-type="image" data-title="Volcano" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Volcano](#volcano){ .viz-tile__name title="Jump to Volcano" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![DA barplot](../images/guides/advanced-visualizations/da_barplot_light.webp#only-light){ data-title="DA barplot" loading=lazy }
-![DA barplot](../images/guides/advanced-visualizations/da_barplot_dark.webp#only-dark){ data-title="DA barplot" loading=lazy }
-[DA barplot](#da-barplot){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--t" markdown>
+[![Group compare](../images/guides/advanced-visualizations/thumbs/group_compare_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/group_compare_light.webp){ .glightbox data-type="image" data-title="Group compare" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Group compare](../images/guides/advanced-visualizations/thumbs/group_compare_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/group_compare_dark.webp){ .glightbox data-type="image" data-title="Group compare" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Group compare](#group-compare){ .viz-tile__name title="Jump to Group compare" } <span class="ver-badge">v1.13.0+</span></span>
 </div>
 
-<div markdown>
-![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_light.webp#only-light){ data-title="GSEA running score" loading=lazy }
-![GSEA running score](../images/guides/advanced-visualizations/gsea_running_score_dark.webp#only-dark){ data-title="GSEA running score" loading=lazy }
-[GSEA running score](#gsea-running-score){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![DA barplot](../images/guides/advanced-visualizations/thumbs/da_barplot_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/da_barplot_light.webp){ .glightbox data-type="image" data-title="DA barplot" data-gallery="catalog-light" data-desc-position="bottom" }
+[![DA barplot](../images/guides/advanced-visualizations/thumbs/da_barplot_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/da_barplot_dark.webp){ .glightbox data-type="image" data-title="DA barplot" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[DA barplot](#da-barplot){ .viz-tile__name title="Jump to DA barplot" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![Group compare](../images/guides/advanced-visualizations/group_compare_light.webp#only-light){ data-title="Group compare" loading=lazy }
-![Group compare](../images/guides/advanced-visualizations/group_compare_dark.webp#only-dark){ data-title="Group compare" loading=lazy }
-[Group compare](#group-compare){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![GSEA running score](../images/guides/advanced-visualizations/thumbs/gsea_running_score_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/gsea_running_score_light.webp){ .glightbox data-type="image" data-title="GSEA running score" data-gallery="catalog-light" data-desc-position="bottom" }
+[![GSEA running score](../images/guides/advanced-visualizations/thumbs/gsea_running_score_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/gsea_running_score_dark.webp){ .glightbox data-type="image" data-title="GSEA running score" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[GSEA running score](#gsea-running-score){ .viz-tile__name title="Jump to GSEA running score" } <span class="ver-badge">v1.11.0+</span></span>
 </div>
 
 </div>
@@ -54,22 +56,22 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 
 <div class="viz-grid" markdown>
 
-<div markdown>
-![Embedding](../images/guides/advanced-visualizations/embedding_light.webp#only-light){ data-title="Embedding" loading=lazy }
-![Embedding](../images/guides/advanced-visualizations/embedding_dark.webp#only-dark){ data-title="Embedding" loading=lazy }
-[Embedding](#embedding){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--f" markdown>
+[![Embedding](../images/guides/advanced-visualizations/thumbs/embedding_light.webp#only-light){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/embedding_light.webp){ .glightbox data-type="image" data-title="Embedding" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Embedding](../images/guides/advanced-visualizations/thumbs/embedding_dark.webp#only-dark){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/embedding_dark.webp){ .glightbox data-type="image" data-title="Embedding" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Embedding](#embedding){ .viz-tile__name title="Jump to Embedding" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![Dot plot](../images/guides/advanced-visualizations/dot_plot_light.webp#only-light){ data-title="Dot plot" loading=lazy }
-![Dot plot](../images/guides/advanced-visualizations/dot_plot_dark.webp#only-dark){ data-title="Dot plot" loading=lazy }
-[Dot plot](#dot-plot){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--t" markdown>
+[![Dot plot](../images/guides/advanced-visualizations/thumbs/dot_plot_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/dot_plot_light.webp){ .glightbox data-type="image" data-title="Dot plot" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Dot plot](../images/guides/advanced-visualizations/thumbs/dot_plot_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/dot_plot_dark.webp){ .glightbox data-type="image" data-title="Dot plot" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Dot plot](#dot-plot){ .viz-tile__name title="Jump to Dot plot" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![Knee plot](../images/guides/advanced-visualizations/knee_plot_light.webp#only-light){ data-title="Knee plot" loading=lazy }
-![Knee plot](../images/guides/advanced-visualizations/knee_plot_dark.webp#only-dark){ data-title="Knee plot" loading=lazy }
-[Knee plot](#knee-plot){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
+<div class="viz-tile viz-tile--t" markdown>
+[![Knee plot](../images/guides/advanced-visualizations/thumbs/knee_plot_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/knee_plot_light.webp){ .glightbox data-type="image" data-title="Knee plot" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Knee plot](../images/guides/advanced-visualizations/thumbs/knee_plot_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/knee_plot_dark.webp){ .glightbox data-type="image" data-title="Knee plot" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Knee plot](#knee-plot){ .viz-tile__name title="Jump to Knee plot" } <span class="ver-badge">v1.13.0+</span></span>
 </div>
 
 </div>
@@ -78,46 +80,46 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 
 <div class="viz-grid" markdown>
 
-<div markdown>
-![Coverage track](../images/guides/advanced-visualizations/coverage_track_light.webp#only-light){ data-title="Coverage track" loading=lazy }
-![Coverage track](../images/guides/advanced-visualizations/coverage_track_dark.webp#only-dark){ data-title="Coverage track" loading=lazy }
-[Coverage track](#coverage-track){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--f" markdown>
+[![Coverage track](../images/guides/advanced-visualizations/thumbs/coverage_track_light.webp#only-light){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/coverage_track_light.webp){ .glightbox data-type="image" data-title="Coverage track" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Coverage track](../images/guides/advanced-visualizations/thumbs/coverage_track_dark.webp#only-dark){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/coverage_track_dark.webp){ .glightbox data-type="image" data-title="Coverage track" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Coverage track](#coverage-track){ .viz-tile__name title="Jump to Coverage track" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![Genome view](../images/guides/advanced-visualizations/genome_view_light.webp#only-light){ data-title="Genome view" loading=lazy }
-![Genome view](../images/guides/advanced-visualizations/genome_view_dark.webp#only-dark){ data-title="Genome view" loading=lazy }
-[Genome view](#genome-view){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
+<div class="viz-tile viz-tile--w" markdown>
+[![Genome view](../images/guides/advanced-visualizations/thumbs/genome_view_light.webp#only-light){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/genome_view_light.webp){ .glightbox data-type="image" data-title="Genome view" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Genome view](../images/guides/advanced-visualizations/thumbs/genome_view_dark.webp#only-dark){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/genome_view_dark.webp){ .glightbox data-type="image" data-title="Genome view" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Genome view](#genome-view){ .viz-tile__name title="Jump to Genome view" } <span class="ver-badge">v1.13.0+</span></span>
 </div>
 
-<div markdown>
-![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_light.webp#only-light){ data-title="Copy-number profile" loading=lazy }
-![Copy-number profile](../images/guides/advanced-visualizations/cnv_profile_dark.webp#only-dark){ data-title="Copy-number profile" loading=lazy }
-[Copy-number profile](#cnv-profile){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
+<div class="viz-tile viz-tile--w" markdown>
+[![Sashimi](../images/guides/advanced-visualizations/thumbs/sashimi_light.webp#only-light){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sashimi_light.webp){ .glightbox data-type="image" data-title="Sashimi" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Sashimi](../images/guides/advanced-visualizations/thumbs/sashimi_dark.webp#only-dark){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sashimi_dark.webp){ .glightbox data-type="image" data-title="Sashimi" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Sashimi](#sashimi){ .viz-tile__name title="Jump to Sashimi" } <span class="ver-badge">v1.11.0+</span></span>
 </div>
 
-<div markdown>
-![Contact map](../images/guides/advanced-visualizations/contact_map_light.webp#only-light){ data-title="Contact map" loading=lazy }
-![Contact map](../images/guides/advanced-visualizations/contact_map_dark.webp#only-dark){ data-title="Contact map" loading=lazy }
-[Contact map](#contact-map){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Copy-number profile](../images/guides/advanced-visualizations/thumbs/cnv_profile_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/cnv_profile_light.webp){ .glightbox data-type="image" data-title="Copy-number profile" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Copy-number profile](../images/guides/advanced-visualizations/thumbs/cnv_profile_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/cnv_profile_dark.webp){ .glightbox data-type="image" data-title="Copy-number profile" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Copy-number profile](#cnv-profile){ .viz-tile__name title="Jump to Copy-number profile" } <span class="ver-badge">v1.13.0+</span></span>
 </div>
 
-<div markdown>
-![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_light.webp#only-light){ data-title="Transcript structure" loading=lazy }
-![Transcript structure](../images/guides/advanced-visualizations/transcript_structure_dark.webp#only-dark){ data-title="Transcript structure" loading=lazy }
-[Transcript structure](#transcript-structure){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Contact map](../images/guides/advanced-visualizations/thumbs/contact_map_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/contact_map_light.webp){ .glightbox data-type="image" data-title="Contact map" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Contact map](../images/guides/advanced-visualizations/thumbs/contact_map_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/contact_map_dark.webp){ .glightbox data-type="image" data-title="Contact map" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Contact map](#contact-map){ .viz-tile__name title="Jump to Contact map" } <span class="ver-badge">v1.13.0+</span></span>
 </div>
 
-<div markdown>
-![Sashimi](../images/guides/advanced-visualizations/sashimi_light.webp#only-light){ data-title="Sashimi" loading=lazy }
-![Sashimi](../images/guides/advanced-visualizations/sashimi_dark.webp#only-dark){ data-title="Sashimi" loading=lazy }
-[Sashimi](#sashimi){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Transcript structure](../images/guides/advanced-visualizations/thumbs/transcript_structure_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/transcript_structure_light.webp){ .glightbox data-type="image" data-title="Transcript structure" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Transcript structure](../images/guides/advanced-visualizations/thumbs/transcript_structure_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/transcript_structure_dark.webp){ .glightbox data-type="image" data-title="Transcript structure" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Transcript structure](#transcript-structure){ .viz-tile__name title="Jump to Transcript structure" } <span class="ver-badge">v1.13.0+</span></span>
 </div>
 
-<div markdown>
-![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_light.webp#only-light){ data-title="Gene arrow track" loading=lazy }
-![Gene arrow track](../images/guides/advanced-visualizations/gene_arrow_track_dark.webp#only-dark){ data-title="Gene arrow track" loading=lazy }
-[Gene arrow track](#gene-arrow-track){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Gene arrow track](../images/guides/advanced-visualizations/thumbs/gene_arrow_track_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/gene_arrow_track_light.webp){ .glightbox data-type="image" data-title="Gene arrow track" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Gene arrow track](../images/guides/advanced-visualizations/thumbs/gene_arrow_track_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/gene_arrow_track_dark.webp){ .glightbox data-type="image" data-title="Gene arrow track" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Gene arrow track](#gene-arrow-track){ .viz-tile__name title="Jump to Gene arrow track" } <span class="ver-badge">v1.11.0+</span></span>
 </div>
 
 </div>
@@ -126,34 +128,34 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 
 <div class="viz-grid" markdown>
 
-<div markdown>
-![Manhattan](../images/guides/advanced-visualizations/manhattan_light.webp#only-light){ data-title="Manhattan" loading=lazy }
-![Manhattan](../images/guides/advanced-visualizations/manhattan_dark.webp#only-dark){ data-title="Manhattan" loading=lazy }
-[Manhattan](#manhattan){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--f" markdown>
+[![Oncoplot](../images/guides/advanced-visualizations/thumbs/oncoplot_light.webp#only-light){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/oncoplot_light.webp){ .glightbox data-type="image" data-title="Oncoplot" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Oncoplot](../images/guides/advanced-visualizations/thumbs/oncoplot_dark.webp#only-dark){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/oncoplot_dark.webp){ .glightbox data-type="image" data-title="Oncoplot" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Oncoplot](#oncoplot){ .viz-tile__name title="Jump to Oncoplot" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![Lollipop](../images/guides/advanced-visualizations/lollipop_light.webp#only-light){ data-title="Lollipop" loading=lazy }
-![Lollipop](../images/guides/advanced-visualizations/lollipop_dark.webp#only-dark){ data-title="Lollipop" loading=lazy }
-[Lollipop](#lollipop){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Manhattan](../images/guides/advanced-visualizations/thumbs/manhattan_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/manhattan_light.webp){ .glightbox data-type="image" data-title="Manhattan" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Manhattan](../images/guides/advanced-visualizations/thumbs/manhattan_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/manhattan_dark.webp){ .glightbox data-type="image" data-title="Manhattan" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Manhattan](#manhattan){ .viz-tile__name title="Jump to Manhattan" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![Oncoplot](../images/guides/advanced-visualizations/oncoplot_light.webp#only-light){ data-title="Oncoplot" loading=lazy }
-![Oncoplot](../images/guides/advanced-visualizations/oncoplot_dark.webp#only-dark){ data-title="Oncoplot" loading=lazy }
-[Oncoplot](#oncoplot){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Lollipop](../images/guides/advanced-visualizations/thumbs/lollipop_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/lollipop_light.webp){ .glightbox data-type="image" data-title="Lollipop" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Lollipop](../images/guides/advanced-visualizations/thumbs/lollipop_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/lollipop_dark.webp){ .glightbox data-type="image" data-title="Lollipop" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Lollipop](#lollipop){ .viz-tile__name title="Jump to Lollipop" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![Genome chord](../images/guides/advanced-visualizations/genome_chord_light.webp#only-light){ data-title="Genome chord" loading=lazy }
-![Genome chord](../images/guides/advanced-visualizations/genome_chord_dark.webp#only-dark){ data-title="Genome chord" loading=lazy }
-[Genome chord](#genome-chord){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Genome chord](../images/guides/advanced-visualizations/thumbs/genome_chord_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/genome_chord_light.webp){ .glightbox data-type="image" data-title="Genome chord" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Genome chord](../images/guides/advanced-visualizations/thumbs/genome_chord_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/genome_chord_dark.webp){ .glightbox data-type="image" data-title="Genome chord" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Genome chord](#genome-chord){ .viz-tile__name title="Jump to Genome chord" } <span class="ver-badge">v1.13.0+</span></span>
 </div>
 
-<div markdown>
-![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_light.webp#only-light){ data-title="Fusion structure" loading=lazy }
-![Fusion structure](../images/guides/advanced-visualizations/fusion_structure_dark.webp#only-dark){ data-title="Fusion structure" loading=lazy }
-[Fusion structure](#fusion-structure){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Fusion structure](../images/guides/advanced-visualizations/thumbs/fusion_structure_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/fusion_structure_light.webp){ .glightbox data-type="image" data-title="Fusion structure" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Fusion structure](../images/guides/advanced-visualizations/thumbs/fusion_structure_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/fusion_structure_dark.webp){ .glightbox data-type="image" data-title="Fusion structure" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Fusion structure](#fusion-structure){ .viz-tile__name title="Jump to Fusion structure" } <span class="ver-badge">v1.11.0+</span></span>
 </div>
 
 </div>
@@ -162,22 +164,22 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 
 <div class="viz-grid" markdown>
 
-<div markdown>
-![Profile](../images/guides/advanced-visualizations/profile_light.webp#only-light){ data-title="Profile" loading=lazy }
-![Profile](../images/guides/advanced-visualizations/profile_dark.webp#only-dark){ data-title="Profile" loading=lazy }
-[Profile](#profile){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
+<div class="viz-tile viz-tile--f" markdown>
+[![Profile](../images/guides/advanced-visualizations/thumbs/profile_light.webp#only-light){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/profile_light.webp){ .glightbox data-type="image" data-title="Profile" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Profile](../images/guides/advanced-visualizations/thumbs/profile_dark.webp#only-dark){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/profile_dark.webp){ .glightbox data-type="image" data-title="Profile" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Profile](#profile){ .viz-tile__name title="Jump to Profile" } <span class="ver-badge">v1.11.0+</span></span>
 </div>
 
-<div markdown>
-![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_light.webp#only-light){ data-title="Signal matrix" loading=lazy }
-![Signal matrix](../images/guides/advanced-visualizations/signal_matrix_dark.webp#only-dark){ data-title="Signal matrix" loading=lazy }
-[Signal matrix](#signal-matrix){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
+<div class="viz-tile viz-tile--t" markdown>
+[![Signal matrix](../images/guides/advanced-visualizations/thumbs/signal_matrix_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/signal_matrix_light.webp){ .glightbox data-type="image" data-title="Signal matrix" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Signal matrix](../images/guides/advanced-visualizations/thumbs/signal_matrix_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/signal_matrix_dark.webp){ .glightbox data-type="image" data-title="Signal matrix" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Signal matrix](#signal-matrix){ .viz-tile__name title="Jump to Signal matrix" } <span class="ver-badge">v1.11.0+</span></span>
 </div>
 
-<div markdown>
-![Damage profile](../images/guides/advanced-visualizations/damage_profile_light.webp#only-light){ data-title="Damage profile" loading=lazy }
-![Damage profile](../images/guides/advanced-visualizations/damage_profile_dark.webp#only-dark){ data-title="Damage profile" loading=lazy }
-[Damage profile](#damage-profile){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
+<div class="viz-tile viz-tile--t" markdown>
+[![Damage profile](../images/guides/advanced-visualizations/thumbs/damage_profile_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/damage_profile_light.webp){ .glightbox data-type="image" data-title="Damage profile" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Damage profile](../images/guides/advanced-visualizations/thumbs/damage_profile_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/damage_profile_dark.webp){ .glightbox data-type="image" data-title="Damage profile" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Damage profile](#damage-profile){ .viz-tile__name title="Jump to Damage profile" } <span class="ver-badge">v1.13.0+</span></span>
 </div>
 
 </div>
@@ -186,28 +188,28 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 
 <div class="viz-grid" markdown>
 
-<div markdown>
-![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light){ data-title="Stacked taxonomy" loading=lazy }
-![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark){ data-title="Stacked taxonomy" loading=lazy }
-[Stacked taxonomy](#stacked-taxonomy){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--f" markdown>
+[![Sunburst](../images/guides/advanced-visualizations/thumbs/sunburst_light.webp#only-light){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sunburst_light.webp){ .glightbox data-type="image" data-title="Sunburst" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Sunburst](../images/guides/advanced-visualizations/thumbs/sunburst_dark.webp#only-dark){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sunburst_dark.webp){ .glightbox data-type="image" data-title="Sunburst" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Sunburst](#sunburst){ .viz-tile__name title="Jump to Sunburst" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![Sunburst](../images/guides/advanced-visualizations/sunburst_light.webp#only-light){ data-title="Sunburst" loading=lazy }
-![Sunburst](../images/guides/advanced-visualizations/sunburst_dark.webp#only-dark){ data-title="Sunburst" loading=lazy }
-[Sunburst](#sunburst){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--t" markdown>
+[![Stacked taxonomy](../images/guides/advanced-visualizations/thumbs/stacked_taxonomy_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp){ .glightbox data-type="image" data-title="Stacked taxonomy" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Stacked taxonomy](../images/guides/advanced-visualizations/thumbs/stacked_taxonomy_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp){ .glightbox data-type="image" data-title="Stacked taxonomy" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Stacked taxonomy](#stacked-taxonomy){ .viz-tile__name title="Jump to Stacked taxonomy" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![Rarefaction](../images/guides/advanced-visualizations/rarefaction_light.webp#only-light){ data-title="Rarefaction" loading=lazy }
-![Rarefaction](../images/guides/advanced-visualizations/rarefaction_dark.webp#only-dark){ data-title="Rarefaction" loading=lazy }
-[Rarefaction](#rarefaction){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Rarefaction](../images/guides/advanced-visualizations/thumbs/rarefaction_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/rarefaction_light.webp){ .glightbox data-type="image" data-title="Rarefaction" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Rarefaction](../images/guides/advanced-visualizations/thumbs/rarefaction_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/rarefaction_dark.webp){ .glightbox data-type="image" data-title="Rarefaction" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Rarefaction](#rarefaction){ .viz-tile__name title="Jump to Rarefaction" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_light.webp#only-light){ data-title="Phylogenetic tree" loading=lazy }
-![Phylogenetic tree](../images/guides/advanced-visualizations/phylogenetic_dark.webp#only-dark){ data-title="Phylogenetic tree" loading=lazy }
-[Phylogenetic tree](#phylogenetic){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Phylogenetic tree](../images/guides/advanced-visualizations/thumbs/phylogenetic_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/phylogenetic_light.webp){ .glightbox data-type="image" data-title="Phylogenetic tree" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Phylogenetic tree](../images/guides/advanced-visualizations/thumbs/phylogenetic_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/phylogenetic_dark.webp){ .glightbox data-type="image" data-title="Phylogenetic tree" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Phylogenetic tree](#phylogenetic){ .viz-tile__name title="Jump to Phylogenetic tree" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
 </div>
@@ -216,40 +218,40 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 
 <div class="viz-grid" markdown>
 
-<div markdown>
-![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_light.webp#only-light){ data-title="Scatter (X/Y)" loading=lazy }
-![Scatter (X/Y)](../images/guides/advanced-visualizations/scatter_xy_dark.webp#only-dark){ data-title="Scatter (X/Y)" loading=lazy }
-[Scatter (X/Y)](#scatter-xy){ .viz-grid__name } <span class="ver-badge">v1.11.0+</span>
+<div class="viz-tile viz-tile--f" markdown>
+[![Scatter (X/Y)](../images/guides/advanced-visualizations/thumbs/scatter_xy_light.webp#only-light){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/scatter_xy_light.webp){ .glightbox data-type="image" data-title="Scatter (X/Y)" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Scatter (X/Y)](../images/guides/advanced-visualizations/thumbs/scatter_xy_dark.webp#only-dark){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/scatter_xy_dark.webp){ .glightbox data-type="image" data-title="Scatter (X/Y)" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Scatter (X/Y)](#scatter-xy){ .viz-tile__name title="Jump to Scatter (X/Y)" } <span class="ver-badge">v1.11.0+</span></span>
 </div>
 
-<div markdown>
-![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_light.webp#only-light){ data-title="Hierarchical heatmap" loading=lazy }
-![Hierarchical heatmap](../images/guides/advanced-visualizations/complex_heatmap_dark.webp#only-dark){ data-title="Hierarchical heatmap" loading=lazy }
-[Hierarchical heatmap](#hierarchical-heatmap){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--t" markdown>
+[![UpSet](../images/guides/advanced-visualizations/thumbs/upset_plot_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/upset_plot_light.webp){ .glightbox data-type="image" data-title="UpSet" data-gallery="catalog-light" data-desc-position="bottom" }
+[![UpSet](../images/guides/advanced-visualizations/thumbs/upset_plot_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/upset_plot_dark.webp){ .glightbox data-type="image" data-title="UpSet" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[UpSet](#upset){ .viz-tile__name title="Jump to UpSet" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![UpSet](../images/guides/advanced-visualizations/upset_plot_light.webp#only-light){ data-title="UpSet" loading=lazy }
-![UpSet](../images/guides/advanced-visualizations/upset_plot_dark.webp#only-dark){ data-title="UpSet" loading=lazy }
-[UpSet](#upset){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--w" markdown>
+[![Parallel coordinates](../images/guides/advanced-visualizations/thumbs/parallel_coordinates_light.webp#only-light){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/parallel_coordinates_light.webp){ .glightbox data-type="image" data-title="Parallel coordinates" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Parallel coordinates](../images/guides/advanced-visualizations/thumbs/parallel_coordinates_dark.webp#only-dark){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/parallel_coordinates_dark.webp){ .glightbox data-type="image" data-title="Parallel coordinates" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Parallel coordinates](#parallel-coordinates){ .viz-tile__name title="Jump to Parallel coordinates" } <span class="ver-badge">v1.13.0+</span></span>
 </div>
 
-<div markdown>
-![Sankey](../images/guides/advanced-visualizations/sankey_light.webp#only-light){ data-title="Sankey" loading=lazy }
-![Sankey](../images/guides/advanced-visualizations/sankey_dark.webp#only-dark){ data-title="Sankey" loading=lazy }
-[Sankey](#sankey){ .viz-grid__name } <span class="ver-badge">v0.13.0+</span>
+<div class="viz-tile viz-tile--t" markdown>
+[![Record card](../images/guides/advanced-visualizations/thumbs/record_card_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/record_card_light.webp){ .glightbox data-type="image" data-title="Record card" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Record card](../images/guides/advanced-visualizations/thumbs/record_card_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/record_card_dark.webp){ .glightbox data-type="image" data-title="Record card" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Record card](#record-card){ .viz-tile__name title="Jump to Record card" } <span class="ver-badge">v1.13.0+</span></span>
 </div>
 
-<div markdown>
-![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_light.webp#only-light){ data-title="Parallel coordinates" loading=lazy }
-![Parallel coordinates](../images/guides/advanced-visualizations/parallel_coordinates_dark.webp#only-dark){ data-title="Parallel coordinates" loading=lazy }
-[Parallel coordinates](#parallel-coordinates){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Hierarchical heatmap](../images/guides/advanced-visualizations/thumbs/complex_heatmap_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/complex_heatmap_light.webp){ .glightbox data-type="image" data-title="Hierarchical heatmap" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Hierarchical heatmap](../images/guides/advanced-visualizations/thumbs/complex_heatmap_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/complex_heatmap_dark.webp){ .glightbox data-type="image" data-title="Hierarchical heatmap" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Hierarchical heatmap](#hierarchical-heatmap){ .viz-tile__name title="Jump to Hierarchical heatmap" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
-<div markdown>
-![Record card](../images/guides/advanced-visualizations/record_card_light.webp#only-light){ data-title="Record card" loading=lazy }
-![Record card](../images/guides/advanced-visualizations/record_card_dark.webp#only-dark){ data-title="Record card" loading=lazy }
-[Record card](#record-card){ .viz-grid__name } <span class="ver-badge">v1.13.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Sankey](../images/guides/advanced-visualizations/thumbs/sankey_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sankey_light.webp){ .glightbox data-type="image" data-title="Sankey" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Sankey](../images/guides/advanced-visualizations/thumbs/sankey_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sankey_dark.webp){ .glightbox data-type="image" data-title="Sankey" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Sankey](#sankey){ .viz-tile__name title="Jump to Sankey" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
 </div>
@@ -258,22 +260,22 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 
 <div class="viz-grid" markdown>
 
-<div markdown>
-![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_light.webp#only-light){ data-title="PR benchmark" loading=lazy }
-![PR benchmark](../images/guides/advanced-visualizations/pr_benchmark_dark.webp#only-dark){ data-title="PR benchmark" loading=lazy }
-[PR benchmark](#pr-benchmark){ .viz-grid__name } <span class="ver-badge">v1.10.0+</span>
+<div class="viz-tile viz-tile--f" markdown>
+[![PR benchmark](../images/guides/advanced-visualizations/thumbs/pr_benchmark_light.webp#only-light){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/pr_benchmark_light.webp){ .glightbox data-type="image" data-title="PR benchmark" data-gallery="catalog-light" data-desc-position="bottom" }
+[![PR benchmark](../images/guides/advanced-visualizations/thumbs/pr_benchmark_dark.webp#only-dark){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/pr_benchmark_dark.webp){ .glightbox data-type="image" data-title="PR benchmark" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[PR benchmark](#pr-benchmark){ .viz-tile__name title="Jump to PR benchmark" } <span class="ver-badge">v1.10.0+</span></span>
 </div>
 
-<div markdown>
-![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_light.webp#only-light){ data-title="Confusion matrix" loading=lazy }
-![Confusion matrix](../images/guides/advanced-visualizations/confusion_matrix_dark.webp#only-dark){ data-title="Confusion matrix" loading=lazy }
-[Confusion matrix](#confusion-matrix){ .viz-grid__name } <span class="ver-badge">v1.10.0+</span>
+<div class="viz-tile viz-tile--t" markdown>
+[![Confusion matrix](../images/guides/advanced-visualizations/thumbs/confusion_matrix_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/confusion_matrix_light.webp){ .glightbox data-type="image" data-title="Confusion matrix" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Confusion matrix](../images/guides/advanced-visualizations/thumbs/confusion_matrix_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/confusion_matrix_dark.webp){ .glightbox data-type="image" data-title="Confusion matrix" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Confusion matrix](#confusion-matrix){ .viz-tile__name title="Jump to Confusion matrix" } <span class="ver-badge">v1.10.0+</span></span>
 </div>
 
-<div markdown>
-![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_light.webp#only-light){ data-title="Metric with CI" loading=lazy }
-![Metric with CI](../images/guides/advanced-visualizations/metric_ci_bars_dark.webp#only-dark){ data-title="Metric with CI" loading=lazy }
-[Metric with CI](#metric-ci-bars){ .viz-grid__name } <span class="ver-badge">v1.10.0+</span>
+<div class="viz-tile viz-tile--t" markdown>
+[![Metric with CI](../images/guides/advanced-visualizations/thumbs/metric_ci_bars_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/metric_ci_bars_light.webp){ .glightbox data-type="image" data-title="Metric with CI" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Metric with CI](../images/guides/advanced-visualizations/thumbs/metric_ci_bars_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/metric_ci_bars_dark.webp){ .glightbox data-type="image" data-title="Metric with CI" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Metric with CI](#metric-ci-bars){ .viz-tile__name title="Jump to Metric with CI" } <span class="ver-badge">v1.10.0+</span></span>
 </div>
 
 </div>
@@ -282,57 +284,57 @@ Click a thumbnail to enlarge it, or its name to jump to the entry.
 
 <div class="viz-grid" markdown>
 
-<div markdown>
-![3D structure](../images/guides/advanced-visualizations/molecule_3d_light.webp#only-light){ data-title="3D structure" loading=lazy }
-![3D structure](../images/guides/advanced-visualizations/molecule_3d_dark.webp#only-dark){ data-title="3D structure" loading=lazy }
-[3D structure](#molecule-3d){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
+<div class="viz-tile viz-tile--f" markdown>
+[![3D structure](../images/guides/advanced-visualizations/thumbs/molecule_3d_light.webp#only-light){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/molecule_3d_light.webp){ .glightbox data-type="image" data-title="3D structure" data-gallery="catalog-light" data-desc-position="bottom" }
+[![3D structure](../images/guides/advanced-visualizations/thumbs/molecule_3d_dark.webp#only-dark){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/molecule_3d_dark.webp){ .glightbox data-type="image" data-title="3D structure" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[3D structure](#molecule-3d){ .viz-tile__name title="Jump to 3D structure" } <span class="ver-badge">v1.19.0+</span></span>
 </div>
 
-<div markdown>
-![Alignment](../images/guides/advanced-visualizations/msa_light.webp#only-light){ data-title="Alignment" loading=lazy }
-![Alignment](../images/guides/advanced-visualizations/msa_dark.webp#only-dark){ data-title="Alignment" loading=lazy }
-[Alignment](#msa){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
+<div class="viz-tile viz-tile--w" markdown>
+[![Sequence track](../images/guides/advanced-visualizations/thumbs/sequence_track_light.webp#only-light){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sequence_track_light.webp){ .glightbox data-type="image" data-title="Sequence track" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Sequence track](../images/guides/advanced-visualizations/thumbs/sequence_track_dark.webp#only-dark){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sequence_track_dark.webp){ .glightbox data-type="image" data-title="Sequence track" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Sequence track](#sequence-track){ .viz-tile__name title="Jump to Sequence track" } <span class="ver-badge">v1.19.0+</span></span>
 </div>
 
-<div markdown>
-![Sequence track](../images/guides/advanced-visualizations/sequence_track_light.webp#only-light){ data-title="Sequence track" loading=lazy }
-![Sequence track](../images/guides/advanced-visualizations/sequence_track_dark.webp#only-dark){ data-title="Sequence track" loading=lazy }
-[Sequence track](#sequence-track){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Alignment](../images/guides/advanced-visualizations/thumbs/msa_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/msa_light.webp){ .glightbox data-type="image" data-title="Alignment" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Alignment](../images/guides/advanced-visualizations/thumbs/msa_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/msa_dark.webp){ .glightbox data-type="image" data-title="Alignment" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Alignment](#msa){ .viz-tile__name title="Jump to Alignment" } <span class="ver-badge">v1.19.0+</span></span>
 </div>
 
-<div markdown>
-![HMM logo](../images/guides/advanced-visualizations/hmm_logo_light.webp#only-light){ data-title="HMM logo" loading=lazy }
-![HMM logo](../images/guides/advanced-visualizations/hmm_logo_dark.webp#only-dark){ data-title="HMM logo" loading=lazy }
-[HMM logo](#hmm-logo){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![HMM logo](../images/guides/advanced-visualizations/thumbs/hmm_logo_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/hmm_logo_light.webp){ .glightbox data-type="image" data-title="HMM logo" data-gallery="catalog-light" data-desc-position="bottom" }
+[![HMM logo](../images/guides/advanced-visualizations/thumbs/hmm_logo_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/hmm_logo_dark.webp){ .glightbox data-type="image" data-title="HMM logo" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[HMM logo](#hmm-logo){ .viz-tile__name title="Jump to HMM logo" } <span class="ver-badge">v1.19.0+</span></span>
 </div>
 
-<div markdown>
-![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_light.webp#only-light){ data-title="Domain architecture" loading=lazy }
-![Domain architecture](../images/guides/advanced-visualizations/domain_architecture_dark.webp#only-dark){ data-title="Domain architecture" loading=lazy }
-[Domain architecture](#domain-architecture){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Domain architecture](../images/guides/advanced-visualizations/thumbs/domain_architecture_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/domain_architecture_light.webp){ .glightbox data-type="image" data-title="Domain architecture" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Domain architecture](../images/guides/advanced-visualizations/thumbs/domain_architecture_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/domain_architecture_dark.webp){ .glightbox data-type="image" data-title="Domain architecture" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Domain architecture](#domain-architecture){ .viz-tile__name title="Jump to Domain architecture" } <span class="ver-badge">v1.19.0+</span></span>
 </div>
 
-<div markdown>
-![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_light.webp#only-light){ data-title="Secondary structure" loading=lazy }
-![Secondary structure](../images/guides/advanced-visualizations/secondary_structure_dark.webp#only-dark){ data-title="Secondary structure" loading=lazy }
-[Secondary structure](#secondary-structure){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Secondary structure](../images/guides/advanced-visualizations/thumbs/secondary_structure_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/secondary_structure_light.webp){ .glightbox data-type="image" data-title="Secondary structure" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Secondary structure](../images/guides/advanced-visualizations/thumbs/secondary_structure_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/secondary_structure_dark.webp){ .glightbox data-type="image" data-title="Secondary structure" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Secondary structure](#secondary-structure){ .viz-tile__name title="Jump to Secondary structure" } <span class="ver-badge">v1.19.0+</span></span>
 </div>
 
-<div markdown>
-![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_light.webp#only-light){ data-title="Predicted aligned error" loading=lazy }
-![Predicted aligned error](../images/guides/advanced-visualizations/pae_matrix_dark.webp#only-dark){ data-title="Predicted aligned error" loading=lazy }
-[Predicted aligned error](#pae-matrix){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Predicted aligned error](../images/guides/advanced-visualizations/thumbs/pae_matrix_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/pae_matrix_light.webp){ .glightbox data-type="image" data-title="Predicted aligned error" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Predicted aligned error](../images/guides/advanced-visualizations/thumbs/pae_matrix_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/pae_matrix_dark.webp){ .glightbox data-type="image" data-title="Predicted aligned error" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Predicted aligned error](#pae-matrix){ .viz-tile__name title="Jump to Predicted aligned error" } <span class="ver-badge">v1.19.0+</span></span>
 </div>
 
-<div markdown>
-![Ramachandran](../images/guides/advanced-visualizations/ramachandran_light.webp#only-light){ data-title="Ramachandran" loading=lazy }
-![Ramachandran](../images/guides/advanced-visualizations/ramachandran_dark.webp#only-dark){ data-title="Ramachandran" loading=lazy }
-[Ramachandran](#ramachandran){ .viz-grid__name } <span class="ver-badge">v1.19.0+</span>
+<div class="viz-tile viz-tile--s" markdown>
+[![Ramachandran](../images/guides/advanced-visualizations/thumbs/ramachandran_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/ramachandran_light.webp){ .glightbox data-type="image" data-title="Ramachandran" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Ramachandran](../images/guides/advanced-visualizations/thumbs/ramachandran_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/ramachandran_dark.webp){ .glightbox data-type="image" data-title="Ramachandran" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Ramachandran](#ramachandran){ .viz-tile__name title="Jump to Ramachandran" } <span class="ver-badge">v1.19.0+</span></span>
 </div>
 
 </div>
 
----
+</div>
 
 ## :material-cursor-default-click-outline: How to use one { #how-to-use }
 
@@ -1596,7 +1598,17 @@ Summary by rank (**View**: Summary by rank, **Collapse to**: Genus, **Top N**: 1
 ![Phylogenetic tree, summary by rank](../images/guides/advanced-visualizations/phylogenetic_summary_light.webp#only-light){ data-title="Phylogenetic tree, summary by rank" .viz-shot loading=lazy }
 ![Phylogenetic tree, summary by rank](../images/guides/advanced-visualizations/phylogenetic_summary_dark.webp#only-dark){ data-title="Phylogenetic tree, summary by rank" .viz-shot loading=lazy }
 
-**Input:** a Newick tree (a `phylogeny` collection, `tree_dc_tag`) plus a tip table (`metadata_dc_tag`), one row per tip.
+**Input:** two data collections, joined on the tree's tip labels, plus an optional third.
+
+| Collection | DC type | Config key | Content |
+|---|---|---|---|
+| Tree | `phylogeny`, a special DC: the Newick or Nexus file is read as is, never turned into a table | `tree_dc_tag` | one tree, tips labelled `ASV_0001`, `ASV_0002`... |
+| Tip metadata | `table` | `metadata_dc_tag` (the tile's `data_collection_tag`) | one row per tip, columns below |
+| Abundance, optional | `table` | `abundance_dc_tag` | one row per tip and sample, sizes the summary by reads |
+
+The project declares the `phylogeny` DC with a link to its metadata table, see [Phylogeny DCs and their metadata table](../usage/projects/guide.md#example-phylogeny-dcs-and-their-metadata-table).
+
+Tip metadata columns:
 
 | Column | Config key | Need | Type | Example |
 |---|---|---|---|---|
@@ -1605,7 +1617,7 @@ Summary by rank (**View**: Summary by rank, **Collapse to**: Genus, **Top N**: 1
 | `Genus` | `label_col` | optional, shown beside the tip label | String | `Bacteroides` |
 | `Class`, `Order` | `extra_color_cols` | optional, more **Colour by** choices | String | `Bacteroidia` |
 
-An abundance table (`abundance_dc_tag`, `abundance_col`, `abundance_sample_col`) can size a summary by reads.
+Abundance table columns are bound by `abundance_col` and `abundance_sample_col`.
 
 **Compatible inputs:** IQ-TREE or FastTree Newick plus a tip metadata table (nf-core/bactmap, pathogensurveillance, ampliseq).
 

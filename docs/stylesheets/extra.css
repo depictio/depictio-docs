@@ -2629,23 +2629,6 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
     color: #c9b6f2;
 }
 
-/* Screenshot catalogue: one card per visualization, the thumbnail opens in the
-   lightbox and the name below it jumps to the entry. */
-.md-typeset .viz-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 0.8rem;
-    margin: 0.4rem 0 1.4rem;
-}
-
-.md-typeset .viz-grid > div > p {
-    margin: 0;
-}
-
-.md-typeset .viz-grid a.glightbox {
-    display: block;
-}
-
 /* A lightboxed screenshot is wrapped in a link, and any rule that sets the
    image's display (the grid's below) beats Material's #only-light/#only-dark
    hiding. Hide the off-theme link itself so one figure shows per theme. */
@@ -2654,36 +2637,135 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
     display: none !important;
 }
 
-.md-typeset .viz-grid img {
+/* Screenshot catalogue: a bento grid per family. Each tile is a small webp
+   crop (dev/make_viz_thumbs.py) that opens the full screenshot in the
+   lightbox; the name in the caption jumps to the entry. Rows are sized from
+   the catalogue width (container units), so every shape lines up:
+   --f featured 2x2, --w wide 2x1, --t tall 1x2, --s 1x1. */
+.md-typeset .viz-bento {
+    container-type: inline-size;
+    --viz-gap: 0.6rem;
+    --viz-cols: 4;
+}
+
+.md-typeset .viz-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--viz-cols), minmax(0, 1fr));
+    grid-auto-rows: calc((100cqw - (var(--viz-cols) - 1) * var(--viz-gap)) / var(--viz-cols) * 0.75);
+    grid-auto-flow: dense;
+    gap: var(--viz-gap);
+    margin: 0.4rem 0 1.2rem;
+}
+
+@media screen and (max-width: 59.9375em) {
+    .md-typeset .viz-bento {
+        --viz-cols: 2;
+        --viz-gap: 0.5rem;
+    }
+}
+
+.md-typeset .viz-tile {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 8px;
+    background: var(--md-default-bg-color);
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.md-typeset .viz-tile:hover {
+    border-color: var(--md-accent-fg-color);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.md-typeset .viz-tile--f { grid-column: span 2; grid-row: span 2; }
+.md-typeset .viz-tile--w { grid-column: span 2; }
+.md-typeset .viz-tile--t { grid-row: span 2; }
+
+.md-typeset .viz-tile > p {
+    margin: 0;
+}
+
+.md-typeset .viz-tile a.glightbox {
+    position: absolute;
+    inset: 0;
+    display: block;
+}
+
+.md-typeset .viz-tile img {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    height: 100%;
     object-fit: cover;
-    object-position: top center;
-    border: 1px solid var(--md-default-fg-color--lightest);
-    border-radius: 6px;
-    background: var(--md-default-bg-color);
+    object-position: top left;
+    transition: transform 0.25s ease;
 }
 
-.md-typeset .viz-grid .viz-grid__name {
-    display: block;
-    margin-top: 0.3rem;
-    font-size: 0.72rem;
-    line-height: 1.3;
-    text-align: center;
+.md-typeset .viz-tile:hover img {
+    transform: scale(1.025);
 }
 
-/* Version badge under each catalogue card, centred like the name. */
-.md-typeset .viz-grid .ver-badge {
-    display: table;
-    margin: 0.25rem auto 0;
+/* Name and version on a fade of the page colour: the tile stays clickable
+   through it (lightbox), only the name itself is a link to the entry. */
+.md-typeset .viz-tile__cap {
+    position: absolute;
+    inset: auto 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem 0.4rem;
+    padding: 1.4rem 0.55rem 0.4rem;
+    background: linear-gradient(to top,
+        var(--md-default-bg-color) 0%,
+        color-mix(in srgb, var(--md-default-bg-color) 88%, transparent) 55%,
+        transparent 100%);
+    pointer-events: none;
+}
+
+.md-typeset .viz-tile--s .viz-tile__cap {
+    padding-top: 0.9rem;
+}
+
+.md-typeset .viz-tile .viz-tile__name {
+    pointer-events: auto;
+    color: var(--md-default-fg-color);
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.md-typeset .viz-tile .viz-tile__name::after {
+    content: "↓";
+    margin-left: 0.2em;
+    color: var(--md-accent-fg-color);
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.md-typeset .viz-tile .viz-tile__name:hover,
+.md-typeset .viz-tile .viz-tile__name:focus-visible {
+    color: var(--md-accent-fg-color);
+    text-decoration: underline;
+}
+
+.md-typeset .viz-tile:hover .viz-tile__name::after,
+.md-typeset .viz-tile .viz-tile__name:focus-visible::after {
+    opacity: 1;
+}
+
+.md-typeset .viz-tile--f .viz-tile__name {
+    font-size: 0.82rem;
+}
+
+.md-typeset .viz-tile .ver-badge {
+    font-size: 0.55rem;
 }
 
 .md-typeset .viz-grid__family {
     margin: 1rem 0 0;
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--md-default-fg-color--light);
 }
