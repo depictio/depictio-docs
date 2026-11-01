@@ -30,6 +30,9 @@ ghcr.io/depictio/depictio-cli:1.19.3
 * **Faster dashboard loads and filter changes**: stacked taxonomy fetches one rank, sunbursts are summed on the server, and repeated redraws are skipped ([#1286](https://github.com/depictio/depictio/pull/1286)).
 * **A larger UpSet** dot matrix, set-size bars and annotation strip ([#1287](https://github.com/depictio/depictio/pull/1287)).
 * **Compact docked controls**: a control group joins the row of controls ([#1285](https://github.com/depictio/depictio/pull/1285)).
+
+### **🧬 Pipeline Templates**
+
 * **A Kingdom filter on the ampliseq Ordination tab**. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md#dashboard-tabs) ([#1292](https://github.com/depictio/depictio/pull/1292)).
 
 ### **🐛 Bug Fixes**
