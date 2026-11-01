@@ -24,11 +24,14 @@ ghcr.io/depictio/depictio-cli:1.19.2
 ### **✨ New Features**
 
 * **Option cards on a segmented control**, which can sit at the top of the tab. See [SegmentedControl](../features/components.md#segmentedcontrol) ([#1264](https://github.com/depictio/depictio/pull/1264)).
-* **ANCOM-BC for two reference databases** in the ampliseq template, switched from the top of the tab. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md#dashboard-tabs) ([#1264](https://github.com/depictio/depictio/pull/1264)).
 
 ### **🚀 Improvements**
 
 * **Volcano and DA barplot name the groups of a contrast**, with shapes or colours per group. See [Volcano](../features/components.md#volcano) ([#1264](https://github.com/depictio/depictio/pull/1264)).
+
+### **🧬 Pipeline Templates**
+
+* **ANCOM-BC for two reference databases** in the ampliseq template, switched from the top of the tab. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md#dashboard-tabs) ([#1264](https://github.com/depictio/depictio/pull/1264)).
 
 ---
 
