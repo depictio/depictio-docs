@@ -53,7 +53,15 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
+.gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
+.gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
 </style>
+
+<div class="gtd-versions" data-template-version="2.0.0">
+<span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/chipseq 1.2.0</span>
+<span class="gtd-badge gtd-template-ver">Template 2.0.0</span>
+</div>
 
 ### :material-code-braces: Template variables
 

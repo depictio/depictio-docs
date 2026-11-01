@@ -1,4 +1,4 @@
-/* Template pages ship one generated reference partial per template version.
+/* Template pages ship one generated reference partial per pipeline version.
    Rendering them as tabs put every version's headings in the table of contents
    three times over; a dropdown at the top of the page keeps one block visible
    and hides the table-of-contents entries belonging to the others, so the
@@ -33,11 +33,27 @@ function initTemplateVersionPicker() {
   const badge = document.querySelector('.tpl-version-badge');
   const latest = select.closest('.tpl-version-pick')?.dataset.latest;
 
+  // The picker selects the pipeline version; the template's own revision
+  // (template.version) comes from the generated partial of that version.
+  const pick = select.closest('.tpl-version-pick');
+  let rev = pick?.querySelector('.tpl-template-rev');
+  if (pick && !rev) {
+    rev = document.createElement('span');
+    rev.className = 'tpl-template-rev';
+    rev.title = "The template's own revision, not the pipeline's";
+    pick.appendChild(rev);
+  }
+
   const apply = () => {
     if (badge) badge.hidden = select.value !== latest;
     blocks.forEach((block) => {
       const hidden = block.dataset.version !== select.value;
       block.hidden = hidden;
+      const version = block.querySelector('[data-template-version]')?.dataset.templateVersion;
+      if (!hidden && rev) {
+        rev.textContent = version ? `Template ${version}` : '';
+        rev.hidden = !version;
+      }
       headingIds.get(block).forEach((id) => {
         tocItems(id).forEach((item) => {
           item.hidden = hidden;

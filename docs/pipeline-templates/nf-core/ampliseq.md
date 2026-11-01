@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="2.18.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="2.18.0" selected>2.18.0</option>
     <option value="2.16.0">2.16.0</option>
     <option value="2.14.0">2.14.0</option>

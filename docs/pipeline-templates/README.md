@@ -15,26 +15,6 @@ depictio ingest /data/my_ampliseq_run \
   --template nf-core/ampliseq/latest
 ```
 
-## :material-tag-multiple-outline: Pipeline version and template version { #pipeline-version-and-template-version }
-
-A template carries two version numbers that mean different things.
-
-| | Example | What it says | Where you see it |
-|---|---|---|---|
-| **Pipeline version** | `nf-core/rnaseq/3.26.0` | The pipeline release whose outputs the template reads. A new pipeline release gets its own template. | The template id, the catalog cards |
-| **Template version** | `2.1.0` | The revision of the template itself: its data collections, recipes and dashboards. It moves when the template improves, for the same pipeline release. | The project and dashboard settings, the ingest log |
-
-Pick the template that matches the pipeline version you ran (`latest` takes the newest).
-The template version then tells you whether your project is up to date:
-
-- **major** (`2.1.0` to `3.0.0`): the data collections changed; ingest the run again.
-- **minor** (`2.0.0` to `2.1.0`): dashboards or figures changed; import the dashboards again.
-- **patch** (`2.1.0` to `2.1.1`): text only.
-
-Depictio records the template version a project was ingested with and each dashboard was
-imported from, and warns in the viewer when a newer one is available.
-
-
 ---
 
 ## :material-view-grid-outline: Available templates
@@ -470,6 +450,69 @@ A template bundles:
 - :material-view-dashboard: **[Dashboard YAML](../features/yaml-sync.md)**: imported on the first run, with the template variables substituted
 - :material-link: **[Cross-DC links](../usage/projects/templates.md#cross-dc-links)**: interactive filtering across data collections
 - :material-seed: **[Recipe seeds](../usage/projects/templates.md#recipe-seeds)**: each recipe's output committed as a `.tsv`, so the bundled project can be explored, and re-ingested, without the pipeline run behind it <small>(v1.6.0+)</small>
+
+---
+
+## :material-tag-multiple-outline: Pipeline version and template version { #pipeline-version-and-template-version }
+
+A template carries two version numbers. They move independently.
+
+<div class="grid cards" markdown>
+
+-   :material-pipe:{ .lg .middle } **Pipeline version**
+
+    ---
+
+    The pipeline release whose outputs the template reads. It is the last part of the
+    template id: `nf-core/rnaseq/3.26.0`. A new pipeline release gets a template of its own.
+
+    *Choose it* with `--template`, or with the **Pipeline version** picker on a template's page.
+
+-   :material-layers-outline:{ .lg .middle } **Template version**
+
+    ---
+
+    The revision of the template itself: its data collections, recipes and dashboards, for
+    one pipeline release. It moves when the template improves, for example `2.0.0` to `2.1.0`.
+
+    *Find it* beside the picker on a template's page, in the ingest log, and in the project
+    and dashboard settings.
+
+</div>
+
+When the template version moves, what you need to do depends on which number changed:
+
+<div class="tpl-bumps" markdown>
+
+<div class="tpl-bump is-major" markdown>
+<span class="tpl-bump-tag">Major</span> <code><b>2</b>.1.0 → <b>3</b>.0.0</code>
+
+**The data collections changed.** A collection, a column or a template variable was added,
+removed or renamed.
+
+:material-database-refresh: Ingest the run again.
+</div>
+
+<div class="tpl-bump is-minor" markdown>
+<span class="tpl-bump-tag">Minor</span> <code>2.<b>0</b>.0 → 2.<b>1</b>.0</code>
+
+**The dashboards changed.** Figures, tabs or recipes moved; every collection keeps its columns.
+
+:material-view-dashboard-edit-outline: Import the dashboards again.
+</div>
+
+<div class="tpl-bump is-patch" markdown>
+<span class="tpl-bump-tag">Patch</span> <code>2.1.<b>0</b> → 2.1.<b>1</b></code>
+
+**Only text changed.** Titles, captions and descriptions.
+
+:material-check: Nothing to do; import again to get the new wording.
+</div>
+
+</div>
+
+Depictio records the template version a project was ingested with, and the one each dashboard
+was imported from. The viewer warns when a newer one is available.
 
 ---
 
