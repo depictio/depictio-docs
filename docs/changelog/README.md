@@ -51,7 +51,6 @@ ghcr.io/depictio/depictio-cli:1.19.0
 * **Protein tiles**: eight advanced visualizations for structures, alignments and protein families. See [Protein tiles](../features/protein-tiles.md) ([#1130](https://github.com/depictio/depictio/pull/1130)).
 * **Tiles linked by residue**: a pick filters every table, a hover marks every tile. See [Linked by residue](../features/protein-tiles.md#residue-selection) ([#1130](https://github.com/depictio/depictio/pull/1130)).
 * **Structures from AlphaFold DB or ESMFold**, off until `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` is set. See [Where the structure comes from](../features/protein-tiles.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1254](https://github.com/depictio/depictio/pull/1254)).
-* **Seven nf-core templates**, and a Protein tab on sarek. See [nf-core templates](../pipeline-templates/nf-core/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131)).
 * **Add user**: an administrator creates an account with an initial password. See [Adding a user](../usage/guides/web_ui.md#add-a-user) ([#1251](https://github.com/depictio/depictio/pull/1251)).
 * **Everyone with access** on a project's permissions. See [Everyone with access](../usage/projects/guide.md#everyone-with-access) ([#1252](https://github.com/depictio/depictio/pull/1252)).
 
@@ -66,6 +65,10 @@ ghcr.io/depictio/depictio-cli:1.19.0
 
 * **The structure resolver is off by default** and names the service it calls. See [External structure services](../features/security.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1256](https://github.com/depictio/depictio/pull/1256)).
 * **SAML counts as single sign-on** for `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED`. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) ([#1246](https://github.com/depictio/depictio/pull/1246)).
+
+### **🧬 Pipeline Templates**
+
+* **Seven nf-core templates**, and a Protein tab on sarek. See [nf-core templates](../pipeline-templates/nf-core/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131)).
 
 ### **🐛 Bug Fixes**
 
@@ -199,7 +202,7 @@ ghcr.io/depictio/depictio-cli:1.17.2
 
 * **Viewers may comment** when `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT` is on. See [Viewers can comment](../features/comments-annotations.md#viewers-can-comment) ([#1204](https://github.com/depictio/depictio/pull/1204), [#1206](https://github.com/depictio/depictio/pull/1206)).
 
-### **🚀 Improvements**
+### **🧬 Pipeline Templates**
 
 * **One sample filter for every tab**: 14 nf-core templates drop the sample filter of their MultiQC tab. See [Sections on every tab](../features/dashboards.md#persistent-sections) ([#1203](https://github.com/depictio/depictio/pull/1203)).
 
@@ -415,9 +418,12 @@ ghcr.io/depictio/depictio-cli:1.14.1
 
 ### **✨ New Features**
 
+* **`category_colors: auto`** picks the colours at import, and text tiles print **live values** computed from the data. See [Category colours](../features/yaml-sync.md#category-colors) and [Live values](../features/yaml-sync.md#text-live-values) ([#1160](https://github.com/depictio/depictio/pull/1160)).
+
+### **🧬 Pipeline Templates**
+
 * **The nf-core templates move to v2**: each opens on an Overview landing tab, with its analyses in tab groups, built on one set of authoring rules. See [Contributing Templates](../developer/contributing-templates.md) ([#1160](https://github.com/depictio/depictio/pull/1160)).
 * **Templates for atacseq 2.1.2, chipseq 2.1.0, airrflow 5.1.1 and cutandrun 3.2.2**, whose outputs moved too far for the previous templates to ingest them. See [atacseq](../pipeline-templates/nf-core/atacseq.md) ([#1161](https://github.com/depictio/depictio/pull/1161)).
-* **`category_colors: auto`** picks the colours at import, and text tiles print **live values** computed from the data. See [Category colours](../features/yaml-sync.md#category-colors) and [Live values](../features/yaml-sync.md#text-live-values) ([#1160](https://github.com/depictio/depictio/pull/1160)).
 
 ### **🐛 Bug Fixes**
 
@@ -881,11 +887,14 @@ ghcr.io/depictio/depictio-worker:1.8.3
 
 * **Run provenance**: a template declares a `provenance:` block and the CLI collects the run's parameters, thresholds and tool versions into `template_origin`, shown as a searchable card in the ingestion report and on the dashboard. See [Run provenance](../usage/projects/templates.md#run-provenance) ([#1002](https://github.com/depictio/depictio/pull/1002), [4ef63950](https://github.com/depictio/depictio/commit/4ef63950), [3fe35f5c](https://github.com/depictio/depictio/commit/3fe35f5c)).
 * **The canvas leads with a real tab header**: the tab's name, description and icon, all fields it already carried and never showed. See [Dashboard Tabs](../features/dashboards.md#dashboard-tabs) ([#1002](https://github.com/depictio/depictio/pull/1002), [4a5cf5e0](https://github.com/depictio/depictio/commit/4a5cf5e0)).
-* **Rarefaction curves are pre-aggregated at ingest** into `alpha_rarefaction_summary`, so "Group by" offers every categorical column. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md) ([#1002](https://github.com/depictio/depictio/pull/1002), [740fa643](https://github.com/depictio/depictio/commit/740fa643)).
 
 ### **🚀 Improvements**
 
 * **Layout and panel state**: grid packing runs per section, so one section's cards no longer collide with another's, and the filter panel remembers its collapse, width and folds per tab family. See [Using the dashboard](../usage/guides/dashboard_usage.md#working-with-the-filter-panel-v140) ([#1002](https://github.com/depictio/depictio/pull/1002), [ff6e4f7b](https://github.com/depictio/depictio/commit/ff6e4f7b), [0712a5a8](https://github.com/depictio/depictio/commit/0712a5a8)).
+
+### **🧬 Pipeline Templates**
+
+* **Rarefaction curves are pre-aggregated at ingest** into `alpha_rarefaction_summary`, so "Group by" offers every categorical column. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md) ([#1002](https://github.com/depictio/depictio/pull/1002), [740fa643](https://github.com/depictio/depictio/commit/740fa643)).
 
 ### **🐛 Bug Fixes**
 
