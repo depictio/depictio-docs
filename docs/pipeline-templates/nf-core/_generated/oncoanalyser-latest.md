@@ -68,16 +68,18 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `GROUP_COL` | — | Samplesheet column the dashboard groups and filters samples by. Defaults to sample_class (sample_type and sequence_type joined, e.g. tumor_dna), which the sample hub derives. |
 | `GROUP_COL_DISPLAY` | — | Reader-facing label of GROUP_COL, used in filter and card titles. |
 | `GENOME` | — | Genome build of the run (UCSC name): hg38 for GRCh38_hmf, hg19 for GRCh37_hmf. Sets the chromosome ring, the locus views and their gene lane. |
+| `TRACKS_URI` | — | s3:// or https:// folder holding the run's outdir (the one with a <group_id>/ sub-directory per tumor), to read the genome-browser tracks (PURPLE's VCFs and the BAMs) in place instead of uploading them from DATA_ROOT. Without it the `tracks` collection uploads whichever of those files DATA_ROOT holds. |
 
 ### :material-database-outline: Data collections
 
-22 data collections — <span class="gtd-badge gtd-req">14 required</span> <span class="gtd-badge gtd-opt">8 optional</span> · <span class="gtd-badge gtd-direct">19 direct</span> <span class="gtd-badge gtd-derived">3 derived</span>.
+23 data collections — <span class="gtd-badge gtd-req">15 required</span> <span class="gtd-badge gtd-opt">8 optional</span> · <span class="gtd-badge gtd-direct">20 direct</span> <span class="gtd-badge gtd-derived">3 derived</span>.
 
 **Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
 | `samples` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/oncoanalyser/recipes/samples.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/oncoanalyser/samples.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `tracks` | <span class="gtd-badge gtd-direct">direct</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/oncoanalyser/recipes/tracks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/oncoanalyser/tracks.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `purple_purity` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/purple/purity.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">purple/purity.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `purple_cnv_segments` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/purple/cnv_segments.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">purple/cnv_segments.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `purple_gene_copy_number` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/purple/gene_copy_number.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">purple/gene_copy_number.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
@@ -100,9 +102,22 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `hmf_bamtools_fragment_length` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/hmf_bamtools/fragment_length.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">hmf_bamtools/fragment_length.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `qsee_status` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/qsee/status.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">qsee/status.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 
+### :material-directions-fork: Conditional routes
+
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (22 collections are unaffected by any variable — present on every run.)
+
+<p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
+
+<div class="gtd-mtx">
+<table>
+<thead><tr><th class="dc">Data collection</th><th><code>TRACKS_URI</code></th></tr></thead>
+<tbody>
+<tr><th class="dc"><code>tracks</code></th><td class="swap" title="re-sourced when TRACKS_URI is set">⇄</td></tr>
+</tbody></table></div>
+
 ### :material-vector-link: Cross-DC links
 
-23 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+28 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -131,6 +146,11 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>qsee_status</code></td><td>Filter the QC verdicts by samplesheet samples</td></tr>
 <tr><td><code>purple_drivers</code> <span class="col">·&nbsp;gene</span></td><td class="arr">→</td><td><code>purple_protein_changes</code></td><td>Filter the protein changes by the genes of the selected drivers</td></tr>
 <tr><td><code>purple_gene_copy_number</code> <span class="col">·&nbsp;gene</span></td><td class="arr">→</td><td><code>purple_drivers</code></td><td>Filter the driver catalog by the selected genes</td></tr>
+<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Show the genome tracks of the samples picked in the left panel</td></tr>
+<tr><td><code>tracks</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>samples</code></td><td>Filter the dashboard by the samples whose tracks are picked in the genome browser</td></tr>
+<tr><td><code>purple_somatic_variants</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Open the genome tracks of the tumor a picked call was made in</td></tr>
+<tr><td><code>purple_cnv_segments</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Open the genome tracks of the tumor a picked copy-number segment belongs to</td></tr>
+<tr><td><code>linx_svs</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Open the genome tracks of the tumor a picked structural variant was called in</td></tr>
 </tbody></table></div>
 
 ### :material-chef-hat: Recipes
@@ -151,6 +171,7 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`neo/neoepitopes.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/neo/neoepitopes.py) | Neo's scored neoepitopes, one row per tumor and candidate neoepitope. | `neoepitope_id`, `sample`, `variant_type`, `variant`, `gene`, `up_amino_acids`, `novel_amino_acids`, `down_amino_acids`, `peptides`, `rna_fragments`, `rna_depth`, `expected_tpm`, `effective_tpm`, `variant_copy_number`, `copy_number`, `subclonal_likelihood` |
 | [`nf-core/oncoanalyser/protein_genes.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/oncoanalyser/recipes/protein_genes.py) | One row per tumor and gene with a protein change: the protein tab's selector. | `entity`, `sample`, `changes`, `hotspots`, `max_af`, `worst_effect`, `driver_likelihood`, `gene_role`, `driver_types`, `reported` |
 | [`nf-core/oncoanalyser/samples.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/oncoanalyser/recipes/samples.py) | Sample hub for nf-core/oncoanalyser: the run's samplesheet, one row per sample. | `sample_id`, `group_id`, `subject_id`, `sample_type`, `sequence_type`, `sample_class`, `input_files`, `filetypes` |
+| [`nf-core/oncoanalyser/tracks.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/oncoanalyser/recipes/tracks.py) | Genome-browser track manifest: one row per track file the run published. | `track_id`, `sample_id`, `group_id`, `source_sample`, `kind`, `format`, `uri`, `name`, `category`, `order` |
 | [`purple/cnv_segments.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/purple/cnv_segments.py) | PURPLE's fitted copy-number segments as a canonical ``cnv_profile`` table. | `sample`, `chrom`, `start`, `end`, `log2`, `baf`, `copy_number`, `segment`, `label`, `depth`, `minor_copy_number`, `major_copy_number` |
 | [`purple/drivers.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/purple/drivers.py) | The run's driver catalog, somatic and germline, one row per gene and driver. | `driver_id`, `sample`, `gene`, `driver`, `origin`, `source_tool`, `category`, `reported`, `report_status`, `driver_likelihood`, `likelihood_method`, `biallelic`, `missense`, `nonsense`, `splice`, `inframe`, `frameshift`, `min_copy_number`, `max_copy_number`, `chrom`, `chromosome_band`, `transcript` |
 | [`purple/gene_copy_number.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/purple/gene_copy_number.py) | PURPLE's copy number per gene, with a call a reader can filter on. | `sample`, `gene`, `chrom`, `start`, `end`, `chromosome_band`, `transcript`, `min_copy_number`, `max_copy_number`, `min_minor_allele_copy_number`, `relative_min_copy_number`, `somatic_regions`, `cn_event`, `reported_status`, `driver_type` |

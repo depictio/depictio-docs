@@ -125,6 +125,8 @@ Translational regulation are pooled over the run and do not follow them. The
 *Sample sheet* section (the sample sheet and the optional design table) is pinned,
 collapsed, to the bottom of every child tab. Without a `METADATA_FILE` the design
 table and the group filters go; the library and assay filters remain.
+The template also has a **Locus** tab that embeds a [genome browser](../../features/genome-browser.md), opened on an
+ORF, with the libraries' P-site, coverage and read tracks.
 
 === ":material-compass-outline: Overview"
 

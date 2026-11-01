@@ -63,12 +63,13 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | Variable | Required | Description |
 |---|:--:|---|
 | `DATA_ROOT` | ✓ | Root directory containing viralrecon pipeline output (multiqc/, variants/) |
+| `TRACKS_URI` | — | s3:// or https:// folder holding the run's results, to read the genome-browser tracks (iVar VCF, primer-trimmed BAM) in place instead of uploading them from DATA_ROOT. Without it the `tracks` collection uploads whichever of those files DATA_ROOT holds. |
 
 **Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `IS_NANOPORE`
 
 ### :material-database-outline: Data collections
 
-14 data collections — <span class="gtd-badge gtd-req">2 required</span> <span class="gtd-badge gtd-opt">12 optional</span> · <span class="gtd-badge gtd-direct">8 direct</span> <span class="gtd-badge gtd-derived">6 derived</span>.
+15 data collections — <span class="gtd-badge gtd-req">3 required</span> <span class="gtd-badge gtd-opt">12 optional</span> · <span class="gtd-badge gtd-direct">8 direct</span> <span class="gtd-badge gtd-derived">7 derived</span>.
 
 **Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
@@ -76,7 +77,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 |---|:--:|---|---|:--:|
 | `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">multiqc/multiqc_data/multiqc.parquet</code> | <span class="gtd-badge gtd-req">required</span> |
 | `summary_metrics` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/multiqc/summary_metrics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">multiqc/summary_metrics.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
-| `variants_long` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ivar/variants_long.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ivar/variants_long.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `variants_long` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/variants_long.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/viralrecon/variants_long.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `tracks` | <span class="gtd-badge gtd-derived">derived</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/tracks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/viralrecon/tracks.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `pangolin_lineages` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/pangolin/pangolin_lineages.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">pangolin/pangolin_lineages.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `nextclade_results` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/nextclade/nextclade_results.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nextclade/nextclade_results.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `mosdepth_amplicon_coverage` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">variants/bowtie2/mosdepth/amplicon/all_samples.mosdepth.coverage.tsv</code> | <span class="gtd-badge gtd-opt">optional</span> |
@@ -97,22 +99,23 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 
 <div class="gtd-mtx">
 <table>
-<thead><tr><th class="dc">Data collection</th><th><code>IS_NANOPORE</code></th></tr></thead>
+<thead><tr><th class="dc">Data collection</th><th><code>IS_NANOPORE</code></th><th><code>TRACKS_URI</code></th></tr></thead>
 <tbody>
-<tr><th class="dc"><code>variants_long</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
-<tr><th class="dc"><code>pangolin_lineages</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
-<tr><th class="dc"><code>nextclade_results</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
-<tr><th class="dc"><code>mosdepth_amplicon_coverage</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
-<tr><th class="dc"><code>mosdepth_genome_coverage</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
-<tr><th class="dc"><code>mosdepth_amplicon_heatmap</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td></tr>
-<tr><th class="dc"><code>oncoplot_canonical</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
-<tr><th class="dc"><code>upset_canonical</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
-<tr><th class="dc"><code>variant_feature_matrix_canonical</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td></tr>
+<tr><th class="dc"><code>variants_long</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td><td></td></tr>
+<tr><th class="dc"><code>tracks</code></th><td></td><td class="swap" title="re-sourced when TRACKS_URI is set">⇄</td></tr>
+<tr><th class="dc"><code>pangolin_lineages</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td><td></td></tr>
+<tr><th class="dc"><code>nextclade_results</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td><td></td></tr>
+<tr><th class="dc"><code>mosdepth_amplicon_coverage</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td><td></td></tr>
+<tr><th class="dc"><code>mosdepth_genome_coverage</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td><td></td></tr>
+<tr><th class="dc"><code>mosdepth_amplicon_heatmap</code></th><td class="swap" title="re-sourced when IS_NANOPORE is set">⇄</td><td></td></tr>
+<tr><th class="dc"><code>oncoplot_canonical</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td><td></td></tr>
+<tr><th class="dc"><code>upset_canonical</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td><td></td></tr>
+<tr><th class="dc"><code>variant_feature_matrix_canonical</code></th><td class="minus" title="removed when IS_NANOPORE is set">−</td><td></td></tr>
 </tbody></table></div>
 
 ### :material-vector-link: Cross-DC links
 
-12 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+16 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -130,6 +133,10 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>summary_metrics</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>sankey_canonical</code></td><td>Filter the classification funnel by selected samples</td></tr>
 <tr><td><code>summary_metrics</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>oncoplot_canonical</code></td><td>Filter the oncoplot by selected samples</td></tr>
 <tr><td><code>summary_metrics</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>variant_feature_matrix_canonical</code></td><td>Filter the variant feature matrix by selected samples</td></tr>
+<tr><td><code>summary_metrics</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Show the genome tracks of the samples picked in the summary metrics</td></tr>
+<tr><td><code>tracks</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>summary_metrics</code></td><td>Filter the dashboard by the samples whose tracks are picked in the genome browser</td></tr>
+<tr><td><code>variants_long</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Open the genome tracks of the sample a picked variant was called in</td></tr>
+<tr><td><code>mosdepth_amplicon_coverage</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Open the genome tracks of the sample whose amplicon coverage is picked</td></tr>
 </tbody></table></div>
 
 ### :material-chef-hat: Recipes
@@ -138,13 +145,14 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 
 | Recipe | Transforms | Output |
 |---|---|---|
-| [`ivar/variants_long.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ivar/variants_long.py) | Clean and normalize viralrecon variants_long_table.csv for dashboard consumption. | `sample`, `CHROM`, `POS`, `REF`, `ALT`, `FILTER`, `DP`, `REF_DP`, `ALT_DP`, `AF`, `GENE`, `AA`, `EFFECT`, `FUNCLASS`, `mutation_label` |
 | [`mosdepth/complex_heatmap_canonical.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/mosdepth/complex_heatmap_canonical.py) | Canonical-schema ComplexHeatmap DC for viralrecon amplicon coverage. | `sample` |
 | [`mosdepth/coverage_track_canonical.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/mosdepth/coverage_track_canonical.py) | Canonical-schema Coverage Track DC for viralrecon. | `chromosome`, `position`, `value` |
 | [`multiqc/summary_metrics.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/multiqc/summary_metrics.py) | Parse viralrecon summary_variants_metrics_mqc.csv into a clean per-sample metrics table. | `sample`, `num_reads_mapped`, `pct_reads_mapped`, `coverage_median`, `pct_genome_covered_1x`, `pct_genome_covered_10x`, `num_variants_snp`, `num_variants_indel`, `num_variants_total`, `lineage` |
 | [`nextclade/nextclade_results.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/nextclade/nextclade_results.py) | Extract and clean Nextclade clade assignment results from viralrecon output. | `sample`, `clade`, `Nextclade_pango`, `totalSubstitutions`, `totalDeletions`, `totalInsertions`, `totalFrameShifts`, `totalMissing`, `totalNonACGTNs`, `alignmentScore`, `coverage`, `qc_overallScore`, `qc_overallStatus` |
 | [`nf-core/viralrecon/oncoplot_canonical.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/oncoplot_canonical.py) | Canonical-schema Oncoplot DC for viralrecon variants. | `sample_id`, `gene`, `mutation_type` |
 | [`nf-core/viralrecon/sankey_canonical.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/sankey_canonical.py) | Canonical-schema Sankey DC for viralrecon lineage / clade typing. | `sample`, `qc_status`, `lineage`, `clade` |
+| [`nf-core/viralrecon/tracks.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/tracks.py) | Genome-browser track manifest: one row per track file the run published. | `track_id`, `sample_id`, `kind`, `format`, `uri`, `name`, `lineage`, `category`, `order` |
 | [`nf-core/viralrecon/upset_canonical.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/upset_canonical.py) | Canonical-schema UpSet DC for viralrecon variants. | `mutation_label` |
 | [`nf-core/viralrecon/variant_feature_matrix_canonical.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/variant_feature_matrix_canonical.py) | Canonical-schema sample × variant feature matrix for live PCA embedding. | `sample_id` |
+| [`nf-core/viralrecon/variants_long.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/viralrecon/recipes/variants_long.py) | viralrecon's variant calls, with a ranking column for the call the dashboard opens on. | `sample`, `CHROM`, `POS`, `REF`, `ALT`, `FILTER`, `DP`, `REF_DP`, `ALT_DP`, `AF`, `GENE`, `AA`, `EFFECT`, `FUNCLASS`, `mutation_label`, `call_score` |
 | [`pangolin/pangolin_lineages.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/pangolin/pangolin_lineages.py) | Extract and clean Pangolin lineage assignments from viralrecon output. | `sample`, `lineage`, `conflict`, `ambiguity_score`, `scorpio_call`, `scorpio_support`, `pangolin_version`, `qc_status` |

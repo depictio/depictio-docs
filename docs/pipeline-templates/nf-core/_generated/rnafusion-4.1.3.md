@@ -63,6 +63,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 |---|:--:|---|
 | `DATA_ROOT` | ✓ | Root directory containing rnafusion pipeline output (multiqc/, fusionreport/, arriba/, starfusion/, fusioncatcher/, fusioninspector/, ctatsplicing/) |
 | `SAMPLESHEET_FILE` | — | Path to the run samplesheet. Defaults to {DATA_ROOT}/input/samplesheet.csv. rnafusion does not publish the samplesheet, so fetch the one params.json `input` points at (see megatest.yaml post_fetch_help). |
+| `GENOME` | — | UCSC name of the assembly the run aligned to (hg38, hg19, mm10): the axis and gene lane of the genome browser. |
+| `TRACKS_URI` | — | s3:// or https:// folder holding the run's results (the folder DATA_ROOT mirrors), to read the genome-browser tracks (STAR alignments) in place instead of uploading them from DATA_ROOT. Without it the `tracks` collection uploads whichever of those files DATA_ROOT holds. |
 | `SKIP_ARRIBA` | — | Set when params.json `tools` does not include arriba. Prunes the Arriba data collection. |
 | `SKIP_STARFUSION` | — | Set when params.json `tools` does not include starfusion. Prunes the STAR-Fusion data collection. |
 | `SKIP_FUSIONCATCHER` | — | Set when params.json `tools` does not include fusioncatcher. Prunes the FusionCatcher data collection. |
@@ -72,7 +74,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 
 ### :material-database-outline: Data collections
 
-12 data collections — <span class="gtd-badge gtd-req">11 required</span> <span class="gtd-badge gtd-opt">1 optional</span> · <span class="gtd-badge gtd-direct">12 direct</span> <span class="gtd-badge gtd-derived">0 derived</span>.
+13 data collections — <span class="gtd-badge gtd-req">12 required</span> <span class="gtd-badge gtd-opt">1 optional</span> · <span class="gtd-badge gtd-direct">12 direct</span> <span class="gtd-badge gtd-derived">1 derived</span>.
 
 **Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
@@ -83,13 +85,14 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `fusion_consensus` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/fusionreport/fusions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">fusionreport/fusions.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `caller_evidence` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/fusionreport/caller_evidence.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">fusionreport/caller_evidence.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `arriba_fusions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/arriba/fusions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">arriba/fusions.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
-| `arriba_fusion_links` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/arriba/fusion_links.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">arriba/fusion_links.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `arriba_fusion_links` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnafusion/recipes/breakpoint_links.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnafusion/breakpoint_links.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `starfusion_fusions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/starfusion/fusions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">starfusion/fusions.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `fusioncatcher_fusions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/fusioncatcher/fusion_genes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">fusioncatcher/fusion_genes.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `fusioninspector_fusions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/fusioninspector/fusions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">fusioninspector/fusions.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `fusion_protein_domains` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/fusioninspector/protein_domains.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">fusioninspector/protein_domains.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `splice_junctions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ctatsplicing/introns.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ctatsplicing/introns.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `cancer_introns` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ctatsplicing/cancer_introns.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ctatsplicing/cancer_introns.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `tracks` | <span class="gtd-badge gtd-direct">direct</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnafusion/recipes/tracks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnafusion/tracks.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 
 ### :material-directions-fork: Conditional routes
 
@@ -99,23 +102,24 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 
 <div class="gtd-mtx scroll">
 <table>
-<thead><tr><th class="dc">Data collection</th><th><code>SAMPLESHEET_FILE</code></th><th><code>SKIP_ARRIBA</code></th><th><code>SKIP_STARFUSION</code></th><th><code>SKIP_FUSIONCATCHER</code></th><th><code>SKIP_FUSIONINSPECTOR</code></th><th><code>SKIP_CTATSPLICING</code></th><th><code>SKIP_QC</code></th></tr></thead>
+<thead><tr><th class="dc">Data collection</th><th><code>SAMPLESHEET_FILE</code></th><th><code>TRACKS_URI</code></th><th><code>SKIP_ARRIBA</code></th><th><code>SKIP_STARFUSION</code></th><th><code>SKIP_FUSIONCATCHER</code></th><th><code>SKIP_FUSIONINSPECTOR</code></th><th><code>SKIP_CTATSPLICING</code></th><th><code>SKIP_QC</code></th></tr></thead>
 <tbody>
-<tr><th class="dc"><code>multiqc_data</code></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_QC is set">−</td></tr>
-<tr><th class="dc"><code>samplesheet</code></th><td class="swap" title="re-sourced when SAMPLESHEET_FILE is set">⇄</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><th class="dc"><code>arriba_fusions</code></th><td></td><td class="minus" title="removed when SKIP_ARRIBA is set">−</td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><th class="dc"><code>arriba_fusion_links</code></th><td></td><td class="minus" title="removed when SKIP_ARRIBA is set">−</td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><th class="dc"><code>starfusion_fusions</code></th><td></td><td></td><td class="minus" title="removed when SKIP_STARFUSION is set">−</td><td></td><td></td><td></td><td></td></tr>
-<tr><th class="dc"><code>fusioncatcher_fusions</code></th><td></td><td></td><td></td><td class="minus" title="removed when SKIP_FUSIONCATCHER is set">−</td><td></td><td></td><td></td></tr>
-<tr><th class="dc"><code>fusioninspector_fusions</code></th><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_FUSIONINSPECTOR is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>fusion_protein_domains</code></th><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_FUSIONINSPECTOR is set">−</td><td></td><td></td></tr>
-<tr><th class="dc"><code>splice_junctions</code></th><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_CTATSPLICING is set">−</td><td></td></tr>
-<tr><th class="dc"><code>cancer_introns</code></th><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_CTATSPLICING is set">−</td><td></td></tr>
+<tr><th class="dc"><code>multiqc_data</code></th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_QC is set">−</td></tr>
+<tr><th class="dc"><code>samplesheet</code></th><td class="swap" title="re-sourced when SAMPLESHEET_FILE is set">⇄</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>arriba_fusions</code></th><td></td><td></td><td class="minus" title="removed when SKIP_ARRIBA is set">−</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>arriba_fusion_links</code></th><td></td><td></td><td class="minus" title="removed when SKIP_ARRIBA is set">−</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>starfusion_fusions</code></th><td></td><td></td><td></td><td class="minus" title="removed when SKIP_STARFUSION is set">−</td><td></td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>fusioncatcher_fusions</code></th><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_FUSIONCATCHER is set">−</td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>fusioninspector_fusions</code></th><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_FUSIONINSPECTOR is set">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>fusion_protein_domains</code></th><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_FUSIONINSPECTOR is set">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>splice_junctions</code></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_CTATSPLICING is set">−</td><td></td></tr>
+<tr><th class="dc"><code>cancer_introns</code></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="minus" title="removed when SKIP_CTATSPLICING is set">−</td><td></td></tr>
+<tr><th class="dc"><code>tracks</code></th><td class="swap" title="re-sourced when SAMPLESHEET_FILE is set">⇄</td><td class="swap" title="re-sourced when TRACKS_URI is set">⇄</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 </tbody></table></div>
 
 ### :material-vector-link: Cross-DC links
 
-20 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+23 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -141,6 +145,9 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>fusion_protein_domains</code></td><td>Narrow fusion protein domains to the selected samples</td></tr>
 <tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>splice_junctions</code></td><td>Narrow splice junctions to the selected samples</td></tr>
 <tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>cancer_introns</code></td><td>Narrow cancer introns to the selected samples</td></tr>
+<tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Show the genome tracks of the samples picked in the left panel</td></tr>
+<tr><td><code>arriba_fusion_links</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Show the genome tracks of the sample that called the fusion picked on the ring</td></tr>
+<tr><td><code>tracks</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>samplesheet</code></td><td>Filter the dashboard by the samples whose tracks are picked in the genome browser</td></tr>
 </tbody></table></div>
 
 ### :material-chef-hat: Recipes
@@ -149,7 +156,6 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 
 | Recipe | Transforms | Output |
 |---|---|---|
-| [`arriba/fusion_links.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/arriba/fusion_links.py) | Turn Arriba's ``fusions.tsv`` into one breakpoint-pair link per fusion call. | `sample`, `label`, `chrom_a`, `pos_a`, `chrom_b`, `pos_b`, `weight`, `category`, `confidence` |
 | [`arriba/fusions.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/arriba/fusions.py) | Tidy Arriba's ``fusions.tsv`` into one row per retained fusion call. | `sample`, `fusion`, `gene_5p`, `gene_3p`, `breakpoint_5p`, `breakpoint_3p`, `chrom_5p`, `chrom_3p`, `chrom_pair`, `site_5p`, `site_3p`, `fusion_type`, `confidence`, `reading_frame`, `split_reads`, `discordant_mates`, `supporting_reads`, `coverage`, `log_support`, `support_fraction`, `retained_protein_domains`, `tags` |
 | [`ctatsplicing/cancer_introns.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ctatsplicing/cancer_introns.py) | Tidy the CTAT-SPLICING ``*.cancer.introns`` candidate table into one row per intron. | `sample`, `intron`, `chrom`, `start`, `end`, `strand`, `gene`, `gene_id`, `uniq_mapped`, `multi_mapped`, `score`, `n_tcga_cohorts`, `top_tcga_cohort`, `top_tcga_pct`, `n_gtex_tissues`, `top_gtex_tissue`, `top_gtex_pct`, `variant_name` |
 | [`ctatsplicing/introns.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ctatsplicing/introns.py) | Tidy the CTAT-SPLICING ``*.introns`` splice-junction table into one row per intron. | `sample`, `intron`, `chrom`, `start`, `end`, `intron_length`, `strand`, `gene`, `gene_id`, `uniq_mapped`, `multi_mapped`, `total_mapped`, `uniq_fraction`, `score` |
@@ -158,4 +164,6 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`fusioninspector/protein_domains.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/fusioninspector/protein_domains.py) | Unpivot the FusionInspector Pfam fields into one row per fusion protein domain. | `sample`, `fusion`, `partner`, `domain`, `domain_start`, `domain_end`, `domain_length`, `evalue`, `neg_log10_evalue`, `prot_fusion_type` |
 | [`fusionreport/caller_evidence.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/fusionreport/caller_evidence.py) | Unpivot the per-caller evidence strings of the fusion-report consensus CSV. | `sample`, `fusion`, `caller`, `position_5p`, `position_3p`, `supporting_reads`, `log_support`, `evidence_fraction`, `fii`, `detail` |
 | [`fusionreport/fusions.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/fusionreport/fusions.py) | Turn the fusion-report consensus CSV into one tidy row per fusion. | `sample`, `fusion`, `gene_5p`, `gene_3p`, `databases`, `n_databases`, `fii`, `explained_fii`, `n_tools`, `tool_support`, `rank` |
+| [`nf-core/rnafusion/breakpoint_links.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnafusion/recipes/breakpoint_links.py) | Arriba breakpoint pairs with the fusion-report index and a rank the browser opens on. | `sample`, `label`, `chrom_a`, `pos_a`, `chrom_b`, `pos_b`, `weight`, `category`, `confidence`, `fii`, `rank_score` |
+| [`nf-core/rnafusion/tracks.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnafusion/recipes/tracks.py) | Genome-browser track manifest: one row per track file the run published. | `track_id`, `sample`, `kind`, `format`, `uri`, `name`, `category`, `order` |
 | [`starfusion/fusions.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/starfusion/fusions.py) | Tidy STAR-Fusion's abridged prediction table into one row per fusion call. | `sample`, `fusion`, `gene_5p`, `gene_3p`, `breakpoint_5p`, `breakpoint_3p`, `splice_type`, `junction_reads`, `spanning_frags`, `supporting_reads`, `ffpm`, `log_ffpm`, `junction_fraction`, `large_anchor_support`, `annotations` |

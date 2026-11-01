@@ -146,6 +146,7 @@ no contrast and leave them out. Pick one contrast first: rnasplice often runs a
 contrast and its mirror, and a gene called in both counts twice. The *Sample
 sheet* section (the samples and the contrasts) is pinned, collapsed, to the bottom
 of every child tab.
+The Splicing Events tab embeds a [genome browser](../../features/genome-browser.md) opened on the selected event.
 
 === ":material-compass-outline: Overview"
 

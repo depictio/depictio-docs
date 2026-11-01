@@ -146,6 +146,8 @@ every tab. The persistent *Sample filters* (lineage, then sample id) and *QC
 thresholds* (genome at 10x, median depth, reads mapped, variants called) sit in the
 left panel and narrow every tab. The *Sample sheet*, the run summary table, is
 pinned, collapsed, to the bottom of every child tab.
+The Variants tab embeds a [genome browser](../../features/genome-browser.md) with the called variants and the reads
+along the genome.
 
 !!! info "Nanopore (ARTIC) runs"
     A nanopore run keeps the Overview's Key figures, the persistent filters and the

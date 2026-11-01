@@ -111,7 +111,7 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/airrflow/" data-tpl-name="nf-core/airrflow" data-tpl-status="experimental" data-tpl-version="5.1.0" data-tpl-keywords="airr bcr tcr repertoire immune receptor clonal lineage immcantation presto changeo vdj">
+  <a class="template-card" href="nf-core/airrflow/" data-tpl-name="nf-core/airrflow" data-tpl-status="experimental" data-tpl-version="5.1.2" data-tpl-keywords="airr bcr tcr repertoire immune receptor clonal lineage immcantation presto changeo vdj">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/airrflow/master/docs/images/nf-core-airrflow_logo_dark.png" alt="nf-core/airrflow">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/airrflow/master/docs/images/nf-core-airrflow_logo_light.png" alt="nf-core/airrflow">
@@ -223,7 +223,7 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/hic/" data-tpl-name="nf-core/hic" data-tpl-status="draft" data-tpl-version="2.0.0" data-tpl-keywords="hic hi-c chromatin conformation contact map pairs compartments tad cooler">
+  <a class="template-card" href="nf-core/hic/" data-tpl-name="nf-core/hic" data-tpl-status="draft" data-tpl-version="2.1.0" data-tpl-keywords="hic hi-c chromatin conformation contact map pairs compartments tad cooler">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/hic/master/docs/images/nf-core-hic_logo_dark.png" alt="nf-core/hic">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/hic/master/docs/images/nf-core-hic_logo_light.png" alt="nf-core/hic">
@@ -279,7 +279,7 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/sarek/" data-tpl-name="nf-core/sarek" data-tpl-status="draft" data-tpl-version="3.10.0" data-tpl-keywords="sarek variant calling germline somatic snv indel vcf vep snpeff wgs wes">
+  <a class="template-card" href="nf-core/sarek/" data-tpl-name="nf-core/sarek" data-tpl-status="draft" data-tpl-version="3.11.0" data-tpl-keywords="sarek variant calling germline somatic snv indel vcf vep snpeff wgs wes">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/sarek/master/docs/images/nf-core-sarek_logo_dark.png" alt="nf-core/sarek">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/sarek/master/docs/images/nf-core-sarek_logo_light.png" alt="nf-core/sarek">

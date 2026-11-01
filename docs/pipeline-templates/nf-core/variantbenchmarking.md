@@ -192,6 +192,8 @@ and no *Sample sheet* section. Each child tab opens with a short intro and a str
 cards, then at most three open sections; tables and the cross-check follow, collapsed.
 Each caller keeps one colour on every tab, and the precision-recall scatters draw no point
 labels.
+The Germline and Structural & CNV tabs each embed a [genome browser](../../features/genome-browser.md) that shows where
+the callsets err on the genome.
 
 === ":material-compass-outline: Overview"
 
