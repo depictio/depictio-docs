@@ -37,6 +37,17 @@ peptides each sample presents:
 - :material-magnify-scan: **Search**: the spectra, PSMs and peptides of each raw file, how the raw search behaves as the FDR threshold moves, and whether the peptides elute and ionise as predicted
 - :material-ruler: **Immunopeptidome**: the length profile and anchor motifs that point to the MHC class, and the peptides the conditions share with the proteins they come from
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/mhcquant, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acceceaa57cdb54ef9a2262" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acceceaa57cdb54ef9a2262" loading="lazy" title="nf-core/mhcquant showcase dashboard" allowfullscreen></iframe>
+</div>
+
 The persistent `Sample filters` (condition, sample, raw file) sit in the left
 panel and apply to every tab, and the collapsed `Sample sheet` and `Reference
 tables` sections are pinned to the bottom of every child tab.

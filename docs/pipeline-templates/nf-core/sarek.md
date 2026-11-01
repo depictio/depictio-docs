@@ -38,6 +38,17 @@ call and gene by gene rather than only by how many calls each made:
 - :material-set-merge: **Variant calls**: what each caller called and of what kind, how clean each callset looks, and which calls the callers share
 - :material-dna: **Annotation**: SnpEff's consequences recomputed per call, the genes that carry the calls, the coding variants on the protein and its predicted structure, and depth and calls at one region on one axis
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/sarek, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accee6e068a4d7c3dc3f0ee" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accee6e068a4d7c3dc3f0ee" loading="lazy" title="nf-core/sarek showcase dashboard" allowfullscreen></iframe>
+</div>
+
 The persistent `Sample filters` (status, patient, sample) sit in the left panel,
 and a pick there reaches every per-sample collection and the MultiQC panels
 through the sample links.

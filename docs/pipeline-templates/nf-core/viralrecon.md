@@ -37,6 +37,17 @@ reads to variant calls and lineage, one tab or tab group per step:
 - :material-dna: **Variants**: every call with its snpEff effect, its allele frequency and its read support (iVar on Illumina runs)
 - :material-virus: **Lineage & Clustering**: Pangolin lineages and Nextclade clades with their QC verdicts, and the samples grouped by the mutations they share
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/viralrecon, nf-core test data</span>
+    <span class="tpl-showcase-runs"><button type="button" class="tpl-showcase-run is-active" data-src="https://showcases.depictio.embl.org/dashboard/6accf00cfe17adcb30c3f090">Illumina</button><button type="button" class="tpl-showcase-run" data-src="https://showcases.depictio.embl.org/dashboard/6accf030068a4d7c3dc3f14c">Nanopore</button></span>
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf00cfe17adcb30c3f090" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf00cfe17adcb30c3f090" loading="lazy" title="nf-core/viralrecon showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! info "Works beyond SARS-CoV-2"
     The pipeline supports any viral genome in nf-core's reference-genomes
     config. This template was validated on SARS-CoV-2 ARTIC amplicon data, but

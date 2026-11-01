@@ -2182,3 +2182,85 @@ body.catalog-fs-lock .md-main {
     background: #fff6e6;
     color: #b9770e;
 }
+
+/* Live showcase on template pages: the template's dashboard from
+   showcases.depictio.embl.org, rendered at 60% so a full dashboard fits the
+   column. loading=lazy keeps it off the network until it scrolls into view. */
+.md-typeset .tpl-showcase {
+    margin: 1.2rem 0 1.6rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--md-default-bg-color);
+}
+
+.md-typeset .tpl-showcase-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.8rem;
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid var(--md-default-fg-color--lightest);
+    font-size: 0.72rem;
+}
+
+.md-typeset .tpl-showcase-live {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2fb344;
+    box-shadow: 0 0 0 3px rgba(47, 179, 68, 0.2);
+}
+
+.md-typeset .tpl-showcase-label {
+    font-weight: 700;
+}
+
+.md-typeset .tpl-showcase-meta {
+    color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .tpl-showcase-runs {
+    display: inline-flex;
+    gap: 0.25rem;
+}
+
+.md-typeset .tpl-showcase-run {
+    padding: 0.1rem 0.6rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--md-default-fg-color--light);
+    font: inherit;
+    cursor: pointer;
+}
+
+.md-typeset .tpl-showcase-run.is-active {
+    border-color: var(--md-accent-fg-color, #526cfe);
+    color: var(--md-accent-fg-color, #526cfe);
+    font-weight: 600;
+}
+
+.md-typeset .tpl-showcase-open {
+    margin-left: auto;
+}
+
+.md-typeset .tpl-showcase-frame {
+    display: block;
+    width: 166.67%;
+    max-width: none;
+    height: 1150px;
+    border: 0;
+    transform: scale(0.6);
+    transform-origin: 0 0;
+    margin-bottom: -460px;
+}
+
+@media (max-width: 600px) {
+    .md-typeset .tpl-showcase-frame {
+        width: 250%;
+        height: 1500px;
+        transform: scale(0.4);
+        margin-bottom: -900px;
+    }
+}

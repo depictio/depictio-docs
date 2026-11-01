@@ -41,6 +41,17 @@ the libraries per guide:
 - :material-chart-bell-curve: **Indel spectrum**: the size distribution and the deletion and insertion positions around the cut site of one guide
 - :material-waves: **Substitutions**: substitution and gap rates by offset from the cut site, for every guide and for the picked one
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/crisprseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6ad10e5892aa15cc37084203" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6ad10e5892aa15cc37084203" loading="lazy" title="nf-core/crisprseq showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! warning "The targeted analysis only"
     The template reads `--analysis targeted`. The screening analysis (count
     tables, MAGeCK, BAGEL2) writes different outputs and is not covered. The

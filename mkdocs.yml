@@ -82,6 +82,7 @@ extra_javascript:
   - javascripts/depictio-theme-sync.js
   - javascripts/catalog-fullscreen.js
   - javascripts/template-version.js
+  - javascripts/template-showcase.js
   - javascripts/doc-sections.js
   - javascripts/template-catalog.js
   - javascripts/asciinema.js

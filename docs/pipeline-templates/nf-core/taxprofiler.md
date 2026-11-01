@@ -37,6 +37,17 @@ run, whichever classifiers it used:
 - :material-bacteria-outline: **Communities**: the composition per profiling run beside sylph containment and melon genome copies, and the diversity of each profile
 - :material-graph-outline: **Classifiers**: a Bray-Curtis ordination over every profiling run, the classifier overlap as an UpSet, the taxonomic flow, and sylph containment identity
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/taxprofiler, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf0fea57cdb54ef9a22da" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf0fea57cdb54ef9a22da" loading="lazy" title="nf-core/taxprofiler showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! info "Whatever profilers your run used"
     taxprofiler runs an arbitrary subset of its profilers, chosen by the database
     sheet and the `run_*` flags. The template deliberately does not gate each

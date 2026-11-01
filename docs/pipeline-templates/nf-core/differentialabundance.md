@@ -37,6 +37,17 @@ nf-core/differentialabundance run:
 - :material-chart-scatter-plot: **Differential**: volcano with MA and QQ views per contrast, test diagnostics, effect size by biotype, and every annotated call on the genome
 - :material-set-merge: **Gene sets**: GSEA enrichment per contrast and pole (needs a GSEA run)
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/differentialabundance, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf05a068a4d7c3dc3f159" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf05a068a4d7c3dc3f159" loading="lazy" title="nf-core/differentialabundance showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! info "The DESeq2 route only"
     This template binds `--differential_method deseq2`, the pipeline default. The
     limma, propd and dream routes write differently named tables and are not

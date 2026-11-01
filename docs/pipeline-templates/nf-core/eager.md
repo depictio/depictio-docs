@@ -37,6 +37,17 @@ question per tab, in three groups:
 - :material-dna: **Ancient DNA**: how much of each extract is the target organism, how many distinct molecules each library holds, and whether the DNA is damaged and short, as ancient DNA is
 - :material-waves: **Genome**: depth per contig and the depth distribution, depth and mapping quality at one locus, and the variants called per sample
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/eager, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acceac0068a4d7c3dc3f07d" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acceac0068a4d7c3dc3f07d" loading="lazy" title="nf-core/eager showcase dashboard" allowfullscreen></iframe>
+</div>
+
 The persistent `Sample filters` (sample, library, UDG treatment) sit in the left
 panel and narrow every tab. Below them, the collapsed `QC thresholds` set
 coverage, duplication and endogenous-DNA floors: the collections they read link

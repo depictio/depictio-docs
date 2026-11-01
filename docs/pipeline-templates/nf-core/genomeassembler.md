@@ -38,6 +38,17 @@ groups:
 - :material-trophy: **Assemblies**: which assembly is best across contiguity, accuracy and genes, and what each polishing and scaffolding step adds to a sample's assembly
 - :material-ruler: **Quality**: Nx curves and QUAST for contiguity, Merqury QV, k-mer completeness and copy number for accuracy, and BUSCO for gene completeness
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/genomeassembler, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acceb0e813ef93e159a21fd" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acceb0e813ef93e159a21fd" loading="lazy" title="nf-core/genomeassembler showcase dashboard" allowfullscreen></iframe>
+</div>
+
 The persistent `Sample filters` (the design group, then the sample id) sit in the
 left panel and narrow every per-assembly tab through the samplesheet links;
 Genome profile reads per read set and has its own `Read set` filter.

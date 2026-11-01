@@ -37,6 +37,17 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
 - :material-dna: **Repertoire**: V gene usage at family and gene resolution, CDR3 lengths and V by J pairing
 - :material-chart-bell-curve: **Clonality**: Hill diversity profiles, clonal expansion and homeostasis, and the clones samples of one subject share
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/airrflow, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acce9da068a4d7c3dc3f05a" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acce9da068a4d7c3dc3f05a" loading="lazy" title="nf-core/airrflow showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! info "No external metadata file"
     Everything the template reads comes from the run itself: the validated
     samplesheet the pipeline writes to `pipeline_info/samplesheet.valid.tsv` is
