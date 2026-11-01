@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Depictio — Embedded component</title>
+    <script type="module" crossorigin src="embed-a7cd7cf076.js"></script>
+    <link rel="stylesheet" href="embed-a7cd7cf076.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      Payload injected by services/export/embed.py, which replaces the sentinel
+      below. It sits inside a JSON script element on purpose: that is what makes
+      escaping `</` in the payload sufficient to keep the element from closing
+      early. Keep the sentinel and the EMBED_SENTINEL constant in sync.
+    -->
+    <script id="embed-payload" type="application/json">{"theme": "light", "component": {"index": "ov-about", "component_type": "text", "title": "", "workflow_tag": "", "data_collection_tag": "", "wf_id": null, "dc_id": null, "dc_config": {}, "cols_json": {}, "parent_index": null, "last_updated": "2026-10-31T18:21:16.275021", "title_align": "left", "section": null, "order": 1, "alignment": "left", "vertical_alignment": "center", "body": "### About this dashboard\nnf-core/ampliseq turns amplicon reads (16S, 18S or ITS) into amplicon sequence variants (ASVs), names each against a reference taxonomy and compares the communities of the samples. This page sums up one run; each tab behind it answers one question, in the order of the steps below.\n\nThe sample filters in the left panel apply to every tab: narrow the samples once and the whole dashboard follows. A bar above a section narrows that section only.\n", "surface": "card", "accent": null, "logo": null, "logo_dark": null}, "title": "", "data": {"figures": {}, "tables": {}, "maps": {}, "images": {}, "multiqc": {}, "multiqcGeneralStats": {}, "cards": {"values": {}, "secondary": {}, "aggregations": {}}, "unique": {}, "ranges": {}, "specs": {}, "schemas": {}, "advancedVizData": {}, "compute": {}}, "tabs": [{"label": "MultiQC", "icon": null, "color": "orange"}, {"label": "Alpha Diversity", "icon": "mdi:chart-bell-curve", "color": "grape"}, {"label": "Ordination & Clustering", "icon": "mdi:chart-scatter-plot-hexbin", "color": "pink"}, {"label": "Community & Diversity", "icon": "mdi:bacteria-outline", "color": "teal"}, {"label": "Differential Abundance", "icon": "mdi:chart-scatter-plot", "color": "red"}, {"label": "Phylogeny", "icon": "mdi:family-tree", "color": "lime"}, {"label": "Overview", "icon": "mdi:compass-outline", "color": "brandPrimary"}]}</script>
+  </body>
+</html>

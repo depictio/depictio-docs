@@ -136,8 +136,11 @@ markdown_extensions:
 # serves them from one copy at the site root. Only active when
 # DEPICTIO_DOCS_SHARED_IMAGES=1 (set by the deploy workflow), so `mkdocs serve`
 # behaves exactly as before.
+# landing_stats fills the home page's "Depictio in numbers" placeholders from
+# docs/data/landing_stats.json (rebuilt by dev/landing_stats.py).
 hooks:
   - hooks/shared_images.py
+  - hooks/landing_stats.py
 
 # Plugins
 plugins:

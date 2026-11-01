@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Depictio — Embedded component</title>
+    <script type="module" crossorigin src="embed-4dfd1a09fa.js"></script>
+    <link rel="stylesheet" href="embed-4dfd1a09fa.css">
+  <style>@media (min-width: 480px) { html { font-size: 118%; } }</style></head>
+  <body>
+    <div id="root"></div>
+    <!--
+      Payload injected by services/export/embed.py, which replaces the sentinel
+      below. It sits inside a JSON script element on purpose: that is what makes
+      escaping `</` in the payload sufficient to keep the element from closing
+      early. Keep the sentinel and the EMBED_SENTINEL constant in sync.
+    -->
+    <script id="embed-payload" type="application/json">{"theme": "dark", "component": {"index": "ov-study", "component_type": "text", "title": "", "workflow_tag": "", "data_collection_tag": "", "wf_id": null, "dc_id": null, "dc_config": {}, "cols_json": {}, "parent_index": null, "last_updated": "2026-10-31T22:04:56.776146", "title_align": "left", "section": null, "order": 1, "alignment": "left", "vertical_alignment": "center", "body": "### The study\n- ![](icon:mdi:family-tree) **Families** {{n_fam}}, each analysed against its pedigree\n- ![](icon:mdi:test-tube) **Samples** {{n_samples}} sequenced, {{n_aff}} of them affected\n- ![](icon:mdi:account-multiple-outline) **Trios** {{n_trios}} probands with both parents in the run\n- ![](icon:mdi:gender-male-female) **Sex** {{n_female}} female and {{n_male}} male, as the pedigree declares\n- ![](icon:mdi:file-table-outline) **Samplesheet** one row per sample, its path in the run parameters\n", "surface": "card", "accent": null, "logo": null, "logo_dark": null, "values": {"n_fam": {"dc": "samples", "column": "family_id", "aggregation": "nunique", "format": "integer", "wf_id": "6ae1e45087198bb2c1687ec6", "dc_id": "6ae1e45087198bb2c1687eeb"}, "n_samples": {"dc": "samples", "column": "sample", "aggregation": "nunique", "format": "integer", "wf_id": "6ae1e45087198bb2c1687ec6", "dc_id": "6ae1e45087198bb2c1687eeb"}, "n_aff": {"dc": "samples", "column": "sample", "aggregation": "nunique", "filter_expr": "col('status') == 'Affected'", "format": "integer", "wf_id": "6ae1e45087198bb2c1687ec6", "dc_id": "6ae1e45087198bb2c1687eeb"}, "n_trios": {"dc": "samples", "column": "sample", "aggregation": "nunique", "filter_expr": "(col('role') == 'Proband') & col('father').is_not_null() & col('mother').is_not_null()", "format": "integer", "wf_id": "6ae1e45087198bb2c1687ec6", "dc_id": "6ae1e45087198bb2c1687eeb"}, "n_female": {"dc": "samples", "column": "sample", "aggregation": "nunique", "filter_expr": "col('sex') == 'Female'", "format": "integer", "wf_id": "6ae1e45087198bb2c1687ec6", "dc_id": "6ae1e45087198bb2c1687eeb"}, "n_male": {"dc": "samples", "column": "sample", "aggregation": "nunique", "filter_expr": "col('sex') == 'Male'", "format": "integer", "wf_id": "6ae1e45087198bb2c1687ec6", "dc_id": "6ae1e45087198bb2c1687eeb"}}}, "title": "", "data": {"figures": {}, "tables": {}, "maps": {}, "images": {}, "multiqc": {}, "multiqcGeneralStats": {}, "cards": {"values": {"ov-study": {"n_fam": 1.0, "n_samples": 3.0, "n_aff": 1, "n_trios": 1, "n_female": 1, "n_male": 2}}, "secondary": {}, "aggregations": {}}, "unique": {}, "ranges": {}, "specs": {}, "schemas": {}, "advancedVizData": {}, "compute": {}}, "tabs": [{"label": "Overview", "icon": "mdi:compass-outline", "color": "brandPrimary"}, {"label": "MultiQC", "icon": null, "color": "orange"}, {"label": "Alignment", "icon": "mdi:align-horizontal-left", "color": "blue"}, {"label": "Family", "icon": "mdi:family-tree", "color": "pink"}, {"label": "Callset", "icon": "mdi:magnify-scan", "color": "teal"}, {"label": "Ranked", "icon": "mdi:sort-numeric-descending", "color": "grape"}, {"label": "Mitochondria", "icon": "mdi:atom", "color": "yellow"}, {"label": "Repeats", "icon": "mdi:repeat", "color": "red"}, {"label": "Locus", "icon": "mdi:map-marker-outline", "color": "indigo"}]}</script>
+  </body>
+</html>

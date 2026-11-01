@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head><script>
+(function () {
+  var PREFIX = '/depictio/api/v1/files/serve/image?s3_path=';
+  function local(img) {
+    var src = img.getAttribute('src') || '';
+    if (src.indexOf(PREFIX) !== 0) return;
+    var name = decodeURIComponent(src.slice(PREFIX.length)).split('/').pop();
+    img.setAttribute('src', 'img/' + name.replace(/\.[^.]+$/, '') + '.webp');
+  }
+  new MutationObserver(function (records) {
+    records.forEach(function (r) {
+      if (r.type === 'attributes') local(r.target);
+      r.addedNodes.forEach(function (n) {
+        if (n.nodeType !== 1) return;
+        if (n.tagName === 'IMG') local(n);
+        if (n.querySelectorAll) n.querySelectorAll('img').forEach(local);
+      });
+    });
+  }).observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ['src'] });
+})();
+</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Depictio — Embedded component</title>
+    <script type="module" crossorigin src="embed-a7cd7cf076.js"></script>
+    <link rel="stylesheet" href="embed-a7cd7cf076.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      Payload injected by services/export/embed.py, which replaces the sentinel
+      below. It sits inside a JSON script element on purpose: that is what makes
+      escaping `</` in the payload sufficient to keep the element from closing
+      early. Keep the sentinel and the EMBED_SENTINEL constant in sync.
+    -->
+    <script id="embed-payload" type="application/json">{"theme": "light", "component": {"index": "ca1bf6cf-be85-5eec-9446-b56fc8293d2a", "component_type": "image", "title": "Cell and nucleus segmentation per well", "workflow_tag": "python/cellpainting_gallery", "data_collection_tag": "well_images", "wf_id": "6ae62423a3f167d1784a806d", "dc_id": "6ae62423a3f167d1784a806e", "dc_config": {"type": null, "metatype": null, "description": "One segmentation overlay per well", "data_collection_tag": "well_images", "dc_specific_properties": null, "_id": "6ae62423a3f167d1784a806e"}, "cols_json": {}, "parent_index": null, "last_updated": "2026-10-31T18:23:50.271159", "title_size": "sm", "title_align": "left", "section": null, "image_column": "image_path", "s3_base_folder": "s3://depictio-bucket/cellpainting_gallery/", "thumbnail_size": 300, "columns": 4, "max_images": 4, "wf_tag": "python/cellpainting_gallery"}, "title": "Cell and nucleus segmentation per well", "data": {"figures": {}, "tables": {}, "maps": {}, "images": {"ca1bf6cf-be85-5eec-9446-b56fc8293d2a": {"rows": [{"well": "A03", "perturbation": "CEBPE", "pert_type": "ORF overexpression", "gene_description": "CCAAT enhancer binding protein epsilon", "image_path": "A03_overlay.png", "depictio_run_id": "well_images-single-file-scan", "aggregation_time": "2026-10-31 18:23:47"}, {"well": "A04", "perturbation": "HcRed", "pert_type": "Negative control", "gene_description": "Red fluorescent protein control", "image_path": "A04_overlay.png", "depictio_run_id": "well_images-single-file-scan", "aggregation_time": "2026-10-31 18:23:47"}, {"well": "B03", "perturbation": "TSC22D3", "pert_type": "ORF overexpression", "gene_description": "TSC22 domain family member 3", "image_path": "B03_overlay.png", "depictio_run_id": "well_images-single-file-scan", "aggregation_time": "2026-10-31 18:23:47"}, {"well": "B04", "perturbation": "FHL1", "pert_type": "ORF overexpression", "gene_description": "Four and a half LIM domains 1", "image_path": "B04_overlay.png", "depictio_run_id": "well_images-single-file-scan", "aggregation_time": "2026-10-31 18:23:47"}], "image_column": "image_path", "sort_by": null, "sort_dir": "desc", "sortable_columns": ["well", "perturbation", "pert_type", "gene_description", "image_path", "depictio_run_id", "aggregation_time"], "paths": ["A03_overlay.png", "A04_overlay.png", "B03_overlay.png", "B04_overlay.png"], "filter_applied": false, "filter_count": 0}}, "multiqc": {}, "multiqcGeneralStats": {}, "cards": {"values": {}, "secondary": {}, "aggregations": {}}, "unique": {}, "ranges": {}, "specs": {}, "schemas": {}, "advancedVizData": {}, "compute": {}}}</script>
+  </body>
+</html>
