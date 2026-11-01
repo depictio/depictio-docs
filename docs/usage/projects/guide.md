@@ -565,6 +565,70 @@ things follow for a deployment:
 
 Without this, a genome view shows no file tracks. Tracks read from table DCs are unaffected.
 
+#### :material-chart-timeline: Example: genomic_tracks DCs { #example-genomic-tracks-dcs }
+
+A `genomic_tracks` DC is a **manifest of track files**: one row per bigWig, narrowPeak,
+BAM, VCF or other genome-browser file, with the file's location in `uri_column`. The
+manifest is ingested like a table, so it can be filtered, linked and joined like one, and
+the [genome browser](../../features/genome-browser.md) shows the tracks of the rows left
+after filtering. The track files themselves stay files: a relative `uri` is uploaded to
+Depictio's S3 at ingestion, and an `s3://` or `https://` one is read in place.
+
+This is the DC of the nf-core/chipseq dashboard template:
+
+```yaml
+- data_collection_tag: "tracks"
+  description: "Genome-browser tracks of the run, one row per file"
+  config:
+    type: "genomic_tracks"
+    metatype: "Metadata"
+    source: "transformed"
+    transform:
+      recipe: "nf-core/chipseq/tracks.py"   # builds the manifest from the run's results
+    dc_specific_properties:
+      format: "TSV"
+      uri_column: "uri"
+      track_id_column: "track_id"
+      sample_column: "sample_id"            # what a link or a click filters on
+      format_column: "format"
+      name_column: "name"
+      color_column: "color"
+      category_column: "category"
+      order_column: "order"
+      assembly: "hg19"
+      display_defaults:                     # JBrowse config merged into every track of a format
+        bigwig:
+          displays:
+            - type: "LinearWiggleDisplay"
+              height: 60
+              autoscale: "local"
+```
+
+A project that writes its own manifest uses `scan` instead of `transform`, pointing at the
+TSV, and can set `remote_base_uri` to read relative `uri` values in place under an
+`s3://` or `https://` prefix instead of uploading them. Only hosts and buckets on the
+server's allow-list can be read in place, see
+[Security](../../features/security.md#genome-browser-track-access).
+
+| Key | Default | Meaning |
+|-----|---------|---------|
+| `uri_column` | `uri` | Column holding the track location: a relative path, an `s3://` URI or an `https://` URL. |
+| `track_id_column` | the `uri` | Column with a unique id per track. |
+| `sample_column` | none | The entity a track belongs to (sample, cell, ...). Cross-filtering and the browser's selection use it. |
+| `format_column` | `format` | Column with the track format. Without it the format is read from the file extension, falling back to `default_format`. |
+| `index_column` | `index_uri` | Column with the index location. Left empty, the conventional sibling is used (`.bai`, `.crai`, `.tbi`, `.fai`). |
+| `name_column`, `color_column`, `category_column`, `order_column` | none | Track label, colour, folder in the track selector, and the order the tracks open in. |
+| `assembly` | `hg38` | A preset (`hg38`, `hg19`, `hs1`, `mm10`, `mm39`, `sacCer3`, `dm6`, `ce11`, `danRer11`, `TAIR10`, `wuhCor1`) or a custom assembly given by a FASTA with its index, or a 2bit file. |
+| `direct_access` | `false` | Let the browser fetch `https://` tracks itself instead of through the API. The host must send CORS and Range headers. |
+
+Supported formats are bigWig, bedGraph, BED, bigBed, narrowPeak, broadPeak, VCF, BAM,
+CRAM, GFF3, GTF and FASTA. A link whose `target_type` is `genomic_tracks` lets a table
+selection pick the tracks to show, and a click in the browser filters the other
+components back, see [Cross-DC filtering](../../features/cross-dc-filtering.md#supported-target-types).
+
+For per-sample files read directly by a Genome view tile, with no manifest, see
+[Indexed-file DCs](#example-indexed-file-dcs).
+
 ## Template Projects
 
 <!-- prettier-ignore -->

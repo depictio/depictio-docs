@@ -131,7 +131,7 @@ When `mode=all` or `mode=files`, the migrate feature copies S3 objects for all s
 | GeoJSON              | `data_collections.config.dc_specific_properties.s3_location` |
 | Image                | `data_collections.config.dc_specific_properties.s3_base_folder` |
 | MultiQC              | `multiqc_reports.s3_location`                             |
-| JBrowse2             | S3 URIs in `jbrowse_collection.tracks[].uri`              |
+| Genomic tracks       | The `genomic_tracks/<dc_id>/` folder of the data bucket (files uploaded at ingestion; tracks read in place are not copied) |
 
 S3 objects are streamed directly from source to target (no full buffering in RAM).
 

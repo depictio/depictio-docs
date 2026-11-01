@@ -54,7 +54,7 @@ DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
 - [Jobs](#jobs)
 - [Telemetry](#telemetry)
 - [MultiQC Prerender](#multiqc-prerender)
-<!-- - [JBrowse Integration](#jbrowse-integration) -->
+- [Genome Browser](#genome-browser)
 - [S3 File Cache](#s3-file-cache)
 <!-- - [Application Profiling](#application-profiling) -->
 <!-- - [Dashboard YAML Sync](#dashboard-yaml-sync) -->
@@ -558,18 +558,36 @@ Logging verbosity and output configuration.
 
 ---
 
-<!-- ## JBrowse Integration (Coming Soon - see Roadmap)
+## Genome Browser
 
 **Config Class:** `JBrowseConfig`
 **Environment Prefix:** `DEPICTIO_JBROWSE_`
 
-JBrowse genome browser integration settings.
+Settings of the embedded [genome browser](../features/genome-browser.md) (v1.20.0+). It
+runs inside the viewer and reads every track through the API, so there is no separate
+server to deploy. Tracks stored in Depictio's own bucket are always served; tracks read in
+place from a remote host or bucket must be allow-listed here, see
+[Security](../features/security.md#genome-browser-track-access).
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_JBROWSE_ENABLED` | `false` | - |
+| `DEPICTIO_JBROWSE_ENABLED` | `true` | Enable the genome browser component |
+| `DEPICTIO_JBROWSE_REMOTE_HTTPS_HOSTS` | `nf-core-awsmegatests.s3-eu-west-1.amazonaws.com` | Comma-separated hostnames the track proxy may read `https://` tracks from (exact match) |
+| `DEPICTIO_JBROWSE_REMOTE_S3_BUCKETS` | `nf-core-awsmegatests` | Comma-separated S3 buckets the track proxy may read `s3://` tracks from, with the server's credentials |
+| `DEPICTIO_JBROWSE_REMOTE_S3_ENDPOINT_URL` | - | Endpoint for remote `s3://` tracks (default: AWS) |
+| `DEPICTIO_JBROWSE_REMOTE_S3_REGION` | `eu-west-1` | Region for remote `s3://` tracks |
+| `DEPICTIO_JBROWSE_REMOTE_S3_ACCESS_KEY` | - | Access key for remote `s3://` buckets (anonymous if unset) |
+| `DEPICTIO_JBROWSE_REMOTE_S3_SECRET_KEY` | - | Secret key for remote `s3://` buckets |
+| `DEPICTIO_JBROWSE_PRESET_ACCESS` | `proxy` | How the browser reads the built-in assemblies' UCSC files: `proxy` (through the API) or `direct` (from hgdownload.soe.ucsc.edu) |
+| `DEPICTIO_JBROWSE_UCSC_TRACKS_ENABLED` | `true` | Resolve components' `ucsc_tracks` through the UCSC REST API |
+| `DEPICTIO_JBROWSE_UCSC_API_URL` | `https://api.genome.ucsc.edu` | UCSC REST API the UCSC track catalogue is read from |
+| `DEPICTIO_JBROWSE_UCSC_CATALOG_TTL_S` | `86400` | How long a genome's UCSC track catalogue is cached in the API process (at least 60) |
+| `DEPICTIO_JBROWSE_REMOTE_TIMEOUT_S` | `30.0` | Remote read timeout, in seconds |
+| `DEPICTIO_JBROWSE_MAX_RANGE_MB` | `64` | Largest byte range served in one request |
+| `DEPICTIO_JBROWSE_MAX_FULL_READ_MB` | `256` | Largest file served whole when the browser sends no Range header (plain BED, GFF and VCF are read whole; index larger files) |
+| `DEPICTIO_JBROWSE_URL_TTL_S` | `21600` | Lifetime of the signed track URLs handed to the browser, in seconds (at least 60) |
 
---- -->
+---
 
 ## S3 File Cache
 

@@ -265,14 +265,17 @@ collection it uses, the commit that was current when it was saved.
 |----------------------|:-----------------------:|---------------------------|
 | `table` | <span class="status-pill is-yes">:material-check: Yes</span> | The table as that commit wrote it |
 | `image` | <span class="status-pill is-partial">:material-tilde: Paths only</span> | The list of image paths as it was; the image files themselves as they are now |
-| `multiqc`, `jbrowse2` | <span class="status-pill is-no">:material-close: No</span> | Always the latest data |
+| `genomic_tracks` | <span class="status-pill is-partial">:material-tilde: Track list only</span> | The track manifest as that commit wrote it; the track files themselves as they are now |
+| `multiqc` | <span class="status-pill is-no">:material-close: No</span> | Always the latest data |
 | `geojson`, `phylogeny` | <span class="status-pill is-no">:material-close: No</span> | Always the latest data |
 
 A table written before Depictio recorded commit numbers has no commit to pin either.
 Wherever a collection cannot be pinned, the latest data is shown: the History rows say how
 many collections are pinned, and the preview and editor banners name each one. MultiQC,
-JBrowse, advanced visualization and funnel components always read the latest data, and
-carry a **Current data** badge while earlier data is shown.
+advanced visualization and funnel components always read the latest data, and
+carry a **Current data** badge while earlier data is shown. A genome browser tile reads
+its track manifest at the pinned commit, but the files that manifest names are not
+versioned, so a track replaced on S3 or at its remote location shows its new content.
 
 ### Data version in the editor
 
@@ -419,8 +422,8 @@ needs edit access to the dashboard, and deleting a version needs ownership.
 
 ## :material-alert-circle-outline: Known limits
 
-- `multiqc`, `jbrowse2`, `geojson` and `phylogeny` collections always show their latest
-  data, and so do image files and the components marked **Current data**.
+- `multiqc`, `geojson` and `phylogeny` collections always show their latest
+  data, and so do image files, genome track files and the components marked **Current data**.
 - A preview uses today's tab list. A tab deleted since the version is not listed until
   the version is restored, and a tab added since fails to load.
 - Vacuumed commits can no longer be read. See the warning [above](#how-new-data-versions-are-written).

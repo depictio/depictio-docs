@@ -72,6 +72,12 @@ Depictio provides a variety of component types for building interactive dashboar
 
     Geospatial map visualization with markers
 
+-   :material-chart-timeline:{ .lg .middle } **[Genome browser](#genome-browser-components)**
+
+    ---
+
+    Embedded genome browser over a track manifest, with two-way cross-filtering (v1.20.0+)
+
 -   :material-chart-multiline:{ .lg .middle } **[Advanced Visualizations](#advanced-visualizations)**
 
     ---
@@ -2679,6 +2685,43 @@ Ticking rows selects them on the map. Lasso, click and row-ticking all build the
   color_continuous_scale: Viridis
   geojson_url: "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson"
 ```
+
+---
+
+## :material-chart-timeline: Genome Browser Components <small>(v1.20.0+)</small> { #genome-browser-components }
+
+The `jbrowse` component embeds a genome browser in the dashboard. It is bound to a
+[`genomic_tracks` data collection](../usage/projects/guide.md#example-genomic-tracks-dcs),
+a manifest with one row per track file, and shows the tracks whose rows pass the
+dashboard's filters. There is no separate browser server to run: the track files are read
+by byte range through the API.
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `assembly` | Assembly preset, overriding the data collection's | the DC's |
+| `location` | Initial locus, such as `chr1:1-1,000,000` or a gene name | none |
+| `locus_from` | Regions of another collection the view frames when the dashboard narrows them | none |
+| `max_tracks` / `initial_tracks` | Tracks opened at most, and tracks opened when no filter is active | `20` / `5` |
+| `track_mode` | `filtered` shows the tracks matching the filters, `all` keeps every track loaded | `filtered` |
+| `selection_enabled` | Emit a filter on `selection_column` when a feature or a track is picked | `false` |
+| `selection_mode` | `feature_click` (the clicked feature's track) or `visible_tracks` (every open track) | `feature_click` |
+| `color_by` | Manifest column whose value colours and groups the tracks | none |
+| `placement` | `grid` (a normal tile) or `floating` (a panel reachable from every tab) | `grid` |
+
+```yaml
+- tag: browser
+  component_type: jbrowse
+  workflow_tag: my_workflow
+  data_collection_tag: tracks
+  max_tracks: 12
+  selection_enabled: true
+```
+
+Filtering works both ways. A table or interactive selection that reaches the track
+collection through a [link](cross-dc-filtering.md#supported-target-types) changes which
+tracks are shown, and a click in the browser filters the rest of the dashboard.
+
+The genome browser has its own page: see [Genome browser](genome-browser.md).
 
 ---
 
