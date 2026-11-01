@@ -5,6 +5,11 @@ description: An embedded JBrowse 2 genome browser fed by a genomic_tracks collec
 
 # :material-dna: Genome browser <small>(v1.20.0+)</small>
 
+<figure markdown="span">
+  <video autoplay controls muted loop playsinline poster="../../images/guides/genome-browser/table_to_browser.webp" src="../../images/guides/genome-browser/table_to_browser.mp4"></video>
+  <figcaption>A row picked in a table: its record card and the genome browser follow (nf-core/riboseq dashboard template).</figcaption>
+</figure>
+
 A pipeline run publishes coverage, peaks, variants and alignments as files. The `jbrowse`
 component shows them in an embedded [JBrowse 2](https://jbrowse.org) linear genome view, inside
 the dashboard and linked to it:
@@ -61,6 +66,7 @@ are either uploaded or read where they are.
 | `name_column`, `color_column`, `category_column` | | Track label, colour, and the folder of the track selector |
 | `order_column` | | The order the browser opens the tracks in |
 | `assembly` | `hg38` | A built-in assembly (or one of its aliases), or a custom assembly |
+| `tracks_base_path` | the manifest's folder | The local folder relative rows are uploaded from |
 | `remote_base_uri` | | An `s3://` or `https://` folder that relative rows are read under, in place |
 | `direct_access` | `false` | Let the browser fetch `https://` tracks itself (the host must send CORS headers) |
 | `display_defaults` | `{}` | JBrowse track configuration merged into every track of a format |
@@ -71,19 +77,101 @@ are either uploaded or read where they are.
 `.tbi` or `.csi` index, BAM and CRAM a `.bai` or `.crai`. Small plain BED and narrowPeak files
 are read whole.
 
-### Uploaded or read in place
+### Internal and external tracks
+
+A track is either **internal**, a file of the run uploaded into depictio's storage at
+ingestion, or **external**, read where it already is. The `uri` of each row, and two keys of the
+collection, decide which:
+
+| Track | `uri` in the manifest | Collection keys | Who reads it |
+|-------|-----------------------|-----------------|--------------|
+| Internal | a relative path | none | the API, from depictio's storage |
+| External, read in place | a relative path, or an absolute `s3://` or `https://` URI | `remote_base_uri` for relative paths | the API, from an allow-listed host or bucket |
+| External, fetched by the browser | an `https://` URI | `direct_access: true` | the browser |
+
+Two more kinds of external tracks are set on the component rather than in the manifest:
+[UCSC tracks](#tracks-and-their-configuration) (`ucsc_tracks`) and raw JBrowse tracks
+(`config_overrides.extra_tracks`, [below](#raw-jbrowse-tracks)).
+
+#### Internal tracks
+
+The manifest names each file relative to the manifest's own folder (or to `tracks_base_path`):
+
+```text
+track_id    sample  format  uri                          name
+S1.signal   S1      bigwig  bigwig/S1.bigWig             S1 signal
+S1.peaks    S1      bed     peaks/S1.peaks.bed.gz        S1 peaks
+S1.reads    S1      bam     bam/S1.markdup.sorted.bam    S1 reads
+```
 
 When the collection is ingested (`depictio run`, `depictio data sync`), the manifest becomes a
-Delta table, then:
+Delta table and each file is uploaded with its index (here `S1.peaks.bed.gz.tbi` and
+`S1.markdup.sorted.bam.bai`, found next to the file) under the collection's
+`genomic_tracks/<dc_id>/` folder of depictio's storage. The files are removed with the
+collection or the project. Use internal tracks when the run's results live on a disk the server
+cannot reach.
 
-- relative rows found under the data location are uploaded with their index to depictio's
-  storage, and removed with the collection or the project;
-- with `remote_base_uri`, or for rows that already are `s3://` or `https://` URIs, nothing is
-  copied: the files are read in place.
+#### External tracks read in place
 
-The nf-core dashboard templates take the results folder of a run as a variable:
+With `remote_base_uri`, nothing is copied: the relative rows are read under that folder, through
+the API, each time the browser asks for a range of a file. A row may also carry an absolute
+`s3://` or `https://` URI, which is read in place without `remote_base_uri`.
+
+```yaml
+dc_specific_properties:
+  uri_column: uri
+  remote_base_uri: s3://my-results/chipseq/run-42/   # or https://data.example.org/run-42/
+```
+
+The server reads only from hosts and buckets it allows, set by the administrator:
+
+```bash
+DEPICTIO_JBROWSE_REMOTE_HTTPS_HOSTS=data.example.org
+DEPICTIO_JBROWSE_REMOTE_S3_BUCKETS=my-results
+# A private bucket, or one outside AWS:
+DEPICTIO_JBROWSE_REMOTE_S3_ENDPOINT_URL=https://s3.example.org
+DEPICTIO_JBROWSE_REMOTE_S3_REGION=eu-west-1
+DEPICTIO_JBROWSE_REMOTE_S3_ACCESS_KEY=...
+DEPICTIO_JBROWSE_REMOTE_S3_SECRET_KEY=...
+```
+
+Without credentials, remote buckets are read anonymously. A listed bucket is readable by anyone
+who can open a collection pointing at it, so list only buckets whose content may be shown.
+`http://` URIs are refused. Since the files stay where they are, a file replaced at the same
+path shows its new content (see [Versions](#versions)).
+
+The nf-core dashboard templates turn the results folder of a run into `remote_base_uri`:
 `depictio run --var TRACKS_URI=s3://<bucket>/<run>/results/` reads the run's tracks in place,
-and without it the files found in the local results folder are uploaded.
+and without the variable the files found in the local results folder are uploaded.
+
+#### External tracks fetched by the browser
+
+With `direct_access: true`, the browser fetches the collection's `https://` tracks itself
+instead of going through the API. The host must answer cross-origin range requests (CORS with
+`Range` allowed and `Content-Range` exposed), and the instance's Content Security Policy must
+allow it: by default it lets the browser connect only to depictio itself and to UCSC's download
+server. Read in place through the API is the safer choice; use direct access for a public host
+that is close to the readers.
+
+#### Raw JBrowse tracks
+
+`config_overrides.extra_tracks` adds JBrowse track configurations as they are, next to the
+collection's tracks. The browser fetches their files itself, under the same CORS and Content
+Security Policy conditions as direct access:
+
+```yaml
+- component_type: jbrowse
+  data_collection_tag: tracks
+  config_overrides:
+    extra_tracks:
+      - type: FeatureTrack
+        trackId: regions_of_interest
+        name: Regions of interest
+        adapter:
+          type: BedTabixAdapter
+          bedGzLocation: {uri: "https://hgdownload.soe.ucsc.edu/<path>/regions.bed.gz"}
+          index: {location: {uri: "https://hgdownload.soe.ucsc.edu/<path>/regions.bed.gz.tbi"}}
+```
 
 ### Assemblies
 
@@ -171,12 +259,7 @@ rows (a picked table row, a volcano point, a gene), the browser frames them. Wit
 opens on the first row in `sort_by` order: the most supported fusion, the highest quality
 variant, the most significant peak. A table that drives the browser can set
 `row_selection_mode: single`, so a click replaces the picked row and the browser frames one
-feature.
-
-<figure markdown="span">
-  <video controls muted loop playsinline preload="none" poster="../../images/guides/genome-browser/table_to_browser.webp" src="../../images/guides/genome-browser/table_to_browser.mp4"></video>
-  <figcaption><strong>Table to browser.</strong> A row picked in a table: its record card and the browser follow (nf-core/riboseq dashboard template).</figcaption>
-</figure>
+feature, as in the clip at the top of this page.
 
 When `locus_from` is set, the browser's toolbar also walks its regions: next and previous
 region, a region picker that can be sorted and searched, and a density strip that shows where
