@@ -1,6 +1,7 @@
 ---
 title: Genome browser
 description: An embedded JBrowse 2 genome browser fed by a genomic_tracks collection, filtered by the dashboard and filtering it back.
+glightbox: true
 ---
 
 # :material-dna: Genome browser <small>(v1.20.0+)</small>
@@ -15,8 +16,80 @@ The `jbrowse` component shows a run's coverage, peaks, variants and alignments i
 to a picked row; a click on a feature filters the dashboard back. Nothing else has to run: the
 track bytes come through the API, in `depictio local up`, Docker Compose and Kubernetes alike.
 
+## Examples
+
+Each example opens its own page: the clip, what it shows, and the few lines of YAML behind it.
+
+<div class="grid cards" markdown>
+
+-   [![Table to browser](../images/guides/genome-browser/table_to_browser.webp){ .off-glb }](genome-browser/table-to-browser.md)
+
+    **[Table to browser](genome-browser/table-to-browser.md)**
+
+    A row picked in a table frames the browser on it.
+
+-   [![Browser to dashboard](../images/guides/genome-browser/browser_to_dashboard.webp){ .off-glb }](genome-browser/browser-to-dashboard.md)
+
+    **[Browser to dashboard](genome-browser/browser-to-dashboard.md)**
+
+    A click on a feature filters the dashboard on its sample.
+
+-   [![Navigator](../images/guides/genome-browser/chipseq_peaks.webp){ .off-glb }](genome-browser/navigator.md)
+
+    **[Navigator](genome-browser/navigator.md)**
+
+    Brush a region on GenomeSpy lanes; the browser opens on it.
+
+-   [![Time course](../images/guides/genome-browser/genomespy_jbrowse.webp){ .off-glb }](genome-browser/time-course.md)
+
+    **[Time course](genome-browser/time-course.md)**
+
+    One colour ramp from the earliest library to the latest.
+
+-   [![Ranked calls](../images/guides/genome-browser/ranked_rows.webp){ .off-glb }](genome-browser/ranked-calls.md)
+
+    **[Ranked calls](genome-browser/ranked-calls.md)**
+
+    A numbered track of the best calls, picked and zoomed.
+
+-   [![Sashimi](../images/guides/genome-browser/sashimi_junctions.webp){ .off-glb }](genome-browser/sashimi.md)
+
+    **[Sashimi](genome-browser/sashimi.md)**
+
+    Splice junctions as arcs over RNA coverage.
+
+-   [![Breakpoints](../images/guides/genome-browser/fusion_chord.webp){ .off-glb }](genome-browser/breakpoints.md)
+
+    **[Breakpoints](genome-browser/breakpoints.md)**
+
+    Both sides of a call, the breakpoint view and the circular view.
+
+-   [![UCSC tracks](../images/guides/genome-browser/ucsc_and_tracks.webp){ .off-glb }](genome-browser/ucsc-tracks.md)
+
+    **[UCSC tracks](genome-browser/ucsc-tracks.md)**
+
+    Tracks of the UCSC catalogue next to the run's own.
+
+-   :material-palette:{ .lg .middle }
+
+    **[Variant colours](genome-browser/variant-colours.md)**
+
+    Variants coloured by a category of the dashboard.
+
+-   :material-code-braces:{ .lg .middle }
+
+    **[Raw JBrowse configuration](genome-browser/raw-jbrowse.md)**
+
+    Any JBrowse setting or track, merged last.
+
+</div>
+
+---
+
+## How it works
+
 <figure markdown="span">
-  [![A genomic_tracks manifest is ingested as a collection; the dashboard filters pick its rows, which open as tracks of the jbrowse component; the track files, uploaded or external, reach the browser through the API track proxy; a click on a feature filters the dashboard](../images/guides/genome-browser/schema_tracks.png)](../images/guides/genome-browser/schema_tracks.png){target=_blank}
+  ![A genomic_tracks manifest is ingested as a collection; the dashboard filters pick its rows, which open as tracks of the jbrowse component; the track files, uploaded or external, reach the browser through the API track proxy; a click on a feature filters the dashboard](../images/guides/genome-browser/schema_tracks.png)
   <figcaption><strong>Two inputs.</strong> The collection's rows say which tracks open; the files reach the browser through the API.</figcaption>
 </figure>
 
@@ -183,163 +256,6 @@ A custom assembly has no gene search; type a locus instead.
 | `placement` | `grid`, or `floating` to keep the browser on screen across tabs |
 
 The component builder has a *Genome browser* type with the same settings.
-
----
-
-## Examples
-
-Each example adds a few keys to the component (or the collection) above.
-
-=== "Table to browser"
-
-    ```yaml
-    locus_from:
-      data_collection_tag: variants   # a table on the same dashboard
-      chrom_column: CHROM
-      start_column: POS
-      sort_by: QUAL                   # opens on the best call
-    ```
-
-    A row picked in the table (`row_selection_mode: single` on the table) frames the browser on
-    it, as in the clip at the top of this page. The toolbar then steps through the rows, lists
-    them in a picker, and shows their density along the genome.
-
-=== "Browser to dashboard"
-
-    <video controls muted loop playsinline preload="none" poster="../../images/guides/genome-browser/browser_to_dashboard.webp" src="../../images/guides/genome-browser/browser_to_dashboard.mp4"></video>
-
-    ```yaml
-    selection_enabled: true
-    selection_column: sample          # default: the collection's sample_column
-    ```
-
-    A click on a feature filters the dashboard on its sample (nf-core/viralrecon dashboard
-    template).
-
-=== "Navigator"
-
-    <video controls muted loop playsinline preload="none" poster="../../images/guides/genome-browser/chipseq_peaks.webp" src="../../images/guides/genome-browser/chipseq_peaks.mp4"></video>
-
-    ```yaml
-    # a genome_view tile on the same tab
-    - component_type: advanced_viz
-      viz_kind: genome_view
-      data_collection_tag: peaks
-      config:
-        chr_col: chr
-        pos_col: start
-        end_col: end
-        score_col: score
-        mark: bar
-        open_on_view_window: true     # whole chromosome, the browser's window as a band
-        interaction_mode: select      # a drag brushes a region
-    ```
-
-    A brushed region moves the browser there (nf-core/chipseq dashboard template; also
-    [atacseq](../images/guides/genome-browser/atacseq_peaks.mp4) and
-    [cutandrun](../images/guides/genome-browser/cutandrun_peaks.mp4)).
-
-=== "Time course"
-
-    <video controls muted loop playsinline preload="none" poster="../../images/guides/genome-browser/genomespy_jbrowse.webp" src="../../images/guides/genome-browser/genomespy_jbrowse.mp4"></video>
-
-    ```yaml
-    color_scale:
-      column: time_point              # a manifest column
-      order_by: time_order
-      scheme: viridis
-    display: {autoscale: localsd, summary: avg}
-    ```
-
-    The tracks and the navigator lanes share one ramp, earliest to latest, each track on its own
-    scale (nf-core/nascent dashboard template).
-
-=== "Ranked calls"
-
-    <video controls muted loop playsinline preload="none" poster="../../images/guides/genome-browser/ranked_rows.webp" src="../../images/guides/genome-browser/ranked_rows.mp4"></video>
-
-    ```yaml
-    locus_from:
-      data_collection_tag: ranked_variants
-      chrom_column: chrom
-      start_column: pos
-      sort_by: rank_score
-      label_column: call_label
-      rank_track: 20                  # a track of the 20 best calls, numbered
-      rank_color_by: model_class
-    ```
-
-    nf-core/raredisease dashboard template.
-
-=== "Sashimi"
-
-    <video controls muted loop playsinline preload="none" poster="../../images/guides/genome-browser/sashimi_junctions.webp" src="../../images/guides/genome-browser/sashimi_junctions.mp4"></video>
-
-    ```yaml
-    show_junctions: true              # splice junctions as arcs over RNA coverage
-    color_by: sample
-    ucsc_tracks: [mane]
-    ```
-
-    nf-core/rnafusion dashboard template, Splice Junctions tab.
-
-=== "Breakpoints"
-
-    <video controls muted loop playsinline preload="none" poster="../../images/guides/genome-browser/fusion_chord.webp" src="../../images/guides/genome-browser/fusion_chord.mp4"></video>
-
-    ```yaml
-    read_pairs_display: arcs          # discordant pairs as arcs
-    views: [breakpoint, circular]
-    circular_categories: [Structural variants]   # manifest categories the circle draws
-    locus_from:
-      data_collection_tag: fusions
-      chrom_column: chrom_a
-      start_column: pos_a
-      mate: {chrom_column: chrom_b, start_column: pos_b}
-    ```
-
-    With a `mate`, the browser shows both sides of a call; the breakpoint view joins them by
-    their split reads, the circular view draws every structural variant as a chord
-    (nf-core/rnafusion and nf-core/oncoanalyser dashboard templates).
-
-=== "UCSC tracks"
-
-    <video controls muted loop playsinline preload="none" poster="../../images/guides/genome-browser/ucsc_and_tracks.webp" src="../../images/guides/genome-browser/ucsc_and_tracks.mp4"></video>
-
-    ```yaml
-    ucsc_tracks: [clinvarMain, dbSnp155Common]
-    ```
-
-    Any bigWig, bigBed or VCF track of the UCSC catalogue for the assembly; the builder
-    searches it by name ([clip](../images/guides/genome-browser/ucsc_builder.mp4)).
-
-=== "Variant colours"
-
-    ```yaml
-    variant_color_by:
-      column: coding_effect           # colours from the dashboard's category_colors
-      info_field: IMPACT              # the VCF INFO field that holds the category
-    ```
-
-    nf-core/oncoanalyser dashboard template.
-
-=== "Raw JBrowse"
-
-    ```yaml
-    config_overrides:
-      formats: {bam: {displays: [{type: LinearAlignmentsDisplay, height: 80}]}}
-      extra_tracks:
-        - type: FeatureTrack
-          trackId: regions
-          name: Regions of interest
-          adapter:
-            type: BedTabixAdapter
-            bedGzLocation: {uri: "https://data.example.org/regions.bed.gz"}
-            index: {location: {uri: "https://data.example.org/regions.bed.gz.tbi"}}
-    ```
-
-    Merged last. An extra track is fetched by the browser, so its host needs CORS and the
-    Content Security Policy.
 
 ---
 
