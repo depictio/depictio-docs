@@ -273,6 +273,7 @@ nav:
           - Interactive Selection Filtering: features/interactive-selection-filtering.md
           - Comments and Annotations: features/comments-annotations.md
           - Protein tiles: features/protein-tiles.md
+          - Genome browser: features/genome-browser.md
           - Dashboard and Data Versions: features/versioning.md
           - Component Export and Embedding: features/component-export.md
       - Data Integration:
