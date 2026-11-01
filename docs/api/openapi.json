@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.17.4",
-    "x-generated-at": "2026-10-13T09:42:34Z",
-    "x-depictio-version": "v1.17.4"
+    "version": "1.20.0",
+    "x-generated-at": "2026-11-01T14:39:22Z",
+    "x-depictio-version": "v1.20.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -1604,6 +1604,107 @@
             "OAuth2PasswordBearer": []
           }
         ]
+      }
+    },
+    "/depictio/api/v1/projects/effective_access/{project_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Effective Access",
+        "description": "Everyone a grant gives access to, direct or through a group, one row each.\n\nGated like the edit itself: the rows carry the emails of group members, which\nthe group list withholds from people outside the group.",
+        "operationId": "get_effective_access_depictio_api_v1_projects_effective_access__project_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/group_members_preview/{project_id}/{group_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Preview Group Members",
+        "description": "Members of a group about to be shared with, before the grant is made.",
+        "operationId": "preview_group_members_depictio_api_v1_projects_group_members_preview__project_id___group_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/depictio/api/v1/projects/update_project_permissions": {
@@ -5215,7 +5316,7 @@
           "DeltaTables"
         ],
         "summary": "Get Unique Values",
-        "description": "Return the sorted unique values of ``column`` within a data collection.\n\nBacks the React viewer's MultiSelect options fetch. Mirrors the code path\nDash uses via ``load_deltatable_lite(..., load_for_options=True)`` so both\nviewers see identical option lists.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column name whose unique values to return.\n    limit: Max values to return (default 1000). Prevents unbounded payloads\n        on high-cardinality columns; MultiSelect's UX caps at 100 anyway.\n    filter_expr: Optional Polars filter expression (string) applied before\n        collecting unique values. Validated through the safe-eval pipeline\n        in ``depictio.models.components.filter_expr``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\": str, \"values\": list[str]}`` — strings for MultiSelect UI.\n\nRaises:\n    HTTPException: 404 if DC not found / not accessible, 500 on read error.",
+        "description": "Return the sorted unique values of ``column`` within a data collection.\n\nSynchronous on purpose: the work is blocking (Mongo, S3, Polars), so FastAPI runs\nit in the thread pool instead of on the event loop, where ~20 option lists\nrequested together used to queue behind each other and stall every other request.\n\nBacks the React viewer's MultiSelect options fetch. Mirrors the code path\nDash uses via ``load_deltatable_lite(..., load_for_options=True)`` so both\nviewers see identical option lists.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column name whose unique values to return.\n    limit: Max values to return (default 1000). Prevents unbounded payloads\n        on high-cardinality columns; MultiSelect's UX caps at 100 anyway.\n    filter_expr: Optional Polars filter expression (string) applied before\n        collecting unique values. Validated through the safe-eval pipeline\n        in ``depictio.models.components.filter_expr``.\n    order_by: Optional companion column giving the order of the values (a\n        ``time_order`` next to a ``time_point``): each value follows the\n        smallest key it carries, numerically when every key is a number. Unset,\n        values that all end in a duration (``30min``, ``2h``) follow it, and\n        the rest sort as strings. See ``depictio.models.components.value_order``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\": str, \"values\": list[str]}`` — strings for MultiSelect UI.\n\nRaises:\n    HTTPException: 404 if DC not found / not accessible, 500 on read error.",
         "operationId": "get_unique_values_depictio_api_v1_deltatables_unique_values__data_collection_id__get",
         "security": [
           {
@@ -5250,6 +5351,204 @@
               "type": "integer",
               "default": 1000,
               "title": "Limit"
+            }
+          },
+          {
+            "name": "filter_expr",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Filter Expr"
+            }
+          },
+          {
+            "name": "order_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Order By"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/deltatables/ranked_values/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Ranked Values",
+        "description": "Return the distinct values of ``column`` ranked by the ``by`` column.\n\nBacks the default of an ``always_selected`` Select with ``default_by``: the\nSelect keeps its alphabetical list and starts on the first value of this one\n(see ``rank_values``).\n\nReturns:\n    ``{\"column\": str, \"by\": str, \"values\": list[str]}``, best first.\n\nRaises:\n    HTTPException: 404 if the data collection or a column is missing, 403 without\n    viewer access.",
+        "operationId": "get_ranked_values_depictio_api_v1_deltatables_ranked_values__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "column",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Column"
+            }
+          },
+          {
+            "name": "by",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "By"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string",
+              "default": "desc",
+              "title": "Order"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1000,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/deltatables/row_values/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Row Values",
+        "description": "Return ``columns`` of the first row where ``column`` equals ``value``.\n\nBacks the facts of a scope banner (``banner_facts`` on an ``always_selected``\nfilter): the banner names the picked value and reads a few of its attributes\nfrom the filter's own data collection (see ``row_values``).\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column compared with ``value``.\n    value: The picked value, as text.\n    columns: Columns to return (at most ``MAX_ROW_VALUE_COLUMNS``).\n    filter_expr: Optional Polars filter expression (string) applied before the\n        lookup, validated through ``depictio.models.components.filter_expr``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"row\": dict | None}``: None when no row matches.\n\nRaises:\n    HTTPException: 400 on too many columns or an invalid ``filter_expr``, 404 if\n    the data collection or a column is missing, 403 without viewer access.",
+        "operationId": "get_row_values_depictio_api_v1_deltatables_row_values__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "column",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Column"
+            }
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Value"
+            }
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "title": "Columns"
             }
           },
           {
@@ -5690,6 +5989,676 @@
             "schema": {
               "type": "string",
               "title": "Deltatable Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/assemblies": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Get Assembly Presets",
+        "description": "Built-in reference assemblies (name, display name, organism, annotation).",
+        "operationId": "get_assembly_presets_depictio_api_v1_jbrowse_assemblies_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Get Assembly Presets Depictio Api V1 Jbrowse Assemblies Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/presets": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Get Config Presets",
+        "description": "Built-in named config presets a component can pick with ``preset:``.",
+        "operationId": "get_config_presets_depictio_api_v1_jbrowse_presets_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Get Config Presets Depictio Api V1 Jbrowse Presets Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/tracks/{dc_id}/{track_key}/{role}": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Track File",
+        "description": "Serve (a byte range of) one track's data or index file.",
+        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dc Id"
+            }
+          },
+          {
+            "name": "track_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Track Key"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Track File",
+        "description": "Serve (a byte range of) one track's data or index file.",
+        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dc Id"
+            }
+          },
+          {
+            "name": "track_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Track Key"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/assembly/{dc_id}/{role}": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Assembly File",
+        "description": "Serve (a byte range of) a custom assembly file of a track collection.",
+        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dc Id"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Assembly File",
+        "description": "Serve (a byte range of) a custom assembly file of a track collection.",
+        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dc Id"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/preset/{name}/search": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Search Preset Genes",
+        "description": "Genes and features of a built-in assembly matching ``q``: ``[{label, locus}]``.\n\nProxies the UCSC search API (the browser reads UCSC through this API, not\ndirectly), MANE and HGNC matches first. Public, like the preset files: the\nquery only ever reaches UCSC's own search for that assembly's genome.",
+        "operationId": "search_preset_genes_depictio_api_v1_jbrowse_preset__name__search_get",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Name"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9._-]{1,64}$",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 10,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "Response Search Preset Genes Depictio Api V1 Jbrowse Preset  Name  Search Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/preset/{name}/{role}": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Preset File",
+        "description": "Serve (a byte range of) a built-in assembly's public UCSC file.\n\nPublic: the files are public reference data. Only the URLs hardcoded in the\npresets can be read, so the route cannot be pointed anywhere else.",
+        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__get",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Name"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Preset File",
+        "description": "Serve (a byte range of) a built-in assembly's public UCSC file.\n\nPublic: the files are public reference data. Only the URLs hardcoded in the\npresets can be read, so the route cannot be pointed anywhere else.",
+        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__get",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Name"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/ucsc/{assembly}/tracks": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "List Ucsc Tracks",
+        "description": "UCSC tracks a component can open by default (``ucsc_tracks``), for the builder.\n\n``assembly`` is a preset name or alias (hg38, GRCh38, TAIR10, MN908947.3, ...)\nor a GenArk accession; ``genome`` is null when it has no UCSC counterpart.\nOne page of ``limit`` tracks from ``offset``, with the ``total`` match count,\nper-group counts and when the catalogue was read from UCSC (naive UTC).\n``group`` narrows to one UCSC group id (\"\" for the tracks without one).",
+        "operationId": "list_ucsc_tracks_depictio_api_v1_jbrowse_ucsc__assembly__tracks_get",
+        "parameters": [
+          {
+            "name": "assembly",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Assembly"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "group",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Group"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response List Ucsc Tracks Depictio Api V1 Jbrowse Ucsc  Assembly  Tracks Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/ucsc/{genome}/{track}/{role}": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Ucsc File",
+        "description": "Serve (a byte range of) a UCSC track file.\n\nPublic, like the preset files: only files listed in UCSC's own catalogue for\nthat genome, on UCSC's download server or an allow-listed host, can be read.",
+        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__get",
+        "parameters": [
+          {
+            "name": "genome",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Genome"
+            }
+          },
+          {
+            "name": "track",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Track"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Ucsc File",
+        "description": "Serve (a byte range of) a UCSC track file.\n\nPublic, like the preset files: only files listed in UCSC's own catalogue for\nthat genome, on UCSC's download server or an allow-listed host, can be read.",
+        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__get",
+        "parameters": [
+          {
+            "name": "genome",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Genome"
+            }
+          },
+          {
+            "name": "track",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Track"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
             }
           }
         ],
@@ -9064,7 +10033,7 @@
           "Dashboards"
         ],
         "summary": "Render Jbrowse Endpoint",
-        "description": "Synthesise the JBrowse 2 iframe URL for the React viewer.\n\nJBrowse 2 must be running at ``localhost:3000`` and its session config\nserver at ``localhost:9010/sessions/...``; if either is unreachable,\nreturns 503 (no silent fallback).",
+        "description": "JBrowse configuration of a ``jbrowse`` component under the dashboard filters.\n\nRequest body: ``{\"filters\": [...]}`` (same payload as the other render\nendpoints; the component strips its own ``jbrowse_selection`` entry), plus\nthe optional time-travel keys (``as_of_version`` / ``data_versions``, see\n``_data_pins``; ``definition_version``, see ``_render_component``).\nFilters are extended over DC links, then applied to the component's\n``genomic_tracks`` manifest: the matching tracks are the ones shown. A\npinned manifest is read at its commit, and so is the ``locus_from``\ncollection; the signed track URLs name the commit for the proxy.\n\nReturns the assembly and track configurations (file locations are signed\nproxy URLs), the track ids to show, the locus and view flags, plus a\nper-track summary the viewer uses to turn a click back into a filter.\n\nThe view opens on (``opening`` says which): the filtered ``locus_from``\nrows, the component's ``location``, the first call of ``locus_from``, the\nfirst region holding data in the first tracks, the assembly's default.\n``mate_location`` is the second side of the filtered or first call.\n``region`` (optional, ``{chrom, start, end}``) is the genome selection in\nforce; it never filters, but when the filters leave several ``locus_from``\nrows, the ones inside it frame the view (the latest of several picks).\n``locus_source`` is the ``locus_from`` collection and columns (null without\n``locus_from``), and ``display`` the YAML display defaults (null when unset).",
         "operationId": "render_jbrowse_endpoint_depictio_api_v1_dashboards_render_jbrowse__dashboard_id___component_id__post",
         "security": [
           {
@@ -9093,12 +10062,166 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": true,
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/jbrowse_calls/{dashboard_id}/{component_index}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Jbrowse Calls Endpoint",
+        "description": "One page of the regions (\"calls\") a ``jbrowse`` component lists, steps through and bins.\n\nRequest body: ``{\"filters\": [...], \"start\": 0, \"limit\": 50}`` (``limit`` at\nmost 200), plus the time-travel keys of the render endpoints and these\noptional keys (a body without them behaves as before):\n\n- ``sources``: names of the ``locus_from`` sources to read (unknown names are\n  ignored; none left = ``total`` 0);\n- ``sort``: ``{\"column\", \"descending\"}``, overriding ``sort_by``. ``column`` is a\n  common-shape name (``chrom``, ``start``, ``end``, ``score``, ``label``,\n  ``sample``, ``run``, ``source``; merged: ``n_rows``, ``n_samples``) or a raw\n  column of a source (``sort_by``, ``label_column``, ``sample_column``,\n  ``run_column``, ``columns``); anything else is a 400;\n- ``search``: case-insensitive substring over the label and ``search_columns``;\n- ``column_filters``: ``[{\"column\", \"kind\": \"text\" | \"number\", \"op\", \"value\",\n  \"value_to\"}]``, the picker's per-column filters (AG Grid's ops), all applied;\n- ``near``: ``{\"chrom\", \"pos\", \"direction\", \"chrom_order\"}``, at most one row (see\n  ``regions.near_region``); ``total`` is still the full count;\n- ``merge``: overlapping regions of one source (across samples and runs) joined into\n  one row each (``n_rows``, ``n_samples``, ``samples``, ``sources``); ``total``\n  counts the merged regions and every other key applies to them.\n\nThe regions are the rows of the sources' collections left by the filters\n(extended over DC links) at their pinned commit, read in memory and memoised\nfor the modes above; the plain single-source page keeps its Delta page read.\n\nReturns ``{\"total\": N, \"rows\": [...]}``; a row is ``{\"locus\", \"mate_locus\",\n\"label\", \"chrom\", \"start\", \"end\", \"score\", \"extra\", \"source\", \"sample\", \"run\"}``\n(plus the merge keys). A row whose coordinates are unreadable has a null\n``locus`` and still counts in ``total``; ``mate_locus`` is set for the primary\nsource (the first) when it declares a ``mate``.",
+        "operationId": "jbrowse_calls_endpoint_depictio_api_v1_dashboards_jbrowse_calls__dashboard_id___component_index__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_index",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Index"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/jbrowse_call_density/{dashboard_id}/{component_index}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Jbrowse Call Density Endpoint",
+        "description": "How many regions of a ``jbrowse`` component start in each genome bin, per track.\n\nRequest body: ``{\"filters\": [...], \"regions\": [{\"refName\", \"length\"}],\n\"bins\": 500, \"sources\": null, \"group\": \"source\"}`` plus the time-travel keys.\n``bins`` (1 to 2000) is the total over the genome: every chromosome shares one\nbin size, ``ceil(sum(length) / bins)``. ``group`` is ``source`` (one track per\nsource), ``sample`` or ``run`` (one per sample / run of each source that has\nthe column; the others stay one track). The regions are read like\n``jbrowse_calls`` reads them (filters, pinned commit, memoised).\n\nReturns ``{\"bin_size\", \"max\", \"tracks\", \"truncated\"}``, see ``regions.density``.",
+        "operationId": "jbrowse_call_density_endpoint_depictio_api_v1_dashboards_jbrowse_call_density__dashboard_id___component_index__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_index",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Index"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
                 "title": "Request"
               }
             }
@@ -9268,7 +10391,7 @@
           "Dashboards"
         ],
         "summary": "Import Dashboard From Yaml",
-        "description": "Import a dashboard from YAML content.\n\nSupports both single dashboard and multi-tab dashboard formats:\n- Single: Standard YAML with title, components, etc.\n- Multi-tab: YAML with main_dashboard and tabs keys\n\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True`, the dashboard imported earlier from the same `source_key`\nis updated instead of creating a new one, whatever its title is now; without\none, a dashboard with the same title is, if it has no `source_key` yet (one\nkeyed to another source is left alone). A main dashboard is only matched\nwith a main one, and a tab with the tabs of its parent. Either kind of match\nis a 409 without `overwrite`.\n\n`existing` says what becomes of a dashboard so matched, over `overwrite`:\n- `replace`: as `overwrite=True`;\n- `keep`: it is left as it is, its layout and components as edited in the\n  viewer, and the response says `\"status\": \"kept\"` with its id. `main_title`\n  still renames a kept main dashboard, which changes nothing else. A kept\n  multi-tab main keeps the tabs it has as they are and gains those of the\n  YAML it lacks, after its last one; `tabs_added` says how many. A tab\n  removed in the viewer so comes back. A dashboard with no match is created\n  as usual.\nEvery response says what happened in `status`: `created`, `replaced` or `kept`.\n\nTitles: a dashboard takes the title in the YAML, unless\n- `keep_titles=True` and the import replaces an existing dashboard: that\n  dashboard keeps its current title, so a refresh does not undo a rename made\n  in the viewer. Applies to the main dashboard and to every tab;\n- `main_title` is given: the main dashboard (the multi-tab `main_dashboard`,\n  or a single dashboard that is not a child tab) is titled that, over the YAML\n  and over `keep_titles`. The tabs are not affected. A 400 on a child tab.\n\nA single-format child tab names its parent by title (`parent_dashboard_tag`).\n`parent_source_key`, the `source_key` the parent was imported under, finds\nthe parent first, so a parent renamed in the viewer keeps its tabs. Without a\nmatch by key or by title, the tab imported from the same `source_key` stays\nunder its current parent.\n\nProject identification:\n- If `project_id` is provided, uses that project directly (404 if it does not exist)\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard(s)\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update the dashboard this one replaces (default: False)\n    source_key: Optional stable origin of the YAML (e.g.\n        \"nf-core/rnaseq:dashboards/base.yaml\"), stored on the dashboard so a\n        later import of the same source finds it after a rename\n    keep_titles: If True, a dashboard this import replaces keeps its current\n        title (default: False, the YAML's title)\n    main_title: Optional title for the main dashboard, over the YAML's and\n        over keep_titles\n    parent_source_key: Optional source_key of a child tab's parent dashboard\n    existing: Optional \"keep\" or \"replace\", for a dashboard the project\n        already has; without it, `overwrite` decides\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
+        "description": "Import a dashboard from YAML content.\n\nSupports both single dashboard and multi-tab dashboard formats:\n- Single: Standard YAML with title, components, etc.\n- Multi-tab: YAML with main_dashboard and tabs keys\n\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True`, the dashboard imported earlier from the same `source_key`\nis updated instead of creating a new one, whatever its title is now; without\none, a dashboard with the same title is, if it has no `source_key` yet (one\nkeyed to another source is left alone). A main dashboard is only matched\nwith a main one, and a tab with the tabs of its parent. Either kind of match\nis a 409 without `overwrite`.\n\n`existing` says what becomes of a dashboard so matched, over `overwrite`:\n- `replace`: as `overwrite=True`;\n- `keep`: it is left as it is, its layout and components as edited in the\n  viewer, and the response says `\"status\": \"kept\"` with its id. `main_title`\n  still renames a kept main dashboard, which changes nothing else. A kept\n  multi-tab main keeps the tabs it has as they are and gains those of the\n  YAML it lacks, after its last one; `tabs_added` says how many. A tab\n  removed in the viewer so comes back. A dashboard with no match is created\n  as usual.\nEvery response says what happened in `status`: `created`, `replaced` or `kept`.\n\nTitles: a dashboard takes the title in the YAML, unless\n- `keep_titles=True` and the import replaces an existing dashboard: that\n  dashboard keeps its current title, so a refresh does not undo a rename made\n  in the viewer. Applies to the main dashboard and to every tab;\n- `main_title` is given: the main dashboard (the multi-tab `main_dashboard`,\n  or a single dashboard that is not a child tab) is titled that, over the YAML\n  and over `keep_titles`. The tabs are not affected. A 400 on a child tab.\n\nA single-format child tab names its parent by title (`parent_dashboard_tag`).\n`parent_source_key`, the `source_key` the parent was imported under, finds\nthe parent first, so a parent renamed in the viewer keeps its tabs. Without a\nmatch by key or by title, the tab imported from the same `source_key` stays\nunder its current parent.\n\n`template_id` and `template_version` (both or neither, else a 400) say the YAML\nis a template's dashboard: every dashboard this import writes records them,\nwith the import date, as its `template_origin`. A dashboard left as it is\n(`existing=keep`) keeps the stamp it had. The stamp is provenance, not content:\nit is not in the dashboard's versions, nor in its YAML export.\n\nProject identification:\n- If `project_id` is provided, uses that project directly (404 if it does not exist)\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard(s)\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update the dashboard this one replaces (default: False)\n    source_key: Optional stable origin of the YAML (e.g.\n        \"nf-core/rnaseq:dashboards/base.yaml\"), stored on the dashboard so a\n        later import of the same source finds it after a rename\n    keep_titles: If True, a dashboard this import replaces keeps its current\n        title (default: False, the YAML's title)\n    main_title: Optional title for the main dashboard, over the YAML's and\n        over keep_titles\n    parent_source_key: Optional source_key of a child tab's parent dashboard\n    existing: Optional \"keep\" or \"replace\", for a dashboard the project\n        already has; without it, `overwrite` decides\n    template_id: Optional id of the template the YAML belongs to\n    template_version: Optional revision (`template.version`) of that template\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
         "operationId": "import_dashboard_from_yaml_depictio_api_v1_dashboards_import_yaml_post",
         "security": [
           {
@@ -9379,6 +10502,38 @@
                 }
               ],
               "title": "Existing"
+            }
+          },
+          {
+            "name": "template_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Template Id"
+            }
+          },
+          {
+            "name": "template_version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Template Version"
             }
           }
         ],
@@ -9849,7 +11004,7 @@
           "Dashboards"
         ],
         "summary": "Filter Options Endpoint",
-        "description": "The options an interactive filter offers, at the data version in effect.\n\nA filter's option list read today's data while the tiles beside it showed a\npinned version: a variety select offered values the pinned data does not\nhold, and picking one emptied every chart.\n\nRequest body:\n    {\"dc_id\": str, \"column\": str, \"kind\": \"unique\" | \"range\",\n     \"filter_expr\": str (optional),\n     \"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null}}\n\nResponse, the shapes ``GET /deltatables/unique_values/{dc}`` and a column's\n``/deltatables/specs/{dc}`` entry give:\n    unique: {\"column\": str, \"values\": [str, ...]}\n    range:  {\"min\": number | null, \"max\": number | null,\n             \"dtype\": str | null, \"unique\": int | null}\n\nViewer permission on the dashboard; ``dc_id`` must belong to its project\n(404 otherwise). The pins resolve exactly as a render's do (``_data_pins``,\nwith the same 400s). Unpinned, the answer comes from the paths the viewer\nused before, cache included.",
+        "description": "The options an interactive filter offers, at the data version in effect.\n\nA filter's option list read today's data while the tiles beside it showed a\npinned version: a variety select offered values the pinned data does not\nhold, and picking one emptied every chart.\n\nRequest body:\n    {\"dc_id\": str, \"column\": str, \"kind\": \"unique\" | \"range\",\n     \"filter_expr\": str (optional), \"order_by\": str (optional, unique only),\n     \"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null}}\n\nResponse, the shapes ``GET /deltatables/unique_values/{dc}`` and a column's\n``/deltatables/specs/{dc}`` entry give:\n    unique: {\"column\": str, \"values\": [str, ...]}\n    range:  {\"min\": number | null, \"max\": number | null,\n             \"dtype\": str | null, \"unique\": int | null}\n\nViewer permission on the dashboard; ``dc_id`` must belong to its project\n(404 otherwise). The pins resolve exactly as a render's do (``_data_pins``,\nwith the same 400s). Unpinned, the answer comes from the paths the viewer\nused before, cache included.",
         "operationId": "filter_options_endpoint_depictio_api_v1_dashboards_filter_options__dashboard_id__post",
         "security": [
           {
@@ -9953,6 +11108,156 @@
                 "schema": {}
               }
             }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/filter_state/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Get Filter State",
+        "description": "Return the caller's saved filter state. Absence is a normal answer, not a 404.",
+        "operationId": "get_filter_state_depictio_api_v1_dashboards_filter_state__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Filter State Depictio Api V1 Dashboards Filter State  Dashboard Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Put Filter State",
+        "description": "Upsert the caller's filter state (last write wins).",
+        "operationId": "put_filter_state_depictio_api_v1_dashboards_filter_state__dashboard_id__put",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DashboardFilterStatePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Put Filter State Depictio Api V1 Dashboards Filter State  Dashboard Id  Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Delete Filter State",
+        "description": "Drop the caller's saved state entirely (toggle OFF uses PUT so the preference roams).",
+        "operationId": "delete_filter_state_depictio_api_v1_dashboards_filter_state__dashboard_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
           },
           "422": {
             "description": "Validation Error",
@@ -11571,7 +12876,7 @@
           "Advanced Viz"
         ],
         "summary": "Get Phylogeny Newick",
-        "description": "Return the raw Newick string for a phylogeny DC.\n\nFirst tries the copy the CLI uploads at ingest, at\n``s3://<bucket>/phylogeny/<dc_id>/tree.nwk``: it is readable by any backend,\nwhichever machine ran the CLI. Any miss there falls through to the stored\npaths below, which is what reference seeds and older ingests rely on.\n\nThose stored paths are tried in three ways: (1) prefer the file registered\nby the CLI scan in ``files_collection``; (2) for reference datasets\n(seeded via db_init, never CLI-scanned), traverse the project document\nto find the matching DC under ``workflows[].data_collections[]`` and\nread its ``config.scan.scan_parameters.filename``. DCs are stored\nembedded in the project — there is no top-level ``data_collections``\ndocument for them — so we can't ``find_one({\"_id\": dc_oid})`` directly.\n(3) as a last resort, each stored path rewritten onto the container's\n``/app`` bind mount, which is what makes a host-run CLI ingest readable\nfrom the backend container.\n\nReturns local file contents directly; stream S3-hosted trees via boto3.",
+        "description": "Return the raw Newick string for a phylogeny DC.\n\nFirst tries the copy the CLI uploads at ingest, at\n``s3://<bucket>/phylogeny/<dc_id>/tree.nwk``: it is readable by any backend,\nwhichever machine ran the CLI. Any miss there falls through to the stored\npaths below, which is what reference seeds and older ingests rely on.\n\nThose stored paths are tried in three ways: (1) prefer the file registered\nby the CLI scan in ``files_collection``; (2) for reference datasets\n(seeded via db_init, never CLI-scanned), traverse the project document\nto find the matching DC under ``workflows[].data_collections[]`` and\nread its ``config.scan.scan_parameters.filename``. DCs are stored\nembedded in the project — there is no top-level ``data_collections``\ndocument for them — so we can't ``find_one({\"_id\": dc_oid})`` directly.\n(3) as a last resort, each stored path rewritten onto the container's\n``/app`` bind mount, which is what makes a host-run CLI ingest readable\nfrom the backend container.\n\nThe stored paths are user-supplied, so neither kind is read as is: an\n``s3://`` one goes through the remote-data resolution (never the instance\ncredentials, never the instance bucket), a local one only from the bundled\nreference projects or the local-data policy's folders. A refused candidate\nis skipped, and the response never names a path.",
         "operationId": "get_phylogeny_newick_depictio_api_v1_advanced_viz_phylogeny__data_collection_id__newick_get",
         "security": [
           {
@@ -11612,6 +12917,55 @@
             }
           }
         }
+      }
+    },
+    "/depictio/api/v1/advanced_viz/structure/resolve": {
+      "post": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Resolve Structure",
+        "description": "Presigned URL of a PDB model for a UniProt accession, a gene, or a sequence.\n\nMounted as ``POST /advanced_viz/structure/resolve`` by ``routes.py``.",
+        "operationId": "resolve_structure_depictio_api_v1_advanced_viz_structure_resolve_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StructureResolveRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Resolve Structure Depictio Api V1 Advanced Viz Structure Resolve Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/export/dashboards/{dashboard_id}/components": {
@@ -13053,6 +14407,568 @@
         ]
       }
     },
+    "/depictio/api/v1/groups/list": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "List Groups",
+        "description": "List all groups (sharing picker). Any authenticated non-anonymous user;\nsummaries only, so no member emails are leaked.",
+        "operationId": "list_groups_depictio_api_v1_groups_list_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GroupSummary"
+                  },
+                  "type": "array",
+                  "title": "Response List Groups Depictio Api V1 Groups List Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/groups/mine": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "My Groups",
+        "description": "Groups the caller belongs to, annotated with their role in each.",
+        "operationId": "my_groups_depictio_api_v1_groups_mine_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MyGroup"
+                  },
+                  "type": "array",
+                  "title": "Response My Groups Depictio Api V1 Groups Mine Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/groups/{group_id}": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Get Group",
+        "description": "Group detail incl. member list — sysadmin, group admins and members only.",
+        "operationId": "get_group_depictio_api_v1_groups__group_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Update Group",
+        "description": "Rename / re-describe a group (sysadmin or group admin). Renames are\npropagated into the denormalized permission snapshots.",
+        "operationId": "update_group_depictio_api_v1_groups__group_id__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Delete Group",
+        "description": "Delete a group (sysadmin only) and scrub its permission snapshots.",
+        "operationId": "delete_group_depictio_api_v1_groups__group_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/groups": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Create Group",
+        "description": "Create a group (sysadmin only). The optional P.I. becomes member + group admin.",
+        "operationId": "create_group_depictio_api_v1_groups_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/groups/{group_id}/members/{user_id}": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Add Group Member",
+        "description": "Add a member (sysadmin or group admin). Idempotent. Works on sso_managed\ngroups too (manual override) — the response carries ``sso_managed`` so the\nUI can warn.",
+        "operationId": "add_group_member_depictio_api_v1_groups__group_id__members__user_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Remove Group Member",
+        "description": "Remove a member (sysadmin or group admin). Idempotent. Also drops their\ngroup-admin role and clears pi_id if it was them.",
+        "operationId": "remove_group_member_depictio_api_v1_groups__group_id__members__user_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/groups/{group_id}/admins/{user_id}/{make_admin}": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Set Group Admin",
+        "description": "Promote/demote a group admin (sysadmin or group admin of THIS group).\n\nMirrors the /auth/turn_sysadmin guard rails: no self-demotion, and the\ngroup cannot be left admin-less unless the caller is a sysadmin.",
+        "operationId": "set_group_admin_depictio_api_v1_groups__group_id__admins__user_id___make_admin__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "User Id"
+            }
+          },
+          {
+            "name": "make_admin",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "title": "Make Admin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/groups/{group_id}/pi/{user_id}": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Set Group Pi",
+        "description": "Set the group's P.I. (sysadmin only). The P.I. becomes member + group admin.",
+        "operationId": "set_group_pi_depictio_api_v1_groups__group_id__pi__user_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/groups/{group_id}/pending-pi": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Set Group Pending Pi",
+        "description": "Park a P.I. designation on an email address (sysadmin only).\n\nLets an admin name the P.I. of a group before that person has ever signed\nin — the promotion is applied by ``claim_pending_pi_groups`` on their first\nlogin, in any auth mode. An address that already resolves to an account is\napplied immediately instead of parked. ``email=None`` clears the parking.",
+        "operationId": "set_group_pending_pi_depictio_api_v1_groups__group_id__pending_pi_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupPendingPIRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/auth/login": {
       "post": {
         "tags": [
@@ -13989,6 +15905,55 @@
         }
       }
     },
+    "/depictio/api/v1/auth/admin/create_user": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Admin Create User",
+        "description": "Create an account with an initial password. Admin-only.\n\nThe admin chooses the password and hands it over; by default the person is\nasked to replace it at their first sign-in (``must_change_password``).\nUnlike ``/register`` this is not gated by ``registration_disabled`` or\n``password_login_disabled``: an admin pre-creating accounts is how a closed\ninstance gets its users, and on an SSO-only instance the account is matched\nby email at the first SSO sign-in, the password never being used.\n\nA duplicate email is a 409 here: the caller is an admin, so there is no\nenumeration to hide.",
+        "operationId": "admin_create_user_depictio_api_v1_auth_admin_create_user_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestAdminCreateUser"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Admin Create User Depictio Api V1 Auth Admin Create User Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/auth/edit_password": {
       "post": {
         "tags": [
@@ -14562,6 +16527,96 @@
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/saml/login": {
+      "get": {
+        "tags": [
+          "SAML SSO"
+        ],
+        "summary": "Saml Login",
+        "description": "Start an SP-initiated SAML login: redirect the browser to the IdP.",
+        "operationId": "saml_login_depictio_api_v1_auth_saml_login_get",
+        "parameters": [
+          {
+            "name": "next",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Same-origin path to land on after login",
+              "title": "Next"
+            },
+            "description": "Same-origin path to land on after login"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/saml/callback": {
+      "post": {
+        "tags": [
+          "SAML SSO"
+        ],
+        "summary": "Saml Acs",
+        "description": "Assertion Consumer Service: validate the IdP response, mint a session ticket.",
+        "operationId": "saml_acs_depictio_api_v1_auth_saml_callback_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/auth/saml/metadata": {
+      "get": {
+        "tags": [
+          "SAML SSO"
+        ],
+        "summary": "Saml Metadata",
+        "description": "Serve the SP metadata XML (import this in the IdP to register the client).",
+        "operationId": "saml_metadata_depictio_api_v1_auth_saml_metadata_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           }
@@ -16996,6 +19051,366 @@
         "type": "object",
         "title": "CreateVersionRequest"
       },
+      "CustomAssembly": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Assembly name used by JBrowse (e.g. 'MN908947.3')"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name",
+            "description": "Human-readable name"
+          },
+          "aliases": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Aliases",
+            "description": "Other names of the assembly (e.g. ['hg38'])"
+          },
+          "fasta_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fasta Uri",
+            "description": "FASTA (plain or bgzipped)"
+          },
+          "fai_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fai Uri",
+            "description": "FASTA .fai index"
+          },
+          "gzi_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gzi Uri",
+            "description": "bgzip .gzi index"
+          },
+          "twobit_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Twobit Uri",
+            "description": "UCSC .2bit sequence"
+          },
+          "chrom_sizes_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chrom Sizes Uri",
+            "description": "chrom.sizes (2bit only)"
+          },
+          "refname_aliases_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refname Aliases Uri",
+            "description": "Tab-separated refName alias file (e.g. chr1 ↔ 1)"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "CustomAssembly",
+        "description": "A reference assembly that is not one of the built-in presets.\n\nGive either an indexed FASTA (``fasta_uri`` + ``fai_uri``, plus ``gzi_uri``\nwhen bgzipped) or a UCSC ``twobit_uri``. URIs follow the same rules as\ntrack URIs (relative, ``s3://`` or ``https://``)."
+      },
+      "DCGenomicTracksConfig": {
+        "properties": {
+          "format": {
+            "type": "string",
+            "title": "Format",
+            "description": "Manifest format: csv, tsv, parquet, feather, xls, xlsx"
+          },
+          "polars_kwargs": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Polars Kwargs"
+          },
+          "keep_columns": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Keep Columns"
+          },
+          "columns_description": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Columns Description"
+          },
+          "uri_column": {
+            "type": "string",
+            "title": "Uri Column",
+            "description": "Column holding the track location",
+            "default": "uri"
+          },
+          "track_id_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Track Id Column",
+            "description": "Column with a unique track id (defaults to the row's uri)"
+          },
+          "sample_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Column",
+            "description": "Entity column the tracks belong to (sample, cell…); used for cross-filtering and as the default selection column"
+          },
+          "format_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Format Column",
+            "description": "Column holding the track format (optional)",
+            "default": "format"
+          },
+          "default_format": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "bigwig",
+                  "bedgraph",
+                  "bed",
+                  "bigbed",
+                  "narrowpeak",
+                  "broadpeak",
+                  "vcf",
+                  "bam",
+                  "cram",
+                  "gff3",
+                  "gtf",
+                  "fasta"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default Format",
+            "description": "Format used when the manifest has no format column and the extension does not tell"
+          },
+          "index_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index Column",
+            "description": "Column holding the index location (optional; inferred otherwise)",
+            "default": "index_uri"
+          },
+          "order_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order Column",
+            "description": "Column the tracks are ordered by (ascending) when the view opens and fills its first `initial_tracks`; ingestion may reorder the rows otherwise"
+          },
+          "name_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name Column",
+            "description": "Track label column"
+          },
+          "color_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color Column",
+            "description": "Track colour column"
+          },
+          "category_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Column",
+            "description": "Track category column (track selector folders)"
+          },
+          "assembly": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/CustomAssembly"
+              }
+            ],
+            "title": "Assembly",
+            "description": "Assembly preset name (hg38, hg19, hs1, mm10, mm39, sacCer3, dm6, ce11, danRer11, TAIR10, wuhCor1) or a custom assembly",
+            "default": "hg38"
+          },
+          "tracks_base_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tracks Base Path",
+            "description": "Local directory relative track URIs resolve against at ingestion (defaults to the manifest's directory)"
+          },
+          "s3_base_folder": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "S3 Base Folder",
+            "description": "S3 folder relative track URIs live under (set at ingestion)"
+          },
+          "remote_base_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remote Base Uri",
+            "description": "s3:// or https:// prefix relative track URIs are read in place under (e.g. a pipeline's results folder), instead of being uploaded at ingestion"
+          },
+          "direct_access": {
+            "type": "boolean",
+            "title": "Direct Access",
+            "description": "Let the browser fetch https:// tracks directly instead of through the API proxy (the host must send CORS + Range headers)",
+            "default": false
+          },
+          "display_defaults": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Display Defaults",
+            "description": "Per-format JBrowse track config merged into every track of that format (e.g. {'bigwig': {'displays': [...]}})"
+          },
+          "presets": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Presets",
+            "description": "Named JBrowse config fragments components can pick with `preset:`"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "format"
+        ],
+        "title": "DCGenomicTracksConfig",
+        "description": "Configuration of a ``genomic_tracks`` data collection.\n\nExample (project.yaml)::\n\n    - data_collection_tag: sv_tracks\n      config:\n        type: genomic_tracks\n        scan:\n          mode: single\n          scan_parameters:\n            filename: tracks.tsv\n        dc_specific_properties:\n          format: tsv\n          uri_column: uri\n          sample_column: cell\n          assembly: hg38"
+      },
       "DCGeoJSONConfig": {
         "properties": {
           "feature_id_key": {
@@ -17140,10 +19555,13 @@
               "bigbed",
               "gff3",
               "fasta",
-              "tabix"
+              "tabix",
+              "pdb",
+              "mmcif",
+              "pae"
             ],
             "title": "Format",
-            "description": "File format. Each maps to one GenomeSpy lazy data source: vcf, bam, bigwig, bigbed, gff3, fasta (indexedFasta) or tabix (any other bgzip-compressed, tabix-indexed interval file such as BED)."
+            "description": "File format. Each maps to one GenomeSpy lazy data source: vcf, bam, bigwig, bigbed, gff3, fasta (indexedFasta) or tabix (any other bgzip-compressed, tabix-indexed interval file such as BED). pdb and mmcif hold protein structures (.pdb, .cif, .mmcif, gzip allowed), one per entity, read whole by the molecule_3d viz. pae holds the predicted aligned error matrix of a structure (.pae.tsv, .pae.json, gzip allowed), one per entity, read whole by the pae_matrix viz."
           },
           "index_suffix": {
             "anyOf": [
@@ -17167,7 +19585,7 @@
               }
             ],
             "title": "Sample Regex",
-            "description": "Regular expression with a named group 'sample', matched against the scanned file path to name the sample. Null falls back to the file name with its format and compression suffixes stripped."
+            "description": "Regular expression matched against the scanned file path to name the sample: its named group 'sample', or, without one, its named groups joined with '__' in declaration order. Null falls back to the file name with its format and compression suffixes stripped."
           },
           "sample_col": {
             "type": "string",
@@ -17286,10 +19704,11 @@
             "enum": [
               "table",
               "multiqc",
-              "image"
+              "image",
+              "genomic_tracks"
             ],
             "title": "Target Type",
-            "description": "Type of the target DC. Determines which resolver strategies are valid. Supported: 'table', 'multiqc', 'image'. Future: 'jbrowse2', 'geomap'"
+            "description": "Type of the target DC. Determines which resolver strategies are valid. Supported: 'table', 'multiqc', 'image', 'genomic_tracks'. Future: 'geomap'"
           },
           "link_config": {
             "$ref": "#/components/schemas/LinkConfig",
@@ -17321,7 +19740,7 @@
           "target_type"
         ],
         "title": "DCLink",
-        "description": "Universal link between data collections for cross-DC filtering.\n\nA link defines a relationship between a source DC (where filters are applied)\nand a target DC (which receives the filtered values). The link_config determines\nhow values are resolved from source to target.\n\nPhase 1 supports:\n- table: Direct column mapping or link-based filtering\n- multiqc: Sample name resolution via sample_mappings\n\nFuture phases will add:\n- jbrowse2: Track visibility based on sample patterns\n- images: Image selection based on metadata patterns\n- geomap: Marker/region filtering\n\nExample YAML configuration:\n    links:\n      - source_dc_id: \"metadata_table_dc_id\"\n        source_column: \"sample_id\"\n        target_dc_id: \"multiqc_dc_id\"\n        target_type: \"multiqc\"\n        link_config:\n          resolver: \"sample_mapping\"\n          target_field: \"sample_name\"\n        description: \"Link metadata samples to MultiQC variants\""
+        "description": "Universal link between data collections for cross-DC filtering.\n\nA link defines a relationship between a source DC (where filters are applied)\nand a target DC (which receives the filtered values). The link_config determines\nhow values are resolved from source to target.\n\nPhase 1 supports:\n- table: Direct column mapping or link-based filtering\n- multiqc: Sample name resolution via sample_mappings\n- genomic_tracks: filters a track manifest (the jbrowse component then shows\n  the matching tracks); resolved like a table\n\nFuture phases will add:\n- images: Image selection based on metadata patterns\n- geomap: Marker/region filtering\n\nExample YAML configuration:\n    links:\n      - source_dc_id: \"metadata_table_dc_id\"\n        source_column: \"sample_id\"\n        target_dc_id: \"multiqc_dc_id\"\n        target_type: \"multiqc\"\n        link_config:\n          resolver: \"sample_mapping\"\n          target_field: \"sample_name\"\n        description: \"Link metadata samples to MultiQC variants\""
       },
       "DCMultiQC": {
         "properties": {
@@ -17561,7 +19980,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -17718,6 +20137,11 @@
             "type": "boolean",
             "title": "Show Tab Header",
             "default": true
+          },
+          "open_with_defaults": {
+            "type": "boolean",
+            "title": "Open With Defaults",
+            "default": false
           },
           "show_guide": {
             "type": "boolean",
@@ -17958,6 +20382,16 @@
               }
             ],
             "title": "Source Key"
+          },
+          "template_origin": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashboardTemplateOrigin"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -17970,6 +20404,26 @@
         ],
         "title": "DashboardData",
         "description": "Full dashboard model with MongoDB and auth fields.\n\nExtends DashboardDataLite with:\n- MongoDB document fields (id, project_id, dashboard_id)\n- Permissions (owners, editors, viewers)\n- Versioning and timestamps\n- Tab support"
+      },
+      "DashboardFilterStatePayload": {
+        "properties": {
+          "filters": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Filters"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          }
+        },
+        "type": "object",
+        "title": "DashboardFilterStatePayload",
+        "description": "Body of ``PUT /dashboards/filter_state/{dashboard_id}``."
       },
       "DashboardImportResult": {
         "properties": {
@@ -18022,13 +20476,39 @@
         ],
         "title": "DashboardImportResult"
       },
+      "DashboardTemplateOrigin": {
+        "properties": {
+          "template_id": {
+            "type": "string",
+            "title": "Template Id",
+            "description": "Template identifier (e.g., 'nf-core/nascent/2.3.0')"
+          },
+          "template_version": {
+            "type": "string",
+            "title": "Template Version",
+            "description": "The template's own revision (semver) when the dashboard was imported"
+          },
+          "imported_at": {
+            "type": "string",
+            "title": "Imported At",
+            "description": "UTC timestamp of the import, '%Y-%m-%d %H:%M:%S'"
+          }
+        },
+        "type": "object",
+        "required": [
+          "template_id",
+          "template_version"
+        ],
+        "title": "DashboardTemplateOrigin",
+        "description": "Which template revision a dashboard was last imported from.\n\nStored on the dashboard document by the template import (``depictio ingest\n--template``, ``POST /projects/from_manifest``). It is provenance, not\ncontent: it is never in the dashboard YAML, never in a version snapshot, and\na save from the viewer cannot change it. A dashboard built in the viewer, or\nimported from a plain file, has none.\n\n``template_version`` is the template's own revision (``template.version`` in\nits ``template.yaml``, see ``depictio/projects/nf-core/RULES.md``), not the\nversion of the pipeline it targets, which is the last segment of\n``template_id``."
+      },
       "DataCollection": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -18091,7 +20571,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -18181,6 +20661,9 @@
               },
               {
                 "$ref": "#/components/schemas/DCIndexedFileConfig"
+              },
+              {
+                "$ref": "#/components/schemas/DCGenomicTracksConfig"
               }
             ],
             "title": "Dc Specific Properties"
@@ -18501,7 +20984,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -18789,7 +21272,8 @@
                 "type": "string",
                 "enum": [
                   "grid",
-                  "strip"
+                  "strip",
+                  "linked"
                 ]
               },
               {
@@ -18797,7 +21281,7 @@
               }
             ],
             "title": "Display",
-            "description": "How a grid section lays out its members. Unset or `grid`: one tile each on the dashboard grid. `strip`: a filter bar -- the interactive components naming this section leave the left filter panel and render as one compact row of controls (label, chips or a thin slider, dividers between), ignoring their grid coordinates. Their values filter the whole tab, as the panel's do. Any non-interactive members still render as tiles below the bar. Grid sections only."
+            "description": "How a grid section lays out its members. Unset or `grid`: one tile each on the dashboard grid. `strip`: a filter bar -- the interactive components naming this section leave the left filter panel and render as one compact row of controls (label, chips or a thin slider, dividers between), ignoring their grid coordinates. Their values filter the whole tab, as the panel's do. Any non-interactive members still render as tiles below the bar. `linked`: holds the section's tiles within one screen height so linked views stay side by side (grid sections of tiles only). `linked` falls back to a normal stacked section on narrow screens. Grid sections only."
           },
           "filter_bar": {
             "anyOf": [
@@ -19738,6 +22222,305 @@
         ],
         "title": "GranularityConfig",
         "description": "Configuration for handling granularity mismatches between joined tables.\n\nWhen joining tables at different levels (e.g., samples vs cells), this\nconfiguration specifies how to aggregate data to the target granularity.\n\nExample:\n    DC A (samples): one row per sample\n    DC B (cells): multiple rows per sample (cells within samples)\n\n    When joining with granularity=\"sample\", DC B data will be aggregated\n    per sample using the specified aggregation functions."
+      },
+      "GroupBase": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "objectid",
+            "title": "Id",
+            "default": "6ae74f15c0276ba4f22f8cc4"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "flexible_metadata": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flexible Metadata"
+          },
+          "hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hash"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "GroupBase",
+        "description": "Denormalized group snapshot embedded in Permission documents.\n\nMirrors UserBase's role: only identity fields (id, name) are stored inside\npermissions.group_* arrays; membership is always resolved live from the\ngroups collection."
+      },
+      "GroupCreateRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "pi_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "objectid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pi Id"
+          },
+          "pi_email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pi Email"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "GroupCreateRequest"
+      },
+      "GroupDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "sso_managed": {
+            "type": "boolean",
+            "title": "Sso Managed",
+            "default": false
+          },
+          "pi_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pi Id"
+          },
+          "pending_pi_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Pi Email"
+          },
+          "admin_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Admin Ids"
+          },
+          "members": {
+            "items": {
+              "$ref": "#/components/schemas/GroupMemberOut"
+            },
+            "type": "array",
+            "title": "Members"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "GroupDetail"
+      },
+      "GroupMemberOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "is_group_admin": {
+            "type": "boolean",
+            "title": "Is Group Admin"
+          },
+          "is_pi": {
+            "type": "boolean",
+            "title": "Is Pi"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "is_group_admin",
+          "is_pi"
+        ],
+        "title": "GroupMemberOut"
+      },
+      "GroupPendingPIRequest": {
+        "properties": {
+          "email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          }
+        },
+        "type": "object",
+        "title": "GroupPendingPIRequest",
+        "description": "Park (or, with ``email=None``, clear) a group's deferred P.I."
+      },
+      "GroupSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "member_count": {
+            "type": "integer",
+            "title": "Member Count"
+          },
+          "sso_managed": {
+            "type": "boolean",
+            "title": "Sso Managed",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "member_count"
+        ],
+        "title": "GroupSummary",
+        "description": "Minimal group info for pickers/lists — no member identities leaked."
+      },
+      "GroupUpdateRequest": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "title": "GroupUpdateRequest"
       },
       "HTTPValidationError": {
         "properties": {
@@ -21384,7 +24167,8 @@
             "enum": [
               "table",
               "multiqc",
-              "image"
+              "image",
+              "genomic_tracks"
             ],
             "title": "Target Type",
             "description": "Target DC type"
@@ -21695,7 +24479,8 @@
                 "enum": [
                   "table",
                   "multiqc",
-                  "image"
+                  "image",
+                  "genomic_tracks"
                 ]
               },
               {
@@ -22253,7 +25038,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -22418,6 +25203,56 @@
         "title": "MultiQCReportsListResponse",
         "description": "Response model for list of MultiQC reports."
       },
+      "MyGroup": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "member_count": {
+            "type": "integer",
+            "title": "Member Count"
+          },
+          "sso_managed": {
+            "type": "boolean",
+            "title": "Sso Managed",
+            "default": false
+          },
+          "is_group_admin": {
+            "type": "boolean",
+            "title": "Is Group Admin"
+          },
+          "is_pi": {
+            "type": "boolean",
+            "title": "Is Pi"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "member_count",
+          "is_group_admin",
+          "is_pi"
+        ],
+        "title": "MyGroup",
+        "description": "A group the caller belongs to, annotated with their role in it."
+      },
       "Permission": {
         "properties": {
           "owners": {
@@ -22449,6 +25284,30 @@
             },
             "type": "array",
             "title": "Viewers",
+            "default": []
+          },
+          "group_owners": {
+            "items": {
+              "$ref": "#/components/schemas/GroupBase"
+            },
+            "type": "array",
+            "title": "Group Owners",
+            "default": []
+          },
+          "group_editors": {
+            "items": {
+              "$ref": "#/components/schemas/GroupBase"
+            },
+            "type": "array",
+            "title": "Group Editors",
+            "default": []
+          },
+          "group_viewers": {
+            "items": {
+              "$ref": "#/components/schemas/GroupBase"
+            },
+            "type": "array",
+            "title": "Group Viewers",
             "default": []
           }
         },
@@ -22541,7 +25400,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -23236,6 +26095,50 @@
         },
         "type": "object",
         "title": "RenameVersionRequest"
+      },
+      "RequestAdminCreateUser": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 8,
+            "title": "Password"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "title": "Is Admin",
+            "default": false
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "must_change_password": {
+            "type": "boolean",
+            "title": "Must Change Password",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "RequestAdminCreateUser",
+        "description": "An admin creating an account with a password the person will change."
       },
       "RequestEditPassword": {
         "properties": {
@@ -24275,6 +27178,51 @@
         ],
         "title": "StorageTestResult"
       },
+      "StructureResolveRequest": {
+        "properties": {
+          "uniprot": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uniprot"
+          },
+          "gene": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gene"
+          },
+          "taxon": {
+            "type": "integer",
+            "title": "Taxon",
+            "default": 9606
+          },
+          "sequence": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sequence"
+          }
+        },
+        "type": "object",
+        "title": "StructureResolveRequest",
+        "description": "Body of ``POST /advanced_viz/structure/resolve`` (at least one identifier)."
+      },
       "TableJoinConfig": {
         "properties": {
           "on_columns": {
@@ -24838,7 +27786,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -24944,7 +27892,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -25177,7 +28125,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6acdfd04a786543cd67c6e43"
+            "default": "6ae74f15c0276ba4f22f8cc5"
           }
         },
         "type": "object",
@@ -25490,7 +28438,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -25590,6 +28538,55 @@
             ],
             "title": "Registration Date"
           },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "login": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Login"
+          },
+          "sso_provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sso Provider"
+          },
+          "must_change_password": {
+            "type": "boolean",
+            "title": "Must Change Password",
+            "default": false
+          },
           "password": {
             "type": "string",
             "title": "Password"
@@ -25609,7 +28606,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -25691,7 +28688,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -25777,7 +28774,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -25876,6 +28873,55 @@
               }
             ],
             "title": "Registration Date"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "login": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Login"
+          },
+          "sso_provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sso Provider"
+          },
+          "must_change_password": {
+            "type": "boolean",
+            "title": "Must Change Password",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -25991,7 +29037,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -26166,7 +29212,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -26283,7 +29329,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -26388,7 +29434,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6acdfd04a786543cd67c6e42"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
