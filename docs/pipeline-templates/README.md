@@ -453,6 +453,69 @@ A template bundles:
 
 ---
 
+## :material-tag-multiple-outline: Pipeline version and template version { #pipeline-version-and-template-version }
+
+A template carries two version numbers. They move independently.
+
+<div class="grid cards" markdown>
+
+-   :material-pipe:{ .lg .middle } **Pipeline version**
+
+    ---
+
+    The pipeline release whose outputs the template reads. It is the last part of the
+    template id: `nf-core/rnaseq/3.26.0`. A new pipeline release gets a template of its own.
+
+    *Choose it* with `--template`, or with the **Pipeline version** picker on a template's page.
+
+-   :material-layers-outline:{ .lg .middle } **Template version**
+
+    ---
+
+    The revision of the template itself: its data collections, recipes and dashboards, for
+    one pipeline release. It moves when the template improves, for example `2.0.0` to `2.1.0`.
+
+    *Find it* beside the picker on a template's page, in the ingest log, and in the project
+    and dashboard settings.
+
+</div>
+
+When the template version moves, what you need to do depends on which number changed:
+
+<div class="tpl-bumps" markdown>
+
+<div class="tpl-bump is-major" markdown>
+<span class="tpl-bump-tag">Major</span> <code><b>2</b>.1.0 → <b>3</b>.0.0</code>
+
+**The data collections changed.** A collection, a column or a template variable was added,
+removed or renamed.
+
+:material-database-refresh: Ingest the run again.
+</div>
+
+<div class="tpl-bump is-minor" markdown>
+<span class="tpl-bump-tag">Minor</span> <code>2.<b>0</b>.0 → 2.<b>1</b>.0</code>
+
+**The dashboards changed.** Figures, tabs or recipes moved; every collection keeps its columns.
+
+:material-view-dashboard-edit-outline: Import the dashboards again.
+</div>
+
+<div class="tpl-bump is-patch" markdown>
+<span class="tpl-bump-tag">Patch</span> <code>2.1.<b>0</b> → 2.1.<b>1</b></code>
+
+**Only text changed.** Titles, captions and descriptions.
+
+:material-check: Nothing to do; import again to get the new wording.
+</div>
+
+</div>
+
+Depictio records the template version a project was ingested with, and the one each dashboard
+was imported from. The viewer warns when a newer one is available.
+
+---
+
 ## :material-source-pull: Contributing a template
 
 Want to add a template for another pipeline? The contributing guide covers the directory layout, recipe requirements, and review process.
