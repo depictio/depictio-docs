@@ -946,8 +946,7 @@ h1 {
     }
 }
 
-/* ===================================================================}
-
+/* ==========================================================================
    Component Catalog page
    ========================================================================== */
 
@@ -2311,7 +2310,8 @@ body.catalog-fs-lock .md-main {
         transform: scale(0.4);
         margin-bottom: -900px;
     }
-=======
+}
+
 /* Major / minor / patch cards on the Templates page ("Pipeline version and
    template version"): one colour per bump, the changed digit in bold. */
 .tpl-bumps {
