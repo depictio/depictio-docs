@@ -73,16 +73,18 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 |---|:--:|---|
 | `DATA_ROOT` | ✓ | Root directory containing cutandrun output (01_prealign/, 02_alignment/, 03_peak_calling/, 04_reporting/, pipeline_info/) plus the reprocessed multiqc/multiqc_data/multiqc.parquet. |
 | `GENOME` | — | UCSC assembly the run was aligned to (hg38, hg19, mm10, ...). Sets the genome axis of the Locus tab; pass --var GENOME=<assembly> for a run on another build. |
+| `TRACKS_URI` | — | s3:// or https:// folder holding the run's results, to read the genome-browser tracks (bigWig, peaks, BAM) in place instead of uploading them from DATA_ROOT. For the megatest: s3://nf-core-awsmegatests/cutandrun/results-42502fb44975e930eec865353c5481f472bcf766 |
 
 ### :material-database-outline: Data collections
 
-22 data collections — <span class="gtd-badge gtd-req">19 required</span> <span class="gtd-badge gtd-opt">3 optional</span> · <span class="gtd-badge gtd-direct">13 direct</span> <span class="gtd-badge gtd-derived">9 derived</span>.
+23 data collections — <span class="gtd-badge gtd-req">20 required</span> <span class="gtd-badge gtd-opt">3 optional</span> · <span class="gtd-badge gtd-direct">14 direct</span> <span class="gtd-badge gtd-derived">9 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
 | `samples` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/samples.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">cutandrun/samples.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `tracks` | <span class="gtd-badge gtd-direct">direct</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/tracks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">cutandrun/tracks.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `samplesheet` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">samplesheet\.valid\.csv$</code> | <span class="gtd-badge gtd-req">required</span> |
 | `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc\.parquet$</code> | <span class="gtd-badge gtd-req">required</span> |
 | `bowtie2_logs_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*\.bowtie2\.log$</code> | <span class="gtd-badge gtd-req">required</span> |
@@ -105,14 +107,30 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `seacr_frags_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*\.frags\.cut\.bed$</code> | <span class="gtd-badge gtd-opt">optional</span> |
 | `seacr_frags_profile` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/seacr/frags_profile.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">seacr/frags_profile.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 
+### :material-directions-fork: Conditional routes
+
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (22 collections are unaffected by any variable — present on every run.)
+
+<p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
+
+<div class="gtd-mtx">
+<table>
+<thead><tr><th class="dc">Data collection</th><th><code>TRACKS_URI</code></th></tr></thead>
+<tbody>
+<tr><th class="dc"><code>tracks</code></th><td class="swap" title="re-sourced when TRACKS_URI is set">⇄</td></tr>
+</tbody></table></div>
+
 ### :material-vector-link: Cross-DC links
 
-22 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+25 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
 <thead><tr><th>Source · column</th><th></th><th>Target</th><th>Filters</th></tr></thead>
 <tbody>
+<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Show the genome tracks of the samples picked in the left panel</td></tr>
+<tr><td><code>tracks</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>samples</code></td><td>Filter the dashboard by the samples whose tracks are picked in the genome browser</td></tr>
+<tr><td><code>seacr_peaks</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Open the genome tracks of the sample a picked SEACR region was called in</td></tr>
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the MultiQC panels by the samples picked in the left panel</td></tr>
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>seacr_peaks</code></td><td>Filter the SEACR peak table by the samples picked in the left panel</td></tr>
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>seacr_peak_summary</code></td><td>Filter the SEACR QC summary by the samples picked in the left panel</td></tr>
@@ -147,6 +165,7 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`cutandrun/caller_agreement.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/caller_agreement.py) | Do MACS2 and SEACR agree, sample by sample? | `sample`, `target`, `caller`, `n_peaks`, `total_bp`, `median_width`, `max_width`, `n_shared`, `n_unique`, `frac_shared`, `log10_n_peaks`, `other_caller`, `n_peaks_other` |
 | [`cutandrun/frip.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/frip.py) | How much of a sample's fragment coverage falls inside its own peaks. | `sample`, `target`, `signal_class`, `coverage_bp`, `fraction`, `frip`, `n_peaks`, `peak_span_bp`, `fragment_bp`, `scale_factor` |
 | [`cutandrun/samples.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/samples.py) | One row per CUT&RUN sample, from the samplesheet the pipeline validated. | `sample_id`, `target`, `replicate`, `replicate_label`, `role`, `is_control`, `control_target`, `n_libraries`, `library_ids`, `single_end` |
+| [`cutandrun/tracks.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cutandrun/tracks.py) | Genome-browser track manifest: one row per track file the run published. | `track_id`, `sample_id`, `target`, `kind`, `format`, `uri`, `name`, `color`, `category`, `order` |
 | [`deeptools/correlation_matrix.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/correlation_matrix.py) | deepTools plotCorrelation matrix as a square table, one row per sample. | `sample` |
 | [`deeptools/fingerprint_metrics.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/fingerprint_metrics.py) | Per-sample deepTools fingerprint metrics, one row per library. | `sample`, `auc`, `synthetic_auc`, `auc_ratio`, `x_intercept`, `synthetic_x_intercept`, `elbow_point`, `synthetic_elbow_point`, `synthetic_js_distance` |
 | [`deeptools/sample_pca.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/deeptools/sample_pca.py) | deepTools plotPCA coordinates in long form, one row per sample. | `sample`, `pc1`, `pc2`, `pc3`, `pc1_variance`, `pc2_variance` |

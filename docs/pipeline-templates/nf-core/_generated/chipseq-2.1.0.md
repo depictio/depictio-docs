@@ -82,9 +82,9 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 
 ### :material-database-outline: Data collections
 
-19 data collections — <span class="gtd-badge gtd-req">14 required</span> <span class="gtd-badge gtd-opt">5 optional</span> · <span class="gtd-badge gtd-direct">13 direct</span> <span class="gtd-badge gtd-derived">6 derived</span>.
+20 data collections — <span class="gtd-badge gtd-req">15 required</span> <span class="gtd-badge gtd-opt">5 optional</span> · <span class="gtd-badge gtd-direct">13 direct</span> <span class="gtd-badge gtd-derived">7 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
@@ -101,6 +101,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `macs2_peaks` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/2.1.0/recipes/peaks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/chipseq/peaks.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `macs2_peak_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/peak_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">macs2/peak_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `homer_annotated_peaks` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/homer/annotate_peaks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">homer/annotate_peaks.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `homer_feature_classes` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/recipes/feature_classes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/chipseq/feature_classes.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `homer_tss_distance_profile` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/homer/tss_distance_profile.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">homer/tss_distance_profile.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `macs2_summit_profile` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/summit_profile.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">macs2/summit_profile.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `macs2_consensus_boolean` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/consensus_boolean.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">macs2/consensus_boolean.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
@@ -110,7 +111,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 
 ### :material-directions-fork: Conditional routes
 
-Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (16 collections are unaffected by any variable — present on every run.)
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (17 collections are unaffected by any variable — present on every run.)
 
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 
@@ -125,7 +126,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 
 ### :material-vector-link: Cross-DC links
 
-22 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+23 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -143,15 +144,16 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deeptools_fingerprint_metrics</code></td><td>Filter the fingerprint metrics by the samples picked on the design sheet</td></tr>
 <tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deeptools_plot_profile</code></td><td>Filter the metagene profiles by the samples picked on the design sheet</td></tr>
 <tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>homer_tss_distance_profile</code></td><td>Filter the TSS distance profiles by the samples picked on the design sheet</td></tr>
+<tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>homer_feature_classes</code></td><td>Filter the feature-class composition by the samples picked in the left rail</td></tr>
+<tr><td><code>homer_annotated_peaks</code> <span class="col">·&nbsp;annotation_class</span></td><td class="arr">→</td><td><code>homer_feature_classes</code></td><td>A feature class picked on the annotation narrows the feature-class composition</td></tr>
 <tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>macs2_summit_profile</code></td><td>Filter the summit-centred profiles by the samples picked on the design sheet</td></tr>
 <tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>picard_markduplicates_metrics</code></td><td>Filter the duplication metrics by the libraries picked on the design sheet</td></tr>
 <tr><td><code>macs2_peaks</code> <span class="col">·&nbsp;chr</span></td><td class="arr">→</td><td><code>macs2_consensus_boolean</code></td><td>A region brushed or typed on the peak navigator narrows the consensus intervals</td></tr>
 <tr><td><code>macs2_peaks</code> <span class="col">·&nbsp;chr</span></td><td class="arr">→</td><td><code>homer_annotated_peaks</code></td><td>A region brushed or typed on the peak navigator narrows the HOMER annotation track</td></tr>
 <tr><td><code>samplesheet</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the read-level MultiQC panels by the sequencing libraries picked in the left panel</td></tr>
-<tr><td><code>design</code> <span class="col">·&nbsp;antibody</span></td><td class="arr">→</td><td><code>macs2_consensus_boolean</code></td><td>Narrow the consensus overlap panels to the antibody picked in the left panel</td></tr>
-<tr><td><code>design</code> <span class="col">·&nbsp;antibody</span></td><td class="arr">→</td><td><code>macs2_consensus_fc</code></td><td>Narrow the consensus signal heatmap to the antibody picked in the left panel</td></tr>
+<tr><td><code>macs2_consensus_boolean</code> <span class="col">·&nbsp;consensus_set</span></td><td class="arr">→</td><td><code>macs2_consensus_fc</code></td><td>Narrow the consensus signal heatmap to the consensus set picked on the Consensus tab</td></tr>
 <tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deseq2_qc_pca</code></td><td>Filter the count-matrix PCA by the libraries picked in the left panel</td></tr>
-<tr><td><code>design</code> <span class="col">·&nbsp;antibody</span></td><td class="arr">→</td><td><code>deseq2_qc_pca</code></td><td>Narrow the count-matrix PCA to the antibody picked in the left panel</td></tr>
+<tr><td><code>macs2_consensus_boolean</code> <span class="col">·&nbsp;consensus_set</span></td><td class="arr">→</td><td><code>deseq2_qc_pca</code></td><td>Narrow the count-matrix PCA to the consensus set picked on the Consensus tab</td></tr>
 <tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>deseq2_qc_sample_dists</code></td><td>Filter the sample distance matrix by the libraries picked in the left panel</td></tr>
 </tbody></table></div>
 
@@ -172,6 +174,7 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`macs2/summit_profile.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/macs2/summit_profile.py) | Summit-centred aggregate of the MACS2 peak calls, one curve per sample. | `sample`, `offset_bp`, `n_summits`, `peak_footprint`, `neighbour_summit_density` |
 | [`nf-core/chipseq/deseq2_qc_pca.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/2.1.0/recipes/deseq2_qc_pca.py) | DESeq2 QC principal components per antibody, with each library's condition. | `sample_id`, `consensus_set`, `dim_1`, `dim_2`, `dim_1_percent`, `dim_2_percent` |
 | [`nf-core/chipseq/design_factors.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/2.1.0/recipes/design_factors.py) | One row per merged library of a chipseq 2.x run, with its factors as columns. | `sample_id`, `role`, `is_control`, `antibody`, `condition`, `replicate`, `control_id` |
+| [`nf-core/chipseq/feature_classes.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/recipes/feature_classes.py) | Peaks per sample and HOMER feature class, in the long form of a composition. | `sample`, `annotation_class`, `peak_count`, `rank` |
 | [`nf-core/chipseq/peaks.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/2.1.0/recipes/peaks.py) | MACS3 peak calls of either peak type, in one tidy table. | `sample`, `peak_id`, `chr`, `start`, `end`, `width`, `summit`, `score`, `fold_enrichment`, `neg_log10_pvalue`, `neg_log10_qvalue`, `peak_type` |
 | [`picard/markduplicates_metrics.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/picard/markduplicates_metrics.py) | Duplication metrics from a Picard MarkDuplicates report. | `sample`, `library`, `unpaired_reads_examined`, `read_pairs_examined`, `unmapped_reads`, `unpaired_read_duplicates`, `read_pair_duplicates`, `read_pair_optical_duplicates`, `duplicate_reads`, `reads_after_dedup`, `percent_duplication`, `estimated_library_size` |
 | [`preseq/complexity_curve.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/preseq/complexity_curve.py) | Library complexity curve with its confidence ribbon, one row per read depth. | `sample`, `total_reads`, `expected_distinct`, `lower_ci`, `upper_ci`, `ci_width` |
