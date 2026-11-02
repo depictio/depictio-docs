@@ -38,7 +38,7 @@ status` is dirty after a regeneration, something in the figure actually changed.
 | `data_model.py` | Data Model: the two project shapes, config to data, join vs link. |
 | `architecture.py` | The system architecture figure on the Features overview. |
 | `nextflow_trigger.py` | The trigger flow on the Nextflow trigger page. |
-| `protein_tiles.py` | Linking by residue and the structure resolver on the Protein tiles page. One light SVG, no PNG. |
+| `protein_tiles.py` | Linking by residue and the structure resolver, the two figures on the Protein tiles page. |
 
 `sketch.py` is a port of the generator in the main
 [depictio](https://github.com/depictio/depictio) repository, which produces the

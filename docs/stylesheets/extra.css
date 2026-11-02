@@ -2598,8 +2598,11 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
     color: var(--tpl-bump);
 }
 
-/* A pinned sidebar group (javascripts/nav-pinned.js) has no chevron: its title
-   is a link to its own page and the group is always open. */
-.md-nav__item--nested.nav-pinned > .md-nav__container > label.md-nav__link {
+/* A pinned sidebar group (javascripts/nav-pinned.js) is a single entry: its
+   title is a link to its own page, with no chevron and no list of sub-pages.
+   The sub-pages stay in the nav, so the previous/next links and the active
+   highlight still work. */
+.md-nav__item--nested.nav-pinned > .md-nav__container > label.md-nav__link,
+.md-nav__item--nested.nav-pinned > nav.md-nav {
     display: none;
 }

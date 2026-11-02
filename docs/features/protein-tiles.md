@@ -31,8 +31,9 @@ The nf-core [proteinfamilies](../pipeline-templates/nf-core/proteinfamilies.md),
 predicted structure.
 
 <figure markdown="span">
-  [![Protein tiles linked by residue: a click or brush becomes a filter on entity and position that narrows every table, a hover is only published in the browser; the 3D model comes from a file of the run or from the resolver, cache then AlphaFold DB, UniProt and ESMFold](../images/guides/protein-tiles/schema_residue_linking.svg)](../images/guides/protein-tiles/schema_residue_linking.svg){target=_blank}
-  <figcaption><strong>Linked by residue.</strong> A pick is a filter, a hover is not. The model is read from the run, or fetched by the resolver when a server turns it on.</figcaption>
+  [![Protein tiles linked by residue: a click or brush becomes a filter on entity and position that narrows every table and is shown by every protein tile, a hover is only published in the browser and marks one residue](../images/guides/protein-tiles/schema_residue_linking_light.png#only-light)](../images/guides/protein-tiles/schema_residue_linking_light.png){target=_blank}
+  [![Protein tiles linked by residue: a click or brush becomes a filter on entity and position that narrows every table and is shown by every protein tile, a hover is only published in the browser and marks one residue](../images/guides/protein-tiles/schema_residue_linking_dark.png#only-dark)](../images/guides/protein-tiles/schema_residue_linking_dark.png){target=_blank}
+  <figcaption><strong>Linked by residue.</strong> A pick is a filter, a hover is not.</figcaption>
 </figure>
 
 ---
@@ -185,6 +186,12 @@ wheel, or a pinch. The protein templates lay these tiles out as a
 ---
 
 ## Where the structure comes from { #structure-resolver }
+
+<figure markdown="span">
+  [![The 3D model comes from a file of the run, or from the resolver: bucket cache, then AlphaFold DB, UniProt and ESMFold](../images/guides/protein-tiles/schema_structure_resolver_light.png#only-light)](../images/guides/protein-tiles/schema_structure_resolver_light.png){target=_blank}
+  [![The 3D model comes from a file of the run, or from the resolver: bucket cache, then AlphaFold DB, UniProt and ESMFold](../images/guides/protein-tiles/schema_structure_resolver_dark.png#only-dark)](../images/guides/protein-tiles/schema_structure_resolver_dark.png){target=_blank}
+  <figcaption><strong>Where the model comes from.</strong> The run's file, or the resolver when a server turns it on.</figcaption>
+</figure>
 
 `structure_source: file` reads the run's own structure files and needs no outbound call.
 
