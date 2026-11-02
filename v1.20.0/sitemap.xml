@@ -361,7 +361,15 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/drop/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/eager/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/epitopeprediction/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
@@ -373,7 +381,15 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/genomeqc/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/hic/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/hlatyping/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
@@ -382,6 +398,10 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/mag/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/mcmicro/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
@@ -394,6 +414,10 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/nanoseq/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/nascent/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
@@ -417,6 +441,14 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/quantms/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/raredisease/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/riboseq/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
@@ -433,6 +465,10 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/rnavar/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/sarek/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
@@ -445,11 +481,19 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/stableexpression/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/taxprofiler/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/variantbenchmarking/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/viralmetagenome/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
@@ -549,11 +593,27 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/drop-1.0.0/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/drop-latest/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/eager-2.4.5/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/eager-latest/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/epitopeprediction-3.2.0/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/epitopeprediction-latest/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
@@ -573,6 +633,14 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/genomeqc-1.0.1/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/genomeqc-latest/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/hic-2.0.0/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
@@ -582,6 +650,14 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/hic-latest/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/hlatyping-2.2.0/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/hlatyping-latest/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
@@ -598,6 +674,14 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/mag-latest/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/mcmicro-2.0.0/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/mcmicro-latest/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
@@ -622,6 +706,14 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/nanoseq-latest/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/nascent-2.3.0/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/nascent-latest/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
@@ -665,6 +757,22 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/quantms-1.1.1/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/quantms-latest/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/raredisease-3.1.2/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/raredisease-latest/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/riboseq-2.0.0/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
@@ -697,6 +805,14 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/rnavar-1.3.0/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/rnavar-latest/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/sarek-3.10.0/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
@@ -725,6 +841,14 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/stableexpression-1.1.0/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/stableexpression-latest/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/taxprofiler-2.0.1/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
@@ -750,6 +874,14 @@
     </url>
     <url>
          <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/variantbenchmarking-latest/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/viralmetagenome-1.2.0/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://depictio.github.io/depictio-docs/v1.20.0/pipeline-templates/nf-core/_generated/viralmetagenome-latest/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
