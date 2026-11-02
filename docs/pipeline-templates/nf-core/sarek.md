@@ -435,7 +435,7 @@ The Locus tab embeds a [genome browser](../../features/genome-browser/index.md) 
 
     !!! info "Structure resolver"
         The structure tile looks the gene up in AlphaFold DB, which needs the
-        [structure resolver](../../features/advanced-visualizations.md#structure-resolver)
+        [structure resolver](../../features/proteins.md#structure-resolver)
         on the server; without it the tile says so and the rest of the tab works.
 
 === ":material-map-marker-outline:{ .mc-indigo } Locus"

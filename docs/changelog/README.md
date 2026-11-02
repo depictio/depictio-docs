@@ -122,7 +122,7 @@ ghcr.io/depictio/depictio-cli:1.19.1
 
 * **Scope banner** on one-unit tabs. See [Scope banner](../features/dashboards.md#scope-banner) ([#1262](https://github.com/depictio/depictio/pull/1262)).
 * **Linked views**: a section's tiles as panes on one screen. See [Linked view](../features/dashboards.md#linked-view) ([#1262](https://github.com/depictio/depictio/pull/1262)).
-* **Residue tiles sync their zoom**. See [Linked by residue](../features/advanced-visualizations.md#residue-selection) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **Residue tiles sync their zoom**. See [Linked by residue](../features/proteins.md#residue-selection) ([#1262](https://github.com/depictio/depictio/pull/1262)).
 * **Floating 3D structure** across tabs. See [Floating structure](../features/advanced-visualizations.md#floating-structure) ([#1262](https://github.com/depictio/depictio/pull/1262)).
 
 ### **🚀 Improvements**
@@ -152,9 +152,9 @@ ghcr.io/depictio/depictio-cli:1.19.0
 
 ### **✨ New Features**
 
-* **Protein tiles**: eight advanced visualizations for structures, alignments and protein families. See [Protein tiles](../features/advanced-visualizations.md#proteins) ([#1130](https://github.com/depictio/depictio/pull/1130)).
-* **Tiles linked by residue**: a pick filters every table, a hover marks every tile. See [Linked by residue](../features/advanced-visualizations.md#residue-selection) ([#1130](https://github.com/depictio/depictio/pull/1130)).
-* **Structures from AlphaFold DB or ESMFold**, off until `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` is set. See [Where the structure comes from](../features/advanced-visualizations.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1254](https://github.com/depictio/depictio/pull/1254)).
+* **Protein tiles**: eight advanced visualizations for structures, alignments and protein families. See [Proteins](../features/proteins.md) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **Tiles linked by residue**: a pick filters every table, a hover marks every tile. See [Linked by residue](../features/proteins.md#residue-selection) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **Structures from AlphaFold DB or ESMFold**, off until `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` is set. See [Where the structure comes from](../features/proteins.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1254](https://github.com/depictio/depictio/pull/1254)).
 * **Add user**: an administrator creates an account with an initial password. See [Adding a user](../usage/guides/web_ui.md#add-a-user) ([#1251](https://github.com/depictio/depictio/pull/1251)).
 * **Everyone with access** on a project's permissions. See [Everyone with access](../usage/projects/guide.md#everyone-with-access) ([#1252](https://github.com/depictio/depictio/pull/1252)).
 

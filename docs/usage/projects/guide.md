@@ -627,7 +627,7 @@ For per-sample files read directly by a Genome view tile, with no manifest, see
 
 Protein structures and predicted aligned error (PAE) matrices are `indexed_file` DCs too,
 one file per protein. They need no index: a
-[protein tile](../../features/advanced-visualizations.md#the-data) fetches the file whole.
+[protein tile](../../features/proteins.md#the-data) fetches the file whole.
 
 ```yaml
 - data_collection_tag: "structures"

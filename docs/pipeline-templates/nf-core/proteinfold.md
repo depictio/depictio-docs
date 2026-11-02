@@ -57,7 +57,7 @@ left panel and narrow every tab through the target hub.
 !!! info "Structures are read from the run, not resolved"
     The 3D and Ramachandran tiles read the top-ranked PDB that each engine
     publishes under `top_ranked_structures/`, so nothing leaves the server and
-    the [structure resolver](../../features/advanced-visualizations.md#structure-resolver)
+    the [structure resolver](../../features/proteins.md#structure-resolver)
     (`DEPICTIO_STRUCTURE_RESOLVER_ENABLED`) is not used. Those PDBs are required:
     a run that published none has no structure to open.
 

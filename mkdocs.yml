@@ -291,6 +291,7 @@ nav:
           - Dashboards: features/dashboards.md
           - Components: features/components.md
           - Advanced Visualizations: features/advanced-visualizations.md
+          - Proteins: features/proteins.md
           - Interactive Selection Filtering: features/interactive-selection-filtering.md
           - Comments and Annotations: features/comments-annotations.md
           - Genome browser:

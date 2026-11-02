@@ -344,7 +344,7 @@ remote and manifest collections can read a private bucket.
 
 ### External structure services <small>(v1.19.0+)</small> { #structure-resolver }
 
-The [protein tiles](advanced-visualizations.md#structure-resolver) can fetch a model the run did not
+The [protein tiles](proteins.md#structure-resolver) can fetch a model the run did not
 publish. The resolver is **off by default** (`DEPICTIO_STRUCTURE_RESOLVER_ENABLED`), because
 once on, exactly the accession, the gene and taxon, or the protein sequence leaves the
 server, to EBI's AlphaFold DB, UniProt or Meta's ESM Atlas. For an unpublished sequence that

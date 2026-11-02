@@ -732,7 +732,7 @@ Who may use the comment threads of a dashboard. See [Viewers can comment](../fea
 **Config Class:** `StructureResolverSettings`
 **Environment Prefix:** `DEPICTIO_STRUCTURE_RESOLVER_`
 
-Lets the [protein tiles](../features/advanced-visualizations.md#structure-resolver) fetch a model the run did not publish, from AlphaFold DB, UniProt and ESMFold. Off by default: once on, an accession, a gene and taxon, or a sequence leaves the server. See [External structure services](../features/security.md#structure-resolver). Compose and Helm forward only `ENABLED`; add the others to the service's environment.
+Lets the [protein tiles](../features/proteins.md#structure-resolver) fetch a model the run did not publish, from AlphaFold DB, UniProt and ESMFold. Off by default: once on, an accession, a gene and taxon, or a sequence leaves the server. See [External structure services](../features/security.md#structure-resolver). Compose and Helm forward only `ENABLED`; add the others to the service's environment.
 
 | Variable | Default | Description |
 |----------|---------|-------------|

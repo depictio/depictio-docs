@@ -53,7 +53,7 @@ joining them per residue, per domain, per protein and per sample:
 !!! info "Folding needs the structure resolver and sends the sequence out"
     The pipeline predicts no 3D structure. The Structure tab folds the picked
     protein from its sequence through the
-    [structure resolver](../../features/advanced-visualizations.md#structure-resolver),
+    [structure resolver](../../features/proteins.md#structure-resolver),
     which is off by default: an administrator sets
     `DEPICTIO_STRUCTURE_RESOLVER_ENABLED=true` on the server. Folding sends the
     protein sequence to ESMFold on Meta's ESM Atlas (`api.esmatlas.com`), and

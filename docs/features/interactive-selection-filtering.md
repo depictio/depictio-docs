@@ -293,7 +293,7 @@ region: a click or brush in a 3D model, an alignment, a logo or a PAE matrix bec
 on the entity column and a `position` range, plus the chain on a complex. Every table with
 those columns narrows, the last gesture wins, and cards and filter option lists ignore it as
 [they ignore a region](#region-scope). A hover marks the residue in every protein tile without
-filtering anything. See [Linked by residue](advanced-visualizations.md#residue-selection).
+filtering anything. See [Linked by residue](proteins.md#residue-selection).
 
 ---
 

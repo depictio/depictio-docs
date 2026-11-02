@@ -54,7 +54,7 @@ every tab through the samplesheet links.
 !!! info "Structure tiles need the structure resolver"
     proteinfamilies publishes no structure files. The 3D tiles of the Family
     alignment and Profile HMM tabs fold the family representative from its
-    sequence through the [structure resolver](../../features/advanced-visualizations.md#structure-resolver),
+    sequence through the [structure resolver](../../features/proteins.md#structure-resolver),
     which is off by default: an administrator sets
     `DEPICTIO_STRUCTURE_RESOLVER_ENABLED=true` on the server. The sequence is
     sent to ESMFold on Meta's ESM Atlas, which folds at most 400 residues. With

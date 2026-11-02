@@ -349,7 +349,7 @@ with the tumor's calls and reads.
         tile looks the picked gene up by its symbol (UniProt, then the AlphaFold DB
         model), which needs `DEPICTIO_STRUCTURE_RESOLVER_ENABLED=true` on the
         server (it is off by default; see the
-        [structure resolver](../../features/advanced-visualizations.md#structure-resolver)).
+        [structure resolver](../../features/proteins.md#structure-resolver)).
         With it off the tile says the lookup is disabled, and the scatter, the
         lollipop and the table keep working. A change whose reference residue
         disagrees with the model is listed, not drawn.
