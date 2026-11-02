@@ -214,6 +214,36 @@ Click a thumbnail to enlarge it, or a name to jump to its entry.
 
 </div>
 
+<p class="viz-grid__family">Samples & specimens</p>
+
+<div class="viz-grid" markdown>
+
+<div class="viz-tile viz-tile--s" markdown>
+[![Allele grid](../images/guides/advanced-visualizations/thumbs/allele_grid_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/allele_grid_light.webp){ .glightbox data-type="image" data-title="Allele grid" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Allele grid](../images/guides/advanced-visualizations/thumbs/allele_grid_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/allele_grid_dark.webp){ .glightbox data-type="image" data-title="Allele grid" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Allele grid](#allele-grid){ .viz-tile__name title="Jump to Allele grid" } <span class="ver-badge">v1.20.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--s" markdown>
+[![Pedigree](../images/guides/advanced-visualizations/thumbs/pedigree_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/pedigree_light.webp){ .glightbox data-type="image" data-title="Pedigree" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Pedigree](../images/guides/advanced-visualizations/thumbs/pedigree_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/pedigree_dark.webp){ .glightbox data-type="image" data-title="Pedigree" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Pedigree](#pedigree){ .viz-tile__name title="Jump to Pedigree" } <span class="ver-badge">v1.20.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--s" markdown>
+[![Ideogram](../images/guides/advanced-visualizations/thumbs/ideogram_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/ideogram_light.webp){ .glightbox data-type="image" data-title="Ideogram" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Ideogram](../images/guides/advanced-visualizations/thumbs/ideogram_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/ideogram_dark.webp){ .glightbox data-type="image" data-title="Ideogram" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Ideogram](#ideogram){ .viz-tile__name title="Jump to Ideogram" } <span class="ver-badge">v1.20.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--s" markdown>
+[![Spatial cells](../images/guides/advanced-visualizations/thumbs/spatial_cells_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/spatial_cells_light.webp){ .glightbox data-type="image" data-title="Spatial cells" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Spatial cells](../images/guides/advanced-visualizations/thumbs/spatial_cells_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/spatial_cells_dark.webp){ .glightbox data-type="image" data-title="Spatial cells" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Spatial cells](#spatial-cells){ .viz-tile__name title="Jump to Spatial cells" } <span class="ver-badge">v1.20.0+</span></span>
+</div>
+
+</div>
+
 <p class="viz-grid__family">General purpose</p>
 
 <div class="viz-grid" markdown>
@@ -252,6 +282,18 @@ Click a thumbnail to enlarge it, or a name to jump to its entry.
 [![Sankey](../images/guides/advanced-visualizations/thumbs/sankey_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sankey_light.webp){ .glightbox data-type="image" data-title="Sankey" data-gallery="catalog-light" data-desc-position="bottom" }
 [![Sankey](../images/guides/advanced-visualizations/thumbs/sankey_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sankey_dark.webp){ .glightbox data-type="image" data-title="Sankey" data-gallery="catalog-dark" data-desc-position="bottom" }
 <span class="viz-tile__cap">[Sankey](#sankey){ .viz-tile__name title="Jump to Sankey" } <span class="ver-badge">v0.13.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--w" markdown>
+[![Ranked table](../images/guides/advanced-visualizations/thumbs/ranked_table_light.webp#only-light){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/ranked_table_light.webp){ .glightbox data-type="image" data-title="Ranked table" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Ranked table](../images/guides/advanced-visualizations/thumbs/ranked_table_dark.webp#only-dark){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/ranked_table_dark.webp){ .glightbox data-type="image" data-title="Ranked table" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Ranked table](#ranked-table){ .viz-tile__name title="Jump to Ranked table" } <span class="ver-badge">v1.20.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--w" markdown>
+[![Ranked distribution](../images/guides/advanced-visualizations/thumbs/ranked_distribution_light.webp#only-light){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/ranked_distribution_light.webp){ .glightbox data-type="image" data-title="Ranked distribution" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Ranked distribution](../images/guides/advanced-visualizations/thumbs/ranked_distribution_dark.webp#only-dark){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/ranked_distribution_dark.webp){ .glightbox data-type="image" data-title="Ranked distribution" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Ranked distribution](#ranked-distribution){ .viz-tile__name title="Jump to Ranked distribution" } <span class="ver-badge">v1.20.0+</span></span>
 </div>
 
 </div>
@@ -1649,6 +1691,208 @@ Abundance table columns are bound by `abundance_col` and `abundance_sample_col`.
 
 ---
 
+## :material-account-group-outline: Samples & specimens { #samples }
+
+### :material-view-column-outline: Allele grid { #allele-grid }
+
+<span class="ver-badge">v1.20.0+</span> `viz_kind: allele_grid`
+
+A sample by locus grid of diploid genotypes (HLA typing). Each cell is split into its two haplotypes and coloured by allele, one hue family per allele group, and a homozygous locus is one merged cell. With `selection_enabled`, a click on an allele filters the dashboard to the rows carrying it.
+
+![Allele grid](../images/guides/advanced-visualizations/allele_grid_light.webp#only-light){ data-title="Allele grid" .viz-shot loading=lazy }
+![Allele grid](../images/guides/advanced-visualizations/allele_grid_dark.webp#only-dark){ data-title="Allele grid" .viz-shot loading=lazy }
+
+**Input:** one row per allele call (sample, locus, haplotype), melted long.
+
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `sample_id` | `sample_id_col` | required | String | `SAMPLE_BAM` |
+| `locus` | `locus_col` | required | String | `HLA-A`, `HLA-B` |
+| `allele` | `allele_col` | required | String | `HLA-A*02:01` |
+| `haplotype` | `haplotype_col` | optional, 1 or 2; else table order | Integer | `1` |
+| `hla_class` | `category_col` | optional, groups the loci under a header | String | `Class I` |
+| `objective` | `value_col` | optional, side bar | Numeric | `1108.68` |
+| `reads` | `reads_col` | optional, side bar or cell opacity | Numeric | `1129` |
+
+**Compatible inputs:** OptiType genotypes (nf-core/hlatyping), reshaped to one row per call; LILAC and arcasHLA calls as they are written.
+
+**Controls**
+
+- Primary: Resolution, Order samples (and the Locus to order by)
+- Cosmetic: Allele labels, fade cells by read support, side bars
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-allele-grid
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: hla_genotypes
+      viz_kind: allele_grid
+      config:
+        viz_kind: allele_grid
+        sample_id_col: sample_id
+        locus_col: locus
+        allele_col: allele
+        haplotype_col: haplotype
+        category_col: hla_class
+        value_col: objective
+        reads_col: reads
+        resolution: 2
+        selection_enabled: true
+        selection_column: allele
+    ```
+
+### :material-human-male-female-child: Pedigree { #pedigree }
+
+<span class="ver-badge">v1.20.0+</span> `viz_kind: pedigree`
+
+A family tree from a PED-style table: generations top to bottom, couple and sibship lines, a square, circle or diamond by sex, filled when affected. With `selection_enabled`, a click on an individual filters the dashboard to it.
+
+![Pedigree](../images/guides/advanced-visualizations/pedigree_light.webp#only-light){ data-title="Pedigree" .viz-shot loading=lazy }
+![Pedigree](../images/guides/advanced-visualizations/pedigree_dark.webp#only-dark){ data-title="Pedigree" .viz-shot loading=lazy }
+
+**Input:** one row per individual. Parents are `0`, empty or null for a founder; sex is `1` / `2` / `0` or a word, status `2` / `1` / `0` or a word.
+
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `individual` | `individual_col` | required | String or Integer | `F1_I1` |
+| `father` | `father_col` | required | String or Integer | `0`, `F1_I1` |
+| `mother` | `mother_col` | required | String or Integer | `0`, `F1_I2` |
+| `sex` | `sex_col` | required | Numeric or String | `1`, `female` |
+| `status` | `status_col` | required, affected status | Numeric or String | `2`, `unaffected` |
+| `family` | `family_col` | optional, one tree per value | String or Integer | `FAM001` |
+| `label` | `label_col` | optional, text under each symbol | String | `I-1`, `Proband` |
+| `deceased` | `deceased_col` | optional, diagonal slash | Boolean or String | `1` |
+| `proband` | `proband_col` | optional, arrow; else the first affected child | Boolean or String | `proband` |
+
+**Compatible inputs:** A PED or samplesheet table with family, sample, father, mother, sex and phenotype columns, such as the one nf-core/raredisease reads.
+
+**Controls**
+
+- Primary: Family, Families with an affected member only, Max families, Max individuals
+- Cosmetic: Labels under symbols, label text, symbol size, generation spacing, generation numerals, family names, colour affected by, legend
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-pedigree
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: samples
+      viz_kind: pedigree
+      config:
+        viz_kind: pedigree
+        individual_col: individual
+        father_col: father
+        mother_col: mother
+        sex_col: sex
+        status_col: status
+        family_col: family
+        label_col: label
+        selection_enabled: true
+        selection_column: individual
+    ```
+
+### :material-align-horizontal-left: Ideogram { #ideogram }
+
+<span class="ver-badge">v1.20.0+</span> `viz_kind: ideogram`
+
+A karyotype: one bar per chromosome scaled to its length, with a glyph per feature or density bins on it, one karyotype per genome or sample. Click a chromosome to open it with its own bins, a bp axis and zoom; from there the dashboard can be filtered to the chromosome or the visible range.
+
+![Ideogram](../images/guides/advanced-visualizations/ideogram_light.webp#only-light){ data-title="Ideogram" .viz-shot loading=lazy }
+![Ideogram](../images/guides/advanced-visualizations/ideogram_dark.webp#only-dark){ data-title="Ideogram" .viz-shot loading=lazy }
+
+**Input:** one row per feature or window, on a chromosome.
+
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `chrom` | `chrom_col` | required | String | `chr1`, `X` |
+| `start` | `start_col` | required | Numeric | `1000000` |
+| `end` | `end_col` | required | Numeric | `2000000` |
+| `value` | `value_col` | optional, density on a colour scale | Numeric | `12.4` |
+| `svtype` | `category_col` | optional, categorical colour | String | `DEL`, `complete` |
+| `sample` | `sample_col` | optional, one karyotype per value | String | `NA12878_75M` |
+| `label` | `label_col` | optional, hover name | String | `DEL` |
+| `sequence_length` | `chrom_length_col` | optional, else `assembly`, else the last feature | Numeric | `248956422` |
+
+**Compatible inputs:** Structural variants from nf-core/sarek, BUSCO placements and telomeric repeats from nf-core/genomeqc, variant density per window from a VCF.
+
+**Controls**
+
+- Primary: Genome, Go to chromosome, Draw features as (Auto, Marks, Density)
+- Cosmetic: Assembly, Bars (rows or columns), Colour (category or value), bin size, colour scale, feature opacity
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-ideogram
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: sv_calls
+      viz_kind: ideogram
+      config:
+        viz_kind: ideogram
+        chrom_col: chrom
+        start_col: pos
+        end_col: end
+        category_col: svtype
+        sample_col: sample
+        label_col: svtype
+        assembly: hg38
+        mode: auto
+        orientation: horizontal
+    ```
+
+### :material-microscope: Spatial cells { #spatial-cells }
+
+<span class="ver-badge">v1.20.0+</span> `viz_kind: spatial_cells`
+
+Segmented cells where they sit in the image: one marker per cell at its centroid, sized by its area, coloured by a marker picked in the panel or by cell type, optionally over an image of the sample. A lasso selects cells.
+
+![Spatial cells](../images/guides/advanced-visualizations/spatial_cells_light.webp#only-light){ data-title="Spatial cells" .viz-shot loading=lazy }
+![Spatial cells](../images/guides/advanced-visualizations/spatial_cells_dark.webp#only-dark){ data-title="Spatial cells" .viz-shot loading=lazy }
+
+**Input:** one row per segmented cell, wide: one intensity column per marker.
+
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `cell_key` | `cell_id_col` | required, unique across samples | String or Integer | `TEST1\|Cellpose\|1` |
+| `X_centroid` | `x_col` | required | Numeric | `395.4` |
+| `Y_centroid` | `y_col` | required, grows downwards | Numeric | `16.8` |
+| `DNA_6`, `CD45`, ... | `value_columns` or `value_columns_pattern` | optional, the markers to pick from | Numeric | `14242.9` |
+| `segmenter` | `category_col` | optional, categorical colour | String | `Cellpose` |
+| `sample` | `sample_col` | optional, one image each | String | `TEST1` |
+| `Area` | `area_col` | optional, sizes the marker | Numeric | `180` |
+
+**Compatible inputs:** MCQUANT cell tables (nf-core/mcmicro).
+
+**Controls**
+
+- Primary: Marker, Colour (marker or category), Sample, Transform (Linear, asinh, log1p)
+- Cosmetic: Clip low and high, asinh cofactor, colour scale, reverse scale, size by area, size, opacity, Y axis, Samples (one or side by side), image underlay and opacity, legend, hover columns
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-spatial-cells
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: mcquant_cells
+      viz_kind: spatial_cells
+      config:
+        viz_kind: spatial_cells
+        cell_id_col: cell_key
+        x_col: X_centroid
+        y_col: Y_centroid
+        category_col: segmenter
+        sample_col: sample
+        area_col: Area
+        value_columns: [DNA_6, CD45, CD57]
+        color_by: value
+        transform: asinh
+        selection_enabled: true
+        selection_column: cell_key
+    ```
+
+---
+
 ## :material-chart-box-outline: General purpose { #general }
 
 ### :material-scatter-plot: Scatter (X/Y) { #scatter-xy }
@@ -1887,6 +2131,106 @@ Every other column (`biotype`, `chromosome`, `start`, `end`) is a field; `sectio
           Location: [chromosome, start, end]
         link_templates:
           feature_id: "https://www.ensembl.org/id/{value}"
+    ```
+
+### :material-podium: Ranked table { #ranked-table }
+
+<span class="ver-badge">v1.20.0+</span> `viz_kind: ranked_table`
+
+A leaderboard of candidates ordered by a score: medals on the first three, badges coloured by value and bars in the cells, the fields behind a row in a hover popover. With `selection_enabled`, a click on a row filters the dashboard to it.
+
+![Ranked table](../images/guides/advanced-visualizations/ranked_table_light.webp#only-light){ data-title="Ranked table" .viz-shot loading=lazy }
+![Ranked table](../images/guides/advanced-visualizations/ranked_table_dark.webp#only-dark){ data-title="Ranked table" .viz-shot loading=lazy }
+
+**Input:** one row per candidate (a variant, a gene). Every other column is named in the config (`columns`, `popover_columns`), not bound as a role.
+
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `gene` | `title_col` | required, bold row name | String or Integer | `TPTE` |
+| `rank_score` | `score_col` | required, orders the rows | Numeric | `14` |
+| `hgvs_p` | `subtitle_col` | optional, monospace beside the title | String | `p.Arg229Ter` |
+| `rank` | `rank_col` | optional, shown in the medal | Numeric | `1` |
+
+**Compatible inputs:** Ranked variants (nf-core/raredisease), outlier genes (nf-core/drop), somatic variants by priority (nf-core/sarek).
+
+**Controls**
+
+- Primary: Top N, Min score, Filter by, Sort by, First (highest or lowest)
+- Cosmetic: Hide columns, Medals, Compact rows, Open family details
+
+`columns` sets how each cell is drawn: `text`, `mono`, `badge`, `bar` or `number`. `family_dc_tag` adds a pedigree of the family to the pinned popover, see [Pedigree](#pedigree).
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-ranked-table
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: ranked_variants
+      viz_kind: ranked_table
+      config:
+        viz_kind: ranked_table
+        title_col: gene
+        subtitle_col: hgvs_p
+        score_col: rank_score
+        columns:
+          - {column: impact, label: Impact, display: badge}
+          - {column: rank_score, label: Rank score, display: bar, decimals: 0}
+        popover_columns: [consequence, gnomad_af, cadd]
+        top_n: 8
+        selection_enabled: true
+        selection_column: variant_key
+    ```
+
+### :material-sort-variant: Ranked distribution { #ranked-distribution }
+
+<span class="ver-badge">v1.20.0+</span> `viz_kind: ranked_distribution`
+
+The top-N features ranked by a score, each with its distribution across samples as a box or violin beside a lollipop of the score, on one shared feature axis. Used for gene stability and housekeeping-gene panels.
+
+![Ranked distribution](../images/guides/advanced-visualizations/ranked_distribution_light.webp#only-light){ data-title="Ranked distribution" .viz-shot loading=lazy }
+![Ranked distribution](../images/guides/advanced-visualizations/ranked_distribution_dark.webp#only-dark){ data-title="Ranked distribution" .viz-shot loading=lazy }
+
+**Input:** one row per feature, with box statistics (pre-aggregated, boxes only), or one row per feature and sample (long form, boxes or violins). Bind one shape, not both.
+
+| Column | Config key | Need | Type | Example |
+|---|---|---|---|---|
+| `gene_id` | `feature_id_col` | required | String | `ENSG00000198804` |
+| `stability_score` | `score_col` | required, ranks the features | Numeric | `0.83` |
+| `section_rank` | `rank_col` | optional, else ranked by the score | Numeric | `1` |
+| `gene_name` | `label_col` | optional, axis label | String | `MT-CO1` |
+| `section` | `group_col` | optional, colour | String | `Section 01` |
+| `value` | `value_col` | long form | Numeric | `0.9994` |
+| `q1`, `median`, `q3` | `q1_col`, `median_col`, `q3_col` | pre-aggregated, all three together | Numeric | `0.9996`, `0.9998`, `0.9999` |
+| `lower`, `upper`, `mean` | `lower_col`, `upper_col`, `mean_col` | optional, pre-aggregated | Numeric | `0.999`, `1.0` |
+
+**Compatible inputs:** Gene stability ranking and per-sample values from nf-core/stableexpression.
+
+**Controls**
+
+- Primary: Top N, Draw (Box, Violin; long form only), First (lowest or highest)
+- Cosmetic: Features (rows or columns), log value axis
+
+??? example "YAML"
+    ```yaml
+    - tag: viz-ranked-distribution
+      component_type: advanced_viz
+      workflow_tag: my_workflow
+      data_collection_tag: stable_gene_distribution
+      viz_kind: ranked_distribution
+      config:
+        viz_kind: ranked_distribution
+        feature_id_col: gene_id
+        score_col: stability_score
+        rank_col: section_rank
+        label_col: gene_name
+        group_col: section
+        q1_col: q1
+        median_col: median
+        q3_col: q3
+        top_n: 10
+        ascending: true
+        distribution: box
+        selection_enabled: true
     ```
 
 ---
