@@ -1,7 +1,7 @@
 ---
 title: Proteins
 icon: material/molecule
-description: Structures, alignments and per-residue facts on a dashboard: the eight protein tiles, the tables they read, how they stay linked by residue and where the 3D model comes from.
+description: "Structures, alignments and per-residue facts on a dashboard: the eight protein tiles, the tables they read, how they stay linked by residue and where the 3D model comes from."
 ---
 
 # :material-molecule: Proteins <small>(v1.19.0+)</small>
@@ -14,16 +14,59 @@ and every tile marks it. Each tile has its own entry, with its settings and a YA
 the [Advanced visualizations](advanced-visualizations.md#proteins) page. This page covers what
 they share.
 
-| Kind | Shows |
-|------|-------|
-| [`molecule_3d`](advanced-visualizations.md#molecule-3d) | The 3D model, coloured by confidence, chain, value or structure, with variants as spheres |
-| [`msa`](advanced-visualizations.md#msa) | A multiple sequence alignment with consensus and conservation |
-| [`sequence_track`](advanced-visualizations.md#sequence-track) | The sequence on a ruler, with a value lane, secondary structure, domains and variants |
-| [`hmm_logo`](advanced-visualizations.md#hmm-logo) | The logo of a profile HMM, and where the hits of a search land on it |
-| [`domain_architecture`](advanced-visualizations.md#domain-architecture) | The domains of many proteins, one row each, or grouped by architecture |
-| [`secondary_structure`](advanced-visualizations.md#secondary-structure) | Helices, strands and coil with the probabilities behind them, sources compared |
-| [`pae_matrix`](advanced-visualizations.md#pae-matrix) | The predicted aligned error of a model, as AlphaFold DB draws it |
-| [`ramachandran`](advanced-visualizations.md#ramachandran) | The backbone torsions of the model, a quality check computed in the browser |
+<div class="viz-bento" markdown>
+
+<div class="viz-grid" markdown>
+
+<div class="viz-tile viz-tile--f" markdown>
+[![3D structure](../images/guides/advanced-visualizations/thumbs/molecule_3d_light.webp#only-light){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/molecule_3d_light.webp){ .glightbox data-type="image" data-title="3D structure" data-gallery="proteins-light" data-desc-position="bottom" }
+[![3D structure](../images/guides/advanced-visualizations/thumbs/molecule_3d_dark.webp#only-dark){ width=960 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/molecule_3d_dark.webp){ .glightbox data-type="image" data-title="3D structure" data-gallery="proteins-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[3D structure](advanced-visualizations.md#molecule-3d){ .viz-tile__name title="Jump to 3D structure" } <span class="ver-badge">v1.19.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--w" markdown>
+[![Sequence track](../images/guides/advanced-visualizations/thumbs/sequence_track_light.webp#only-light){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sequence_track_light.webp){ .glightbox data-type="image" data-title="Sequence track" data-gallery="proteins-light" data-desc-position="bottom" }
+[![Sequence track](../images/guides/advanced-visualizations/thumbs/sequence_track_dark.webp#only-dark){ width=960 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/sequence_track_dark.webp){ .glightbox data-type="image" data-title="Sequence track" data-gallery="proteins-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Sequence track](advanced-visualizations.md#sequence-track){ .viz-tile__name title="Jump to Sequence track" } <span class="ver-badge">v1.19.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--s" markdown>
+[![Alignment](../images/guides/advanced-visualizations/thumbs/msa_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/msa_light.webp){ .glightbox data-type="image" data-title="Alignment" data-gallery="proteins-light" data-desc-position="bottom" }
+[![Alignment](../images/guides/advanced-visualizations/thumbs/msa_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/msa_dark.webp){ .glightbox data-type="image" data-title="Alignment" data-gallery="proteins-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Alignment](advanced-visualizations.md#msa){ .viz-tile__name title="Jump to Alignment" } <span class="ver-badge">v1.19.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--s" markdown>
+[![HMM logo](../images/guides/advanced-visualizations/thumbs/hmm_logo_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/hmm_logo_light.webp){ .glightbox data-type="image" data-title="HMM logo" data-gallery="proteins-light" data-desc-position="bottom" }
+[![HMM logo](../images/guides/advanced-visualizations/thumbs/hmm_logo_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/hmm_logo_dark.webp){ .glightbox data-type="image" data-title="HMM logo" data-gallery="proteins-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[HMM logo](advanced-visualizations.md#hmm-logo){ .viz-tile__name title="Jump to HMM logo" } <span class="ver-badge">v1.19.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--s" markdown>
+[![Domain architecture](../images/guides/advanced-visualizations/thumbs/domain_architecture_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/domain_architecture_light.webp){ .glightbox data-type="image" data-title="Domain architecture" data-gallery="proteins-light" data-desc-position="bottom" }
+[![Domain architecture](../images/guides/advanced-visualizations/thumbs/domain_architecture_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/domain_architecture_dark.webp){ .glightbox data-type="image" data-title="Domain architecture" data-gallery="proteins-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Domain architecture](advanced-visualizations.md#domain-architecture){ .viz-tile__name title="Jump to Domain architecture" } <span class="ver-badge">v1.19.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--s" markdown>
+[![Secondary structure](../images/guides/advanced-visualizations/thumbs/secondary_structure_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/secondary_structure_light.webp){ .glightbox data-type="image" data-title="Secondary structure" data-gallery="proteins-light" data-desc-position="bottom" }
+[![Secondary structure](../images/guides/advanced-visualizations/thumbs/secondary_structure_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/secondary_structure_dark.webp){ .glightbox data-type="image" data-title="Secondary structure" data-gallery="proteins-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Secondary structure](advanced-visualizations.md#secondary-structure){ .viz-tile__name title="Jump to Secondary structure" } <span class="ver-badge">v1.19.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--s" markdown>
+[![Predicted aligned error](../images/guides/advanced-visualizations/thumbs/pae_matrix_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/pae_matrix_light.webp){ .glightbox data-type="image" data-title="Predicted aligned error" data-gallery="proteins-light" data-desc-position="bottom" }
+[![Predicted aligned error](../images/guides/advanced-visualizations/thumbs/pae_matrix_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/pae_matrix_dark.webp){ .glightbox data-type="image" data-title="Predicted aligned error" data-gallery="proteins-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Predicted aligned error](advanced-visualizations.md#pae-matrix){ .viz-tile__name title="Jump to Predicted aligned error" } <span class="ver-badge">v1.19.0+</span></span>
+</div>
+
+<div class="viz-tile viz-tile--s" markdown>
+[![Ramachandran](../images/guides/advanced-visualizations/thumbs/ramachandran_light.webp#only-light){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/ramachandran_light.webp){ .glightbox data-type="image" data-title="Ramachandran" data-gallery="proteins-light" data-desc-position="bottom" }
+[![Ramachandran](../images/guides/advanced-visualizations/thumbs/ramachandran_dark.webp#only-dark){ width=480 height=360 loading=lazy decoding=async }](../images/guides/advanced-visualizations/ramachandran_dark.webp){ .glightbox data-type="image" data-title="Ramachandran" data-gallery="proteins-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Ramachandran](advanced-visualizations.md#ramachandran){ .viz-tile__name title="Jump to Ramachandran" } <span class="ver-badge">v1.19.0+</span></span>
+</div>
+
+</div>
 
 The nf-core [proteinfamilies](../pipeline-templates/nf-core/proteinfamilies.md),
 [proteinannotator](../pipeline-templates/nf-core/proteinannotator.md) and
@@ -40,14 +83,14 @@ Every protein tile reads tables joined on two column names: `entity` (which prot
 `position` (the 1-based residue number in the structure's numbering). A tile shows one entity
 at a time: the one the filters name, else the reader's pick, else the first.
 
-| Input | Shape |
-|-------|-------|
-| Structure files | `indexed_file` collection, `format: pdb` or `mmcif`, one file per entity, the sample id equal to the `entity` value. Predictors write pLDDT in the B-factor column |
-| Residue table | `entity`, `position`, optionally `chain`, `residue`, `value`, `category` |
-| Variants | `entity`, `position`, `ref_aa`, `alt_aa`, a consequence and a label |
-| Domains | `entity`, `start`, `end`, `label`, optionally `source` |
-| Alignment | `msa_id` (the `entity` it aligns), `seq_id`, `rank` (0 is the query), `aligned_sequence` |
-| PAE files | `indexed_file` collection, `format: pae`: proteinfold TSV, AlphaFold DB or ColabFold JSON |
+| Input | Shape | Read by |
+|-------|-------|---------|
+| :material-molecule: **Structure files** | `indexed_file` collection, `format: pdb` or `mmcif`, one file per entity, the sample id equal to the `entity` value. Predictors write pLDDT in the B-factor column | [3D structure](advanced-visualizations.md#molecule-3d), [Ramachandran](advanced-visualizations.md#ramachandran) |
+| :material-table: **Residue table** | `entity`, `position`, optionally `chain`, `residue`, `value`, `category` | [3D structure](advanced-visualizations.md#molecule-3d), [Sequence track](advanced-visualizations.md#sequence-track), [Secondary structure](advanced-visualizations.md#secondary-structure), [Predicted aligned error](advanced-visualizations.md#pae-matrix), [Ramachandran](advanced-visualizations.md#ramachandran) |
+| :material-map-marker-alert-outline: **Variants** | `entity`, `position`, `ref_aa`, `alt_aa`, a consequence and a label | [3D structure](advanced-visualizations.md#molecule-3d), [Sequence track](advanced-visualizations.md#sequence-track) |
+| :material-view-sequential-outline: **Domains** | `entity`, `start`, `end`, `label`, optionally `source` | [Sequence track](advanced-visualizations.md#sequence-track), [Domain architecture](advanced-visualizations.md#domain-architecture) |
+| :material-text-box-outline: **Alignment** | `msa_id` (the `entity` it aligns), `seq_id`, `rank` (0 is the query), `aligned_sequence` | [Alignment](advanced-visualizations.md#msa) |
+| :material-grid: **PAE files** | `indexed_file` collection, `format: pae`: proteinfold TSV, AlphaFold DB or ColabFold JSON | [Predicted aligned error](advanced-visualizations.md#pae-matrix) |
 
 The helpers in `depictio/recipes/lib/` (`protein_structure`, `msa`, `hmm`,
 `secondary_structure`, `pae`) build these tables. See [Recipes](../usage/projects/recipes.md).
