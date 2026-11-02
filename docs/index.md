@@ -2435,7 +2435,7 @@ hide:
     min-height: 74px;
   }
 
-  /* Template and tool logos scroll by in three rows, the visualization
+  /* Template and tool logos scroll by in four rows, the visualization
      thumbnails in two, each row the opposite way to the one above, and stop
      under the pointer. hooks/landing_stats.py prints each row twice so the
      loop has no seam. */

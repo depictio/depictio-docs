@@ -4,9 +4,9 @@ docs/index.md carries placeholders instead of numbers, so a release refreshes
 the page by rerunning dev/landing_stats.py and nothing else:
 
 - {{ stats.KEY }}           a scalar from the JSON; integers get a thousands comma
-- {{ stats.pipeline_marquee }} the nf-core template logos, three rows, each
+- {{ stats.pipeline_marquee }} the nf-core template logos, four rows, each
                               linked to its page (dev/fetch_template_logos.py)
-- {{ stats.tool_marquee }}     well-known catalog tools, three rows: the official
+- {{ stats.tool_marquee }}     well-known catalog tools, four rows: the official
                               logo where dev/fetch_tool_logos.py found one,
                               else the name
 - {{ stats.viz_marquee }}      a thumbnail of every advanced visualization, two
@@ -40,7 +40,7 @@ def _fmt(value) -> str:
 LOGOS = "images/landing/logos"
 
 
-def _marquee(items: list[str], rows: int = 3, extra_class: str = "") -> str:
+def _marquee(items: list[str], rows: int = 4, extra_class: str = "") -> str:
     """Rows scrolling in turn the opposite way. Each row prints its list twice
     so the loop has no seam; the copy is inert and hidden from screen readers."""
     size = -(-len(items) // rows)
