@@ -229,7 +229,7 @@ collapsed, to the bottom of every child tab.
     Cards on the sites replicates share and on the region in view. A navigator
     draws one lane per design group, each window its distinct PASS variants per
     megabase; a brush or a typed locus sets the region for the cards, the call
-    table and the [genome browser](../../features/genome-browser.md), which shows
+    table and the [genome browser](../../features/genome-browser/index.md), which shows
     the replicates' VCFs and, under them, their BAMs with splice-junction arcs. It
     opens on the best-supported shared variant, and a stepper walks the shared
     sites. The UCSC tracks are hg38 only.
