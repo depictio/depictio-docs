@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="4.0.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="4.0.0" selected>4.0.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -35,6 +35,17 @@ The funcscan template covers the four aggregated screening reports of a standard
 - :material-flask-outline: **Data & QC**: the screens and tool versions the run recorded, what each assembly yielded, and the contigs the screens share
 - :material-bacteria-outline: **Antimicrobials**: five ARG tools harmonised by hAMRonization, and AMPcombi peptide candidates in their property space
 - :material-leaf: **Metabolism**: comBGC regions from antiSMASH, DeepBGC and GECCO, and run_dbCAN CAZyme families with their substrates
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/funcscan, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf093af9f15bf159a226a" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf093af9f15bf159a226a" loading="lazy" title="nf-core/funcscan showcase dashboard" allowfullscreen></iframe>
+</div>
 
 !!! info "Four screens, any subset"
     funcscan runs up to four independent screens over the same assemblies and

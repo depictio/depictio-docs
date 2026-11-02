@@ -82,6 +82,7 @@ extra_javascript:
   - javascripts/depictio-theme-sync.js
   - javascripts/catalog-fullscreen.js
   - javascripts/template-version.js
+  - javascripts/template-showcase.js
   - javascripts/doc-sections.js
   - javascripts/template-catalog.js
   - javascripts/asciinema.js
@@ -136,8 +137,11 @@ markdown_extensions:
 # serves them from one copy at the site root. Only active when
 # DEPICTIO_DOCS_SHARED_IMAGES=1 (set by the deploy workflow), so `mkdocs serve`
 # behaves exactly as before.
+# landing_stats fills the home page's "Depictio in numbers" placeholders from
+# docs/data/landing_stats.json (rebuilt by dev/landing_stats.py).
 hooks:
   - hooks/shared_images.py
+  - hooks/landing_stats.py
 
 # Plugins
 plugins:
@@ -209,6 +213,18 @@ extra:
   analytics:
     provider: google
     property: G-J14FKHSHLC
+
+  # DocBot (EMBL-EBI docs chatbot), rendered by overrides/main.html. Off until
+  # the depictio team is registered with DocBot and depictio.github.io is in its
+  # CORS allow-list (see dev/docbot/). DEPICTIO_DOCS_DOCBOT=1 turns it on for
+  # testing with `mkdocs serve`.
+  docbot:
+    enabled: !ENV [DEPICTIO_DOCS_DOCBOT, false]
+    # Placeholder until DocBot assigns the team ID
+    team: depictio
+    # Dev backend: https://wwwdev.ebi.ac.uk/docbot/api
+    backend: https://www.ebi.ac.uk/docbot/api
+    sdk: https://docbot-64c680.gitdocs.ebi.ac.uk
 
 # Navigation Structure
 nav:

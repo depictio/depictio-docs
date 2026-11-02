@@ -39,6 +39,17 @@ joining them per residue, per domain, per protein and per sample:
 - :material-waves: **Secondary structure**: the S4PRED helix, strand and coil calls per residue, with the domains that cover them
 - :material-cube-outline: **Structure**: one protein in 3D, coloured by its best domain, linked residue by residue to its sequence track
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/proteinannotator, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6ad102d4968ac998c308420e" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6ad102d4968ac998c308420e" loading="lazy" title="nf-core/proteinannotator showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! info "Folding needs the structure resolver and sends the sequence out"
     The pipeline predicts no 3D structure. The Structure tab folds the picked
     protein from its sequence through the
@@ -210,10 +221,12 @@ helix, strand and coil.
     draws one backbone per protein with its domains from all five databases,
     coloured by database; a click selects the protein and the span on the residue
     tables and the family on the domain table, the scatter and the record card.
-    A *View* control groups proteins by architecture. The protein by database
-    heatmap and the UpSet plot show which databases agree, and significance
-    against span separates families from motifs and borderline calls. The domain
-    table and the raw hmmsearch hits are collapsed.
+    A *View* control groups proteins by architecture. The architecture, its record
+    card, the protein by database heatmap and the UpSet plot (which databases
+    agree) share one [linked view](../../features/dashboards.md#linked-view), so
+    they stay side by side. Significance against span separates families from
+    motifs and borderline calls. The domain table and the raw hmmsearch hits are
+    collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -223,8 +236,7 @@ helix, strand and coil.
         | Section | What it holds |
         |---|---|
         | Domains at a glance | 4 cards |
-        | Domain architecture | 2 advanced visualizations: the architecture and the *Domain record* |
-        | Database agreement | 2 advanced visualizations: the coverage heatmap and the UpSet |
+        | Architecture and agreement (linked view) | 4 advanced visualizations: the architecture, the *Domain record*, the coverage heatmap and the UpSet |
         | Domain calls | *Significance against span* |
         | Domain detail (collapsed) | *Domains* |
         | hmmsearch hits (collapsed) | *Bit score against HMM coverage*, *hmmsearch domain table* |
@@ -235,25 +247,27 @@ helix, strand and coil.
 
     [![Secondary structure dashboard](../../images/pipeline-templates/nf-core/proteinannotator/secondary_structure_light.webp){ loading=lazy }](../../images/pipeline-templates/nf-core/proteinannotator/secondary_structure_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The residues S4PRED called, the probability of the called state, and the helix
-    and strand probabilities. Then the
+    The tab shows one protein, the shortest first; its
+    [scope banner](../../features/dashboards.md#linked-view) names it and its
+    sample. The residues S4PRED called, the probability of the called state, and
+    the helix and strand probabilities. Then a
+    [linked view](../../features/dashboards.md#linked-view) stacks the
     [secondary structure](../../features/protein-tiles.md#secondary-structure)
-    ribbon of one protein over the probability of each state, with its segment
-    list; a brush or a segment pick selects the residues on the
-    [sequence track](../../features/protein-tiles.md#sequence-track) below, which
-    also draws the domain spans. A stacked bar compares the state shares of the
-    proteins. The residue table is collapsed.
+    ribbon, over the probability of each state with its segment list, on the
+    [sequence track](../../features/protein-tiles.md#sequence-track), which also
+    draws the domain spans; a brush or a segment pick selects the same residues on
+    both. A stacked bar compares the state shares of the proteins. The residue
+    table is collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Protein` and `Residue window` on
-        `s4pred_secondary_structure`.
+        **Filters** · `Protein` (always one, opening on the shortest) and
+        `Residue window` on `s4pred_secondary_structure`.
 
         | Section | What it holds |
         |---|---|
         | Prediction at a glance | 4 cards |
-        | Predicted structure | 1 advanced visualization, the ribbon |
-        | Along the chain | 1 advanced visualization, the sequence track |
+        | Predicted structure (linked view) | 2 advanced visualizations: the ribbon and the sequence track |
         | Composition | *Predicted states per protein* |
         | Residue table (collapsed) | *Residues* |
 
@@ -261,25 +275,29 @@ helix, strand and coil.
 
     **Annotation** · *Where do the domains sit on one protein's 3D structure?*
 
-    A table of the proteins (sample, length, annotated share, best domain) picks
-    the protein; its [3D structure](../../features/protein-tiles.md#molecule-3d),
-    coloured by best domain over its written sequence, and the sequence track
-    (state, probability and domain spans) stand linked residue by residue. A click
-    on a residue in 3D, on a letter of the sequence or a brush on the track
-    selects the same residues in all three. A protein over 400 residues cannot be
-    folded: its tile says so, and the *Longest protein* card flags it.
+    The tab shows one protein, the shortest first so that the first one folds. Its
+    [scope banner](../../features/dashboards.md#linked-view) prints its length,
+    domain hits and annotated share. A
+    [linked view](../../features/dashboards.md#linked-view) puts its
+    [3D structure](../../features/protein-tiles.md#molecule-3d), coloured by best
+    domain over its written sequence, beside the sequence track (state,
+    probability and domain spans), linked residue by residue: a click on a residue
+    in 3D, on a letter of the sequence or a brush on the track selects the same
+    residues in both. A protein over 400 residues cannot be folded: its tile says
+    so, and the *Protein length* card flags it.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Protein` and `Protein length (residues)` on
-        `proteinannotator_proteins`, and `Residue window` on
-        `proteinannotator_residues`. The length filter has no default window, so
-        every protein is listed.
+        **Filters** · `Protein` (always one, opening on the shortest) and
+        `Protein length (residues)` on `proteinannotator_proteins`, and
+        `Residue window` on `proteinannotator_residues`. The length filter has no
+        default window, so every protein stays in the picker.
 
         | Section | What it holds |
         |---|---|
-        | Structure at a glance | 4 cards: proteins in view, residues in a domain, domains per residue, longest protein |
-        | Structure and sequence | *Proteins to fold*, then 2 advanced visualizations: the predicted structure and the sequence track |
+        | Structure at a glance | 4 cards: domains, residues in a domain, domains per residue, protein length |
+        | Structure and domains (linked view) | 2 advanced visualizations: the predicted structure and the sequence track |
+        | Protein summary (collapsed) | *Protein* |
         | Residue table (collapsed) | *Residues* |
 
 Tables and point views select on `entity`, the protein id, so a protein picked in

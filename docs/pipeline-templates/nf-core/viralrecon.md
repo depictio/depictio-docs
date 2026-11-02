@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="3.0.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="3.0.0" selected>3.0.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -36,6 +36,17 @@ reads to variant calls and lineage, one tab or tab group per step:
 - :material-chart-bar: **Data & QC**: the MultiQC report, per-sample alignment and consensus QC, and mosdepth coverage per window and per amplicon
 - :material-dna: **Variants**: every call with its snpEff effect, its allele frequency and its read support (iVar on Illumina runs)
 - :material-virus: **Lineage & Clustering**: Pangolin lineages and Nextclade clades with their QC verdicts, and the samples grouped by the mutations they share
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/viralrecon, nf-core test data</span>
+    <span class="tpl-showcase-runs"><button type="button" class="tpl-showcase-run is-active" data-src="https://showcases.depictio.embl.org/dashboard/6accf00cfe17adcb30c3f090">Illumina</button><button type="button" class="tpl-showcase-run" data-src="https://showcases.depictio.embl.org/dashboard/6accf030068a4d7c3dc3f14c">Nanopore</button></span>
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf00cfe17adcb30c3f090" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf00cfe17adcb30c3f090" loading="lazy" title="nf-core/viralrecon showcase dashboard" allowfullscreen></iframe>
+</div>
 
 !!! info "Works beyond SARS-CoV-2"
     The pipeline supports any viral genome in nf-core's reference-genomes

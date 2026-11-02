@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="4.2.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="4.2.0" selected>4.2.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -36,6 +36,17 @@ each cluster:
 - :material-chart-box-outline: **Data & QC**: FastQC and Cell Ranger's own summary from the MultiQC report, and each library's metrics against 10x Genomics' cut-offs
 - :material-scatter-plot: **Cells**: the barcodes called as cells and the ambient RNA removed, how the aligner routes agree, the MAD rules that flag a cell, the UMAP and t-SNE, and the clusters with their cell cycle
 - :material-dna: **Genes**: the marker genes of each cluster, and two lassoed groups of cells tested gene by gene
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/scrnaseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accef9eb0bece2b95c3f0ad" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accef9eb0bece2b95c3f0ad" loading="lazy" title="nf-core/scrnaseq showcase dashboard" allowfullscreen></iframe>
+</div>
 
 The persistent `Sample filters` sit in the left panel and narrow every tab. On
 the tabs that draw cells, the collapsed `Cell filters` (cluster, QC status, UMIs

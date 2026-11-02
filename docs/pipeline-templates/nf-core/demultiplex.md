@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="1.8.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="1.8.0" selected>1.8.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -35,6 +35,17 @@ sequencing facility signs a run off:
 - :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
 - :material-chart-box-outline: **Data & QC**: what CheckQC and the Falco and fastp read QC flagged in the MultiQC report, and whether the instrument delivered on every lane, read and cycle
 - :material-scale-balance: **Demultiplexing**: how evenly each lane's reads were shared between the libraries, what no index matched and whether it is an index swap, and which libraries stand out on read QC within their group
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/demultiplex, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acce99a813ef93e159a21ea" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acce99a813ef93e159a21ea" loading="lazy" title="nf-core/demultiplex showcase dashboard" allowfullscreen></iframe>
+</div>
 
 The persistent `Sample filters` (the design group, then the library) sit in the
 left panel and narrow every library tab through the project links; Run health

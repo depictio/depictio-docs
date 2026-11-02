@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="4.1.3">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="4.1.3" selected>4.1.3</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -36,6 +36,17 @@ through to the protein a fusion would produce:
 - :material-chart-box-outline: **Data & QC**: FastQC, fastp, STAR and Picard, out of the MultiQC report
 - :material-set-merge: **Fusion calls**: fusion-report's ranked consensus and caller agreement, each caller's read support, and Arriba's breakpoints on the genome
 - :material-check-decagram: **Follow-up**: FusionInspector re-quantification and fusion allelic ratios, the Pfam domains each fusion protein keeps, and CTAT-splicing junctions
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/rnafusion, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf0b0b0bece2b95c3f0ad" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf0b0b0bece2b95c3f0ad" loading="lazy" title="nf-core/rnafusion showcase dashboard" allowfullscreen></iframe>
+</div>
 
 !!! info "One row is one fusion in one sample"
     rnafusion writes one file per tool per sample and none of those files carries

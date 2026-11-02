@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="3.2.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="3.2.0" selected>3.2.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -36,6 +36,17 @@ peptides each sample presents:
 - :material-chart-box-outline: **Data & QC**: the sections mhcquant writes into its own MultiQC report, and how consistently the replicate injections of a sample quantify the same peptides
 - :material-magnify-scan: **Search**: the spectra, PSMs and peptides of each raw file, how the raw search behaves as the FDR threshold moves, and whether the peptides elute and ionise as predicted
 - :material-ruler: **Immunopeptidome**: the length profile and anchor motifs that point to the MHC class, and the peptides the conditions share with the proteins they come from
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/mhcquant, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acceceaa57cdb54ef9a2262" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acceceaa57cdb54ef9a2262" loading="lazy" title="nf-core/mhcquant showcase dashboard" allowfullscreen></iframe>
+</div>
 
 The persistent `Sample filters` (condition, sample, raw file) sit in the left
 panel and apply to every tab, and the collapsed `Sample sheet` and `Reference

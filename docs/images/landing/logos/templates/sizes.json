@@ -1,0 +1,162 @@
+{
+  "airrflow": {
+    "width": 146,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/airrflow/master/docs/images/nf-core-airrflow_logo_light.png"
+  },
+  "ampliseq": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png"
+  },
+  "atacseq": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/atacseq/master/docs/images/nf-core-atacseq_logo_light.png"
+  },
+  "chipseq": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/chipseq/master/docs/images/nf-core-chipseq_logo_light.png"
+  },
+  "crisprseq": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/crisprseq/master/docs/images/nf-core-crisprseq_logo_light.png"
+  },
+  "cutandrun": {
+    "width": 145,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/cutandrun/master/docs/images/nf-core-cutandrun_logo_light.png"
+  },
+  "demultiplex": {
+    "width": 154,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/demultiplex/master/docs/images/nf-core-demultiplex_logo_light.png"
+  },
+  "differentialabundance": {
+    "width": 311,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/differentialabundance/master/docs/images/nf-core-differentialabundance_logo_light.png"
+  },
+  "eager": {
+    "width": 131,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/eager/dev/docs/images/nf-core-eager_logo_light.png"
+  },
+  "funcscan": {
+    "width": 146,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/funcscan/master/docs/images/nf-core-funcscan_logo_light.png"
+  },
+  "genomeassembler": {
+    "width": 232,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/genomeassembler/master/docs/images/nf-core-genomeassembler_logo_light.png"
+  },
+  "hic": {
+    "width": 146,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/hic/master/docs/images/nf-core-hic_logo_light.png"
+  },
+  "isoseq": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/isoseq/master/docs/images/nf-core-isoseq_logo_light.png"
+  },
+  "mag": {
+    "width": 131,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/mag/master/docs/images/nf-core-mag_logo_light.png"
+  },
+  "methylseq": {
+    "width": 163,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/methylseq/master/docs/images/nf-core-methylseq_logo_light.png"
+  },
+  "mhcquant": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/mhcquant/master/docs/images/nf-core-mhcquant_logo_light.png"
+  },
+  "nanoseq": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/nanoseq/master/docs/images/nf-core-nanoseq_logo_light.png"
+  },
+  "oncoanalyser": {
+    "width": 171,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/oncoanalyser/master/docs/images/nf-core-oncoanalyser_logo_light.png"
+  },
+  "pairgenomealign": {
+    "width": 213,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/pairgenomealign/master/docs/images/nf-core-pairgenomealign_logo_light.png"
+  },
+  "proteinannotator": {
+    "width": 223,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/proteinannotator/master/docs/images/nf-core-proteinannotator_logo_light.png"
+  },
+  "proteinfamilies": {
+    "width": 195,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/proteinfamilies/master/docs/images/nf-core-proteinfamilies_logo_light.png"
+  },
+  "proteinfold": {
+    "width": 142,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/proteinfold/master/docs/images/nf-core-proteinfold_logo_light.png"
+  },
+  "riboseq": {
+    "width": 128,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/riboseq/master/docs/images/nf-core-riboseq_logo_light.png"
+  },
+  "rnafusion": {
+    "width": 146,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/rnafusion/master/docs/images/nf-core-rnafusion_logo_light.png"
+  },
+  "rnaseq": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/rnaseq/master/docs/images/nf-core-rnaseq_logo_light.png"
+  },
+  "rnasplice": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/rnasplice/master/docs/images/nf-core-rnasplice_logo_light.png"
+  },
+  "sarek": {
+    "width": 130,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/sarek/master/docs/images/nf-core-sarek_logo_light.png"
+  },
+  "scrnaseq": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/scrnaseq/master/docs/images/nf-core-scrnaseq_logo_light.png"
+  },
+  "smrnaseq": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/smrnaseq/master/docs/images/nf-core-smrnaseq_logo_light.png"
+  },
+  "taxprofiler": {
+    "width": 139,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/taxprofiler/master/docs/images/nf-core-taxprofiler_logo_light.png"
+  },
+  "variantbenchmarking": {
+    "width": 324,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_light.png"
+  },
+  "viralrecon": {
+    "width": 146,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/viralrecon/master/docs/images/nf-core-viralrecon_logo_light.png"
+  }
+}

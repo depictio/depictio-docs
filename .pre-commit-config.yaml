@@ -1,3 +1,8 @@
+# The home page's live examples are generated (dev/export_components.py):
+# pages that inline their data and one ~10 MB viewer bundle per instance.
+# The fixers would rewrite them and the size check would refuse them.
+exclude: ^docs/images/landing/live/
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0

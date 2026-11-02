@@ -40,6 +40,17 @@ changes and neoepitopes of its variants:
 - :material-target: **Drivers and variants**: the driver catalog, somatic small variants, and protein changes on the sequence and on a predicted structure
 - :material-shield-check-outline: **Immune context**: HLA alleles, candidate neoepitopes and telomere length
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/oncoanalyser, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6ad10241376d37f865da600c" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6ad10241376d37f865da600c" loading="lazy" title="nf-core/oncoanalyser showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! info "Tables only"
     The template reads the tools' tables and the PURPLE somatic VCF. It reads no
     BAM and no MultiQC report (the pipeline writes none), so it has no MultiQC

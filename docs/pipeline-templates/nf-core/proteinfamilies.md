@@ -37,6 +37,17 @@ input sequences to one family's profile model, funnel-wise:
 - :material-shape-outline: **Families**: the families a run built or extended, their size and conservation, and how close their members sit to the representative
 - :material-dna: **Alignment**: each family's alignment, residue conservation and predicted structure, and its profile HMM as a sequence logo with the members that matched it
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/proteinfamilies, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6ad101d9ad03729f20da6006" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6ad101d9ad03729f20da6006" loading="lazy" title="nf-core/proteinfamilies showcase dashboard" allowfullscreen></iframe>
+</div>
+
 The persistent `Sample filters` (mode, sample) sit in the left panel and narrow
 every tab through the samplesheet links.
 
@@ -206,7 +217,11 @@ histograms, the track and the structure agree.
     members per family, the members recruited beyond the seed and the mean
     residue conservation. Then the family landscape, one point per family by size
     against mean conservation and sized by representative length, with the record
-    of the picked family beside it, and the family size per sample.
+    of the picked family beside it, and the family size per sample. The predicted
+    structure of the picked family's representative
+    [floats](../../features/protein-tiles.md#molecule-3d) over the
+    dashboard: it opens compact, stays on screen on every tab and follows the
+    filters of the tab you read.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -218,6 +233,7 @@ histograms, the track and the structure agree.
         | Families at a glance | 4 cards |
         | Family landscape | 2 advanced visualizations: the landscape and the *Picked family* record |
         | Family size | *Family size per sample* |
+        | Floating panel | *Predicted structure of the representative* |
 
 === ":material-account-group-outline:{ .mc-teal } Members"
 
@@ -248,11 +264,12 @@ histograms, the track and the structure agree.
     The aligned sequences, their identity to the representative, the residue
     conservation and the column occupancy. Then two histograms of the
     representative's residues, by conservation score and by column occupancy,
-    coloured by class. Pick a family on the scatter and its representative is
-    folded and coloured by conservation, with the sequence track under it and the
-    family alignment below. Residues picked in the structure, on the track or by
-    brushing alignment columns are selected in all three. The alignment shows at
-    most 500 rows per family.
+    coloured by class. A [linked view](../../features/dashboards.md#linked-view)
+    then holds the predicted structure of the picked family's representative,
+    coloured by conservation, on the left, and the family scatter, the sequence
+    track and the family alignment stacked on the right. Residues picked in the
+    structure, on the track or by brushing alignment columns are selected in all
+    three. The alignment shows at most 500 rows per family.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -262,8 +279,7 @@ histograms, the track and the structure agree.
         |---|---|
         | Alignment at a glance | 4 cards |
         | Conservation | 2 figures |
-        | Structure and sequence | 3 advanced visualizations: the family scatter, the predicted structure, the sequence track |
-        | Alignment | *Family alignment* |
+        | Fold, track and alignment (linked view) | 4 advanced visualizations: the family scatter, the predicted structure, the sequence track, the family alignment |
         | Residue table (collapsed) | *Residue conservation* |
 
 === ":material-chart-bar:{ .mc-indigo } Profile HMM"
@@ -274,14 +290,19 @@ histograms, the track and the structure agree.
 
     One family at a time: the `Family` filter always holds a value, opens on the
     family with most members and cannot be cleared, so the logo, the structure and
-    the track agree. The strip reads the representative's residues and the
-    members' identity and length. Then the profile logo of the family HMM, one
-    stack of letters per match state with the insert, occupancy and consensus
-    lanes and, under it, the members the hmmalign alignment placed on the model;
-    the predicted structure of the representative, coloured by conservation
-    class; and its sequence track. The states are mapped onto the representative's
-    residues through the family's hmmalign alignment, so a brush on the logo
-    selects those residues in the structure and on the track.
+    the track agree. Its [scope banner](../../features/dashboards.md#linked-view)
+    prints the family's members, its representative's length and the members'
+    mean identity to it. The strip reads the representative's residues and the
+    members' identity and length. Then a
+    [linked view](../../features/dashboards.md#linked-view) holds the predicted
+    structure of the representative, coloured by conservation class, on the left
+    and, stacked on the right, the profile logo of the family HMM (one stack of
+    letters per match state with the insert, occupancy and consensus lanes and,
+    under it, the members the hmmalign alignment placed on the model), the
+    sequence track and the family alignment. The states are mapped onto the
+    representative's residues through the family's hmmalign alignment, so a brush
+    on the logo selects those residues in the structure, on the track and in the
+    alignment.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -290,10 +311,7 @@ histograms, the track and the structure agree.
         | Section | What it holds |
         |---|---|
         | Profile at a glance | 4 cards |
-        | Profile logo | 1 advanced visualization |
-        | Structure | 1 advanced visualization |
-        | Residues | 1 advanced visualization, the sequence track |
-        | Family alignment (collapsed) | *Family alignment* |
+        | Profile, fold and alignment (linked view) | 4 advanced visualizations: the logo, the predicted structure, the sequence track, the family alignment |
         | Hits table (collapsed) | *Members on the model* |
 
     !!! note "Families an update run extended"

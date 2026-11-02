@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="2.0.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="2.0.0" selected>2.0.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -36,6 +36,17 @@ RNA-seq libraries to translated ORFs:
 - :material-chart-box-outline: **Data & QC**: the MultiQC report, riboWaltz periodicity of the footprints, and the Salmon sample space of both assays
 - :material-scale-balance: **Translation**: translational efficiency per gene, pooled over the run, and anota2seq translational regulation per contrast
 - :material-set-merge: **ORFs**: ORF classes per library, and where Ribo-TISH, RiboCode and the annotation agree
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/riboseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acced71068a4d7c3dc3f0ce" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acced71068a4d7c3dc3f0ce" loading="lazy" title="nf-core/riboseq showcase dashboard" allowfullscreen></iframe>
+</div>
 
 The persistent `Sample filters` (the design group, the library and the assay)
 sit in the left panel and narrow every tab that reads per-library data.
