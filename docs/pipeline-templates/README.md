@@ -119,7 +119,7 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">B and T cell repertoire analysis: sequence processing, repertoire composition and clonal analysis.</p>
       <div class="template-card-meta">
-        <span class="template-version">v5.1.0</span>
+        <span class="template-version">v5.1.2</span>
         <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
@@ -231,7 +231,7 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">Hi-C: valid pair statistics, contact maps and compartment and TAD calls, from library QC to 3D genome structure.</p>
       <div class="template-card-meta">
-        <span class="template-version">v2.0.0</span>
+        <span class="template-version">v2.1.0</span>
         <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
@@ -287,7 +287,7 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">Germline and somatic variant calling: alignment QC, variant counts per caller, annotated variants and their genome positions.</p>
       <div class="template-card-meta">
-        <span class="template-version">v3.10.0</span>
+        <span class="template-version">v3.11.0</span>
         <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
@@ -485,6 +485,160 @@ depictio ingest /data/my_ampliseq_run \
       <p class="template-card-desc">Pairwise genome alignment: coverage and identity of each query on the target, divergence, assembly contiguity and synteny.</p>
       <div class="template-card-meta">
         <span class="template-version">v3.0.4</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/drop/" data-tpl-name="nf-core/drop" data-tpl-status="draft" data-tpl-version="1.0.0" data-tpl-keywords="drop rna outlier aberrant expression splicing mono-allelic rare disease diagnosis">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/drop/master/docs/images/nf-core-drop_logo_dark.png" alt="nf-core/drop">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/drop/master/docs/images/nf-core-drop_logo_light.png" alt="nf-core/drop">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">RNA outlier detection: aberrant expression, splicing and mono-allelic expression in rare disease cohorts.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.0.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/epitopeprediction/" data-tpl-name="nf-core/epitopeprediction" data-tpl-status="draft" data-tpl-version="3.2.0" data-tpl-keywords="epitope mhc binding prediction neoantigen peptide hla immunology">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/epitopeprediction/master/docs/images/nf-core-epitopeprediction_logo_dark.png" alt="nf-core/epitopeprediction">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/epitopeprediction/master/docs/images/nf-core-epitopeprediction_logo_light.png" alt="nf-core/epitopeprediction">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">MHC binding prediction for variant, protein and peptide inputs.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.2.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/genomeqc/" data-tpl-name="nf-core/genomeqc" data-tpl-status="draft" data-tpl-version="1.0.1" data-tpl-keywords="genome assembly annotation qc busco quast orthology comparison">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/genomeqc/master/docs/images/nf-core-genomeqc_logo_dark.png" alt="nf-core/genomeqc">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/genomeqc/master/docs/images/nf-core-genomeqc_logo_light.png" alt="nf-core/genomeqc">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Genome assembly and annotation QC across genomes: BUSCO, assembly statistics and orthology.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.0.1</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/hlatyping/" data-tpl-name="nf-core/hlatyping" data-tpl-status="draft" data-tpl-version="2.2.0" data-tpl-keywords="hla typing optitype mhc class I immunogenetics">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/hlatyping/master/docs/images/nf-core-hlatyping_logo_dark.png" alt="nf-core/hlatyping">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/hlatyping/master/docs/images/nf-core-hlatyping_logo_light.png" alt="nf-core/hlatyping">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">HLA class I typing with OptiType from DNA or RNA reads.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.2.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/mcmicro/" data-tpl-name="nf-core/mcmicro" data-tpl-status="draft" data-tpl-version="2.0.0" data-tpl-keywords="mcmicro multiplexed imaging tissue cycif codex cell segmentation marker spatial">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/mcmicro/master/docs/images/nf-core-mcmicro_logo_dark.png" alt="nf-core/mcmicro">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/mcmicro/master/docs/images/nf-core-mcmicro_logo_light.png" alt="nf-core/mcmicro">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Multiplexed tissue imaging: segmented cells, marker intensities and morphology.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.0.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/nascent/" data-tpl-name="nf-core/nascent" data-tpl-status="draft" data-tpl-version="2.3.0" data-tpl-keywords="nascent transcription gro-seq pro-seq time course bigwig enhancer genome browser">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/nascent/master/docs/images/nf-core-nascent_logo_dark.png" alt="nf-core/nascent">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/nascent/master/docs/images/nf-core-nascent_logo_light.png" alt="nf-core/nascent">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Nascent transcription time courses (GRO-seq, PRO-seq): signal along the genome and differential transcription.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.3.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/quantms/" data-tpl-name="nf-core/quantms" data-tpl-status="draft" data-tpl-version="1.1.1" data-tpl-keywords="quantms proteomics mass spectrometry dia label-free quantification peptide protein">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/quantms/master/docs/images/nf-core-quantms_logo_dark.png" alt="nf-core/quantms">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/quantms/master/docs/images/nf-core-quantms_logo_light.png" alt="nf-core/quantms">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Label-free DIA proteomics quantification: identifications, protein abundances and QC.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.1.1</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/raredisease/" data-tpl-name="nf-core/raredisease" data-tpl-status="draft" data-tpl-version="3.1.2" data-tpl-keywords="raredisease rare disease family trio variant ranking inheritance snv sv genmod">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/raredisease/master/docs/images/nf-core-raredisease_logo_dark.png" alt="nf-core/raredisease">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/raredisease/master/docs/images/nf-core-raredisease_logo_light.png" alt="nf-core/raredisease">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Rare disease family analysis: ranked variants and inheritance models.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.1.2</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/rnavar/" data-tpl-name="nf-core/rnavar" data-tpl-status="draft" data-tpl-version="1.3.0" data-tpl-keywords="rnavar rna-seq variant calling germline gatk snpeff vcf">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/rnavar/master/docs/images/nf-core-rnavar_logo_dark.png" alt="nf-core/rnavar">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/rnavar/master/docs/images/nf-core-rnavar_logo_light.png" alt="nf-core/rnavar">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">RNA-seq germline variant calling: variants, annotation and alignment QC.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.3.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/stableexpression/" data-tpl-name="nf-core/stableexpression" data-tpl-status="draft" data-tpl-version="1.1.0" data-tpl-keywords="stable expression reference genes housekeeping normalisation public datasets geo">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/stableexpression/master/docs/images/nf-core-stableexpression_logo_dark.png" alt="nf-core/stableexpression">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/stableexpression/master/docs/images/nf-core-stableexpression_logo_light.png" alt="nf-core/stableexpression">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Most stable reference genes across public expression datasets.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.1.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/viralmetagenome/" data-tpl-name="nf-core/viralmetagenome" data-tpl-status="draft" data-tpl-version="1.2.0" data-tpl-keywords="viral metagenome virus assembly consensus genome reconstruction qc">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/viralmetagenome/master/docs/images/nf-core-viralmetagenome_logo_dark.png" alt="nf-core/viralmetagenome">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/viralmetagenome/master/docs/images/nf-core-viralmetagenome_logo_light.png" alt="nf-core/viralmetagenome">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Viral genome reconstruction from metagenomic reads: assemblies, consensus genomes and QC.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.2.0</span>
         <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
       </div>
     </div>
