@@ -38,6 +38,17 @@ annotation:
 - :material-dna: **Isoforms**: structural categories (FSM, ISM, NIC, NNC and the rest) by isoform and by read, and the length against read support of every isoform
 - :material-family-tree: **Genes**: the genes that carry the isoform diversity, and the isoform structures of one gene beside its reference transcripts
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/isoseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6ad1018d968ac998c30841e9" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6ad1018d968ac998c30841e9" loading="lazy" title="nf-core/isoseq showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! info "Reference annotation and design table"
     Structural categories compare each isoform with `REFERENCE_GTF`, which
     defaults to the GTF uLTRA indexed (`ULTRA_INDEX/genome.gtf`). A minimap2 run

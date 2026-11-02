@@ -36,6 +36,17 @@ the genes and isoforms that differ between conditions:
 - :material-chart-box-outline: **Data & QC**: FastQC and samtools panels from the reprocessed MultiQC report, NanoStat's length and quality per library with the Nx and quality ladders, and what minimap2 placed with its identity, depth and indel spectrum
 - :material-dna: **Expression**: what Bambu counted and whether the libraries group by condition or by preparation, the genes DESeq2 calls between the conditions, and the transcripts DEXSeq finds shifting their share of their gene
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/nanoseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acced38a57cdb54ef9a2276" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acced38a57cdb54ef9a2276" loading="lazy" title="nf-core/nanoseq showcase dashboard" allowfullscreen></iframe>
+</div>
+
 The persistent `Sample filters` (condition, library, library preparation,
 flow-cell run, source replicate) sit in the left panel, and the template's links
 carry a pick to NanoStat, the samtools distributions, the melted Bambu counts and

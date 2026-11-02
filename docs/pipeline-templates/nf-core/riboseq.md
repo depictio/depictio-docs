@@ -37,6 +37,17 @@ RNA-seq libraries to translated ORFs:
 - :material-scale-balance: **Translation**: translational efficiency per gene, pooled over the run, and anota2seq translational regulation per contrast
 - :material-set-merge: **ORFs**: ORF classes per library, and where Ribo-TISH, RiboCode and the annotation agree
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/riboseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acced71068a4d7c3dc3f0ce" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acced71068a4d7c3dc3f0ce" loading="lazy" title="nf-core/riboseq showcase dashboard" allowfullscreen></iframe>
+</div>
+
 The persistent `Sample filters` (the design group, the library and the assay)
 sit in the left panel and narrow every tab that reads per-library data.
 

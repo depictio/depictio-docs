@@ -36,6 +36,17 @@ The funcscan template covers the four aggregated screening reports of a standard
 - :material-bacteria-outline: **Antimicrobials**: five ARG tools harmonised by hAMRonization, and AMPcombi peptide candidates in their property space
 - :material-leaf: **Metabolism**: comBGC regions from antiSMASH, DeepBGC and GECCO, and run_dbCAN CAZyme families with their substrates
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/funcscan, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf093af9f15bf159a226a" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf093af9f15bf159a226a" loading="lazy" title="nf-core/funcscan showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! info "Four screens, any subset"
     funcscan runs up to four independent screens over the same assemblies and
     nothing joins them, which is why the dashboard has one tab per screen, after

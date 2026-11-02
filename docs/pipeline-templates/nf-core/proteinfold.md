@@ -40,6 +40,17 @@ engines' agreement:
 - :material-grid: **Predicted error**: the predicted aligned error matrix beside the structure, to pick a confident domain
 - :material-compare-horizontal: **Engines comparison**: the engines and the models of one target, rank by rank and residue by residue
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/proteinfold, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6ad1031825c06749a1084211" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6ad1031825c06749a1084211" loading="lazy" title="nf-core/proteinfold showcase dashboard" allowfullscreen></iframe>
+</div>
+
 The persistent `Sample filters` (assembly, target, target length) sit in the
 left panel and narrow every tab through the target hub.
 
@@ -200,15 +211,16 @@ every child tab. The pLDDT bands take AlphaFold's own colours.
     The tab reads one target: its `Target` filter always holds a value and opens
     on the first. The strip gives the median residue pLDDT, the residues by
     confidence band, the likely disordered residues and the best mean pLDDT. Then
-    a table with one row per engine's top-ranked structure picks the structure,
-    which opens in [3D](../../features/protein-tiles.md#molecule-3d) coloured by
-    pLDDT over its written sequence, with the sequence and its pLDDT lane below.
-    A click on a residue in 3D, on a letter or a brush on the track selects the
-    same residues in all of them. The
+    a [linked view](../../features/dashboards.md#linked-view) holds the picked
+    structure in [3D](../../features/protein-tiles.md#molecule-3d), coloured by
+    pLDDT over its written sequence, on the left. Stacked on the right are a table
+    with one row per engine's top-ranked structure, which picks the structure, the
+    sequence with its pLDDT lane, the pLDDT profile of every engine and the
     [Ramachandran plot](../../features/protein-tiles.md#ramachandran) of the
-    picked structure (phi and psi computed in the browser, coloured by pLDDT)
-    sits beside the pLDDT profile of every engine. The alignment the structure
-    was folded from and the residue table are collapsed.
+    picked structure (phi and psi computed in the browser, coloured by pLDDT). A
+    click on a residue in 3D, on a letter or a brush on the track selects the same
+    residues in all of them. The alignment the structure was folded from and the
+    residue table are collapsed.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -217,8 +229,7 @@ every child tab. The pLDDT bands take AlphaFold's own colours.
         | Section | What it holds |
         |---|---|
         | Confidence at a glance | 4 cards |
-        | Structure and sequence | *Structures of the target, one row per engine*, then 2 advanced visualizations: the structure and the sequence track |
-        | Backbone and engines | 2 advanced visualizations: the Ramachandran plot and the pLDDT per engine |
+        | Structures and confidence (linked view) | *Structures of the target, one row per engine*, then 4 advanced visualizations: the structure, the sequence track, the Ramachandran plot and the pLDDT per engine |
         | Alignment (collapsed) | *Alignment the structure was folded from* |
         | Residue table (collapsed) | *Residues of the structures in scope* |
 

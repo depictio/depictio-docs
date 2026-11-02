@@ -39,6 +39,17 @@ the long alignments land on the target:
 - :material-family-tree: **Divergence**: Kimura distance, transition bias and the 12-class substitution spectrum of every pair
 - :material-vector-link: **Synteny**: the long alignments of one query on a ring shared with the target (needs the PSL export)
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/pairgenomealign, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6ad1026a968ac998c30841f7" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6ad1026a968ac998c30841f7" loading="lazy" title="nf-core/pairgenomealign showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! info "Summaries, not alignments"
     The MAF alignments are gigabytes per pair and are not read: the template
     reads the small per-pair summaries LAST writes next to them. The Synteny tab

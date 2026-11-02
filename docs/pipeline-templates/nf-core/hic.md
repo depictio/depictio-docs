@@ -37,6 +37,17 @@ architecture:
 - :material-grid: **Contacts**: how contact probability falls off with distance, and the contact triangle with its domain, insulation and compartment tracks at one locus
 - :material-border-all-variant: **Architecture**: TAD domain sizes and the A/B compartment split, genome-wide
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/hic, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acceba6a57cdb54ef9a221d" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acceba6a57cdb54ef9a221d" loading="lazy" title="nf-core/hic showcase dashboard" allowfullscreen></iframe>
+</div>
+
 The persistent `Sample filters` sit in the left panel, and a pick there reaches the
 funnel, the matrix, every track and the P(s) curve through the project links.
 
