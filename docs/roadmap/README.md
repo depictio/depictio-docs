@@ -122,14 +122,38 @@ Three sections, one question each:
   key: "completed"
   sub_title: "v1.16.0 ✅"
 
-- title: "Project authoring & embedding"
-  content: "Project builder, a component embedded in an external site"
-  icon: ":fontawesome-solid-cubes:"
+- title: "Embedding & the Paper look"
+  content: "A component embedded in another site, the Paper look, Account settings, viewers who comment"
+  icon: ":fontawesome-solid-window-restore:"
+  key: "completed"
+  sub_title: "v1.17.x ✅"
+
+- title: "Groups, SAML & shareable filters"
+  content: "User groups, SAML 2.0 sign-in, filters that are remembered and travel as a link"
+  icon: ":fontawesome-solid-users:"
+  key: "completed"
+  sub_title: "v1.18.0 ✅"
+
+- title: "Proteins & linked views"
+  content: "Protein tiles linked by residue, structures from AlphaFold DB, a section's tiles on one screen"
+  icon: ":fontawesome-solid-dna:"
+  key: "completed"
+  sub_title: "v1.19.x ✅"
+
+- title: "Genome browser"
+  content: "An embedded JBrowse 2 view, linked to the dashboard both ways, in 16 nf-core templates"
+  icon: ":fontawesome-solid-map-location-dot:"
+  key: "completed"
+  sub_title: "v1.20.0 ✅"
+
+- title: "Imaging, AI & serverless"
+  content: "Bioimage collections, an AI assistant and MCP agents, a dashboard as a single file, a project builder"
+  icon: ":fontawesome-solid-hammer:"
   key: "inprogress"
   sub_title: "In progress 🚧"
 
 - title: "Ideas"
-  content: "Serverless Depictio, journeys through tabs, citable DOI snapshots, AI-assisted analysis"
+  content: "Journeys through tabs, citable DOI snapshots, a Snakemake report plugin"
   icon: ":fontawesome-solid-lightbulb:"
   key: "idea"
   sub_title: "Unscheduled 💡"
@@ -145,6 +169,18 @@ reference; this table only says *when* something arrived.
 
 | Capability | Since | Docs |
 | ---------- | ----- | ---- |
+| An embedded genome browser (JBrowse 2) that filters the dashboard and is filtered by it, in 16 nf-core templates | v1.20.0 | [Genome browser](../features/genome-browser/index.md) |
+| Eleven more nf-core templates documented, 43 in all | v1.20.0 | [Pipeline Templates](../pipeline-templates/README.md) |
+| Option cards: a SegmentedControl drawn as cards | v1.19.2 | [Option cards](../features/components.md#option-cards) |
+| Scope banner on one-unit tabs, linked views, zoom synced across residue tiles | v1.19.1 | [Scope banner](../features/dashboards.md#scope-banner) · [Linked view](../features/dashboards.md#linked-view) |
+| Protein tiles linked by residue, with structures from the run, AlphaFold DB or ESMFold | v1.19.0 | [Proteins](../features/proteins.md) |
+| Add user: an administrator creates an account with an initial password | v1.19.0 | [Adding a user](../usage/guides/web_ui.md#add-a-user) |
+| SAML 2.0 sign-in, with groups from the identity provider | v1.18.0 | [Single sign-on (SAML)](../installation/sso.md) |
+| User groups: share a project with a whole lab | v1.18.0 | [Groups](../usage/administration/groups.md) |
+| Remembered filters, and filter links that carry the active filters | v1.18.0 | [Remembered filters](../usage/guides/dashboard_usage.md#remembered-filters) |
+| Viewers may comment | v1.17.2 | [Viewers can comment](../features/comments-annotations.md#viewers-can-comment) |
+| A component embedded in another site, as a Plotly spec or a self-contained page | v1.17.0 | [Component export and embedding](../features/component-export.md) |
+| The Paper look, Account settings, a sectioned Administration page | v1.17.0 | [Paper and Classic](../usage/guides/web_ui.md#looks) · [Account settings](../usage/guides/web_ui.md#account-settings) |
 | A dashboard composed from what the tools catalog recognises in a results directory, the way MultiQC builds its report | v1.16.0 | [Composed dashboards](../usage/projects/composed-dashboards.md) |
 | Data read where it is: an `s3://` run folder, a URL, a bucket prefix or a data manifest; projects created from a run folder in the web UI, refreshed in place, exported as a template | v1.16.0 | [Remote data and manifests](../usage/projects/remote-data.md) · [Export a project as a template](../usage/projects/templates.md#export-a-project-as-a-template) |
 | Dashboard version history: bookmarks, read-only previews, restoring a dashboard or one component | v1.15.0 | [Dashboard and data versions](../features/versioning.md#history) · [Component history](../features/versioning.md#component-history) |
@@ -201,18 +237,29 @@ reference; this table only says *when* something arrived.
 Grouped by theme. Each item links the pull request that implements it, so its
 real state is always one click away.
 
-### Authoring: templates and project setup
+### Authoring and project setup
 
-Lowering the cost of contributing a tool or standing up a project. The catalog picker and
-Tool Studio both landed in v1.9.0, and a dashboard composed from a results folder in v1.16.0;
-what is left is below.
+Lowering the cost of standing up a project. The catalog picker and Tool Studio landed in
+v1.9.0, and a dashboard composed from a results folder in v1.16.0; what is left is below.
 
-- [ ] **nf-core template harmonization**: the bundled templates reference the same catalog entries a dashboard does, rather than carrying bespoke inline tiles ([#873](https://github.com/depictio/depictio/pull/873))
-- [ ] **Project builder**: `depictio project-builder <folder>` turns a folder into a `project.yaml`, with live glob/regex matching and schema-consistency checks ([#901](https://github.com/depictio/depictio/pull/901))
+- [ ] **Project builder**: define the collections of a project yourself, on a server or without one ([#1182](https://github.com/depictio/depictio/pull/1182))
 
-### Component export & embedding
+### Data and imaging
 
-- [ ] **Embed a component in an external site**: serve one dashboard component either as a Plotly spec for your own `plotly.js`, or as a single self-contained offline page. Off by default ([#917](https://github.com/depictio/depictio/pull/917))
+- [ ] **YAML and JSON samplesheets** next to the CSV and TSV ones ([#1289](https://github.com/depictio/depictio/pull/1289))
+- [ ] **Pipeline results read from Google Cloud Storage** through its S3 API ([#1291](https://github.com/depictio/depictio/pull/1291))
+- [ ] **Bioimage collections**: a data collection and viewer tile for OME-TIFF and SpatialData, stores read in place, tables read straight from a store ([#1118](https://github.com/depictio/depictio/pull/1118), [#1121](https://github.com/depictio/depictio/pull/1121), [#1122](https://github.com/depictio/depictio/pull/1122)), and imaging and spatial nf-core templates built on it ([#1134](https://github.com/depictio/depictio/pull/1134), draft)
+
+### AI and agents
+
+- [ ] **An opt-in AI assistant**: dashboard chat, component generation, typed suggestions and budgeted read-only analysis reports ([#964](https://github.com/depictio/depictio/pull/964))
+- [ ] **A whole dashboard generated from a project**, reviewed tile by tile, every generated component checked ([#1028](https://github.com/depictio/depictio/pull/1028))
+- [ ] **An MCP server**, scoped tokens and in-app agent teams ([#1125](https://github.com/depictio/depictio/pull/1125), draft)
+
+### Export and sharing
+
+- [ ] **A dashboard as a single file** that opens without Depictio ([#963](https://github.com/depictio/depictio/pull/963))
+- [ ] **A dashboard as a notebook**, and a Quarto report rendered for you ([#1034](https://github.com/depictio/depictio/pull/1034))
 
 ---
 
@@ -224,11 +271,8 @@ something up.
 
 | Idea | What it would give you | Link |
 | ---- | ---------------------- | ---- |
-| :material-cloud-off-outline: **Serverless Depictio** | Explore a dashboard with no server to deploy or maintain: S3 files and prerenders read client-side, with WASM and DuckDB | [#934](https://github.com/depictio/depictio/issues/934) |
 | :material-filter-multiple-outline: **Journeys** | Named paths through tabs. The two halves of this idea already shipped: filters promoted to dashboard scope in [v1.6.0](../features/dashboards.md#persistent-sections), and [funnel filtering](../features/dashboards.md#funnel-filtering) in v1.7.0 | [#756](https://github.com/depictio/depictio/pull/756) · [#690](https://github.com/depictio/depictio/issues/690) · [#691](https://github.com/depictio/depictio/issues/691) |
-| :material-flask-outline: **Citable science** | DOI-backed snapshots per dashboard version, sample-to-viz provenance via [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/), static export to [Quarto](https://quarto.org/). Nothing is open for it yet; [#931](https://github.com/depictio/depictio/issues/931) is the nearest neighbour, surfacing pipeline and filtering provenance in a dashboard | [#931](https://github.com/depictio/depictio/issues/931) |
-| :material-robot-outline: **AI-assisted analysis** | Describe the analysis and get a proposed layout; anomaly detection, narration, and an MCP server for AI agents | [#844](https://github.com/depictio/depictio/issues/844) · [#79](https://github.com/depictio/depictio/issues/79) |
-| :material-table-merge-cells: **Grain-aware joins** | Detect each table's grain so a cross-DC join cannot silently explode rows | [#877](https://github.com/depictio/depictio/pull/877) · [#876](https://github.com/depictio/depictio/issues/876) |
+| :material-flask-outline: **Citable science** | DOI-backed snapshots per dashboard version, sample-to-viz provenance via [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/). Nothing is open for it yet, though a [Quarto](https://quarto.org/) export is [in progress](#export-and-sharing); [#931](https://github.com/depictio/depictio/issues/931) is the nearest neighbour, surfacing pipeline and filtering provenance in a dashboard | [#931](https://github.com/depictio/depictio/issues/931) |
 | :material-snake: **Snakemake report plugin** | Depictio as a drop-in replacement for Snakemake's static HTML report | *none yet* |
 
 ---
