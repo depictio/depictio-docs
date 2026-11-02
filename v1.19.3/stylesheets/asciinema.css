@@ -1,0 +1,31 @@
+/* Terminal recordings, mounted by javascripts/asciinema.js.
+
+   The "depictio" player theme: a dark terminal in both colour schemes, on the
+   background of Material's slate scheme, with the Depictio brand colours (as in
+   the CLI's DEPICTIO_COLORS) for green, yellow, blue, magenta and cyan. Two
+   classes, as the player's own stylesheet, loaded after this one, sets the
+   default palette on .ap-player. */
+.asciinema-cast {
+    margin: 1em 0 0.5em;
+}
+
+.ap-player.asciinema-player-theme-depictio {
+    --term-color-foreground: #d4d6dd;
+    --term-color-background: #1e2029;
+    --term-color-0: #2b2e3b;
+    --term-color-1: #e06c75;
+    --term-color-2: #8bc34a;
+    --term-color-3: #f9cb40;
+    --term-color-4: #6495ed;
+    --term-color-5: #9966cc;
+    --term-color-6: #45b8ac;
+    --term-color-7: #d4d6dd;
+    --term-color-8: #5c6070;
+    --term-color-9: #ef8891;
+    --term-color-10: #a5d46a;
+    --term-color-11: #fbd968;
+    --term-color-12: #8fb3f5;
+    --term-color-13: #b58ce0;
+    --term-color-14: #6fd0c5;
+    --term-color-15: #ffffff;
+}
