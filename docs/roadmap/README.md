@@ -364,12 +364,12 @@ mind. Most of the reproducibility story is shipped; citability is not.
 | Experiment data sits in silos | :material-check-circle: Cross-DC linking ([docs](../features/cross-dc-filtering.md)) |
 | Dashboards disappear | :material-check-circle: Hosted on [SciLifeLab Serve](https://serve.scilifelab.se/) |
 | No data lineage | :material-check-circle: [Run provenance](../usage/projects/templates.md#run-provenance) records the parameters a run used; each table write is a Delta commit that a dashboard can be read at ([docs](../features/versioning.md#data-versions)) |
-| Not citable, no sample-to-viz traceability | :material-lightbulb-outline: DOI snapshots + LabID provenance — [an idea](#ideas) |
+| Not citable, no sample-to-viz traceability | :material-lightbulb-outline: DOI snapshots + LabID provenance: [an idea](#ideas) |
 
 ---
 
 ## Get involved
 
-- [:material-github: Issues](https://github.com/depictio/depictio/issues) — feature requests and bug reports
-- [:material-source-pull: Pull requests](https://github.com/depictio/depictio/pulls) — everything under *In progress*, live
-- [Contributing Guide](../developer/contributing.md) — setup, conventions, how to add a tool
+- [:material-github: Issues](https://github.com/depictio/depictio/issues): feature requests and bug reports
+- [:material-source-pull: Pull requests](https://github.com/depictio/depictio/pulls): everything under *In progress*, live
+- [Contributing Guide](../developer/contributing.md): setup, conventions, how to add a tool
