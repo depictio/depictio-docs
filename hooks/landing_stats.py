@@ -4,11 +4,13 @@ docs/index.md carries placeholders instead of numbers, so a release refreshes
 the page by rerunning dev/landing_stats.py and nothing else:
 
 - {{ stats.KEY }}           a scalar from the JSON; integers get a thousands comma
-- {{ stats.pipeline_marquee }} the nf-core template logos, two rows, each
+- {{ stats.pipeline_marquee }} the nf-core template logos, three rows, each
                               linked to its page (dev/fetch_template_logos.py)
-- {{ stats.tool_marquee }}     well-known catalog tools, two rows: the official
+- {{ stats.tool_marquee }}     well-known catalog tools, three rows: the official
                               logo where dev/fetch_tool_logos.py found one,
                               else the name
+- {{ stats.viz_marquee }}      a thumbnail of every advanced visualization, two
+                              rows, read from the catalog of its page
 - {{ stats.renders_bar }}    the stacked bar segments of renders by component
 - {{ stats.renders_legend }} its legend
 
@@ -38,19 +40,45 @@ def _fmt(value) -> str:
 LOGOS = "images/landing/logos"
 
 
-def _marquee(items: list[str]) -> str:
-    """Two rows scrolling opposite ways. Each row prints its list twice so the
-    loop has no seam; the copy is inert and hidden from screen readers."""
-    half = (len(items) + 1) // 2
-    rows = []
-    for i, row in enumerate((items[:half], items[half:])):
-        ul = "".join(row)
-        rows.append(
-            f'<div class="kpi-marquee-row{" kpi-marquee-reverse" if i else ""}">'
+def _marquee(items: list[str], rows: int = 3, extra_class: str = "") -> str:
+    """Rows scrolling in turn the opposite way. Each row prints its list twice
+    so the loop has no seam; the copy is inert and hidden from screen readers."""
+    size = -(-len(items) // rows)
+    out = []
+    for i in range(rows):
+        ul = "".join(items[i * size:(i + 1) * size])
+        if not ul:
+            continue
+        out.append(
+            f'<div class="kpi-marquee-row{" kpi-marquee-reverse" if i % 2 else ""}">'
             f'<div class="kpi-marquee-track"><ul class="kpi-logos">{ul}</ul>'
             f'<ul class="kpi-logos" aria-hidden="true" inert>{ul}</ul></div></div>'
         )
-    return f'<div class="kpi-marquee">{"".join(rows)}</div>'
+    return f'<div class="kpi-marquee{extra_class}">{"".join(out)}</div>'
+
+
+VIZ_PAGE = "features/advanced-visualizations.md"
+_VIZ_TILE = re.compile(
+    r"thumbs/([a-z0-9_]+)_light\.webp#only-light.*?\[([^\]]+)\]\(#([a-z0-9-]+)\)\{ \.viz-tile__name", re.S
+)
+
+
+def _viz_items(docs_dir: Path) -> list[str]:
+    """One thumbnail per tile of the advanced visualizations catalog, in its order."""
+    text = (docs_dir / VIZ_PAGE).read_text()
+    items = []
+    for kind, name, anchor in _VIZ_TILE.findall(text):
+        imgs = "".join(
+            f'<img class="kpi-viz-{theme}" src="images/guides/advanced-visualizations/thumbs/{kind}_{theme}.webp" '
+            f'alt="" width="112" height="84" loading="lazy" decoding="async">'
+            for theme in ("light", "dark")
+        )
+        items.append(
+            f'<li><a href="features/advanced-visualizations/#{anchor}" title="{html.escape(name)}">{imgs}</a></li>'
+        )
+    if not items:
+        raise PluginError(f"landing_stats: no catalog tiles found in {VIZ_PAGE}")
+    return items
 
 
 def _img(src: str, alt: str, size: dict, cls: str = "") -> str:
@@ -103,6 +131,7 @@ def _fragments(stats: dict, docs_dir: Path) -> dict[str, str]:
     return {
         "pipeline_marquee": _marquee(pipelines),
         "tool_marquee": _marquee(tools),
+        "viz_marquee": _marquee(_viz_items(docs_dir), rows=2, extra_class=" kpi-marquee-viz"),
         "renders_bar": "".join(bar),
         "renders_legend": "".join(legend),
     }

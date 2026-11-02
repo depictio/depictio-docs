@@ -125,7 +125,7 @@ hide:
         <p class="kpi-figure"><span class="kpi-num">{{ stats.viz }}</span></p>
         <h3 class="kpi-label">advanced visualizations</h3>
         <p class="kpi-sub">Each with its own controls and views</p>
-        <div class="kpi-example kpi-viz"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_volcano_light.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_volcano_dark.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_sunburst_light.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_sunburst_dark.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_genome_chord_light.webp" alt="" width="320" height="184" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_genome_chord_dark.webp" alt="" width="320" height="184" loading="lazy" decoding="async"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_oncoplot_light.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_oncoplot_dark.webp" alt="" width="320" height="207" loading="lazy" decoding="async"></div>
+        <div class="kpi-example kpi-viz">{{ stats.viz_marquee }}</div>
         <a class="kpi-link" href="features/advanced-visualizations/">See them all &rarr;</a>
       </article>
     </div>
@@ -2435,7 +2435,8 @@ hide:
     min-height: 74px;
   }
 
-  /* Template and tool logos scroll by in two rows, opposite ways, and stop
+  /* Template and tool logos scroll by in three rows, the visualization
+     thumbnails in two, each row the opposite way to the one above, and stop
      under the pointer. hooks/landing_stats.py prints each row twice so the
      loop has no seam. */
   .kpi-marquee {
@@ -2595,28 +2596,31 @@ hide:
     flex: none;
   }
 
-  .kpi-viz {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.35rem;
+  .md-typeset .kpi-viz a {
+    display: block;
   }
 
   .md-typeset .kpi-viz img {
-    width: 100%;
-    aspect-ratio: 1;
+    width: 112px;
+    height: 84px;
     object-fit: cover;
-    object-position: center 60%;
+    object-position: center top;
     border-radius: 6px;
     border: 1px solid var(--md-default-fg-color--lightest);
   }
 
+  .md-typeset .kpi-viz a:hover img,
+  .md-typeset .kpi-viz a:focus-visible img {
+    border-color: var(--kpi-accent);
+  }
+
   .kpi-viz-dark,
   [data-md-color-scheme="slate"] .kpi-viz-light {
-    display: none;
+    display: none !important;
   }
 
   [data-md-color-scheme="slate"] .kpi-viz-dark {
-    display: block;
+    display: block !important;
   }
 
   .md-typeset .kpi-link {
