@@ -1,7 +1,7 @@
 """Download the nf-core template logos the home page's templates tile shows.
 
 Each template page's banner links its pipeline's logo on GitHub. The home page
-must not hotlink 32 of them, so this fetches each once, trims it, scales it to
+must not hotlink dozens of them, so this fetches each once, trims it, scales it to
 HEIGHT px and saves light and dark webp copies:
 
     python dev/fetch_template_logos.py

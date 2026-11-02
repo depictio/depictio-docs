@@ -341,7 +341,7 @@ hide:
             <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_rarefaction_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Rarefaction curves per habitat, nf-core/ampliseq" aria-label="Rarefaction curves per habitat, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/viz_rarefaction_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
           </figure>
         </div>
-        <ul class="cshow-points"><li>50 visualizations: volcano, oncoplot, sunburst, genome tracks, 3D structures and more</li><li>Each comes with its own controls; some switch between views</li></ul>
+        <ul class="cshow-points"><li>{{ stats.viz }} visualizations: volcano, oncoplot, sunburst, genome tracks, 3D structures and more</li><li>Each comes with its own controls; some switch between views</li></ul>
         <a class="cshow-docs" href="features/advanced-visualizations/">Advanced viz docs &rarr;</a>
       </div>
       <div class="cshow-panel" role="tabpanel" id="cshow-card" aria-labelledby="cshow-tab-card" tabindex="0" style="--c-accent: var(--depictio-teal);">
