@@ -56,11 +56,13 @@
 .gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
 .gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
 .gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
+.gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="2.0.0">
+<div class="gtd-versions" data-template-version="2.1.0" data-template-updated="2026-11-01">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/atacseq 1.2.2</span>
-<span class="gtd-badge gtd-template-ver">Template 2.0.0</span>
+<span class="gtd-badge gtd-template-ver">Template 2.1.0</span>
+<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables

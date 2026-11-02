@@ -53,7 +53,16 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
+.gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
+.gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
+
+<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/proteinfold 2.1.0</span>
+<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
+<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+</div>
 
 ### :material-code-braces: Template variables
 

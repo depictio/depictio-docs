@@ -38,6 +38,8 @@ ghcr.io/depictio/depictio-cli:1.20.0
 ### **🧬 Pipeline Templates**
 
 * **A genome browser in 16 nf-core dashboard templates**. See [Templates with a genome browser](../features/genome-browser/index.md#templates-with-a-genome-browser) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **Eleven more nf-core templates documented**: drop, epitopeprediction, genomeqc, hlatyping, mcmicro, nascent, quantms, raredisease, rnavar, stableexpression, viralmetagenome. See [nf-core templates](../pipeline-templates/nf-core/index.md).
+* **Template pages show the template version and its last update** beside the pipeline version, and the `latest` aliases of hic, sarek and airrflow no longer show the previous pipeline version.
 * **New pipeline versions**: nf-core/airrflow 5.1.2, nf-core/hic 2.1.0 and nf-core/sarek 3.11.0 ([#1294](https://github.com/depictio/depictio/pull/1294), [#1302](https://github.com/depictio/depictio/pull/1302)).
 * **Overview study cards and genome views**: every Overview names what the run looked at next to how it was run, and eleven templates gain an Overview genome view ([#1306](https://github.com/depictio/depictio/pull/1306), [#1308](https://github.com/depictio/depictio/pull/1308)).
 
