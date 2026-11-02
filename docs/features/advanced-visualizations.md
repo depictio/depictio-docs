@@ -2445,8 +2445,8 @@ The helpers in `depictio/recipes/lib/` (`protein_structure`, `msa`, `hmm`,
 
 ### Linked by residue { #residue-selection }
 
-![Protein tiles linked by residue: one range is shown by every tile, a pick leaves the browser as a filter on the tables, a hover stays in it](../images/guides/protein-tiles/schema_residue_linking_light.png#only-light){ .viz-shot loading=lazy }
-![Protein tiles linked by residue: one range is shown by every tile, a pick leaves the browser as a filter on the tables, a hover stays in it](../images/guides/protein-tiles/schema_residue_linking_dark.png#only-dark){ .viz-shot loading=lazy }
+![Protein tiles linked by residue: one range is shown by every tile, a pick leaves the browser as a filter on the tables, a hover stays in it](../images/guides/protein-tiles/schema_residue_linking_light.png#only-light){ loading=lazy }
+![Protein tiles linked by residue: one range is shown by every tile, a pick leaves the browser as a filter on the tables, a hover stays in it](../images/guides/protein-tiles/schema_residue_linking_dark.png#only-dark){ loading=lazy }
 
 - **A pick is a filter.** A click or brush emits a `residue_selection`: the entity, a
   `position` range and, on a complex, the chain. Every table with those columns narrows, and
@@ -2459,8 +2459,8 @@ The helpers in `depictio/recipes/lib/` (`protein_structure`, `msa`, `hmm`,
 
 ### Where the structure comes from { #structure-resolver }
 
-![The 3D model comes from a file of the run, or from the resolver: bucket cache, AlphaFold DB, UniProt, ESMFold](../images/guides/protein-tiles/schema_structure_resolver_light.png#only-light){ .viz-shot loading=lazy }
-![The 3D model comes from a file of the run, or from the resolver: bucket cache, AlphaFold DB, UniProt, ESMFold](../images/guides/protein-tiles/schema_structure_resolver_dark.png#only-dark){ .viz-shot loading=lazy }
+![The 3D model comes from a file of the run, or from the resolver: bucket cache, AlphaFold DB, UniProt, ESMFold](../images/guides/protein-tiles/schema_structure_resolver_light.png#only-light){ loading=lazy }
+![The 3D model comes from a file of the run, or from the resolver: bucket cache, AlphaFold DB, UniProt, ESMFold](../images/guides/protein-tiles/schema_structure_resolver_dark.png#only-dark){ loading=lazy }
 
 `structure_source: file` reads the run's own files and makes no outbound call.
 `structure_source: resolve` asks the server for a model by UniProt accession, by gene and
