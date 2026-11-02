@@ -2597,3 +2597,219 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
 .tpl-bump code b {
     color: var(--tpl-bump);
 }
+
+/* A pinned sidebar group (javascripts/nav-pinned.js) is a single entry: its
+   title is a link to its own page, with no chevron and no list of sub-pages.
+   The sub-pages stay in the nav, so the previous/next links and the active
+   highlight still work. */
+.md-nav__item--nested.nav-pinned > .md-nav__container > label.md-nav__link,
+.md-nav__item--nested.nav-pinned > nav.md-nav {
+    display: none;
+}
+
+/* Version badge. One convention for "available since": a small pill on its own
+   line under a heading, never inside the heading, so anchors and the table of
+   contents stay version-free. Used by the Advanced visualizations page. */
+.md-typeset .ver-badge {
+    display: inline-block;
+    padding: 0 0.45em;
+    border: 1px solid #d1c4e9;
+    border-radius: 999px;
+    background: #f3eefc;
+    color: #5e35b1;
+    font-size: 0.6rem;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .ver-badge {
+    border-color: rgba(179, 157, 219, 0.45);
+    background: rgba(149, 117, 205, 0.16);
+    color: #c9b6f2;
+}
+
+/* A lightboxed screenshot is wrapped in a link, and any rule that sets the
+   image's display (the grid's below) beats Material's #only-light/#only-dark
+   hiding. Hide the off-theme link itself so one figure shows per theme. */
+[data-md-color-scheme="default"] .md-typeset a.glightbox:has(img[src$="#only-dark"]),
+[data-md-color-scheme="slate"] .md-typeset a.glightbox:has(img[src$="#only-light"]) {
+    display: none !important;
+}
+
+/* Screenshot catalogue: a bento grid per family. Each tile is a small webp
+   crop (dev/make_viz_thumbs.py) that opens the full screenshot in the
+   lightbox; the name in the caption jumps to the entry. Rows are sized from
+   the catalogue width (container units), so every shape lines up:
+   --f featured 2x2, --w wide 2x1, --t tall 1x2, --s 1x1. */
+.md-typeset .viz-bento {
+    container-type: inline-size;
+    --viz-gap: 0.6rem;
+    --viz-cols: 4;
+}
+
+.md-typeset .viz-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--viz-cols), minmax(0, 1fr));
+    grid-auto-rows: calc((100cqw - (var(--viz-cols) - 1) * var(--viz-gap)) / var(--viz-cols) * 0.75);
+    grid-auto-flow: dense;
+    gap: var(--viz-gap);
+    margin: 0.4rem 0 1.2rem;
+}
+
+@media screen and (max-width: 59.9375em) {
+    .md-typeset .viz-bento {
+        --viz-cols: 2;
+        --viz-gap: 0.5rem;
+    }
+}
+
+.md-typeset .viz-tile {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 8px;
+    background: var(--md-default-bg-color);
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.md-typeset .viz-tile:hover {
+    border-color: var(--md-accent-fg-color);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.md-typeset .viz-tile--f { grid-column: span 2; grid-row: span 2; }
+.md-typeset .viz-tile--w { grid-column: span 2; }
+.md-typeset .viz-tile--t { grid-row: span 2; }
+
+.md-typeset .viz-tile > p {
+    margin: 0;
+}
+
+.md-typeset .viz-tile a.glightbox {
+    position: absolute;
+    inset: 0;
+    display: block;
+}
+
+.md-typeset .viz-tile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+    transition: transform 0.25s ease;
+}
+
+.md-typeset .viz-tile:hover img {
+    transform: scale(1.025);
+}
+
+/* Name and version on a fade of the page colour: the tile stays clickable
+   through it (lightbox), only the name itself is a link to the entry. */
+.md-typeset .viz-tile__cap {
+    position: absolute;
+    inset: auto 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem 0.4rem;
+    padding: 1.4rem 0.55rem 0.4rem;
+    background: linear-gradient(to top,
+        var(--md-default-bg-color) 0%,
+        color-mix(in srgb, var(--md-default-bg-color) 88%, transparent) 55%,
+        transparent 100%);
+    pointer-events: none;
+}
+
+.md-typeset .viz-tile--s .viz-tile__cap {
+    padding-top: 0.9rem;
+}
+
+.md-typeset .viz-tile .viz-tile__name {
+    pointer-events: auto;
+    color: var(--md-default-fg-color);
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.md-typeset .viz-tile .viz-tile__name::after {
+    content: "↓";
+    margin-left: 0.2em;
+    color: var(--md-accent-fg-color);
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.md-typeset .viz-tile .viz-tile__name:hover,
+.md-typeset .viz-tile .viz-tile__name:focus-visible {
+    color: var(--md-accent-fg-color);
+    text-decoration: underline;
+}
+
+.md-typeset .viz-tile:hover .viz-tile__name::after,
+.md-typeset .viz-tile .viz-tile__name:focus-visible::after {
+    opacity: 1;
+}
+
+.md-typeset .viz-tile--f .viz-tile__name {
+    font-size: 0.82rem;
+}
+
+.md-typeset .viz-tile .ver-badge {
+    font-size: 0.55rem;
+}
+
+.md-typeset .viz-grid__family {
+    margin: 1rem 0 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--md-default-fg-color--light);
+}
+
+/* The screenshot at the top of each entry: capped so a wide tile does not
+   push the data table off screen; the lightbox shows it full size. */
+.md-typeset img.viz-shot {
+    display: block;
+    max-width: min(100%, 760px);
+    margin: 0.6rem 0;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 6px;
+}
+
+/* Lightbox title: a gallery image carries data-title, shown centred above the
+   figure on the dark backdrop instead of GLightbox's small white strip below. */
+.glightbox-container .ginner-container.desc-bottom {
+    flex-direction: column-reverse !important;
+}
+
+.glightbox-container .gslide-description {
+    background: transparent !important;
+}
+
+.glightbox-container .gdesc-inner {
+    padding: 12px 0 !important;
+}
+
+.glightbox-container .gslide-title {
+    margin: 0 !important;
+    color: #fff !important;
+    font-family: var(--md-text-font-family, sans-serif);
+    font-size: 1.15rem !important;
+    font-weight: 600 !important;
+    text-align: center;
+    letter-spacing: 0.01em;
+}
+
+.glightbox-container .ginner-container.desc-bottom .gslide-image img {
+    max-height: calc(100vh - 70px) !important;
+    width: auto;
+}
+
+.glightbox-container .goverlay {
+    background: rgba(0, 0, 0, 0.96) !important;
+}
