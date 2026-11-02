@@ -461,7 +461,7 @@ hide:
             <a class="glightbox cshow-dark" href="images/landing/components/genome_navigator_dark.webp" data-type="image" data-gallery="cshow-genome-dark" data-title="Narrow calls per library, driving the genome browser, nf-core/chipseq" aria-label="Narrow calls per library, driving the genome browser, nf-core/chipseq, open full size"><img src="images/landing/components/genome_navigator_dark.webp" alt="" width="1600" height="1109" loading="lazy" decoding="async"></a>
           </figure>
         </div>
-        <ul class="cshow-points"><li>JBrowse 2 inside the dashboard, no browser server to run</li><li>Filters pick the tracks and frame the locus, a click on a feature filters the dashboard back</li><li>Bound to a manifest of track files: bigWig, BAM, VCF, BED, GFF</li></ul>
+        <ul class="cshow-points"><li>JBrowse 2 inside the dashboard, no browser server to run, bound to a manifest of track files: bigWig, BAM, VCF, BED, GFF</li><li>GenomeSpy lanes (the Navigator) show every library's calls along the chromosome: brush a region and the browser opens on it</li><li>The browser's window is drawn as a band on the lanes, and a click on a feature filters the dashboard on its sample</li><li>Filters pick the tracks and frame the locus</li></ul>
         <a class="cshow-docs" href="features/genome-browser/">Genome browser docs &rarr;</a>
       </div>
       <div class="cshow-panel" role="tabpanel" id="cshow-text" aria-labelledby="cshow-tab-text" tabindex="0" style="--c-accent: #e91e63;">
