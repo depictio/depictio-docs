@@ -464,6 +464,9 @@ Effect size vs significance scatter — classic differential-expression view wit
 | `fold_change_threshold` | float (≥0) | `1.0` | MA view: absolute fold-change cutoff (v1.13.0+) |
 | `p_value_col` | str \| null | `null` | QQ view: raw p-value column; null reuses `significance_col` (v1.13.0+) |
 | `show_ci` / `show_identity` / `point_size` | bool / bool / int | `true` / `true` / `5` | QQ view: 95% null band, y = x line, marker size (v1.13.0+) |
+| `reference` / `contrast_prefix` / `contrast_separator` | str \| null | `null` | Name the two sides of a contrast: the baseline group, a prefix stripped from the contrast value (`locality` turns `localityBarcelona` into Barcelona), or a separator such as `_vs_` that names both sides. `effect_label` can say `vs {reference}` (v1.19.2+) |
+| `group_symbols` / `marker_cols` | dict / list \| null | `null` | Marker shape per group, and the columns the **Shape by** control can switch to (v1.19.2+) |
+| `hover_col` / `hover_category` | str \| null / bool | `null` / `false` | A second hover line (e.g. the Kingdom), and the contrast in the hover (v1.19.2+) |
 
 **Filtering / row tagging**
 
@@ -553,6 +556,7 @@ Ranked signed-LFC horizontal bars for differential abundance — single panel or
 | `contrast_view` | str | `"all"` | `"all"` → faceted small-multiples (one panel per contrast); any specific contrast value → single-panel drill-in |
 | `significance_threshold` | float (0–1) | `0.05` | Highlight cutoff for `significance` |
 | `top_n` | int (≥1) | `15` | Top features by `\|lfc\|` shown per panel |
+| `reference` / `contrast_prefix` / `contrast_separator` / `group_colors` | str \| dict \| null | `null` | Name the two sides of each contrast as on the [Volcano](#volcano), and colour a bar by the group it leans toward; bars past the cutoff are hatched. `effect_label` can say `vs {reference}`, and `hover_col` / `hover_category` add hover lines (v1.19.2+) |
 
 **Filtering / row tagging**
 
@@ -2321,6 +2325,23 @@ Single-selection toggle:
 | Column | Column to filter |
 | Options | Available choices |
 | Default | Initially selected option |
+
+Since **v1.19.2** `option_cards` draws one card per option (title, icon, a line of
+description), keyed by the option's value, for a choice that changes what the whole tab
+shows, such as a reference database. A segmented control can also sit at the top of the
+tab with `placement: top`, like a Timeline.
+
+```yaml
+- component_type: interactive
+  interactive_component_type: SegmentedControl
+  data_collection_tag: ancombc_results
+  column_name: taxonomy
+  placement: top
+  default_value: silva
+  option_cards:
+    silva: {label: SILVA 138.2, icon: mdi:bacteria, description: Bacteria and archaea named}
+    pr2: {label: PR2 5.0.0, icon: mdi:microscope, description: Eukaryotes resolved}
+```
 
 ### In a filter bar <small>(v1.14.0+)</small> { #filter-bar-keys }
 
