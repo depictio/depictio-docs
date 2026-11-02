@@ -1,0 +1,113 @@
+{
+  "version": "1.19.3",
+  "templates": 32,
+  "tools": 120,
+  "outputs": 413,
+  "renders": 1908,
+  "viz": 50,
+  "viz_kinds": 43,
+  "viz_views": 7,
+  "renders_by_component": [
+    {
+      "id": "card",
+      "label": "Card",
+      "count": 837
+    },
+    {
+      "id": "advanced_viz",
+      "label": "Advanced viz",
+      "count": 375
+    },
+    {
+      "id": "table",
+      "label": "Table",
+      "count": 340
+    },
+    {
+      "id": "figure",
+      "label": "Figure",
+      "count": 207
+    },
+    {
+      "id": "interactive",
+      "label": "Interactive",
+      "count": 88
+    },
+    {
+      "id": "multiqc",
+      "label": "MultiQC",
+      "count": 61
+    }
+  ],
+  "pipelines": [
+    "airrflow",
+    "ampliseq",
+    "atacseq",
+    "chipseq",
+    "crisprseq",
+    "cutandrun",
+    "demultiplex",
+    "differentialabundance",
+    "eager",
+    "funcscan",
+    "genomeassembler",
+    "hic",
+    "isoseq",
+    "mag",
+    "methylseq",
+    "mhcquant",
+    "nanoseq",
+    "oncoanalyser",
+    "pairgenomealign",
+    "proteinannotator",
+    "proteinfamilies",
+    "proteinfold",
+    "riboseq",
+    "rnafusion",
+    "rnaseq",
+    "rnasplice",
+    "sarek",
+    "scrnaseq",
+    "smrnaseq",
+    "taxprofiler",
+    "variantbenchmarking",
+    "viralrecon"
+  ],
+  "tool_chips": [
+    "multiqc",
+    "salmon",
+    "deseq2",
+    "qiime2",
+    "samtools",
+    "pangolin",
+    "bcftools",
+    "nextclade",
+    "kallisto",
+    "quast",
+    "busco",
+    "openms",
+    "metaphlan",
+    "edger",
+    "macs2",
+    "cooler",
+    "cellranger",
+    "taxpasta",
+    "snpeff",
+    "bowtie2",
+    "gtdbtk",
+    "dexseq",
+    "mosdepth",
+    "cellbender",
+    "picard",
+    "mirtop",
+    "deeptools",
+    "simpleaf",
+    "arriba",
+    "dbcan",
+    "cnvkit",
+    "cooltools",
+    "nanoplot",
+    "damageprofiler",
+    "bismark"
+  ]
+}

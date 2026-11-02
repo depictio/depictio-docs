@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Depictio — Embedded component</title>
+    <script type="module" crossorigin src="embed-4dfd1a09fa.js"></script>
+    <link rel="stylesheet" href="embed-4dfd1a09fa.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      Payload injected by services/export/embed.py, which replaces the sentinel
+      below. It sits inside a JSON script element on purpose: that is what makes
+      escaping `</` in the payload sufficient to keep the element from closing
+      early. Keep the sentinel and the EMBED_SENTINEL constant in sync.
+    -->
+    <script id="embed-payload" type="application/json">{"theme": "light", "component": {"index": "ov-kf-shared", "component_type": "card", "title": "Replicate agreement", "workflow_tag": "rnavar", "data_collection_tag": "replicate_sharing", "wf_id": "6ae133dce5499ce53e349e39", "dc_id": "6ae2393b1ed8034281c2c3a5", "dc_config": {"type": null, "metatype": null, "description": "Per design group: the distinct PASS sites called in any of its samples, and the share called in every one of them", "data_collection_tag": "replicate_sharing", "dc_specific_properties": null, "_id": "6ae2393b1ed8034281c2c3a5"}, "cols_json": {}, "parent_index": null, "last_updated": "2026-10-31T21:45:16.026108", "description": "Share of a group's PASS sites that every one of its replicates calls, in percent. A low value means the replicates reached different parts of the transcriptome; replicates of one group agree far more than samples of different groups do.", "title_size": "sm", "title_align": "left", "section": "Key figures", "aggregation": "median", "column_name": "shared_pct", "column_type": "float64", "value": null, "aggregations": null, "filter_expr": null, "secondary_layout": "gauge", "breakdown_col": null, "top_n_count": 3, "coverage_max": 100.0, "threshold_value": null, "threshold_direction": "min", "threshold_warn": null, "attrition_cols": [], "trend_col": null, "follow_region_filter": false, "icon_name": "mdi:content-duplicate", "icon_color": "blue", "caption": "median share per Group, of 100", "link": "tab:Callset", "decimals": 1, "wf_tag": "nextflow/rnavar"}, "title": "Replicate agreement", "data": {"figures": {}, "tables": {}, "maps": {}, "images": {}, "multiqc": {}, "multiqcGeneralStats": {}, "cards": {"values": {"ov-kf-shared": 6.42}, "secondary": {}, "aggregations": {}}, "unique": {}, "ranges": {}, "specs": {}, "schemas": {}, "advancedVizData": {}, "compute": {}}}</script>
+  </body>
+</html>

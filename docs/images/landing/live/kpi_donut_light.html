@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Depictio — Embedded component</title>
+    <script type="module" crossorigin src="embed-4dfd1a09fa.js"></script>
+    <link rel="stylesheet" href="embed-4dfd1a09fa.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      Payload injected by services/export/embed.py, which replaces the sentinel
+      below. It sits inside a JSON script element on purpose: that is what makes
+      escaping `</` in the payload sufficient to keep the element from closing
+      early. Keep the sentinel and the EMBED_SENTINEL constant in sync.
+    -->
+    <script id="embed-payload" type="application/json">{"theme": "light", "component": {"index": "nc-ov-kf-responsive", "component_type": "card", "title": "Responsive genes", "workflow_tag": "nascent", "data_collection_tag": "gene_dynamics", "wf_id": "6ae133fd522b0dc4a42b27cc", "dc_id": "6ae133fd522b0dc4a42b27db", "dc_config": {"type": null, "metatype": null, "description": "Per expressed gene: its peak change in transcription against the baseline, when it peaks, and its response class", "data_collection_tag": "gene_dynamics", "dc_specific_properties": null, "_id": "6ae133fd522b0dc4a42b27db"}, "cols_json": {}, "parent_index": null, "last_updated": "2026-10-31T21:45:20.665630", "description": "Genes whose transcription changes by a log2 fold change of 1 against the baseline at two time points or more.", "title_size": "sm", "title_align": "left", "section": "Key figures", "aggregation": "count", "column_name": "gene_id", "column_type": "object", "value": null, "aggregations": null, "filter_expr": "col('direction') != 'Stable'", "secondary_layout": "donut", "breakdown_col": "direction", "top_n_count": 3, "coverage_max": null, "threshold_value": null, "threshold_direction": "min", "threshold_warn": null, "attrition_cols": [], "trend_col": null, "follow_region_filter": false, "icon_name": "mdi:chart-timeline-variant", "icon_color": "grape", "caption": "genes, induced and repressed", "link": "tab:Gene dynamics", "wf_tag": "nextflow/nascent"}, "title": "Responsive genes", "data": {"figures": {}, "tables": {}, "maps": {}, "images": {}, "multiqc": {}, "multiqcGeneralStats": {}, "cards": {"values": {"nc-ov-kf-responsive": 3416}, "secondary": {"nc-ov-kf-responsive": {"__breakdown__": {"column": "direction", "total": 3416, "top": [{"name": "Repressed", "count": 2062, "percent": 0.6036299765807962}, {"name": "Induced", "count": 1354, "percent": 0.39637002341920374}], "top_share": 1.0, "unique_values": 2, "breakdown_kind": "count", "evenness": 0.9687875497453191}}}, "aggregations": {}}, "unique": {}, "ranges": {}, "specs": {}, "schemas": {}, "advancedVizData": {}, "compute": {}}}</script>
+  </body>
+</html>

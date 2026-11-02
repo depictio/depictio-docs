@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Depictio — Embedded component</title>
+    <script type="module" crossorigin src="embed-4dfd1a09fa.js"></script>
+    <link rel="stylesheet" href="embed-4dfd1a09fa.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      Payload injected by services/export/embed.py, which replaces the sentinel
+      below. It sits inside a JSON script element on purpose: that is what makes
+      escaping `</` in the payload sufficient to keep the element from closing
+      early. Keep the sentinel and the EMBED_SENTINEL constant in sync.
+    -->
+    <script id="embed-payload" type="application/json">{"theme": "dark", "component": {"index": "ov-kf-samples", "component_type": "card", "title": "Samples", "workflow_tag": "viralrecon", "data_collection_tag": "summary_metrics", "wf_id": "6ad9df1678eaa0816ca04b2b", "dc_id": "6ad9df1678eaa0816ca04b2e", "dc_config": {"type": null, "metatype": null, "description": "Per-sample alignment, coverage, and variant calling summary metrics", "data_collection_tag": "summary_metrics", "dc_specific_properties": null, "_id": "6ad9df1678eaa0816ca04b2e"}, "cols_json": {}, "parent_index": null, "last_updated": "2026-10-31T21:44:53.252228", "description": "Samples in the run summary. The bar counts those above the pipeline's default 1,000 mapped reads, the floor for variant calling.", "title_size": "sm", "title_align": "left", "use": "multiqc/summary_metrics", "catalog_source": {"toolId": "multiqc", "toolName": "MultiQC", "outputId": "multiqc_summary_metrics", "use": "multiqc/summary_metrics", "description": "Per-sample variant-calling summary (reads mapped, coverage, SNP/indel/total variant counts, lineage) parsed from MultiQC's summary_variants_metrics table."}, "section": "Key figures", "aggregation": "count", "column_name": "num_reads_mapped", "column_type": "float64", "value": null, "aggregations": null, "filter_expr": null, "secondary_layout": "threshold", "breakdown_col": null, "top_n_count": 3, "coverage_max": null, "threshold_value": 1000.0, "threshold_direction": "min", "threshold_warn": null, "attrition_cols": [], "trend_col": null, "follow_region_filter": false, "icon_name": "mdi:flask-outline", "icon_color": "blue", "caption": "against the 1,000-read floor for calling", "link": "tab:MultiQC", "decimals": 0, "wf_tag": "nextflow/viralrecon"}, "title": "Samples", "data": {"figures": {}, "tables": {}, "maps": {}, "images": {}, "multiqc": {}, "multiqcGeneralStats": {}, "cards": {"values": {"ov-kf-samples": 48}, "secondary": {"ov-kf-samples": {"__threshold__": {"column": "num_reads_mapped", "threshold": 1000.0, "warn_threshold": null, "direction": "min", "total": 48, "measured": 48, "nulls": 0, "passing": 46, "warning": 0, "failing": 2, "pass_rate": 0.9583333333333334, "min": 50.0, "max": 2058204.0, "median": 1526992.0}}}, "aggregations": {}}, "unique": {}, "ranges": {}, "specs": {}, "schemas": {}, "advancedVizData": {}, "compute": {}}}</script>
+  </body>
+</html>

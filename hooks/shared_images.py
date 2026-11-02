@@ -30,6 +30,8 @@ SHARED_SUBTREES = (
     "blog",
     "data-model",
     "guides",
+    # Home page screenshots and their bento thumbnails/galleries.
+    "landing",
     "modularity",
     "pipeline-templates",
     "react",
