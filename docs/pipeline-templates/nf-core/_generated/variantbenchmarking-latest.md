@@ -71,10 +71,12 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | Variable | Required | Description |
 |---|:--:|---|
 | `DATA_ROOT` | ✓ | Root directory containing variantbenchmarking output (small/, indel/, and optionally sv/, cnv/). |
+| `GENOME` | — | UCSC name of the assembly the benchmark ran on (hg38, hg19): the axis and gene lane of the genome browser. |
+| `TRACKS_URI` | — | s3:// or https:// folder holding the run's results (the one with the <variant_type>/ sub-directories), to read the genome-browser tracks (each callset's false positive, false negative and true positive VCFs) in place instead of uploading them from DATA_ROOT. Without it the `tracks` collection uploads whichever of those files DATA_ROOT holds. |
 
 ### :material-database-outline: Data collections
 
-9 data collections — <span class="gtd-badge gtd-req">0 required</span> <span class="gtd-badge gtd-opt">9 optional</span> · <span class="gtd-badge gtd-direct">9 direct</span> <span class="gtd-badge gtd-derived">0 derived</span>.
+10 data collections — <span class="gtd-badge gtd-req">0 required</span> <span class="gtd-badge gtd-opt">10 optional</span> · <span class="gtd-badge gtd-direct">10 direct</span> <span class="gtd-badge gtd-derived">0 derived</span>.
 
 **Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
@@ -89,10 +91,24 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `sv_truvari_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/truvari/summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">truvari/summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `sv_svbenchmark_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/svanalyzer/svbenchmark.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">svanalyzer/svbenchmark.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `cnv_wittyer_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/wittyer/summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">wittyer/summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `tracks` | <span class="gtd-badge gtd-direct">direct</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/variantbenchmarking/recipes/tracks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/variantbenchmarking/tracks.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+
+### :material-directions-fork: Conditional routes
+
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (9 collections are unaffected by any variable — present on every run.)
+
+<p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
+
+<div class="gtd-mtx">
+<table>
+<thead><tr><th class="dc">Data collection</th><th><code>TRACKS_URI</code></th></tr></thead>
+<tbody>
+<tr><th class="dc"><code>tracks</code></th><td class="swap" title="re-sourced when TRACKS_URI is set">⇄</td></tr>
+</tbody></table></div>
 
 ### :material-vector-link: Cross-DC links
 
-4 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+8 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -102,6 +118,10 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 <tr><td><code>somatic_sompy_summary</code> <span class="col">·&nbsp;caller</span></td><td class="arr">→</td><td><code>somatic_vcfeval_summary</code></td><td>Cross-filter som.py and vcfeval somatic summaries by caller</td></tr>
 <tr><td><code>sv_truvari_summary</code> <span class="col">·&nbsp;label</span></td><td class="arr">→</td><td><code>sv_svbenchmark_summary</code></td><td>Filter the SVanalyzer summary by the callsets picked on the Structural tab</td></tr>
 <tr><td><code>sv_truvari_summary</code> <span class="col">·&nbsp;label</span></td><td class="arr">→</td><td><code>cnv_wittyer_summary</code></td><td>Filter the Wittyer summary by the callsets picked on the Structural tab</td></tr>
+<tr><td><code>germline_vcfeval_summary</code> <span class="col">·&nbsp;label</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Show the genome tracks of the germline callsets picked on the Germline tab</td></tr>
+<tr><td><code>tracks</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>germline_vcfeval_summary</code></td><td>Filter the germline summary by the callsets whose tracks are picked in the genome browser</td></tr>
+<tr><td><code>sv_truvari_summary</code> <span class="col">·&nbsp;label</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Show the genome tracks of the structural callsets picked on the Structural tab</td></tr>
+<tr><td><code>tracks</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>sv_truvari_summary</code></td><td>Filter the Truvari summary by the callsets whose tracks are picked in the genome browser</td></tr>
 </tbody></table></div>
 
 ### :material-chef-hat: Recipes
@@ -112,6 +132,7 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 |---|---|---|
 | [`happy/roc.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/happy/roc.py) | Extract a germline precision/recall ROC curve from hap.py per-quality ROC output. | `quality`, `recall`, `precision`, `f1` |
 | [`happy/summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/happy/summary.py) | Pool hap.py per-sample summaries into a germline SNP/INDEL performance table. | `variant_type`, `filter`, `truth_tp`, `truth_fn`, `query_fp`, `recall`, `precision`, `f1` |
+| [`nf-core/variantbenchmarking/tracks.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/variantbenchmarking/recipes/tracks.py) | Genome-browser track manifest: the false positives and false negatives of every callset. | `track_id`, `sample_id`, `caller`, `truth_set`, `tool`, `kind`, `format`, `uri`, `name`, `error_type`, `order` |
 | [`rtgtools/vcfeval_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/rtgtools/vcfeval_summary.py) | Normalize an rtg-tools vcfeval aggregated summary into a tidy benchmark table. | `label`, `caller`, `truth_set`, `tp_base`, `tp_comp`, `fp`, `fn`, `precision`, `recall`, `f1` |
 | [`sompy/regions.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/sompy/regions.py) | Reshape the som.py region-stratified benchmark into a caller × AF-bin metrics table. | `caller`, `label`, `truth_set`, `af_bin`, `recall`, `precision`, `f1` |
 | [`sompy/summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/sompy/summary.py) | Normalize the som.py somatic benchmark summary into a tidy per-caller table. | `caller`, `label`, `truth_set`, `variant_type`, `tp`, `fp`, `fn`, `recall`, `precision`, `f1`, `recall_lower`, `recall_upper`, `precision_lower`, `precision_upper` |

@@ -421,9 +421,31 @@ Configure logging via environment variables:
 
 ## Security Best Practices
 
-### JBrowse Iframe Sandbox
+### Genome browser track access <small>(v1.20.0+)</small> { #genome-browser-track-access }
 
-The JBrowse iframe uses a restricted `sandbox` attribute that omits `allow-same-origin`. Previously, combining `allow-same-origin` with `allow-scripts` would have allowed iframe content to access the parent page's `localStorage` and read authentication tokens; removing `allow-same-origin` closes this vector.
+The [genome browser](genome-browser.md) runs inside the viewer, not in an iframe, and the
+browser never talks to S3 or to a track host itself. Every track byte goes through the
+API's Range-capable track proxy:
+
+- **Signed, expiring URLs.** The API hands the browser signed proxy URLs, valid for
+  `DEPICTIO_JBROWSE_URL_TTL_S` seconds (6 hours by default). The proxy re-checks that the
+  caller can read the data collection's project.
+- **Ids, not URLs.** A request names a track of the collection's manifest, never a
+  location, so a viewer cannot make the server fetch an address of their choosing.
+- **Remote tracks need an allow-list.** A track read in place is refused unless its
+  `https://` host is in `DEPICTIO_JBROWSE_REMOTE_HTTPS_HOSTS` or its `s3://` bucket is in
+  `DEPICTIO_JBROWSE_REMOTE_S3_BUCKETS` (comma-separated lists). A listed S3 bucket is read
+  with the server's credentials, so anyone who can open a collection pointing at it can
+  read it: list only buckets that hold nothing private. In depictio's own data bucket, only
+  the collection's `genomic_tracks/<dc_id>/` folder is served; a remote folder pointing
+  elsewhere in it is refused.
+- **Remote S3 credentials.** Without `DEPICTIO_JBROWSE_REMOTE_S3_ACCESS_KEY` and
+  `DEPICTIO_JBROWSE_REMOTE_S3_SECRET_KEY`, remote buckets are read anonymously.
+- **Direct access is opt-in.** A collection with `direct_access: true` has the browser
+  fetch its `https://` tracks itself, which bypasses the proxy and needs the host to allow
+  it with CORS.
+
+The full variable list is in the [environment reference](../installation/env-reference.md#genome-browser).
 
 ### SAML sign-in <small>(v1.18.0+)</small> { #saml-sign-in }
 

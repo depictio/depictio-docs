@@ -74,12 +74,14 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `METADATA_FILE` | — | Optional design table (TSV), first column the sample id, then one column per annotation. Adds the group filter and the design table; pruned when absent. |
 | `METADATA_ID_COL` | — | Design-table sample id column (links join on it). Auto-detected as the first column; defaults to 'sample'. |
 | `GROUP_COL` | — | Design-table column the group filter and card read. Auto-detected as the first annotation column (treatment in the vendored megatest table). |
+| `GENOME` | — | UCSC name of the assembly the run aligned to (hg38, hg19, mm10): the axis and gene lane of the genome browser. |
+| `TRACKS_URI` | — | s3:// or https:// folder holding the run's results (the folder DATA_ROOT mirrors), to read the genome-browser tracks (P-sites, coverage bigWig, BAM) in place instead of uploading them from DATA_ROOT. Without it the `tracks` collection uploads whichever of those files DATA_ROOT holds. |
 
 **Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`
 
 ### :material-database-outline: Data collections
 
-18 data collections — <span class="gtd-badge gtd-req">4 required</span> <span class="gtd-badge gtd-opt">14 optional</span> · <span class="gtd-badge gtd-direct">16 direct</span> <span class="gtd-badge gtd-derived">2 derived</span>.
+19 data collections — <span class="gtd-badge gtd-req">5 required</span> <span class="gtd-badge gtd-opt">14 optional</span> · <span class="gtd-badge gtd-direct">14 direct</span> <span class="gtd-badge gtd-derived">5 derived</span>.
 
 **Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
@@ -89,8 +91,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `samples` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/samplesheet.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/riboseq/samplesheet.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code> | <span class="gtd-badge gtd-opt">optional</span> |
 | `gene_counts` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">salmon\.merged\.gene_counts\.tsv$</code> | <span class="gtd-badge gtd-req">required</span> |
-| `sample_pca` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/salmon/sample_pca.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">salmon/sample_pca.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
-| `ribowaltz_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ribowaltz/library_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ribowaltz/library_summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `sample_pca` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/sample_pca.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/riboseq/sample_pca.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `ribowaltz_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/library_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/riboseq/library_summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `ribowaltz_frames` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ribowaltz/frames.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ribowaltz/frames.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `ribowaltz_psite_region` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ribowaltz/psite_region.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ribowaltz/psite_region.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `ribowaltz_length` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ribowaltz/length_distribution.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ribowaltz/length_distribution.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
@@ -103,6 +105,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `ribocode_orfs` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/ribocode/orfs.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">ribocode/orfs.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `orf_calls` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/orf_calls.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/riboseq/orf_calls.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `orf_overlap` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/orf_overlap.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/riboseq/orf_overlap.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `tracks` | <span class="gtd-badge gtd-derived">derived</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/tracks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/riboseq/tracks.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 
 ### :material-directions-fork: Conditional routes
 
@@ -112,14 +115,15 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 
 <div class="gtd-mtx">
 <table>
-<thead><tr><th class="dc">Data collection</th><th><code>METADATA_FILE</code></th></tr></thead>
+<thead><tr><th class="dc">Data collection</th><th><code>METADATA_FILE</code></th><th><code>TRACKS_URI</code></th></tr></thead>
 <tbody>
-<tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td></tr>
+<tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td></td></tr>
+<tr><th class="dc"><code>tracks</code></th><td></td><td class="swap" title="re-sourced when TRACKS_URI is set">⇄</td></tr>
 </tbody></table></div>
 
 ### :material-vector-link: Cross-DC links
 
-35 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+37 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -160,6 +164,8 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>orf_overlap</code> <span class="col">·&nbsp;orf_id</span></td><td class="arr">→</td><td><code>ribotish_orfs</code></td><td>Carry an ORF selection onto the Ribo-TISH calls</td></tr>
 <tr><td><code>orf_overlap</code> <span class="col">·&nbsp;orf_id</span></td><td class="arr">→</td><td><code>ribocode_orfs</code></td><td>Carry an ORF selection onto the RiboCode calls</td></tr>
 <tr><td><code>orf_overlap</code> <span class="col">·&nbsp;orf_class</span></td><td class="arr">→</td><td><code>orf_calls</code></td><td>Narrow the ORF class composition to the picked classes</td></tr>
+<tr><td><code>samples</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Show the genome tracks of the libraries picked in the left panel</td></tr>
+<tr><td><code>tracks</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>samples</code></td><td>Filter the dashboard by the libraries whose tracks are picked in the genome browser</td></tr>
 </tbody></table></div>
 
 ### :material-chef-hat: Recipes
@@ -170,16 +176,17 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 |---|---|---|
 | [`anota2seq/regulation.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/anota2seq/regulation.py) | anota2seq regulatory mode per gene: one row per contrast and gene. | `contrast`, `gene_id`, `gene_name`, `total_mrna_lfc`, `total_mrna_padj`, `translated_mrna_lfc`, `translated_mrna_padj`, `translation_effect`, `translation_pvalue`, `translation_padj`, `buffering_effect`, `buffering_padj`, `regulation_mode`, `direction` |
 | [`anota2seq/results.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/anota2seq/results.py) | anota2seq results in long form: one row per contrast, analysis and gene. | `contrast`, `analysis`, `gene_id`, `gene_name`, `effect`, `slope`, `pvalue`, `padj`, `neg_log10_padj`, `significant`, `direction` |
+| [`nf-core/riboseq/library_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/library_summary.py) | riboWaltz library summary with each library's design group and label. | `sample`, `psites`, `frame0_cds_pct`, `frame_bias`, `cds_pct`, `utr5_pct`, `utr3_pct`, `cds_enrichment`, `modal_length`, `length_iqr` |
 | [`nf-core/riboseq/orf_calls.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/orf_calls.py) | ORF classes per library and caller: the composition behind the ORF stacked bars. | `sample`, `caller`, `orf_class`, `orfs`, `pct` |
-| [`nf-core/riboseq/orf_overlap.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/orf_overlap.py) | Which ORFs each caller found: one row per ORF, pooled over the libraries. | `orf_id`, `gene_id`, `gene_name`, `gene_type`, `orf_class`, `aa_length`, `ribotish`, `ribocode`, `annotated_cds`, `ribotish_libraries`, `ribocode_libraries` |
+| [`nf-core/riboseq/orf_overlap.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/orf_overlap.py) | Which ORFs each caller found: one row per ORF, pooled over the libraries. | `orf_id`, `gene_id`, `gene_name`, `gene_type`, `orf_class`, `aa_length`, `chrom`, `orf_start`, `orf_end`, `ribotish`, `ribocode`, `annotated_cds`, `ribotish_libraries`, `ribocode_libraries`, `support_score` |
+| [`nf-core/riboseq/sample_pca.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/sample_pca.py) | Salmon sample PCA with each library's design group. | `sample_id`, `dim_1`, `dim_2`, `group`, `genes_detected`, `genes_expressed`, `median_tpm` |
 | [`nf-core/riboseq/samplesheet.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/samplesheet.py) | nf-core/riboseq samplesheet as the sample hub every panel filters through. | `sample`, `type`, `read_type` |
+| [`nf-core/riboseq/tracks.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/tracks.py) | Genome-browser track manifest: one row per track file the run published. | `track_id`, `sample`, `assay`, `strand`, `kind`, `format`, `uri`, `name`, `category`, `order` |
 | [`nf-core/riboseq/translational_efficiency.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/riboseq/recipes/translational_efficiency.py) | Baseline translational efficiency per gene, pooled over the run's libraries. | `gene_id`, `gene_name`, `rna_cpm`, `ribo_cpm`, `log2_rna_cpm`, `log2_ribo_cpm`, `log2_te`, `rna_libraries`, `ribo_libraries` |
 | [`ribocode/orfs.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ribocode/orfs.py) | RiboCode ORF calls, one row per library and ORF. | `sample`, `orf_id`, `transcript_id`, `gene_id`, `gene_name`, `gene_type`, `chrom`, `strand`, `orf_type`, `orf_class`, `aa_length`, `psites_frame0`, `adjusted_pvalue` |
 | [`ribotish/orfs.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ribotish/orfs.py) | Ribo-TISH ORF predictions, one row per library and ORF. | `sample`, `orf_id`, `transcript_id`, `gene_id`, `gene_name`, `gene_type`, `chrom`, `strand`, `orf_type`, `orf_class`, `start_codon`, `aa_length`, `start_sites`, `frame_qvalue` |
 | [`ribowaltz/frames.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ribowaltz/frames.py) | riboWaltz P-site frame distribution per library and transcript region. | `sample`, `region`, `frame`, `count`, `pct` |
 | [`ribowaltz/length_distribution.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ribowaltz/length_distribution.py) | riboWaltz read-length distribution per library. | `sample`, `length`, `count`, `pct` |
-| [`ribowaltz/library_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ribowaltz/library_summary.py) | One row per Ribo-seq library: the riboWaltz quality readouts side by side. | `sample`, `psites`, `frame0_cds_pct`, `frame_bias`, `cds_pct`, `utr5_pct`, `utr3_pct`, `cds_enrichment`, `modal_length`, `length_iqr` |
 | [`ribowaltz/metaprofile_start.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ribowaltz/metaprofile_start.py) | riboWaltz metagene P-site profile around the start codon. | `sample`, `position`, `signal` |
 | [`ribowaltz/metaprofile_stop.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ribowaltz/metaprofile_stop.py) | riboWaltz metagene P-site profile around the stop codon. | `sample`, `position`, `signal` |
 | [`ribowaltz/psite_region.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/ribowaltz/psite_region.py) | riboWaltz P-site share per transcript region, against the transcriptome expectation. | `sample`, `region`, `scope`, `count`, `pct`, `expected_pct`, `enrichment` |
-| [`salmon/sample_pca.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/salmon/sample_pca.py) | Sample PCA of a merged Salmon TPM matrix, plus the per-sample library summary. | `sample_id`, `dim_1`, `dim_2`, `group`, `genes_detected`, `genes_expressed`, `median_tpm` |

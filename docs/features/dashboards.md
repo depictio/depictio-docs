@@ -222,12 +222,13 @@ Available component types include:
 | :material-map-marker-multiple: **Maps**     | Geospatial scatter, density and choropleth maps |
 | :material-microscope: **MultiQC**           | Quality control report visualizations          |
 | :material-image: **Images**                 | Display grid of static images (PNG, JPEG, SVG) |
+| :material-chart-timeline: **Genome browser** | Embedded genome browser over a track manifest (v1.20.0+), see [Genome browser](genome-browser.md) |
 
 A map can also leave the grid entirely and become a dashboard-wide panel that follows the
 viewer across every tab. See [Components](components.md#dashboard-wide-map-panel).
 
 !!! note "Future Components"
-    Additional component types may be added in future releases based on user needs and feedback (Network Graphs, JBrowse2).
+    Additional component types may be added in future releases based on user needs and feedback (Network Graphs).
 
 ### :material-view-sequential: Sections <small>(v1.4.0+)</small> { #sections }
 

@@ -76,14 +76,15 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `GROUP_COL` | — | Design column the group filter, cards and colouring read. Auto-detected as the first annotation column of METADATA_FILE, else the sample sheet's condition. |
 | `GROUP_COL_DISPLAY` | — | Title-cased GROUP_COL for display; auto-populated with METADATA_FILE. |
 | `QUANT_ROUTE` | — | Quantification route the expression, DEXSeq DTU and SUPPA2 collections read: star_salmon (default) or salmon (pseudo-alignment). |
-| `GENOME` | — | UCSC assembly name the event loci link out to (the genome the run aligned to). |
+| `GENOME` | — | UCSC assembly name the event loci link out to and the genome browser opens on (the genome the run aligned to). |
+| `TRACKS_URI` | — | s3:// or https:// folder holding the run's results (the folder DATA_ROOT mirrors), to read the genome-browser tracks (stranded bigWig, BAM) in place instead of uploading them from DATA_ROOT. Without it the `tracks` collection uploads whichever of those files DATA_ROOT holds. |
 | `SPLICING_FDR` | — | Significance cut-off on the adjusted p-values of every splicing tool (SUPPA2: its empirical p-value). |
 | `MIN_DPSI` | — | Minimal absolute change in percent spliced-in (0 to 1) for an rMATS or SUPPA2 event to be called. |
 | `RMATS_MIN_READS` | — | Mean junction reads per replicate an rMATS event needs in both conditions to be kept. |
 
 ### :material-database-outline: Data collections
 
-13 data collections — <span class="gtd-badge gtd-req">6 required</span> <span class="gtd-badge gtd-opt">7 optional</span> · <span class="gtd-badge gtd-direct">10 direct</span> <span class="gtd-badge gtd-derived">3 derived</span>.
+14 data collections — <span class="gtd-badge gtd-req">7 required</span> <span class="gtd-badge gtd-opt">7 optional</span> · <span class="gtd-badge gtd-direct">11 direct</span> <span class="gtd-badge gtd-derived">3 derived</span>.
 
 **Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
@@ -102,6 +103,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `event_junctions` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnasplice/recipes/event_junctions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnasplice/event_junctions.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `suppa_events` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/suppa/local_events.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">suppa/local_events.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `splicing_genes` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnasplice/recipes/splicing_genes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnasplice/splicing_genes.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `tracks` | <span class="gtd-badge gtd-direct">direct</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnasplice/recipes/tracks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnasplice/tracks.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 
 ### :material-directions-fork: Conditional routes
 
@@ -111,14 +113,15 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 
 <div class="gtd-mtx">
 <table>
-<thead><tr><th class="dc">Data collection</th><th><code>METADATA_FILE</code></th></tr></thead>
+<thead><tr><th class="dc">Data collection</th><th><code>METADATA_FILE</code></th><th><code>TRACKS_URI</code></th></tr></thead>
 <tbody>
-<tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td></tr>
+<tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td></td></tr>
+<tr><th class="dc"><code>tracks</code></th><td></td><td class="swap" title="re-sourced when TRACKS_URI is set">⇄</td></tr>
 </tbody></table></div>
 
 ### :material-vector-link: Cross-DC links
 
-17 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+19 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -141,6 +144,8 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>splicing_genes</code> <span class="col">·&nbsp;gene_id</span></td><td class="arr">→</td><td><code>rmats_events</code></td><td>Carry the cross-tool gene selection onto the rMATS events</td></tr>
 <tr><td><code>splicing_genes</code> <span class="col">·&nbsp;gene_id</span></td><td class="arr">→</td><td><code>suppa_events</code></td><td>Carry the cross-tool gene selection onto the SUPPA2 events</td></tr>
 <tr><td><code>splicing_genes</code> <span class="col">·&nbsp;gene_id</span></td><td class="arr">→</td><td><code>event_junctions</code></td><td>Carry the cross-tool gene selection onto the sashimi of the rMATS events</td></tr>
+<tr><td><code>samples</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Show the genome tracks of the samples picked in the left panel</td></tr>
+<tr><td><code>tracks</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>samples</code></td><td>Filter the dashboard by the samples whose tracks are picked in the genome browser</td></tr>
 </tbody></table></div>
 
 ### :material-chef-hat: Recipes
@@ -155,6 +160,7 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`nf-core/rnasplice/event_junctions.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnasplice/recipes/event_junctions.py) | STAR splice junctions around the called rMATS events, per gene and condition. | `gene_id`, `gene_name`, `condition`, `chrom`, `start`, `end`, `strand`, `reads` |
 | [`nf-core/rnasplice/samples.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnasplice/recipes/samples.py) | The nf-core/rnasplice sample hub: one row per sample, every design column. | `sample`, `condition`, `read_type`, `strandedness`, `runs` |
 | [`nf-core/rnasplice/splicing_genes.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnasplice/recipes/splicing_genes.py) | Cross-tool differential splicing per gene: which tools call each gene. | `contrast`, `gene_id`, `gene_name`, `dexseq_exon`, `dexseq_dtu`, `edger`, `rmats`, `suppa`, `tools_tested`, `tools_significant`, `tools`, `dexseq_exon_padj`, `dexseq_exon_log2fc`, `dexseq_dtu_padj`, `edger_fdr`, `edger_log2fc`, `rmats_events_significant`, `rmats_max_abs_dpsi`, `rmats_min_fdr`, `suppa_events_significant`, `suppa_max_abs_dpsi`, `suppa_min_pvalue` |
+| [`nf-core/rnasplice/tracks.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnasplice/recipes/tracks.py) | Genome-browser track manifest: one row per track file the run published. | `track_id`, `sample`, `condition`, `strand`, `kind`, `format`, `uri`, `name`, `color`, `category`, `order` |
 | [`rmats/events.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/rmats/events.py) | rMATS differential alternative splicing events, all five event types stacked. | `contrast`, `event_id`, `event_type`, `gene_id`, `gene_name`, `chrom`, `strand`, `start`, `end`, `locus`, `psi_treatment`, `psi_control`, `dpsi`, `abs_dpsi`, `pvalue`, `fdr`, `neg_log10_fdr`, `reads_treatment`, `reads_control`, `significant`, `direction` |
 | [`salmon/sample_pca.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/salmon/sample_pca.py) | Sample PCA of a merged Salmon TPM matrix, plus the per-sample library summary. | `sample_id`, `dim_1`, `dim_2`, `group`, `genes_detected`, `genes_expressed`, `median_tpm` |
 | [`salmon/top_variable_genes.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/salmon/top_variable_genes.py) | Top variable genes of a merged Salmon TPM matrix, for ComplexHeatmap. | `gene_name` |

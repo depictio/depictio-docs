@@ -74,12 +74,14 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `METADATA_FILE` | — | Optional design table (TSV): sample name (or samplesheet group) in METADATA_ID_COL, one column per factor. GROUP_COL becomes the condition; columns named protocol, source_replicate and run_id feed the library preparation, source replicate and flow-cell run filters; other factors are carried as extra columns. |
 | `METADATA_ID_COL` | — | Design table id column. Auto-detected as the first column. |
 | `GROUP_COL` | — | Design table factor the run compares, carried as the condition column. Auto-detected as the first factor column of METADATA_FILE. |
+| `GENOME` | — | UCSC name of the assembly the run aligned to (hg38, hg19, mm10): the axis and gene lane of the genome browser. |
+| `TRACKS_URI` | — | s3:// or https:// folder holding the run's results (the folder DATA_ROOT mirrors), to read the genome-browser tracks (coverage bigWig, long-read BAM) in place instead of uploading them from DATA_ROOT. Without it the `tracks` collection uploads whichever of those files DATA_ROOT holds. |
 
 **Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`
 
 ### :material-database-outline: Data collections
 
-22 data collections — <span class="gtd-badge gtd-req">19 required</span> <span class="gtd-badge gtd-opt">3 optional</span> · <span class="gtd-badge gtd-direct">14 direct</span> <span class="gtd-badge gtd-derived">8 derived</span>.
+26 data collections — <span class="gtd-badge gtd-req">22 required</span> <span class="gtd-badge gtd-opt">4 optional</span> · <span class="gtd-badge gtd-direct">14 direct</span> <span class="gtd-badge gtd-derived">12 derived</span>.
 
 **Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
@@ -87,6 +89,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 |---|:--:|---|---|:--:|
 | `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code> | <span class="gtd-badge gtd-opt">optional</span> |
 | `samples` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/samples.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nanoseq/samples.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `design` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/design.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nanoseq/design.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `samplesheet` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">samplesheet\.valid\.csv$</code> | <span class="gtd-badge gtd-req">required</span> |
 | `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc\.parquet$</code> | <span class="gtd-badge gtd-req">required</span> |
 | `nanoplot_nanostats_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*_)?NanoStats\.txt$</code> | <span class="gtd-badge gtd-req">required</span> |
@@ -107,23 +110,28 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `dexseq_usage` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/3.0.0/recipes/dexseq_usage.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nanoseq/dexseq_usage.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `gtf_transcripts_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?bambu/extended_annotations\.gtf(?:\.gz)?$</code> | <span class="gtd-badge gtd-opt">optional</span> |
 | `gtf_transcripts` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/gtf/transcripts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">gtf/transcripts.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `isoform_junctions` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/junctions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nanoseq/junctions.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `isoform_loci` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/isoform_loci.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nanoseq/isoform_loci.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `tracks` | <span class="gtd-badge gtd-derived">derived</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/tracks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nanoseq/tracks.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 
 ### :material-directions-fork: Conditional routes
 
-Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (21 collections are unaffected by any variable — present on every run.)
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (23 collections are unaffected by any variable — present on every run.)
 
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 
 <div class="gtd-mtx">
 <table>
-<thead><tr><th class="dc">Data collection</th><th><code>METADATA_FILE</code></th></tr></thead>
+<thead><tr><th class="dc">Data collection</th><th><code>METADATA_FILE</code></th><th><code>TRACKS_URI</code></th></tr></thead>
 <tbody>
-<tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td></tr>
+<tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td></td></tr>
+<tr><th class="dc"><code>design</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td></td></tr>
+<tr><th class="dc"><code>tracks</code></th><td></td><td class="swap" title="re-sourced when TRACKS_URI is set">⇄</td></tr>
 </tbody></table></div>
 
 ### :material-vector-link: Cross-DC links
 
-13 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+21 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -140,8 +148,16 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>samtools_read_length_nx</code></td><td>Filter the Nx ladder by the samples picked in the left panel</td></tr>
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>dexseq_usage</code></td><td>Filter the DEXSeq usage shares by the samples picked in the left panel</td></tr>
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>gtf_transcripts</code></td><td>Filter the isoform structures by the samples picked in the left panel</td></tr>
+<tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>samples</code></td><td>Scope the sample hub by the preparation, source replicate or flow-cell run picked in the left panel</td></tr>
+<tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the MultiQC panels by the preparation, source replicate or flow-cell run picked in the left panel</td></tr>
+<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>design</code></td><td>Scope the design rings by the samples picked in the left panel</td></tr>
 <tr><td><code>nanostats</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>samples</code></td><td>Scope the sample hub to a library picked on the NanoStat table</td></tr>
 <tr><td><code>bambu_sample_pca</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>samples</code></td><td>Scope the sample hub to a sample picked on the PCA</td></tr>
+<tr><td><code>samples</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Show the genome tracks of the samples picked in the left panel</td></tr>
+<tr><td><code>tracks</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>samples</code></td><td>Filter the dashboard by the samples whose tracks are picked in the genome browser</td></tr>
+<tr><td><code>dexseq_results</code> <span class="col">·&nbsp;feature_id</span></td><td class="arr">→</td><td><code>gtf_transcripts</code></td><td>Carry a transcript picked in the DEXSeq results onto its isoform structure</td></tr>
+<tr><td><code>dexseq_results</code> <span class="col">·&nbsp;feature_id</span></td><td class="arr">→</td><td><code>isoform_loci</code></td><td>Carry a transcript picked in the DEXSeq results onto its span, where the genome browser opens</td></tr>
+<tr><td><code>dexseq_results</code> <span class="col">·&nbsp;feature_id</span></td><td class="arr">→</td><td><code>isoform_junctions</code></td><td>Carry a transcript picked in the DEXSeq results onto its weighted intron chain</td></tr>
 </tbody></table></div>
 
 ### :material-chef-hat: Recipes
@@ -161,7 +177,11 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`nanoplot/nanostats_quality.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/nanoplot/nanostats_quality.py) | The yield-above-quality-cutoff ladder of a NanoStat summary. | `sample`, `q_cutoff`, `n_reads`, `pct_reads`, `megabases` |
 | [`nf-core/nanoseq/deseq2_results.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/deseq2_results.py) | DESeq2 results on Bambu counts, with labels a reader can read. | `contrast`, `gene_id`, `gene_biotype`, `feature_label`, `exon_id`, `base_mean`, `log2fc`, `lfc_se`, `pvalue`, `padj`, `log2_base_mean`, `neg_log10_padj`, `significant`, `direction` |
 | [`nf-core/nanoseq/deseq2_top_expressed.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/deseq2_top_expressed.py) | The most expressed slice of the DESeq2 table, for the pinned reference tile. | `contrast`, `gene_id`, `gene_biotype`, `feature_label`, `exon_id`, `base_mean`, `log2fc`, `lfc_se`, `pvalue`, `padj`, `log2_base_mean`, `neg_log10_padj`, `significant`, `direction` |
+| [`nf-core/nanoseq/design.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/design.py) | The design columns of the hub, one row per sample: the confounders of the run. | `sample_id`, `protocol`, `source_replicate`, `run_id` |
 | [`nf-core/nanoseq/dexseq_usage.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/3.0.0/recipes/dexseq_usage.py) | Relative transcript usage per library, for the genes DEXSeq ranks first. | `sample`, `condition`, `gene_id`, `gene_label`, `transcript_id`, `count`, `usage_pct`, `gene_padj`, `usage_log2fc`, `significant` |
+| [`nf-core/nanoseq/isoform_loci.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/isoform_loci.py) | One row per transcript DEXSeq tested, with its span and a score the genome browser opens on. | `transcript_id`, `gene_id`, `gene_name`, `chrom`, `start`, `end`, `strand`, `n_exons`, `transcript_class`, `log2fc`, `padj`, `significant`, `direction`, `rank_score` |
+| [`nf-core/nanoseq/junctions.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/junctions.py) | Intron chains of the isoforms, weighted by what each isoform was counted at. | `chrom`, `start`, `end`, `reads`, `condition`, `transcript_id`, `gene_id`, `gene_name`, `annotation` |
 | [`nf-core/nanoseq/read_length_nx.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/3.0.0/recipes/read_length_nx.py) | The Nx ladder of each library, from the read-length histogram samtools stats keeps. | `sample`, `nx`, `read_length`, `bases_share` |
 | [`nf-core/nanoseq/samples.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/samples.py) | One row per nf-core/nanoseq sample: the validated samplesheet, joined to the run's design. | `sample_id`, `condition`, `replicate`, `protocol`, `source_replicate`, `run_id`, `reference`, `is_transcripts`, `has_fast5` |
+| [`nf-core/nanoseq/tracks.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nanoseq/recipes/tracks.py) | Genome-browser track manifest: one row per track file the run published. | `track_id`, `sample`, `condition`, `kind`, `format`, `uri`, `name`, `category`, `order` |
 | [`samtools/stats_sections.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/samtools/stats_sections.py) | The distribution sections of a `samtools stats` report, as one long table. | `sample`, `section`, `series`, `metric`, `bin`, `n_reads`, `n_bases`, `n_indels`, `n_pairs`, `reads_total`, `reads_mapped`, `reads_mapped_pct`, `bases_mapped`, `error_rate`, `identity_pct`, `average_length`, `maximum_length`, `average_quality`, `supplementary_alignments` |

@@ -153,6 +153,8 @@ through the samplesheet links. The *Sample sheet* is pinned, collapsed, to the
 bottom of every child tab. nf-core/rnaseq runs no differential test: the gene
 numbers are rankings, by spread across the libraries or by the lead of one
 condition, and every tile that shows one says so.
+The Gene Explorer tab embeds a [genome browser](../../features/genome-browser.md) with the stranded coverage and the
+alignments of the samples at the selected gene.
 
 === ":material-compass-outline: Overview"
 

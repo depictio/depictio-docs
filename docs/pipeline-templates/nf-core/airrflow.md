@@ -20,11 +20,12 @@ hide:
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="5.1.1">
+<div class="tpl-version-pick" data-latest="5.1.2">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Pipeline version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
-    <option value="5.1.1" selected>5.1.1</option>
+    <option value="5.1.2" selected>5.1.2</option>
+    <option value="5.1.1">5.1.1</option>
     <option value="5.1.0">5.1.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -54,10 +55,11 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
     the hub data collection, so there is nothing to prepare. The one column to
     name is the condition, `GROUP_COL`, which defaults to `treatment`, the
     column airrflow's samplesheet schema documents for it; a sample sheet that
-    names it differently passes `--var GROUP_COL=<column>`. 5.1.1 keeps the 5.1.0
-    output layout and has no AWS megatest run: the 5.1.1 template was validated
-    on an EMBL HPC run of the release, and the 5.1.0 megatest still serves to
-    try it.
+    names it differently passes `--var GROUP_COL=<column>`. 5.1.2 keeps the 5.1.0
+    output layout and has no AWS megatest run: 5.1.1 only changed how enchantr
+    receives boolean parameters and 5.1.2 only replaces container images whose
+    certificates expired, so the 5.1.2 template inherits the validation on an
+    EMBL HPC run of 5.1.1, and the 5.1.0 megatest still serves to try it.
 
 ---
 
@@ -97,7 +99,7 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/airrflow -r 5.1.0 -profile docker --outdir results
+    nextflow run nf-core/airrflow -r 5.1.2 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -127,9 +129,15 @@ ingests: the affected collections are optional and simply come up empty.
     visualizations are dropped entirely, and the remaining components are
     re-packed so there are no empty rows.
 
-<div class="tpl-version-block" data-version="5.1.1" markdown>
+<div class="tpl-version-block" data-version="5.1.2" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/airrflow-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="5.1.1" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/airrflow-5.1.1.md"
 
 </div>
 
@@ -170,11 +178,13 @@ colours the per-sample lines and annotates the heatmaps.
 
     [![Overview dashboard](../../images/pipeline-templates/nf-core/airrflow/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/airrflow/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    A short hero links the run parameters. *About this dashboard* says how to move
-    through the tabs, *The run* lists the samples and subjects, the library
-    preparation, the clonal threshold setting and the input mode, and *Pipeline*
-    walks six steps from trimming to the comparison of repertoires, each linked to
-    its parameters and its tab. The Key figures are **Samples** (split by
+    A short hero links the run parameters. *The study* lists the samples and
+    subjects, the species, the tissue and the sex read from the sample sheet, *The
+    run* gives the pipeline version, the library preparation, the clonal threshold
+    setting and the input mode, and *Pipeline* walks six steps from trimming to the
+    comparison of repertoires, each linked to its parameters and its tab and
+    quoting what the step handled. *About this dashboard* says how to move through
+    the tabs. The Key figures are **Samples** (split by
     condition), **Input reads** and **Clones** (each summed, with the spread per
     sample) and **Sequences per clone** (each sample's mean clone size, the median
     over samples).
@@ -412,7 +422,7 @@ Depictio reads the **output** of nf-core/airrflow, it does not run the pipeline.
 Run the pipeline first:
 
 ```bash
-nextflow run nf-core/airrflow -r 5.1.1 \
+nextflow run nf-core/airrflow -r 5.1.2 \
   --input samplesheet.tsv \
   --mode fastq \
   --library_generation_method specific_pcr_umi \
@@ -429,7 +439,7 @@ depictio ingest results/ \
   --template nf-core/airrflow/latest
 ```
 
-See [nf-co.re/airrflow/usage](https://nf-co.re/airrflow/5.1.1/docs/usage)
+See [nf-co.re/airrflow/usage](https://nf-co.re/airrflow/5.1.2/docs/usage)
 for full pipeline documentation.
 
 ---
@@ -475,11 +485,12 @@ somewhere under the root. Nothing outside the run is needed.
 
 ## :material-flask-outline: Validation runs
 
-5.1.1 has no AWS megatest run: the bucket holds no prefix for the release. The
-5.1.1 template was validated on an EMBL HPC run of the release's `test` profile
-(`airrflow511`), ingested on a local stack; its MultiQC 1.34 report already
-carries the parquet, so no reprocess step is needed. 5.1.1 publishes the 5.1.0
-layout, so the megatest shown here is the 5.1.0 run. The repository ships
+5.1.2 has no AWS megatest run: the bucket holds no prefix for the release. The
+template was validated on an EMBL HPC run of the 5.1.1 release's `test` profile
+(`airrflow511`), ingested on a local stack, and 5.1.2 only replaces container
+images; the 5.1.1 MultiQC 1.34 report already carries the parquet, so no
+reprocess step is needed. 5.1.1 and 5.1.2 publish the 5.1.0 layout, so the
+megatest shown here is the 5.1.0 run. The repository ships
 [`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/airrflow/5.1.0/download_test_data.sh)
 next to the 5.1.0 template, which fetches the subset of that run the template
 needs:
@@ -510,7 +521,7 @@ depictio ingest /tmp/airrflow_test \
 ## :material-link-variant: Additional resources
 
 - [nf-co.re/airrflow](https://nf-co.re/airrflow): official pipeline documentation
-- [nf-co.re/airrflow/5.1.0/results](https://nf-co.re/airrflow/5.1.0/results): AWS test results of the 5.1.0 release (5.1.1 has none)
+- [nf-co.re/airrflow/5.1.0/results](https://nf-co.re/airrflow/5.1.0/results): AWS test results of the 5.1.0 release (5.1.1 and 5.1.2 have none)
 - [Immcantation](https://immcantation.readthedocs.io): enchantR, alakazam and shazam, the toolset behind the repertoire panels
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes

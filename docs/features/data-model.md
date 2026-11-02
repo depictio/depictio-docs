@@ -129,10 +129,15 @@ instance's own S3, fetched once at ingestion rather than read through at render 
 | ![MultiQC](../images/logos/multiqc_light.svg#only-light){ width="18" }![MultiQC](../images/logos/multiqc_dark.svg#only-dark){ width="18" } | `multiqc` | MultiQC report data | The report's parsed data, as Parquet on S3 |
 | :material-map-marker: | `geojson` | GeoJSON boundaries for choropleth maps | The file, copied to S3 unchanged |
 | :material-family-tree: | `phylogeny` | Newick or Nexus trees | Nothing. The file is read where it was found |
+| :material-chart-timeline: | `genomic_tracks` | A manifest of genome-browser tracks, one row per track file (bigWig, BAM, VCF, BED, ...) | The manifest as a Delta Lake table. Track files are uploaded to S3 at ingestion, or read in place from an allow-listed remote location |
 | :material-dna: | `indexed_file` | Indexed genomic files: VCF, BAM, bigWig, bigBed, GFF3, FASTA, or any bgzip + tabix interval file; since v1.19.0 also protein structures (PDB, mmCIF) and PAE matrices | Each file and its index, copied to S3 unchanged and read by the browser by byte range |
 
 A `table` collection that declares latitude and longitude columns becomes map-capable
 without changing its type. See [Components](components.md#map-components).
+
+A `genomic_tracks` collection is a table too, so it can be filtered, linked and joined like
+one, and the [genome browser](genome-browser.md) shows the tracks its rows name. See
+[genomic_tracks DCs](../usage/projects/guide.md#example-genomic-tracks-dcs).
 
 A `phylogeny` collection points at a `table` collection for its tip annotations rather
 than carrying them itself. See

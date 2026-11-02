@@ -289,6 +289,18 @@ nav:
           - Interactive Selection Filtering: features/interactive-selection-filtering.md
           - Comments and Annotations: features/comments-annotations.md
           - Protein tiles: features/protein-tiles.md
+          - Genome browser:
+              - Overview: features/genome-browser.md
+              - Table to browser: features/genome-browser/table-to-browser.md
+              - Browser to dashboard: features/genome-browser/browser-to-dashboard.md
+              - Navigator: features/genome-browser/navigator.md
+              - Time course: features/genome-browser/time-course.md
+              - Ranked calls: features/genome-browser/ranked-calls.md
+              - Sashimi: features/genome-browser/sashimi.md
+              - Breakpoints: features/genome-browser/breakpoints.md
+              - UCSC tracks: features/genome-browser/ucsc-tracks.md
+              - Variant colours: features/genome-browser/variant-colours.md
+              - Raw JBrowse configuration: features/genome-browser/raw-jbrowse.md
           - Dashboard and Data Versions: features/versioning.md
           - Component Export and Embedding: features/component-export.md
       - Data Integration:

@@ -159,6 +159,8 @@ whole run: their result tables carry no sample column, so the sample filters do
 not narrow the Gene expression tab or the DEXSeq tiles of Isoform usage. The
 *Sample sheet*, the library design table, is pinned, collapsed, to the bottom of
 every child tab.
+The template also has a **Locus** tab that embeds a [genome browser](../../features/genome-browser.md), opened on the
+transcript picked in the DEXSeq results, with the run's coverage and read tracks.
 
 === ":material-compass-outline: Overview"
 

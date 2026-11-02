@@ -34,7 +34,7 @@ requesting all of them up front, Depictio loads them as you reach them.
 - **Panels load when they scroll into view.** A panel below the fold shows a placeholder
   and issues **no data request** until you scroll near it, so opening a large dashboard
   stays responsive instead of waiting on every panel first. Advanced-viz, MultiQC and
-  JBrowse panels defer their **code chunk** as well, since their renderers fetch on mount;
+  genome browser panels defer their **code chunk** as well, since their renderers fetch on mount;
   figure and table panels load their chunk when they mount but still gate the fetch.
 - **Progress is scoped to the viewport.** A ring and a count beside the dashboard title
   cover what is on screen rather than the whole dashboard, so they always complete.

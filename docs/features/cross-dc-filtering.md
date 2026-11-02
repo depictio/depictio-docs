@@ -127,7 +127,7 @@ Consequences worth knowing:
 | :material-table: `table` | Filters rows with `WHERE IN` | :material-check: Available |
 | :material-microscope: `multiqc` | Filters plot samples | :material-check: Available |
 | :material-map-marker-multiple: `map` | Filters map markers | :material-check: Available |
-| :material-dna: `jbrowse2` | Shows/hides tracks | :material-clock-outline: Planned |
+| :material-chart-timeline: `genomic_tracks` | Filters the track manifest; the [genome browser](genome-browser.md) shows the matching tracks | :material-check: Available (v1.20.0+) |
 | :material-image-multiple: `images` | Filters image gallery | :material-clock-outline: Planned |
 
 Since **v1.17.2** every link from a source table to a MultiQC collection counts, not only

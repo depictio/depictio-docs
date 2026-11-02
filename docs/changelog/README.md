@@ -8,6 +8,46 @@ hide:
 
 # Changelog
 
+## **[v1.20.0](https://github.com/depictio/depictio/releases/tag/v1.20.0)** (November 2026)
+
+!!! success "Minor: an embedded genome browser, linked to the dashboard both ways"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.0
+ghcr.io/depictio/depictio-viewer:1.20.0
+ghcr.io/depictio/depictio-worker:1.20.0
+ghcr.io/depictio/depictio-cli:1.20.0
+```
+
+### **♻️ Migration**
+
+* **The JBrowse iframe is removed**: the separate JBrowse server (port 3000), its session watcher (port 9010) and the `jbrowse2` data collection type are gone. Tracks are now a `genomic_tracks` collection shown by the `jbrowse` component; nothing else has to run. See [Genome browser](../features/genome-browser.md) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **Templates whose major version changed need a re-ingest**, a minor version change only a dashboard re-import. The nf-core/nascent dashboard template moves to 2.0.0 ([#1311](https://github.com/depictio/depictio/pull/1311)).
+
+### **✨ New Features**
+
+* **An embedded genome browser**: a JBrowse 2 view of the run's coverage, peaks, variants and alignments, uploaded or read in place, on 11 built-in assemblies or a custom one. See [Genome browser](../features/genome-browser.md) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **Two-way cross-filtering**: dashboard filters open the matching tracks and move the browser to a picked row (`locus_from`); a click on a feature filters the dashboard. See [Examples](../features/genome-browser.md#examples) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **A genome view navigates the browser**: brush a region on the GenomeSpy lanes and the browser opens on it, and the genomic tiles of other tabs open the browser on their locus. See [Examples](../features/genome-browser.md#examples) ([#1123](https://github.com/depictio/depictio/pull/1123), [#1311](https://github.com/depictio/depictio/pull/1311)).
+* **UCSC tracks, breakpoint and circular views**, ranked calls, sashimi arcs and per-dashboard display defaults. See [Examples](../features/genome-browser.md#examples) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **A floating data table** on volcano and scatter tiles, linked to the points both ways ([#1308](https://github.com/depictio/depictio/pull/1308)).
+* **A `depictio/ingest` Nextflow module** that publishes a depictio folder holding the run, and an **all-in-one image** that reopens that folder with one `docker run` ([#1290](https://github.com/depictio/depictio/pull/1290), [#1300](https://github.com/depictio/depictio/pull/1300)).
+
+### **🧬 Pipeline Templates**
+
+* **A genome browser in 16 nf-core dashboard templates**. See [Templates with a genome browser](../features/genome-browser.md#templates-with-a-genome-browser) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **New pipeline versions**: nf-core/airrflow 5.1.2, nf-core/hic 2.1.0 and nf-core/sarek 3.11.0 ([#1294](https://github.com/depictio/depictio/pull/1294), [#1302](https://github.com/depictio/depictio/pull/1302)).
+* **Overview study cards and genome views**: every Overview names what the run looked at next to how it was run, and eleven templates gain an Overview genome view ([#1306](https://github.com/depictio/depictio/pull/1306), [#1308](https://github.com/depictio/depictio/pull/1308)).
+
+### **🐛 Bug Fixes**
+
+* **MongoDB starts on Linux 6.19+ kernels** under Docker Compose ([#1297](https://github.com/depictio/depictio/pull/1297)).
+* **Genome views keep rows on contigs the assembly spells differently** (`20` and `chr20`) ([#1308](https://github.com/depictio/depictio/pull/1308), [#1311](https://github.com/depictio/depictio/pull/1311)).
+
+---
+
 ## **[v1.19.3](https://github.com/depictio/depictio/releases/tag/v1.19.3)** (October 28, 2026)
 
 !!! success "Patch: faster dashboards, heatmaps that keep their height, and a larger UpSet"

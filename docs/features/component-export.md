@@ -95,7 +95,7 @@ The dialog warns when a link will not work as is:
   An `<iframe>` cannot send a token, so embed a page from a public project.
 - **No site may frame this page yet**: `DEPICTIO_FASTAPI_EMBED_ALLOWED_ORIGINS` is empty.
 
-There is no **Export / embed** on filter controls, on JBrowse tiles, or while a past
+There is no **Export / embed** on filter controls, on genome browser tiles, or while a past
 [version](versioning.md) is shown, since the export always serves the current dashboard.
 A tile of a [section shown on every tab](dashboards.md#persistent-sections) exports from
 the tab that owns it.
@@ -110,7 +110,7 @@ the tab that owns it.
 | MultiQC | :material-check: | :material-check: |
 | Advanced visualization | some kinds, see below | all but three kinds |
 | Table, card, image, text, filter control | | :material-check: |
-| JBrowse | | |
+| Genome browser | | |
 | Highlight | | |
 
 - **JSON** needs a figure the server can build in Python. For advanced visualizations
@@ -122,8 +122,9 @@ the tab that owns it.
   the same way. Three advanced visualizations have no offline page: the genome view, the
   contact map and group comparison, which fetch or compute data as you zoom or select,
   and neither has a tile saved on a GenomeSpy view.
-- **JBrowse** is a frame onto a live JBrowse server, and a **highlight** draws another
-  tab's component: export that one instead.
+- The **genome browser** reads its track files by byte range from the API as you move
+  around, so it has no offline page. A **highlight** draws another tab's component: export that
+  one instead.
 
 The manifest says the same for a given dashboard, per component, with the reason for any
 missing format. Read it rather than hardcoding the table.

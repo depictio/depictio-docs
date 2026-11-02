@@ -20,11 +20,12 @@ hide:
   <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="2.0.0">
+<div class="tpl-version-pick" data-latest="2.1.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Pipeline version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
-    <option value="2.0.0" selected>2.0.0</option>
+    <option value="2.1.0" selected>2.1.0</option>
+    <option value="2.0.0">2.0.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
@@ -52,7 +53,7 @@ The persistent `Sample filters` sit in the left panel, and a pick there reaches 
 funnel, the matrix, every track and the P(s) curve through the project links.
 
 !!! warning "The MultiQC report must be regenerated"
-    hic 2.0.0 ships MultiQC 1.13, which writes no parquet, and Depictio reads
+    hic 2.1.0 ships MultiQC 1.13, which writes no parquet, and Depictio reads
     only `multiqc.parquet` (MultiQC 1.31 and later). Re-run MultiQC over the
     run's own tool outputs before ingesting, or the MultiQC tab stays empty:
 
@@ -89,7 +90,7 @@ funnel, the matrix, every track and the P(s) curve through the project links.
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/hic -r 2.0.0 -profile docker --outdir results
+    nextflow run nf-core/hic -r 2.1.0 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -114,9 +115,15 @@ comes from.
     visualizations are dropped entirely, and the remaining components are
     re-packed so there are no empty rows.
 
-<div class="tpl-version-block" data-version="2.0.0" markdown>
+<div class="tpl-version-block" data-version="2.1.0" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/hic-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="2.0.0" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/hic-2.0.0.md"
 
 </div>
 
@@ -150,7 +157,7 @@ sheet* is pinned, collapsed, to the bottom of every child tab.
 
     [![Overview dashboard](../../images/pipeline-templates/nf-core/hic/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/hic/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    A short hero links the run's provenance: hic 2.0.0 writes no `params.json`, so
+    A short hero links the run's provenance: hic 2.1.0 writes no `params.json`, so
     the dialog holds the software versions. *About this dashboard* says how the two
     filter levels work, *The run* lists facts read from the data (samples, read
     pairs, unique valid pairs, map resolutions), and *Pipeline* walks the six steps
@@ -347,7 +354,7 @@ Depictio reads the **output** of nf-core/hic, it does not run the pipeline.
 Run the pipeline first, without `--skip_compartments` or `--skip_tads`:
 
 ```bash
-nextflow run nf-core/hic -r 2.0.0 \
+nextflow run nf-core/hic -r 2.1.0 \
   --input samplesheet.csv \
   --genome GRCm38 --digestion dpnii \
   -profile docker --outdir results
@@ -361,7 +368,7 @@ python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
 depictio ingest results/ --template nf-core/hic/latest --var GENOME=mm10
 ```
 
-See [nf-co.re/hic/usage](https://nf-co.re/hic/2.0.0/docs/usage) for full pipeline documentation.
+See [nf-co.re/hic/usage](https://nf-co.re/hic/2.1.0/docs/usage) for full pipeline documentation.
 
 ---
 
@@ -393,7 +400,9 @@ layout lands in the same collections.
 
 ## :material-flask-outline: Validation runs
 
-The template was validated on the nf-core AWS megatest of the 2.0.0 release,
+The 2.1.0 release only adds a container profile and keeps the 2.0.0 output layout,
+and its AWS megatest prefix is a truncated sync, so the template was validated on
+the nf-core AWS megatest of the 2.0.0 release,
 `s3://nf-core-awsmegatests/hic/results-b4d89cfacf97a5835fba804887cf0fc7e0449e8d/`,
 a single mouse ES cell sample merged from three FASTQ pairs, and the screenshots
 above come from that run with `GENOME=mm10`. With one sample the sample filter
@@ -402,7 +411,7 @@ sample column and the links are ready for a cohort.
 
 ```bash
 DEST=/tmp/hic_test
-bash depictio/projects/nf-core/hic/2.0.0/download_test_data.sh "$DEST"
+bash depictio/projects/nf-core/hic/2.1.0/download_test_data.sh "$DEST"
 python -m depictio.dev_scripts.multiqc_reprocess --src "$DEST" --dest "$DEST"
 depictio ingest "$DEST" --template nf-core/hic/latest --var GENOME=mm10
 ```
@@ -416,7 +425,7 @@ Re-ingesting accumulates dashboards, so delete the project before repeating a ru
 ## :material-link-variant: Additional resources
 
 - [nf-co.re/hic](https://nf-co.re/hic): official pipeline documentation
-- [nf-co.re/hic/2.0.0/results](https://nf-co.re/hic/2.0.0/results): AWS test results
+- [nf-co.re/hic/2.0.0/results](https://nf-co.re/hic/2.0.0/results): AWS test results of the 2.0.0 release (the 2.1.0 results are incomplete)
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes
 

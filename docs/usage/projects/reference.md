@@ -143,7 +143,8 @@ workflows:
             #   "indexed_file" - Indexed genomic files (VCF, BAM, bigWig,
             #     bigBed, GFF3, FASTA, bgzip + tabix), range-read by the
             #     browser; see the guide's "Indexed-file DCs" example
-            #   "jbrowse2" - Genome browser tracks
+            #   "genomic_tracks" - Manifest of genome-browser tracks, one row
+            #     per track file; see the "GENOMIC TRACKS" block below
 
           # Required: Data aggregation strategy
           metatype:
@@ -375,7 +376,76 @@ workflows:
               "taxon" # Optional: "taxon" (leaf name IS the taxon id, default)
               #                   or "first_token" (take the first
               #                   underscore-separated token of the leaf name)
+
+      # --- GENOMIC TRACKS DATA COLLECTION ---
+      - data_collection_tag:
+          "tracks" # Required: Unique identifier for the track manifest
+
+        description: "Genome-browser tracks, one row per file" # Optional
+
+        config:
+          type:
+            "genomic_tracks" # Required: Identifies this as a track manifest
+            # NOTE: the manifest is ingested like a Table DC (a Delta table)
+            #   - Each row names one track file in uri_column
+            #   - Rendered by the "jbrowse" component; filterable and
+            #     linkable like any table (target_type: "genomic_tracks")
+
+          metatype: "Metadata" # Required: Metatype identifier
+
+          scan:
+            mode: single
+            scan_parameters:
+              filename: "path/to/tracks.tsv" # The manifest, not the track files
+
+          dc_specific_properties:
+            format: "tsv" # Required: manifest format (csv, tsv, parquet, feather, xls, xlsx)
+            polars_kwargs:
+              separator: "\t" # As for a Table DC
+
+            # Manifest columns
+            uri_column: "uri" # Column holding the track location (default "uri")
+            track_id_column: "track_id" # Unique track id (default: the row's uri)
+            sample_column: "sample" # Entity the track belongs to; used for cross-filtering
+            format_column: "format" # Track format column (default "format")
+            default_format: "bigwig" # Used when no column and no file extension tells
+            index_column: "index_uri" # Index location (default "index_uri"; inferred otherwise)
+            order_column: "order" # Tracks open in ascending order of this column
+            name_column: "name" # Track label
+            color_column: "color" # Track colour
+            category_column: "category" # Folders in the track selector
+
+            # Reference genome: a preset name or a custom assembly
+            assembly:
+              "hg38" # Default "hg38". Presets: hg38, hg19, hs1, mm10, mm39,
+              # sacCer3, dm6, ce11, danRer11, TAIR10, wuhCor1.
+              # A custom assembly is a mapping with `name` and either
+              # `fasta_uri` + `fai_uri` (+ `gzi_uri` when bgzipped) or `twobit_uri`;
+              # optional: display_name, aliases, chrom_sizes_uri, refname_aliases_uri
+
+            # Where the track files are. A track uri is one of:
+            #   - a relative path: uploaded to Depictio's S3 at ingestion
+            #   - s3://bucket/key or https://host/path: read in place
+            tracks_base_path:
+              null # Optional: local folder relative uris resolve against
+              # (default: the manifest's folder)
+            remote_base_uri:
+              null # Optional: s3:// or https:// prefix relative uris are read
+              # in place under, instead of being uploaded
+            direct_access:
+              false # Optional: let the browser fetch https:// tracks itself
+              # (the host must send CORS and Range headers)
+
+            # Display
+            display_defaults: {} # Optional: per-format JBrowse track config, keyed by track format
+            presets: {} # Optional: named JBrowse config fragments a component can pick
+
+            keep_columns: null # Optional: as for a Table DC
+            columns_description: {} # Optional: as for a Table DC
 ```
+
+A `genomic_tracks` collection is shown by the [genome browser](../../features/genome-browser.md);
+the [guide](guide.md#example-genomic-tracks-dcs) has a worked example.
 
 ## Remote scan modes <small>(v1.16.0+)</small> { #remote-scan-modes }
 
