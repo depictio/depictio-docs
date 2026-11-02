@@ -786,7 +786,7 @@ hide:
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9,2V8H11V10H5A2,2 0 0,0 3,12V14H1V20H7V14H5V12H11V14H9V20H15V14H13V12H19V14H17V20H23V14H21V12A2,2 0 0,0 19,10H13V8H15V2H9Z"/></svg><span>Explore</span></span>
         <h3>Pick a clade, filter everything</h3>
         <p>Click any internal node and the panel names what you picked: how many tips it holds, how deep it runs, how well the branch is supported, and how those tips break down by taxonomy. Send it through as a filter and every other component on the dashboard narrows to the same samples.</p>
-        <a class="feature-link" href="features/components/#phylogeny-interaction">Phylogeny interaction &rarr;</a>
+        <a class="feature-link" href="features/advanced-visualizations/#phylogenetic">Phylogeny interaction &rarr;</a>
       </div>
     </article>
 
