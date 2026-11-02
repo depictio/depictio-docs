@@ -8,6 +8,44 @@ hide:
 
 # Changelog
 
+## **[v1.20.2](https://github.com/depictio/depictio/releases/tag/v1.20.2)** (November 2, 2026)
+
+!!! success "Patch: the genome browser's ranked-variant counter on public dashboards"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.2
+ghcr.io/depictio/depictio-viewer:1.20.2
+ghcr.io/depictio/depictio-worker:1.20.2
+ghcr.io/depictio/depictio-cli:1.20.2
+```
+
+### **🐛 Bug Fixes**
+
+* **The ranked-variant counter works for visitors of a public dashboard**: it read "0 ranked variants" and Prev/Next stayed disabled because the calls could not be read without a token. See [Genome browser](../features/genome-browser/index.md) ([#1323](https://github.com/depictio/depictio/pull/1323)).
+
+---
+
+## **[v1.20.1](https://github.com/depictio/depictio/releases/tag/v1.20.1)** (November 2, 2026)
+
+!!! success "Patch: genome views keep their rows when the table and the assembly spell a contig differently"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.1
+ghcr.io/depictio/depictio-viewer:1.20.1
+ghcr.io/depictio/depictio-worker:1.20.1
+ghcr.io/depictio/depictio-cli:1.20.1
+```
+
+### **🐛 Bug Fixes**
+
+* **Genome views keep rows on contigs the assembly spells differently** (`21` and `chr21`): the Overview "Ranked variants along the genome" tile of raredisease showed "No rows" ([#1322](https://github.com/depictio/depictio/pull/1322)).
+
+---
+
 ## **[v1.20.0](https://github.com/depictio/depictio/releases/tag/v1.20.0)** (November 2026)
 
 !!! success "Minor: an embedded genome browser, linked to the dashboard both ways"
