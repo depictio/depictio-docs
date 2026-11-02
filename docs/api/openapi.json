@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.19.3",
-    "x-generated-at": "2026-10-28T18:22:40Z",
-    "x-depictio-version": "v1.19.3"
+    "version": "1.20.0",
+    "x-generated-at": "2026-11-01T14:39:22Z",
+    "x-depictio-version": "v1.20.0"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -5316,7 +5316,7 @@
           "DeltaTables"
         ],
         "summary": "Get Unique Values",
-        "description": "Return the sorted unique values of ``column`` within a data collection.\n\nSynchronous on purpose: the work is blocking (Mongo, S3, Polars), so FastAPI runs\nit in the thread pool instead of on the event loop, where ~20 option lists\nrequested together used to queue behind each other and stall every other request.\n\nBacks the React viewer's MultiSelect options fetch. Mirrors the code path\nDash uses via ``load_deltatable_lite(..., load_for_options=True)`` so both\nviewers see identical option lists.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column name whose unique values to return.\n    limit: Max values to return (default 1000). Prevents unbounded payloads\n        on high-cardinality columns; MultiSelect's UX caps at 100 anyway.\n    filter_expr: Optional Polars filter expression (string) applied before\n        collecting unique values. Validated through the safe-eval pipeline\n        in ``depictio.models.components.filter_expr``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\": str, \"values\": list[str]}`` — strings for MultiSelect UI.\n\nRaises:\n    HTTPException: 404 if DC not found / not accessible, 500 on read error.",
+        "description": "Return the sorted unique values of ``column`` within a data collection.\n\nSynchronous on purpose: the work is blocking (Mongo, S3, Polars), so FastAPI runs\nit in the thread pool instead of on the event loop, where ~20 option lists\nrequested together used to queue behind each other and stall every other request.\n\nBacks the React viewer's MultiSelect options fetch. Mirrors the code path\nDash uses via ``load_deltatable_lite(..., load_for_options=True)`` so both\nviewers see identical option lists.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column name whose unique values to return.\n    limit: Max values to return (default 1000). Prevents unbounded payloads\n        on high-cardinality columns; MultiSelect's UX caps at 100 anyway.\n    filter_expr: Optional Polars filter expression (string) applied before\n        collecting unique values. Validated through the safe-eval pipeline\n        in ``depictio.models.components.filter_expr``.\n    order_by: Optional companion column giving the order of the values (a\n        ``time_order`` next to a ``time_point``): each value follows the\n        smallest key it carries, numerically when every key is a number. Unset,\n        values that all end in a duration (``30min``, ``2h``) follow it, and\n        the rest sort as strings. See ``depictio.models.components.value_order``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\": str, \"values\": list[str]}`` — strings for MultiSelect UI.\n\nRaises:\n    HTTPException: 404 if DC not found / not accessible, 500 on read error.",
         "operationId": "get_unique_values_depictio_api_v1_deltatables_unique_values__data_collection_id__get",
         "security": [
           {
@@ -5367,6 +5367,22 @@
                 }
               ],
               "title": "Filter Expr"
+            }
+          },
+          {
+            "name": "order_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Order By"
             }
           }
         ],
@@ -5973,6 +5989,676 @@
             "schema": {
               "type": "string",
               "title": "Deltatable Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/assemblies": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Get Assembly Presets",
+        "description": "Built-in reference assemblies (name, display name, organism, annotation).",
+        "operationId": "get_assembly_presets_depictio_api_v1_jbrowse_assemblies_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Get Assembly Presets Depictio Api V1 Jbrowse Assemblies Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/presets": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Get Config Presets",
+        "description": "Built-in named config presets a component can pick with ``preset:``.",
+        "operationId": "get_config_presets_depictio_api_v1_jbrowse_presets_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Get Config Presets Depictio Api V1 Jbrowse Presets Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/tracks/{dc_id}/{track_key}/{role}": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Track File",
+        "description": "Serve (a byte range of) one track's data or index file.",
+        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dc Id"
+            }
+          },
+          {
+            "name": "track_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Track Key"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Track File",
+        "description": "Serve (a byte range of) one track's data or index file.",
+        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dc Id"
+            }
+          },
+          {
+            "name": "track_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Track Key"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/assembly/{dc_id}/{role}": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Assembly File",
+        "description": "Serve (a byte range of) a custom assembly file of a track collection.",
+        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dc Id"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Assembly File",
+        "description": "Serve (a byte range of) a custom assembly file of a track collection.",
+        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dc Id"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/preset/{name}/search": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Search Preset Genes",
+        "description": "Genes and features of a built-in assembly matching ``q``: ``[{label, locus}]``.\n\nProxies the UCSC search API (the browser reads UCSC through this API, not\ndirectly), MANE and HGNC matches first. Public, like the preset files: the\nquery only ever reaches UCSC's own search for that assembly's genome.",
+        "operationId": "search_preset_genes_depictio_api_v1_jbrowse_preset__name__search_get",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Name"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9._-]{1,64}$",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 10,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "Response Search Preset Genes Depictio Api V1 Jbrowse Preset  Name  Search Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/preset/{name}/{role}": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Preset File",
+        "description": "Serve (a byte range of) a built-in assembly's public UCSC file.\n\nPublic: the files are public reference data. Only the URLs hardcoded in the\npresets can be read, so the route cannot be pointed anywhere else.",
+        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__get",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Name"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Preset File",
+        "description": "Serve (a byte range of) a built-in assembly's public UCSC file.\n\nPublic: the files are public reference data. Only the URLs hardcoded in the\npresets can be read, so the route cannot be pointed anywhere else.",
+        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__get",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Name"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/ucsc/{assembly}/tracks": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "List Ucsc Tracks",
+        "description": "UCSC tracks a component can open by default (``ucsc_tracks``), for the builder.\n\n``assembly`` is a preset name or alias (hg38, GRCh38, TAIR10, MN908947.3, ...)\nor a GenArk accession; ``genome`` is null when it has no UCSC counterpart.\nOne page of ``limit`` tracks from ``offset``, with the ``total`` match count,\nper-group counts and when the catalogue was read from UCSC (naive UTC).\n``group`` narrows to one UCSC group id (\"\" for the tracks without one).",
+        "operationId": "list_ucsc_tracks_depictio_api_v1_jbrowse_ucsc__assembly__tracks_get",
+        "parameters": [
+          {
+            "name": "assembly",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Assembly"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "group",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Group"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response List Ucsc Tracks Depictio Api V1 Jbrowse Ucsc  Assembly  Tracks Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/jbrowse/ucsc/{genome}/{track}/{role}": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Ucsc File",
+        "description": "Serve (a byte range of) a UCSC track file.\n\nPublic, like the preset files: only files listed in UCSC's own catalogue for\nthat genome, on UCSC's download server or an allow-listed host, can be read.",
+        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__get",
+        "parameters": [
+          {
+            "name": "genome",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Genome"
+            }
+          },
+          {
+            "name": "track",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Track"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Proxy Ucsc File",
+        "description": "Serve (a byte range of) a UCSC track file.\n\nPublic, like the preset files: only files listed in UCSC's own catalogue for\nthat genome, on UCSC's download server or an allow-listed host, can be read.",
+        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__get",
+        "parameters": [
+          {
+            "name": "genome",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Genome"
+            }
+          },
+          {
+            "name": "track",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Track"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Role"
             }
           }
         ],
@@ -9347,7 +10033,7 @@
           "Dashboards"
         ],
         "summary": "Render Jbrowse Endpoint",
-        "description": "Synthesise the JBrowse 2 iframe URL for the React viewer.\n\nJBrowse 2 must be running at ``localhost:3000`` and its session config\nserver at ``localhost:9010/sessions/...``; if either is unreachable,\nreturns 503 (no silent fallback).",
+        "description": "JBrowse configuration of a ``jbrowse`` component under the dashboard filters.\n\nRequest body: ``{\"filters\": [...]}`` (same payload as the other render\nendpoints; the component strips its own ``jbrowse_selection`` entry), plus\nthe optional time-travel keys (``as_of_version`` / ``data_versions``, see\n``_data_pins``; ``definition_version``, see ``_render_component``).\nFilters are extended over DC links, then applied to the component's\n``genomic_tracks`` manifest: the matching tracks are the ones shown. A\npinned manifest is read at its commit, and so is the ``locus_from``\ncollection; the signed track URLs name the commit for the proxy.\n\nReturns the assembly and track configurations (file locations are signed\nproxy URLs), the track ids to show, the locus and view flags, plus a\nper-track summary the viewer uses to turn a click back into a filter.\n\nThe view opens on (``opening`` says which): the filtered ``locus_from``\nrows, the component's ``location``, the first call of ``locus_from``, the\nfirst region holding data in the first tracks, the assembly's default.\n``mate_location`` is the second side of the filtered or first call.\n``region`` (optional, ``{chrom, start, end}``) is the genome selection in\nforce; it never filters, but when the filters leave several ``locus_from``\nrows, the ones inside it frame the view (the latest of several picks).\n``locus_source`` is the ``locus_from`` collection and columns (null without\n``locus_from``), and ``display`` the YAML display defaults (null when unset).",
         "operationId": "render_jbrowse_endpoint_depictio_api_v1_dashboards_render_jbrowse__dashboard_id___component_id__post",
         "security": [
           {
@@ -9376,12 +10062,166 @@
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": true,
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/jbrowse_calls/{dashboard_id}/{component_index}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Jbrowse Calls Endpoint",
+        "description": "One page of the regions (\"calls\") a ``jbrowse`` component lists, steps through and bins.\n\nRequest body: ``{\"filters\": [...], \"start\": 0, \"limit\": 50}`` (``limit`` at\nmost 200), plus the time-travel keys of the render endpoints and these\noptional keys (a body without them behaves as before):\n\n- ``sources``: names of the ``locus_from`` sources to read (unknown names are\n  ignored; none left = ``total`` 0);\n- ``sort``: ``{\"column\", \"descending\"}``, overriding ``sort_by``. ``column`` is a\n  common-shape name (``chrom``, ``start``, ``end``, ``score``, ``label``,\n  ``sample``, ``run``, ``source``; merged: ``n_rows``, ``n_samples``) or a raw\n  column of a source (``sort_by``, ``label_column``, ``sample_column``,\n  ``run_column``, ``columns``); anything else is a 400;\n- ``search``: case-insensitive substring over the label and ``search_columns``;\n- ``column_filters``: ``[{\"column\", \"kind\": \"text\" | \"number\", \"op\", \"value\",\n  \"value_to\"}]``, the picker's per-column filters (AG Grid's ops), all applied;\n- ``near``: ``{\"chrom\", \"pos\", \"direction\", \"chrom_order\"}``, at most one row (see\n  ``regions.near_region``); ``total`` is still the full count;\n- ``merge``: overlapping regions of one source (across samples and runs) joined into\n  one row each (``n_rows``, ``n_samples``, ``samples``, ``sources``); ``total``\n  counts the merged regions and every other key applies to them.\n\nThe regions are the rows of the sources' collections left by the filters\n(extended over DC links) at their pinned commit, read in memory and memoised\nfor the modes above; the plain single-source page keeps its Delta page read.\n\nReturns ``{\"total\": N, \"rows\": [...]}``; a row is ``{\"locus\", \"mate_locus\",\n\"label\", \"chrom\", \"start\", \"end\", \"score\", \"extra\", \"source\", \"sample\", \"run\"}``\n(plus the merge keys). A row whose coordinates are unreadable has a null\n``locus`` and still counts in ``total``; ``mate_locus`` is set for the primary\nsource (the first) when it declares a ``mate``.",
+        "operationId": "jbrowse_calls_endpoint_depictio_api_v1_dashboards_jbrowse_calls__dashboard_id___component_index__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_index",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Index"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/jbrowse_call_density/{dashboard_id}/{component_index}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Jbrowse Call Density Endpoint",
+        "description": "How many regions of a ``jbrowse`` component start in each genome bin, per track.\n\nRequest body: ``{\"filters\": [...], \"regions\": [{\"refName\", \"length\"}],\n\"bins\": 500, \"sources\": null, \"group\": \"source\"}`` plus the time-travel keys.\n``bins`` (1 to 2000) is the total over the genome: every chromosome shares one\nbin size, ``ceil(sum(length) / bins)``. ``group`` is ``source`` (one track per\nsource), ``sample`` or ``run`` (one per sample / run of each source that has\nthe column; the others stay one track). The regions are read like\n``jbrowse_calls`` reads them (filters, pinned commit, memoised).\n\nReturns ``{\"bin_size\", \"max\", \"tracks\", \"truncated\"}``, see ``regions.density``.",
+        "operationId": "jbrowse_call_density_endpoint_depictio_api_v1_dashboards_jbrowse_call_density__dashboard_id___component_index__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_index",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Index"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
                 "title": "Request"
               }
             }
@@ -9551,7 +10391,7 @@
           "Dashboards"
         ],
         "summary": "Import Dashboard From Yaml",
-        "description": "Import a dashboard from YAML content.\n\nSupports both single dashboard and multi-tab dashboard formats:\n- Single: Standard YAML with title, components, etc.\n- Multi-tab: YAML with main_dashboard and tabs keys\n\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True`, the dashboard imported earlier from the same `source_key`\nis updated instead of creating a new one, whatever its title is now; without\none, a dashboard with the same title is, if it has no `source_key` yet (one\nkeyed to another source is left alone). A main dashboard is only matched\nwith a main one, and a tab with the tabs of its parent. Either kind of match\nis a 409 without `overwrite`.\n\n`existing` says what becomes of a dashboard so matched, over `overwrite`:\n- `replace`: as `overwrite=True`;\n- `keep`: it is left as it is, its layout and components as edited in the\n  viewer, and the response says `\"status\": \"kept\"` with its id. `main_title`\n  still renames a kept main dashboard, which changes nothing else. A kept\n  multi-tab main keeps the tabs it has as they are and gains those of the\n  YAML it lacks, after its last one; `tabs_added` says how many. A tab\n  removed in the viewer so comes back. A dashboard with no match is created\n  as usual.\nEvery response says what happened in `status`: `created`, `replaced` or `kept`.\n\nTitles: a dashboard takes the title in the YAML, unless\n- `keep_titles=True` and the import replaces an existing dashboard: that\n  dashboard keeps its current title, so a refresh does not undo a rename made\n  in the viewer. Applies to the main dashboard and to every tab;\n- `main_title` is given: the main dashboard (the multi-tab `main_dashboard`,\n  or a single dashboard that is not a child tab) is titled that, over the YAML\n  and over `keep_titles`. The tabs are not affected. A 400 on a child tab.\n\nA single-format child tab names its parent by title (`parent_dashboard_tag`).\n`parent_source_key`, the `source_key` the parent was imported under, finds\nthe parent first, so a parent renamed in the viewer keeps its tabs. Without a\nmatch by key or by title, the tab imported from the same `source_key` stays\nunder its current parent.\n\nProject identification:\n- If `project_id` is provided, uses that project directly (404 if it does not exist)\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard(s)\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update the dashboard this one replaces (default: False)\n    source_key: Optional stable origin of the YAML (e.g.\n        \"nf-core/rnaseq:dashboards/base.yaml\"), stored on the dashboard so a\n        later import of the same source finds it after a rename\n    keep_titles: If True, a dashboard this import replaces keeps its current\n        title (default: False, the YAML's title)\n    main_title: Optional title for the main dashboard, over the YAML's and\n        over keep_titles\n    parent_source_key: Optional source_key of a child tab's parent dashboard\n    existing: Optional \"keep\" or \"replace\", for a dashboard the project\n        already has; without it, `overwrite` decides\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
+        "description": "Import a dashboard from YAML content.\n\nSupports both single dashboard and multi-tab dashboard formats:\n- Single: Standard YAML with title, components, etc.\n- Multi-tab: YAML with main_dashboard and tabs keys\n\nA new dashboard_id will be generated, and the current user will be set as owner.\n\nIf `overwrite=True`, the dashboard imported earlier from the same `source_key`\nis updated instead of creating a new one, whatever its title is now; without\none, a dashboard with the same title is, if it has no `source_key` yet (one\nkeyed to another source is left alone). A main dashboard is only matched\nwith a main one, and a tab with the tabs of its parent. Either kind of match\nis a 409 without `overwrite`.\n\n`existing` says what becomes of a dashboard so matched, over `overwrite`:\n- `replace`: as `overwrite=True`;\n- `keep`: it is left as it is, its layout and components as edited in the\n  viewer, and the response says `\"status\": \"kept\"` with its id. `main_title`\n  still renames a kept main dashboard, which changes nothing else. A kept\n  multi-tab main keeps the tabs it has as they are and gains those of the\n  YAML it lacks, after its last one; `tabs_added` says how many. A tab\n  removed in the viewer so comes back. A dashboard with no match is created\n  as usual.\nEvery response says what happened in `status`: `created`, `replaced` or `kept`.\n\nTitles: a dashboard takes the title in the YAML, unless\n- `keep_titles=True` and the import replaces an existing dashboard: that\n  dashboard keeps its current title, so a refresh does not undo a rename made\n  in the viewer. Applies to the main dashboard and to every tab;\n- `main_title` is given: the main dashboard (the multi-tab `main_dashboard`,\n  or a single dashboard that is not a child tab) is titled that, over the YAML\n  and over `keep_titles`. The tabs are not affected. A 400 on a child tab.\n\nA single-format child tab names its parent by title (`parent_dashboard_tag`).\n`parent_source_key`, the `source_key` the parent was imported under, finds\nthe parent first, so a parent renamed in the viewer keeps its tabs. Without a\nmatch by key or by title, the tab imported from the same `source_key` stays\nunder its current parent.\n\n`template_id` and `template_version` (both or neither, else a 400) say the YAML\nis a template's dashboard: every dashboard this import writes records them,\nwith the import date, as its `template_origin`. A dashboard left as it is\n(`existing=keep`) keeps the stamp it had. The stamp is provenance, not content:\nit is not in the dashboard's versions, nor in its YAML export.\n\nProject identification:\n- If `project_id` is provided, uses that project directly (404 if it does not exist)\n- If `project_id` is not provided, extracts `project_tag` from YAML and\n  looks up the project by name\n\nArgs:\n    yaml_content: The YAML content defining the dashboard(s)\n    project_id: Optional project ID (if not provided, uses project_tag from YAML)\n    overwrite: If True, update the dashboard this one replaces (default: False)\n    source_key: Optional stable origin of the YAML (e.g.\n        \"nf-core/rnaseq:dashboards/base.yaml\"), stored on the dashboard so a\n        later import of the same source finds it after a rename\n    keep_titles: If True, a dashboard this import replaces keeps its current\n        title (default: False, the YAML's title)\n    main_title: Optional title for the main dashboard, over the YAML's and\n        over keep_titles\n    parent_source_key: Optional source_key of a child tab's parent dashboard\n    existing: Optional \"keep\" or \"replace\", for a dashboard the project\n        already has; without it, `overwrite` decides\n    template_id: Optional id of the template the YAML belongs to\n    template_version: Optional revision (`template.version`) of that template\n    current_user: The authenticated user (will be set as owner)\n\nReturns:\n    Created/updated dashboard information including dashboard_id",
         "operationId": "import_dashboard_from_yaml_depictio_api_v1_dashboards_import_yaml_post",
         "security": [
           {
@@ -9662,6 +10502,38 @@
                 }
               ],
               "title": "Existing"
+            }
+          },
+          {
+            "name": "template_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Template Id"
+            }
+          },
+          {
+            "name": "template_version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Template Version"
             }
           }
         ],
@@ -10132,7 +11004,7 @@
           "Dashboards"
         ],
         "summary": "Filter Options Endpoint",
-        "description": "The options an interactive filter offers, at the data version in effect.\n\nA filter's option list read today's data while the tiles beside it showed a\npinned version: a variety select offered values the pinned data does not\nhold, and picking one emptied every chart.\n\nRequest body:\n    {\"dc_id\": str, \"column\": str, \"kind\": \"unique\" | \"range\",\n     \"filter_expr\": str (optional),\n     \"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null}}\n\nResponse, the shapes ``GET /deltatables/unique_values/{dc}`` and a column's\n``/deltatables/specs/{dc}`` entry give:\n    unique: {\"column\": str, \"values\": [str, ...]}\n    range:  {\"min\": number | null, \"max\": number | null,\n             \"dtype\": str | null, \"unique\": int | null}\n\nViewer permission on the dashboard; ``dc_id`` must belong to its project\n(404 otherwise). The pins resolve exactly as a render's do (``_data_pins``,\nwith the same 400s). Unpinned, the answer comes from the paths the viewer\nused before, cache included.",
+        "description": "The options an interactive filter offers, at the data version in effect.\n\nA filter's option list read today's data while the tiles beside it showed a\npinned version: a variety select offered values the pinned data does not\nhold, and picking one emptied every chart.\n\nRequest body:\n    {\"dc_id\": str, \"column\": str, \"kind\": \"unique\" | \"range\",\n     \"filter_expr\": str (optional), \"order_by\": str (optional, unique only),\n     \"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null}}\n\nResponse, the shapes ``GET /deltatables/unique_values/{dc}`` and a column's\n``/deltatables/specs/{dc}`` entry give:\n    unique: {\"column\": str, \"values\": [str, ...]}\n    range:  {\"min\": number | null, \"max\": number | null,\n             \"dtype\": str | null, \"unique\": int | null}\n\nViewer permission on the dashboard; ``dc_id`` must belong to its project\n(404 otherwise). The pins resolve exactly as a render's do (``_data_pins``,\nwith the same 400s). Unpinned, the answer comes from the paths the viewer\nused before, cache included.",
         "operationId": "filter_options_endpoint_depictio_api_v1_dashboards_filter_options__dashboard_id__post",
         "security": [
           {
@@ -18179,6 +19051,366 @@
         "type": "object",
         "title": "CreateVersionRequest"
       },
+      "CustomAssembly": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Assembly name used by JBrowse (e.g. 'MN908947.3')"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name",
+            "description": "Human-readable name"
+          },
+          "aliases": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Aliases",
+            "description": "Other names of the assembly (e.g. ['hg38'])"
+          },
+          "fasta_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fasta Uri",
+            "description": "FASTA (plain or bgzipped)"
+          },
+          "fai_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fai Uri",
+            "description": "FASTA .fai index"
+          },
+          "gzi_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gzi Uri",
+            "description": "bgzip .gzi index"
+          },
+          "twobit_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Twobit Uri",
+            "description": "UCSC .2bit sequence"
+          },
+          "chrom_sizes_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chrom Sizes Uri",
+            "description": "chrom.sizes (2bit only)"
+          },
+          "refname_aliases_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refname Aliases Uri",
+            "description": "Tab-separated refName alias file (e.g. chr1 ↔ 1)"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "CustomAssembly",
+        "description": "A reference assembly that is not one of the built-in presets.\n\nGive either an indexed FASTA (``fasta_uri`` + ``fai_uri``, plus ``gzi_uri``\nwhen bgzipped) or a UCSC ``twobit_uri``. URIs follow the same rules as\ntrack URIs (relative, ``s3://`` or ``https://``)."
+      },
+      "DCGenomicTracksConfig": {
+        "properties": {
+          "format": {
+            "type": "string",
+            "title": "Format",
+            "description": "Manifest format: csv, tsv, parquet, feather, xls, xlsx"
+          },
+          "polars_kwargs": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Polars Kwargs"
+          },
+          "keep_columns": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Keep Columns"
+          },
+          "columns_description": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Columns Description"
+          },
+          "uri_column": {
+            "type": "string",
+            "title": "Uri Column",
+            "description": "Column holding the track location",
+            "default": "uri"
+          },
+          "track_id_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Track Id Column",
+            "description": "Column with a unique track id (defaults to the row's uri)"
+          },
+          "sample_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Column",
+            "description": "Entity column the tracks belong to (sample, cell…); used for cross-filtering and as the default selection column"
+          },
+          "format_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Format Column",
+            "description": "Column holding the track format (optional)",
+            "default": "format"
+          },
+          "default_format": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "bigwig",
+                  "bedgraph",
+                  "bed",
+                  "bigbed",
+                  "narrowpeak",
+                  "broadpeak",
+                  "vcf",
+                  "bam",
+                  "cram",
+                  "gff3",
+                  "gtf",
+                  "fasta"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default Format",
+            "description": "Format used when the manifest has no format column and the extension does not tell"
+          },
+          "index_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index Column",
+            "description": "Column holding the index location (optional; inferred otherwise)",
+            "default": "index_uri"
+          },
+          "order_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order Column",
+            "description": "Column the tracks are ordered by (ascending) when the view opens and fills its first `initial_tracks`; ingestion may reorder the rows otherwise"
+          },
+          "name_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name Column",
+            "description": "Track label column"
+          },
+          "color_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color Column",
+            "description": "Track colour column"
+          },
+          "category_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Column",
+            "description": "Track category column (track selector folders)"
+          },
+          "assembly": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/CustomAssembly"
+              }
+            ],
+            "title": "Assembly",
+            "description": "Assembly preset name (hg38, hg19, hs1, mm10, mm39, sacCer3, dm6, ce11, danRer11, TAIR10, wuhCor1) or a custom assembly",
+            "default": "hg38"
+          },
+          "tracks_base_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tracks Base Path",
+            "description": "Local directory relative track URIs resolve against at ingestion (defaults to the manifest's directory)"
+          },
+          "s3_base_folder": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "S3 Base Folder",
+            "description": "S3 folder relative track URIs live under (set at ingestion)"
+          },
+          "remote_base_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remote Base Uri",
+            "description": "s3:// or https:// prefix relative track URIs are read in place under (e.g. a pipeline's results folder), instead of being uploaded at ingestion"
+          },
+          "direct_access": {
+            "type": "boolean",
+            "title": "Direct Access",
+            "description": "Let the browser fetch https:// tracks directly instead of through the API proxy (the host must send CORS + Range headers)",
+            "default": false
+          },
+          "display_defaults": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Display Defaults",
+            "description": "Per-format JBrowse track config merged into every track of that format (e.g. {'bigwig': {'displays': [...]}})"
+          },
+          "presets": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Presets",
+            "description": "Named JBrowse config fragments components can pick with `preset:`"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "format"
+        ],
+        "title": "DCGenomicTracksConfig",
+        "description": "Configuration of a ``genomic_tracks`` data collection.\n\nExample (project.yaml)::\n\n    - data_collection_tag: sv_tracks\n      config:\n        type: genomic_tracks\n        scan:\n          mode: single\n          scan_parameters:\n            filename: tracks.tsv\n        dc_specific_properties:\n          format: tsv\n          uri_column: uri\n          sample_column: cell\n          assembly: hg38"
+      },
       "DCGeoJSONConfig": {
         "properties": {
           "feature_id_key": {
@@ -18472,10 +19704,11 @@
             "enum": [
               "table",
               "multiqc",
-              "image"
+              "image",
+              "genomic_tracks"
             ],
             "title": "Target Type",
-            "description": "Type of the target DC. Determines which resolver strategies are valid. Supported: 'table', 'multiqc', 'image'. Future: 'jbrowse2', 'geomap'"
+            "description": "Type of the target DC. Determines which resolver strategies are valid. Supported: 'table', 'multiqc', 'image', 'genomic_tracks'. Future: 'geomap'"
           },
           "link_config": {
             "$ref": "#/components/schemas/LinkConfig",
@@ -18507,7 +19740,7 @@
           "target_type"
         ],
         "title": "DCLink",
-        "description": "Universal link between data collections for cross-DC filtering.\n\nA link defines a relationship between a source DC (where filters are applied)\nand a target DC (which receives the filtered values). The link_config determines\nhow values are resolved from source to target.\n\nPhase 1 supports:\n- table: Direct column mapping or link-based filtering\n- multiqc: Sample name resolution via sample_mappings\n\nFuture phases will add:\n- jbrowse2: Track visibility based on sample patterns\n- images: Image selection based on metadata patterns\n- geomap: Marker/region filtering\n\nExample YAML configuration:\n    links:\n      - source_dc_id: \"metadata_table_dc_id\"\n        source_column: \"sample_id\"\n        target_dc_id: \"multiqc_dc_id\"\n        target_type: \"multiqc\"\n        link_config:\n          resolver: \"sample_mapping\"\n          target_field: \"sample_name\"\n        description: \"Link metadata samples to MultiQC variants\""
+        "description": "Universal link between data collections for cross-DC filtering.\n\nA link defines a relationship between a source DC (where filters are applied)\nand a target DC (which receives the filtered values). The link_config determines\nhow values are resolved from source to target.\n\nPhase 1 supports:\n- table: Direct column mapping or link-based filtering\n- multiqc: Sample name resolution via sample_mappings\n- genomic_tracks: filters a track manifest (the jbrowse component then shows\n  the matching tracks); resolved like a table\n\nFuture phases will add:\n- images: Image selection based on metadata patterns\n- geomap: Marker/region filtering\n\nExample YAML configuration:\n    links:\n      - source_dc_id: \"metadata_table_dc_id\"\n        source_column: \"sample_id\"\n        target_dc_id: \"multiqc_dc_id\"\n        target_type: \"multiqc\"\n        link_config:\n          resolver: \"sample_mapping\"\n          target_field: \"sample_name\"\n        description: \"Link metadata samples to MultiQC variants\""
       },
       "DCMultiQC": {
         "properties": {
@@ -18747,7 +19980,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -19149,6 +20382,16 @@
               }
             ],
             "title": "Source Key"
+          },
+          "template_origin": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashboardTemplateOrigin"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -19233,13 +20476,39 @@
         ],
         "title": "DashboardImportResult"
       },
+      "DashboardTemplateOrigin": {
+        "properties": {
+          "template_id": {
+            "type": "string",
+            "title": "Template Id",
+            "description": "Template identifier (e.g., 'nf-core/nascent/2.3.0')"
+          },
+          "template_version": {
+            "type": "string",
+            "title": "Template Version",
+            "description": "The template's own revision (semver) when the dashboard was imported"
+          },
+          "imported_at": {
+            "type": "string",
+            "title": "Imported At",
+            "description": "UTC timestamp of the import, '%Y-%m-%d %H:%M:%S'"
+          }
+        },
+        "type": "object",
+        "required": [
+          "template_id",
+          "template_version"
+        ],
+        "title": "DashboardTemplateOrigin",
+        "description": "Which template revision a dashboard was last imported from.\n\nStored on the dashboard document by the template import (``depictio ingest\n--template``, ``POST /projects/from_manifest``). It is provenance, not\ncontent: it is never in the dashboard YAML, never in a version snapshot, and\na save from the viewer cannot change it. A dashboard built in the viewer, or\nimported from a plain file, has none.\n\n``template_version`` is the template's own revision (``template.version`` in\nits ``template.yaml``, see ``depictio/projects/nf-core/RULES.md``), not the\nversion of the pipeline it targets, which is the last segment of\n``template_id``."
+      },
       "DataCollection": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -19302,7 +20571,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -19392,6 +20661,9 @@
               },
               {
                 "$ref": "#/components/schemas/DCIndexedFileConfig"
+              },
+              {
+                "$ref": "#/components/schemas/DCGenomicTracksConfig"
               }
             ],
             "title": "Dc Specific Properties"
@@ -19712,7 +20984,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -20957,7 +22229,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -22895,7 +24167,8 @@
             "enum": [
               "table",
               "multiqc",
-              "image"
+              "image",
+              "genomic_tracks"
             ],
             "title": "Target Type",
             "description": "Target DC type"
@@ -23206,7 +24479,8 @@
                 "enum": [
                   "table",
                   "multiqc",
-                  "image"
+                  "image",
+                  "genomic_tracks"
                 ]
               },
               {
@@ -23764,7 +25038,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -24126,7 +25400,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -26512,7 +27786,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -26618,7 +27892,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -26851,7 +28125,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6ae23d6bc9c64fbab6d0dfc5"
+            "default": "6ae74f15c0276ba4f22f8cc5"
           }
         },
         "type": "object",
@@ -27164,7 +28438,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -27332,7 +28606,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -27414,7 +28688,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -27500,7 +28774,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -27763,7 +29037,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -27938,7 +29212,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -28055,7 +29329,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
@@ -28160,7 +29434,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae23d6bc9c64fbab6d0dfc4"
+            "default": "6ae74f15c0276ba4f22f8cc4"
           },
           "description": {
             "anyOf": [
