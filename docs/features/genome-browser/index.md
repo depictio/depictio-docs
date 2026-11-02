@@ -22,7 +22,7 @@ track bytes come through the API, in `depictio local up`, Docker Compose and Kub
 ![Navigator above, browser below](../../images/guides/genome-browser/navigator_browser_light.webp#only-light){ loading=lazy }
 ![Navigator above, browser below](../../images/guides/genome-browser/navigator_browser_dark.webp#only-dark){ loading=lazy }
 
-nf-core/chipseq, Locus tab: the lanes above are a `genome_view` tile (GenomeSpy), zoomed on chr14:37.0-39.5 Mb, with the browser's window as a band. The `jbrowse` component below is open on that band.
+nf-core/chipseq, Locus tab: the lanes above are a `genome_view` tile (GenomeSpy), one dot per call on chr14:37.0-39.5 Mb, with the browser's window as a band. The `jbrowse` component below is open on that band.
 
 ![GenomeSpy and JBrowse drive each other](../../images/guides/genome-browser/schema_genomespy_jbrowse_light.png#only-light){ loading=lazy }
 ![GenomeSpy and JBrowse drive each other](../../images/guides/genome-browser/schema_genomespy_jbrowse_dark.png#only-dark){ loading=lazy }
