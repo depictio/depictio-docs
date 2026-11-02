@@ -17,6 +17,25 @@ The `jbrowse` component shows a run's coverage, peaks, variants and alignments i
 to a picked row; a click on a feature filters the dashboard back. Nothing else has to run: the
 track bytes come through the API, in `depictio local up`, Docker Compose and Kubernetes alike.
 
+## GenomeSpy and JBrowse together
+
+![Navigator above, browser below](../../images/guides/genome-browser/navigator_browser_light.webp#only-light){ loading=lazy }
+![Navigator above, browser below](../../images/guides/genome-browser/navigator_browser_dark.webp#only-dark){ loading=lazy }
+
+nf-core/chipseq, Locus tab: the lanes above are a `genome_view` tile (GenomeSpy), zoomed on chr14:37.0-39.5 Mb, with the browser's window as a band. The `jbrowse` component below is open on that band.
+
+![GenomeSpy and JBrowse drive each other](../../images/guides/genome-browser/schema_genomespy_jbrowse_light.png#only-light){ loading=lazy }
+![GenomeSpy and JBrowse drive each other](../../images/guides/genome-browser/schema_genomespy_jbrowse_dark.png#only-dark){ loading=lazy }
+
+The lanes show every library's calls along the chromosome; the browser shows the tracks of one region. Each drives the other:
+
+- **Lanes to browser**: brush a region on the lanes and the browser opens on it. The browser does not filter on the region, so every track stays open ([Navigator](navigator.md)).
+- **Browser to lanes**: the browser's window is drawn as a band on every lane.
+- **Browser to dashboard**: a click on a feature filters the dashboard on its track's sample, and the lanes keep that sample's calls ([Browser to dashboard](browser-to-dashboard.md)).
+- **Dashboard to browser**: filters pick the tracks, and a picked row moves the browser ([Table to browser](table-to-browser.md)).
+
+Both can share one colour ramp, so a time course reads the same on the lanes and on the tracks ([Time course](time-course.md)).
+
 ## Examples
 
 Each example opens its own page: the clip, what it shows, and the few lines of YAML behind it.
