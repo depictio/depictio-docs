@@ -173,6 +173,14 @@ with `follow_region_filter: true`.
 **A hover is not.** Pointing at a residue publishes it in the browser, once per frame, and
 every protein tile marks it. Nothing is fetched again.
 
+**Zoom sync** <small>(v1.19.1+)</small>. The sequence track, secondary structure, alignment,
+HMM logo and domain architecture can follow each other's zoom: per tile from the link icon
+of its hover row, or for a whole section from its header. Windows travel in residue
+numbers, through an alignment's reference row and a logo's reference residues, and the 3D
+model follows by framing the visible residues. Figures zoom only with Ctrl or Cmd and the
+wheel, or a pinch. The protein templates lay these tiles out as a
+[linked view](dashboards.md#linked-view).
+
 ---
 
 ## Where the structure comes from { #structure-resolver }

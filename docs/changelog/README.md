@@ -8,6 +8,31 @@ hide:
 
 # Changelog
 
+## **[v1.19.1](https://github.com/depictio/depictio/releases/tag/v1.19.1)** (October 16, 2026)
+
+!!! success "Patch: protein tabs on one screen, and exports that keep card strips"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.19.1
+ghcr.io/depictio/depictio-viewer:1.19.1
+ghcr.io/depictio/depictio-worker:1.19.1
+ghcr.io/depictio/depictio-cli:1.19.1
+```
+
+### **✨ New Features**
+
+* **Linked view sections**: `display: linked` keeps a section's tiles on one screen. See [Linked view](../features/dashboards.md#linked-view) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **A scope banner** for a tab whose picker holds one value, with its `banner_facts`. See [Linked view](../features/dashboards.md#linked-view) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **Zoom sync** between the residue tiles and the 3D model. See [Linked by residue](../features/protein-tiles.md#residue-selection) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+
+### **🐛 Bug Fixes**
+
+* **An export keeps a card's secondary strip and a table's row selection** ([#1263](https://github.com/depictio/depictio/pull/1263)).
+
+---
+
 ## **[v1.19.0](https://github.com/depictio/depictio/releases/tag/v1.19.0)** (October 15, 2026)
 
 !!! success "Minor: protein tiles, seven nf-core templates, and Add user"

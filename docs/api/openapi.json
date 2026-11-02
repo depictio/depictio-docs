@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.19.0",
-    "x-generated-at": "2026-10-15T16:18:31Z",
-    "x-depictio-version": "v1.19.0"
+    "version": "1.19.1",
+    "x-generated-at": "2026-10-16T11:25:43Z",
+    "x-depictio-version": "v1.19.1"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -5456,6 +5456,99 @@
               "type": "integer",
               "default": 1000,
               "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/deltatables/row_values/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Row Values",
+        "description": "Return ``columns`` of the first row where ``column`` equals ``value``.\n\nBacks the facts of a scope banner (``banner_facts`` on an ``always_selected``\nfilter): the banner names the picked value and reads a few of its attributes\nfrom the filter's own data collection (see ``row_values``).\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column compared with ``value``.\n    value: The picked value, as text.\n    columns: Columns to return (at most ``MAX_ROW_VALUE_COLUMNS``).\n    filter_expr: Optional Polars filter expression (string) applied before the\n        lookup, validated through ``depictio.models.components.filter_expr``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"row\": dict | None}``: None when no row matches.\n\nRaises:\n    HTTPException: 400 on too many columns or an invalid ``filter_expr``, 404 if\n    the data collection or a column is missing, 403 without viewer access.",
+        "operationId": "get_row_values_depictio_api_v1_deltatables_row_values__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "column",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Column"
+            }
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Value"
+            }
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "title": "Columns"
+            }
+          },
+          {
+            "name": "filter_expr",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Filter Expr"
             }
           }
         ],
@@ -18654,7 +18747,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -19141,7 +19234,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -19204,7 +19297,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -19614,7 +19707,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -19902,7 +19995,8 @@
                 "type": "string",
                 "enum": [
                   "grid",
-                  "strip"
+                  "strip",
+                  "linked"
                 ]
               },
               {
@@ -19910,7 +20004,7 @@
               }
             ],
             "title": "Display",
-            "description": "How a grid section lays out its members. Unset or `grid`: one tile each on the dashboard grid. `strip`: a filter bar -- the interactive components naming this section leave the left filter panel and render as one compact row of controls (label, chips or a thin slider, dividers between), ignoring their grid coordinates. Their values filter the whole tab, as the panel's do. Any non-interactive members still render as tiles below the bar. Grid sections only."
+            "description": "How a grid section lays out its members. Unset or `grid`: one tile each on the dashboard grid. `strip`: a filter bar -- the interactive components naming this section leave the left filter panel and render as one compact row of controls (label, chips or a thin slider, dividers between), ignoring their grid coordinates. Their values filter the whole tab, as the panel's do. Any non-interactive members still render as tiles below the bar. `linked`: holds the section's tiles within one screen height so linked views stay side by side (grid sections of tiles only). `linked` falls back to a normal stacked section on narrow screens. Grid sections only."
           },
           "filter_bar": {
             "anyOf": [
@@ -20858,7 +20952,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -23665,7 +23759,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -24027,7 +24121,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -26413,7 +26507,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -26519,7 +26613,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -26752,7 +26846,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6ad0fcd24b6ecce698793063"
+            "default": "6ad209b2f4bfc42c87c7f120"
           }
         },
         "type": "object",
@@ -27065,7 +27159,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -27233,7 +27327,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -27315,7 +27409,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -27401,7 +27495,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -27664,7 +27758,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -27839,7 +27933,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -27956,7 +28050,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [
@@ -28061,7 +28155,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ad0fcd24b6ecce698793062"
+            "default": "6ad209b2f4bfc42c87c7f11f"
           },
           "description": {
             "anyOf": [

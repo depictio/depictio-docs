@@ -269,6 +269,18 @@ dashboard, so collapsing a section you are reading never changes what anyone
 else sees. A section that lives on every tab is remembered once for the whole
 dashboard rather than per tab, so it does not unfold as you move between them.
 
+#### Linked view <small>(v1.19.1+)</small> { #linked-view }
+
+A grid section with `display: linked` keeps its tiles within one screen height, as panes
+with draggable gutters, so views that follow each other stay side by side: a pick on an
+HMM logo shows on the 3D model next to it, not a screen further down. The section header
+resets and fits the panes; in the editor, **Arrange tiles** shows the plain grid to move
+them. On a narrow screen the panes stack, and `?layout=classic` draws the plain grid.
+
+A tab whose pickers hold one value at a time (`always_selected`) shows a **scope banner**
+under its header: the picked unit, an inline picker and the facts its filter declares in
+[`banner_facts`](yaml-sync.md#interactive-defaults).
+
 ### :material-pin: Sections on every tab <small>(v1.6.0+)</small> { #persistent-sections }
 
 A section normally belongs to the tab that declares it. Switch on **Show on
