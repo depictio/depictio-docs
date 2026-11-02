@@ -78,10 +78,12 @@ jobs:
         with:
           node-version: '20'
 
+      # Same major as depictio's own CI. pnpm 9 rejects the frozen install once
+      # the lockfile carries patchedDependencies (ERR_PNPM_LOCKFILE_CONFIG_MISMATCH).
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
 
       - name: Build catalog gallery bundle
         working-directory: depictio-src
