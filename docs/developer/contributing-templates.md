@@ -101,6 +101,10 @@ workflows:
           transform: { recipe: "<pipeline>/my_recipe.py" }
 ```
 
+`template.version` is the template's own revision, not the pipeline's (which is the
+last segment of `template_id`). See [Pipeline version and template version](../pipeline-templates/README.md#pipeline-version-and-template-version)
+for what a major, minor or patch bump tells users.
+
 **Dry-run early** to confirm your scan patterns match real files and the right
 data collections resolve — without ingesting anything:
 

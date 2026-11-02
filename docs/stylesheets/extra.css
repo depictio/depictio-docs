@@ -946,7 +946,8 @@ h1 {
     }
 }
 
-/* ==========================================================================
+/* ===================================================================}
+
    Component Catalog page
    ========================================================================== */
 
@@ -1659,8 +1660,9 @@ body.catalog-fs-lock .md-main {
 [data-md-color-scheme="slate"] .md-typeset .status-pill.is-partial { color: #ffa94d; }
 [data-md-color-scheme="slate"] .md-typeset .status-pill.is-no { color: #ff8787; }
 
-/* Template version picker: sits under the template banner and chooses which
-   generated reference block is shown. See javascripts/template-version.js. */
+/* Pipeline version picker: sits under the template banner and chooses which
+   generated reference block is shown; the template's own revision is shown
+   beside it. See javascripts/template-version.js. */
 .tpl-version-pick {
     display: inline-flex;
     align-items: center;
@@ -1743,6 +1745,26 @@ body.catalog-fs-lock .md-main {
 [data-md-color-scheme="slate"] .tpl-version-pick .tpl-version-badge {
     background: rgba(64, 192, 87, 0.22);
     color: #69db7c;
+}
+
+.tpl-version-pick .tpl-template-rev {
+    margin-left: 0.2rem;
+    padding: 0.12rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(69, 184, 172, 0.16);
+    color: #2a8c82;
+    font-size: 0.62rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.tpl-version-pick .tpl-template-rev[hidden] {
+    display: none;
+}
+
+[data-md-color-scheme="slate"] .tpl-version-pick .tpl-template-rev {
+    background: rgba(69, 184, 172, 0.24);
+    color: #63e6be;
 }
 
 @media screen and (max-width: 44.9375em) {
@@ -2289,4 +2311,48 @@ body.catalog-fs-lock .md-main {
         transform: scale(0.4);
         margin-bottom: -900px;
     }
+=======
+/* Major / minor / patch cards on the Templates page ("Pipeline version and
+   template version"): one colour per bump, the changed digit in bold. */
+.tpl-bumps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    margin: 1rem 0;
+}
+
+@media screen and (max-width: 44.9375em) {
+    .tpl-bumps {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tpl-bump {
+    --tpl-bump: #868e96;
+    padding: 0.2rem 0.9rem 0.4rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-top: 4px solid var(--tpl-bump);
+    border-radius: 8px;
+    font-size: 0.7rem;
+}
+
+.tpl-bump.is-major { --tpl-bump: #e03131; }
+.tpl-bump.is-minor { --tpl-bump: #f08c00; }
+.tpl-bump.is-patch { --tpl-bump: #2f9e44; }
+
+.tpl-bump .tpl-bump-tag {
+    display: inline-block;
+    margin-right: 0.3rem;
+    padding: 0.05rem 0.55rem;
+    border-radius: 999px;
+    background: var(--tpl-bump);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.tpl-bump code b {
+    color: var(--tpl-bump);
 }
