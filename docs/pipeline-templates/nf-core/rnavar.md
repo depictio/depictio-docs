@@ -333,7 +333,7 @@ output from the same subworkflow in a sarek megatest.
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it Experimental.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it from Reviewed.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">
