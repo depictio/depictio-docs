@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="2.0.1">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="2.0.1" selected>2.0.1</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -36,6 +36,17 @@ run, whichever classifiers it used:
 - :material-chart-box-outline: **Data & QC**: FastQC and fastp, host removal, nanopore read stats and coverage redundancy from the MultiQC report, and the sequencing depth Nonpareil models
 - :material-bacteria-outline: **Communities**: the composition per profiling run beside sylph containment and melon genome copies, and the diversity of each profile
 - :material-graph-outline: **Classifiers**: a Bray-Curtis ordination over every profiling run, the classifier overlap as an UpSet, the taxonomic flow, and sylph containment identity
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/taxprofiler, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf0fea57cdb54ef9a22da" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf0fea57cdb54ef9a22da" loading="lazy" title="nf-core/taxprofiler showcase dashboard" allowfullscreen></iframe>
+</div>
 
 !!! info "Whatever profilers your run used"
     taxprofiler runs an arbitrary subset of its profilers, chosen by the database

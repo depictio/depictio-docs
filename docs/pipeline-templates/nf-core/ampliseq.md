@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="2.18.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="2.18.0" selected>2.18.0</option>
     <option value="2.16.0">2.16.0</option>
     <option value="2.14.0">2.14.0</option>
@@ -39,6 +39,17 @@ differential taxa, one tab per step:
 - :material-chart-bell-curve: **Diversity**: alpha diversity with rarefaction curves, and the PCoA on Bray-Curtis distances (requires metadata)
 - :material-bacteria: **Taxa**: composition per group and per sample, the sunburst, the taxa groups share, and the phylogenetic tree
 - :material-chart-scatter-plot: **Differential abundance**: ANCOM-BC volcano with MA and QQ views, per contrast (requires metadata + `--ancombc`)
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/ampliseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accea28a57cdb54ef9a2206" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accea28a57cdb54ef9a2206" loading="lazy" title="nf-core/ampliseq showcase dashboard" allowfullscreen></iframe>
+</div>
 
 ---
 
@@ -234,8 +245,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Phylum` on `complex_heatmap_canonical`, narrowing the rows
-        of the heatmap, plus the sample filters.
+        **Filters** · `Kingdom` (v1.19.3+) and `Phylum` on
+        `complex_heatmap_canonical`, narrowing the rows of the heatmap, plus the
+        sample filters.
 
         | Section | What it holds |
         |---|---|
@@ -282,6 +294,13 @@ run was resolved against; the dashboard substitutes its real name everywhere.
     View switch reads the same calls as an MA or a QQ plot, and the largest effects
     per contrast. The collapsed *Taxon detail* holds the ANCOM-BC table, with a
     record card for the row you pick.
+
+    Since v1.19.2 a run analysed against two reference databases can show both
+    ANCOM-BC results: a slice written beside ampliseq's own as
+    `<slice>.<label>.csv` (and its `qiime2/barplot/level-N.<label>.csv` for the MA
+    view) keeps its rows under `taxonomy = <label>`, and a segmented control with
+    [option cards](../../features/components.md#segmentedcontrol) at the top of the
+    tab switches between them. A run with one database is unchanged.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
@@ -406,11 +425,11 @@ from `params.json`.
 │   ├── alpha-rarefaction/*.csv                    # requires --metadata
 │   ├── diversity/alpha_diversity/
 │   │   └── <metric>_vector/metadata.tsv           # shannon, observed_features, faith_pd, evenness
-│   ├── barplot/level-<N>.csv                      # N = Phylum depth of the database
+│   ├── barplot/level-<N>[.<label>].csv            # N = Phylum depth of the database
 │   ├── rel_abundance_tables/rel-table-<N>.tsv     # Phylum down to Genus
 │   ├── ancombc/differentials/                     # requires --metadata, skipped by --skip_ancom
 │   │   └── Category-<GROUP_COL>-level-<N>/
-│   │       └── {lfc,p_val,q_val,se,w}_slice.csv
+│   │       └── {lfc,p_val,q_val,se,w}_slice[.<label>].csv  # .<label>: a second database
 │   └── phylogenetic_tree/tree.nwk                 # or --var TREE_FILE
 ├── dada2/ASV_table.tsv                            # --skip_qiime route only
 ├── sintax/ASV_tax_sintax.*.tsv                    # --skip_qiime route only

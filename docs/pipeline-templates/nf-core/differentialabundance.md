@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="2.0.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="2.0.0" selected>2.0.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -36,6 +36,17 @@ nf-core/differentialabundance run:
 - :material-flask-outline: **Data & QC**: the sample space, DESeq2 size factors, the expression distribution per sample and the most variable features
 - :material-chart-scatter-plot: **Differential**: volcano with MA and QQ views per contrast, test diagnostics, effect size by biotype, and every annotated call on the genome
 - :material-set-merge: **Gene sets**: GSEA enrichment per contrast and pole (needs a GSEA run)
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/differentialabundance, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf05a068a4d7c3dc3f159" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf05a068a4d7c3dc3f159" loading="lazy" title="nf-core/differentialabundance showcase dashboard" allowfullscreen></iframe>
+</div>
 
 !!! info "The DESeq2 route only"
     This template binds `--differential_method deseq2`, the pipeline default. The

@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="5.1.1">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="5.1.1" selected>5.1.1</option>
     <option value="5.1.0">5.1.0</option>
   </select>
@@ -36,6 +36,17 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
 - :material-chart-box-outline: **Data & QC**: fastp trimming and both FastQC runs from the pipeline's MultiQC report, and every read followed through pRESTO and Change-O
 - :material-dna: **Repertoire**: V gene usage at family and gene resolution, CDR3 lengths and V by J pairing
 - :material-chart-bell-curve: **Clonality**: Hill diversity profiles, clonal expansion and homeostasis, and the clones samples of one subject share
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/airrflow, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acce9da068a4d7c3dc3f05a" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acce9da068a4d7c3dc3f05a" loading="lazy" title="nf-core/airrflow showcase dashboard" allowfullscreen></iframe>
+</div>
 
 !!! info "No external metadata file"
     Everything the template reads comes from the run itself: the validated
@@ -205,7 +216,7 @@ colours the per-sample lines and annotates the heatmaps.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample ID`, read from the MultiQC report.
+        **Filters** · the pinned sample filters narrow its panels.
 
         | Section | What it holds |
         |---|---|

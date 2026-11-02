@@ -129,7 +129,7 @@ instance's own S3, fetched once at ingestion rather than read through at render 
 | ![MultiQC](../images/logos/multiqc_light.svg#only-light){ width="18" }![MultiQC](../images/logos/multiqc_dark.svg#only-dark){ width="18" } | `multiqc` | MultiQC report data | The report's parsed data, as Parquet on S3 |
 | :material-map-marker: | `geojson` | GeoJSON boundaries for choropleth maps | The file, copied to S3 unchanged |
 | :material-family-tree: | `phylogeny` | Newick or Nexus trees | Nothing. The file is read where it was found |
-| :material-dna: | `indexed_file` | Indexed genomic files: VCF, BAM, bigWig, bigBed, GFF3, FASTA, or any bgzip + tabix interval file | Each file and its index, copied to S3 unchanged and read by the browser by byte range |
+| :material-dna: | `indexed_file` | Indexed genomic files: VCF, BAM, bigWig, bigBed, GFF3, FASTA, or any bgzip + tabix interval file; since v1.19.0 also protein structures (PDB, mmCIF) and PAE matrices | Each file and its index, copied to S3 unchanged and read by the browser by byte range |
 
 A `table` collection that declares latitude and longitude columns becomes map-capable
 without changing its type. See [Components](components.md#map-components).
@@ -206,6 +206,10 @@ Project, Dashboard, WorkflowRun and File, holding three disjoint sets of users:
 | **owners** | Full control: edit, share, delete |
 | **editors** | Modify dashboard content, run data updates |
 | **viewers** | Read-only access to dashboards and data |
+
+Since v1.18.0 the same object also holds `group_owners`, `group_editors` and
+`group_viewers`, which grant a role to every member of a [group](../usage/administration/groups.md).
+A user's role is the highest of their own and their groups'.
 
 A project also carries an `is_public` flag, which is what opens it to readers with no
 account. See [Authentication Modes](../usage/guides/authentication-modes.md) for how that

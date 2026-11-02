@@ -18,7 +18,8 @@ Depictio supports four authentication modes, each designed for a different deplo
 | **User management** | Full RBAC | Disabled | Disabled | Disabled |
 | **Temporary users (24h)** | No | No | Yes | Yes |
 | **Google OAuth** | Optional | Optional | Optional | Optional |
-| **Guided tour** | No | No | No | Yes |
+| **[SAML SSO](../../installation/sso.md)** (v1.18.0+) | Optional | No | Optional | Optional |
+| **Guided tour** | No | No | Dashboards list | Yes |
 
 ## Auth Mode (Default)
 
@@ -80,12 +81,28 @@ DEPICTIO_AUTH_PUBLIC_MODE=true
 
 **Behavior:**
 
-- Anonymous user has **read-only** access to public dashboards
-- A "Sign In" button in the sidebar opens an auth modal with:
-    - **Temporary user** — 24-hour session, auto-cleaned after expiry
-    - **Google OAuth** — persistent account (if enabled)
+- Every visitor gets a **temporary account** (24-hour session, cleaned after expiry) with
+  **read-only** access to public dashboards, without a login screen
+- With Google OAuth or another identity provider enabled, a guest can
+  [sign in](#guest-sign-in) to a persistent account
+- A short tour of the dashboards list ends by picking a dashboard, where a
+  [landing hint](dashboard-guide.md#landing-hint) points to its Guide <small>(v1.17.4+)</small>
 - After sign-in, users can create dashboards, duplicate existing ones, and manage projects
 - Sidebar shows a "Public Mode" badge
+
+### Signing in as a guest <small>(v1.17.3+)</small> { #guest-sign-in }
+
+When Google or another identity provider is configured, a guest finds **Sign in** where
+they would need it: the avatar menu, the sidebar's mode line (*Public mode · Sign in*),
+the profile page, the tour's welcome step and, when
+[viewers may comment](../../features/comments-annotations.md#viewers-can-comment), the
+comments buttons, which open a *Sign in to comment* prompt. `/auth/login` shows the
+sign-in form with **Continue as guest**, and a sign-in returns to the page it started
+from. A public instance with password sign-in only behaves as before.
+
+A public showcase where signed-in readers comment combines `DEPICTIO_AUTH_PUBLIC_MODE`,
+an identity provider and `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT`. Keep
+[registration](#registration) open, or a first-time reader's account is never created.
 
 **Configuration:**
 
@@ -164,12 +181,13 @@ DEPICTIO_AUTH_REGISTRATION_DISABLED=true
 **Behavior:**
 
 - `POST /auth/register` returns 403, and the Register view and the link to it are hidden
-- Google OAuth becomes a login-only door: a known email signs in, an unknown one is refused instead of being provisioned an account
+- Google OAuth, and [SAML](../../installation/sso.md) since v1.18.0, become login-only doors: a known email signs in, an unknown one is refused instead of being provisioned an account
 - Existing accounts, roles and permissions are untouched
+- An administrator can still create accounts with [Add user](web_ui.md#add-a-user) (v1.19.0+)
 
 ### Password sign-in <small>(v1.8.2+)</small> { #password-login }
 
-Closes email and password sign-in so Google OAuth is the only way in, for an instance whose accounts all come from one identity provider:
+Closes email and password sign-in so single sign-on (Google OAuth, or [SAML](../../installation/sso.md) since v1.19.0) is the only way in, for an instance whose accounts all come from one identity provider:
 
 ```bash
 DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED=true
@@ -178,7 +196,8 @@ DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED=true
 **Behavior:**
 
 - `POST /auth/login` refuses before reading any credential, so a valid password is not a way around the setting, and the sign-in card hides the form rather than showing one that always fails
-- Ignored unless Google OAuth is configured, so forgetting the OAuth variables gives you the password form back instead of a locked instance
+- Ignored unless Google OAuth or, since v1.19.0, SAML is configured, so forgetting the variables gives you the password form back instead of a locked instance
+- Since v1.19.0 it also closes `POST /auth/register` (403), and the refusal says to use single sign-on
 - `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` is no longer required: OAuth matches the admin by email, so pointing `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` at your own Google address is what makes you the admin, with no seeded local account
 
 ### Public-mode access code <small>(v1.8.2+)</small> { #public-access-code }

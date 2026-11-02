@@ -180,6 +180,11 @@ DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI=http://localhost:8058/auth/google/callba
 
 4. **Copy the credentials** to your environment variables
 
+### SAML single sign-on <small>(v1.18.0+)</small>
+
+Users can also sign in through their institution's SAML 2.0 identity provider, with their
+groups mirrored from it. See [Single sign-on (SAML)](sso.md).
+
 ### Authentication Keys
 
 Configure JWT authentication keys:

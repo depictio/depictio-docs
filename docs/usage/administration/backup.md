@@ -143,6 +143,7 @@ Deliberately excluded:
 | `task_events`, `app_logs`, `telemetry` | Operational, and self-expiring by design |
 | `jobs`, `cli_agents` | Background job status and watcher heartbeats. Both expire on their own, so a restore would only bring back expired rows |
 | `ingestion_runs` | Audit and lineage data with no TTL. A known gap, not a decision that it should never be backed up. |
+| `dashboard_filter_states` | Each user's [remembered filters](../guides/dashboard_usage.md#remembered-filters), a convenience like a session (v1.18.0+) |
 
 A coverage test fails CI when a new collection is added without being
 classified, so this list cannot silently drift. Backups record the Depictio

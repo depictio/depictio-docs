@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="2.3.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="2.3.0" selected>2.3.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -35,6 +35,17 @@ the reads to the windows whose methylation differs between groups:
 - :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
 - :material-chart-box-outline: **Data & QC**: FastQC, Cutadapt, Bismark and Qualimap panels from the regenerated MultiQC report, the libraries that fail the alignment, duplication or conversion floors, and how deep and how evenly the alignments cover the reference
 - :material-dna: **Methylome**: whether the extraction needs a read-position trim, whether each methylome is bimodal, whether the libraries group by the design, and the windows that differ between two groups
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/methylseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accecb8b0bece2b95c3f082" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accecb8b0bece2b95c3f082" loading="lazy" title="nf-core/methylseq showcase dashboard" allowfullscreen></iframe>
+</div>
 
 The persistent `Sample filters` (the design factor, then the sample id) sit in the
 left panel and narrow every tab through the project links, and the collapsed
@@ -190,7 +201,7 @@ The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample ID`, read from the MultiQC report.
+        **Filters** · the pinned sample filters narrow its panels.
 
         | Section | What it holds |
         |---|---|

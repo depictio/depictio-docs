@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="3.26.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="3.26.0" selected>3.26.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -35,6 +35,17 @@ nf-core/rnaseq run:
 - :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
 - :material-chart-box-outline: **Data & QC**: the MultiQC report, a per-library QC profile with the RSeQC read distribution, and the pipeline's own DESeq2 QC PCA beside the sample distances
 - :material-dna: **Expression**: the 500 most variable genes, clustered, the most variable ones per condition, and a mean-variance plane with a record card per gene
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/rnaseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf0d2068a4d7c3dc3f171" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf0d2068a4d7c3dc3f171" loading="lazy" title="nf-core/rnaseq showcase dashboard" allowfullscreen></iframe>
+</div>
 
 !!! info "The STAR + Salmon route"
     This template binds the pipeline default: STAR for alignment, Salmon for
@@ -186,7 +197,7 @@ condition, and every tile that shows one says so.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample ID`, read from the MultiQC report.
+        **Filters** · the pinned sample filters narrow its panels.
 
         | Section | What it holds |
         |---|---|

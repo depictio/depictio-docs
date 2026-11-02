@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="1.0.4">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="1.0.4" selected>1.0.4</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -35,6 +35,17 @@ splicing calls of up to five tests:
 - :material-compass-outline: **Overview**: the run in four key figures, live findings and four figures, each linked to the tab that explains it
 - :material-chart-box-outline: **Data & QC**: the MultiQC report (FastQC, Trim Galore, STAR, samtools, featureCounts and Salmon), and whether the replicates of each condition sit together on their Salmon expression
 - :material-set-merge: **Splicing**: where the five tests agree per gene, then exon usage (DEXSeq, edgeR), transcript usage (DEXSeq DTU) and local events (rMATS, SUPPA2)
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/rnasplice, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accedc1a57cdb54ef9a2298" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accedc1a57cdb54ef9a2298" loading="lazy" title="nf-core/rnasplice showcase dashboard" allowfullscreen></iframe>
+</div>
 
 Two persistent filter sections sit in the left panel: `Sample filters` (the
 group, then the sample) apply to every tab, and `Splicing filters` (one contrast,
@@ -198,8 +209,8 @@ of every child tab.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample ID`, read from the MultiQC report, whose library
-        names carry read suffixes.
+        **Filters** · the pinned sample filters narrow its panels, though the
+        report's library names carry read suffixes.
 
         | Section | What it holds |
         |---|---|

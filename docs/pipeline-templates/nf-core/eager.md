@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="2.4.5">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="2.4.5" selected>2.4.5</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -36,6 +36,17 @@ question per tab, in three groups:
 - :material-chart-box-outline: **Data & QC**: FastQC, AdapterRemoval and bcftools panels from the regenerated MultiQC report, every library on every tool at once, and where each sequenced read stops, from trimming and collapsing to deduplication
 - :material-dna: **Ancient DNA**: how much of each extract is the target organism, how many distinct molecules each library holds, and whether the DNA is damaged and short, as ancient DNA is
 - :material-waves: **Genome**: depth per contig and the depth distribution, depth and mapping quality at one locus, and the variants called per sample
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/eager, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6acceac0068a4d7c3dc3f07d" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6acceac0068a4d7c3dc3f07d" loading="lazy" title="nf-core/eager showcase dashboard" allowfullscreen></iframe>
+</div>
 
 The persistent `Sample filters` (sample, library, UDG treatment) sit in the left
 panel and narrow every tab. Below them, the collapsed `QC thresholds` set

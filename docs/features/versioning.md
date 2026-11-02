@@ -199,6 +199,9 @@ In the editor, **History** in a component's ⋮ menu shows that one component ac
 dashboard's versions. It is offered on tiles and on filters, once the dashboard has at
 least one version.
 
+Readers get a read-only view of it, without **Restore**, from the **Versions** part of the
+[dashboard Guide](../usage/guides/dashboard-guide.md#what-it-covers) <small>(v1.17.4+)</small>.
+
 <figure markdown="span">
   [![A box plot's ⋮ menu open in the editor, with History below Edit](../images/guides/versioning/component_menu_history_light.webp#only-light)](../images/guides/versioning/component_menu_history_light.webp){target=_blank}
   [![A box plot's ⋮ menu open in the editor, with History below Edit](../images/guides/versioning/component_menu_history_dark.webp#only-dark)](../images/guides/versioning/component_menu_history_dark.webp){target=_blank}

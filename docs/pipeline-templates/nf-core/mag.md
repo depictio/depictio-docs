@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="5.5.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="5.5.0" selected>5.5.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -36,6 +36,17 @@ genomes, where the unit is the bin rather than the sample:
 - :material-chart-box-outline: **Data & QC**: fastp, Bowtie 2 and NanoStat read QC from the MultiQC report, the only home of the read QC, with the QUAST, CheckM2 and GTDB-Tk panels behind it
 - :material-dna: **Assemblies**: what each assembler made of the same samples, size against contiguity and the Nx curve, then the length and depth signal every binner is fed
 - :material-bacteria-outline: **Genomes**: CheckM2 completeness against contamination, the GTDB-Tk lineage, Prokka's genes and RNAs, and one bin read through all four tools with its locus map
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/mag, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accec29a57cdb54ef9a2237" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accec29a57cdb54ef9a2237" loading="lazy" title="nf-core/mag showcase dashboard" allowfullscreen></iframe>
+</div>
 
 Every assembler is crossed with every binner over every sample, so the filters
 that matter are the assembler, the binner, the phylum and the quality thresholds.
@@ -180,7 +191,7 @@ child tab.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sample`, read from the MultiQC report.
+        **Filters** · the pinned sample filters narrow its panels.
 
         | Section | What it holds |
         |---|---|

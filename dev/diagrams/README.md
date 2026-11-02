@@ -9,6 +9,7 @@ uv sync --group diagrams           # once, pulls playwright
 uv run playwright install chromium # once
 cd dev/diagrams && uv run python data_model.py && uv run python architecture.py
 uv run python nextflow_trigger.py
+uv run python protein_tiles.py
 ```
 
 Each script writes `<name>_light` and `<name>_dark`, as both SVG and PNG, into
@@ -37,6 +38,7 @@ status` is dirty after a regeneration, something in the figure actually changed.
 | `data_model.py` | Data Model: the two project shapes, config to data, join vs link. |
 | `architecture.py` | The system architecture figure on the Features overview. |
 | `nextflow_trigger.py` | The trigger flow on the Nextflow trigger page. |
+| `protein_tiles.py` | Linking by residue and the structure resolver on the Protein tiles page. One light SVG, no PNG. |
 
 `sketch.py` is a port of the generator in the main
 [depictio](https://github.com/depictio/depictio) repository, which produces the

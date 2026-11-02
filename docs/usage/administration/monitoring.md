@@ -8,7 +8,7 @@ description: Admin-only panel for Celery tasks, ingestion runs, running watchers
 Admin-only panel (**Administration → Log & Task**, `/admin`) exposing a durable MongoDB ledger of background activity: Celery tasks, ingestion runs, running watchers, application logs, and worker health. Since **v1.11.0** each pane has its own address, `/admin/tasks`, `/admin/ingestion`, `/admin/logs` and `/admin/health`, joined by `/admin/watchers` for the Watchers pane, and the Ingestion pane keeps its filters in the query string, so a filtered view can be bookmarked or sent. `/admin/monitoring` redirects to `/admin/tasks`.
 
 !!! info "Availability"
-    Admin-only. Shown in single- and multi-user mode, hidden in public/demo; non-admins get *Forbidden*.
+    Admin-only. Shown in single- and multi-user mode, hidden in demo mode; non-admins get *Forbidden*. On a public instance it is offered to a signed-in administrator since v1.18.0, never to a guest, and **Backups** stays hidden there.
 
 Each pane polls every 8 s; toggle **Auto** to pause. With live updates on, a green **Live** badge appears and the active pane refreshes on each event. The Tasks, Ingestion and Logs panes each have a free-text search box next to their filters.
 

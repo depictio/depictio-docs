@@ -391,6 +391,105 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
+
+  <a class="template-card" href="nf-core/proteinfamilies/" data-tpl-name="nf-core/proteinfamilies" data-tpl-status="draft" data-tpl-version="2.5.0" data-tpl-keywords="proteinfamilies protein families clustering mmseqs hmmer profile hmm logo alignment famsa structure">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/proteinfamilies/master/docs/images/nf-core-proteinfamilies_logo_dark.png" alt="nf-core/proteinfamilies">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/proteinfamilies/master/docs/images/nf-core-proteinfamilies_logo_light.png" alt="nf-core/proteinfamilies">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Protein families: how the input clustered, the families built or extended, and each family's alignment, conservation, structure and profile HMM.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.5.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/proteinannotator/" data-tpl-name="nf-core/proteinannotator" data-tpl-status="draft" data-tpl-version="1.1.0" data-tpl-keywords="proteinannotator protein annotation domains interproscan hmmer pfam s4pred secondary structure esmfold">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/proteinannotator/master/docs/images/nf-core-proteinannotator_logo_dark.png" alt="nf-core/proteinannotator">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/proteinannotator/master/docs/images/nf-core-proteinannotator_logo_light.png" alt="nf-core/proteinannotator">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Protein annotation: domains from HMM libraries and InterProScan, predicted secondary structure, and structures folded on demand.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v1.1.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/proteinfold/" data-tpl-name="nf-core/proteinfold" data-tpl-status="draft" data-tpl-version="2.1.0" data-tpl-keywords="proteinfold structure prediction alphafold colabfold esmfold plddt pae ramachandran protein">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/proteinfold/master/docs/images/nf-core-proteinfold_logo_dark.png" alt="nf-core/proteinfold">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/proteinfold/master/docs/images/nf-core-proteinfold_logo_light.png" alt="nf-core/proteinfold">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Structure prediction: model confidence per engine, pLDDT along the chain, the predicted aligned error and where the engines agree.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.1.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/oncoanalyser/" data-tpl-name="nf-core/oncoanalyser" data-tpl-status="draft" data-tpl-version="3.0.0" data-tpl-keywords="oncoanalyser cancer tumor somatic wigits purple linx sage cuppa lilac copy number structural variants drivers">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/oncoanalyser/master/docs/images/nf-core-oncoanalyser_logo_dark.png" alt="nf-core/oncoanalyser">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/oncoanalyser/master/docs/images/nf-core-oncoanalyser_logo_light.png" alt="nf-core/oncoanalyser">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Cancer genomics: QC, purity and ploidy, copy number, structural variants, drivers, protein changes on the structure and immune context.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.0.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/crisprseq/" data-tpl-name="nf-core/crisprseq" data-tpl-status="draft" data-tpl-version="2.3.0" data-tpl-keywords="crisprseq crispr gene editing guides indels cut site amplicon substitutions">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/crisprseq/master/docs/images/nf-core-crisprseq_logo_dark.png" alt="nf-core/crisprseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/crisprseq/master/docs/images/nf-core-crisprseq_logo_light.png" alt="nf-core/crisprseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Gene editing: read accounting, edit outcomes per library and per guide, and the indels and substitutions around the cut site.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v2.3.0</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/isoseq/" data-tpl-name="nf-core/isoseq" data-tpl-status="draft" data-tpl-version="3.0.1" data-tpl-keywords="isoseq iso-seq pacbio long read isoforms transcripts ccs lima tama">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/isoseq/master/docs/images/nf-core-isoseq_logo_dark.png" alt="nf-core/isoseq">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/isoseq/master/docs/images/nf-core-isoseq_logo_light.png" alt="nf-core/isoseq">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Iso-Seq: CCS and primer QC, the full-length read funnel, isoform categories and structures per gene.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.0.1</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="template-card" href="nf-core/pairgenomealign/" data-tpl-name="nf-core/pairgenomealign" data-tpl-status="draft" data-tpl-version="3.0.4" data-tpl-keywords="pairgenomealign genome alignment last synteny divergence assemblies">
+    <div class="template-card-logo">
+      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/pairgenomealign/master/docs/images/nf-core-pairgenomealign_logo_dark.png" alt="nf-core/pairgenomealign">
+      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/pairgenomealign/master/docs/images/nf-core-pairgenomealign_logo_light.png" alt="nf-core/pairgenomealign">
+    </div>
+    <div class="template-card-body">
+      <p class="template-card-desc">Pairwise genome alignment: coverage and identity of each query on the target, divergence, assembly contiguity and synteny.</p>
+      <div class="template-card-meta">
+        <span class="template-version">v3.0.4</span>
+        <span class="template-status-draft"><i class="mdi mdi-pencil-outline" style="vertical-align:-1px;"></i> Draft</span>
+      </div>
+    </div>
+  </a>
+
 </div>
 
 <div class="tpl-catalog-table" data-tpl-table hidden></div>
@@ -450,6 +549,69 @@ A template bundles:
 - :material-view-dashboard: **[Dashboard YAML](../features/yaml-sync.md)**: imported on the first run, with the template variables substituted
 - :material-link: **[Cross-DC links](../usage/projects/templates.md#cross-dc-links)**: interactive filtering across data collections
 - :material-seed: **[Recipe seeds](../usage/projects/templates.md#recipe-seeds)**: each recipe's output committed as a `.tsv`, so the bundled project can be explored, and re-ingested, without the pipeline run behind it <small>(v1.6.0+)</small>
+
+---
+
+## :material-tag-multiple-outline: Pipeline version and template version { #pipeline-version-and-template-version }
+
+A template carries two version numbers. They move independently.
+
+<div class="grid cards" markdown>
+
+-   :material-pipe:{ .lg .middle } **Pipeline version**
+
+    ---
+
+    The pipeline release whose outputs the template reads. It is the last part of the
+    template id: `nf-core/rnaseq/3.26.0`. A new pipeline release gets a template of its own.
+
+    *Choose it* with `--template`, or with the **Pipeline version** picker on a template's page.
+
+-   :material-layers-outline:{ .lg .middle } **Template version**
+
+    ---
+
+    The revision of the template itself: its data collections, recipes and dashboards, for
+    one pipeline release. It moves when the template improves, for example `2.0.0` to `2.1.0`.
+
+    *Find it* beside the picker on a template's page, in the ingest log, and in the project
+    and dashboard settings.
+
+</div>
+
+When the template version moves, what you need to do depends on which number changed:
+
+<div class="tpl-bumps" markdown>
+
+<div class="tpl-bump is-major" markdown>
+<span class="tpl-bump-tag">Major</span> <code><b>2</b>.1.0 → <b>3</b>.0.0</code>
+
+**The data collections changed.** A collection, a column or a template variable was added,
+removed or renamed.
+
+:material-database-refresh: Ingest the run again.
+</div>
+
+<div class="tpl-bump is-minor" markdown>
+<span class="tpl-bump-tag">Minor</span> <code>2.<b>0</b>.0 → 2.<b>1</b>.0</code>
+
+**The dashboards changed.** Figures, tabs or recipes moved; every collection keeps its columns.
+
+:material-view-dashboard-edit-outline: Import the dashboards again.
+</div>
+
+<div class="tpl-bump is-patch" markdown>
+<span class="tpl-bump-tag">Patch</span> <code>2.1.<b>0</b> → 2.1.<b>1</b></code>
+
+**Only text changed.** Titles, captions and descriptions.
+
+:material-check: Nothing to do; import again to get the new wording.
+</div>
+
+</div>
+
+Depictio records the template version a project was ingested with, and the one each dashboard
+was imported from. The viewer warns when a newer one is available.
 
 ---
 

@@ -22,8 +22,8 @@ hide:
 
 <div class="tpl-version-pick" data-latest="2.1.2">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
-  <span class="tpl-version-label">Template version</span>
-  <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
+  <span class="tpl-version-label">Pipeline version</span>
+  <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
     <option value="2.1.2" selected>2.1.2</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -36,6 +36,17 @@ nf-core/atacseq run:
 - :material-chart-box-outline: **Data & QC**: the MultiQC report, the ataqv library quality (TSS enrichment, the fragment ladder, where the reads landed), and the deepTools and Picard signal tables
 - :material-chart-scatter-plot: **Peak calls**: MACS2 broad calls per library, where HOMER places them relative to genes, and one genomic region across libraries
 - :material-set-merge: **Comparison**: the consensus peak set, which libraries agree on an interval, and where the libraries sit on the DESeq2 QC of its counts
+
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/atacseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf196a57cdb54ef9a22f6" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf196a57cdb54ef9a22f6" loading="lazy" title="nf-core/atacseq showcase dashboard" allowfullscreen></iframe>
+</div>
 
 !!! warning "One MultiQC parquet per run, in one of two places"
     The release pins MultiQC 1.13, which writes no parquet. The collection binds
@@ -205,9 +216,8 @@ filters do not narrow them.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Sequencing library` on `samplesheet`, in its own *Library
-        scope* group: the read-level panels are keyed on the sequencing library, a
-        finer grain than the sample every other tab works in.
+        **Filters** · the pinned sample filters narrow the panels, down to the
+        sequencing libraries behind them.
 
         | Section | What it holds |
         |---|---|

@@ -24,7 +24,7 @@ Read-only mode for exploring data:
 - :material-filter: Use filter components to explore data
 - :material-download: Export data from tables (v0.6.0+)
 - :material-share-variant: Share dashboards with collaborators
-- :material-comment-text-multiple-outline: Discuss and annotate components (project editors and owners), see [Comments and Annotations](comments-annotations.md)
+- :material-comment-text-multiple-outline: Discuss and annotate components (project editors and owners, and viewers if allowed), see [Comments and Annotations](comments-annotations.md)
 - :material-code-json: Export one component to another website, when the server allows it, see [Component export and embedding](component-export.md) <small>(v1.17.0+)</small>
 - :material-lock: No accidental modifications
 
@@ -269,6 +269,18 @@ dashboard, so collapsing a section you are reading never changes what anyone
 else sees. A section that lives on every tab is remembered once for the whole
 dashboard rather than per tab, so it does not unfold as you move between them.
 
+#### Linked view <small>(v1.19.1+)</small> { #linked-view }
+
+A grid section with `display: linked` keeps its tiles within one screen height, as panes
+with draggable gutters, so views that follow each other stay side by side: a pick on an
+HMM logo shows on the 3D model next to it, not a screen further down. The section header
+resets and fits the panes; in the editor, **Arrange tiles** shows the plain grid to move
+them. On a narrow screen the panes stack, and `?layout=classic` draws the plain grid.
+
+A tab whose pickers hold one value at a time (`always_selected`) shows a **scope banner**
+under its header: the picked unit, an inline picker and the facts its filter declares in
+[`banner_facts`](yaml-sync.md#interactive-defaults).
+
 ### :material-pin: Sections on every tab <small>(v1.6.0+)</small> { #persistent-sections }
 
 A section normally belongs to the tab that declares it. Switch on **Show on
@@ -344,6 +356,11 @@ editor still draws such a section on the tab being edited, badged **Hidden on th
 On a tab that does not own it, a pinned grid section says **Filtered** while a filter
 narrows it; folded, its cards read *filtered / total*, and **Reset filters** clears the
 filters.
+
+Since **v1.17.2** a value picked in a pinned filter section also narrows the MultiQC
+panels of every other tab (the report, General Statistics and the funnel), through the
+project's [links](cross-dc-filtering.md#supported-target-types) to the MultiQC collection.
+A MultiQC tab no longer needs a sample filter of its own.
 
 ### :material-view-dashboard-outline: Landing tabs <small>(v1.14.0+)</small> { #landing-tabs }
 
@@ -772,7 +789,7 @@ with *sign in again* when none is valid.
 
 ### :material-shield-account: Permissions { #permissions }
 
-Dashboards inherit permissions from their project:
+Dashboards inherit permissions from their project, granted to users or, since v1.18.0, to [groups](../usage/administration/groups.md):
 
 | Role                              | View                 | Edit                 | Delete               |
 | --------------------------------- | -------------------- | -------------------- | -------------------- |
@@ -784,6 +801,7 @@ Dashboards inherit permissions from their project:
 
 - :material-eye: **Viewer URL**: `/dashboard/{id}` - Safe to share with collaborators
 - :material-pencil: **Editor URL**: `/dashboard-edit/{id}` - Only for authorized editors
+- :material-filter-variant: **Filter link** <small>(v1.18.0+)</small>: `/dashboard/{id}#filters=…` - The viewer URL with its filters. See [Filter links](../usage/guides/dashboard_usage.md#filter-links)
 
 ### :material-application-brackets: Embedding a component <small>(v1.17.0+)</small> { #embedding }
 

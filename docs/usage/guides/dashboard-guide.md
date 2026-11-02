@@ -28,9 +28,21 @@ the thing it is about inside the demo. A row of links at the top jumps to each p
 | **Components** | Pick a kind: one of the dashboard's own components of it, from this tab or a sibling, with its full action row, so every icon can be tried. A kind the dashboard lacks shows a stand-in. *In the editor* adds the grip, the resize corner and the ⋮ menu, whose items only describe what they would do |
 | **Analysis** | Select, save as a group and compare, overlaid or split, on the dashboard's own figure, table and card. See [Analysis](../../features/interactive-selection-filtering.md#analysis-panel) |
 | **Settings** | The reader's own page width and text size (*Settings → Your view*), and light or dark (the sidebar's sun / moon). **Show me what they do** plays them on the demo, then puts them back |
+| **Comments** <small>(v1.17.4+)</small> | Threads and annotations on one of the dashboard's own figures, through the real comment controls. It works without an account and writes nothing. See [Comments and Annotations](../../features/comments-annotations.md) |
+| **Versions** <small>(v1.17.4+)</small> | A component's real history, read-only for any reader (no **Restore**). A dashboard with no saved version gets a sample list. See [Component history](../../features/versioning.md#component-history) |
 
 Everything the demos do stays in the Guide: no filter, group or setting of the dashboard
 changes.
+
+---
+
+## Landing hint <small>(v1.17.4+)</small> { #landing-hint }
+
+A public-mode guest opening a dashboard (demo mode keeps its tour) gets a small note under
+the *Powered by Depictio* credit: what Depictio is, what this dashboard is, and a button to the Guide. It shows once
+per browser, on the main tab, and goes away with its close button or when the Guide is
+opened. It takes over from the public tour, which now stays on the dashboards list and
+ends by picking a dashboard. A dashboard with `show_guide: false` gets no hint.
 
 ---
 
