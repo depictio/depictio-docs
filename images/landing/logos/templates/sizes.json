@@ -39,10 +39,20 @@
     "height": 56,
     "source": "https://raw.githubusercontent.com/nf-core/differentialabundance/master/docs/images/nf-core-differentialabundance_logo_light.png"
   },
+  "drop": {
+    "width": 134,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/drop/master/docs/images/nf-core-drop_logo_light.png"
+  },
   "eager": {
     "width": 131,
     "height": 56,
     "source": "https://raw.githubusercontent.com/nf-core/eager/dev/docs/images/nf-core-eager_logo_light.png"
+  },
+  "epitopeprediction": {
+    "width": 229,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/epitopeprediction/master/docs/images/nf-core-epitopeprediction_logo_light.png"
   },
   "funcscan": {
     "width": 146,
@@ -54,10 +64,20 @@
     "height": 56,
     "source": "https://raw.githubusercontent.com/nf-core/genomeassembler/master/docs/images/nf-core-genomeassembler_logo_light.png"
   },
+  "genomeqc": {
+    "width": 131,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/genomeqc/master/docs/images/nf-core-genomeqc_logo_light.png"
+  },
   "hic": {
     "width": 146,
     "height": 56,
     "source": "https://raw.githubusercontent.com/nf-core/hic/master/docs/images/nf-core-hic_logo_light.png"
+  },
+  "hlatyping": {
+    "width": 131,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/hlatyping/master/docs/images/nf-core-hlatyping_logo_light.png"
   },
   "isoseq": {
     "width": 133,
@@ -68,6 +88,11 @@
     "width": 131,
     "height": 56,
     "source": "https://raw.githubusercontent.com/nf-core/mag/master/docs/images/nf-core-mag_logo_light.png"
+  },
+  "mcmicro": {
+    "width": 146,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/mcmicro/master/docs/images/nf-core-mcmicro_logo_light.png"
   },
   "methylseq": {
     "width": 163,
@@ -83,6 +108,11 @@
     "width": 133,
     "height": 56,
     "source": "https://raw.githubusercontent.com/nf-core/nanoseq/master/docs/images/nf-core-nanoseq_logo_light.png"
+  },
+  "nascent": {
+    "width": 145,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/nascent/master/docs/images/nf-core-nascent_logo_light.png"
   },
   "oncoanalyser": {
     "width": 171,
@@ -109,6 +139,16 @@
     "height": 56,
     "source": "https://raw.githubusercontent.com/nf-core/proteinfold/master/docs/images/nf-core-proteinfold_logo_light.png"
   },
+  "quantms": {
+    "width": 133,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/quantms/master/docs/images/nf-core-quantms_logo_light.png"
+  },
+  "raredisease": {
+    "width": 216,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/raredisease/master/docs/images/nf-core-raredisease_logo_light.png"
+  },
   "riboseq": {
     "width": 128,
     "height": 56,
@@ -129,6 +169,11 @@
     "height": 56,
     "source": "https://raw.githubusercontent.com/nf-core/rnasplice/master/docs/images/nf-core-rnasplice_logo_light.png"
   },
+  "rnavar": {
+    "width": 146,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/rnavar/master/docs/images/nf-core-rnavar_logo_light.png"
+  },
   "sarek": {
     "width": 130,
     "height": 56,
@@ -144,6 +189,11 @@
     "height": 56,
     "source": "https://raw.githubusercontent.com/nf-core/smrnaseq/master/docs/images/nf-core-smrnaseq_logo_light.png"
   },
+  "stableexpression": {
+    "width": 218,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/stableexpression/master/docs/images/nf-core-stableexpression_logo_light.png"
+  },
   "taxprofiler": {
     "width": 139,
     "height": 56,
@@ -153,6 +203,11 @@
     "width": 324,
     "height": 56,
     "source": "https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_light.png"
+  },
+  "viralmetagenome": {
+    "width": 224,
+    "height": 56,
+    "source": "https://raw.githubusercontent.com/nf-core/viralmetagenome/master/docs/images/nf-core-viralmetagenome_logo_light.png"
   },
   "viralrecon": {
     "width": 146,
