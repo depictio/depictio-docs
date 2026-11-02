@@ -239,7 +239,7 @@ something arrived.
     | Passwordless magic-link login, pipeline provisioning | v1.1.3 | [Authentication Modes](../usage/guides/authentication-modes.md) |
     | Cross-DC linking UI, ingestion reports, self-adapting nf-core templates | v1.1.0 | [Cross-DC Filtering](../features/cross-dc-filtering.md) |
     | React viewer as sole frontend on canonical URLs | v1.0.0 | [Dashboards](../features/dashboards.md) |
-    | Tools catalog — tool outputs become dashboard components | v1.0.0 | [Catalog](../catalog/index.md) |
+    | Tools catalog: tool outputs become dashboard components | v1.0.0 | [Catalog](../catalog/index.md) |
 
 ??? success "v0.x: the foundations"
 
@@ -247,7 +247,7 @@ something arrived.
     | ---------- | ----- | ---- |
     | Advanced biology visualizations (volcano, Manhattan, sunburst…) | v0.13.0 | [Components](../features/advanced-visualizations.md) |
     | MultiQC data lifecycle, DC-level type config | v0.12.0 | [Projects Guide](../usage/projects/guide.md) |
-    | Templates & recipes — one-command project setup | v0.10.0 | [Templates](../usage/projects/templates.md) · [Recipes](../usage/projects/recipes.md) |
+    | Templates & recipes: one-command project setup | v0.10.0 | [Templates](../usage/projects/templates.md) · [Recipes](../usage/projects/recipes.md) |
     | Geospatial maps, choropleth & GeoJSON collections | v0.8.0 | [Components](../features/components.md#map-components) |
     | MultiQC report integration | v0.5.0 | [Components](../features/components.md#multiqc-components) |
     | YAML-defined projects & dashboards, Delta Lake ingestion via CLI | v0.0.5 | [CLI Usage](../depictio-cli/usage.md) · [YAML Sync](../features/yaml-sync.md) |
