@@ -2206,6 +2206,247 @@ body.catalog-fs-lock .md-main {
     color: #b9770e;
 }
 
+/* DocBot widget (overrides/main.html, off unless extra.docbot.enabled).
+   The SDK ships its own EMBL-EBI look; this re-skins it with the Material
+   palette so it follows light and dark. The SDK rules are scoped to
+   #docbot-modal.docbot-modal and load after this file, so ours add `html` to win. Colours that
+   the SDK reads from --vf-color--* variables are remapped there; the ones it
+   hard-codes (#1a1c1a text, #3a77bc send button, #18974c button) are set below. */
+html #docbot-modal.docbot-modal {
+    --vf-color--neutral--0: var(--md-default-bg-color);
+    --vf-color--neutral--200: var(--md-default-fg-color--lightest);
+    --vf-color--neutral--400: var(--md-default-fg-color--lighter);
+    --vf-color--neutral--800: var(--md-default-fg-color--light);
+    --vf-color--neutral--900: var(--md-default-fg-color);
+    --vf-color--grey: var(--md-default-fg-color--lightest);
+    --vf-color--grey--light: var(--md-default-fg-color--lightest);
+    --vf-color--blue: var(--md-accent-fg-color);
+    --vf-color__link: var(--md-accent-fg-color);
+    --vf-color__text--primary: var(--md-default-fg-color);
+    font-family: var(--md-text-font-family, "Roboto"), sans-serif;
+}
+
+/* Launcher: the Depictio logo in a speech bubble, so it reads as a chat and
+   not as part of the page. The bubble takes the page surface colour (light and
+   dark); on hover the logo turns by one wedge (1/7 turn) and the bubble lifts. */
+html .vf-chatbot-fab {
+    width: 68px;
+    height: 60px;
+    padding: 0;
+    background: var(--md-default-bg-color);
+    border: 1px solid var(--md-default-fg-color--lighter);
+    border-radius: 20px;
+    box-shadow: none;
+    filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.3));
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+/* The bubble's tail, under the bottom-right corner */
+html .vf-chatbot-fab::after {
+    content: "";
+    position: absolute;
+    right: 15px;
+    bottom: -7px;
+    width: 14px;
+    height: 14px;
+    background: var(--md-default-bg-color);
+    border-right: 1px solid var(--md-default-fg-color--lighter);
+    border-bottom: 1px solid var(--md-default-fg-color--lighter);
+    border-radius: 0 0 3px 0;
+    transform: rotate(45deg);
+}
+
+html .vf-chatbot-fab::before {
+    content: "";
+    width: 42px;
+    height: 42px;
+    background: url("../images/logo/logo_icon.png") center / contain no-repeat;
+    transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html .vf-chatbot-fab:hover {
+    background: var(--md-default-bg-color);
+    transform: translateY(-3px);
+    filter: drop-shadow(0 9px 16px rgba(0, 0, 0, 0.38));
+}
+
+html .vf-chatbot-fab:hover::before {
+    transform: rotate(51.43deg) scale(1.08);
+}
+
+html .vf-chatbot-fab:focus-visible {
+    outline: 2px solid var(--md-accent-fg-color);
+    outline-offset: 4px;
+}
+
+html .vf-chatbot-fab .vf-chatbot-fab__icon {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html .vf-chatbot-fab:hover,
+    html .vf-chatbot-fab:hover::before {
+        transform: none;
+    }
+}
+
+/* Window */
+html #docbot-modal.docbot-modal .vf-chatbot-modal-container {
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+    overflow: hidden;
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-modal,
+html #docbot-modal.docbot-modal .vf-chatbot-modal-container .vf-chatbot-modal {
+    border-radius: 0;
+    background: var(--md-code-bg-color);
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-modal__header {
+    background: var(--md-default-bg-color);
+    border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* Text the SDK hard-codes as #1a1c1a */
+html #docbot-modal.docbot-modal .vf-chatbot-selector__main-text,
+html #docbot-modal.docbot-modal .vf-chatbot-selector__title-text,
+html #docbot-modal.docbot-modal .vf-chatbot-welcome__title,
+html #docbot-modal.docbot-modal .vf-chatbot-welcome__description,
+html #docbot-modal.docbot-modal .vf-chatbot-welcome__suggestions-title,
+html #docbot-modal.docbot-modal .vf-chatbot-modal__footnote,
+html #docbot-modal.docbot-modal .vf-chatbot-modal__input,
+html #docbot-modal.docbot-modal .vf-chatbot-message__avatar,
+html #docbot-modal.docbot-modal .vf-chatbot-message__content li:not([class*="vf-"]),
+html #docbot-modal.docbot-modal .vf-chatbot-sources-toggle,
+html #docbot-modal.docbot-modal .vf-chatbot-sources__label,
+html #docbot-modal.docbot-modal .vf-chatbot-sources__hide-link,
+html #docbot-modal.docbot-modal .vf-chatbot-sources__description,
+html #docbot-modal.docbot-modal .vf-chatbot-feedback__title,
+html #docbot-modal.docbot-modal .vf-chatbot-feedback__option,
+html #docbot-modal.docbot-modal .vf-chatbot-feedback__comment,
+html #docbot-modal.docbot-modal .vf-chatbot-feedback__comment-title,
+html #docbot-modal.docbot-modal .vf-chatbot-dialog__title,
+html #docbot-modal.docbot-modal .vf-chatbot-selector__item-title,
+html #docbot-modal.docbot-modal h1.vf-chatbot-welcome__title,
+html #docbot-modal.docbot-modal h2.vf-chatbot-dialog__title,
+html #docbot-modal.docbot-modal h3.vf-chatbot-welcome__suggestions-title,
+html #docbot-modal.docbot-modal .vf-chatbot-welcome__message {
+    color: var(--md-default-fg-color);
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-modal__footnote,
+html #docbot-modal.docbot-modal .vf-chatbot-modal__footnote p {
+    color: var(--md-default-fg-color);
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-selector__item-description {
+    color: var(--md-default-fg-color--light);
+}
+
+/* One font for the whole window (the SDK sets IBM Plex Sans on each element) */
+html #docbot-modal.docbot-modal [class]:not(code):not(pre) {
+    font-family: inherit;
+}
+
+/* Hand-drawn title, like the site's other headings */
+html #docbot-modal.docbot-modal h1.vf-chatbot-welcome__title[class] {
+    font-family: "Virgil", var(--md-text-font-family, "Roboto"), sans-serif;
+    font-weight: 400;
+}
+
+/* Input row and send button */
+html #docbot-modal.docbot-modal .vf-chatbot-modal__input-container {
+    background: var(--md-default-bg-color);
+    border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-modal__input {
+    background: var(--md-default-bg-color);
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-modal__input::placeholder {
+    color: var(--md-default-fg-color--light);
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-modal__send-button {
+    background: var(--md-accent-fg-color);
+}
+
+html #docbot-modal.docbot-modal .vf-banner__link,
+html #docbot-modal.docbot-modal .vf-chatbot-message__content a {
+    color: var(--md-typeset-a-color);
+}
+
+/* Rating banner: a neutral tint instead of pale yellow */
+html #docbot-modal.docbot-modal .vf-banner--alert {
+    background: var(--md-code-bg-color);
+    border: 0;
+    border-top: 1px solid var(--md-default-fg-color--lightest);
+    color: var(--md-default-fg-color);
+}
+
+html #docbot-modal.docbot-modal .vf-banner--alert * {
+    color: inherit;
+}
+
+html #docbot-modal.docbot-modal .vf-banner--alert svg {
+    fill: currentColor;
+}
+
+/* Messages */
+html #docbot-modal.docbot-modal .vf-chatbot-message--user .vf-chatbot-message__content {
+    background: var(--md-accent-fg-color);
+    color: #fff;
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-message--assistant .vf-chatbot-message__content {
+    background: var(--md-default-bg-color);
+    border: 1px solid var(--md-default-fg-color--lightest);
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-message__content code,
+html #docbot-modal.docbot-modal .vf-chatbot-message__content pre {
+    background: var(--md-code-bg-color);
+    color: var(--md-code-fg-color);
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-action-prompt__link,
+html #docbot-modal.docbot-modal .vf-chatbot-sources__toggle-link {
+    background: var(--md-default-bg-color);
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-sources {
+    border-radius: 10px;
+}
+
+/* Dialogs and the team selector */
+html #docbot-modal.docbot-modal .vf-chatbot-dialog__content,
+html #docbot-modal.docbot-modal .vf-chatbot-selector__dropdown {
+    background: var(--md-default-bg-color);
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-selector__item:hover {
+    background: var(--md-default-fg-color--lightest);
+}
+
+/* Header icons (close, minimize, menu) follow the text colour */
+html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg,
+html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
+    fill: var(--md-default-fg-color--light);
+}
+
+@media (max-width: 600px) {
+    /* The SDK window takes the whole screen here; only the launcher moves in */
+    html .vf-chatbot-fab {
+        right: 16px;
+        bottom: 16px;
+    }
+}
+
 /* Live showcase on template pages: the template's dashboard from
    showcases.depictio.embl.org, rendered at 60% so a full dashboard fits the
    column. loading=lazy keeps it off the network until it scrolls into view. */
