@@ -153,7 +153,7 @@ Three sections, one question each:
   sub_title: "In progress 🚧"
 
 - title: "Ideas"
-  content: "Journeys through tabs, citable DOI snapshots, a Snakemake report plugin"
+  content: "Journeys through tabs, citable DOI snapshots, Galaxy, Snakemake and WorkflowHub, a central Depictio"
   icon: ":fontawesome-solid-lightbulb:"
   key: "idea"
   sub_title: "Unscheduled 💡"
@@ -326,7 +326,16 @@ something up.
 | ---- | ---------------------- | ---- |
 | :material-file-document-edit-outline: **Report while exploring** | Assemble what you find into a report with a live Quarto preview, no re-execution | [#1148](https://github.com/depictio/depictio/issues/1148) |
 | :material-flask-outline: **Citable science** | Immutable, DOI-citable app releases on the public EMBL instance, and sample-to-viz provenance via [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/). A [Quarto](https://quarto.org/) export is [in progress](#export-and-sharing) | [#1303](https://github.com/depictio/depictio/issues/1303) · [#931](https://github.com/depictio/depictio/issues/931) |
+### :material-graph-outline: Workflow ecosystems and publishing
+
+| Idea | What it would give you | Link |
+| ---- | ---------------------- | ---- |
+| :material-share-variant-outline: **Galaxy** | The results of a Galaxy workflow shown as a Depictio dashboard | *none yet* |
 | :material-snake: **Snakemake report plugin** | Depictio as a drop-in replacement for Snakemake's static HTML report | *none yet* |
+| :material-source-branch: **WorkflowHub** | A dashboard template registered beside the workflow it reads, so the two are found and cited together | *none yet* |
+| :material-server-network-outline: **A central Depictio** | One shared instance for a lab or an institute, that projects from local instances are sent to | *none yet* |
+| :material-cloud-upload-outline: **Push to the public instance from the UI** | Publish a project and its dashboards to the public EMBL instance from the web UI, not only with `depictio migrate` | [#1303](https://github.com/depictio/depictio/issues/1303) |
+
 ### :material-robot-outline: Agents
 
 | Idea | What it would give you | Link |
