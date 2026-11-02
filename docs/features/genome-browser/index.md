@@ -1,5 +1,6 @@
 ---
 title: Genome browser
+icon: material/dna
 description: An embedded JBrowse 2 genome browser fed by a genomic_tracks collection, filtered by the dashboard and filtering it back.
 glightbox: true
 ---
@@ -22,63 +23,63 @@ Each example opens its own page: the clip, what it shows, and the few lines of Y
 
 <div class="grid cards" markdown>
 
--   [![Table to browser](../images/guides/genome-browser/table_to_browser.webp){ .off-glb }](genome-browser/table-to-browser.md)
+-   [![Table to browser](../../images/guides/genome-browser/table_to_browser.webp){ .off-glb }](table-to-browser.md)
 
-    **[Table to browser](genome-browser/table-to-browser.md)**
+    **[Table to browser](table-to-browser.md)**
 
     A row picked in a table frames the browser on it.
 
--   [![Browser to dashboard](../images/guides/genome-browser/browser_to_dashboard.webp){ .off-glb }](genome-browser/browser-to-dashboard.md)
+-   [![Browser to dashboard](../../images/guides/genome-browser/browser_to_dashboard.webp){ .off-glb }](browser-to-dashboard.md)
 
-    **[Browser to dashboard](genome-browser/browser-to-dashboard.md)**
+    **[Browser to dashboard](browser-to-dashboard.md)**
 
     A click on a feature filters the dashboard on its sample.
 
--   [![Navigator](../images/guides/genome-browser/chipseq_peaks.webp){ .off-glb }](genome-browser/navigator.md)
+-   [![Navigator](../../images/guides/genome-browser/chipseq_peaks.webp){ .off-glb }](navigator.md)
 
-    **[Navigator](genome-browser/navigator.md)**
+    **[Navigator](navigator.md)**
 
     Brush a region on GenomeSpy lanes; the browser opens on it.
 
--   [![Time course](../images/guides/genome-browser/genomespy_jbrowse.webp){ .off-glb }](genome-browser/time-course.md)
+-   [![Time course](../../images/guides/genome-browser/genomespy_jbrowse.webp){ .off-glb }](time-course.md)
 
-    **[Time course](genome-browser/time-course.md)**
+    **[Time course](time-course.md)**
 
     One colour ramp from the earliest library to the latest.
 
--   [![Ranked calls](../images/guides/genome-browser/ranked_rows.webp){ .off-glb }](genome-browser/ranked-calls.md)
+-   [![Ranked calls](../../images/guides/genome-browser/ranked_rows.webp){ .off-glb }](ranked-calls.md)
 
-    **[Ranked calls](genome-browser/ranked-calls.md)**
+    **[Ranked calls](ranked-calls.md)**
 
     A numbered track of the best calls, picked and zoomed.
 
--   [![Sashimi](../images/guides/genome-browser/sashimi_junctions.webp){ .off-glb }](genome-browser/sashimi.md)
+-   [![Sashimi](../../images/guides/genome-browser/sashimi_junctions.webp){ .off-glb }](sashimi.md)
 
-    **[Sashimi](genome-browser/sashimi.md)**
+    **[Sashimi](sashimi.md)**
 
     Splice junctions as arcs over RNA coverage.
 
--   [![Breakpoints](../images/guides/genome-browser/fusion_chord.webp){ .off-glb }](genome-browser/breakpoints.md)
+-   [![Breakpoints](../../images/guides/genome-browser/fusion_chord.webp){ .off-glb }](breakpoints.md)
 
-    **[Breakpoints](genome-browser/breakpoints.md)**
+    **[Breakpoints](breakpoints.md)**
 
     Both sides of a call, the breakpoint view and the circular view.
 
--   [![UCSC tracks](../images/guides/genome-browser/ucsc_and_tracks.webp){ .off-glb }](genome-browser/ucsc-tracks.md)
+-   [![UCSC tracks](../../images/guides/genome-browser/ucsc_and_tracks.webp){ .off-glb }](ucsc-tracks.md)
 
-    **[UCSC tracks](genome-browser/ucsc-tracks.md)**
+    **[UCSC tracks](ucsc-tracks.md)**
 
     Tracks of the UCSC catalogue next to the run's own.
 
 -   :material-palette:{ .lg .middle }
 
-    **[Variant colours](genome-browser/variant-colours.md)**
+    **[Variant colours](variant-colours.md)**
 
     Variants coloured by a category of the dashboard.
 
 -   :material-code-braces:{ .lg .middle }
 
-    **[Raw JBrowse configuration](genome-browser/raw-jbrowse.md)**
+    **[Raw JBrowse configuration](raw-jbrowse.md)**
 
     Any JBrowse setting or track, merged last.
 
@@ -89,7 +90,7 @@ Each example opens its own page: the clip, what it shows, and the few lines of Y
 ## How it works
 
 <figure markdown="span">
-  ![A genomic_tracks manifest is ingested as a collection; the dashboard filters pick its rows, which open as tracks of the jbrowse component; the track files, uploaded or external, reach the browser through the API track proxy; a click on a feature filters the dashboard](../images/guides/genome-browser/schema_tracks.png)
+  ![A genomic_tracks manifest is ingested as a collection; the dashboard filters pick its rows, which open as tracks of the jbrowse component; the track files, uploaded or external, reach the browser through the API track proxy; a click on a feature filters the dashboard](../../images/guides/genome-browser/schema_tracks.png)
   <figcaption><strong>Two inputs.</strong> The collection's rows say which tracks open; the files reach the browser through the API.</figcaption>
 </figure>
 
@@ -261,14 +262,14 @@ The component builder has a *Genome browser* type with the same settings.
 
 ## Versions and security
 
-- A [version](versioning.md) preview or a dataset pin reads the manifest at its pinned commit.
+- A [version](../versioning.md) preview or a dataset pin reads the manifest at its pinned commit.
   The track files are not versioned.
 - The browser never receives a storage URL or credentials: tracks come through signed proxy
   URLs (6 hours), the proxy re-checks read access, and clients name tracks by id, never by URL.
 - External files are read only from allow-listed hosts and buckets; `http://` is refused and
   redirects are not followed.
 - `DEPICTIO_JBROWSE_ENABLED=false` turns the browser off. Every `DEPICTIO_JBROWSE_*` variable
-  is in the [environment reference](../installation/env-reference.md).
+  is in the [environment reference](../../installation/env-reference.md).
 
 ---
 
@@ -276,22 +277,22 @@ The component builder has a *Genome browser* type with the same settings.
 
 | Dashboard template | Tab |
 |--------------------|-----|
-| [nf-core/atacseq](../pipeline-templates/nf-core/atacseq.md) 1.2.2 | Locus |
-| [nf-core/chipseq](../pipeline-templates/nf-core/chipseq.md) 1.2.0 | Locus |
-| [nf-core/cutandrun](../pipeline-templates/nf-core/cutandrun.md) 3.1 | Locus |
+| [nf-core/atacseq](../../pipeline-templates/nf-core/atacseq.md) 1.2.2 | Locus |
+| [nf-core/chipseq](../../pipeline-templates/nf-core/chipseq.md) 1.2.0 | Locus |
+| [nf-core/cutandrun](../../pipeline-templates/nf-core/cutandrun.md) 3.1 | Locus |
 | nf-core/drop 1.0.0 | Locus |
-| [nf-core/nanoseq](../pipeline-templates/nf-core/nanoseq.md) 3.0.0 | Locus |
+| [nf-core/nanoseq](../../pipeline-templates/nf-core/nanoseq.md) 3.0.0 | Locus |
 | nf-core/nascent 2.3.0 | Genome signal |
-| [nf-core/oncoanalyser](../pipeline-templates/nf-core/oncoanalyser.md) 3.0.0 | Small variants, Structural variants |
+| [nf-core/oncoanalyser](../../pipeline-templates/nf-core/oncoanalyser.md) 3.0.0 | Small variants, Structural variants |
 | nf-core/raredisease 3.1.2 | Locus |
-| [nf-core/riboseq](../pipeline-templates/nf-core/riboseq.md) 2.0.0 | Locus |
-| [nf-core/rnafusion](../pipeline-templates/nf-core/rnafusion.md) 4.1.3 | Breakpoints, Splice Junctions |
-| [nf-core/rnaseq](../pipeline-templates/nf-core/rnaseq.md) 3.26.0 | Gene Explorer |
-| [nf-core/rnasplice](../pipeline-templates/nf-core/rnasplice.md) 1.0.4 | Splicing Events |
+| [nf-core/riboseq](../../pipeline-templates/nf-core/riboseq.md) 2.0.0 | Locus |
+| [nf-core/rnafusion](../../pipeline-templates/nf-core/rnafusion.md) 4.1.3 | Breakpoints, Splice Junctions |
+| [nf-core/rnaseq](../../pipeline-templates/nf-core/rnaseq.md) 3.26.0 | Gene Explorer |
+| [nf-core/rnasplice](../../pipeline-templates/nf-core/rnasplice.md) 1.0.4 | Splicing Events |
 | nf-core/rnavar 1.3.0 | Genome |
-| [nf-core/sarek](../pipeline-templates/nf-core/sarek.md) 3.10.0, 3.11.0 | Locus |
-| [nf-core/variantbenchmarking](../pipeline-templates/nf-core/variantbenchmarking.md) 1.4.0 | Germline, Structural & CNV |
-| [nf-core/viralrecon](../pipeline-templates/nf-core/viralrecon.md) 3.0.0 | Variants |
+| [nf-core/sarek](../../pipeline-templates/nf-core/sarek.md) 3.10.0, 3.11.0 | Locus |
+| [nf-core/variantbenchmarking](../../pipeline-templates/nf-core/variantbenchmarking.md) 1.4.0 | Germline, Structural & CNV |
+| [nf-core/viralrecon](../../pipeline-templates/nf-core/viralrecon.md) 3.0.0 | Variants |
 
 ## Limits
 

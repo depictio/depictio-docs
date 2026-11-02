@@ -2597,3 +2597,9 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
 .tpl-bump code b {
     color: var(--tpl-bump);
 }
+
+/* A pinned sidebar group (javascripts/nav-pinned.js) has no chevron: its title
+   is a link to its own page and the group is always open. */
+.md-nav__item--nested.nav-pinned > .md-nav__container > label.md-nav__link {
+    display: none;
+}

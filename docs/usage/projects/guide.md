@@ -570,7 +570,7 @@ Without this, a genome view shows no file tracks. Tracks read from table DCs are
 A `genomic_tracks` DC is a **manifest of track files**: one row per bigWig, narrowPeak,
 BAM, VCF or other genome-browser file, with the file's location in `uri_column`. The
 manifest is ingested like a table, so it can be filtered, linked and joined like one, and
-the [genome browser](../../features/genome-browser.md) shows the tracks of the rows left
+the [genome browser](../../features/genome-browser/index.md) shows the tracks of the rows left
 after filtering. The track files themselves stay files: a relative `uri` is uploaded to
 Depictio's S3 at ingestion, and an `s3://` or `https://` one is read in place.
 

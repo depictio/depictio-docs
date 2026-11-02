@@ -151,7 +151,7 @@ three open sections; tables and record cards follow, collapsed. The persistent
 *Sample filters* (sample class, sample, analysis group) sit in the left panel and
 narrow every tab through the samplesheet links. The *Sample sheet* is pinned,
 collapsed, to the bottom of every child tab.
-The Structural variants and Small variants tabs each embed a [genome browser](../../features/genome-browser.md)
+The Structural variants and Small variants tabs each embed a [genome browser](../../features/genome-browser/index.md)
 with the tumor's calls and reads.
 
 === ":material-compass-outline: Overview"

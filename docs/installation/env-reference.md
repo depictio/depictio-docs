@@ -563,7 +563,7 @@ Logging verbosity and output configuration.
 **Config Class:** `JBrowseConfig`
 **Environment Prefix:** `DEPICTIO_JBROWSE_`
 
-Settings of the embedded [genome browser](../features/genome-browser.md) (v1.20.0+). It
+Settings of the embedded [genome browser](../features/genome-browser/index.md) (v1.20.0+). It
 runs inside the viewer and reads every track through the API, so there is no separate
 server to deploy. Tracks stored in Depictio's own bucket are always served; tracks read in
 place from a remote host or bucket must be allow-listed here, see

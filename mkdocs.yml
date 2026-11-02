@@ -83,6 +83,7 @@ extra_javascript:
   - javascripts/catalog-fullscreen.js
   - javascripts/template-version.js
   - javascripts/template-showcase.js
+  - javascripts/nav-pinned.js
   - javascripts/doc-sections.js
   - javascripts/template-catalog.js
   - javascripts/asciinema.js
@@ -290,7 +291,7 @@ nav:
           - Comments and Annotations: features/comments-annotations.md
           - Protein tiles: features/protein-tiles.md
           - Genome browser:
-              - Overview: features/genome-browser.md
+              - features/genome-browser/index.md
               - Table to browser: features/genome-browser/table-to-browser.md
               - Browser to dashboard: features/genome-browser/browser-to-dashboard.md
               - Navigator: features/genome-browser/navigator.md

@@ -1,5 +1,6 @@
 ---
 title: "Genome browser: Sashimi"
+icon: material/chart-timeline-variant
 description: Splice junctions as arcs over RNA coverage.
 glightbox: true
 ---
@@ -22,4 +23,4 @@ follow_window: true
 
 Used in the [nf-core/rnafusion dashboard template](../../pipeline-templates/nf-core/rnafusion.md).
 
-[:material-arrow-left: All examples](../genome-browser.md#examples)
+[:material-arrow-left: All examples](index.md#examples)

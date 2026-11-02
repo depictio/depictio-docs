@@ -2721,7 +2721,7 @@ Filtering works both ways. A table or interactive selection that reaches the tra
 collection through a [link](cross-dc-filtering.md#supported-target-types) changes which
 tracks are shown, and a click in the browser filters the rest of the dashboard.
 
-The genome browser has its own page: see [Genome browser](genome-browser.md).
+The genome browser has its own page: see [Genome browser](genome-browser/index.md).
 
 ---
 

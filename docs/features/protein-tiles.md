@@ -1,5 +1,6 @@
 ---
 title: Protein tiles
+icon: material/molecule
 description: Eight advanced visualizations that show one protein or a protein family, linked by residue, with structures from the run or from AlphaFold DB and ESMFold.
 ---
 

@@ -423,7 +423,7 @@ Configure logging via environment variables:
 
 ### Genome browser track access <small>(v1.20.0+)</small> { #genome-browser-track-access }
 
-The [genome browser](genome-browser.md) runs inside the viewer, not in an iframe, and the
+The [genome browser](genome-browser/index.md) runs inside the viewer, not in an iframe, and the
 browser never talks to S3 or to a track host itself. Every track byte goes through the
 API's Range-capable track proxy:
 

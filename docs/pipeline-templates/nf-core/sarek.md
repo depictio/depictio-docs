@@ -156,7 +156,7 @@ status and the callers run per sample. A callset is one caller on one sample. Th
 persistent *Sample filters* (status, patient, sample) sit in the left panel and
 narrow every tab through the sample links. The *Sample sheet* is pinned,
 collapsed, to the bottom of every child tab.
-The Locus tab embeds a [genome browser](../../features/genome-browser.md) that shows depth and reads on one axis.
+The Locus tab embeds a [genome browser](../../features/genome-browser/index.md) that shows depth and reads on one axis.
 
 === ":material-compass-outline: Overview"
 
