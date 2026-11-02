@@ -12,6 +12,7 @@ editing this file leaves the working tree clean.
 
 from __future__ import annotations
 
+import math
 from pathlib import Path
 
 from sketch import Box, Sketch, Theme, write_themed
@@ -22,69 +23,117 @@ LEFT = 46
 RIGHT = 1254
 
 
-def residue_linking(theme: Theme) -> Sketch:
-    """One gesture, two outcomes: a pick is sent as a filter, a hover stays local.
+def _tile(s: Sketch, theme: Theme, x: float, y: float, w: float, h: float, title: str, kind: str) -> None:
+    """One protein tile as a thumbnail, with the picked range banded across it.
 
-    The two rows are parallel on purpose, because the contrast is the point: the
-    same tiles, one path that goes through the server's filters and one that
-    never leaves the browser. The strip underneath is the protein itself, so
-    the range a pick filters and the single residue a hover marks are seen as
-    the same axis the tiles share.
+    Every tile draws the same band at the same offset, because that is the claim:
+    one range, shown by all of them. The thin column to the right is the hover.
     """
-    s = Sketch(1300, 640, theme=theme)
+    s.rect(Box(x, y, w, h, "white", ""))
+    pic_top, pic_h = y + 16, h - 66
+    band_x, band_w, hover_x = x + 0.34 * w, 0.22 * w, x + 0.78 * w
+    s._parts.append(
+        f'<rect x="{band_x:.1f}" y="{pic_top:.1f}" width="{band_w:.1f}" height="{pic_h:.1f}" '
+        f'fill="{theme.fill("blue")}" stroke="{theme.accent}" stroke-width="1.4" stroke-dasharray="5 4" rx="3"/>'
+    )
+    s._parts.append(
+        f'<rect x="{hover_x:.1f}" y="{pic_top:.1f}" width="9" height="{pic_h:.1f}" '
+        f'fill="{theme.fill("yellow")}" stroke="{theme.muted}" stroke-width="1.2" rx="2"/>'
+    )
+    left, right, mid = x + 16, x + w - 16, pic_top + pic_h / 2
+    ink = theme.ink
+    if kind == "3d":
+        pts = [(left + i * (right - left) / 24, mid + 16 * math.sin(i * 0.9) + 8 * math.sin(i * 0.37)) for i in range(25)]
+        s.polyline(pts, colour=ink, width=2.0, amount=0.5)
+        s.circle(band_x + band_w / 2, mid, 9, colour=theme.accent, width=2.0)
+    elif kind == "alignment":
+        for r, ln in enumerate((1.0, 0.92, 0.84, 0.96, 0.7)):
+            yy = pic_top + 10 + r * (pic_h - 20) / 4
+            s.line(left, yy, left + ln * (right - left), yy, colour=ink, width=2.0, amount=0.6, passes=1)
+    elif kind == "track":
+        n = 11
+        cw = (right - left) / n
+        for i in range(n):
+            s.rect(Box(left + i * cw, mid - 14, cw, 28, "none", ""), colour=theme.dim)
+    elif kind == "pae":
+        n = 5
+        cw, ch = (right - left) / n, (pic_h - 8) / n
+        for i in range(n):
+            for j in range(n):
+                if abs(i - j) <= 1:
+                    s._parts.append(
+                        f'<rect x="{left + i * cw + 1:.1f}" y="{pic_top + 4 + j * ch + 1:.1f}" width="{cw - 2:.1f}" '
+                        f'height="{ch - 2:.1f}" fill="{theme.muted}" opacity="0.7"/>'
+                    )
+        s.rect(Box(left, pic_top + 4, right - left, pic_h - 8, "none", ""), colour=theme.dim)
+    elif kind == "lollipop":
+        base = pic_top + pic_h - 8
+        s.line(left, base, right, base, colour=ink, width=1.8, amount=0.6, passes=1)
+        for fx, fh in ((0.08, 0.35), (0.3, 0.8), (0.42, 0.55), (0.58, 0.9), (0.86, 0.45)):
+            px, py = left + fx * (right - left), base - fh * (pic_h - 26)
+            s.line(px, base, px, py, colour=ink, width=1.6, amount=0.3, passes=1)
+            s.circle(px, py, 5, colour=ink, width=1.6)
+    s.text(x + w / 2, y + h - 18, title, size=16, weight="bold")
+
+
+def residue_linking(theme: Theme) -> Sketch:
+    """Tiles share one residue range; a pick leaves for the server as a filter, a hover never does.
+
+    The browser is drawn as a dashed zone because that is the line the hover does
+    not cross: everything in it is shared by the tiles, and only the pick goes out.
+    """
+    s = Sketch(1300, 740, theme=theme)
     s.heading(
         LEFT,
         56,
         "Protein tiles are linked by residue",
-        "a pick filters every table on its residues, a hover only marks them",
+        "a pick is a filter that leaves the browser, a hover only marks the residue in every tile",
     )
 
-    col1, col2, col3 = (LEFT, 250), (380, 420), (880, RIGHT - 880)
-    y1, h1 = 130, 128
-    y2, h2 = y1 + h1 + 34, 100
+    zone = Box(LEFT, 118, 1208, 300, "none", "")
+    s.rect(zone, colour=theme.muted, dashed=True)
+    s.text(LEFT + 22, zone.bottom - 18, "in the browser", size=15, colour=theme.dim, anchor="start")
 
-    gesture_pick = Box(col1[0], y1, col1[1], h1, "violet", "Click or brush", ("in any protein tile:", "3D, alignment, logo,", "PAE matrix, lollipop"))
-    pick = Box(
-        col2[0], y1, col2[1], h1, "blue", "A pick is a filter",
-        ("`entity`, a `position` range,", "and `chain` on a complex", "the last gesture wins"),
+    w, gap, top, h = 200, 24, 176, 168
+    x0 = LEFT + (1208 - (5 * w + 4 * gap)) / 2
+    tiles = ("3D structure", "Alignment", "Sequence track", "PAE matrix", "Lollipop")
+    kinds = ("3d", "alignment", "track", "pae", "lollipop")
+    for i, (title, kind) in enumerate(zip(tiles, kinds)):
+        _tile(s, theme, x0 + i * (w + gap), top, w, h, title, kind)
+
+    # The hover: a dashed line over the tiles, one arrow into each.
+    hover_y = 146
+    hxs = [x0 + i * (w + gap) + 0.78 * w + 4.5 for i in range(5)]
+    s.line(hxs[0], hover_y, hxs[-1], hover_y, colour=theme.dim, amount=1.0, dashed=True)
+    for hx in hxs:
+        s.arrow(hx, hover_y, hx, top - 4, dashed=True, colour=theme.dim)
+    s.text(x0, hover_y - 8, "a hover: one residue, marked in every tile, never sent to the server", size=15, colour=theme.dim, anchor="start")
+
+    # The pick: out of the browser, as a filter, into every table.
+    pick_x = x0 + 2 * (w + gap) + 0.34 * w + 0.11 * w
+    filt = Box(pick_x - 150, 478, 300, 96, "blue", "A filter", ("`entity` and a `position` range", "`chain` on a complex"))
+    s.box(filt)
+    s.arrow(pick_x, top + h + 4, pick_x, filt.y - 6, colour=theme.accent)
+    s.text(pick_x - 16, (zone.bottom + filt.y) / 2 + 6, "a pick: a click or a brush, the last one wins", size=15, colour=theme.accent, anchor="end")
+
+    tables = [
+        Box(900, 448, 354, 62, "pink", "Residue table", ()),
+        Box(900, 536, 354, 62, "pink", "Variants", ()),
+        Box(900, 624, 354, 62, "pink", "Domains", ()),
+    ]
+    for t in tables:
+        s.rect(t)
+        s.glyph("table", t.x + 38, t.cy, size=30)
+        s.text(t.x + 78, t.cy + 6, t.title, size=18, weight="bold", anchor="start")
+        s.arrow(filt.right + 6, filt.cy, t.x - 8, t.cy, dashed=True, colour=theme.accent)
+    s.text(
+        (filt.right + tables[0].x) / 2,
+        tables[2].bottom + 22,
+        "every table with those columns narrows",
+        size=15,
+        colour=theme.accent,
     )
-    follow = Box(
-        col3[0], y1, col3[1], h1, "green", "Tables narrow, tiles show it",
-        ("every table with those columns", "3D rings and zooms, alignment shades", "cards and option lists ignore it"),
-    )
-    gesture_hover = Box(col1[0], y2, col1[1], h2, "violet", "Pointer", ("over a residue", "in any protein tile"))
-    hover = Box(
-        col2[0], y2, col2[1], h2, "yellow", "A hover is a highlight",
-        ("published in the browser, once per frame", "never sent to the server"),
-    )
-    marked = Box(col3[0], y2, col3[1], h2, "grey", "Every protein tile marks it", ("nothing is fetched again",))
-    for b in (gesture_pick, pick, follow, gesture_hover, hover, marked):
-        s.box(b)
-
-    for a, b in ((gesture_pick, pick), (pick, follow)):
-        s.arrow(a.right + 6, a.cy, b.x - 6, b.cy)
-    for a, b in ((gesture_hover, hover), (hover, marked)):
-        s.arrow(a.right + 6, a.cy, b.x - 6, b.cy, dashed=True)
-
-    # -- the shared axis --------------------------------------------------------
-    s.line(LEFT, 420, RIGHT, 420, colour=theme.muted, amount=1.0, passes=1, dashed=True)
-    s.text(LEFT, 464, "The residue axis every tile shares", size=21, anchor="start")
-
-    cells, size, top = 40, 30, 490
-    pick_from, pick_to, hover_at = 13, 21, 31
-    for i in range(cells):
-        fill = "blue" if pick_from <= i <= pick_to else "yellow" if i == hover_at else "white"
-        s.rect(Box(LEFT + i * size, top, size, 34, fill, ""))
-
-    band_x1, band_x2 = LEFT + pick_from * size, LEFT + (pick_to + 1) * size
-    s.line(band_x1, top + 52, band_x2, top + 52, colour=theme.dim, amount=1.2)
-    s.line(band_x1, top + 46, band_x1, top + 58, colour=theme.dim, amount=0.6, passes=1)
-    s.line(band_x2, top + 46, band_x2, top + 58, colour=theme.dim, amount=0.6, passes=1)
-    s.text((band_x1 + band_x2) / 2, top + 84, "a pick: a range, sent as a filter", size=15, colour=theme.dim)
-
-    hx = LEFT + hover_at * size + size / 2
-    s.arrow(hx, top + 82, hx, top + 42, dashed=True)
-    s.text(hx, top + 104, "a hover: one residue, kept local", size=15, colour=theme.dim)
+    s.text(filt.cx, filt.bottom + 44, "cards and option lists ignore it", size=15, colour=theme.dim)
     return s
 
 
@@ -117,7 +166,7 @@ def structure_resolver(theme: Theme) -> Sketch:
         ("off until the server", "turns the resolver on"),
     )
     s.box(file_src)
-    s.box(collection)
+    s.box(collection, icon="folder")
     s.box(resolve_src)
     s.arrow(file_src.right + 6, file_src.cy, collection.x - 6, file_src.cy)
 

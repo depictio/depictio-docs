@@ -466,6 +466,8 @@ Effect size against significance for a differential test. The same table also re
 - Primary: View (Volcano, MA, QQ), p / padj threshold, |effect| or |log2 FC| threshold, Top-N labels, Search
 - Cosmetic: Show top-N labels; in the QQ view: identity line, 95% null band, point size
 
+**Contrasts** <span class="ver-badge">v1.19.2+</span>: `reference`, `contrast_prefix` and `contrast_separator` name the two sides (`localityBarcelona` reads Barcelona, `_vs_` names both), `effect_label` can say `vs {reference}`, `group_symbols` and `marker_cols` set the marker shape and the **Shape by** control, `hover_col` and `hover_category` add hover lines.
+
 ??? example "YAML"
     ```yaml
     - tag: viz-volcano
@@ -508,6 +510,8 @@ Ranked signed log fold changes per feature, one panel per contrast or one contra
 
 - Primary: Contrast tabs (All or one contrast), Top-N per panel, Significance threshold
 - Cosmetic: None
+
+**Contrasts** <span class="ver-badge">v1.19.2+</span>: `reference`, `contrast_prefix`, `contrast_separator` and `group_colors` name the two sides as on the [Volcano](#volcano) and colour a bar by the group it leans toward; bars past the cutoff are hatched. `effect_label`, `hover_col` and `hover_category` as on the Volcano.
 
 ??? example "YAML"
     ```yaml
@@ -1715,6 +1719,8 @@ A clustered matrix with dendrograms and annotation tracks, computed on the serve
 - Primary: Normalisation, Clustering method, Cluster rows, Cluster columns
 - Cosmetic: Row annotations, column annotations
 
+**Height** <span class="ver-badge">v1.19.3+</span>: `max_rows` (3 to 16) lets the tile grow to fit a large matrix, up to that many grid rows; unset, it keeps its layout height and only shrinks for a small matrix. `min_cell_px` (2 to 40, 12 when unset) is the shortest row height the tile asks the grid for.
+
 ??? example "YAML"
     ```yaml
     - tag: viz-complex-heatmap
@@ -2439,7 +2445,8 @@ The helpers in `depictio/recipes/lib/` (`protein_structure`, `msa`, `hmm`,
 
 ### Linked by residue { #residue-selection }
 
-![Protein tiles linked by residue: a click or brush becomes a filter on entity and position that narrows every table, a hover is only published in the browser; the model comes from a file of the run or from the resolver](../images/guides/protein-tiles/schema_residue_linking.svg){ .viz-shot loading=lazy }
+![Protein tiles linked by residue: one range is shown by every tile, a pick leaves the browser as a filter on the tables, a hover stays in it](../images/guides/protein-tiles/schema_residue_linking_light.png#only-light){ .viz-shot loading=lazy }
+![Protein tiles linked by residue: one range is shown by every tile, a pick leaves the browser as a filter on the tables, a hover stays in it](../images/guides/protein-tiles/schema_residue_linking_dark.png#only-dark){ .viz-shot loading=lazy }
 
 - **A pick is a filter.** A click or brush emits a `residue_selection`: the entity, a
   `position` range and, on a complex, the chain. Every table with those columns narrows, and
@@ -2451,6 +2458,9 @@ The helpers in `depictio/recipes/lib/` (`protein_structure`, `msa`, `hmm`,
   `residue_axis: true`. Cards and figures that do not draw the position column ignore the range.
 
 ### Where the structure comes from { #structure-resolver }
+
+![The 3D model comes from a file of the run, or from the resolver: bucket cache, AlphaFold DB, UniProt, ESMFold](../images/guides/protein-tiles/schema_structure_resolver_light.png#only-light){ .viz-shot loading=lazy }
+![The 3D model comes from a file of the run, or from the resolver: bucket cache, AlphaFold DB, UniProt, ESMFold](../images/guides/protein-tiles/schema_structure_resolver_dark.png#only-dark){ .viz-shot loading=lazy }
 
 `structure_source: file` reads the run's own files and makes no outbound call.
 `structure_source: resolve` asks the server for a model by UniProt accession, by gene and

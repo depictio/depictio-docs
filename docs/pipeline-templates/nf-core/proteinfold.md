@@ -212,11 +212,11 @@ every child tab. The pLDDT bands take AlphaFold's own colours.
     on the first. The strip gives the median residue pLDDT, the residues by
     confidence band, the likely disordered residues and the best mean pLDDT. Then
     a [linked view](../../features/dashboards.md#linked-view) holds the picked
-    structure in [3D](../../features/protein-tiles.md#molecule-3d), coloured by
+    structure in [3D](../../features/advanced-visualizations.md#molecule-3d), coloured by
     pLDDT over its written sequence, on the left. Stacked on the right are a table
     with one row per engine's top-ranked structure, which picks the structure, the
     sequence with its pLDDT lane, the pLDDT profile of every engine and the
-    [Ramachandran plot](../../features/protein-tiles.md#ramachandran) of the
+    [Ramachandran plot](../../features/advanced-visualizations.md#ramachandran) of the
     picked structure (phi and psi computed in the browser, coloured by pLDDT). A
     click on a residue in 3D, on a letter or a brush on the track selects the same
     residues in all of them. The alignment the structure was folded from and the

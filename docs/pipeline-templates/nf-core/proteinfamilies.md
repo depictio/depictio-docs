@@ -219,7 +219,7 @@ histograms, the track and the structure agree.
     against mean conservation and sized by representative length, with the record
     of the picked family beside it, and the family size per sample. The predicted
     structure of the picked family's representative
-    [floats](../../features/protein-tiles.md#molecule-3d) over the
+    [floats](../../features/advanced-visualizations.md#molecule-3d) over the
     dashboard: it opens compact, stays on screen on every tab and follows the
     filters of the tab you read.
 

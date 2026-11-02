@@ -63,7 +63,7 @@ ghcr.io/depictio/depictio-cli:1.19.3
 
 ### **♻️ Migration**
 
-* **A heatmap keeps its authored height**: set `max_rows` to let it grow with a large matrix again. See [Hierarchical Heatmap](../features/components.md#hierarchical-heatmap) ([#1285](https://github.com/depictio/depictio/pull/1285)).
+* **A heatmap keeps its authored height**: set `max_rows` to let it grow with a large matrix again. See [Hierarchical Heatmap](../features/advanced-visualizations.md#hierarchical-heatmap) ([#1285](https://github.com/depictio/depictio/pull/1285)).
 
 ### **🚀 Improvements**
 
@@ -152,16 +152,16 @@ ghcr.io/depictio/depictio-cli:1.19.0
 
 ### **✨ New Features**
 
-* **Protein tiles**: eight advanced visualizations for structures, alignments and protein families. See [Protein tiles](../features/protein-tiles.md) ([#1130](https://github.com/depictio/depictio/pull/1130)).
-* **Tiles linked by residue**: a pick filters every table, a hover marks every tile. See [Linked by residue](../features/protein-tiles.md#residue-selection) ([#1130](https://github.com/depictio/depictio/pull/1130)).
-* **Structures from AlphaFold DB or ESMFold**, off until `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` is set. See [Where the structure comes from](../features/protein-tiles.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1254](https://github.com/depictio/depictio/pull/1254)).
+* **Protein tiles**: eight advanced visualizations for structures, alignments and protein families. See [Protein tiles](../features/advanced-visualizations.md#proteins) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **Tiles linked by residue**: a pick filters every table, a hover marks every tile. See [Linked by residue](../features/advanced-visualizations.md#residue-selection) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **Structures from AlphaFold DB or ESMFold**, off until `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` is set. See [Where the structure comes from](../features/advanced-visualizations.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1254](https://github.com/depictio/depictio/pull/1254)).
 * **Add user**: an administrator creates an account with an initial password. See [Adding a user](../usage/guides/web_ui.md#add-a-user) ([#1251](https://github.com/depictio/depictio/pull/1251)).
 * **Everyone with access** on a project's permissions. See [Everyone with access](../usage/projects/guide.md#everyone-with-access) ([#1252](https://github.com/depictio/depictio/pull/1252)).
 
 ### **🚀 Improvements**
 
 * **`always_selected` and `default_by`** for pickers that hold one value. See [Initial values](../features/yaml-sync.md#interactive-defaults) ([#1131](https://github.com/depictio/depictio/pull/1131), [#1257](https://github.com/depictio/depictio/pull/1257)).
-* **Protein tiles zoom and fold**. See [The tiles](../features/protein-tiles.md#the-tiles) ([#1256](https://github.com/depictio/depictio/pull/1256)).
+* **Protein tiles zoom and fold**. See [The tiles](../features/advanced-visualizations.md#proteins) ([#1256](https://github.com/depictio/depictio/pull/1256)).
 * **Structure and PAE files as indexed-file collections**. See [Indexed-file DCs](../usage/projects/guide.md#example-indexed-file-dcs) ([#1130](https://github.com/depictio/depictio/pull/1130)).
 * **27 catalog tools** for the new pipelines. See [Tools Catalog](../catalog/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131)).
 
@@ -193,7 +193,7 @@ No images were published for v1.18.1: the API image failed to build ([#1244](htt
 ### **🐛 Bug Fixes**
 
 * **SAML loads in the API image**, where every SAML route answered 500 in 1.18.0. See [Single sign-on (SAML)](../installation/sso.md) ([#1243](https://github.com/depictio/depictio/pull/1243)).
-* **File-backed genome tracks render with sign-in on**. See [Genome view](../features/components.md#genome-view) ([#1242](https://github.com/depictio/depictio/pull/1242)).
+* **File-backed genome tracks render with sign-in on**. See [Genome view](../features/advanced-visualizations.md#genome-view) ([#1242](https://github.com/depictio/depictio/pull/1242)).
 
 ---
 
