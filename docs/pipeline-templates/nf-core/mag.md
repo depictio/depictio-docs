@@ -37,6 +37,17 @@ genomes, where the unit is the bin rather than the sample:
 - :material-dna: **Assemblies**: what each assembler made of the same samples, size against contiguity and the Nx curve, then the length and depth signal every binner is fed
 - :material-bacteria-outline: **Genomes**: CheckM2 completeness against contamination, the GTDB-Tk lineage, Prokka's genes and RNAs, and one bin read through all four tools with its locus map
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/mag, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accec29a57cdb54ef9a2237" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accec29a57cdb54ef9a2237" loading="lazy" title="nf-core/mag showcase dashboard" allowfullscreen></iframe>
+</div>
+
 Every assembler is crossed with every binner over every sample, so the filters
 that matter are the assembler, the binner, the phylum and the quality thresholds.
 The persistent `Sample filters` (assembler, binner, sample) sit in the left panel,

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Depictio — Embedded component</title>
+    <script type="module" crossorigin src="embed-a7cd7cf076.js"></script>
+    <link rel="stylesheet" href="embed-a7cd7cf076.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      Payload injected by services/export/embed.py, which replaces the sentinel
+      below. It sits inside a JSON script element on purpose: that is what makes
+      escaping `</` in the payload sufficient to keep the element from closing
+      early. Keep the sentinel and the EMBED_SENTINEL constant in sync.
+    -->
+    <script id="embed-payload" type="application/json">{"theme": "dark", "component": {"index": "ov-steps", "component_type": "text", "title": "", "workflow_tag": "", "data_collection_tag": "", "wf_id": null, "dc_id": null, "dc_config": {}, "cols_json": {}, "parent_index": null, "last_updated": "2026-10-31T18:21:49.984353", "title_align": "left", "section": null, "order": 1, "alignment": "left", "vertical_alignment": "center", "body": "### Six steps from reads to lineages\nEach step names its settings and the tab that shows its result.\n\n::: steps\n1. ![](icon:mdi:content-cut) **Trim** Adapters cut by fastp \u00b7 Settings \u00b7 [MultiQC](tab:MultiQC)\n2. ![](icon:mdi:target) **Align** Bowtie 2, primers clipped by iVar \u00b7 Settings \u00b7 [Sample QC](tab:Sample QC)\n3. ![](icon:mdi:chart-areaspline) **Cover** Depth by mosdepth \u00b7 Settings \u00b7 [Coverage](tab:Coverage & Depth)\n4. ![](icon:mdi:dna) **Call** Variants by {{param:variant_caller}}, effects by snpEff \u00b7 Settings \u00b7 [Variants](tab:Variants)\n5. ![](icon:mdi:source-merge) **Consensus** One genome per sample \u00b7 Settings \u00b7 [Sample QC](tab:Sample QC)\n6. ![](icon:mdi:virus) **Type** Pangolin lineage, Nextclade clade \u00b7 Settings \u00b7 [Lineages](tab:Lineage & Clustering)\n:::\n", "surface": "card", "accent": "green", "logo": null, "logo_dark": null}, "title": "", "data": {"figures": {}, "tables": {}, "maps": {}, "images": {}, "multiqc": {}, "multiqcGeneralStats": {}, "cards": {"values": {"ov-steps": {"param:variant_caller": "ivar"}}, "secondary": {}, "aggregations": {}}, "unique": {}, "ranges": {}, "specs": {}, "schemas": {}, "advancedVizData": {}, "compute": {}}, "tabs": [{"label": "MultiQC", "icon": null, "color": "orange"}, {"label": "Sample QC", "icon": "mdi:stethoscope", "color": "indigo"}, {"label": "Coverage & Depth", "icon": "mdi:chart-areaspline", "color": "teal"}, {"label": "Variants", "icon": "mdi:dna", "color": "grape"}, {"label": "Lineage & Clustering", "icon": "mdi:virus", "color": "red"}, {"label": "Overview", "icon": "mdi:compass-outline", "color": "brandPrimary"}]}</script>
+  </body>
+</html>

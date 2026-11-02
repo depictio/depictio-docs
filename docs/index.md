@@ -90,7 +90,54 @@ hide:
   </div>
 </section>
 
-<!-- Dashboard Components Section -->
+<!-- Depictio in numbers. Every figure is a {{ stats.* }} placeholder that
+     hooks/landing_stats.py fills from docs/data/landing_stats.json; rebuild that
+     file with dev/landing_stats.py, never edit a number here. -->
+<section class="kpi-section">
+  <div class="kpi-content">
+    <h2 class="section-heading kpi-title">
+      <span class="section-heading-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3,22V8H7V22H3M10,22V2H14V22H10M17,22V14H21V22H17Z"/></svg></span>
+      <span>Depictio in numbers</span>
+    </h2>
+    <div class="kpi-grid">
+      <article class="kpi-tile" style="--kpi-accent: var(--depictio-green);">
+        <p class="kpi-figure"><span class="kpi-num">{{ stats.templates }}</span></p>
+        <h3 class="kpi-label">nf-core pipeline templates</h3>
+        <div class="kpi-example kpi-templates">{{ stats.pipeline_marquee }}</div>
+        <a class="kpi-link" href="pipeline-templates/">All templates &rarr;</a>
+      </article>
+      <article class="kpi-tile" style="--kpi-accent: var(--depictio-purple);">
+        <p class="kpi-figure"><span class="kpi-num">{{ stats.tools }}</span><span class="kpi-figure-sub">tools &middot; <span class="kpi-num">{{ stats.outputs }}</span> outputs</span></p>
+        <h3 class="kpi-label">in the Tools Catalog</h3>
+        <div class="kpi-example kpi-tools">{{ stats.tool_marquee }}</div>
+        <a class="kpi-link" href="catalog/">Open the catalog &rarr;</a>
+      </article>
+      <article class="kpi-tile" style="--kpi-accent: var(--depictio-teal);">
+        <p class="kpi-figure"><span class="kpi-num">{{ stats.renders }}</span></p>
+        <h3 class="kpi-label">ready-made renders</h3>
+        <div class="kpi-example">
+          <div class="kpi-bar" role="img" aria-label="Renders by component type">{{ stats.renders_bar }}</div>
+          <ul class="kpi-legend">{{ stats.renders_legend }}</ul>
+        </div>
+        <a class="kpi-link" href="catalog/">See the renders &rarr;</a>
+      </article>
+      <article class="kpi-tile" style="--kpi-accent: #d6336c;">
+        <p class="kpi-figure"><span class="kpi-num">{{ stats.viz }}</span></p>
+        <h3 class="kpi-label">advanced visualizations</h3>
+        <p class="kpi-sub">Each with its own controls and views</p>
+        <div class="kpi-example kpi-viz"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_volcano_light.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_volcano_dark.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_sunburst_light.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_sunburst_dark.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_genome_chord_light.webp" alt="" width="320" height="184" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_genome_chord_dark.webp" alt="" width="320" height="184" loading="lazy" decoding="async"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_oncoplot_light.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_oncoplot_dark.webp" alt="" width="320" height="207" loading="lazy" decoding="async"></div>
+        <a class="kpi-link" href="features/advanced-visualizations/">See them all &rarr;</a>
+      </article>
+    </div>
+    <p class="kpi-stamp">As of v{{ stats.version }}</p>
+  </div>
+</section>
+
+<!-- Dashboard Components: one tab per component, each with a few examples
+     captured from the public showcases (dev/capture_components.py). Only the
+     selected example's image is shown, so only it is fetched at first; the
+     script then fetches the other tabs' first images when idle, in the
+     current theme. Without JS every panel is shown, stacked. -->
 <section class="components-section">
   <div class="components-content">
     <h2 class="section-heading components-title">
@@ -98,90 +145,340 @@ hide:
       <span>Dashboard Components</span>
     </h2>
     <p class="components-description">
-      Build powerful dashboards with a rich library of interactive components.
+      Pick a component to see a few examples from real dashboards. Most are live: hover, zoom and use their controls.
     </p>
-    <div class="components-grid">
-      <div class="component-card">
-        <div class="component-icon" style="background: var(--depictio-purple);">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.45,15.18L22,7.31V19L22,21H2V3H4V15.54L9.5,6L16,9.78L20.24,2.45L21.97,3.45L16.74,12.5L10.23,8.75L4.31,19H6.57L10.96,11.44L17.45,15.18Z"/>
-          </svg>
-        </div>
-        <h4>Figure</h4>
-        <p>Scatter, bar, box, histogram, line plots and more with Plotly</p>
+    <div class="cshow">
+      <div class="cshow-tabs" role="tablist" aria-label="Dashboard components" aria-orientation="vertical">
+        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-figure" aria-controls="cshow-figure" aria-selected="true" tabindex="0" style="--c-accent: var(--depictio-purple);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.45,15.18L22,7.31V19L22,21H2V3H4V15.54L9.5,6L16,9.78L20.24,2.45L21.97,3.45L16.74,12.5L10.23,8.75L4.31,19H6.57L10.96,11.44L17.45,15.18Z"/></svg></span><span class="cshow-tab-text"><b>Figure</b><small>Plotly charts, any kind</small></span></button>
+        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-advanced_viz" aria-controls="cshow-advanced_viz" aria-selected="false" tabindex="-1" style="--c-accent: #d6336c;"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 2h2v18h18v2H2zm12 12.5L12 18H7.94l-2.02-3.5L7.94 11H12zm.08-8L12.06 10H8L6 6.5L8 3h4.06zm7.17 4L19.23 14h-4.04l-2.02-3.5L15.19 7h4.04z"/></svg></span><span class="cshow-tab-text"><b>Advanced viz</b><small>Omics plots with controls</small></span></button>
+        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-card" aria-controls="cshow-card" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-teal);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5,3A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3H5M7,7H17V9H7V7M7,11H14V13H7V11M7,15H17V17H7V15Z"/></svg></span><span class="cshow-tab-text"><b>Card</b><small>Metrics at a glance</small></span></button>
+        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-table" aria-controls="cshow-table" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-blue);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5,4H19A2,2 0 0,1 21,6V18A2,2 0 0,1 19,20H5A2,2 0 0,1 3,18V6A2,2 0 0,1 5,4M5,8V12H11V8H5M13,8V12H19V8H13M5,14V18H11V14H5M13,14V18H19V14H13Z"/></svg></span><span class="cshow-tab-text"><b>Table</b><small>Sort, filter, export</small></span></button>
+        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-interactive" aria-controls="cshow-interactive" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-green);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z"/></svg></span><span class="cshow-tab-text"><b>Interactive</b><small>Filters for every tile</small></span></button>
+        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-multiqc" aria-controls="cshow-multiqc" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-orange);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.46,11.53A7.53,7.53 0 0,1 11.52,4.5V0.09A11.98,11.98 0 0,0 0.06,11.53ZM11.5,19.6A7.53,7.53 0 0,1 4.46,12.54H0.06A11.98,11.98 0 0,0 11.5,24ZM12.53,4.5A7.53,7.53 0 0,1 19.57,11.56H24A11.98,11.98 0 0,0 12.53,0.09ZM24,19.6A7.53,7.53 0 0,1 16.93,12.54H12.53A11.98,11.98 0 0,0 24,24Z"/></svg></span><span class="cshow-tab-text"><b>MultiQC</b><small>Your QC report, live</small></span></button>
+        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-map" aria-controls="cshow-map" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-violet);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/></svg></span><span class="cshow-tab-text"><b>Map</b><small>Samples on a map</small></span></button>
+        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-text" aria-controls="cshow-text" aria-selected="false" tabindex="-1" style="--c-accent: #e91e63;"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 19.11L12.11 17H7v-2h7v.12L16.12 13H7v-2h10v1.12l1.24-1.23c.48-.48 1.11-.75 1.8-.75c.33 0 .66.07.96.19V5a2 2 0 0 0-2-2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h5zM7 7h10v2H7zm14.7 7.35l-1 1l-2.05-2.05l1-1a.55.55 0 0 1 .77 0l1.28 1.28c.21.21.21.56 0 .77M12 19.94l6.06-6.06l2.05 2.05L14.06 22H12z"/></svg></span><span class="cshow-tab-text"><b>Text</b><small>Notes for the reader</small></span></button>
+        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-image" aria-controls="cshow-image" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-pink);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22,16V4A2,2 0 0,0 20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16M11,12L13.03,14.71L16,11L20,16H8M2,6V20A2,2 0 0,0 4,22H18V20H4V6"/></svg></span><span class="cshow-tab-text"><b>Image</b><small>Galleries from S3</small></span></button>
       </div>
-      <div class="component-card">
-        <div class="component-icon" style="background: var(--depictio-blue);">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M5,4H19A2,2 0 0,1 21,6V18A2,2 0 0,1 19,20H5A2,2 0 0,1 3,18V6A2,2 0 0,1 5,4M5,8V12H11V8H5M13,8V12H19V8H13M5,14V18H11V14H5M13,14V18H19V14H13Z"/>
-          </svg>
+      <div class="cshow-panel" role="tabpanel" id="cshow-figure" aria-labelledby="cshow-tab-figure" tabindex="0" style="--c-accent: var(--depictio-purple);">
+        <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.45,15.18L22,7.31V19L22,21H2V3H4V15.54L9.5,6L16,9.78L20.24,2.45L21.97,3.45L16.74,12.5L10.23,8.75L4.31,19H6.57L10.96,11.44L17.45,15.18Z"/></svg></span>Figure</h3>
+        <div class="cshow-examples" role="group" aria-label="Figure examples">
+          <span class="cshow-exgroup"><b>Distribution</b><button class="cshow-ex" type="button" aria-pressed="true" data-ex="0">Scatter + marginals</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="1">Violin</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="2">Box</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="3">Dots + thresholds</button></span>
+          <span class="cshow-exgroup"><b>Lines &amp; points</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="4">Annotated lines</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="5">Profile</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="6">Shaded bands</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="7">MA scatter</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="8">Genome scatter</button></span>
+          <span class="cshow-exgroup"><b>Matrix</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="9">Heatmap</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="10">Annotated grid</button></span>
+          <span class="cshow-exgroup"><b>Composition</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="11">Stacked bars</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="12">Grouped bars</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="13">Score breakdown</button></span>
+          <span class="cshow-exgroup"><b>Layout</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="14">Shared axis</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="15">Facets</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="16">Genome-wide</button></span>
         </div>
-        <h4>Table</h4>
-        <p>Interactive AG Grid tables with filtering, sorting, and export</p>
+        <div class="cshow-stage">
+          <figure class="cshow-shot" data-ex="0" data-live-src="images/landing/live/fig_scatter">
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_scatter_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Body mass against flipper length, with marginal distributions" aria-label="Body mass against flipper length, with marginal distributions, open full size"><img src="images/landing/live/poster/fig_scatter_light.webp" alt="A penguin scatter of body mass against flipper length with box and violin marginals" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_scatter_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Body mass against flipper length, with marginal distributions" aria-label="Body mass against flipper length, with marginal distributions, open full size"><img src="images/landing/live/poster/fig_scatter_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="1" data-live-src="images/landing/live/fig_violin" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_violin_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Body mass distribution by species" aria-label="Body mass distribution by species, open full size"><img src="images/landing/live/poster/fig_violin_light.webp" alt="Violin plots of penguin body mass by species" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_violin_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Body mass distribution by species" aria-label="Body mass distribution by species, open full size"><img src="images/landing/live/poster/fig_violin_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="2" data-live-src="images/landing/live/fig_box" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_box_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Bill length by species and sex" aria-label="Bill length by species and sex, open full size"><img src="images/landing/live/poster/fig_box_light.webp" alt="Box plots of penguin bill length by species and sex" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_box_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Bill length by species and sex" aria-label="Bill length by species and sex, open full size"><img src="images/landing/live/poster/fig_box_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="3" data-live-src="images/landing/live/fig_dot_bands" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_dot_bands_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Unique mapping and duplication per sample, nf-core/rnavar" aria-label="Unique mapping and duplication per sample, nf-core/rnavar, open full size"><img src="images/landing/live/poster/fig_dot_bands_light.webp" alt="Two dot panels per sample, unique mapping and duplication, with warning bands shaded" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_dot_bands_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Unique mapping and duplication per sample, nf-core/rnavar" aria-label="Unique mapping and duplication per sample, nf-core/rnavar, open full size"><img src="images/landing/live/poster/fig_dot_bands_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="4" data-live-src="images/landing/live/fig_annotated" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_annotated_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Fragment length distribution with nucleosome bands, nf-core/atacseq" aria-label="Fragment length distribution with nucleosome bands, nf-core/atacseq, open full size"><img src="images/landing/live/poster/fig_annotated_light.webp" alt="Fragment length curves per library with shaded nucleosome-free and mono-nucleosome bands" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_annotated_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Fragment length distribution with nucleosome bands, nf-core/atacseq" aria-label="Fragment length distribution with nucleosome bands, nf-core/atacseq, open full size"><img src="images/landing/live/poster/fig_annotated_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="5" data-live-src="images/landing/live/fig_tss" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_tss_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Coverage around transcription start sites, nf-core/atacseq" aria-label="Coverage around transcription start sites, nf-core/atacseq, open full size"><img src="images/landing/live/poster/fig_tss_light.webp" alt="Aggregate coverage profiles per library centred on transcription start sites" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_tss_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Coverage around transcription start sites, nf-core/atacseq" aria-label="Coverage around transcription start sites, nf-core/atacseq, open full size"><img src="images/landing/live/poster/fig_tss_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="6" data-live-src="images/landing/live/fig_bands" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_bands_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Allele fraction per caller, nf-core/sarek" aria-label="Allele fraction per caller, nf-core/sarek, open full size"><img src="images/landing/live/poster/fig_bands_light.webp" alt="Allele fraction density per caller with the heterozygous and homozygous bands shaded" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_bands_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Allele fraction per caller, nf-core/sarek" aria-label="Allele fraction per caller, nf-core/sarek, open full size"><img src="images/landing/live/poster/fig_bands_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="7" data-live-src="images/landing/live/fig_ma" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_ma_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Run against run, difference over mean, nf-core/quantms" aria-label="Run against run, difference over mean, nf-core/quantms, open full size"><img src="images/landing/live/poster/fig_ma_light.webp" alt="A scatter of the difference between two runs against their mean, with a twofold band" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_ma_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Run against run, difference over mean, nf-core/quantms" aria-label="Run against run, difference over mean, nf-core/quantms, open full size"><img src="images/landing/live/poster/fig_ma_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="8" data-live-src="images/landing/live/fig_loh" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_loh_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Tumour allele fraction at the normal&#x27;s heterozygous sites, nf-core/sarek" aria-label="Tumour allele fraction at the normal&#x27;s heterozygous sites, nf-core/sarek, open full size"><img src="images/landing/live/poster/fig_loh_light.webp" alt="Allele fraction along the genome, coloured as balanced, imbalanced or LOH-like" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_loh_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Tumour allele fraction at the normal&#x27;s heterozygous sites, nf-core/sarek" aria-label="Tumour allele fraction at the normal&#x27;s heterozygous sites, nf-core/sarek, open full size"><img src="images/landing/live/poster/fig_loh_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="9" data-live-src="images/landing/live/fig_heatmap" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_heatmap_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Share of the signal per chromosome over time, nf-core/nascent" aria-label="Share of the signal per chromosome over time, nf-core/nascent, open full size"><img src="images/landing/live/poster/fig_heatmap_light.webp" alt="A diverging heatmap of the log2 share of signal per chromosome at each time point" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_heatmap_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Share of the signal per chromosome over time, nf-core/nascent" aria-label="Share of the signal per chromosome over time, nf-core/nascent, open full size"><img src="images/landing/live/poster/fig_heatmap_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="10" data-live-src="images/landing/live/fig_matrix" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_matrix_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Structural variant types by size class, nf-core/sarek" aria-label="Structural variant types by size class, nf-core/sarek, open full size"><img src="images/landing/live/poster/fig_matrix_light.webp" alt="A heatmap of structural variant types by size class with counts in the cells" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_matrix_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Structural variant types by size class, nf-core/sarek" aria-label="Structural variant types by size class, nf-core/sarek, open full size"><img src="images/landing/live/poster/fig_matrix_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="11" data-live-src="images/landing/live/fig_stacked" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_stacked_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Phylum composition per habitat, nf-core/ampliseq" aria-label="Phylum composition per habitat, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/fig_stacked_light.webp" alt="Stacked bars of phylum composition per habitat" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_stacked_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Phylum composition per habitat, nf-core/ampliseq" aria-label="Phylum composition per habitat, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/fig_stacked_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="12" data-live-src="images/landing/live/fig_grouped" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_grouped_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Substitution spectrum per caller, nf-core/sarek" aria-label="Substitution spectrum per caller, nf-core/sarek, open full size"><img src="images/landing/live/poster/fig_grouped_light.webp" alt="Grouped bars of the six substitution classes for each variant caller" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_grouped_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Substitution spectrum per caller, nf-core/sarek" aria-label="Substitution spectrum per caller, nf-core/sarek, open full size"><img src="images/landing/live/poster/fig_grouped_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="13" data-live-src="images/landing/live/fig_score_parts" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_score_parts_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Rank score parts of the 20 best variants, nf-core/raredisease" aria-label="Rank score parts of the 20 best variants, nf-core/raredisease, open full size"><img src="images/landing/live/poster/fig_score_parts_light.webp" alt="Horizontal stacked bars splitting each variant&#x27;s rank score into its parts" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_score_parts_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Rank score parts of the 20 best variants, nf-core/raredisease" aria-label="Rank score parts of the 20 best variants, nf-core/raredisease, open full size"><img src="images/landing/live/poster/fig_score_parts_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="14" data-live-src="images/landing/live/fig_subplots" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_subplots_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Differences and missing bases per consensus genome, nf-core/viralrecon" aria-label="Differences and missing bases per consensus genome, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/fig_subplots_light.webp" alt="Two stacked panels sharing the sample axis: Nextclade differences and missing bases" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_subplots_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Differences and missing bases per consensus genome, nf-core/viralrecon" aria-label="Differences and missing bases per consensus genome, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/fig_subplots_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="15" data-live-src="images/landing/live/fig_facets" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_facets_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Transcript usage per library for chosen genes, nf-core/nanoseq" aria-label="Transcript usage per library for chosen genes, nf-core/nanoseq, open full size"><img src="images/landing/live/poster/fig_facets_light.webp" alt="A grid of stacked bar panels, one per gene, of transcript usage per library" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_facets_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Transcript usage per library for chosen genes, nf-core/nanoseq" aria-label="Transcript usage per library for chosen genes, nf-core/nanoseq, open full size"><img src="images/landing/live/poster/fig_facets_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="16" data-live-src="images/landing/live/fig_genome" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/fig_genome_light.webp" data-type="image" data-gallery="cshow-figure-light" data-title="Gains and losses along the genome, nf-core/sarek" aria-label="Gains and losses along the genome, nf-core/sarek, open full size"><img src="images/landing/live/poster/fig_genome_light.webp" alt="Copy-number log ratios along the genome, one panel per sample, chromosomes shaded" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/fig_genome_dark.webp" data-type="image" data-gallery="cshow-figure-dark" data-title="Gains and losses along the genome, nf-core/sarek" aria-label="Gains and losses along the genome, nf-core/sarek, open full size"><img src="images/landing/live/poster/fig_genome_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+        </div>
+        <ul class="cshow-points"><li>Scatter, bar, line, histogram, box and ComplexHeatmap from the editor</li><li>Code mode takes any Plotly Express call</li><li>A click or a lasso on a scatter filters the dashboard</li></ul>
+        <a class="cshow-docs" href="features/components/#figure-components">Figure docs &rarr;</a>
       </div>
-      <div class="component-card">
-        <div class="component-icon" style="background: var(--depictio-teal);">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M5,3A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3H5M7,7H17V9H7V7M7,11H14V13H7V11M7,15H17V17H7V15Z"/>
-          </svg>
+      <div class="cshow-panel" role="tabpanel" id="cshow-advanced_viz" aria-labelledby="cshow-tab-advanced_viz" tabindex="0" style="--c-accent: #d6336c;">
+        <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 2h2v18h18v2H2zm12 12.5L12 18H7.94l-2.02-3.5L7.94 11H12zm.08-8L12.06 10H8L6 6.5L8 3h4.06zm7.17 4L19.23 14h-4.04l-2.02-3.5L15.19 7h4.04z"/></svg></span>Advanced viz</h3>
+        <div class="cshow-examples" role="group" aria-label="Advanced viz examples">
+          <span class="cshow-exgroup"><b>Matrix</b><button class="cshow-ex" type="button" aria-pressed="true" data-ex="0">Annotated heatmap</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="1">UpSet</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="2">Oncoplot</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="3">Signal matrix</button></span>
+          <span class="cshow-exgroup"><b>Genome</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="4">Coverage + annotation</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="5">Copy number</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="6">Chord</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="7">Ideogram</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="8">Sashimi</button></span>
+          <span class="cshow-exgroup"><b>Protein</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="9">Lollipop</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="10">Fusion structure</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="11">HMM logo</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="12">Alignment</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="13">3D structure</button></span>
+          <span class="cshow-exgroup"><b>Statistics</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="14">Volcano</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="15">Manhattan</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="16">Ranked</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="17">Dot plot</button></span>
+          <span class="cshow-exgroup"><b>Hierarchy &amp; flow</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="18">Sunburst</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="19">Sankey</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="20">Stacked taxonomy</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="21">Rarefaction</button></span>
         </div>
-        <h4>Card</h4>
-        <p>Metric cards with aggregations (count, sum, mean, min, max)</p>
+        <div class="cshow-stage">
+          <figure class="cshow-shot" data-ex="0" data-live-src="images/landing/live/viz_heatmap">
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_heatmap_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Phylum abundance, clustered, with taxon and sample annotations, nf-core/ampliseq" aria-label="Phylum abundance, clustered, with taxon and sample annotations, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/viz_heatmap_light.webp" alt="A clustered heatmap of phylum abundance with a kingdom annotation on the rows and sample metadata on the columns" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_heatmap_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Phylum abundance, clustered, with taxon and sample annotations, nf-core/ampliseq" aria-label="Phylum abundance, clustered, with taxon and sample annotations, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/viz_heatmap_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="1" data-live-src="images/landing/live/viz_upset" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_upset_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Taxa shared between habitats, nf-core/ampliseq" aria-label="Taxa shared between habitats, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/viz_upset_light.webp" alt="An UpSet plot of taxa shared between habitats, set bars coloured by habitat, with a kingdom annotation on top" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_upset_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Taxa shared between habitats, nf-core/ampliseq" aria-label="Taxa shared between habitats, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/viz_upset_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="2" hidden data-live-src="images/landing/live/viz_oncoplot" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_oncoplot_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Mutations per sample and gene, nf-core/viralrecon" aria-label="Mutations per sample and gene, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/viz_oncoplot_light.webp" alt="An oncoplot of samples by genes with marginal bar charts" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_oncoplot_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Mutations per sample and gene, nf-core/viralrecon" aria-label="Mutations per sample and gene, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/viz_oncoplot_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="3" hidden data-live-src="images/landing/live/viz_signal" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_signal_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Fragment pile-up around SEACR summits, nf-core/cutandrun" aria-label="Fragment pile-up around SEACR summits, nf-core/cutandrun, open full size"><img src="images/landing/live/poster/viz_signal_light.webp" alt="Heatmaps of fragment pile-up per library with a summary profile on top" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_signal_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Fragment pile-up around SEACR summits, nf-core/cutandrun" aria-label="Fragment pile-up around SEACR summits, nf-core/cutandrun, open full size"><img src="images/landing/live/poster/viz_signal_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="4" hidden data-live-src="images/landing/live/viz_coverage" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_coverage_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Depth per amplicon over the SARS-CoV-2 genes, nf-core/viralrecon" aria-label="Depth per amplicon over the SARS-CoV-2 genes, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/viz_coverage_light.webp" alt="Sequencing depth along the viral genome with a gene annotation track" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_coverage_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Depth per amplicon over the SARS-CoV-2 genes, nf-core/viralrecon" aria-label="Depth per amplicon over the SARS-CoV-2 genes, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/viz_coverage_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="5" hidden data-live-src="images/landing/live/viz_cnv" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_cnv_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Copy-number profile of one sample, nf-core/sarek" aria-label="Copy-number profile of one sample, nf-core/sarek, open full size"><img src="images/landing/live/poster/viz_cnv_light.webp" alt="Log ratios along the genome with segments coloured as gain, loss or neutral" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_cnv_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Copy-number profile of one sample, nf-core/sarek" aria-label="Copy-number profile of one sample, nf-core/sarek, open full size"><img src="images/landing/live/poster/viz_cnv_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="6" hidden data-live-src="images/landing/live/viz_chord" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_chord_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Structural variants across the genome, nf-core/oncoanalyser" aria-label="Structural variants across the genome, nf-core/oncoanalyser, open full size"><img src="images/landing/live/poster/viz_chord_light.webp" alt="A circular genome with chords joining the two ends of each structural variant" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_chord_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Structural variants across the genome, nf-core/oncoanalyser" aria-label="Structural variants across the genome, nf-core/oncoanalyser, open full size"><img src="images/landing/live/poster/viz_chord_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="7" hidden data-live-src="images/landing/live/viz_ideogram" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_ideogram_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Structural variants on the karyotype, nf-core/sarek" aria-label="Structural variants on the karyotype, nf-core/sarek, open full size"><img src="images/landing/live/poster/viz_ideogram_light.webp" alt="Chromosome ideograms with structural variants marked along them" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_ideogram_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Structural variants on the karyotype, nf-core/sarek" aria-label="Structural variants on the karyotype, nf-core/sarek, open full size"><img src="images/landing/live/poster/viz_ideogram_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="8" hidden>
+            <a class="glightbox cshow-light" href="images/guides/advanced-visualizations/sashimi_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Splice junctions over a gene, GenomeSpy sashimi view" aria-label="Splice junctions over a gene, GenomeSpy sashimi view, open full size"><img src="images/guides/advanced-visualizations/sashimi_light.webp" alt="Read coverage with arcs for splice junctions over a gene model" width="1450" height="836" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/guides/advanced-visualizations/sashimi_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Splice junctions over a gene, GenomeSpy sashimi view" aria-label="Splice junctions over a gene, GenomeSpy sashimi view, open full size"><img src="images/guides/advanced-visualizations/sashimi_dark.webp" alt="" width="1450" height="836" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="9" hidden data-live-src="images/landing/live/viz_lollipop" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_lollipop_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Coding variants along the protein, nf-core/sarek" aria-label="Coding variants along the protein, nf-core/sarek, open full size"><img src="images/landing/live/poster/viz_lollipop_light.webp" alt="Lollipop plot of coding variants along the protein, coloured by impact" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_lollipop_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Coding variants along the protein, nf-core/sarek" aria-label="Coding variants along the protein, nf-core/sarek, open full size"><img src="images/landing/live/poster/viz_lollipop_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="10" hidden data-live-src="images/landing/live/viz_fusion" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_fusion_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Kept and lost exons per fusion, nf-core/oncoanalyser" aria-label="Kept and lost exons per fusion, nf-core/oncoanalyser, open full size"><img src="images/landing/live/poster/viz_fusion_light.webp" alt="Exon maps of each fusion partner, kept exons highlighted" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_fusion_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Kept and lost exons per fusion, nf-core/oncoanalyser" aria-label="Kept and lost exons per fusion, nf-core/oncoanalyser, open full size"><img src="images/landing/live/poster/viz_fusion_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="11" hidden data-live-src="images/landing/live/viz_hmm_logo" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_hmm_logo_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Profile HMM logo of a protein family, nf-core/proteinfamilies" aria-label="Profile HMM logo of a protein family, nf-core/proteinfamilies, open full size"><img src="images/landing/live/poster/viz_hmm_logo_light.webp" alt="A sequence logo of a profile HMM, letter height by conservation" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_hmm_logo_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Profile HMM logo of a protein family, nf-core/proteinfamilies" aria-label="Profile HMM logo of a protein family, nf-core/proteinfamilies, open full size"><img src="images/landing/live/poster/viz_hmm_logo_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="12" hidden data-live-src="images/landing/live/viz_msa" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_msa_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Family alignment, nf-core/proteinfamilies" aria-label="Family alignment, nf-core/proteinfamilies, open full size"><img src="images/landing/live/poster/viz_msa_light.webp" alt="A multiple sequence alignment of a protein family, residues coloured" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_msa_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Family alignment, nf-core/proteinfamilies" aria-label="Family alignment, nf-core/proteinfamilies, open full size"><img src="images/landing/live/poster/viz_msa_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="13" hidden>
+            <a class="glightbox cshow-light" href="images/landing/components/viz_structure_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Coding variants on the predicted protein structure, nf-core/sarek" aria-label="Coding variants on the predicted protein structure, nf-core/sarek, open full size"><img src="images/landing/components/viz_structure_light.webp" alt="Coding variants mapped onto a predicted 3D protein structure" width="1184" height="1242" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/components/viz_structure_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Coding variants on the predicted protein structure, nf-core/sarek" aria-label="Coding variants on the predicted protein structure, nf-core/sarek, open full size"><img src="images/landing/components/viz_structure_dark.webp" alt="" width="1184" height="1242" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="14" hidden data-live-src="images/landing/live/viz_volcano" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_volcano_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Translation effect against significance, nf-core/riboseq" aria-label="Translation effect against significance, nf-core/riboseq, open full size"><img src="images/landing/live/poster/viz_volcano_light.webp" alt="A volcano plot of translation effects with labelled genes" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_volcano_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Translation effect against significance, nf-core/riboseq" aria-label="Translation effect against significance, nf-core/riboseq, open full size"><img src="images/landing/live/poster/viz_volcano_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="15" hidden data-live-src="images/landing/live/viz_manhattan" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_manhattan_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="MACS2 peak significance along the genome, nf-core/cutandrun" aria-label="MACS2 peak significance along the genome, nf-core/cutandrun, open full size"><img src="images/landing/live/poster/viz_manhattan_light.webp" alt="A Manhattan plot of peak significance coloured by chromosome" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_manhattan_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="MACS2 peak significance along the genome, nf-core/cutandrun" aria-label="MACS2 peak significance along the genome, nf-core/cutandrun, open full size"><img src="images/landing/live/poster/viz_manhattan_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="16" data-live-src="images/landing/live/viz_ranked" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_ranked_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Top candidate variants with their details, nf-core/raredisease" aria-label="Top candidate variants with their details, nf-core/raredisease, open full size"><img src="images/landing/live/poster/viz_ranked_light.webp" alt="A ranked table of candidate variants with model, impact and score bars; each row opens its annotation details" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_ranked_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Top candidate variants with their details, nf-core/raredisease" aria-label="Top candidate variants with their details, nf-core/raredisease, open full size"><img src="images/landing/live/poster/viz_ranked_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="17" hidden data-live-src="images/landing/live/viz_dotplot" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_dotplot_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Read support per fusion and caller, nf-core/rnafusion" aria-label="Read support per fusion and caller, nf-core/rnafusion, open full size"><img src="images/landing/live/poster/viz_dotplot_light.webp" alt="A dot plot of fusions by caller, dot size and colour by read support" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_dotplot_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Read support per fusion and caller, nf-core/rnafusion" aria-label="Read support per fusion and caller, nf-core/rnafusion, open full size"><img src="images/landing/live/poster/viz_dotplot_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="18" data-live-src="images/landing/live/viz_sunburst" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_sunburst_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Taxonomic hierarchy, TREC 2024 marine metabarcoding (nf-core/ampliseq)" aria-label="Taxonomic hierarchy, TREC 2024 marine metabarcoding (nf-core/ampliseq), open full size"><img src="images/landing/live/poster/viz_sunburst_light.webp" alt="A sunburst of relative abundance from kingdom to phylum to class" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_sunburst_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Taxonomic hierarchy, TREC 2024 marine metabarcoding (nf-core/ampliseq)" aria-label="Taxonomic hierarchy, TREC 2024 marine metabarcoding (nf-core/ampliseq), open full size"><img src="images/landing/live/poster/viz_sunburst_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="19" data-live-src="images/landing/live/viz_sankey" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_sankey_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Taxonomic flow, TREC 2024 marine metabarcoding (nf-core/ampliseq)" aria-label="Taxonomic flow, TREC 2024 marine metabarcoding (nf-core/ampliseq), open full size"><img src="images/landing/live/poster/viz_sankey_light.webp" alt="A Sankey diagram of relative abundance flowing from kingdom to phylum to class" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_sankey_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Taxonomic flow, TREC 2024 marine metabarcoding (nf-core/ampliseq)" aria-label="Taxonomic flow, TREC 2024 marine metabarcoding (nf-core/ampliseq), open full size"><img src="images/landing/live/poster/viz_sankey_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="20" data-live-src="images/landing/live/viz_stacked" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_stacked_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Composition per sample, with a locality strip, TREC 2024 marine metabarcoding (nf-core/ampliseq)" aria-label="Composition per sample, with a locality strip, TREC 2024 marine metabarcoding (nf-core/ampliseq), open full size"><img src="images/landing/live/poster/viz_stacked_light.webp" alt="Stacked relative abundance of the top phyla in 85 samples, with a locality strip on top" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_stacked_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Composition per sample, with a locality strip, TREC 2024 marine metabarcoding (nf-core/ampliseq)" aria-label="Composition per sample, with a locality strip, TREC 2024 marine metabarcoding (nf-core/ampliseq), open full size"><img src="images/landing/live/poster/viz_stacked_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="21" data-live-src="images/landing/live/viz_rarefaction" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/viz_rarefaction_light.webp" data-type="image" data-gallery="cshow-advanced_viz-light" data-title="Rarefaction curves per habitat, nf-core/ampliseq" aria-label="Rarefaction curves per habitat, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/viz_rarefaction_light.webp" alt="Alpha rarefaction curves per habitat" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_rarefaction_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Rarefaction curves per habitat, nf-core/ampliseq" aria-label="Rarefaction curves per habitat, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/viz_rarefaction_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+        </div>
+        <ul class="cshow-points"><li>50 visualizations: volcano, oncoplot, sunburst, genome tracks, 3D structures and more</li><li>Each comes with its own controls; some switch between views</li></ul>
+        <a class="cshow-docs" href="features/advanced-visualizations/">Advanced viz docs &rarr;</a>
       </div>
-      <div class="component-card">
-        <div class="component-icon" style="background: var(--depictio-green);">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z"/>
-          </svg>
+      <div class="cshow-panel" role="tabpanel" id="cshow-card" aria-labelledby="cshow-tab-card" tabindex="0" style="--c-accent: var(--depictio-teal);">
+        <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5,3A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3H5M7,7H17V9H7V7M7,11H14V13H7V11M7,15H17V17H7V15Z"/></svg></span>Card</h3>
+        <div class="cshow-examples" role="group" aria-label="Card examples">
+          <button class="cshow-ex" type="button" aria-pressed="true" data-ex="0">Overview styles</button>
         </div>
-        <h4>Interactive</h4>
-        <p>Filters with sliders, dropdowns, and date pickers</p>
+        <div class="cshow-stage">
+          <figure class="cshow-shot" data-ex="0" data-live-grid="images/landing/live/kpi_threshold images/landing/live/kpi_box images/landing/live/kpi_coverage images/landing/live/kpi_top_n images/landing/live/kpi_composition images/landing/live/kpi_gauge images/landing/live/kpi_donut images/landing/live/kpi_histogram" data-live-layout="cols-4">
+            <a class="glightbox cshow-light" href="images/landing/live/poster/card_kpi_light.webp" data-type="image" data-gallery="cshow-card-light" data-title="Eight card styles from nf-core overview tabs" aria-label="Eight card styles from nf-core overview tabs, open full size"><img src="images/landing/live/poster/card_kpi_light.webp" alt="Eight metric cards, each with a different secondary view: threshold, box plot, coverage, top N, composition, gauge, donut and histogram" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/card_kpi_dark.webp" data-type="image" data-gallery="cshow-card-dark" data-title="Eight card styles from nf-core overview tabs" aria-label="Eight card styles from nf-core overview tabs, open full size"><img src="images/landing/live/poster/card_kpi_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+        </div>
+        <ul class="cshow-points"><li>One metric per card: count, sum, average, median, unique values and more</li><li>A secondary view shows its shape: donut, box plot, sparkline, histogram, gauge</li><li>Follows every filter on the dashboard</li></ul>
+        <a class="cshow-docs" href="features/components/#card-components">Card docs &rarr;</a>
       </div>
-      <div class="component-card">
-        <div class="component-icon multiqc-logo-icon">
-          <img class="only-light" src="images/logos/multiqc_light.svg" alt="MultiQC">
-          <img class="only-dark" src="images/logos/multiqc_dark.svg" alt="MultiQC">
+      <div class="cshow-panel" role="tabpanel" id="cshow-table" aria-labelledby="cshow-tab-table" tabindex="0" style="--c-accent: var(--depictio-blue);">
+        <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5,4H19A2,2 0 0,1 21,6V18A2,2 0 0,1 19,20H5A2,2 0 0,1 3,18V6A2,2 0 0,1 5,4M5,8V12H11V8H5M13,8V12H19V8H13M5,14V18H11V14H5M13,14V18H19V14H13Z"/></svg></span>Table</h3>
+        <div class="cshow-examples" role="group" aria-label="Table examples">
+          <button class="cshow-ex" type="button" aria-pressed="true" data-ex="0">Abundance</button>
         </div>
-        <h4>MultiQC</h4>
-        <p>Quality control reports embedded in dashboards</p>
+        <div class="cshow-stage">
+          <figure class="cshow-shot" data-ex="0">
+            <a class="glightbox cshow-light" href="images/landing/components/table_abundance_light.webp" data-type="image" data-gallery="cshow-table-light" data-title="Relative abundance per sample and phylum, nf-core/ampliseq" aria-label="Table: Abundance, open full size"><img src="images/landing/components/table_abundance_light.webp" alt="A table of relative abundance per sample and phylum" width="1600" height="831" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/components/table_abundance_dark.webp" data-type="image" data-gallery="cshow-table-dark" data-title="Relative abundance per sample and phylum, nf-core/ampliseq" aria-label="Table: Abundance, open full size"><img src="images/landing/components/table_abundance_dark.webp" alt="" width="1600" height="831" loading="lazy" decoding="async"></a>
+          </figure>
+        </div>
+        <ul class="cshow-points"><li>AG Grid with server-side paging, so large tables stay fast</li><li>Sort and filter by column, export to CSV</li><li>Selecting rows filters the dashboard</li></ul>
+        <a class="cshow-docs" href="features/components/#table-components">Table docs &rarr;</a>
       </div>
-      <div class="component-card">
-        <div class="component-icon" style="background: var(--depictio-pink);">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M22,16V4A2,2 0 0,0 20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16M11,12L13.03,14.71L16,11L20,16H8M2,6V20A2,2 0 0,0 4,22H18V20H4V6"/>
-          </svg>
+      <div class="cshow-panel" role="tabpanel" id="cshow-interactive" aria-labelledby="cshow-tab-interactive" tabindex="0" style="--c-accent: var(--depictio-green);">
+        <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z"/></svg></span>Interactive</h3>
+        <div class="cshow-examples" role="group" aria-label="Interactive examples">
+          <button class="cshow-ex" type="button" aria-pressed="true" data-ex="0">Linked filters</button>
+          <button class="cshow-ex" type="button" aria-pressed="false" data-ex="1">Filters in action</button>
+          <button class="cshow-ex" type="button" aria-pressed="false" data-ex="2">Filter panel</button>
         </div>
-        <h4>Image</h4>
-        <p>Image galleries with S3/MinIO storage integration</p>
+        <div class="cshow-stage">
+          <figure class="cshow-shot" data-ex="0" data-live-linked="images/landing/live/link_season images/landing/live/link_species" data-live-views="images/landing/live/link_mix images/landing/live/link_mass images/landing/live/link_trend images/landing/live/link_sex images/landing/live/link_scatter" data-live-all="3" data-live-seasons="2007-2009">
+            <a class="glightbox cshow-light" href="images/landing/live/poster/int_linked_light.webp" data-type="image" data-gallery="cshow-interactive-light" data-title="Species and season filters driving four cards and a scatter, Palmer penguins" aria-label="Species and season filters driving four cards and a scatter, Palmer penguins, open full size"><img src="images/landing/live/poster/int_linked_light.webp" alt="A filter panel with a season range slider and a species multi-select next to four metric cards and a scatter plot" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/int_linked_dark.webp" data-type="image" data-gallery="cshow-interactive-dark" data-title="Species and season filters driving four cards and a scatter, Palmer penguins" aria-label="Species and season filters driving four cards and a scatter, Palmer penguins, open full size"><img src="images/landing/live/poster/int_linked_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="1" data-video="images/landing/components/interactive_filters" hidden>
+            <a class="glightbox cshow-light" href="images/landing/components/interactive_filters_light.mp4" data-type="video" data-gallery="cshow-interactive-light" data-title="Filters narrowing a dashboard" aria-label="Filters narrowing a dashboard, open full size"><img src="images/landing/components/interactive_filters_light.webp" alt="Picking species, sex and a season range updates every card of a penguin dashboard" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/components/interactive_filters_dark.mp4" data-type="video" data-gallery="cshow-interactive-dark" data-title="Filters narrowing a dashboard" aria-label="Filters narrowing a dashboard, open full size"><img src="images/landing/components/interactive_filters_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="2" hidden>
+            <a class="glightbox cshow-light" href="images/landing/components/interactive_da_light.webp" data-type="image" data-gallery="cshow-interactive-light" data-title="Filter panel: multi-selects and a log-fold-change slider, nf-core/ampliseq" aria-label="Interactive: Filter panel, open full size"><img src="images/landing/components/interactive_da_light.webp" alt="A filter panel with sample filters, contrast, phylum and kingdom selects and a log-fold-change slider" width="656" height="1468" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/components/interactive_da_dark.webp" data-type="image" data-gallery="cshow-interactive-dark" data-title="Filter panel: multi-selects and a log-fold-change slider, nf-core/ampliseq" aria-label="Interactive: Filter panel, open full size"><img src="images/landing/components/interactive_da_dark.webp" alt="" width="656" height="1468" loading="lazy" decoding="async"></a>
+          </figure>
+        </div>
+        <ul class="cshow-points"><li>Range slider, slider, multi-select, date picker, segmented control, text search</li><li>Each filter applies to every linked component</li><li>Grouped in a filter panel at the side of the dashboard</li></ul>
+        <a class="cshow-docs" href="features/components/#interactive-components">Interactive docs &rarr;</a>
       </div>
-      <div class="component-card">
-        <div class="component-icon" style="background: var(--depictio-violet);">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/>
-          </svg>
+      <div class="cshow-panel" role="tabpanel" id="cshow-multiqc" aria-labelledby="cshow-tab-multiqc" tabindex="0" style="--c-accent: var(--depictio-orange);">
+        <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.46,11.53A7.53,7.53 0 0,1 11.52,4.5V0.09A11.98,11.98 0 0,0 0.06,11.53ZM11.5,19.6A7.53,7.53 0 0,1 4.46,12.54H0.06A11.98,11.98 0 0,0 11.5,24ZM12.53,4.5A7.53,7.53 0 0,1 19.57,11.56H24A11.98,11.98 0 0,0 12.53,0.09ZM24,19.6A7.53,7.53 0 0,1 16.93,12.54H12.53A11.98,11.98 0 0,0 24,24Z"/></svg></span>MultiQC</h3>
+        <div class="cshow-examples" role="group" aria-label="MultiQC examples">
+          <span class="cshow-exgroup"><b>Plots</b><button class="cshow-ex" type="button" aria-pressed="true" data-ex="0">Status heatmap</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="1">Coverage lines</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="2">Insert size</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="3">Stacked bars</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="4">Variant effects</button></span>
+          <span class="cshow-exgroup"><b>Table</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="5">General stats</button></span>
         </div>
-        <h4>Map</h4>
-        <p>Geospatial map visualization with markers</p>
+        <div class="cshow-stage">
+          <figure class="cshow-shot" data-ex="0" data-live-src="images/landing/live/mqc_fastqc_status">
+            <a class="glightbox cshow-light" href="images/landing/live/poster/mqc_fastqc_status_light.webp" data-type="image" data-gallery="cshow-multiqc-light" data-title="FastQC status checks per sample, nf-core/viralrecon" aria-label="FastQC status checks per sample, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/mqc_fastqc_status_light.webp" alt="A heatmap of FastQC pass, warn and fail per module and sample" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/mqc_fastqc_status_dark.webp" data-type="image" data-gallery="cshow-multiqc-dark" data-title="FastQC status checks per sample, nf-core/viralrecon" aria-label="FastQC status checks per sample, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/mqc_fastqc_status_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="1" data-live-src="images/landing/live/mqc_mosdepth" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/mqc_mosdepth_light.webp" data-type="image" data-gallery="cshow-multiqc-light" data-title="Cumulative coverage, mosdepth, nf-core/viralrecon" aria-label="Cumulative coverage, mosdepth, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/mqc_mosdepth_light.webp" alt="Mosdepth cumulative coverage distribution per sample" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/mqc_mosdepth_dark.webp" data-type="image" data-gallery="cshow-multiqc-dark" data-title="Cumulative coverage, mosdepth, nf-core/viralrecon" aria-label="Cumulative coverage, mosdepth, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/mqc_mosdepth_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="2" data-live-src="images/landing/live/mqc_insert_size" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/mqc_insert_size_light.webp" data-type="image" data-gallery="cshow-multiqc-light" data-title="Insert size distribution, samtools, nf-core/sarek" aria-label="Insert size distribution, samtools, nf-core/sarek, open full size"><img src="images/landing/live/poster/mqc_insert_size_light.webp" alt="Insert size curves per sample" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/mqc_insert_size_dark.webp" data-type="image" data-gallery="cshow-multiqc-dark" data-title="Insert size distribution, samtools, nf-core/sarek" aria-label="Insert size distribution, samtools, nf-core/sarek, open full size"><img src="images/landing/live/poster/mqc_insert_size_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="3" data-live-src="images/landing/live/mqc_bcftools" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/mqc_bcftools_light.webp" data-type="image" data-gallery="cshow-multiqc-light" data-title="Variant substitution types, bcftools, nf-core/viralrecon" aria-label="Variant substitution types, bcftools, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/mqc_bcftools_light.webp" alt="Stacked bars of substitution types per sample" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/mqc_bcftools_dark.webp" data-type="image" data-gallery="cshow-multiqc-dark" data-title="Variant substitution types, bcftools, nf-core/viralrecon" aria-label="Variant substitution types, bcftools, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/mqc_bcftools_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="4" data-live-src="images/landing/live/mqc_vep_sift" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/mqc_vep_sift_light.webp" data-type="image" data-gallery="cshow-multiqc-light" data-title="SIFT predictions, VEP, nf-core/sarek" aria-label="SIFT predictions, VEP, nf-core/sarek, open full size"><img src="images/landing/live/poster/mqc_vep_sift_light.webp" alt="Stacked bars of SIFT predictions per variant caller" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/mqc_vep_sift_dark.webp" data-type="image" data-gallery="cshow-multiqc-dark" data-title="SIFT predictions, VEP, nf-core/sarek" aria-label="SIFT predictions, VEP, nf-core/sarek, open full size"><img src="images/landing/live/poster/mqc_vep_sift_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="5" data-live-src="images/landing/live/mqc_general_stats" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/mqc_general_stats_light.webp" data-type="image" data-gallery="cshow-multiqc-light" data-title="MultiQC general statistics, nf-core/viralrecon" aria-label="MultiQC general statistics, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/mqc_general_stats_light.webp" alt="The MultiQC general statistics table" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/mqc_general_stats_dark.webp" data-type="image" data-gallery="cshow-multiqc-dark" data-title="MultiQC general statistics, nf-core/viralrecon" aria-label="MultiQC general statistics, nf-core/viralrecon, open full size"><img src="images/landing/live/poster/mqc_general_stats_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+        </div>
+        <ul class="cshow-points"><li>MultiQC plots and the general stats table, inside the dashboard</li><li>Filtered with the rest of the dashboard</li></ul>
+        <a class="cshow-docs" href="features/components/#multiqc-components">MultiQC docs &rarr;</a>
       </div>
-      <div class="component-card">
-        <div class="component-icon" style="background: #e91e63;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M10 19.11L12.11 17H7v-2h7v.12L16.12 13H7v-2h10v1.12l1.24-1.23c.48-.48 1.11-.75 1.8-.75c.33 0 .66.07.96.19V5a2 2 0 0 0-2-2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h5zM7 7h10v2H7zm14.7 7.35l-1 1l-2.05-2.05l1-1a.55.55 0 0 1 .77 0l1.28 1.28c.21.21.21.56 0 .77M12 19.94l6.06-6.06l2.05 2.05L14.06 22H12z"/>
-          </svg>
+      <div class="cshow-panel" role="tabpanel" id="cshow-map" aria-labelledby="cshow-tab-map" tabindex="0" style="--c-accent: var(--depictio-violet);">
+        <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/></svg></span>Map</h3>
+        <div class="cshow-examples" role="group" aria-label="Map examples">
+          <button class="cshow-ex" type="button" aria-pressed="true" data-ex="0">Sampling sites</button>
         </div>
-        <h4>Text</h4>
-        <p>Section headings and notes to document the dashboard</p>
+        <div class="cshow-stage">
+          <figure class="cshow-shot" data-ex="0" data-live-src="images/landing/live/map_sites">
+            <a class="glightbox cshow-light" href="images/landing/live/poster/map_sites_light.webp" data-type="image" data-gallery="cshow-map-light" data-title="Sampling sites coloured by habitat, nf-core/ampliseq" aria-label="Sampling sites coloured by habitat, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/map_sites_light.webp" alt="A map of sampling sites coloured by habitat" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/map_sites_dark.webp" data-type="image" data-gallery="cshow-map-dark" data-title="Sampling sites coloured by habitat, nf-core/ampliseq" aria-label="Sampling sites coloured by habitat, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/map_sites_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+        </div>
+        <ul class="cshow-points"><li>Tile maps from latitude and longitude columns, no API key</li><li>A click or a lasso on the sites filters the dashboard</li></ul>
+        <a class="cshow-docs" href="features/components/#map-components">Map docs &rarr;</a>
       </div>
-      <div class="component-card">
-        <div class="component-icon" style="background: #d6336c;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M2 2h2v18h18v2H2zm12 12.5L12 18H7.94l-2.02-3.5L7.94 11H12zm.08-8L12.06 10H8L6 6.5L8 3h4.06zm7.17 4L19.23 14h-4.04l-2.02-3.5L15.19 7h4.04z"/>
-          </svg>
+      <div class="cshow-panel" role="tabpanel" id="cshow-text" aria-labelledby="cshow-tab-text" tabindex="0" style="--c-accent: #e91e63;">
+        <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 19.11L12.11 17H7v-2h7v.12L16.12 13H7v-2h10v1.12l1.24-1.23c.48-.48 1.11-.75 1.8-.75c.33 0 .66.07.96.19V5a2 2 0 0 0-2-2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h5zM7 7h10v2H7zm14.7 7.35l-1 1l-2.05-2.05l1-1a.55.55 0 0 1 .77 0l1.28 1.28c.21.21.21.56 0 .77M12 19.94l6.06-6.06l2.05 2.05L14.06 22H12z"/></svg></span>Text</h3>
+        <div class="cshow-examples" role="group" aria-label="Text examples">
+          <button class="cshow-ex" type="button" aria-pressed="true" data-ex="0">Overview</button>
+          <button class="cshow-ex" type="button" aria-pressed="false" data-ex="1">Study &amp; run</button>
         </div>
-        <h4>Advanced viz</h4>
-        <p>Omics plots — Volcano, Manhattan, Sunburst, and more</p>
+        <div class="cshow-stage">
+          <figure class="cshow-shot" data-ex="0" data-live-grid="images/landing/live/text_about images/landing/live/text_steps" data-live-layout="rows">
+            <a class="glightbox cshow-light" href="images/landing/live/poster/text_overview_light.webp" data-type="image" data-gallery="cshow-text-light" data-title="Dashboard introduction, nf-core/ampliseq and nf-core/viralrecon" aria-label="Dashboard introduction, nf-core/ampliseq and nf-core/viralrecon, open full size"><img src="images/landing/live/poster/text_overview_light.webp" alt="Two text blocks: what the dashboard covers and the pipeline steps" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/text_overview_dark.webp" data-type="image" data-gallery="cshow-text-dark" data-title="Dashboard introduction, nf-core/ampliseq and nf-core/viralrecon" aria-label="Dashboard introduction, nf-core/ampliseq and nf-core/viralrecon, open full size"><img src="images/landing/live/poster/text_overview_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="1" data-live-grid="images/landing/live/text_study images/landing/live/text_run" data-live-layout="pair" hidden>
+            <a class="glightbox cshow-light" href="images/landing/live/poster/text_study_run_light.webp" data-type="image" data-gallery="cshow-text-light" data-title="Study and run, nf-core/raredisease" aria-label="Study and run, nf-core/raredisease, open full size"><img src="images/landing/live/poster/text_study_run_light.webp" alt="Two text blocks with values from the data and the run parameters: the families, samples and trios of the study, and the reference, aligner and caller of the run" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/text_study_run_dark.webp" data-type="image" data-gallery="cshow-text-dark" data-title="Study and run, nf-core/raredisease" aria-label="Study and run, nf-core/raredisease, open full size"><img src="images/landing/live/poster/text_study_run_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+        </div>
+        <ul class="cshow-points"><li>Markdown blocks between the plots</li><li>Say what the dashboard answers and how to read it</li><li>Values computed from the data and the run parameters, kept up to date</li></ul>
+        <a class="cshow-docs" href="features/components/#text-components">Text docs &rarr;</a>
+      </div>
+      <div class="cshow-panel" role="tabpanel" id="cshow-image" aria-labelledby="cshow-tab-image" tabindex="0" style="--c-accent: var(--depictio-pink);">
+        <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22,16V4A2,2 0 0,0 20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16M11,12L13.03,14.71L16,11L20,16H8M2,6V20A2,2 0 0,0 4,22H18V20H4V6"/></svg></span>Image</h3>
+        <div class="cshow-examples" role="group" aria-label="Image examples">
+          <button class="cshow-ex" type="button" aria-pressed="true" data-ex="0">Cell Painting</button>
+        </div>
+        <div class="cshow-stage">
+          <figure class="cshow-shot" data-ex="0" data-live-src="images/landing/live/image_gallery">
+            <a class="glightbox cshow-light" href="images/landing/live/poster/image_gallery_light.webp" data-type="image" data-gallery="cshow-image-light" data-title="Cell and nucleus segmentation per well, nf-core/cellpainting (JUMP cpg0016)" aria-label="Cell and nucleus segmentation per well, nf-core/cellpainting (JUMP cpg0016), open full size"><img src="images/landing/live/poster/image_gallery_light.webp" alt="A gallery of four Cell Painting wells with cell and nucleus outlines" width="1280" height="800" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/live/poster/image_gallery_dark.webp" data-type="image" data-gallery="cshow-image-dark" data-title="Cell and nucleus segmentation per well, nf-core/cellpainting (JUMP cpg0016)" aria-label="Cell and nucleus segmentation per well, nf-core/cellpainting (JUMP cpg0016), open full size"><img src="images/landing/live/poster/image_gallery_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
+          </figure>
+        </div>
+        <ul class="cshow-points"><li>Image galleries served from S3 or MinIO storage</li><li>Filtered by the dashboard&#x27;s interactive components</li><li>Click a thumbnail for the full-size image</li></ul>
+        <a class="cshow-docs" href="features/components/#image-components">Image docs &rarr;</a>
       </div>
     </div>
+    <p class="cshow-more">A selection, not the full list: each component has more types, options and layouts. See <a href="features/components/">all components</a> and the <a href="features/advanced-visualizations/">advanced visualizations</a>.</p>
   </div>
 </section>
 
@@ -1407,6 +1704,22 @@ hide:
     text-align: center;
   }
 
+  /* The showcase breaks out of the page column, up to 1320px, so the live
+     components get room. */
+  @media (min-width: 1100px) {
+    .components-section {
+      width: min(100vw - 3rem, 1320px);
+      margin-left: calc(50% - min(50vw - 1.5rem, 660px));
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .components-section .components-content {
+      max-width: none;
+    }
+  }
+
   .components-description {
     font-size: 1.2rem;
     color: var(--md-default-fg-color--light);
@@ -1416,128 +1729,929 @@ hide:
     margin-right: auto;
   }
 
-  .components-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-    max-width: 900px;
-    margin: 0 auto;
+  /* Far below the fold: skip its layout and paint, and so its lazy image,
+     until it comes near. */
+  .components-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1000px;
   }
 
-  .component-card {
-    background: var(--md-default-bg-color);
-    border-radius: 12px;
-    padding: 1.5rem 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--md-default-fg-color--lightest);
-    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-                box-shadow 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-                border-color 0.45s ease;
-    text-align: center;
-    width: calc((100% - 3rem) / 3);
-    box-sizing: border-box;
-    position: relative;
+  /* Dashboard Components: tabs on the left, the selected component on the
+     right. The script adds .is-enhanced; without it every panel is shown,
+     stacked, and the tabs and example pills (which need JS) are hidden. */
+  .cshow {
+    display: grid;
+    gap: 1.25rem;
+    text-align: left;
   }
 
-  [data-md-color-scheme="slate"] .component-card {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  .cshow.is-enhanced {
+    grid-template-columns: 220px minmax(0, 1fr);
+    align-items: start;
   }
 
-  .component-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 18px 38px -14px rgba(0, 0, 0, 0.22);
-    border-color: var(--md-default-fg-color--lighter);
+  .cshow > * {
+    min-width: 0;
   }
 
-  [data-md-color-scheme="slate"] .component-card:hover {
-    box-shadow: 0 18px 38px -14px rgba(0, 0, 0, 0.6);
-  }
-
-  .component-card-upcoming {
-    border-style: dashed;
-    opacity: 0.85;
-  }
-
-  .component-badge {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: var(--depictio-orange, #f68b33);
-    color: white;
-  }
-
-  .component-icon {
-    width: 48px;
-    height: 48px;
-    margin: 0 auto 1rem auto;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-  }
-
-  .component-icon svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  .component-icon.multiqc-logo-icon {
-    background: transparent;
-  }
-
-  .component-icon.multiqc-logo-icon img {
-    width: 48px;
-    height: 48px;
-    object-fit: contain;
-  }
-
-  .component-icon.multiqc-logo-icon img.only-dark,
-  [data-md-color-scheme="slate"] .component-icon.multiqc-logo-icon img.only-light {
+  .cshow-panel[hidden] {
     display: none;
   }
 
-  [data-md-color-scheme="slate"] .component-icon.multiqc-logo-icon img.only-dark {
-    display: block;
+  .cshow-tabs,
+  .cshow-examples {
+    display: none;
   }
 
-  .component-card h4 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.1rem;
-    font-weight: 600;
+  .cshow.is-enhanced .cshow-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .md-typeset .cshow-tab {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: none;
     color: var(--md-default-fg-color);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
   }
 
-  .component-card p {
+  .md-typeset .cshow-tab:hover {
+    background: color-mix(in srgb, var(--c-accent) 7%, transparent);
+  }
+
+  .md-typeset .cshow-tab[aria-selected="true"] {
+    border-color: color-mix(in srgb, var(--c-accent) 45%, transparent);
+    background: color-mix(in srgb, var(--c-accent) 11%, var(--md-default-bg-color));
+  }
+
+  .cshow-tab:focus-visible,
+  .cshow-ex:focus-visible,
+  .cshow-panel:focus-visible,
+  .cshow-shot a:focus-visible {
+    outline: 2px solid var(--c-accent);
+    outline-offset: 2px;
+  }
+
+  .cshow-icon {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    color: var(--c-accent);
+    background: color-mix(in srgb, var(--c-accent) 14%, transparent);
+  }
+
+  .cshow-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cshow-tab[aria-selected="true"] .cshow-icon {
+    color: #fff;
+    background: var(--c-accent);
+  }
+
+  .cshow-tab-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.3;
+  }
+
+  .cshow-tab-text b {
+    font-size: 0.95rem;
+  }
+
+  .cshow-tab-text small {
+    font-size: 0.76rem;
+    color: var(--md-default-fg-color--light);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cshow-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 1rem;
+    border-radius: 14px;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-top: 3px solid var(--c-accent);
+    background: var(--md-default-bg-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  [data-md-color-scheme="slate"] .cshow-panel {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .md-typeset .cshow-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  /* The tabs already name the panel */
+  .cshow.is-enhanced .cshow-heading {
+    display: none;
+  }
+
+  .cshow.is-enhanced .cshow-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    min-height: 1.9rem;
+  }
+
+  /* Examples sorted by what they show, one labelled row per group */
+  .cshow-exgroup {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  .cshow-exgroup > b {
+    min-width: 6.5rem;
+    color: var(--md-default-fg-color--light);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .md-typeset .cshow-ex {
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--c-accent) 35%, transparent);
+    background: none;
+    color: var(--md-default-fg-color);
+    font: inherit;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    cursor: pointer;
+  }
+
+  .md-typeset .cshow-ex[aria-pressed="true"] {
+    border-color: var(--c-accent);
+    background: var(--c-accent);
+    color: #fff;
+  }
+
+  /* A fixed box, so switching tab or example never moves the page */
+  .cshow-stage {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 10px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--c-accent) 5%, var(--md-default-bg-color));
+  }
+
+  /* .md-typeset figure is a fit-content flex column; undo that. */
+  .md-typeset .cshow-shot {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: auto;
+    margin: 0;
+    max-width: none;
+  }
+
+  .md-typeset .cshow-shot[hidden] {
+    display: none;
+  }
+
+  .md-typeset .cshow-shot a {
+    position: absolute;
+    inset: 0;
+    display: block;
+    padding: 0.75rem;
+    cursor: zoom-in;
+  }
+
+  /* One link per theme; the other is display:none, so its lazy image is never
+     fetched. */
+  .cshow-dark,
+  [data-md-color-scheme="slate"] .cshow-light {
+    display: none !important;
+  }
+
+  [data-md-color-scheme="slate"] .cshow-dark {
+    display: block !important;
+  }
+
+  .md-typeset .cshow-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+
+  /* A live example: the exported component (or a grid of them, or a video)
+     over its screenshot, which stays as the poster until it has loaded. */
+  .cshow-live {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  /* Live components drawn at 85%, so more of each fits the stage. Scaling the
+     box (not the frames' content) keeps pointer events exact. */
+  @media (min-width: 761px) {
+    div.cshow-live {
+      width: calc(100% / 0.85);
+      height: calc(100% / 0.85);
+      transform: scale(0.85);
+      transform-origin: 0 0;
+    }
+  }
+
+  .cshow-live.is-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cshow-live.is-rows {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cshow-live.is-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Text reads at a line length, not at the width of a plot. */
+  #cshow-text .cshow-stage {
+    width: 100%;
+    max-width: 820px;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 761px) {
+    #cshow-text .cshow-stage {
+      aspect-ratio: 16 / 10.5;
+    }
+
+    #cshow-text .cshow-stage:has(> [data-live-layout="pair"]:not([hidden])) {
+      aspect-ratio: 16 / 7.6;
+    }
+  }
+
+  .cshow-live.is-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Rows of cards at their own height; the stage takes the rows' height. */
+  .cshow-live.is-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-content: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .cshow-live.is-cols-4 iframe {
+    height: 10rem;
+  }
+
+  .cshow-stage:has(> [data-live-layout="cols-4"]:not([hidden])) {
+    aspect-ratio: 16 / 5.4;
+  }
+
+  /* Linked example: filters on the left, the cards and the plot they drive */
+  .cshow-live.is-linked {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3.2fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0.6rem;
+    padding: 0.75rem;
+  }
+
+  .cshow-linked-filters {
+    display: flex;
+    grid-row: 1 / 3;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .cshow-linked-filters iframe {
+    width: 100%;
+    border: 0;
+  }
+
+  .cshow-linked-filters iframe:first-child {
+    flex: none;
+    height: 6.2rem;
+  }
+
+  .cshow-linked-filters iframe:last-child {
+    flex: 1;
+  }
+
+  .cshow-linked-cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.6rem;
+    height: 9.5rem;
+  }
+
+  .cshow-slot,
+  .cshow-linked-plot {
+    position: relative;
+  }
+
+  .cshow-linked-plot > .cshow-slot {
+    height: 100%;
+  }
+
+  .cshow-slot iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .cshow-slot iframe.is-shown {
+    opacity: 1;
+  }
+
+  .md-typeset .cshow-more {
+    margin: 1rem 0 0;
+    color: var(--md-default-fg-color--light);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .cshow-live iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  video.cshow-live {
+    object-fit: contain;
+    padding: 0.75rem;
+  }
+
+  .cshow-shot.is-live .cshow-live {
+    opacity: 1;
+  }
+
+  .cshow-shot.is-live a {
+    visibility: hidden;
+  }
+
+  .cshow-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .cshow-empty .cshow-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    color: #fff;
+    background: var(--c-accent);
+  }
+
+  .cshow-empty .cshow-icon svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .md-typeset .cshow-empty p {
     margin: 0;
     font-size: 0.85rem;
-    color: var(--md-default-fg-color--light);
-    line-height: 1.5;
   }
 
-  @media (max-width: 900px) {
-    .component-card {
-      width: calc((100% - 1.5rem) / 2);
-    }
+  .md-typeset ul.cshow-points {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.25rem;
+    min-height: 4.6rem;
+    font-size: 0.86rem;
+    line-height: 1.45;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .md-typeset ul.cshow-points li {
+    position: relative;
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .md-typeset ul.cshow-points li::before {
+    content: "";
+    position: absolute;
+    left: 0.15rem;
+    top: 0.55em;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 2px;
+    background: var(--c-accent);
+  }
+
+  .md-typeset .cshow-docs {
+    align-self: flex-start;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--c-accent);
+    white-space: nowrap;
   }
 
   @media (max-width: 768px) {
     .components-section {
-      padding: 1rem 1rem 2rem 1rem;
-      margin: 0 -0.8rem;
+      padding: 1rem 0 2rem;
+      margin: 0;
     }
   }
 
-  @media (max-width: 500px) {
-    .component-card {
-      width: 100%;
+  /* Narrow: the tabs become a row of pills that scrolls on its own. */
+  @media (max-width: 860px) {
+    .cshow.is-enhanced {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cshow.is-enhanced .cshow-tabs {
+      flex-direction: row;
+      gap: 0.4rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      padding-bottom: 0.2rem;
+    }
+
+    .cshow-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .md-typeset .cshow-tab {
+      flex: none;
+      width: auto;
+      gap: 0.45rem;
+      padding: 0.3rem 0.8rem 0.3rem 0.35rem;
+      border-radius: 999px;
+      border-color: var(--md-default-fg-color--lightest);
+    }
+
+    .cshow-tab .cshow-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+    }
+
+    .cshow-tab .cshow-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .cshow-tab-text small {
+      display: none;
+    }
+
+    .cshow-tab-text b {
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .md-typeset ul.cshow-points {
+      min-height: 0;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .cshow-live.is-cols-4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Stacked text blocks need the height of their lines on a phone. */
+    .cshow-stage:has(> [data-live-layout="rows"]:not([hidden])),
+    .cshow-stage:has(> [data-live-layout="pair"]:not([hidden])) {
+      aspect-ratio: 1 / 2.4;
+    }
+
+    .cshow-live.is-pair {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cshow-stage:has(> [data-live-layout="cols-4"]:not([hidden])) {
+      aspect-ratio: 1 / 1.05;
+    }
+
+    /* Filters on top, then the cards two by two, then the plot */
+    .cshow-live.is-linked {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto minmax(0, 1fr);
+    }
+
+    .cshow-linked-filters {
+      grid-row: auto;
+      flex-direction: row;
+    }
+
+    .cshow-linked-filters iframe:first-child,
+    .cshow-linked-filters iframe:last-child {
+      flex: 1;
+      height: 6.2rem;
+    }
+
+    .cshow-linked-cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      height: 19.6rem;
+    }
+
+    .cshow-stage:has(> [data-live-linked]:not([hidden])) {
+      aspect-ratio: 1 / 1.6;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .cshow-stage {
+      aspect-ratio: 4 / 3.4;
+    }
+
+    .cshow-live.is-cols-4 iframe {
+      height: 12.5rem;
+    }
+
+    .cshow-stage:has(> [data-live-layout="cols-4"]:not([hidden])) {
+      aspect-ratio: 1 / 2.55;
+    }
+
+    .cshow-linked-filters {
+      flex-direction: column;
+    }
+
+    .cshow-linked-cards {
+      height: 24rem;
+    }
+
+    .cshow-stage:has(> [data-live-linked]:not([hidden])) {
+      aspect-ratio: 1 / 3.4;
+    }
+
+    .cshow-panel {
+      padding: 0.75rem;
+    }
+
+    .md-typeset .cshow-shot a {
+      padding: 0.4rem;
+    }
+  }
+
+  /* Depictio in numbers */
+  .kpi-section {
+    padding: 1.5rem 0 3rem;
+  }
+
+  .kpi-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+    text-align: left;
+  }
+
+  .kpi-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+    padding: 1.25rem 1.25rem 1rem;
+    border-radius: 14px;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-top: 3px solid var(--kpi-accent);
+    background: var(--md-default-bg-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  [data-md-color-scheme="slate"] .kpi-tile {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .md-typeset .kpi-figure {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.6rem;
+    line-height: 1;
+  }
+
+  .kpi-figure > .kpi-num {
+    font-size: 2.9rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--kpi-accent);
+  }
+
+  .kpi-num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .kpi-figure-sub {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .kpi-figure-sub .kpi-num {
+    color: var(--md-default-fg-color);
+  }
+
+  .md-typeset .kpi-label {
+    margin: 0.15rem 0 0;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--md-default-fg-color);
+  }
+
+  .md-typeset .kpi-sub {
+    margin: -0.2rem 0 0;
+    font-size: 0.85rem;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .kpi-example {
+    margin: 0.6rem 0 0.4rem;
+    min-height: 74px;
+  }
+
+  /* Template and tool logos scroll by in two rows, opposite ways, and stop
+     under the pointer. hooks/landing_stats.py prints each row twice so the
+     loop has no seam. */
+  .kpi-marquee {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.45rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .kpi-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: kpi-marquee 80s linear infinite;
+  }
+
+  .kpi-marquee-reverse .kpi-marquee-track {
+    animation-direction: reverse;
+  }
+
+  .kpi-marquee:hover .kpi-marquee-track,
+  .kpi-marquee:focus-within .kpi-marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes kpi-marquee {
+    to { transform: translateX(-50%); }
+  }
+
+  .md-typeset ul.kpi-logos {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0 0.5rem 0 0;
+    list-style: none;
+  }
+
+  .md-typeset ul.kpi-logos li {
+    flex: none;
+    margin: 0;
+  }
+
+  .md-typeset ul.kpi-logos img {
+    display: block;
+    max-width: none;
+  }
+
+  /* nf-core logos: one per theme, the other never fetched */
+  .md-typeset .kpi-templates a {
+    display: block;
+    padding: 0.2rem 0.3rem;
+    border-radius: 8px;
+  }
+
+  .md-typeset .kpi-templates a:hover,
+  .md-typeset .kpi-templates a:focus-visible {
+    background: color-mix(in srgb, var(--kpi-accent) 12%, transparent);
+  }
+
+  .kpi-templates img {
+    height: 28px;
+    width: auto;
+  }
+
+  .kpi-logo-dark,
+  [data-md-color-scheme="slate"] .kpi-logo-light {
+    display: none !important;
+  }
+
+  [data-md-color-scheme="slate"] .kpi-logo-dark {
+    display: block !important;
+  }
+
+  /* Tools: the official logo on a white pill, so it reads in both themes;
+     a plain name where there is no logo. */
+  .md-typeset .kpi-tools li.kpi-tool {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 32px;
+    padding: 0 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-family: var(--md-code-font-family);
+    white-space: nowrap;
+    color: var(--md-default-fg-color);
+    background: color-mix(in srgb, var(--kpi-accent) 14%, transparent);
+  }
+
+  .md-typeset .kpi-tools li.kpi-tool-logo {
+    padding: 0 0.6rem;
+    color: #24292f;
+    background: #fff;
+    border: 1px solid var(--md-default-fg-color--lightest);
+  }
+
+  .kpi-tools img {
+    height: 22px;
+    width: auto;
+  }
+
+  .kpi-bar {
+    display: flex;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    gap: 2px;
+  }
+
+  .kpi-seg { display: block; height: 100%; }
+  .kpi-seg-card { background: var(--depictio-teal); }
+  .kpi-seg-advanced_viz { background: #d6336c; }
+  .kpi-seg-table { background: var(--depictio-blue); }
+  .kpi-seg-figure { background: var(--depictio-purple); }
+  .kpi-seg-interactive { background: var(--depictio-green); }
+  .kpi-seg-multiqc { background: var(--depictio-orange); }
+
+  /* Two columns when they fit, one when the tile is narrow */
+  .md-typeset ul.kpi-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+    gap: 0.15rem 0.9rem;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.75rem;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .md-typeset ul.kpi-legend li {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .kpi-legend-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .md-typeset ul.kpi-legend b {
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
+    color: var(--md-default-fg-color);
+  }
+
+  .kpi-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 2px;
+    flex: none;
+  }
+
+  .kpi-viz {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.35rem;
+  }
+
+  .md-typeset .kpi-viz img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    object-position: center 60%;
+    border-radius: 6px;
+    border: 1px solid var(--md-default-fg-color--lightest);
+  }
+
+  .kpi-viz-dark,
+  [data-md-color-scheme="slate"] .kpi-viz-light {
+    display: none;
+  }
+
+  [data-md-color-scheme="slate"] .kpi-viz-dark {
+    display: block;
+  }
+
+  .md-typeset .kpi-link {
+    margin-top: auto;
+    padding-top: 0.4rem;
+    white-space: nowrap;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--kpi-accent);
+  }
+
+  .md-typeset .kpi-stamp {
+    margin: 1rem 0 0;
+    font-size: 0.78rem;
+    color: var(--md-default-fg-color--light);
+  }
+
+  @media (max-width: 1100px) {
+    .kpi-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .kpi-section {
+      padding: 1rem 0 2rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .kpi-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* No motion: the logos wrap in place, the first rows shown. */
+  @media (prefers-reduced-motion: reduce) {
+    .kpi-marquee {
+      max-height: 118px;
+      -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent);
+      mask-image: linear-gradient(to bottom, #000 75%, transparent);
+    }
+
+    .kpi-marquee-row + .kpi-marquee-row,
+    .md-typeset ul.kpi-logos[aria-hidden="true"] {
+      display: none;
+    }
+
+    .kpi-marquee-track {
+      animation: none;
+      width: auto;
+    }
+
+    .md-typeset ul.kpi-logos {
+      flex-wrap: wrap;
     }
   }
 
@@ -2581,7 +3695,7 @@ hide:
 
     /* The theme sets `*{transition:none!important}` here, which would make every
        hover and the lightbox snap. Opt these back in, at half the duration. */
-    .component-card,
+    .cshow-tab,
     .workflow-card,
     .catalog-landing-card,
     .feature-frame,
@@ -2590,7 +3704,6 @@ hide:
       transition-timing-function: ease-out !important;
     }
 
-    .component-card,
     .workflow-card {
       transition-property: transform, box-shadow, border-color !important;
     }
@@ -2598,6 +3711,10 @@ hide:
     .catalog-landing-card,
     .feature-frame {
       transition-property: transform, box-shadow !important;
+    }
+
+    .cshow-tab {
+      transition-property: background-color, border-color !important;
     }
 
     .feature-zoom {
@@ -3353,4 +4470,317 @@ function initLightbox() {
 }
 
 onPageReady(initLightbox);
+// Depictio in numbers: each figure counts up from zero the first time it
+// scrolls into view. The final number is in the HTML and stays there until
+// then, so without JS, with reduced motion, or for a figure never scrolled to,
+// the page reads as printed.
+function initKpiCountUp() {
+  const nums = Array.from(document.querySelectorAll('.kpi-num'));
+  if (!nums.length || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  function run(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const start = performance.now();
+    const duration = 1400;
+    function frame(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(target * eased).toLocaleString('en-US');
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      run(entry.target);
+    });
+  }, { threshold: 0.6 });
+
+  nums.forEach(function(el) {
+    if (el.dataset.target) return;
+    const target = parseInt(el.textContent.replace(/[^0-9]/g, ''), 10);
+    if (!target) return;
+    el.dataset.target = String(target);
+    observer.observe(el);
+  });
+}
+
+onPageReady(initKpiCountUp);
+// Dashboard Components: a tab list (arrow keys, Home, End) and, per panel, a
+// row of example pills. No auto-advance. Hidden panels and examples are
+// display:none, so their lazy images wait until shown; once the section is in
+// view, the other tabs' first images are fetched when the browser is idle, in
+// the current theme only.
+function initComponentShowcase() {
+  const root = document.querySelector('.cshow');
+  if (!root || root.classList.contains('is-enhanced')) return;
+  const tabs = Array.from(root.querySelectorAll('.cshow-tab'));
+  const panels = tabs.map(function(tab) {
+    return document.getElementById(tab.getAttribute('aria-controls'));
+  });
+  root.classList.add('is-enhanced');
+
+  // Live examples: a shot with data-live-src shows that exported component
+  // (dev/export_components.py) in an iframe, in the current theme, once the
+  // section is on screen. All exports share one embed.js, so the browser
+  // downloads it for the first live example only.
+  let inView = false;
+  const theme = function() {
+    return document.body.getAttribute('data-md-color-scheme') === 'slate' ? 'dark' : 'light';
+  };
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function showVideo(shot) {
+    const src = shot.dataset.video + '_' + theme() + '.mp4';
+    let video = shot.querySelector('video');
+    if (!video) {
+      video = document.createElement('video');
+      video.className = 'cshow-live';
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.controls = calm;
+      video.addEventListener('loadeddata', function() { shot.classList.add('is-live'); });
+      shot.appendChild(video);
+    }
+    if (video.getAttribute('src') !== src) {
+      shot.classList.remove('is-live');
+      video.poster = shot.dataset.video + '_' + theme() + '.webp';
+      video.setAttribute('src', src);
+    }
+    if (!calm) video.play().catch(function() {});
+  }
+  const HUG_CSS = 'html,body{background:transparent!important}' +
+    '#root>div,#root>div>div,.depictio-component-chrome{height:auto!important}';
+  // A linked example: filter frames (data-live-linked) drive the frames of
+  // data-live-views. Each view is a pack of exports, one per combination of
+  // the filters' values; a filter frame posts its value and the views swap
+  // to the matching export, drawn into a fresh frame so nothing flashes.
+  const packs = {};
+  function pack(base) {
+    const url = base + '_' + theme() + '.json';
+    if (!packs[url]) packs[url] = fetch(url).then(function(r) { return r.json(); });
+    return packs[url];
+  }
+  function drawView(slot, base, key, hug, done) {
+    pack(base).then(function(p) {
+      const dir = new URL(base, location.href).href.replace(/[^/]*$/, '');
+      const css = hug ? HUG_CSS : 'html,body{background:transparent!important}';
+      const head = '<head><base href="' + dir + '"><style>' + css + '</style>';
+      const frame = document.createElement('iframe');
+      frame.title = slot.dataset.title;
+      frame.addEventListener('load', function() {
+        // The export renders once its module has run; give it a beat.
+        setTimeout(function() {
+          Array.from(slot.children).forEach(function(old) { if (old !== frame) old.remove(); });
+          frame.classList.add('is-shown');
+          if (done) done();
+        }, 350);
+      });
+      frame.srcdoc = p.shell.replace('<head>', head).replace('__PAYLOAD__', function() { return p.variants[key]; });
+      slot.appendChild(frame);
+    });
+  }
+  function showLinked(shot) {
+    let box = shot.querySelector('.cshow-live');
+    if (box && box.dataset.theme === theme()) return;
+    if (box) box.remove();
+    shot.classList.remove('is-live');
+    box = document.createElement('div');
+    box.className = 'cshow-live is-linked';
+    box.dataset.theme = theme();
+    const title = shot.querySelector('a').getAttribute('data-title') || 'Live example';
+    const state = {};
+    const key = function() {
+      const species = (state.species || []).slice().sort();
+      const all = species.length === 0 || species.length === Number(shot.dataset.liveAll);
+      const season = state.season || shot.dataset.liveSeasons.split('-');
+      return (all ? '' : species.join('+')) + '|' + Math.round(season[0]) + '-' + Math.round(season[1]);
+    };
+    const filters = document.createElement('div');
+    filters.className = 'cshow-linked-filters';
+    const cards = document.createElement('div');
+    cards.className = 'cshow-linked-cards';
+    const plot = document.createElement('div');
+    plot.className = 'cshow-linked-plot';
+    box.append(filters, cards, plot);
+    let pending = 0;
+    const ready = function() { if (--pending === 0) shot.classList.add('is-live'); };
+    const frames = shot.dataset.liveLinked.split(/\s+/).map(function(base) {
+      const frame = document.createElement('iframe');
+      frame.title = title;
+      pending++;
+      frame.addEventListener('load', function() {
+        const style = frame.contentDocument.createElement('style');
+        style.textContent = HUG_CSS;
+        frame.contentDocument.head.appendChild(style);
+        ready();
+      }, { once: true });
+      frame.src = base + '_' + theme() + '.html';
+      filters.appendChild(frame);
+      return frame;
+    });
+    const views = shot.dataset.liveViews.split(/\s+/).map(function(base, i, all) {
+      const slot = document.createElement('div');
+      slot.className = 'cshow-slot';
+      slot.dataset.title = title;
+      (i < all.length - 1 ? cards : plot).appendChild(slot);
+      pending++;
+      drawView(slot, base, key(), i < all.length - 1, ready);
+      return { slot: slot, base: base, hug: i < all.length - 1 };
+    });
+    let shown = key();
+    box.addEventListener('depictio-filter', function(event) {
+      const f = event.detail || {};
+      const value = Array.isArray(f.value) ? f.value : null;
+      if (f.column_name === 'species') state.species = value;
+      else if (f.column_name === 'year') state.season = value && value.length === 2 ? value : null;
+      else return;
+      const next = key();
+      if (next === shown) return;
+      shown = next;
+      views.forEach(function(v) { drawView(v.slot, v.base, next, v.hug); });
+    });
+    box.frames = frames;
+    shot.appendChild(box);
+  }
+  window.addEventListener('message', function(event) {
+    const data = event.data || {};
+    if (data.source !== 'depictio-embed' || data.type !== 'filter') return;
+    root.querySelectorAll('.cshow-live.is-linked').forEach(function(box) {
+      if (!box.frames.some(function(f) { return f.contentWindow === event.source; })) return;
+      box.dispatchEvent(new CustomEvent('depictio-filter', { detail: data.filter }));
+    });
+  });
+
+  function showLive(shot) {
+    // One live example at a time: the others go back to their poster, which
+    // frees their memory; the shared bundle stays cached for a return.
+    root.querySelectorAll('video').forEach(function(v) { if (!shot || !shot.contains(v)) v.pause(); });
+    root.querySelectorAll('div.cshow-live').forEach(function(box) {
+      if (shot && shot.contains(box)) return;
+      box.parentNode.classList.remove('is-live');
+      box.remove();
+    });
+    if (!inView || !shot) return;
+    if (shot.dataset.video) return showVideo(shot);
+    if (shot.dataset.liveLinked) return showLinked(shot);
+    const bases = (shot.dataset.liveGrid || shot.dataset.liveSrc || '').split(/\s+/).filter(Boolean);
+    if (!bases.length) return;
+    let box = shot.querySelector('.cshow-live');
+    if (!box) {
+      box = document.createElement('div');
+      box.className = 'cshow-live' + (bases.length > 1 ? ' is-grid' : '') +
+        (shot.dataset.liveLayout ? ' is-' + shot.dataset.liveLayout : '');
+      const title = shot.querySelector('a').getAttribute('data-title') || 'Live example';
+      const hug = shot.dataset.liveLayout === 'cols-4';
+      bases.forEach(function() {
+        const frame = document.createElement('iframe');
+        frame.title = title;
+        frame.addEventListener('load', function() {
+          if (!frame.getAttribute('src')) return;
+          if (hug) {
+            // Let the card take its own height, over a transparent page, so
+            // a row of them stays compact and a dropdown opens below it.
+            const style = frame.contentDocument.createElement('style');
+            style.textContent = HUG_CSS;
+            frame.contentDocument.head.appendChild(style);
+          }
+          frame.dataset.loaded = '1';
+          if (Array.from(box.children).every(function(f) { return f.dataset.loaded; })) {
+            shot.classList.add('is-live');
+          }
+        });
+        box.appendChild(frame);
+      });
+      shot.appendChild(box);
+    }
+    Array.from(box.children).forEach(function(frame, i) {
+      const src = bases[i] + '_' + theme() + '.html';
+      if (frame.getAttribute('src') === src) return;
+      shot.classList.remove('is-live');
+      frame.dataset.loaded = '';
+      frame.setAttribute('src', src);
+    });
+  }
+  const visibleShot = function() {
+    return root.querySelector('.cshow-panel:not([hidden]) .cshow-shot:not([hidden])');
+  };
+  new MutationObserver(function() { showLive(visibleShot()); })
+    .observe(document.body, { attributes: true, attributeFilter: ['data-md-color-scheme'] });
+
+  function select(index, focus) {
+    tabs.forEach(function(tab, i) {
+      const on = i === index;
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.tabIndex = on ? 0 : -1;
+      panels[i].hidden = !on;
+    });
+    if (focus) tabs[index].focus();
+    showLive(panels[index].querySelector('.cshow-shot:not([hidden])'));
+    // Keep the selected pill in view when the tabs scroll sideways.
+    if (root.querySelector('.cshow-tabs').scrollWidth > root.querySelector('.cshow-tabs').clientWidth) {
+      tabs[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+  }
+
+  tabs.forEach(function(tab, i) {
+    tab.addEventListener('click', function() { select(i, false); });
+    tab.addEventListener('keydown', function(event) {
+      const last = tabs.length - 1;
+      const next = {
+        ArrowDown: i === last ? 0 : i + 1,
+        ArrowRight: i === last ? 0 : i + 1,
+        ArrowUp: i === 0 ? last : i - 1,
+        ArrowLeft: i === 0 ? last : i - 1,
+        Home: 0,
+        End: last
+      }[event.key];
+      if (next === undefined) return;
+      event.preventDefault();
+      select(next, true);
+    });
+  });
+
+  panels.forEach(function(panel) {
+    const pills = Array.from(panel.querySelectorAll('.cshow-ex'));
+    const shots = Array.from(panel.querySelectorAll('.cshow-shot'));
+    pills.forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        pills.forEach(function(p) { p.setAttribute('aria-pressed', p === pill ? 'true' : 'false'); });
+        shots.forEach(function(shot) {
+          const on = shot.dataset.ex === pill.dataset.ex;
+          shot.hidden = !on;
+          if (on) showLive(shot);
+        });
+      });
+    });
+  });
+
+  select(0, false);
+
+  // Warm the other tabs' first images, current theme, once the section shows.
+  if (!('IntersectionObserver' in window)) return;
+  const idle = window.requestIdleCallback || function(fn) { return setTimeout(fn, 1200); };
+  const observer = new IntersectionObserver(function(entries) {
+    if (!entries.some(function(e) { return e.isIntersecting; })) return;
+    observer.disconnect();
+    inView = true;
+    showLive(visibleShot());
+    idle(function() {
+      const dark = document.body.getAttribute('data-md-color-scheme') === 'slate';
+      panels.forEach(function(panel) {
+        const img = panel.querySelector('.cshow-shot .cshow-' + (dark ? 'dark' : 'light') + ' img');
+        // Same URL as the img, so showing the tab later hits the cache.
+        if (img) new Image().src = img.getAttribute('src');
+      });
+    });
+  }, { rootMargin: '0px 0px -20% 0px' });
+  observer.observe(root);
+}
+
+onPageReady(initComponentShowcase);
 </script>

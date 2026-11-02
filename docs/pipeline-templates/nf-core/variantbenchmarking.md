@@ -28,6 +28,17 @@ The variantbenchmarking template turns a benchmarking run into a precision/recal
 - :material-chart-scatter-plot: **Structural & CNV**: Truvari, SVanalyzer and Wittyer, per event and per base
 - :material-poll: **MultiQC**: the run's own report, in the per-variant-type templates
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/variantbenchmarking, nf-core test data</span>
+    <span class="tpl-showcase-runs"><button type="button" class="tpl-showcase-run is-active" data-src="https://showcases.depictio.embl.org/dashboard/6accf1469c24a94fb89a2214">Germline small</button><button type="button" class="tpl-showcase-run" data-src="https://showcases.depictio.embl.org/dashboard/6accf14f0e3cf5af86c3f099">Germline SV</button><button type="button" class="tpl-showcase-run" data-src="https://showcases.depictio.embl.org/dashboard/6accf1589c24a94fb89a221f">Somatic SNV</button></span>
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf1469c24a94fb89a2214" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf1469c24a94fb89a2214" loading="lazy" title="nf-core/variantbenchmarking showcase dashboard" allowfullscreen></iframe>
+</div>
+
 ---
 
 ## :material-arrow-decision-outline: Choosing a template

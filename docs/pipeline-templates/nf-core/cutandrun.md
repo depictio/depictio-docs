@@ -37,6 +37,17 @@ The cutandrun template covers the peak-calling chain of a standard run:
 - :material-waves: **Chromatin signal**: the nucleosomal fragment ladder, then the SEACR regions, their pile-up and the signal they hold
 - :material-scale-balance: **Agreement**: how much SEACR and MACS2 agree, the consensus set each target's replicates reproduce, and both on one genomic region
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/cutandrun, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accf13b0e3cf5af86c3f08a" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accf13b0e3cf5af86c3f08a" loading="lazy" title="nf-core/cutandrun showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! warning "One MultiQC report per run, chosen by `MULTIQC_REPROCESSED`"
     cutandrun 3.2.2 pins MultiQC 1.19, which writes no parquet, and Depictio
     reads only `multiqc.parquet` (MultiQC 1.31 and later). A run made with a

@@ -538,6 +538,12 @@ figures and tables read rows, and an `indexed_file` DC has none. Its consumer is
 track reading files directly: a [Genome view](../../features/components.md#genome-view)
 tile with `source: file`.
 
+Since **v1.19.0** `format` also takes `pdb` and `mmcif` (aliases `ent`, `cif`) for protein
+structures and `pae` for predicted aligned error matrices (`.pae.tsv`, `.pae.json`), each
+optionally gzipped. These need no index: the file is fetched whole by a
+[protein tile](../../features/protein-tiles.md#the-data), and the sample id the scan derives
+must equal the `entity` value of the residue tables.
+
 ##### Storage the browser can read <small>(v1.13.0+)</small> { #indexed-file-storage }
 
 The bytes of an indexed file never pass through the API: the browser reads them from the
@@ -684,6 +690,14 @@ Since **v1.18.0** a role can be given to a person or to a whole
 direct viewer whose group owns the project is an owner. Writing a data collection needs
 **editor**, deleting one **owner**. The project settings no longer change who has access:
 sharing goes through **Permissions** only.
+
+### Everyone with access <small>(v1.19.0+)</small> { #everyone-with-access }
+
+The **Permissions** page sums direct and group grants into **Everyone with access**: one row
+per person, highest role first, with every grant behind it. Typing a group's name in the add
+box previews its members before **Add group**, flagging those who already have access. Both
+show members' emails, so only those who may change the sharing see them: owners, system
+admins and the admins of an owning group.
 
 ### Public Projects
 

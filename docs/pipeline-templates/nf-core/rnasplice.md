@@ -36,6 +36,17 @@ splicing calls of up to five tests:
 - :material-chart-box-outline: **Data & QC**: the MultiQC report (FastQC, Trim Galore, STAR, samtools, featureCounts and Salmon), and whether the replicates of each condition sit together on their Salmon expression
 - :material-set-merge: **Splicing**: where the five tests agree per gene, then exon usage (DEXSeq, edgeR), transcript usage (DEXSeq DTU) and local events (rMATS, SUPPA2)
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/rnasplice, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accedc1a57cdb54ef9a2298" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accedc1a57cdb54ef9a2298" loading="lazy" title="nf-core/rnasplice showcase dashboard" allowfullscreen></iframe>
+</div>
+
 Two persistent filter sections sit in the left panel: `Sample filters` (the
 group, then the sample) apply to every tab, and `Splicing filters` (one contrast,
 then genes) to every splicing tab. The contrast sheet is linked to every

@@ -319,7 +319,7 @@ components:
 | `appearance`  | str    | `box`      | `box`, or `plain`: a heading over the tiles, no frame, never folded. Grid sections only <small>(v1.14.0+)</small> |
 | `card_variant` | str   | `null`     | `default`, `headline`, `compact`, `minimal`, `accent` or `split`: style of every card in the section that sets no `variant` of its own. Grid sections only <small>(v1.14.0+)</small> |
 | `figure_style` | str   | `null`     | `default` or `minimal`: style of every figure and advanced visualization in the section that sets no `figure_style` of its own. Grid sections only <small>(v1.14.0+)</small> |
-| `display`     | str    | `null`     | `grid` (same as unset): one tile per member; `strip`: the section is a filter bar that filters the whole tab. Grid sections only <small>(v1.14.0+)</small> |
+| `display`     | str    | `null`     | `grid` (same as unset): one tile per member; `strip`: the section is a filter bar that filters the whole tab; `linked` <small>(v1.19.1+)</small>: the section's tiles share one screen height, as [linked views](dashboards.md#linked-view). Grid sections only <small>(v1.14.0+)</small> |
 | `filter_bar`  | bool   | `null`     | A filter bar under the section's heading that narrows only its own tiles. Ignored with `display: strip` <small>(v1.14.0+)</small> |
 | `visible_filters` | int (≥1) | `null` | Controls a bar shows before **More filters**. Unset: 2 on a `filter_bar`, all on a `display: strip` bar <small>(v1.14.0+)</small> |
 
@@ -916,6 +916,10 @@ render is in [Components](components.md#secondary-layout-modes).
 | `slider_mode` | `gte`, `gt`, `lte`, `lt`, `eq`, `ne` | `Slider` | How the column is compared with the slider's value. `gte` (keep rows at or above it) by default |
 | `show_histogram` | bool | `RangeSlider` | Draw the column's distribution above the slider track, on the same scale, so a threshold is placed against the data. Off by default |
 | `show_mark_labels` <small>(v1.17.0+)</small> | bool | `Slider`, `RangeSlider` | `false` keeps the tick marks but drops their values. Unset, every tick is labelled |
+| `always_selected` <small>(v1.19.0+)</small> | bool | `Select` | The filter always holds exactly one value: empty (first load, **Reset all**) or holding a value its list no longer offers, it takes the first enabled option. It cannot be cleared. For pickers that feed tiles showing one unit at a time, such as one structure or one family |
+| `default_by` <small>(v1.19.0+)</small> | numeric column | `Select` with `always_selected` | Start on the option ranking first on this column, e.g. the family with the most members, instead of the first in the list. The list stays alphabetical, and a pinned data version skips the ranking |
+| `default_order` <small>(v1.19.0+)</small> | `desc`, `asc` | with `default_by` | `desc` (default) starts on the largest value, `asc` on the smallest |
+| `banner_facts` <small>(v1.19.1+)</small> | list | `Select` with `always_selected` | Facts shown in the tab's scope banner for the picked value, each `{column, label, format, icon}` read from the filter's own data collection. `format`: `percent`, `integer`, `si` or `decimals:N` |
 
 A default on the wrong control fails validation: `default_value` on a `RangeSlider`, a list on
 a `Slider`, or a `default_range` whose low end is above its high end.
@@ -936,6 +940,16 @@ a `Slider`, or a `default_range` whose low end is above its high end.
   column_name: qvalue
   default_range: [0, 0.05]
   show_histogram: true
+- tag: family-picker
+  component_type: interactive
+  workflow_tag: python/workflow_name
+  data_collection_tag: families
+  interactive_component_type: Select
+  column_name: family
+  always_selected: true
+  default_by: n_members    # opens on the largest family
+  banner_facts:            # the scope banner of the tab (v1.19.1+)
+    - {column: n_members, label: Members, format: integer, icon: tabler:users-group}
 ```
 
 !!! warning "A `Slider` is a threshold since v1.13.0"
@@ -962,7 +976,7 @@ a `Slider`, or a `default_range` whose low end is above its high end.
   workflow_tag: python/workflow_name
   data_collection_tag: table_dc
   page_size: 25            # rows per page (default: 100)
-  columns: [col1, col2]   # optional: allowlist of visible columns (omit to show all)
+  columns: [col1, col2]   # optional: the visible columns, in this order (v1.19.0+; omit to show all)
   compact: false          # optional: tighter row and header heights (default: false)
   title: "Sample Data"    # optional: auto-generated from DC tag if omitted
   description: "Complete measurements across all samples"  # optional subtitle

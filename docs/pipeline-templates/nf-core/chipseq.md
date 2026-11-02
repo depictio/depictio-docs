@@ -37,6 +37,17 @@ consensus peak set per antibody:
 - :material-chart-scatter-plot: **Peak calls**: MACS3 peaks per library, where HOMER places them relative to genes, and one genomic region across libraries
 - :material-set-merge: **Comparison**: one consensus peak set per antibody, which libraries agree on an interval, and where they sit on the DESeq2 QC of its counts
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/chipseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accea5cfe17adcb30c3f058" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accea5cfe17adcb30c3f058" loading="lazy" title="nf-core/chipseq showcase dashboard" allowfullscreen></iframe>
+</div>
+
 !!! warning "One MultiQC parquet per run, in one of two places"
     The 2.1.0 release pins MultiQC 1.23, which writes no parquet, and Depictio
     reads only `multiqc.parquet` (MultiQC 1.31 and later). The template therefore

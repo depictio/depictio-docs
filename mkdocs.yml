@@ -82,6 +82,7 @@ extra_javascript:
   - javascripts/depictio-theme-sync.js
   - javascripts/catalog-fullscreen.js
   - javascripts/template-version.js
+  - javascripts/template-showcase.js
   - javascripts/doc-sections.js
   - javascripts/template-catalog.js
   - javascripts/asciinema.js
@@ -136,8 +137,11 @@ markdown_extensions:
 # serves them from one copy at the site root. Only active when
 # DEPICTIO_DOCS_SHARED_IMAGES=1 (set by the deploy workflow), so `mkdocs serve`
 # behaves exactly as before.
+# landing_stats fills the home page's "Depictio in numbers" placeholders from
+# docs/data/landing_stats.json (rebuilt by dev/landing_stats.py).
 hooks:
   - hooks/shared_images.py
+  - hooks/landing_stats.py
 
 # Plugins
 plugins:
@@ -210,6 +214,18 @@ extra:
     provider: google
     property: G-J14FKHSHLC
 
+  # DocBot (EMBL-EBI docs chatbot), rendered by overrides/main.html. Off until
+  # the depictio team is registered with DocBot and depictio.github.io is in its
+  # CORS allow-list (see dev/docbot/). DEPICTIO_DOCS_DOCBOT=1 turns it on for
+  # testing with `mkdocs serve`.
+  docbot:
+    enabled: !ENV [DEPICTIO_DOCS_DOCBOT, false]
+    # Placeholder until DocBot assigns the team ID
+    team: depictio
+    # Dev backend: https://wwwdev.ebi.ac.uk/docbot/api
+    backend: https://www.ebi.ac.uk/docbot/api
+    sdk: https://docbot-64c680.gitdocs.ebi.ac.uk
+
 # Navigation Structure
 nav:
   - index.md
@@ -272,6 +288,7 @@ nav:
           - Components: features/components.md
           - Interactive Selection Filtering: features/interactive-selection-filtering.md
           - Comments and Annotations: features/comments-annotations.md
+          - Protein tiles: features/protein-tiles.md
           - Dashboard and Data Versions: features/versioning.md
           - Component Export and Embedding: features/component-export.md
       - Data Integration:
@@ -319,6 +336,13 @@ nav:
           - mhcquant: pipeline-templates/nf-core/mhcquant.md
           - demultiplex: pipeline-templates/nf-core/demultiplex.md
           - rnasplice: pipeline-templates/nf-core/rnasplice.md
+          - proteinfamilies: pipeline-templates/nf-core/proteinfamilies.md
+          - proteinannotator: pipeline-templates/nf-core/proteinannotator.md
+          - proteinfold: pipeline-templates/nf-core/proteinfold.md
+          - oncoanalyser: pipeline-templates/nf-core/oncoanalyser.md
+          - crisprseq: pipeline-templates/nf-core/crisprseq.md
+          - isoseq: pipeline-templates/nf-core/isoseq.md
+          - pairgenomealign: pipeline-templates/nf-core/pairgenomealign.md
   - Tools Catalog: catalog/index.md
   - Developer:
       - Overview: developer/README.md

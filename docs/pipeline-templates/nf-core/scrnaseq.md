@@ -37,6 +37,17 @@ each cluster:
 - :material-scatter-plot: **Cells**: the barcodes called as cells and the ambient RNA removed, how the aligner routes agree, the MAD rules that flag a cell, the UMAP and t-SNE, and the clusters with their cell cycle
 - :material-dna: **Genes**: the marker genes of each cluster, and two lassoed groups of cells tested gene by gene
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/scrnaseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accef9eb0bece2b95c3f0ad" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accef9eb0bece2b95c3f0ad" loading="lazy" title="nf-core/scrnaseq showcase dashboard" allowfullscreen></iframe>
+</div>
+
 The persistent `Sample filters` sit in the left panel and narrow every tab. On
 the tabs that draw cells, the collapsed `Cell filters` (cluster, QC status, UMIs
 and genes per cell) compose forward through the `cluster_label` links, so a

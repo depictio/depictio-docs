@@ -37,6 +37,17 @@ libraries to novel miRNA candidates:
 - :material-scale-balance: **Expression**: which miRNAs each library carries and which vary most, how the libraries relate, and which miRNAs separate two groups
 - :material-shape-outline: **Sequences**: how far the reads stray from the reference miRNA sequences, and the precursors miRDeep2 proposes beyond miRBase
 
+<div class="tpl-showcase">
+  <div class="tpl-showcase-bar">
+    <span class="tpl-showcase-live"></span>
+    <span class="tpl-showcase-label">Live showcase</span>
+    <span class="tpl-showcase-meta">nf-core/smrnaseq, nf-core test data</span>
+
+    <a class="tpl-showcase-open" href="https://showcases.depictio.embl.org/dashboard/6accefdd068a4d7c3dc3f130" target="_blank" rel="noopener"><i class="mdi mdi-open-in-new"></i> Open</a>
+  </div>
+  <iframe class="tpl-showcase-frame" src="https://showcases.depictio.embl.org/dashboard/6accefdd068a4d7c3dc3f130" loading="lazy" title="nf-core/smrnaseq showcase dashboard" allowfullscreen></iframe>
+</div>
+
 The persistent `Sample filters` (the design group, then the sample) sit in the
 left panel and narrow every tab.
 

@@ -183,10 +183,11 @@ DEPICTIO_AUTH_REGISTRATION_DISABLED=true
 - `POST /auth/register` returns 403, and the Register view and the link to it are hidden
 - Google OAuth, and [SAML](../../installation/sso.md) since v1.18.0, become login-only doors: a known email signs in, an unknown one is refused instead of being provisioned an account
 - Existing accounts, roles and permissions are untouched
+- An administrator can still create accounts with [Add user](web_ui.md#add-a-user) (v1.19.0+)
 
 ### Password sign-in <small>(v1.8.2+)</small> { #password-login }
 
-Closes email and password sign-in so Google OAuth is the only way in, for an instance whose accounts all come from one identity provider:
+Closes email and password sign-in so single sign-on (Google OAuth, or [SAML](../../installation/sso.md) since v1.19.0) is the only way in, for an instance whose accounts all come from one identity provider:
 
 ```bash
 DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED=true
@@ -195,7 +196,8 @@ DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED=true
 **Behavior:**
 
 - `POST /auth/login` refuses before reading any credential, so a valid password is not a way around the setting, and the sign-in card hides the form rather than showing one that always fails
-- Ignored unless Google OAuth is configured, so forgetting the OAuth variables gives you the password form back instead of a locked instance
+- Ignored unless Google OAuth or, since v1.19.0, SAML is configured, so forgetting the variables gives you the password form back instead of a locked instance
+- Since v1.19.0 it also closes `POST /auth/register` (403), and the refusal says to use single sign-on
 - `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` is no longer required: OAuth matches the admin by email, so pointing `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` at your own Google address is what makes you the admin, with no seeded local account
 
 ### Public-mode access code <small>(v1.8.2+)</small> { #public-access-code }

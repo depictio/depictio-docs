@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Depictio — Embedded component</title>
+    <script type="module" crossorigin src="embed-4dfd1a09fa.js"></script>
+    <link rel="stylesheet" href="embed-4dfd1a09fa.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      Payload injected by services/export/embed.py, which replaces the sentinel
+      below. It sits inside a JSON script element on purpose: that is what makes
+      escaping `</` in the payload sufficient to keep the element from closing
+      early. Keep the sentinel and the EMBED_SENTINEL constant in sync.
+    -->
+    <script id="embed-payload" type="application/json">{"theme": "dark", "component": {"index": "ov-kf-drivers", "component_type": "card", "title": "Reported drivers", "workflow_tag": "oncoanalyser", "data_collection_tag": "purple_drivers", "wf_id": "6adb745eaddb9f91b53b673d", "dc_id": "6adb745eaddb9f91b53b6748", "dc_config": {"type": null, "metatype": null, "description": "The somatic and germline driver catalog of PURPLE and LINX, one row per tumor, gene and driver type", "data_collection_tag": "purple_drivers", "dc_specific_properties": null, "_id": "6adb745eaddb9f91b53b6748"}, "cols_json": {}, "parent_index": null, "last_updated": "2026-10-31T21:44:58.669637", "description": "Somatic and germline drivers that PURPLE and LINX report. The bars rank the commonest driver types.", "title_size": "sm", "title_align": "left", "use": "purple/drivers", "catalog_source": {"toolId": "purple", "toolName": "PURPLE", "outputId": "purple_drivers", "use": "purple/drivers", "description": "The run's somatic and germline driver catalog, one row per tumor, gene and driver type: point mutations, amplifications, deletions, loss of heterozygosity and germline variants from PURPLE, plus the structural disruptions LINX adds. Each row carries PURPLE's driver likelihood, whether it is reported, the variant counts behind a mutation driver, biallelic status and the gene's copy-number range."}, "section": "Key figures", "aggregation": "count", "column_name": "driver_id", "column_type": "object", "value": null, "aggregations": null, "filter_expr": "col('reported') == True", "secondary_layout": "top_n", "breakdown_col": "driver", "top_n_count": 3, "coverage_max": null, "threshold_value": null, "threshold_direction": "min", "threshold_warn": null, "attrition_cols": [], "trend_col": null, "follow_region_filter": false, "icon_name": "mdi:target", "icon_color": "red", "caption": "reported, by driver type", "link": "tab:Drivers", "wf_tag": "nextflow/oncoanalyser"}, "title": "Reported drivers", "data": {"figures": {}, "tables": {}, "maps": {}, "images": {}, "multiqc": {}, "multiqcGeneralStats": {}, "cards": {"values": {"ov-kf-drivers": 35}, "secondary": {"ov-kf-drivers": {"__breakdown__": {"column": "driver", "total": 35, "top": [{"name": "MUTATION", "count": 11, "percent": 0.3142857142857143}, {"name": "DISRUPTION", "count": 10, "percent": 0.2857142857142857}, {"name": "DEL", "count": 7, "percent": 0.2}], "top_share": 0.8, "unique_values": 6, "breakdown_kind": "count", "evenness": 0.8687652126797492}}}, "aggregations": {}}, "unique": {}, "ranges": {}, "specs": {}, "schemas": {}, "advancedVizData": {}, "compute": {}}}</script>
+  </body>
+</html>
