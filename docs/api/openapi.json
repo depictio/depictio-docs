@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.19.2",
-    "x-generated-at": "2026-10-23T13:49:54Z",
-    "x-depictio-version": "v1.19.2"
+    "version": "1.19.3",
+    "x-generated-at": "2026-10-28T18:22:40Z",
+    "x-depictio-version": "v1.19.3"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -5316,7 +5316,7 @@
           "DeltaTables"
         ],
         "summary": "Get Unique Values",
-        "description": "Return the sorted unique values of ``column`` within a data collection.\n\nBacks the React viewer's MultiSelect options fetch. Mirrors the code path\nDash uses via ``load_deltatable_lite(..., load_for_options=True)`` so both\nviewers see identical option lists.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column name whose unique values to return.\n    limit: Max values to return (default 1000). Prevents unbounded payloads\n        on high-cardinality columns; MultiSelect's UX caps at 100 anyway.\n    filter_expr: Optional Polars filter expression (string) applied before\n        collecting unique values. Validated through the safe-eval pipeline\n        in ``depictio.models.components.filter_expr``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\": str, \"values\": list[str]}`` — strings for MultiSelect UI.\n\nRaises:\n    HTTPException: 404 if DC not found / not accessible, 500 on read error.",
+        "description": "Return the sorted unique values of ``column`` within a data collection.\n\nSynchronous on purpose: the work is blocking (Mongo, S3, Polars), so FastAPI runs\nit in the thread pool instead of on the event loop, where ~20 option lists\nrequested together used to queue behind each other and stall every other request.\n\nBacks the React viewer's MultiSelect options fetch. Mirrors the code path\nDash uses via ``load_deltatable_lite(..., load_for_options=True)`` so both\nviewers see identical option lists.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column name whose unique values to return.\n    limit: Max values to return (default 1000). Prevents unbounded payloads\n        on high-cardinality columns; MultiSelect's UX caps at 100 anyway.\n    filter_expr: Optional Polars filter expression (string) applied before\n        collecting unique values. Validated through the safe-eval pipeline\n        in ``depictio.models.components.filter_expr``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\": str, \"values\": list[str]}`` — strings for MultiSelect UI.\n\nRaises:\n    HTTPException: 404 if DC not found / not accessible, 500 on read error.",
         "operationId": "get_unique_values_depictio_api_v1_deltatables_unique_values__data_collection_id__get",
         "security": [
           {
@@ -18747,7 +18747,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -19239,7 +19239,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -19302,7 +19302,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -19712,7 +19712,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -20957,7 +20957,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -23764,7 +23764,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -24126,7 +24126,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -26512,7 +26512,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -26618,7 +26618,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -26851,7 +26851,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6adb65fbccfb7d804bd44a5f"
+            "default": "6ae23d6bc9c64fbab6d0dfc5"
           }
         },
         "type": "object",
@@ -27164,7 +27164,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -27332,7 +27332,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -27414,7 +27414,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -27500,7 +27500,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -27763,7 +27763,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -27938,7 +27938,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -28055,7 +28055,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [
@@ -28160,7 +28160,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6adb65fbccfb7d804bd44a5e"
+            "default": "6ae23d6bc9c64fbab6d0dfc4"
           },
           "description": {
             "anyOf": [

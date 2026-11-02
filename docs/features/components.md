@@ -1117,6 +1117,8 @@ Numeric matrix columns are inferred from the rest of the DC schema at compute ti
 | `cluster_metric` | `euclidean` \| `correlation` \| `cosine` | `euclidean` | Distance metric |
 | `normalize` | `none` \| `row_z` \| `col_z` \| `log1p` | `none` | Pre-clustering normalisation |
 | `colorscale` | str \| null | `null` | Plotly colorscale name override |
+| `max_rows` | int (3–16) \| null | `null` | Let the tile grow to fit a large matrix, up to this many grid rows. Unset, the heatmap keeps the height its layout gave it and only shrinks for a small matrix (v1.19.3+) |
+| `min_cell_px` | int (2–40) \| null | `null` | Shortest row height, in px, the tile asks the grid for (12 when unset). Lower it for a dense matrix (v1.19.3+) |
 
 **Filtering / row tagging**
 

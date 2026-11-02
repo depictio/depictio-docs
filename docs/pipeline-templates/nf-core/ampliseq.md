@@ -234,8 +234,9 @@ run was resolved against; the dashboard substitutes its real name everywhere.
 
     ??? abstract ":material-tune-variant: Filters and components"
 
-        **Filters** · `Phylum` on `complex_heatmap_canonical`, narrowing the rows
-        of the heatmap, plus the sample filters.
+        **Filters** · `Kingdom` (v1.19.3+) and `Phylum` on
+        `complex_heatmap_canonical`, narrowing the rows of the heatmap, plus the
+        sample filters.
 
         | Section | What it holds |
         |---|---|
