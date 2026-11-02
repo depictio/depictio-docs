@@ -2605,6 +2605,7 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
 .md-nav__item--nested.nav-pinned > .md-nav__container > label.md-nav__link,
 .md-nav__item--nested.nav-pinned > nav.md-nav {
     display: none;
+}
 
 /* Version badge. One convention for "available since": a small pill on its own
    line under a heading, never inside the heading, so anchors and the table of
