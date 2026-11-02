@@ -1,5 +1,6 @@
 ---
 title: "Genome browser: UCSC tracks"
+icon: material/database-search
 description: Tracks of the UCSC catalogue next to the run's own.
 glightbox: true
 ---
@@ -24,4 +25,4 @@ fetch_size_limit_mb: 5
 
 Used in the [nf-core/viralrecon dashboard template](../../pipeline-templates/nf-core/viralrecon.md).
 
-[:material-arrow-left: All examples](../genome-browser.md#examples)
+[:material-arrow-left: All examples](index.md#examples)

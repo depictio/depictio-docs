@@ -155,7 +155,7 @@ reference; this table only says *when* something arrived.
 | A built-in Guide on every dashboard | v1.14.0 | [The dashboard Guide](../usage/guides/dashboard-guide.md) |
 | Search every component of every tab with ⌘K | v1.14.0 | [Spotlight search](../usage/guides/spotlight-search.md) |
 | Comments and annotations on dashboard components, with agent proposals held for review | v1.13.0 | [Comments and Annotations](../features/comments-annotations.md) |
-| Thirteen more nf-core templates, ten advanced visualization kinds including a GenomeSpy genome view | v1.13.0 | [Pipeline Templates](../pipeline-templates/README.md) · [Components](../features/components.md#genome-view) |
+| Thirteen more nf-core templates, ten advanced visualization kinds including a GenomeSpy genome view | v1.13.0 | [Pipeline Templates](../pipeline-templates/README.md) · [Components](../features/advanced-visualizations.md#genome-view) |
 | Genome regions carried between collections, record cards that follow a selection | v1.13.0 | [Cross-DC Filtering](../features/cross-dc-filtering.md#region-links) · [Interactive Selection Filtering](../features/interactive-selection-filtering.md#record-cards) |
 | The full server installed as a Python package, no containers: `depictio local up` | v1.12.0 | [Python package](../installation/local.md) |
 | One `depictio` package, `depictio ingest <results dir>`, refreshes that keep edited dashboards | v1.12.0 | [Ingest Command](../depictio-cli/usage.md#ingest-command) · [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) |
@@ -171,7 +171,7 @@ reference; this table only says *when* something arrived.
 | Tool Studio: contribute a catalog tool from the browser | v1.9.0 | [Tool Studio](../developer/tool-studio.md) |
 | Run provenance, a real tab header, per-section grid packing | v1.8.3 | [Templates](../usage/projects/templates.md#run-provenance) · [Dashboards](../features/dashboards.md#dashboard-tabs) |
 | Password sign-in disabled, shared code for public mode | v1.8.2 | [Authentication Modes](../usage/guides/authentication-modes.md) |
-| Instance and dashboard brand themes, a navigable phylogeny | v1.8.0 | [Branding](../usage/administration/branding.md) · [Components](../features/components.md#phylogeny-interaction) |
+| Instance and dashboard brand themes, a navigable phylogeny | v1.8.0 | [Branding](../usage/administration/branding.md) · [Components](../features/advanced-visualizations.md#phylogenetic) |
 | Selection groups, the Analysis panel, funnel filtering | v1.7.0 | [Interactive Selection Filtering](../features/interactive-selection-filtering.md#analysis-panel) · [Dashboards](../features/dashboards.md#funnel-filtering) |
 | Sections and filters that span every tab of a dashboard | v1.6.0 | [Dashboards](../features/dashboards.md#persistent-sections) · [YAML Sync](../features/yaml-sync.md#persistent-sections) |
 | Filters carried into the component builder, bucket-scoped S3 startup | v1.5.2 | [Dashboard creation](../usage/guides/dashboard_creation.md#previewing-with-active-filters-v152) |
@@ -186,7 +186,7 @@ reference; this table only says *when* something arrived.
 | Cross-DC linking UI, ingestion reports, self-adapting nf-core templates | v1.1.0 | [Cross-DC Filtering](../features/cross-dc-filtering.md) |
 | React viewer as sole frontend on canonical URLs | v1.0.0 | [Dashboards](../features/dashboards.md) |
 | Tools catalog — tool outputs become dashboard components | v1.0.0 | [Catalog](../catalog/index.md) |
-| Advanced biology visualizations (volcano, Manhattan, sunburst…) | v0.13.0 | [Components](../features/components.md#advanced-visualizations) |
+| Advanced biology visualizations (volcano, Manhattan, sunburst…) | v0.13.0 | [Components](../features/advanced-visualizations.md) |
 | MultiQC data lifecycle, DC-level type config | v0.12.0 | [Projects Guide](../usage/projects/guide.md) |
 | Templates & recipes — one-command project setup | v0.10.0 | [Templates](../usage/projects/templates.md) · [Recipes](../usage/projects/recipes.md) |
 | Geospatial maps, choropleth & GeoJSON collections | v0.8.0 | [Components](../features/components.md#map-components) |

@@ -266,7 +266,7 @@ thresholds and a Manhattan knows how to order chromosomes.
 
 </div>
 
-*Four tabs from the two template dashboards, click any of them to open it full size. The volcano and DA barplot are driven by the same contrast filter; the PCoA, distance matrix and taxonomy heatmap are three views of one structure; the tree comes straight from Newick; the coverage track carries a SARS-CoV-2 gene axis under it. The catalog has eighteen visualisation types in total. [Browse them in the docs.](../../features/components.md#advanced-visualizations)*
+*Four tabs from the two template dashboards, click any of them to open it full size. The volcano and DA barplot are driven by the same contrast filter; the PCoA, distance matrix and taxonomy heatmap are three views of one structure; the tree comes straight from Newick; the coverage track carries a SARS-CoV-2 gene axis under it. The catalog has eighteen visualisation types in total. [Browse them in the docs.](../../features/advanced-visualizations.md)*
 
 Those controls are additional, not a replacement. Everything from the section
 above still applies: panel filters and selections made on other components narrow

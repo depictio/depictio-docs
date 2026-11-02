@@ -156,7 +156,7 @@ status and the callers run per sample. A callset is one caller on one sample. Th
 persistent *Sample filters* (status, patient, sample) sit in the left panel and
 narrow every tab through the sample links. The *Sample sheet* is pinned,
 collapsed, to the bottom of every child tab.
-The Locus tab embeds a [genome browser](../../features/genome-browser.md) that shows depth and reads on one axis.
+The Locus tab embeds a [genome browser](../../features/genome-browser/index.md) that shows depth and reads on one axis.
 
 === ":material-compass-outline: Overview"
 
@@ -435,7 +435,7 @@ The Locus tab embeds a [genome browser](../../features/genome-browser.md) that s
 
     !!! info "Structure resolver"
         The structure tile looks the gene up in AlphaFold DB, which needs the
-        [structure resolver](../../features/protein-tiles.md#structure-resolver)
+        [structure resolver](../../features/proteins.md#structure-resolver)
         on the server; without it the tile says so and the rest of the tab works.
 
 === ":material-map-marker-outline:{ .mc-indigo } Locus"

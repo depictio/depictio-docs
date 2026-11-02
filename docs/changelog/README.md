@@ -23,21 +23,21 @@ ghcr.io/depictio/depictio-cli:1.20.0
 
 ### **♻️ Migration**
 
-* **The JBrowse iframe is removed**: the separate JBrowse server (port 3000), its session watcher (port 9010) and the `jbrowse2` data collection type are gone. Tracks are now a `genomic_tracks` collection shown by the `jbrowse` component; nothing else has to run. See [Genome browser](../features/genome-browser.md) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **The JBrowse iframe is removed**: the separate JBrowse server (port 3000), its session watcher (port 9010) and the `jbrowse2` data collection type are gone. Tracks are now a `genomic_tracks` collection shown by the `jbrowse` component; nothing else has to run. See [Genome browser](../features/genome-browser/index.md) ([#1123](https://github.com/depictio/depictio/pull/1123)).
 * **Templates whose major version changed need a re-ingest**, a minor version change only a dashboard re-import. The nf-core/nascent dashboard template moves to 2.0.0 ([#1311](https://github.com/depictio/depictio/pull/1311)).
 
 ### **✨ New Features**
 
-* **An embedded genome browser**: a JBrowse 2 view of the run's coverage, peaks, variants and alignments, uploaded or read in place, on 11 built-in assemblies or a custom one. See [Genome browser](../features/genome-browser.md) ([#1123](https://github.com/depictio/depictio/pull/1123)).
-* **Two-way cross-filtering**: dashboard filters open the matching tracks and move the browser to a picked row (`locus_from`); a click on a feature filters the dashboard. See [Examples](../features/genome-browser.md#examples) ([#1123](https://github.com/depictio/depictio/pull/1123)).
-* **A genome view navigates the browser**: brush a region on the GenomeSpy lanes and the browser opens on it, and the genomic tiles of other tabs open the browser on their locus. See [Examples](../features/genome-browser.md#examples) ([#1123](https://github.com/depictio/depictio/pull/1123), [#1311](https://github.com/depictio/depictio/pull/1311)).
-* **UCSC tracks, breakpoint and circular views**, ranked calls, sashimi arcs and per-dashboard display defaults. See [Examples](../features/genome-browser.md#examples) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **An embedded genome browser**: a JBrowse 2 view of the run's coverage, peaks, variants and alignments, uploaded or read in place, on 11 built-in assemblies or a custom one. See [Genome browser](../features/genome-browser/index.md) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **Two-way cross-filtering**: dashboard filters open the matching tracks and move the browser to a picked row (`locus_from`); a click on a feature filters the dashboard. See [Examples](../features/genome-browser/index.md#examples) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **A genome view navigates the browser**: brush a region on the GenomeSpy lanes and the browser opens on it, and the genomic tiles of other tabs open the browser on their locus. See [Examples](../features/genome-browser/index.md#examples) ([#1123](https://github.com/depictio/depictio/pull/1123), [#1311](https://github.com/depictio/depictio/pull/1311)).
+* **UCSC tracks, breakpoint and circular views**, ranked calls, sashimi arcs and per-dashboard display defaults. See [Examples](../features/genome-browser/index.md#examples) ([#1123](https://github.com/depictio/depictio/pull/1123)).
 * **A floating data table** on volcano and scatter tiles, linked to the points both ways ([#1308](https://github.com/depictio/depictio/pull/1308)).
 * **A `depictio/ingest` Nextflow module** that publishes a depictio folder holding the run, and an **all-in-one image** that reopens that folder with one `docker run` ([#1290](https://github.com/depictio/depictio/pull/1290), [#1300](https://github.com/depictio/depictio/pull/1300)).
 
 ### **🧬 Pipeline Templates**
 
-* **A genome browser in 16 nf-core dashboard templates**. See [Templates with a genome browser](../features/genome-browser.md#templates-with-a-genome-browser) ([#1123](https://github.com/depictio/depictio/pull/1123)).
+* **A genome browser in 16 nf-core dashboard templates**. See [Templates with a genome browser](../features/genome-browser/index.md#templates-with-a-genome-browser) ([#1123](https://github.com/depictio/depictio/pull/1123)).
 * **New pipeline versions**: nf-core/airrflow 5.1.2, nf-core/hic 2.1.0 and nf-core/sarek 3.11.0 ([#1294](https://github.com/depictio/depictio/pull/1294), [#1302](https://github.com/depictio/depictio/pull/1302)).
 * **Overview study cards and genome views**: every Overview names what the run looked at next to how it was run, and eleven templates gain an Overview genome view ([#1306](https://github.com/depictio/depictio/pull/1306), [#1308](https://github.com/depictio/depictio/pull/1308)).
 
@@ -63,7 +63,7 @@ ghcr.io/depictio/depictio-cli:1.19.3
 
 ### **♻️ Migration**
 
-* **A heatmap keeps its authored height**: set `max_rows` to let it grow with a large matrix again. See [Hierarchical Heatmap](../features/components.md#hierarchical-heatmap) ([#1285](https://github.com/depictio/depictio/pull/1285)).
+* **A heatmap keeps its authored height**: set `max_rows` to let it grow with a large matrix again. See [Hierarchical Heatmap](../features/advanced-visualizations.md#hierarchical-heatmap) ([#1285](https://github.com/depictio/depictio/pull/1285)).
 
 ### **🚀 Improvements**
 
@@ -84,7 +84,7 @@ ghcr.io/depictio/depictio-cli:1.19.3
 
 ## **[v1.19.2](https://github.com/depictio/depictio/releases/tag/v1.19.2)** (October 23, 2026)
 
-!!! success "Patch: a switch between two reference databases, and volcano groups named"
+!!! success "Patch: option cards"
 
 ### Docker Images
 
@@ -97,15 +97,11 @@ ghcr.io/depictio/depictio-cli:1.19.2
 
 ### **✨ New Features**
 
-* **Option cards on a segmented control**, which can sit at the top of the tab. See [SegmentedControl](../features/components.md#segmentedcontrol) ([#1264](https://github.com/depictio/depictio/pull/1264)).
+* **Option cards**: a SegmentedControl drawn as cards, optionally at the top of the tab. See [Option cards](../features/components.md#option-cards) ([#1264](https://github.com/depictio/depictio/pull/1264)).
 
 ### **🚀 Improvements**
 
-* **Volcano and DA barplot name the groups of a contrast**, with shapes or colours per group. See [Volcano](../features/components.md#volcano) ([#1264](https://github.com/depictio/depictio/pull/1264)).
-
-### **🧬 Pipeline Templates**
-
-* **ANCOM-BC for two reference databases** in the ampliseq template, switched from the top of the tab. See [ampliseq](../pipeline-templates/nf-core/ampliseq.md#dashboard-tabs) ([#1264](https://github.com/depictio/depictio/pull/1264)).
+* **An optional glob that matches nothing is skipped**. See [`RecipeSource` Reference](../usage/projects/recipes.md#recipesource-reference) ([#1264](https://github.com/depictio/depictio/pull/1264)).
 
 ---
 
@@ -124,13 +120,20 @@ ghcr.io/depictio/depictio-cli:1.19.1
 
 ### **✨ New Features**
 
-* **Linked view sections**: `display: linked` keeps a section's tiles on one screen. See [Linked view](../features/dashboards.md#linked-view) ([#1262](https://github.com/depictio/depictio/pull/1262)).
-* **A scope banner** for a tab whose picker holds one value, with its `banner_facts`. See [Linked view](../features/dashboards.md#linked-view) ([#1262](https://github.com/depictio/depictio/pull/1262)).
-* **Zoom sync** between the residue tiles and the 3D model. See [Linked by residue](../features/protein-tiles.md#residue-selection) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **Scope banner** on one-unit tabs. See [Scope banner](../features/dashboards.md#scope-banner) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **Linked views**: a section's tiles as panes on one screen. See [Linked view](../features/dashboards.md#linked-view) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **Residue tiles sync their zoom**. See [Linked by residue](../features/proteins.md#residue-selection) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **Floating 3D structure** across tabs. See [Floating structure](../features/advanced-visualizations.md#floating-structure) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+
+### **🚀 Improvements**
+
+* **Figures zoom on Ctrl or Cmd and the wheel**, or a pinch. See [Right Panel](../features/dashboards.md#right-panel-visualizations) ([#1262](https://github.com/depictio/depictio/pull/1262)).
+* **proteinannotator, proteinfamilies and proteinfold** use these. See [nf-core templates](../pipeline-templates/nf-core/index.md) ([#1262](https://github.com/depictio/depictio/pull/1262)).
 
 ### **🐛 Bug Fixes**
 
-* **An export keeps a card's secondary strip and a table's row selection** ([#1263](https://github.com/depictio/depictio/pull/1263)).
+* **Export keeps card secondary strips and table row selection**. See [Export](../features/yaml-sync.md#export) ([#1263](https://github.com/depictio/depictio/pull/1263)).
+* **Builds and CI no longer count as installations** in telemetry ([#1258](https://github.com/depictio/depictio/pull/1258)).
 
 ---
 
@@ -149,16 +152,16 @@ ghcr.io/depictio/depictio-cli:1.19.0
 
 ### **✨ New Features**
 
-* **Protein tiles**: eight advanced visualizations for structures, alignments and protein families. See [Protein tiles](../features/protein-tiles.md) ([#1130](https://github.com/depictio/depictio/pull/1130)).
-* **Tiles linked by residue**: a pick filters every table, a hover marks every tile. See [Linked by residue](../features/protein-tiles.md#residue-selection) ([#1130](https://github.com/depictio/depictio/pull/1130)).
-* **Structures from AlphaFold DB or ESMFold**, off until `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` is set. See [Where the structure comes from](../features/protein-tiles.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1254](https://github.com/depictio/depictio/pull/1254)).
+* **Protein tiles**: eight advanced visualizations for structures, alignments and protein families. See [Proteins](../features/proteins.md) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **Tiles linked by residue**: a pick filters every table, a hover marks every tile. See [Linked by residue](../features/proteins.md#residue-selection) ([#1130](https://github.com/depictio/depictio/pull/1130)).
+* **Structures from AlphaFold DB or ESMFold**, off until `DEPICTIO_STRUCTURE_RESOLVER_ENABLED` is set. See [Where the structure comes from](../features/proteins.md#structure-resolver) ([#1130](https://github.com/depictio/depictio/pull/1130), [#1254](https://github.com/depictio/depictio/pull/1254)).
 * **Add user**: an administrator creates an account with an initial password. See [Adding a user](../usage/guides/web_ui.md#add-a-user) ([#1251](https://github.com/depictio/depictio/pull/1251)).
 * **Everyone with access** on a project's permissions. See [Everyone with access](../usage/projects/guide.md#everyone-with-access) ([#1252](https://github.com/depictio/depictio/pull/1252)).
 
 ### **🚀 Improvements**
 
 * **`always_selected` and `default_by`** for pickers that hold one value. See [Initial values](../features/yaml-sync.md#interactive-defaults) ([#1131](https://github.com/depictio/depictio/pull/1131), [#1257](https://github.com/depictio/depictio/pull/1257)).
-* **Protein tiles zoom and fold**. See [The tiles](../features/protein-tiles.md#the-tiles) ([#1256](https://github.com/depictio/depictio/pull/1256)).
+* **Protein tiles zoom and fold**. See [The tiles](../features/advanced-visualizations.md#proteins) ([#1256](https://github.com/depictio/depictio/pull/1256)).
 * **Structure and PAE files as indexed-file collections**. See [Indexed-file DCs](../usage/projects/guide.md#example-indexed-file-dcs) ([#1130](https://github.com/depictio/depictio/pull/1130)).
 * **27 catalog tools** for the new pipelines. See [Tools Catalog](../catalog/index.md) ([#1131](https://github.com/depictio/depictio/pull/1131)).
 
@@ -190,7 +193,7 @@ No images were published for v1.18.1: the API image failed to build ([#1244](htt
 ### **🐛 Bug Fixes**
 
 * **SAML loads in the API image**, where every SAML route answered 500 in 1.18.0. See [Single sign-on (SAML)](../installation/sso.md) ([#1243](https://github.com/depictio/depictio/pull/1243)).
-* **File-backed genome tracks render with sign-in on**. See [Genome view](../features/components.md#genome-view) ([#1242](https://github.com/depictio/depictio/pull/1242)).
+* **File-backed genome tracks render with sign-in on**. See [Genome view](../features/advanced-visualizations.md#genome-view) ([#1242](https://github.com/depictio/depictio/pull/1242)).
 
 ---
 
@@ -547,7 +550,7 @@ ghcr.io/depictio/depictio-cli:1.14.0
 
 ### **♻️ Migration**
 
-* **Advanced visualization controls dock beside or above the plot** on a tile with room for them, three in view and the rest under *More options*, unless the component sets `controls_placement: popover`. See [Shared settings](../features/components.md#advanced-viz-shared-settings) ([#1145](https://github.com/depictio/depictio/pull/1145), [97da4ef6](https://github.com/depictio/depictio/commit/97da4ef6), [e7321b4b](https://github.com/depictio/depictio/commit/e7321b4b)).
+* **Advanced visualization controls dock beside or above the plot** on a tile with room for them, three in view and the rest under *More options*, unless the component sets `controls_placement: popover`. See [Shared settings](../features/advanced-visualizations.md#shared-settings) ([#1145](https://github.com/depictio/depictio/pull/1145), [97da4ef6](https://github.com/depictio/depictio/commit/97da4ef6), [e7321b4b](https://github.com/depictio/depictio/commit/e7321b4b)).
 
 ### **✨ New Features**
 
@@ -557,8 +560,8 @@ ghcr.io/depictio/depictio-cli:1.14.0
 * **Card styles** (`variant`: `headline`, `compact`, `minimal`, `accent`, `split`) are set per card or per section with `card_variant`, beside a `caption`, fixed `decimals` and a `link` to a tab. See [Display options](../features/components.md#card-display-options) ([#1145](https://github.com/depictio/depictio/pull/1145), [cff3d3b2](https://github.com/depictio/depictio/commit/cff3d3b2), [f8bbe31c](https://github.com/depictio/depictio/commit/f8bbe31c)).
 * **`figure_style: minimal`** draws a figure or advanced visualization as a landing-page card, its title beside an icon badge, with a `caption` and a `link` to the tab it summarises. See [Figure style](../features/components.md#figure-style) ([#1145](https://github.com/depictio/depictio/pull/1145), [c8021f23](https://github.com/depictio/depictio/commit/c8021f23), [5d95c157](https://github.com/depictio/depictio/commit/5d95c157)).
 * **Highlight components** redraw a figure from another tab under this tab's filters, without copying it, from **Highlight on…** in its menu. See [Highlight Components](../features/components.md#highlight-components) ([#1145](https://github.com/depictio/depictio/pull/1145), [9b281d59](https://github.com/depictio/depictio/commit/9b281d59)).
-* **Phylogeny summary by rank**: `collapse_rank` draws one tip per lineage, sized by tips or reads, with a column of dots per site, and the builder sets a tree up in steps. See [Summary by rank](../features/components.md#phylogeny-summary) ([#1145](https://github.com/depictio/depictio/pull/1145), [58ba52c9](https://github.com/depictio/depictio/commit/58ba52c9), [cadbc5cf](https://github.com/depictio/depictio/commit/cadbc5cf)).
-* **An UpSet can filter the dashboard**: a click on an intersection emits its rows' `selection_column` values. See [UpSet](../features/components.md#upset) ([#1145](https://github.com/depictio/depictio/pull/1145), [9fa11889](https://github.com/depictio/depictio/commit/9fa11889)).
+* **Phylogeny summary by rank**: `collapse_rank` draws one tip per lineage, sized by tips or reads, with a column of dots per site, and the builder sets a tree up in steps. See [Summary by rank](../features/advanced-visualizations.md#phylogenetic) ([#1145](https://github.com/depictio/depictio/pull/1145), [58ba52c9](https://github.com/depictio/depictio/commit/58ba52c9), [cadbc5cf](https://github.com/depictio/depictio/commit/cadbc5cf)).
+* **An UpSet can filter the dashboard**: a click on an intersection emits its rows' `selection_column` values. See [UpSet](../features/advanced-visualizations.md#upset) ([#1145](https://github.com/depictio/depictio/pull/1145), [9fa11889](https://github.com/depictio/depictio/commit/9fa11889)).
 * **Tab groups and tab defaults**: `tab_group` lists child tabs under headings in the sidebar, and `filter_panel_default`, `content_width_default` and `show_tab_header` set what a tab opens with. See [Tab groups](../features/dashboards.md#tab-groups) and [Tab defaults](../features/dashboards.md#tab-defaults) ([#1145](https://github.com/depictio/depictio/pull/1145), [922a4457](https://github.com/depictio/depictio/commit/922a4457), [22eadf99](https://github.com/depictio/depictio/commit/22eadf99)).
 * **The dashboard Guide**, an entry in every dashboard's sidebar, shows how to move around, filter and read it, with live demos built from the dashboard's own components. See [The dashboard Guide](../usage/guides/dashboard-guide.md) ([#1145](https://github.com/depictio/depictio/pull/1145), [2d40cdd8](https://github.com/depictio/depictio/commit/2d40cdd8), [454bf14a](https://github.com/depictio/depictio/commit/454bf14a)).
 * **Spotlight search**: **⌘K** / **Ctrl+K** searches every component of every tab and lands on the one picked, unfolding whatever hides it. See [Spotlight search](../usage/guides/spotlight-search.md) ([#1152](https://github.com/depictio/depictio/pull/1152), [d2a8cb84](https://github.com/depictio/depictio/commit/d2a8cb84), [12234adc](https://github.com/depictio/depictio/commit/12234adc)).
@@ -569,7 +572,7 @@ ghcr.io/depictio/depictio-cli:1.14.0
 * **Settings is a dialog with a rail of sections**: *Your view* for the reader's font size and page width, then, in edit mode, tab defaults, tiles, filtering, Guide and branding, all in the dashboard's colours. See [Dashboard settings](../usage/guides/dashboard_usage.md#dashboard-settings-drawer) ([#1145](https://github.com/depictio/depictio/pull/1145), [e8545b20](https://github.com/depictio/depictio/commit/e8545b20), [f71da622](https://github.com/depictio/depictio/commit/f71da622)).
 * **A child tab without a brand of its own draws in its main tab's**, figures and builder previews included. See [Settings for everyone](../usage/guides/dashboard_usage.md#settings-for-everyone) ([#1145](https://github.com/depictio/depictio/pull/1145), [743ee0f8](https://github.com/depictio/depictio/commit/743ee0f8), [1cf3e4e8](https://github.com/depictio/depictio/commit/1cf3e4e8)).
 * **A section on every tab can skip some** with `exclude_tabs`, and says *Filtered* with a *Reset filters* action where it is pinned. See [Sections on every tab](../features/dashboards.md#persistent-sections) ([#1145](https://github.com/depictio/depictio/pull/1145), [35343b57](https://github.com/depictio/depictio/commit/35343b57)).
-* **Sunburst and sankey colour by lineage**, small sunburst arcs fold into *Other*, and stacked taxonomy strips are labelled in place. See [Sunburst](../features/components.md#sunburst) ([#1145](https://github.com/depictio/depictio/pull/1145), [b83094e5](https://github.com/depictio/depictio/commit/b83094e5), [a2bfc69d](https://github.com/depictio/depictio/commit/a2bfc69d)).
+* **Sunburst and sankey colour by lineage**, small sunburst arcs fold into *Other*, and stacked taxonomy strips are labelled in place. See [Sunburst](../features/advanced-visualizations.md#sunburst) ([#1145](https://github.com/depictio/depictio/pull/1145), [b83094e5](https://github.com/depictio/depictio/commit/b83094e5), [a2bfc69d](https://github.com/depictio/depictio/commit/a2bfc69d)).
 * **Component builders are laid out in collapsible sections**, the required ones always open. See [Step 3](../usage/guides/dashboard_creation.md#step-3-customize-your-component) ([#1145](https://github.com/depictio/depictio/pull/1145), [ccb68f97](https://github.com/depictio/depictio/commit/ccb68f97), [c2953547](https://github.com/depictio/depictio/commit/c2953547)).
 * **Grids count in half rows**, so fitted text and cards leave less blank, and phones lay tiles out in reading order. See [Right Panel](../features/dashboards.md#right-panel-visualizations) ([#1145](https://github.com/depictio/depictio/pull/1145), [5755726c](https://github.com/depictio/depictio/commit/5755726c), [74c681cc](https://github.com/depictio/depictio/commit/74c681cc)).
 
@@ -642,7 +645,7 @@ ghcr.io/depictio/depictio-cli:1.13.0
 
 * **A `Slider` filter is now a threshold**, keeping the rows at or above its value; add `slider_mode: eq` to keep the exact match. See [Initial values and slider options](../features/yaml-sync.md#interactive-defaults) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
 * **A card's `threshold_warn` on the passing side of `threshold_value` fails validation** instead of being dropped silently. See [Secondary Layout Modes](../features/components.md#secondary-layout-modes) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
-* **`ma`, `qq`, `enrichment` and `roc_pr_curve` are views of the volcano, dot plot and `pr_benchmark` tiles**; stored dashboards and YAML files are rewritten when read, nothing to edit. See [Switchable views](../features/components.md#advanced-viz-views) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **`ma`, `qq`, `enrichment` and `roc_pr_curve` are views of the volcano, dot plot and `pr_benchmark` tiles**; stored dashboards and YAML files are rewritten when read, nothing to edit. See [Switchable views](../features/advanced-visualizations.md#views) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
 * **A catalog tool's `module.yaml` must declare `description` and `homepage`** (and may add `biotools_url`); copy them into your own modules. See [Step 1: `module.yaml`](../developer/contributing-a-tool.md#step-1-moduleyaml-identity) ([#1102](https://github.com/depictio/depictio/pull/1102), [0f1d6e21](https://github.com/depictio/depictio/commit/0f1d6e21)).
 * **Reworked templates do not replace your dashboards on refresh**: delete the old dashboard in the viewer, then refresh, to get the new layout. See [Refreshing a project](../depictio-cli/usage.md#refreshing-a-project) ([#1102](https://github.com/depictio/depictio/pull/1102), [b9cd837f](https://github.com/depictio/depictio/commit/b9cd837f)).
 
@@ -650,7 +653,7 @@ ghcr.io/depictio/depictio-cli:1.13.0
 
 * **Comments and annotations on dashboard components**: threads that restore the filters and selection they were written under, and marks drawn on figures, advanced visualizations, MultiQC plots, tables and maps. See [Comments and Annotations](../features/comments-annotations.md) ([#1109](https://github.com/depictio/depictio/pull/1109), [61bc6cf6](https://github.com/depictio/depictio/commit/61bc6cf6)).
 * **Threads flag when their subject changed** (*Data changed*, *Component changed*, *Component removed*), and **agent proposals** wait for a person to accept them. See [When the data or the component changes](../features/comments-annotations.md#when-the-data-or-the-component-changes) and [Agent proposals](../features/comments-annotations.md#agent-proposals) ([#1109](https://github.com/depictio/depictio/pull/1109), [cab8ddd6](https://github.com/depictio/depictio/commit/cab8ddd6)).
-* **Ten new advanced visualization kinds**: [Contact map](../features/components.md#contact-map), [Knee plot](../features/components.md#knee-plot), [Damage profile](../features/components.md#damage-profile), [Genome view](../features/components.md#genome-view), [Group compare](../features/components.md#group-compare), [Transcript structure](../features/components.md#transcript-structure), [Copy-number profile](../features/components.md#cnv-profile), [Genome chord](../features/components.md#genome-chord), [Parallel coordinates](../features/components.md#parallel-coordinates) and [Record card](../features/components.md#record-card) ([#1102](https://github.com/depictio/depictio/pull/1102), [02f56618](https://github.com/depictio/depictio/commit/02f56618), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
+* **Ten new advanced visualization kinds**: [Contact map](../features/advanced-visualizations.md#contact-map), [Knee plot](../features/advanced-visualizations.md#knee-plot), [Damage profile](../features/advanced-visualizations.md#damage-profile), [Genome view](../features/advanced-visualizations.md#genome-view), [Group compare](../features/advanced-visualizations.md#group-compare), [Transcript structure](../features/advanced-visualizations.md#transcript-structure), [Copy-number profile](../features/advanced-visualizations.md#cnv-profile), [Genome chord](../features/advanced-visualizations.md#genome-chord), [Parallel coordinates](../features/advanced-visualizations.md#parallel-coordinates) and [Record card](../features/advanced-visualizations.md#record-card) ([#1102](https://github.com/depictio/depictio/pull/1102), [02f56618](https://github.com/depictio/depictio/commit/02f56618), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
 * **Record cards follow a selection**, showing the row picked in their `linked_component`, as its side panel. See [Record cards and their source](../features/interactive-selection-filtering.md#record-cards) ([#1102](https://github.com/depictio/depictio/pull/1102), [60ebff4b](https://github.com/depictio/depictio/commit/60ebff4b)).
 * **Genome regions filter the dashboard**: a region brushed or typed on a track becomes a chromosome and position filter, carried across collections by a `region` link. See [Genome region selection](../features/interactive-selection-filtering.md#genome-region-selection) and [Region links](../features/cross-dc-filtering.md#region-links) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
 * **`indexed_file` data collections**: VCF, BAM, bigWig, bigBed, GFF3 or tabix files read by the browser by byte range, with no table built. See [Indexed-file DCs](../usage/projects/guide.md#example-indexed-file-dcs) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
@@ -660,8 +663,8 @@ ghcr.io/depictio/depictio-cli:1.13.0
 ### **🚀 Improvements**
 
 * **Tiles take the height their content needs**, levelled per row; `autofit: false` or a tile's `fit: fixed` turns it off. See [Tile height and control placement](../features/yaml-sync.md#tile-height) ([#1102](https://github.com/depictio/depictio/pull/1102), [59f632ae](https://github.com/depictio/depictio/commit/59f632ae)).
-* **Advanced visualization controls can sit beside the plot or under the title** (`controls_placement`, `advanced_viz_controls`). See [Shared settings](../features/components.md#advanced-viz-shared-settings) ([#1102](https://github.com/depictio/depictio/pull/1102), [60ebff4b](https://github.com/depictio/depictio/commit/60ebff4b)).
-* **The kind picker ranks kinds for the data**, with a badge saying why each one matches. See [The kind picker](../features/components.md#kind-picker) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
+* **Advanced visualization controls can sit beside the plot or under the title** (`controls_placement`, `advanced_viz_controls`). See [Shared settings](../features/advanced-visualizations.md#shared-settings) ([#1102](https://github.com/depictio/depictio/pull/1102), [60ebff4b](https://github.com/depictio/depictio/commit/60ebff4b)).
+* **The kind picker ranks kinds for the data**, with a badge saying why each one matches. See [The kind picker](../features/advanced-visualizations.md#kind-picker) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
 * **Clear selection (N)** replaces the always-visible reset, and shows only while a tile holds a selection. See [Reset Selection](../features/interactive-selection-filtering.md#reset-selection) ([#1102](https://github.com/depictio/depictio/pull/1102), [60ebff4b](https://github.com/depictio/depictio/commit/60ebff4b)).
 * **A card breakdown follows the card's aggregation** (max, mean or median per group instead of a count). See [Secondary Layout Modes](../features/components.md#secondary-layout-modes) ([#1102](https://github.com/depictio/depictio/pull/1102), [48d0bc05](https://github.com/depictio/depictio/commit/48d0bc05)).
 * **56 new catalog tools** (93 in all), each card with description, homepage and bio.tools link. See [Catalog](../catalog/index.md) ([#1102](https://github.com/depictio/depictio/pull/1102), [a72c8efa](https://github.com/depictio/depictio/commit/a72c8efa)).
@@ -715,7 +718,7 @@ ghcr.io/depictio/depictio-cli:1.12.0
 
 * **Clearer CLI output**: `-v` / `-vv` for INFO / DEBUG, each failure reported once, and `depictio --help` grouped by purpose. See [Global Options](../depictio-cli/usage.md#global-options) ([#1149](https://github.com/depictio/depictio/pull/1149), [987bc950](https://github.com/depictio/depictio/commit/987bc950)).
 * **Dashboard thumbnails can be turned off or moved** with `DEPICTIO_PERFORMANCE_SCREENSHOTS_ENABLED` / `_DIR`. See [Performance & Timeouts](../installation/env-reference.md#performance-timeouts) ([#1110](https://github.com/depictio/depictio/pull/1110), [6c7021d0](https://github.com/depictio/depictio/commit/6c7021d0)).
-* **Stacked taxonomy**: `taxon_palette` pins a colour per taxon, and the nf-core/ampliseq strips can use any categorical metadata column (re-ingest to get them). See [Stacked taxonomy](../features/components.md#stacked-taxonomy) ([#1140](https://github.com/depictio/depictio/pull/1140), [f80b7313](https://github.com/depictio/depictio/commit/f80b7313), [ca0172cd](https://github.com/depictio/depictio/commit/ca0172cd)).
+* **Stacked taxonomy**: `taxon_palette` pins a colour per taxon, and the nf-core/ampliseq strips can use any categorical metadata column (re-ingest to get them). See [Stacked taxonomy](../features/advanced-visualizations.md#stacked-taxonomy) ([#1140](https://github.com/depictio/depictio/pull/1140), [f80b7313](https://github.com/depictio/depictio/commit/f80b7313), [ca0172cd](https://github.com/depictio/depictio/commit/ca0172cd)).
 
 ### **🐛 Bug Fixes**
 
@@ -808,7 +811,7 @@ ghcr.io/depictio/depictio-cli:1.11.0
 
 * **Every advanced visualization kind has a fixed answer to analysis groups**: it splits, colours one panel or stays whole. A figure the groups cannot reach carries a **not grouped** badge, and groups reach other tabs through the dashboard's links. See [The Analysis panel](../features/interactive-selection-filtering.md#analysis-panel) ([#1093](https://github.com/depictio/depictio/pull/1093), [8fc2b824](https://github.com/depictio/depictio/commit/8fc2b824)).
 * **Ingestion runs always close**: Ctrl-C or SIGTERM records `interrupted`, a run nobody closed is swept to `abandoned`, the Ingestion pane filters by status, instance and project, and each admin pane has its own URL. See [Monitoring](../usage/administration/monitoring.md#ingestion) ([#1097](https://github.com/depictio/depictio/pull/1097), [38e3acfe](https://github.com/depictio/depictio/commit/38e3acfe), [c681b76b](https://github.com/depictio/depictio/commit/c681b76b)).
-* **UpSet and complex heatmap can pick their columns by pattern**: `set_columns_pattern` and `value_columns_pattern` take a regex, so a consensus figure fits whatever samples a run has. See [UpSet](../features/components.md#upset) ([#1094](https://github.com/depictio/depictio/pull/1094), [#1098](https://github.com/depictio/depictio/pull/1098), [86851685](https://github.com/depictio/depictio/commit/86851685), [f5298ec6](https://github.com/depictio/depictio/commit/f5298ec6)).
+* **UpSet and complex heatmap can pick their columns by pattern**: `set_columns_pattern` and `value_columns_pattern` take a regex, so a consensus figure fits whatever samples a run has. See [UpSet](../features/advanced-visualizations.md#upset) ([#1094](https://github.com/depictio/depictio/pull/1094), [#1098](https://github.com/depictio/depictio/pull/1098), [86851685](https://github.com/depictio/depictio/commit/86851685), [f5298ec6](https://github.com/depictio/depictio/commit/f5298ec6)).
 
 ### **🧬 Pipeline Templates**
 
@@ -1073,7 +1076,7 @@ ghcr.io/depictio/depictio-worker:1.8.0
 * **A Branding panel in `/admin`**, with a live preview, presets and JSON import/export, saved server-side so it needs no redeploy. See [Branding](../usage/administration/branding.md#presets-import-and-export) ([#1003](https://github.com/depictio/depictio/pull/1003), [5e4cd68b](https://github.com/depictio/depictio/commit/5e4cd68b)).
 * **A dashboard can carry its own brand and logo**, from **Settings → Appearance** or a `brand_theme:` block, both tri-state so *inherit the instance* is expressible. See [Using the dashboard](../usage/guides/dashboard_usage.md#appearance) ([#1003](https://github.com/depictio/depictio/pull/1003), [5e4cd68b](https://github.com/depictio/depictio/commit/5e4cd68b)).
 * **Font size for dashboard content**: **A-** / **A+** steps figures, tables and cards from 85% to 130%, and a tile takes a `font_scale` of its own. See [Components](../features/components.md#figure-components) ([#1003](https://github.com/depictio/depictio/pull/1003), [68d8a1ed](https://github.com/depictio/depictio/commit/68d8a1ed)).
-* **A phylogeny you can navigate**: zoom and pan, undo/redo, focus mode, clade collapsing, and a clade that becomes a dashboard filter like any other. See [Components](../features/components.md#phylogeny-interaction) ([#981](https://github.com/depictio/depictio/pull/981), [8ff22a83](https://github.com/depictio/depictio/commit/8ff22a83), [5b96bbea](https://github.com/depictio/depictio/commit/5b96bbea)).
+* **A phylogeny you can navigate**: zoom and pan, undo/redo, focus mode, clade collapsing, and a clade that becomes a dashboard filter like any other. See [Components](../features/advanced-visualizations.md#phylogenetic) ([#981](https://github.com/depictio/depictio/pull/981), [8ff22a83](https://github.com/depictio/depictio/commit/8ff22a83), [5b96bbea](https://github.com/depictio/depictio/commit/5b96bbea)).
 
 ### **🚀 Improvements**
 
@@ -2132,7 +2135,7 @@ ghcr.io/depictio/depictio:0.13.1
 ## **[v0.13.0](https://github.com/depictio/depictio/releases/tag/v0.13.0)** (May 20, 2026)
 
 !!! success "Stable Release — Advanced Visualization component type"
-    Introduces **[Advanced Visualization](../features/components.md#advanced-visualizations)**,
+    Introduces **[Advanced Visualization](../features/advanced-visualizations.md)**,
     a new component type providing ready-to-use visualizations for standard
     bioinformatics outputs.
 

@@ -57,7 +57,7 @@ left panel and narrow every tab through the target hub.
 !!! info "Structures are read from the run, not resolved"
     The 3D and Ramachandran tiles read the top-ranked PDB that each engine
     publishes under `top_ranked_structures/`, so nothing leaves the server and
-    the [structure resolver](../../features/protein-tiles.md#structure-resolver)
+    the [structure resolver](../../features/proteins.md#structure-resolver)
     (`DEPICTIO_STRUCTURE_RESOLVER_ENABLED`) is not used. Those PDBs are required:
     a run that published none has no structure to open.
 
@@ -212,11 +212,11 @@ every child tab. The pLDDT bands take AlphaFold's own colours.
     on the first. The strip gives the median residue pLDDT, the residues by
     confidence band, the likely disordered residues and the best mean pLDDT. Then
     a [linked view](../../features/dashboards.md#linked-view) holds the picked
-    structure in [3D](../../features/protein-tiles.md#molecule-3d), coloured by
+    structure in [3D](../../features/advanced-visualizations.md#molecule-3d), coloured by
     pLDDT over its written sequence, on the left. Stacked on the right are a table
     with one row per engine's top-ranked structure, which picks the structure, the
     sequence with its pLDDT lane, the pLDDT profile of every engine and the
-    [Ramachandran plot](../../features/protein-tiles.md#ramachandran) of the
+    [Ramachandran plot](../../features/advanced-visualizations.md#ramachandran) of the
     picked structure (phi and psi computed in the browser, coloured by pLDDT). A
     click on a residue in 3D, on a letter or a brush on the track selects the same
     residues in all of them. The alignment the structure was folded from and the
@@ -247,7 +247,7 @@ every child tab. The pLDDT bands take AlphaFold's own colours.
     The tab reads one structure. The strip gives its mean PAE, the pLDDT of its
     residues, and the pTM and ipTM of its top-ranked model against AlphaFold's
     cut-offs (pTM 0.5; ipTM 0.8 and 0.6). Then the
-    [PAE matrix](../../features/protein-tiles.md#pae-matrix) beside the same
+    [PAE matrix](../../features/advanced-visualizations.md#pae-matrix) beside the same
     structure in 3D, coloured by pLDDT, and the sequence with its pLDDT lane below.
     A diagonal brush on the matrix selects a square as a residue range: the
     structure draws it red and the sequence track shades it, so a confident domain

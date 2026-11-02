@@ -335,7 +335,7 @@ def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
 | `format` | `str` | yes if `path` set | `CSV`, `TSV`, or `Parquet` (case-insensitive) |
 | `input_schema` | `dict` | no | Columns `transform()` reads from this source, as column name to Polars dtype (e.g. `{"#gene1": pl.Utf8}`). Checked after the source is read. Leave it out, with a `# No input_schema:` comment giving the reason, when no column name is fixed (one column per sample, columns read by position or found by alias) |
 | `read_kwargs` | `dict` | no | Extra kwargs forwarded to the Polars reader (e.g. `{"skip_rows": 1}`) |
-| `optional` | `bool` | no | If `true`, source is skipped when unavailable instead of failing |
+| `optional` | `bool` | no | If `true`, a missing source (or, since v1.19.2, a glob matching nothing) is skipped and reaches `transform()` as `None` |
 | `glob_pattern` | `str` | no | Glob pattern for matching multiple files (concatenated) |
 
 Exactly one of `path`, `dc_ref`, or `glob_pattern` must be set per source.
@@ -570,7 +570,7 @@ recipe keeps the paths and the output schema. Tests for a helper go under
 `depictio/tests/recipes/`, beside the recipe edge-case tests.
 
 Since **v1.19.0** the protein helpers build the tables the
-[protein tiles](../../features/protein-tiles.md#the-data) read: `protein_structure` (residues
+[protein tiles](../../features/proteins.md#the-data) read: `protein_structure` (residues
 and pLDDT from a PDB), `msa` (A3M, Stockholm, aligned FASTA), `hmm` (a profile HMM and its
 reference numbering), `secondary_structure` (S4PRED `.ss2`) and `pae` (PAE matrices). They use
 the standard library and Polars only.

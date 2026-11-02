@@ -1,5 +1,6 @@
 ---
 title: "Genome browser: Ranked calls"
+icon: material/format-list-numbered
 description: A numbered track of the best calls, picked and zoomed.
 glightbox: true
 ---
@@ -26,4 +27,4 @@ locus_from:
 
 Used in the nf-core/raredisease dashboard template.
 
-[:material-arrow-left: All examples](../genome-browser.md#examples)
+[:material-arrow-left: All examples](index.md#examples)

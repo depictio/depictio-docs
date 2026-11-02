@@ -1,5 +1,6 @@
 ---
 title: "Genome browser: Time course"
+icon: material/timeline-clock-outline
 description: One colour ramp from the earliest library to the latest.
 glightbox: true
 ---
@@ -25,4 +26,4 @@ display:
 
 Used in the nf-core/nascent dashboard template.
 
-[:material-arrow-left: All examples](../genome-browser.md#examples)
+[:material-arrow-left: All examples](index.md#examples)

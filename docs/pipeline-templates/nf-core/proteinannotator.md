@@ -53,7 +53,7 @@ joining them per residue, per domain, per protein and per sample:
 !!! info "Folding needs the structure resolver and sends the sequence out"
     The pipeline predicts no 3D structure. The Structure tab folds the picked
     protein from its sequence through the
-    [structure resolver](../../features/protein-tiles.md#structure-resolver),
+    [structure resolver](../../features/proteins.md#structure-resolver),
     which is off by default: an administrator sets
     `DEPICTIO_STRUCTURE_RESOLVER_ENABLED=true` on the server. Folding sends the
     protein sequence to ESMFold on Meta's ESM Atlas (`api.esmatlas.com`), and
@@ -217,7 +217,7 @@ helix, strand and coil.
 
     [![Domains dashboard](../../images/pipeline-templates/nf-core/proteinannotator/domains_light.webp){ loading=lazy }](../../images/pipeline-templates/nf-core/proteinannotator/domains_light.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    The [domain architecture](../../features/protein-tiles.md#domain-architecture)
+    The [domain architecture](../../features/advanced-visualizations.md#domain-architecture)
     draws one backbone per protein with its domains from all five databases,
     coloured by database; a click selects the protein and the span on the residue
     tables and the family on the domain table, the scatter and the record card.
@@ -252,9 +252,9 @@ helix, strand and coil.
     sample. The residues S4PRED called, the probability of the called state, and
     the helix and strand probabilities. Then a
     [linked view](../../features/dashboards.md#linked-view) stacks the
-    [secondary structure](../../features/protein-tiles.md#secondary-structure)
+    [secondary structure](../../features/advanced-visualizations.md#secondary-structure)
     ribbon, over the probability of each state with its segment list, on the
-    [sequence track](../../features/protein-tiles.md#sequence-track), which also
+    [sequence track](../../features/advanced-visualizations.md#sequence-track), which also
     draws the domain spans; a brush or a segment pick selects the same residues on
     both. A stacked bar compares the state shares of the proteins. The residue
     table is collapsed.
@@ -279,7 +279,7 @@ helix, strand and coil.
     [scope banner](../../features/dashboards.md#linked-view) prints its length,
     domain hits and annotated share. A
     [linked view](../../features/dashboards.md#linked-view) puts its
-    [3D structure](../../features/protein-tiles.md#molecule-3d), coloured by best
+    [3D structure](../../features/advanced-visualizations.md#molecule-3d), coloured by best
     domain over its written sequence, beside the sequence track (state,
     probability and domain spans), linked residue by residue: a click on a residue
     in 3D, on a letter of the sequence or a brush on the track selects the same

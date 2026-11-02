@@ -532,7 +532,7 @@ data_collections:
 - **No materialisation**: unlike a Table DC there is no Delta table and no Parquet copy. The backend serves the raw Newick over `/advanced_viz/phylogeny/{dc_id}/newick`
 - **Metadata is optional**: leave the three `metadata_*` keys out and the tree still renders, just unannotated
 - **Tip labels**: use `tip_label_strategy: "first_token"` when leaf names carry a suffix, so `Escherichia_coli_K12` joins as `Escherichia_coli`
-- **Component reference**: an `advanced_viz` component of kind `phylogenetic` points at the tree with `tree_wf_id` / `tree_dc_id`, then colours tips from any column of the metadata DC. See [Phylogenetic](../../features/components.md#phylogenetic)
+- **Component reference**: an `advanced_viz` component of kind `phylogenetic` points at the tree with `tree_wf_id` / `tree_dc_id`, then colours tips from any column of the metadata DC. See [Phylogenetic](../../features/advanced-visualizations.md#phylogenetic)
 
 ---
 

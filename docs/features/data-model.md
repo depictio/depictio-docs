@@ -136,7 +136,7 @@ A `table` collection that declares latitude and longitude columns becomes map-ca
 without changing its type. See [Components](components.md#map-components).
 
 A `genomic_tracks` collection is a table too, so it can be filtered, linked and joined like
-one, and the [genome browser](genome-browser.md) shows the tracks its rows name. See
+one, and the [genome browser](genome-browser/index.md) shows the tracks its rows name. See
 [genomic_tracks DCs](../usage/projects/guide.md#example-genomic-tracks-dcs).
 
 A `phylogeny` collection points at a `table` collection for its tip annotations rather

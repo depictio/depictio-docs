@@ -2,6 +2,7 @@
 title: "Dashboard Features"
 icon: material/view-dashboard-variant
 description: "Guide to Depictio's dashboard modes, layouts, tabs, and organization features."
+glightbox: true
 ---
 
 # :material-view-dashboard-variant: Dashboard Features
@@ -222,10 +223,13 @@ Available component types include:
 | :material-map-marker-multiple: **Maps**     | Geospatial scatter, density and choropleth maps |
 | :material-microscope: **MultiQC**           | Quality control report visualizations          |
 | :material-image: **Images**                 | Display grid of static images (PNG, JPEG, SVG) |
-| :material-chart-timeline: **Genome browser** | Embedded genome browser over a track manifest (v1.20.0+), see [Genome browser](genome-browser.md) |
+| :material-chart-timeline: **Genome browser** | Embedded genome browser over a track manifest (v1.20.0+), see [Genome browser](genome-browser/index.md) |
 
 A map can also leave the grid entirely and become a dashboard-wide panel that follows the
-viewer across every tab. See [Components](components.md#dashboard-wide-map-panel).
+viewer across every tab. See [Components](components.md#dashboard-wide-map-panel). Since
+v1.19.1 a [3D structure](advanced-visualizations.md#floating-structure) can too.
+
+<span class="ver-badge">v1.19.1+</span> A plain wheel scrolls the page. Ctrl or Cmd and the wheel, or a pinch, zooms a figure.
 
 !!! note "Future Components"
     Additional component types may be added in future releases based on user needs and feedback (Network Graphs).
@@ -269,18 +273,6 @@ Folding is remembered per viewer, in the browser: it is not part of the
 dashboard, so collapsing a section you are reading never changes what anyone
 else sees. A section that lives on every tab is remembered once for the whole
 dashboard rather than per tab, so it does not unfold as you move between them.
-
-#### Linked view <small>(v1.19.1+)</small> { #linked-view }
-
-A grid section with `display: linked` keeps its tiles within one screen height, as panes
-with draggable gutters, so views that follow each other stay side by side: a pick on an
-HMM logo shows on the 3D model next to it, not a screen further down. The section header
-resets and fits the panes; in the editor, **Arrange tiles** shows the plain grid to move
-them. On a narrow screen the panes stack, and `?layout=classic` draws the plain grid.
-
-A tab whose pickers hold one value at a time (`always_selected`) shows a **scope banner**
-under its header: the picked unit, an inline picker and the facts its filter declares in
-[`banner_facts`](yaml-sync.md#interactive-defaults).
 
 ### :material-pin: Sections on every tab <small>(v1.6.0+)</small> { #persistent-sections }
 
@@ -388,7 +380,7 @@ and, in the minimal figure style, a PCoA, both coloured by city in the colours
 [![Result rows linking to their tabs, beside a phylogeny summary sized by reads per city](../images/guides/landing-tabs/findings-phylogeny.webp)](../images/guides/landing-tabs/findings-phylogeny.webp){target=_blank}
 
 *Findings*: result rows whose figure takes the linked tab's colour, beside a
-[phylogeny summary](components.md#phylogeny-summary) collapsed to phyla, sized by
+[phylogeny summary](advanced-visualizations.md#phylogenetic) collapsed to phyla, sized by
 share of reads, with one column of dots per city.
 
 [![A stacked bar and a strip plot in the minimal style with captions, then tab tiles](../images/guides/landing-tabs/minimal-figures.webp)](../images/guides/landing-tabs/minimal-figures.webp){target=_blank}
@@ -403,8 +395,8 @@ headings that repeat the sidebar's groups.
 | `icon_style`, `caption`, `decimals`, `variant`, `link` on cards | [Card Components](components.md#card-display-options) |
 | `figure_style: minimal`, `caption`, `link` on figures | [Figure Components](components.md#figure-style) |
 | Another tab's figure, redrawn here | [Highlight](components.md#highlight-components) |
-| Phylogeny summary by rank | [Phylogenetic](components.md#phylogeny-summary) |
-| An UpSet that filters the tab | [UpSet](components.md#upset) |
+| Phylogeny summary by rank | [Phylogenetic](advanced-visualizations.md#phylogenetic) |
+| An UpSet that filters the tab | [UpSet](advanced-visualizations.md#upset) |
 | Plain sections, filter bars, colours, tab defaults | Below, and [YAML Sync](yaml-sync.md#landing-tab-keys) |
 
 #### Plain sections
@@ -453,26 +445,74 @@ On each filter, `strip_label` sets a shorter label for the bar (*Habitat* for *S
 habitat*), and `strip_icon: false` drops the icon badge before it. See
 [In a filter bar](components.md#filter-bar-keys).
 
+#### Linked view { #linked-view }
+
+<span class="ver-badge">v1.19.1+</span> `display: linked`
+
+Keeps a section's tiles on one screen, so a structure, its alignment and its sequence stay side by side.
+
+![Linked view: a structure, its alignment and its sequence as panes on one screen](../images/guides/dashboards/linked_view_light.webp#only-light){ .viz-shot loading=lazy }
+![Linked view: a structure, its alignment and its sequence as panes on one screen](../images/guides/dashboards/linked_view_dark.webp#only-dark){ .viz-shot loading=lazy }
+
+```yaml
+grid_sections:
+  - name: Structure
+    display: linked
+```
+
+| Where | How |
+|---|---|
+| Viewer | Drag a gutter to resize two panes, double-click to reset. Sizes are kept per browser |
+| Editor | **Layout > Linked view** in the section form; **Arrange tiles** to move them |
+| Narrow screen, `?layout=classic` | An ordinary stacked section |
+
+#### Scope banner { #scope-banner }
+
+<span class="ver-badge">v1.19.1+</span> `banner_facts`
+
+A tab whose Select is [`always_selected`](yaml-sync.md#interactive-defaults) shows one unit at a time. The banner names that unit and lets you step to the previous or next one, or search for another.
+
+![Scope banner: the unit's name, its rank, previous and next keys, and its facts](../images/guides/dashboards/scope_banner_light.webp#only-light){ .viz-shot loading=lazy }
+![Scope banner: the unit's name, its rank, previous and next keys, and its facts](../images/guides/dashboards/scope_banner_dark.webp#only-dark){ .viz-shot loading=lazy }
+
+```yaml
+- tag: family-picker
+  component_type: interactive
+  interactive_component_type: Select
+  column_name: family
+  always_selected: true
+  banner_facts:
+    - {column: n_members, label: Members, format: integer}
+```
+
+| `banner_facts` key | Value |
+|---|---|
+| `column`, `label` | Column of the filter's own collection, and its caption |
+| `format` | `percent`, `integer`, `si` or `decimals:N` (optional) |
+| `icon` | An Iconify name (optional) |
+
 #### Category colours { #category-colors }
 
-`category_colors`, at dashboard level, gives one colour per value of a column, so a city
-is the same colour on every tile: the filter bar's chips, a figure's points and bars, an
-UpSet's sets, sunburst, sankey and tree colours, the map's markers (since v1.14.1), and
-code figures. Child tabs inherit the main tab's map, and a child's own map overrides it
-value by value.
-A figure's own `color_discrete_map` still wins value by value. Values left out fall back
-to the brand colorway, then to grey (grey on a filter chip). In code mode the map is
-available as `depictio_category_colors`, and a code figure that sets no colours of its
-own is recoloured from it when every trace name, *Other* aside, is a value of one
-coloured column. See [Code Mode](components.md#code-mode).
+<span class="ver-badge">v1.14.0+</span> `category_colors`
 
-Since v1.14.1 a dashboard can also let the import pick the colours from a
-colour-blind-safe palette (`auto`), and a re-import keeps the colours the values
-already had. See [YAML Sync](yaml-sync.md#category-colors) for the keys.
+One colour per value of a column, the same on every tile and every tab: filter chips, figures, UpSets, trees, sunbursts, sankeys and maps.
+
+![Category colours: one value keeps its colour across a figure, a map and the filter chips](../images/guides/dashboards/category_colors_light.webp#only-light){ .viz-shot loading=lazy }
+![Category colours: one value keeps its colour across a figure, a map and the filter chips](../images/guides/dashboards/category_colors_dark.webp#only-dark){ .viz-shot loading=lazy }
+
+```yaml
+main_dashboard:
+  category_colors:
+    habitat: auto            # a colour-blind-safe palette, picked at import
+    Kingdom:
+      Bacteria: "#4c6ef5"
+```
+
+Child tabs inherit the main tab's colours. A figure's own `color_discrete_map` wins. See [YAML Sync](yaml-sync.md#category-colors) for `auto` and the other keys.
 
 ### :material-tune-vertical: Advanced visualization controls { #viz-controls }
 
-An [advanced visualization](components.md#advanced-visualizations) has controls: the
+An [advanced visualization](advanced-visualizations.md) has controls: the
 view, the colour, the labels. They dock next to the plot when the tile has room, so a
 reader sees how the figure is set without opening a menu. The tile's width decides
 where:

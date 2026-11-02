@@ -133,7 +133,7 @@ strandedness) narrow every tab. *Fusion filters* (the fusion, then the caller
 agreement) reach every caller table through the links on the fusion name;
 MultiQC and Splice Junctions carry no fusion, so they are left off those two
 tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
-The Breakpoints and Splice Junctions tabs embed a [genome browser](../../features/genome-browser.md) that shows the
+The Breakpoints and Splice Junctions tabs embed a [genome browser](../../features/genome-browser/index.md) that shows the
 reads at a breakpoint or a junction.
 
 === ":material-compass-outline: Overview"
