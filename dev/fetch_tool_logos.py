@@ -30,7 +30,7 @@ MAX_SVG = 12 * 1024
 GH = "https://raw.githubusercontent.com/{}/HEAD/{}"
 
 LOGOS = {
-    "multiqc": GH.format("MultiQC/MultiQC", "docs/images/MultiQC_logo.png"),
+    "multiqc": GH.format("MultiQC/logo", "logos/multiqc_logo_dark.svg"),
     "qiime2": GH.format("qiime2/logos", "raster/transparent/qiime2-rect-400.png"),
     "deseq2": GH.format("Bioconductor/BiocStickers", "DESeq2/DESeq2.png"),
     "edger": GH.format("Bioconductor/BiocStickers", "edgeR/edgeR.png"),
