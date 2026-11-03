@@ -2,102 +2,72 @@
 
 Question and answer pairs for DocBot to evaluate its answers on the depictio docs.
 Each answer comes from the page named under it; the source is the file in this
-repository, the link its published page. Check them against the docs before each
-submission: they follow the docs as of v1.17.1.
+repository, the link its published page. Each pair tests a different page or a
+different fact. Check them against the docs before each submission: they follow the
+docs as of v1.20.0.
 
 Base URL of the published pages: `https://depictio.github.io/depictio-docs/stable/`.
 
 ## 1. How do I install Depictio with Docker Compose?
 
+Depictio is open source (MIT License) and free to deploy on your own infrastructure.
 Download the compose file with
 `curl -LO https://raw.githubusercontent.com/depictio/depictio/stable/docker-compose.yaml`,
 then run `docker compose up -d`. It starts MongoDB, Redis, the S3 store (SeaweedFS), the
 backend, the viewer and the Celery worker. Depictio is then at <http://localhost:5080>
-and the API docs at <http://localhost:8058/docs>. It needs Docker 20.10+ and Docker
-Compose V2.
+and the API docs at <http://localhost:8058/docs>, in single-user mode (no login). It
+needs Docker 20.10+ and Docker Compose V2.
 
-- Source: `docs/installation/docker.md`
+- Source: `docs/installation/docker.md` (install) and `docs/FAQ/general.md` (license)
 - Page: <https://depictio.github.io/depictio-docs/stable/installation/docker/>
 
-## 2. The Docker Compose install has no login. How do I switch it to multi-user mode?
-
-It starts in single-user mode by default. In the `.env` file, set
-`DEPICTIO_AUTH_SINGLE_USER_MODE=false`, along with
-`DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` and `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD`, which are
-required in multi-user mode and set on first boot, and a strong
-`DEPICTIO_S3_ROOT_PASSWORD` (at least 8 characters, not a known default).
-
-- Source: `docs/installation/docker.md`
-- Page: <https://depictio.github.io/depictio-docs/stable/installation/docker/>
-
-## 3. Which authentication modes does Depictio support?
-
-Four, one active at a time: **Auth** (multi-user with login and role-based access),
-**Single-user** (no login, the anonymous user is an admin), **Public** (read-only
-anonymous browsing, sign-in to create) and **Demo** (public mode plus a guided tour).
-Google OAuth is optional in all of them.
-
-- Source: `docs/usage/guides/authentication-modes.md`
-- Page: <https://depictio.github.io/depictio-docs/stable/usage/guides/authentication-modes/>
-
-## 4. How can visitors browse my dashboards without an account?
-
-Set `DEPICTIO_AUTH_PUBLIC_MODE=true`. Anonymous visitors get read-only access to public
-dashboards. To create or edit, they sign in, either as a temporary user (a 24-hour
-session by default, set with `DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS`) or with
-Google OAuth if it is enabled.
-
-- Source: `docs/usage/guides/authentication-modes.md`
-- Page: <https://depictio.github.io/depictio-docs/stable/usage/guides/authentication-modes/>
-
-## 5. How do I deploy Depictio on Kubernetes?
-
-With the Helm chart in the depictio repository: clone `depictio/depictio`, then run
-`helm install depictio helm-charts/depictio -f helm-charts/depictio/values.yaml -n depictio --create-namespace`,
-and watch the pods with `kubectl get pods -n depictio --watch`. It needs Kubernetes
-1.19+, Helm 3.2.0+ and a PV provisioner if persistence is enabled.
-
-- Source: `docs/installation/kubernetes.md`
-- Page: <https://depictio.github.io/depictio-docs/stable/installation/kubernetes/>
-
-## 6. Can I run Depictio without Docker?
+## 2. Can I run Depictio without Docker, and move to Docker later?
 
 Yes, from the Python package, on Linux or macOS on Apple silicon with Python 3.11 to
 3.14: `uv tool install "depictio[local]"`, then `depictio local up`. It runs MongoDB,
 Redis and SeaweedFS fetched from conda-forge, in single-user mode, and serves the viewer
-at `http://127.0.0.1:8058/dashboards`. `depictio local down` stops it.
+at `http://127.0.0.1:8058/dashboards`. `depictio local down` stops it, and
+`depictio local export` copies its data into a directory that
+`docker compose up -d` runs.
 
 - Source: `docs/installation/local.md`
 - Page: <https://depictio.github.io/depictio-docs/stable/installation/local/>
 
-## 7. How do I move a server started with `depictio local up` to Docker Compose?
+## 3. Which login modes does Depictio have, and how do I switch between them?
 
-Run `depictio local export`, then `cd depictio-docker && docker compose up -d`. The
-export stops the local server and copies its projects, dashboards and table data into a
-directory that Docker Compose runs.
+Four, one active at a time: Auth (login and role-based access), Single-user
+(`DEPICTIO_AUTH_SINGLE_USER_MODE=true`, no login, the anonymous user is an admin),
+Public (`DEPICTIO_AUTH_PUBLIC_MODE=true`, visitors browse read-only with a 24-hour
+temporary account and sign in to create) and Demo (public mode plus
+`DEPICTIO_AUTH_DEMO_MODE=true`, which adds a guided tour). In Docker Compose, for a
+team instance, set `DEPICTIO_AUTH_SINGLE_USER_MODE=false` in `.env`, together with
+`DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` and `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD`.
 
-- Source: `docs/installation/local.md`
-- Page: <https://depictio.github.io/depictio-docs/stable/installation/local/>
+- Source: `docs/usage/guides/authentication-modes.md`
+- Page: <https://depictio.github.io/depictio-docs/stable/usage/guides/authentication-modes/>
 
-## 8. How do I load nf-core/rnaseq results into Depictio?
+## 4. How do I load my pipeline results into Depictio?
 
-With the CLI and the bundled template:
-`depictio ingest /path/to/rnaseq_results/aligner_star_salmon --template nf-core/rnaseq/latest`.
-The template builds the project and its dashboards from the results directory.
-
-- Source: `docs/pipeline-templates/nf-core/rnaseq.md`
-- Page: <https://depictio.github.io/depictio-docs/stable/pipeline-templates/nf-core/rnaseq/>
-
-## 9. My pipeline has no Depictio template. How can I still ingest its results?
-
-Pass a project YAML with `depictio ingest <DATA_DIR> --project-config-path project.yaml`.
-From v1.16.0, without `--template` or `--project-config-path`, a local results
-directory that no bundled template fits is composed from the catalog instead.
+Run `depictio ingest <results_dir>`: the template is detected from the pipeline name and
+version the run recorded, and `--template nf-core/rnaseq/latest` chooses one yourself.
+For a pipeline with no template, pass a project YAML with `--project-config-path project.yaml`.
+From v1.16.0, a local results directory that no template fits is composed from the
+Tools Catalog instead, and `--dry-run` previews what would be ingested.
 
 - Source: `docs/depictio-cli/usage.md`
 - Page: <https://depictio.github.io/depictio-docs/stable/depictio-cli/usage/>
 
-## 10. How do I make a Nextflow pipeline send its results to Depictio when it finishes?
+## 5. Which pipelines already have a Depictio template?
+
+Many nf-core pipelines, among them rnaseq, sarek, ampliseq, taxprofiler, atacseq, chipseq,
+methylseq and scrnaseq. Each template builds a complete project (data collections,
+dashboards and links) from one `depictio ingest` command. The page lists every pipeline
+with the versions its template covers.
+
+- Source: `docs/pipeline-templates/nf-core/index.md`
+- Page: <https://depictio.github.io/depictio-docs/stable/pipeline-templates/nf-core/>
+
+## 6. How do I make a Nextflow pipeline send its results to Depictio when it finishes?
 
 Set up the Nextflow trigger (v1.10.0+) once, on the machine that runs `nextflow`:
 install the CLI with `pip install "depictio[multiqc]"`, save the server credentials to
@@ -108,52 +78,96 @@ Depictio's side does not change the pipeline's exit status.
 - Source: `docs/depictio-cli/nextflow-trigger.md`
 - Page: <https://depictio.github.io/depictio-docs/stable/depictio-cli/nextflow-trigger/>
 
+## 7. How do I create a dashboard?
+
+On the landing page, click **+ New Dashboard**, enter a title and click **Create
+Dashboard**. Then open it, click **Edit** and **Add component**: pick a component type
+(Figure, Card, Interactive, Table, MultiQC, Image, Map, Text or Advanced viz), choose the
+workflow and data collection it reads, and customise it. **Pick from catalog** offers
+pre-configured visualizations recognised in the project's data instead.
+
+- Source: `docs/usage/guides/web_ui.md` (creating the dashboard) and
+  `docs/usage/guides/dashboard_creation.md` (adding components)
+- Page: <https://depictio.github.io/depictio-docs/stable/usage/guides/dashboard_creation/>
+
+## 8. What kinds of components can I put on a dashboard?
+
+Figure (Plotly charts, built in UI mode or with Python code), Table, Card (a metric with
+an aggregation), Text, Interactive (slider, dropdown, date picker, for filtering),
+MultiQC, Image, Map, Genome browser and Advanced viz (ready-made charts such as volcano
+plots, Manhattan plots, UMAP embeddings, coverage tracks or phylogenetic trees).
+
+- Source: `docs/features/components.md`
+- Page: <https://depictio.github.io/depictio-docs/stable/features/components/>
+
+## 9. How do I filter the components of a dashboard?
+
+Add Interactive components (slider, dropdown, date picker) or select on a graph: click a
+point or box-select a region of a scatter plot, and the other components update. The
+filter panel lists every applied filter with its own clear button, and **Reset all**
+clears them.
+
+- Source: `docs/usage/guides/dashboard_usage.md`
+- Page: <https://depictio.github.io/depictio-docs/stable/usage/guides/dashboard_usage/>
+
+## 10. Can I share a dashboard with colleagues?
+
+Yes, on the same Depictio instance. A dashboard inherits the permissions of its project,
+granted to users or groups with the roles Admin, Editor or Viewer. Send the viewer URL
+(`/dashboard/{id}`) to share it. To share a filtered view, copy the filter link
+(`#filters=…`) from the filter panel.
+
+- Source: `docs/features/dashboards.md`
+- Page: <https://depictio.github.io/depictio-docs/stable/features/dashboards/>
+
 ## 11. How do I filter MultiQC plots from a sample metadata table?
 
-Link the two data collections in the project YAML, under `links`, with
-`source_dc_id` (the metadata table), `source_column` (such as `sample_id`),
-`target_dc_id` (the MultiQC data collection), `target_type: multiqc` and a
-`link_config` resolver such as `sample_mapping`. A filter on the metadata table then
-updates the linked plots, with no pre-computed join.
+Link the two data collections, either in the web viewer (data collection actions menu,
+**Manage Links**, **Add link**) or in the project YAML under `links`. A link takes the
+source data collection (the metadata table), a source column (such as `sample_id`), the
+target (the MultiQC data collection) and a resolver such as `sample_mapping`. A filter on
+the metadata table then updates the linked plots, with no pre-computed join.
 
 - Source: `docs/features/cross-dc-filtering.md`
 - Page: <https://depictio.github.io/depictio-docs/stable/features/cross-dc-filtering/>
 
-## 12. Do Depictio backups include my data tables?
+## 12. When should I use an advanced visualization instead of a normal figure?
 
-No. A backup snapshots MongoDB: users, projects, dashboards, data collection
-definitions, file records, the locations of the Delta tables and the instance settings.
-The Delta tables and files in object storage are not included. To copy them too, use
-`depictio backup create --include-s3-data --s3-backup-prefix backup`, or back up the
-object store itself. Backups need an administrator account.
+When you need a ready-made chart for a common analysis, such as a volcano plot, a
+Manhattan plot, an embedding or a coverage track. An advanced visualization knows what
+its columns mean (a volcano needs a feature, an effect size and a significance): you map
+your columns to those roles once, and the tile adds the thresholds, genomic axes or
+linked selections. For a plain plot of any columns, use a Figure.
 
-- Source: `docs/usage/administration/backup.md`
-- Page: <https://depictio.github.io/depictio-docs/stable/usage/administration/backup/>
+- Source: `docs/features/advanced-visualizations.md`
+- Page: <https://depictio.github.io/depictio-docs/stable/features/advanced-visualizations/>
 
-## 13. How do I embed a dashboard component in another website?
+## 13. What is the Tools Catalog?
 
-Since v1.17.0, an administrator turns the export API on with
-`DEPICTIO_FASTAPI_EMBED_ENABLED=true`, and lists the sites allowed to frame it in
-`DEPICTIO_FASTAPI_EMBED_ALLOWED_ORIGINS`. Each tile then has an **Export / embed**
-action that gives a Plotly spec (JSON) for the site's own plotly.js, or a
-self-contained HTML page for an `<iframe>`.
+A browsable list of the bioinformatics tools Depictio integrates. For each tool it shows
+the files it emits (data collections) and the dashboard components (renders) they
+offer, previewed on real data, with a `use:` snippet to copy. Since v1.16.0,
+`depictio ingest` uses it to compose a dashboard for results that no template fits.
 
-- Source: `docs/features/component-export.md`
-- Page: <https://depictio.github.io/depictio-docs/stable/features/component-export/>
-
+- Source: `docs/catalog/index.md`
+- Page: <https://depictio.github.io/depictio-docs/stable/catalog/>
 ## 14. Can I keep dashboards as YAML files under version control?
 
 Yes, with the `depictio dashboard` commands: `export` writes a dashboard to YAML,
 `validate` checks a file (schema and domain rules, then columns against the server, or
-skip that with `--offline`) and `import` sends it to the server.
+skip that with `--offline`) and `import` sends it to the server. Re-importing a title
+the project already has needs `--overwrite`.
 
 - Source: `docs/features/yaml-sync.md`
 - Page: <https://depictio.github.io/depictio-docs/stable/features/yaml-sync/>
 
-## 15. Is Depictio free and open source?
+## 15. What kind of data can I use in Depictio?
 
-Yes. Depictio is open source under the MIT License and free to deploy on your own
-infrastructure. It is developed at the EMBL Data Science Centre in Heidelberg.
+Tables (CSV, TSV, Parquet, Excel), MultiQC reports, images (PNG, JPEG, GIF, WebP, SVG,
+BMP, TIFF), GeoJSON boundaries for maps, phylogenetic trees (Newick or Nexus),
+genome-browser tracks and indexed genomic files (VCF, BAM, bigWig, BED, GFF3, FASTA).
+Each kind is a data collection type, and a table with latitude and longitude columns can
+also feed a map. Tables become Delta Lake tables on the instance's S3 storage.
 
-- Source: `docs/FAQ/general.md`
-- Page: <https://depictio.github.io/depictio-docs/stable/FAQ/general/>
+- Source: `docs/features/data-model.md`
+- Page: <https://depictio.github.io/depictio-docs/stable/features/data-model/>

@@ -125,7 +125,7 @@ instance's own S3, fetched once at ingestion rather than read through at render 
 | | Type | Content | Materialised as |
 | --- | --- | --- | --- |
 | :material-table: | `table` | Tabular data: CSV, TSV, Parquet, Excel | A Delta Lake table on S3 |
-| :material-image-multiple: | `image` | Image files | A Delta Lake table whose `image_column` holds the S3 paths |
+| :material-image-multiple: | `image` | Image files: PNG, JPEG, GIF, WebP, SVG, BMP, TIFF | A Delta Lake table whose `image_column` holds the S3 paths |
 | ![MultiQC](../images/logos/multiqc_light.svg#only-light){ width="18" }![MultiQC](../images/logos/multiqc_dark.svg#only-dark){ width="18" } | `multiqc` | MultiQC report data | The report's parsed data, as Parquet on S3 |
 | :material-map-marker: | `geojson` | GeoJSON boundaries for choropleth maps | The file, copied to S3 unchanged |
 | :material-family-tree: | `phylogeny` | Newick or Nexus trees | Nothing. The file is read where it was found |

@@ -222,7 +222,7 @@ Available component types include:
 | :material-star-four-points-outline: **Highlights** | Another tab's figure, redrawn here (v1.14.0+) |
 | :material-map-marker-multiple: **Maps**     | Geospatial scatter, density and choropleth maps |
 | :material-microscope: **MultiQC**           | Quality control report visualizations          |
-| :material-image: **Images**                 | Display grid of static images (PNG, JPEG, SVG) |
+| :material-image: **Images**                 | Display grid of static images (PNG, JPEG, GIF, WebP, SVG, BMP, TIFF) |
 | :material-chart-timeline: **Genome browser** | Embedded genome browser over a track manifest (v1.20.0+), see [Genome browser](genome-browser/index.md) |
 
 A map can also leave the grid entirely and become a dashboard-wide panel that follows the
