@@ -1862,7 +1862,7 @@ Segmented cells where they sit in the image: one marker per cell at its centroid
 | `sample` | `sample_col` | optional, one image each | String | `TEST1` |
 | `Area` | `area_col` | optional, sizes the marker | Numeric | `180` |
 
-**Compatible inputs:** MCQUANT cell tables (nf-core/mcmicro).
+**Compatible inputs:** MCQUANT cell tables.
 
 **Controls**
 

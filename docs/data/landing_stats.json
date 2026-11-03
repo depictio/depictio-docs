@@ -1,9 +1,9 @@
 {
   "version": "1.20.0",
-  "templates": 43,
-  "tools": 136,
-  "outputs": 471,
-  "renders": 2211,
+  "templates": 42,
+  "tools": 135,
+  "outputs": 465,
+  "renders": 2176,
   "viz": 56,
   "viz_kinds": 49,
   "viz_views": 7,
@@ -11,27 +11,27 @@
     {
       "id": "card",
       "label": "Card",
-      "count": 953
+      "count": 942
     },
     {
       "id": "advanced_viz",
       "label": "Advanced viz",
-      "count": 417
+      "count": 414
     },
     {
       "id": "table",
       "label": "Table",
-      "count": 397
+      "count": 391
     },
     {
       "id": "figure",
       "label": "Figure",
-      "count": 252
+      "count": 245
     },
     {
       "id": "interactive",
       "label": "Interactive",
-      "count": 131
+      "count": 123
     },
     {
       "id": "multiqc",
@@ -58,7 +58,6 @@
     "hlatyping",
     "isoseq",
     "mag",
-    "mcmicro",
     "methylseq",
     "mhcquant",
     "nanoseq",

@@ -364,7 +364,6 @@ nav:
           - epitopeprediction: pipeline-templates/nf-core/epitopeprediction.md
           - genomeqc: pipeline-templates/nf-core/genomeqc.md
           - hlatyping: pipeline-templates/nf-core/hlatyping.md
-          - mcmicro: pipeline-templates/nf-core/mcmicro.md
           - nascent: pipeline-templates/nf-core/nascent.md
           - quantms: pipeline-templates/nf-core/quantms.md
           - raredisease: pipeline-templates/nf-core/raredisease.md

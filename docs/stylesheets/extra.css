@@ -1321,8 +1321,16 @@ body.catalog-fs-lock .md-main {
   margin-top: auto;
   display: flex;
   align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
+  gap: 4px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+/* Version + status always share one line: tighter padding, never shrink or wrap. */
+.template-card-meta > span {
+  flex: 0 0 auto;
+  padding-inline: 6px;
+  font-size: 0.74em;
 }
 
 .template-version {

@@ -391,7 +391,6 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
-
   <a class="template-card" href="nf-core/proteinfamilies/" data-tpl-name="nf-core/proteinfamilies" data-tpl-status="experimental" data-tpl-version="2.5.0" data-tpl-keywords="proteinfamilies protein families clustering mmseqs hmmer profile hmm logo alignment famsa structure">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/proteinfamilies/master/docs/images/nf-core-proteinfamilies_logo_dark.png" alt="nf-core/proteinfamilies">
@@ -541,20 +540,6 @@ depictio ingest /data/my_ampliseq_run \
       <p class="template-card-desc">HLA class I typing with OptiType from DNA or RNA reads.</p>
       <div class="template-card-meta">
         <span class="template-version">v2.2.0</span>
-        <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="template-card" href="nf-core/mcmicro/" data-tpl-name="nf-core/mcmicro" data-tpl-status="experimental" data-tpl-version="2.0.0" data-tpl-keywords="mcmicro multiplexed imaging tissue cycif codex cell segmentation marker spatial">
-    <div class="template-card-logo">
-      <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/mcmicro/master/docs/images/nf-core-mcmicro_logo_dark.png" alt="nf-core/mcmicro">
-      <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/mcmicro/master/docs/images/nf-core-mcmicro_logo_light.png" alt="nf-core/mcmicro">
-    </div>
-    <div class="template-card-body">
-      <p class="template-card-desc">Multiplexed tissue imaging: segmented cells, marker intensities and morphology.</p>
-      <div class="template-card-meta">
-        <span class="template-version">v2.0.0</span>
         <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>

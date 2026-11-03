@@ -89,11 +89,6 @@
     "height": 56,
     "source": "https://raw.githubusercontent.com/nf-core/mag/master/docs/images/nf-core-mag_logo_light.png"
   },
-  "mcmicro": {
-    "width": 146,
-    "height": 56,
-    "source": "https://raw.githubusercontent.com/nf-core/mcmicro/master/docs/images/nf-core-mcmicro_logo_light.png"
-  },
   "methylseq": {
     "width": 163,
     "height": 56,

@@ -44,7 +44,6 @@ Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a 
 | [epitopeprediction](epitopeprediction.md) | MHC binding prediction for variant, protein and peptide inputs | 3.2.0 |
 | [genomeqc](genomeqc.md) | Genome assembly and annotation QC across genomes | 1.0.1 |
 | [hlatyping](hlatyping.md) | HLA class I typing with OptiType | 2.2.0 |
-| [mcmicro](mcmicro.md) | Multiplexed tissue imaging (cells, markers, morphology) | 2.0.0 |
 | [nascent](nascent.md) | Nascent transcription time courses (GRO-seq, PRO-seq) | 2.3.0 |
 | [quantms](quantms.md) | Label-free DIA proteomics quantification | 1.1.1 |
 | [raredisease](raredisease.md) | Rare disease family analysis: ranked variants and inheritance models | 3.1.2 |

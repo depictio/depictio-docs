@@ -2567,7 +2567,7 @@ hide:
   .kpi-seg-table { background: var(--depictio-blue); }
   .kpi-seg-figure { background: var(--depictio-purple); }
   .kpi-seg-interactive { background: var(--depictio-green); }
-  .kpi-seg-multiqc { background: var(--depictio-orange); }
+  .kpi-seg-multiqc { background: var(--mqc-ink); }
 
   /* Two columns when they fit, one when the tile is narrow */
   .md-typeset ul.kpi-legend {
