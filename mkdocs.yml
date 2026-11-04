@@ -245,7 +245,7 @@ nav:
       - CLI:
           - installation/cli.md
       - Configuration: installation/configuration.md
-      - Single sign-on (SAML): installation/sso.md
+      - Single sign-on (OpenID Connect): installation/sso.md
       - Environment Reference: installation/env-reference.md
 
   - Usage:

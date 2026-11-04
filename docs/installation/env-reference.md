@@ -115,7 +115,7 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_VIEWER_EXTERNAL_HOST` | `localhost` | - |
 | `DEPICTIO_VIEWER_EXTERNAL_PORT` | `5080` | Host-side port mapped to the viewer container |
 | `DEPICTIO_VIEWER_EXTERNAL_PROTOCOL` | `http` | - |
-| `DEPICTIO_VIEWER_PUBLIC_URL` | - | Public URL of the viewer, where magic links and the [SAML](sso.md) hand-off land |
+| `DEPICTIO_VIEWER_PUBLIC_URL` | - | Public URL of the viewer, where magic links and the [OpenID Connect](sso.md) hand-off land |
 | `DEPICTIO_VIEWER_EXTERNAL_SERVICE` | `false` | - |
 | `DEPICTIO_VIEWER_HOST` | `0.0.0.0` | - |
 | `DEPICTIO_VIEWER_WORKERS` | `4` | Gunicorn worker processes |
@@ -274,7 +274,7 @@ by hand. See [From a run folder](../usage/projects/remote-data.md#from-a-run-fol
 **Config Class:** `AuthConfig`
 **Environment Prefix:** `DEPICTIO_AUTH_`
 
-Authentication and authorization settings including JWT configuration, unauthenticated mode, Google OAuth and SAML single sign-on. Empty SAML values count as unset.
+Authentication and authorization settings including JWT configuration, unauthenticated mode and OpenID Connect single sign-on. The removed `DEPICTIO_AUTH_SAML_*` variables are ignored, see [From SAML to OIDC](sso.md#from-saml-to-oidc).
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -289,28 +289,17 @@ Authentication and authorization settings including JWT configuration, unauthent
 | `DEPICTIO_AUTH_ANONYMOUS_USER_EMAIL` | `anonymous@depict.io` | Default anonymous user email |
 | `DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS` | `24` | Number of hours until temporary users expire |
 | `DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_MINUTES` | `0` | Number of minutes until temporary users expire |
-| `DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED` | `false` | Enable Google OAuth authentication |
-| `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID` | - | Google OAuth client ID |
-| `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET` | - | Google OAuth client secret |
-| `DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI` | - | Google OAuth redirect URI |
+| `DEPICTIO_AUTH_OIDC_PROVIDERS` | _(empty)_ | JSON list of OpenID Connect providers (Keycloak, Google, Microsoft Entra ID, Authentik, ...). Keys: `id`, `label`, `enabled`, `issuer`, `discovery_url`, `client_id`, `client_secret`, `scopes`, `redirect_uri`, `claims`, `sso_provider`, `assume_email_verified`, `token_endpoint_auth_method`, `authorize_params`, `fetch_userinfo`. See [Single sign-on (OpenID Connect)](sso.md#provider-keys) |
+| `DEPICTIO_AUTH_OIDC_<ID>_CLIENT_ID` | - | Client id of the provider whose `id` is `<ID>` (upper case, `-` as `_`). Overrides `client_id` in `DEPICTIO_AUTH_OIDC_PROVIDERS` |
+| `DEPICTIO_AUTH_OIDC_<ID>_CLIENT_SECRET` | - | Client secret of that provider. Overrides `client_secret`; use it from a secret store |
+| `DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED` | `false` | **Deprecated**, still works for one release: mapped to an OIDC provider with id `google`. See [From Google OAuth to OIDC](sso.md#from-google-oauth-to-oidc) |
+| `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID` | - | **Deprecated**: use `DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_ID` |
+| `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET` | - | **Deprecated**: use `DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET` |
+| `DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI` | - | **Deprecated**: the `redirect_uri` of the `google` provider |
 | `DEPICTIO_AUTH_REGISTRATION_DISABLED` | `false` | Block self-service registration: `/register` returns 403 and the Register UI is hidden, so only pre-provisioned accounts can log in. Independent of public/single-user mode |
-| `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED` | `false` | Close email and password sign-in when Google OAuth or, since v1.19.0, SAML is on. Ignored with neither. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) |
+| `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED` | `false` | Close email and password sign-in so SSO is the only way in. Ignored unless at least one OIDC provider is enabled and configured. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) |
 | `DEPICTIO_AUTH_PROVISIONING_API_KEY` | - | Shared secret for pipeline-side user provisioning (`POST /auth/provision_user`). Scoped to provisioning only, kept separate from the internal API key. Also accepted as `DEPICTIO_AUTH_PROVISIONING_API_KEY_ENV`. **The provisioning endpoints are disabled while this is unset.** See [Pipeline provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113) |
 | `DEPICTIO_AUTH_MAGIC_LINK_EXPIRY_MINUTES` | `15` | Lifetime of a single-use magic-link login ticket |
-| `DEPICTIO_AUTH_SAML_ENABLED` | `false` | Turn on SAML 2.0 single sign-on (v1.18.0+). See [Single sign-on (SAML)](sso.md) |
-| `DEPICTIO_AUTH_SAML_IDP_ENTITY_ID` | - | The identity provider's entity ID |
-| `DEPICTIO_AUTH_SAML_IDP_SSO_URL` | - | The identity provider's SSO endpoint (HTTP-Redirect binding) |
-| `DEPICTIO_AUTH_SAML_IDP_CERT` | - | The identity provider's signing certificate, as inline PEM or a path to a PEM file |
-| `DEPICTIO_AUTH_SAML_SP_ENTITY_ID` | - | Depictio's entity ID (the Client ID) as registered with the identity provider |
-| `DEPICTIO_AUTH_SAML_SP_BASE_URL` | _(API external URL)_ | Public base URL of the API, used to build the ACS URL |
-| `DEPICTIO_AUTH_SAML_NAME_ID_FORMAT` | `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress` | Requested NameID format |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_EMAIL` | - | Attribute carrying the email. Unset, the NameID is used |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_USERNAME` | - | Attribute carrying the username (informational) |
-| `DEPICTIO_AUTH_SAML_LOGIN_LABEL` | `Sign in with SSO` | Label of the SSO button |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS` | - | Attribute carrying the user's groups, mirrored as SSO-managed groups at each sign-in. See [Group and profile sync](sso.md#group-and-profile-sync) |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_TITLE` | - | Attribute carrying the user's title |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_DISPLAY_NAME` | - | Attribute carrying the user's display name |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_LOGIN` | - | Attribute carrying the user's login |
 
 ---
 

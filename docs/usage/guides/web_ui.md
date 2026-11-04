@@ -63,18 +63,15 @@ in Classic, Paper has it in the top bar or the dock.
 5. Once both fields are filled in, click the **Login** button.
 6. You will be redirected to the Depictio landing page (currently `/dashboards`).
 
-### <span style="color: #E53935;">:material-google:</span> Google OAuth Login
+### <span style="color: #1E88E5;">:material-shield-key-outline:</span> Single sign-on login
 
-If you have configured Google OAuth for your Depictio instance (see [Configuration](../../../installation/configuration/#google-oauth-integration)), you can log in using your Google account. If the account does not exist, it will be created automatically.
+An instance with [OpenID Connect single sign-on](../../installation/sso.md) shows one button
+per identity provider (for example *Sign in with Google* or the label the administrator
+set). It sends you to the provider and back. If the account does not exist, it is created
+automatically, unless registration is closed.
 
-When the server refuses the sign-in, for example because registration is closed, the
-callback page shows **Sign-in failed** and the reason, since v1.17.2.
-
-### <span style="color: #1E88E5;">:material-shield-key-outline:</span> SSO login <small>(v1.18.0+)</small>
-
-An instance with [SAML single sign-on](../../installation/sso.md) adds a button, *Sign in
-with SSO* or the label it sets, that sends you to your institution's identity provider and
-back.
+When the server refuses the sign-in, for example because registration is closed or the
+provider did not verify your email, the page shows **Sign-in failed** and the reason.
 
 ## <span style="color: #F68B33;">:material-view-dashboard:</span> Landing page / Dashboards section (/dashboards) { #dashboards-listing }
 
