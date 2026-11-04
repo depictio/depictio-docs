@@ -447,15 +447,20 @@ API's Range-capable track proxy:
 
 The full variable list is in the [environment reference](../installation/env-reference.md#genome-browser).
 
-### SAML sign-in <small>(v1.18.0+)</small> { #saml-sign-in }
+<a id="saml-sign-in"></a>
 
-[SAML single sign-on](../installation/sso.md) accepts a response only if it answers a
-request this instance made, and only once: the request IDs live in a one-shot store
-shared by the API workers (Redis, with an in-process fallback). The return path the
-identity provider echoes back is never trusted, and redirects stay on this site. The
-browser is handed a single-use ticket in the URL fragment, so no token travels in a query
-string. Accounts created by Google or SAML now get a random password hash instead of an
-invalid placeholder.
+### OpenID Connect sign-in { #oidc-sign-in }
+
+[OpenID Connect single sign-on](../installation/sso.md) uses the authorization code flow
+with PKCE (`S256`). A callback is accepted only if it answers a login this instance
+started, and only once: the `state` is stored server-side in MongoDB and consumed
+atomically. The `nonce` binds the `id_token` to the login, and the token is verified
+against the provider's JWKS (signature, issuer, audience, expiry, with 60 seconds of
+clock-skew leeway). The email is trusted only when the provider asserts it is verified.
+The redirect URI comes from the configuration, never from the request, and redirects stay
+on this site. The browser is handed a single-use ticket in the URL fragment, so no token
+travels in a query string. Accounts created by single sign-on get a random password hash
+instead of an invalid placeholder.
 
 ### OAuth Callback Security
 

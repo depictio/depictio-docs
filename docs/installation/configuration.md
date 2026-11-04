@@ -143,47 +143,28 @@ DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS=24
 
     Logged-in administrators are **not** subject to the public/demo read-only gate. Admins can still create projects and generate CLI tokens even when `DEPICTIO_AUTH_PUBLIC_MODE` or `DEPICTIO_AUTH_DEMO_MODE` is enabled. The gate logic is `is_public AND NOT is_admin`, so regular users (and anonymous visitors) are restricted while admins retain full write access.
 
-### Google OAuth Integration
+### Single sign-on (OpenID Connect)
 
-Configure Google OAuth for user authentication:
+Users can sign in through any OpenID Connect identity provider (Keycloak, Google,
+Microsoft Entra ID, Authentik, ...), with their groups mirrored from it. Providers are
+declared as a JSON list; credentials go in their own variables:
 
 ```bash
-# Enable Google OAuth authentication
-DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED=true
-
-# Google OAuth credentials (obtain from Google Cloud Console)
-DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
-DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET=your-google-client-secret
-
-# OAuth redirect URI (adjust to your domain)
-DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI=http://localhost:8058/auth/google/callback
+DEPICTIO_AUTH_OIDC_PROVIDERS='[
+  {
+    "id": "google",
+    "label": "Sign in with Google",
+    "discovery_url": "https://accounts.google.com/.well-known/openid-configuration"
+  }
+]'
+DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_ID=1234567890-example.apps.googleusercontent.com
+DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET=change-me
 ```
 
-#### Setting up Google OAuth
-
-1. **Create a Google Cloud Project**:
-   - Go to [Google Cloud Console](https://console.cloud.google.com/)
-   - Create a new project or select an existing one
-
-2. **Enable Google+ API**:
-   - Navigate to "APIs & Services" → "Library"
-   - Search for "Google+ API" and enable it
-
-3. **Create OAuth 2.0 Credentials**:
-   - Go to "APIs & Services" → "Credentials"
-   - Click "Create Credentials" → "OAuth 2.0 Client ID"
-   - Configure the consent screen if prompted
-   - Set application type to "Web application"
-   - Add authorized redirect URIs:
-     - `http://localhost:8058/auth/google/callback` (for local development)
-     - `https://your-domain.com/auth/google/callback` (for production)
-
-4. **Copy the credentials** to your environment variables
-
-### SAML single sign-on <small>(v1.18.0+)</small>
-
-Users can also sign in through their institution's SAML 2.0 identity provider, with their
-groups mirrored from it. See [Single sign-on (SAML)](sso.md).
+The redirect URI to register at the provider is
+`https://<api-host>/depictio/api/v1/auth/oidc/<id>/callback`. Full reference, provider
+recipes and migration from the former SAML and `DEPICTIO_AUTH_GOOGLE_OAUTH_*` settings:
+[Single sign-on (OpenID Connect)](sso.md).
 
 ### Authentication Keys
 
@@ -477,7 +458,7 @@ DEPICTIO_VERSION=1.5.2
 
 !!! warning "`DEPICTIO_DEV_MODE` is not a security switch"
     Up to v1.5.1 this flag also skipped OAuth state validation, so any deployment
-    that set it ran the Google OAuth callback without CSRF protection. That bypass
+    that set it ran the OAuth callback without CSRF protection. That bypass
     was removed in **v1.5.2**: the flag now only affects hot-reload and verbose
     logging. See [Security](../features/security.md#oauth-callback-security).
 

@@ -1,6 +1,6 @@
 ---
 title: Groups
-description: Share projects with whole groups, let group admins and a P.I. run their own group, and mirror groups from SAML.
+description: Share projects with whole groups, let group admins and a P.I. run their own group, and mirror groups from an OpenID Connect identity provider.
 ---
 
 # :material-account-group-outline: Groups <small>(v1.18.0+)</small>
@@ -32,8 +32,8 @@ groups: a direct viewer whose lab owns the project is an owner.
 
 A system admin names a group's P.I.; they become a group admin. When the address has no
 account yet, the group shows a banner and waits: that person becomes its P.I.,
-group admin and member when they first sign in, by password, Google or SAML. On a group
-mirrored from SAML, the claim waits until the identity provider asserts the membership.
+group admin and member when they first sign in, by password or single sign-on. On a group
+mirrored from the identity provider, the claim waits until the provider sends the membership.
 
 [![Administration, Groups: a banner says the named address becomes P.I. and group admin at its first sign-in, with a Clear action](../../images/guides/groups/pending_pi.webp)](../../images/guides/groups/pending_pi.webp){target=_blank}
 
@@ -81,7 +81,8 @@ See [Project permissions](../projects/guide.md#project-permissions).
 
 ## Groups from the identity provider { #sso-managed-groups }
 
-With `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS` set, each SAML sign-in mirrors the user's groups
+With `claims.groups` set on an [OpenID Connect provider](../../installation/sso.md#claim-mapping), each sign-in through it mirrors the user's groups
 as **SSO-managed** groups, badged *SSO*: created when first seen, membership synced both
-ways at every sign-in. Groups created by hand are never touched. See
+ways at every sign-in. Groups created by hand are never touched; a login whose token
+carries no groups claim removes the user from every SSO-managed group. See
 [Group and profile sync](../../installation/sso.md#group-and-profile-sync).
