@@ -1,5 +1,9 @@
 # :material-database-arrow-right:{ style="color: #009688" } Project Migration
 
+<!-- prettier-ignore -->
+!!! tip "Sending a project directly?"
+    To send a project directly from one instance to another, see [Publishing to another instance](publishing.md).
+
 Depictio supports **non-destructive project migration** between instances — move a project (MongoDB metadata + S3 data files + dashboards) from one Depictio deployment to another without touching any other project on the target.
 
 ## Overview
