@@ -63,6 +63,28 @@ admin approved it in advance by issuing the code.
 
 ---
 
+## What is published { #what-is-published }
+
+- The project, its workflows and data collections, and every dashboard tab.
+- The data of every collection type: tables, MultiQC reports, genome-browser
+  tracks stored in Depictio (tracks given as `https://` links stay links),
+  image folders, GeoJSON, phylogenetic trees and genomic tracks.
+- Dashboard logos.
+- Comments and annotations. An update replaces them; comments written on the
+  destination are kept.
+
+Not published: the version history (the destination starts a new one, and
+each update adds a version) and the project's members and groups, which may
+not exist on the destination. The person who publishes becomes the owner when
+they have an account with the same email there; otherwise the admin who issued
+the code owns it until they sign in.
+
+Before importing, the destination checks that it can display every dashboard.
+If a dashboard uses something newer than the destination's Depictio, the
+publication is refused with the version to update to, and nothing is written.
+
+---
+
 ## Invite codes { #invite-codes }
 
 There is **one kind of code**.
@@ -292,6 +314,7 @@ DEPICTIO_MIGRATION_DESTINATION_DOMAINS='["example.org"]'
 | Only the code that first brought it can send its updates | The project is already on the destination. Use the original code, or ask an admin there to import through an approval |
 | 409 in progress | This project already has a push in flight. Wait for it to finish |
 | 409 on the destination when editing | The project is locked. An admin can unlock it |
+| Cannot display component type… | The destination runs an older Depictio. Update it to the version named in the message, then publish again |
 | Bundle too large (413) | The bundle exceeds `MAX_BUNDLE_BYTES`, or the ingress body-size limit is too low |
 | `interrupted by a restart` | A restart cut the push or import. Use *Retry* |
 | No *Publish to…* or *Migrations* | `UI_ENABLED` is off on that instance |
