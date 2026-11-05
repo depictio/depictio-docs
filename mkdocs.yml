@@ -277,6 +277,7 @@ nav:
       - Administration:
           - usage/administration/index.md
           - Project Migration: usage/administration/migrate.md
+          - Publishing to another instance: usage/administration/publishing.md
           - Backup & Restore: usage/administration/backup.md
           - Monitoring (Log & Task): usage/administration/monitoring.md
           - Branding: usage/administration/branding.md
