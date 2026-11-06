@@ -751,11 +751,15 @@ flagged under the box and filters nothing.
 
 Under the box, a line says what the pattern caught (*24 of 122 values match*), counted on the
 column's distinct values with the filter's own matcher, so a pattern that keeps nothing says so.
-**show** lists the matching values with the caught part marked, a box to narrow the list and
-**Copy** (the first 100 values; the filter keeps every match).
+**show** opens the matching values, laid out in columns, with a box to narrow them and **Copy**
+(the first 100 values; the filter keeps every match). The list follows what you type.
 
-![TextInput with the pattern ^CCA: the counter under the box and the list of matching protospacers, the start of each marked](../images/guides/components/text_input_matches_light.webp#only-light){ .viz-shot loading=lazy }
-![TextInput with the pattern ^CCA: the counter under the box and the list of matching protospacers, the start of each marked](../images/guides/components/text_input_matches_dark.webp#only-dark){ .viz-shot loading=lazy }
+Several patterns are alternatives separated by `|`: `^CCA|GG$` keeps values that start with `CCA`
+or end with `GG`. Each alternative is marked in its own colour in the list, with a chip saying
+how many of the listed values it catches.
+
+![TextInput with the pattern ^CCA|GG$: two coloured chips, one per alternative, and the matching protospacers with each match marked in its alternative's colour](../images/guides/components/text_input_matches_light.webp#only-light){ .viz-shot loading=lazy }
+![TextInput with the pattern ^CCA|GG$: two coloured chips, one per alternative, and the matching protospacers with each match marked in its alternative's colour](../images/guides/components/text_input_matches_dark.webp#only-dark){ .viz-shot loading=lazy }
 
 The matcher is the server's regular-expression engine, so exotic syntax (lookbehind, named
 groups) can differ from a JavaScript console.
