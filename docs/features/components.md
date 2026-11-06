@@ -735,31 +735,30 @@ Filter by selecting multiple values:
 
 ### TextInput <small>(v1.21.0+)</small> { #text-input }
 
-Keeps the rows of a string column whose text matches what is typed. The text is read as a
-**regular expression**, so `^CCA` keeps values that start with `CCA`, `GG$` those that end
-with `GG`, and a plain word is a substring match. Case is ignored.
+Keeps the rows of a string column whose text matches what is typed, read as a **regular
+expression**: `^CCA` keeps values starting with `CCA`, `GG$` those ending with `GG`, a plain word
+is a substring match. Case is ignored.
 
 | Option | Description |
 |--------|-------------|
-| Column | String column to match |
-| `placeholder` | Hint shown in the empty box, e.g. `e.g. ^CCA or GG$` |
+| `placeholder` | Hint in the empty box, e.g. `'e.g. ^CCA or GG$'` |
 | `case_sensitive` | `true` matches letter case exactly. Off by default |
-| `match_mode` | `regex` (default) or `contains`, which reads the text as literal characters, so `A+` finds the two characters `A+` |
+| `match_mode` | `regex` (default) or `contains`, which reads the text literally (`A+` finds the characters `A+`) |
 | `default_value` | A pattern the box starts with, and returns to on **Reset all** |
 
-An empty box is no filter. A pattern that does not compile is flagged under the box and
-filters nothing, so a half-typed `(` never empties the dashboard.
+An empty box is no filter. A pattern that does not compile, or is longer than 512 characters, is
+flagged under the box and filters nothing.
 
-Under the box, a line says what the pattern caught: *24 of 122 values match*. Counting is
-done on the column's distinct values in the whole collection, with the same matcher the
-filter applies, so a pattern that keeps nothing says so (*No guide value matches*) instead
-of leaving an empty dashboard. **show** opens the matching values with the caught part
-marked, a box to narrow the list, and **Copy** (one value per line). The list is capped at
-100 values; the filter still keeps every match.
+Under the box, a line says what the pattern caught (*24 of 122 values match*), counted on the
+column's distinct values with the filter's own matcher, so a pattern that keeps nothing says so.
+**show** lists the matching values with the caught part marked, a box to narrow the list and
+**Copy** (the first 100 values; the filter keeps every match).
 
-The matcher is the server's regular-expression engine, not the browser's, so exotic syntax
-(lookbehind, named groups) can differ from what a JavaScript console accepts. Leading
-inline flags such as `(?i)` are accepted by the server and ignored by the browser check.
+![TextInput with the pattern ^CCA: the counter under the box and the list of matching protospacers, the start of each marked](../images/guides/components/text_input_matches_light.webp#only-light){ .viz-shot loading=lazy }
+![TextInput with the pattern ^CCA: the counter under the box and the list of matching protospacers, the start of each marked](../images/guides/components/text_input_matches_dark.webp#only-dark){ .viz-shot loading=lazy }
+
+The matcher is the server's regular-expression engine, so exotic syntax (lookbehind, named
+groups) can differ from a JavaScript console.
 
 ```yaml
 - tag: guide-pattern
