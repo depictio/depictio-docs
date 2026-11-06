@@ -205,6 +205,12 @@ reach says so with a **not grouped** badge whose tooltip gives the reason, and g
 reach figures on other tabs by following the dashboard's links in reverse. A lasso drawn
 on a Manhattan plot now holds in Split.
 
+<span class="ver-badge">v1.21.0+</span> A group captured on one data collection (guide
+sequences, say) now also recolours the advanced visualizations of a tab built on another one
+(libraries, samples). The browser asks the server to translate the group through the
+dashboard's links, the same translation figures, cards and tables already got, and a group
+that cannot reach the tab still says why in its **not grouped** badge.
+
 <div style="border: 1px solid grey; width: 602px; padding: 1px;">
     <a href="../../images/guides/selection-groups/split_by_species.jpg" target="_blank">
         <img src="../../images/guides/selection-groups/split_by_species.jpg" width="600">
