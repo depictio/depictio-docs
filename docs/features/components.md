@@ -733,6 +733,44 @@ Filter by selecting multiple values:
 | Default | Initially selected values |
 | Placeholder | Hint text when empty |
 
+### TextInput <small>(v1.21.0+)</small> { #text-input }
+
+Keeps the rows of a string column whose text matches what is typed. The text is read as a
+**regular expression**, so `^CCA` keeps values that start with `CCA`, `GG$` those that end
+with `GG`, and a plain word is a substring match. Case is ignored.
+
+| Option | Description |
+|--------|-------------|
+| Column | String column to match |
+| `placeholder` | Hint shown in the empty box, e.g. `e.g. ^CCA or GG$` |
+| `case_sensitive` | `true` matches letter case exactly. Off by default |
+| `match_mode` | `regex` (default) or `contains`, which reads the text as literal characters, so `A+` finds the two characters `A+` |
+| `default_value` | A pattern the box starts with, and returns to on **Reset all** |
+
+An empty box is no filter. A pattern that does not compile is flagged under the box and
+filters nothing, so a half-typed `(` never empties the dashboard.
+
+Under the box, a line says what the pattern caught: *24 of 122 values match*. Counting is
+done on the column's distinct values in the whole collection, with the same matcher the
+filter applies, so a pattern that keeps nothing says so (*No guide value matches*) instead
+of leaving an empty dashboard. **show** opens the matching values with the caught part
+marked, a box to narrow the list, and **Copy** (one value per line). The list is capped at
+100 values; the filter still keeps every match.
+
+The matcher is the server's regular-expression engine, not the browser's, so exotic syntax
+(lookbehind, named groups) can differ from what a JavaScript console accepts. Leading
+inline flags such as `(?i)` are accepted by the server and ignored by the browser check.
+
+```yaml
+- tag: guide-pattern
+  component_type: interactive
+  workflow_tag: nf-core/crisprseq
+  data_collection_tag: guide_summary
+  interactive_component_type: TextInput
+  column_name: guide
+  placeholder: 'e.g. ^CCA or GG$'
+```
+
 ### DatePicker
 
 Filter by date range:
