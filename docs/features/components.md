@@ -741,7 +741,7 @@ is a substring match. Case is ignored.
 
 | Option | Description |
 |--------|-------------|
-| `placeholder` | Hint in the empty box, e.g. `'e.g. ^CCA or GG$'` |
+| `placeholder` | Hint in the empty box, e.g. `'e.g. ^CCA\|GG$'` |
 | `case_sensitive` | `true` matches letter case exactly. Off by default |
 | `match_mode` | `regex` (default) or `contains`, which reads the text literally (`A+` finds the characters `A+`) |
 | `default_value` | A pattern the box starts with, and returns to on **Reset all** |
@@ -754,12 +754,12 @@ column's distinct values with the filter's own matcher, so a pattern that keeps 
 **show** opens the matching values, laid out in columns, with a box to narrow them and **Copy**
 (the first 100 values; the filter keeps every match). The list follows what you type.
 
-Several patterns are alternatives separated by `|`: `^CCA|GG$` keeps values that start with `CCA`
-or end with `GG`. Each alternative is marked in its own colour in the list, with a chip saying
+The pipe is the usual regex alternation: `^CCA|GG$` keeps values that start with `CCA` or end
+with `GG`. In the list each top-level alternative is marked in its own colour, with a chip saying
 how many of the listed values it catches.
 
-![TextInput with the pattern ^CCA|GG$: two coloured chips, one per alternative, and the matching protospacers with each match marked in its alternative's colour](../images/guides/components/text_input_matches_light.webp#only-light){ .viz-shot loading=lazy }
-![TextInput with the pattern ^CCA|GG$: two coloured chips, one per alternative, and the matching protospacers with each match marked in its alternative's colour](../images/guides/components/text_input_matches_dark.webp#only-dark){ .viz-shot loading=lazy }
+![TextInput with the pattern ^CCA|GG$: one coloured chip per alternative and the matching protospacers, each match marked in its alternative's colour](../images/guides/components/text_input_matches_light.webp#only-light){ .viz-shot loading=lazy }
+![TextInput with the pattern ^CCA|GG$: one coloured chip per alternative and the matching protospacers, each match marked in its alternative's colour](../images/guides/components/text_input_matches_dark.webp#only-dark){ .viz-shot loading=lazy }
 
 The matcher is the server's regular-expression engine, so exotic syntax (lookbehind, named
 groups) can differ from a JavaScript console.
@@ -771,7 +771,7 @@ groups) can differ from a JavaScript console.
   data_collection_tag: guide_summary
   interactive_component_type: TextInput
   column_name: guide
-  placeholder: 'e.g. ^CCA or GG$'
+  placeholder: 'e.g. ^CCA|GG$'
 ```
 
 ### DatePicker
