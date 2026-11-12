@@ -514,7 +514,7 @@ hide:
           <span class="live-indicator"></span>
           <div class="demo-badge-content">
             <strong>Live interactive demo - Try it!</strong>
-            <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener" class="demo-direct-link">
+            <a href="https://showcases.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener" class="demo-direct-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
               </svg>
@@ -534,7 +534,7 @@ hide:
         <div class="demo-alternatives">
           <h4>Get started with Depictio</h4>
           <div class="demo-alt-buttons">
-            <a href="https://demo.depictio.embl.org/" class="demo-alt-btn demo-btn" target="_blank" rel="noopener">
+            <a href="https://showcases.depictio.embl.org/" class="demo-alt-btn demo-btn" target="_blank" rel="noopener">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
               </svg>
@@ -577,8 +577,8 @@ hide:
         <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
       </svg>
     </button>
-    <iframe id="demo-iframe" data-depictio-embed src="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
-      <p>Your browser does not support iframes. <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2">Click here to view the Depictio dashboard</a></p>
+    <iframe id="demo-iframe" data-depictio-embed src="https://showcases.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
+      <p>Your browser does not support iframes. <a href="https://showcases.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2">Click here to view the Depictio dashboard</a></p>
     </iframe>
   </div>
 </section>
@@ -990,7 +990,7 @@ hide:
   </article>
 
   <div class="installation-grid">
-    <a href="https://demo.depictio.embl.org/" class="installation-card demo" target="_blank" rel="noopener">
+    <a href="https://showcases.depictio.embl.org/" class="installation-card demo" target="_blank" rel="noopener">
       <div class="card-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z"/></svg>
       </div>
@@ -4318,7 +4318,7 @@ function toggleFullscreen() {
 async function checkDemoAvailability() {
   const demoSection = document.querySelector('.live-demo-section');
   const iframe = document.getElementById('demo-iframe');
-  const demoUrl = 'https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2';
+  const demoUrl = 'https://showcases.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2';
 
   if (!demoSection || !iframe) return;
 
@@ -4355,7 +4355,7 @@ async function checkDemoAvailability() {
           </svg>
         </div>
         <h3>Live Demo Temporarily Unavailable</h3>
-        <p>The interactive demo is currently not accessible. Please try again later or <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
+        <p>The interactive demo is currently not accessible. Please try again later or <a href="https://showcases.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
         <div class="demo-alternative-actions">
           <a href="https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&amp;quickstart=1" class="md-button" target="_blank" rel="noopener">Open in Codespaces</a>
           <a href="usage/get_started/" class="md-button">View Documentation</a>
