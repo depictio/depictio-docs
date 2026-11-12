@@ -113,7 +113,7 @@ Whether you're looking for a **plotly studio like** experience for immediate ana
 
 **Through the Web Interface:**
 
-1. Visit [demo.depictio.embl.org](https://demo.depictio.embl.org)
+1. Visit [showcases.depictio.embl.org](https://showcases.depictio.embl.org)
 2. Click "Create Project" → Choose "Basic" and fill in project details
 3. Travels to your newly created project and click "Create Data Collection"
 4. Fill in details and upload your tabular file as data collection

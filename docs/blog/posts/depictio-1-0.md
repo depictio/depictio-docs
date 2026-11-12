@@ -361,7 +361,7 @@ with the full performance report behind the numbers above. More soon.
 
 ## 🚀 Try it
 
-- **Live demo:** [demo.depictio.embl.org](https://demo.depictio.embl.org/dashboards), explore the pre-loaded datasets, or upload your own.
+- **Live demo:** [showcases.depictio.embl.org](https://showcases.depictio.embl.org/dashboards), explore the pre-loaded datasets, or upload your own.
 - **Docs:** start with [Your first dashboard in 15 minutes](../../usage/get_started.md).
 - **GitHub:** [depictio/depictio](https://github.com/depictio/depictio), star the repo, open an issue, tell me what breaks.
 - **Webinar:** [watch the recording](https://www.youtube.com/watch?v=KWWHo4esUfg) of the SciLifeLab session, a full walkthrough from project to public URL.
