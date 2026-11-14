@@ -80,7 +80,7 @@ the Load-all icon is the bottom entry in the action cluster, which appears on ho
     | --- | --- | --- |
     | Uniform sample | embedding, QQ, lollipop, coverage track | The renderer draws one mark per row and reads no aggregate, so a uniform subset is a faithful, lower-resolution picture. |
     | Tail-preserving | volcano, MA, Manhattan | Significant rows are kept whole and the dense middle is strided. On a multi-million-row DE table a uniform sample keeps almost none of the hits, so the plot would become a cloud with nothing to label. |
-    | Never sampled | stacked taxonomy, rarefaction, DA barplot, enrichment, sunburst, dot plot, oncoplot, UpSet, hierarchical heatmap, sankey, phylogenetic | These renderers aggregate client-side (per-sample sums, top-N rankings), so a sample would change the reported *values*, not their resolution. |
+    | Never sampled | stacked bar, rarefaction, DA barplot, enrichment, sunburst, dot plot, oncoplot, UpSet, hierarchical heatmap, sankey, phylogenetic | These renderers aggregate client-side (per-sample sums, top-N rankings), so a sample would change the reported *values*, not their resolution. |
 
     The never-sampled kinds are served whole up to `advanced_viz_no_sample_max_rows`
     (2,000,000 by default). Past that ceiling they fall back to a uniform sample and the

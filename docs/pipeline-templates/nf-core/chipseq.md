@@ -129,7 +129,8 @@ preseq card and filter then take the slots the Picard duplication card and filte
 hold on the Signal tab; without the variable both cards are kept and the strip
 wraps to a second row. `GENOME` is empty by default, which lays the Locus axis out
 from the contigs the calls carry and suits any reference, a custom FASTA
-included.
+included. The optional `TRACKS_URI` (an `s3://` or `https://` results folder) reads the
+Locus tab's genome browser files in place.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound

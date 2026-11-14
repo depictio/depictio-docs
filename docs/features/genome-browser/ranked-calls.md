@@ -25,6 +25,8 @@ locus_from:
   rank_color_by: model_class
 ```
 
+The ranked-variant counter and **Prev**/**Next** also work for visitors of a public dashboard.
+
 Used in the nf-core/raredisease dashboard template.
 
 [:material-arrow-left: All examples](index.md#examples)

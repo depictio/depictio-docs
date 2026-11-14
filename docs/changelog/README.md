@@ -100,6 +100,84 @@ ghcr.io/depictio/depictio-cli:1.21.0
 
 ---
 
+## **[v1.20.5](https://github.com/depictio/depictio/releases/tag/v1.20.5)** (November 4, 2026)
+
+!!! success "Patch: advanced viz stacked_taxonomy renamed stacked_bar, and sturdier genome views and sections"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.5
+ghcr.io/depictio/depictio-viewer:1.20.5
+ghcr.io/depictio/depictio-worker:1.20.5
+ghcr.io/depictio/depictio-cli:1.20.5
+```
+
+### **♻️ Migration**
+
+* **The advanced viz `stacked_taxonomy` is now `stacked_bar`**, and a click on a bar can filter the dashboard (`selection_enabled`). The old name is still accepted and loads the same config, so nothing has to change. See [Stacked bar](../features/advanced-visualizations.md#stacked-bar) ([#1339](https://github.com/depictio/depictio/pull/1339)).
+
+### **🐛 Bug Fixes**
+
+* **A genome view keeps its strongest rows by a data-defined cut-off**: scores in [0, 1] that are not p-values no longer lose the rows the track exists to show ([#1338](https://github.com/depictio/depictio/pull/1338)).
+* **A section keeps its highlights when its one data-bound tile is pruned**, so a germline-only sarek run keeps its findings ([#1337](https://github.com/depictio/depictio/pull/1337)).
+
+### **🧬 Pipeline Templates**
+
+* **Thresholds and windows follow their tool or a cited source** across the nf-core templates ([#1340](https://github.com/depictio/depictio/pull/1340)).
+* **The ampliseq `reference_extended` dashboard is regenerated** ([#1341](https://github.com/depictio/depictio/pull/1341)).
+
+---
+
+## **[v1.20.4](https://github.com/depictio/depictio/releases/tag/v1.20.4)** (November 3, 2026)
+
+!!! success "Patch: tiles that describe themselves, colour codes in tables and text, and one error card"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.4
+ghcr.io/depictio/depictio-viewer:1.20.4
+ghcr.io/depictio/depictio-worker:1.20.4
+ghcr.io/depictio/depictio-cli:1.20.4
+```
+
+### **✨ New Features**
+
+* **A structured info popover describes a tile**: a lead, labelled blocks, notes and warnings, and a source. See [Right Panel](../features/dashboards.md#right-panel) ([#1328](https://github.com/depictio/depictio/pull/1328)).
+* **Colour codes in tables and text tiles**: a table column covered by `category_colors` draws a dot before each value, and a text tile prints one colour key per column named in its `{{legend:column}}` placeholder. See [Category colours](../features/dashboards.md#category-colors) ([95d49c3](https://github.com/depictio/depictio/commit/95d49c3b7c53cec4d9236ddd17fa733cb01b107c), [c732ec7](https://github.com/depictio/depictio/commit/c732ec7f9444ff3de998ad39ef76eb26ecf2df39)).
+
+### **🚀 Improvements**
+
+* **One error card for a page that cannot load**: not found, not allowed or unreachable, with **Try again** when it can help. See [Right Panel](../features/dashboards.md#right-panel) ([#1329](https://github.com/depictio/depictio/pull/1329)).
+* **A text line citing a column its collection lacks is removed on import**, instead of printing a dash. See [YAML Sync](../features/yaml-sync.md#text-live-values) ([305ad14](https://github.com/depictio/depictio/commit/305ad1413be2142502f481206d21db8887fb0797)).
+* **The stacked bar zoom draws an axis break, and the allele grid recolours cells and groups rows**. See [Allele grid](../features/advanced-visualizations.md#allele-grid) ([95d49c3](https://github.com/depictio/depictio/commit/95d49c3b7c53cec4d9236ddd17fa733cb01b107c)).
+
+### **🧬 Pipeline Templates**
+
+* **Colour keys and chart descriptions across the Overview templates**, and a review round on hlatyping, viralmetagenome, genomeqc, epitopeprediction and stableexpression ([155bca6](https://github.com/depictio/depictio/commit/155bca6e866330658e305329a9952f66b3817b59), [0128dda](https://github.com/depictio/depictio/commit/0128ddaee4b38b051e0c8b0104817531aeb163ad)).
+
+---
+
+## **[v1.20.3](https://github.com/depictio/depictio/releases/tag/v1.20.3)** (November 3, 2026)
+
+!!! success "Patch: the genome browser on the latest atacseq, chipseq and cutandrun templates"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.3
+ghcr.io/depictio/depictio-viewer:1.20.3
+ghcr.io/depictio/depictio-worker:1.20.3
+ghcr.io/depictio/depictio-cli:1.20.3
+```
+
+### **🧬 Pipeline Templates**
+
+* **A genome browser on the Locus tab of the latest atacseq (2.1.2), chipseq (2.1.0) and cutandrun (3.2.2) templates**: signal, peaks and alignments, read in place with the optional `TRACKS_URI` variable. See [Templates with a genome browser](../features/genome-browser/index.md#templates-with-a-genome-browser) ([#1324](https://github.com/depictio/depictio/pull/1324)).
+
+---
+
 ## **[v1.20.2](https://github.com/depictio/depictio/releases/tag/v1.20.2)** (November 2, 2026)
 
 !!! success "Patch: the genome browser's ranked-variant counter on public dashboards"
