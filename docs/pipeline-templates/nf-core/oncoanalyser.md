@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/oncoanalyser" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="3.0.0">
@@ -151,7 +151,7 @@ three open sections; tables and record cards follow, collapsed. The persistent
 *Sample filters* (sample class, sample, analysis group) sit in the left panel and
 narrow every tab through the samplesheet links. The *Sample sheet* is pinned,
 collapsed, to the bottom of every child tab.
-The Structural variants and Small variants tabs each embed a [genome browser](../../features/genome-browser.md)
+The Structural variants and Small variants tabs each embed a [genome browser](../../features/genome-browser/index.md)
 with the tumor's calls and reads.
 
 === ":material-compass-outline: Overview"
@@ -345,11 +345,11 @@ with the tumor's calls and reads.
     filter drives them too. The change table with a record is collapsed.
 
     !!! note "The structure tile needs the resolver"
-        The pipeline predicts no structure. The [3D structure](../../features/protein-tiles.md#molecule-3d)
+        The pipeline predicts no structure. The [3D structure](../../features/advanced-visualizations.md#molecule-3d)
         tile looks the picked gene up by its symbol (UniProt, then the AlphaFold DB
         model), which needs `DEPICTIO_STRUCTURE_RESOLVER_ENABLED=true` on the
         server (it is off by default; see the
-        [structure resolver](../../features/protein-tiles.md#structure-resolver)).
+        [structure resolver](../../features/proteins.md#structure-resolver)).
         With it off the tile says the lookup is disabled, and the scatter, the
         lollipop and the table keep working. A change whose reference residue
         disagrees with the model is listed, not drawn.
@@ -497,7 +497,7 @@ Re-ingesting accumulates dashboards, so delete the project before repeating a ru
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it from Reviewed.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

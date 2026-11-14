@@ -444,7 +444,7 @@ workflows:
             columns_description: {} # Optional: as for a Table DC
 ```
 
-A `genomic_tracks` collection is shown by the [genome browser](../../features/genome-browser.md);
+A `genomic_tracks` collection is shown by the [genome browser](../../features/genome-browser/index.md);
 the [guide](guide.md#example-genomic-tracks-dcs) has a worked example.
 
 ## Remote scan modes <small>(v1.16.0+)</small> { #remote-scan-modes }

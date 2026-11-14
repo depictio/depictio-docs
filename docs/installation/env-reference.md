@@ -563,7 +563,7 @@ Logging verbosity and output configuration.
 **Config Class:** `JBrowseConfig`
 **Environment Prefix:** `DEPICTIO_JBROWSE_`
 
-Settings of the embedded [genome browser](../features/genome-browser.md) (v1.20.0+). It
+Settings of the embedded [genome browser](../features/genome-browser/index.md) (v1.20.0+). It
 runs inside the viewer and reads every track through the API, so there is no separate
 server to deploy. Tracks stored in Depictio's own bucket are always served; tracks read in
 place from a remote host or bucket must be allow-listed here, see
@@ -732,7 +732,7 @@ Who may use the comment threads of a dashboard. See [Viewers can comment](../fea
 **Config Class:** `StructureResolverSettings`
 **Environment Prefix:** `DEPICTIO_STRUCTURE_RESOLVER_`
 
-Lets the [protein tiles](../features/protein-tiles.md#structure-resolver) fetch a model the run did not publish, from AlphaFold DB, UniProt and ESMFold. Off by default: once on, an accession, a gene and taxon, or a sequence leaves the server. See [External structure services](../features/security.md#structure-resolver). Compose and Helm forward only `ENABLED`; add the others to the service's environment.
+Lets the [protein tiles](../features/proteins.md#structure-resolver) fetch a model the run did not publish, from AlphaFold DB, UniProt and ESMFold. Off by default: once on, an accession, a gene and taxon, or a sequence leaves the server. See [External structure services](../features/security.md#structure-resolver). Compose and Helm forward only `ENABLED`; add the others to the service's environment.
 
 | Variable | Default | Description |
 |----------|---------|-------------|

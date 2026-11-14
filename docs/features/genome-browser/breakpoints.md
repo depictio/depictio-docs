@@ -1,5 +1,6 @@
 ---
 title: "Genome browser: Breakpoints"
+icon: material/vector-link
 description: Both sides of a call, the breakpoint view and the circular view.
 glightbox: true
 ---
@@ -26,4 +27,4 @@ locus_from:
 
 Used in the [nf-core/rnafusion dashboard template](../../pipeline-templates/nf-core/rnafusion.md) and [nf-core/oncoanalyser dashboard template](../../pipeline-templates/nf-core/oncoanalyser.md).
 
-[:material-arrow-left: All examples](../genome-browser.md#examples)
+[:material-arrow-left: All examples](index.md#examples)

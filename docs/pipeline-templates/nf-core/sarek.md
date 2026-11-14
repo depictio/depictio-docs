@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/sarek" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="3.11.0">
@@ -156,7 +156,7 @@ status and the callers run per sample. A callset is one caller on one sample. Th
 persistent *Sample filters* (status, patient, sample) sit in the left panel and
 narrow every tab through the sample links. The *Sample sheet* is pinned,
 collapsed, to the bottom of every child tab.
-The Locus tab embeds a [genome browser](../../features/genome-browser.md) that shows depth and reads on one axis.
+The Locus tab embeds a [genome browser](../../features/genome-browser/index.md) that shows depth and reads on one axis.
 
 === ":material-compass-outline: Overview"
 
@@ -435,7 +435,7 @@ The Locus tab embeds a [genome browser](../../features/genome-browser.md) that s
 
     !!! info "Structure resolver"
         The structure tile looks the gene up in AlphaFold DB, which needs the
-        [structure resolver](../../features/protein-tiles.md#structure-resolver)
+        [structure resolver](../../features/proteins.md#structure-resolver)
         on the server; without it the tile says so and the rest of the tab works.
 
 === ":material-map-marker-outline:{ .mc-indigo } Locus"
@@ -573,7 +573,7 @@ Re-ingesting accumulates dashboards, so delete the project before repeating a ru
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it from Reviewed.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

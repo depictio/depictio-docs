@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/rnafusion" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="4.1.3">
@@ -133,7 +133,7 @@ strandedness) narrow every tab. *Fusion filters* (the fusion, then the caller
 agreement) reach every caller table through the links on the fusion name;
 MultiQC and Splice Junctions carry no fusion, so they are left off those two
 tabs. The *Sample sheet* is pinned, collapsed, to the bottom of every child tab.
-The Breakpoints and Splice Junctions tabs embed a [genome browser](../../features/genome-browser.md) that shows the
+The Breakpoints and Splice Junctions tabs embed a [genome browser](../../features/genome-browser/index.md) that shows the
 reads at a breakpoint or a junction.
 
 === ":material-compass-outline: Overview"
@@ -471,7 +471,7 @@ depictio ingest "$DEST" --template nf-core/rnafusion/latest
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it from Reviewed.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

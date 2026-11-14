@@ -1,37 +1,37 @@
 {
-  "version": "1.19.3",
-  "templates": 32,
-  "tools": 120,
-  "outputs": 413,
-  "renders": 1908,
-  "viz": 50,
-  "viz_kinds": 43,
+  "version": "1.20.0",
+  "templates": 42,
+  "tools": 135,
+  "outputs": 465,
+  "renders": 2176,
+  "viz": 56,
+  "viz_kinds": 49,
   "viz_views": 7,
   "renders_by_component": [
     {
       "id": "card",
       "label": "Card",
-      "count": 837
+      "count": 942
     },
     {
       "id": "advanced_viz",
       "label": "Advanced viz",
-      "count": 375
+      "count": 414
     },
     {
       "id": "table",
       "label": "Table",
-      "count": 340
+      "count": 391
     },
     {
       "id": "figure",
       "label": "Figure",
-      "count": 207
+      "count": 245
     },
     {
       "id": "interactive",
       "label": "Interactive",
-      "count": 88
+      "count": 123
     },
     {
       "id": "multiqc",
@@ -48,29 +48,39 @@
     "cutandrun",
     "demultiplex",
     "differentialabundance",
+    "drop",
     "eager",
+    "epitopeprediction",
     "funcscan",
     "genomeassembler",
+    "genomeqc",
     "hic",
+    "hlatyping",
     "isoseq",
     "mag",
     "methylseq",
     "mhcquant",
     "nanoseq",
+    "nascent",
     "oncoanalyser",
     "pairgenomealign",
     "proteinannotator",
     "proteinfamilies",
     "proteinfold",
+    "quantms",
+    "raredisease",
     "riboseq",
     "rnafusion",
     "rnaseq",
     "rnasplice",
+    "rnavar",
     "sarek",
     "scrnaseq",
     "smrnaseq",
+    "stableexpression",
     "taxprofiler",
     "variantbenchmarking",
+    "viralmetagenome",
     "viralrecon"
   ],
   "tool_chips": [
@@ -78,6 +88,7 @@
     "salmon",
     "deseq2",
     "qiime2",
+    "star",
     "samtools",
     "pangolin",
     "bcftools",
