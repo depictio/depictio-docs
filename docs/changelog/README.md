@@ -23,7 +23,7 @@ ghcr.io/depictio/depictio-cli:1.20.4
 
 ### **✨ New Features**
 
-* **A structured info popover describes a tile**: a lead, labelled blocks, notes and warnings, and a source. See [Right Panel](../features/dashboards.md#right-panel) ([#1328](https://github.com/depictio/depictio/pull/1328)).
+* **A structured info popover describes a tile**: a lead, labelled blocks, notes and warnings, and a source, written as labelled paragraphs of the `description`. The (i) icon now opens it, and the component's metadata moves to a list icon, **Data source and settings**, with its code ready to copy. See [Describe a tile](../usage/guides/dashboard_usage.md#describe-a-tile) ([#1328](https://github.com/depictio/depictio/pull/1328)).
 * **Colour codes in tables and text tiles**: a table column covered by `category_colors` draws a dot before each value, and a text tile prints one colour key per column named in its `{{legend:column}}` placeholder. See [Category colours](../features/dashboards.md#category-colors) ([95d49c3](https://github.com/depictio/depictio/commit/95d49c3b7c53cec4d9236ddd17fa733cb01b107c), [c732ec7](https://github.com/depictio/depictio/commit/c732ec7f9444ff3de998ad39ef76eb26ecf2df39)).
 
 ### **🚀 Improvements**
