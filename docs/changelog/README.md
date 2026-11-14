@@ -91,7 +91,7 @@ ghcr.io/depictio/depictio-cli:1.20.1
 
 ### **🐛 Bug Fixes**
 
-* **Genome views keep rows on contigs the assembly spells differently** (`21` and `chr21`): the Overview "Ranked variants along the genome" tile of raredisease showed "No rows" ([#1322](https://github.com/depictio/depictio/pull/1322)).
+* **Genome views keep rows on contigs the assembly spells differently** (`21` and `chr21`): a genome view read the contig under the assembly's spelling before dropping its rows, instead of showing "No rows" ([#1322](https://github.com/depictio/depictio/pull/1322)).
 
 ---
 
