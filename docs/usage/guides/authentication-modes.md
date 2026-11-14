@@ -89,6 +89,8 @@ DEPICTIO_AUTH_PUBLIC_MODE=true
   [landing hint](dashboard-guide.md#landing-hint) points to its Guide <small>(v1.17.4+)</small>
 - After sign-in, users can create dashboards, duplicate existing ones, and manage projects
 - Sidebar shows a "Public Mode" badge
+- Admins and project editors can import dashboards (**New dashboard**, **Import** tab) <small>(v1.21.0+)</small>. Visitors still get a 403
+- Admins can create CLI tokens in **Profile** > **CLI agents** to refresh dashboards and ingest data without switching public mode off <small>(v1.21.0+)</small>
 
 ### Signing in as a guest <small>(v1.17.3+)</small> { #guest-sign-in }
 

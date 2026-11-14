@@ -173,6 +173,10 @@ RestrictedPython prevents these operations at compile-time:
 | **Dangerous Built-ins** | `exec()`, `eval()`, `__import__()`, `compile()` |
 | **Attribute Access** | Private attributes (underscore methods) on unsafe objects |
 
+### Locking figure code <small>(v1.21.0+)</small> { #figure-code-lock }
+
+A code figure runs Python on a server worker. On an instance open to people you do not know, such as a workshop, set `DEPICTIO_VIEWER_CODE_FIGURES_LOCKED=true`. The server then refuses new figure code from anyone but an administrator, and the figure builder shows "Writing figure code is turned off on this server." Code already on a dashboard or shipped with a template or the catalogue keeps rendering, and saving, moving or duplicating dashboards still works. UI mode stays available for new figures.
+
 ### Past versions in a render <small>(v1.15.0+)</small> { #past-versions-in-a-render }
 
 A render request can draw a component as a past [dashboard version](versioning.md)

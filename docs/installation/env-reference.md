@@ -123,6 +123,7 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_VIEWER_AUTO_GENERATE_FIGURES` | `false` | Automatic figure generation in UI mode |
 | `DEPICTIO_VIEWER_INSPECTOR_ENABLED` | `false` | Docked component inspector, replacing the per-component popovers for advanced-visualisation controls, notes and metadata. Experimental (v1.4.0+) |
 | `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` | `table` | View `/dashboards` opens in for someone who never picked one: `thumbnails` or `table`. A view chosen in the browser, or named by a shared link, wins (v1.11.2+; the default was `thumbnails` until v1.12.0) |
+| `DEPICTIO_VIEWER_CODE_FIGURES_LOCKED` | `false` | Refuse new figure code from non-admin users. Existing code figures still render. See [Security](../features/security.md#figure-code-lock) (v1.21.0+) |
 
 ---
 
@@ -711,6 +712,8 @@ The version history of every dashboard. See [Dashboard and data versions](../fea
 | `DEPICTIO_DASHBOARD_VERSIONS_RETENTION_DAYS` | `90` | Age after which versions that are not bookmarked are dropped |
 | `DEPICTIO_DASHBOARD_VERSIONS_KEEP_DAILY_FOR_DAYS` | `30` | Age after which autosaves thin to the last one of each day |
 | `DEPICTIO_DASHBOARD_VERSIONS_MAX_SNAPSHOT_BYTES` | `8388608` (8 MiB) | Largest version recorded. A larger one is skipped and logged; the save itself goes through |
+| `DEPICTIO_DASHBOARD_VERSIONS_CHANGES_SINCE_ENABLED` | `false` | Show readers what changed since their last visit. See [What's new](../tutorials/whats-new.md) (v1.21.0+) |
+| `DEPICTIO_DASHBOARD_VERSIONS_CHANGES_SINCE_MARK_MODE` | `sticky` | Default for readers who have not chosen: `sticky` keeps the marks until the reader marks them as seen, `previous_visit` shows what changed since the visit before this one (v1.21.0+) |
 
 ---
 

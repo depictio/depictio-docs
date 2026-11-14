@@ -771,6 +771,26 @@ API: `GET`, `PUT` and `DELETE /projects/{project_id}/storage`, and
 
 ---
 
+## Google Cloud Storage <small>(v1.21.0+)</small> { #google-cloud-storage }
+
+Google Cloud Storage serves the S3 protocol through its [XML API](https://cloud.google.com/storage/docs/interoperability), so a project can read pipeline results from a GCS bucket. Set `endpoint_url: https://storage.googleapis.com` in the project's [storage settings](#project-storage-settings), or under `remote_storage_options` in the CLI configuration:
+
+```yaml
+remote_storage_options:
+  endpoint_url: https://storage.googleapis.com
+  bucket: <bucket>
+  # access_key_id / secret_access_key: an HMAC key for a private bucket
+  # Leave both out for a public bucket
+```
+
+Create the HMAC key under Cloud Storage, **Settings**, **Interoperability**, for a service account with Storage Object Viewer on the bucket. Then point a data collection at an `s3://<bucket>/<key>` location.
+
+- Reading is supported. Using GCS as the instance's own storage, where Depictio writes its tables, is not.
+- The run-folder browser asks for keys on a GCS bucket, since `DEPICTIO_REMOTE_PUBLIC_S3_BUCKETS` reads buckets on the AWS endpoint only.
+- Reading a public bucket was checked end to end. A private bucket with an HMAC key uses the same path, signed, and has not been checked against a real bucket yet.
+
+---
+
 ## Sharing a project { #sharing-a-project }
 
 A project built interactively can be frozen into a template bundle and run by
