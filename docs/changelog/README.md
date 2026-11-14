@@ -8,6 +8,35 @@ hide:
 
 # Changelog
 
+## **[v1.20.5](https://github.com/depictio/depictio/releases/tag/v1.20.5)** (November 4, 2026)
+
+!!! success "Patch: advanced viz stacked_taxonomy renamed stacked_bar, and sturdier genome views and sections"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.5
+ghcr.io/depictio/depictio-viewer:1.20.5
+ghcr.io/depictio/depictio-worker:1.20.5
+ghcr.io/depictio/depictio-cli:1.20.5
+```
+
+### **♻️ Migration**
+
+* **The advanced viz `stacked_taxonomy` is now `stacked_bar`**, and a click on a bar can filter the dashboard (`selection_enabled`). The old name is still accepted and loads the same config, so nothing has to change. See [Stacked bar](../features/advanced-visualizations.md#stacked-bar) ([#1339](https://github.com/depictio/depictio/pull/1339)).
+
+### **🐛 Bug Fixes**
+
+* **A genome view keeps its strongest rows by a data-defined cut-off**: scores in [0, 1] that are not p-values no longer lose the rows the track exists to show ([#1338](https://github.com/depictio/depictio/pull/1338)).
+* **A section keeps its highlights when its one data-bound tile is pruned**, for example when a run lacks the data that tile reads ([#1337](https://github.com/depictio/depictio/pull/1337)).
+
+### **🧬 Pipeline Templates**
+
+* **Thresholds and windows follow their tool or a cited source** across the nf-core templates ([#1340](https://github.com/depictio/depictio/pull/1340)).
+* **The ampliseq `reference_extended` dashboard is regenerated** ([#1341](https://github.com/depictio/depictio/pull/1341)).
+
+---
+
 ## **[v1.20.4](https://github.com/depictio/depictio/releases/tag/v1.20.4)** (November 3, 2026)
 
 !!! success "Patch: tiles that describe themselves, colour codes in tables and text, and one error card"

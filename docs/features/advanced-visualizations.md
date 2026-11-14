@@ -195,9 +195,9 @@ Click a thumbnail to enlarge it, or a name to jump to its entry.
 </div>
 
 <div class="viz-tile viz-tile--t" markdown>
-[![Stacked taxonomy](../images/guides/advanced-visualizations/thumbs/stacked_taxonomy_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp){ .glightbox data-type="image" data-title="Stacked taxonomy" data-gallery="catalog-light" data-desc-position="bottom" }
-[![Stacked taxonomy](../images/guides/advanced-visualizations/thumbs/stacked_taxonomy_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp){ .glightbox data-type="image" data-title="Stacked taxonomy" data-gallery="catalog-dark" data-desc-position="bottom" }
-<span class="viz-tile__cap">[Stacked taxonomy](#stacked-taxonomy){ .viz-tile__name title="Jump to Stacked taxonomy" } <span class="ver-badge">v0.13.0+</span></span>
+[![Stacked bar](../images/guides/advanced-visualizations/thumbs/stacked_taxonomy_light.webp#only-light){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp){ .glightbox data-type="image" data-title="Stacked bar" data-gallery="catalog-light" data-desc-position="bottom" }
+[![Stacked bar](../images/guides/advanced-visualizations/thumbs/stacked_taxonomy_dark.webp#only-dark){ width=480 height=720 loading=lazy decoding=async }](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp){ .glightbox data-type="image" data-title="Stacked bar" data-gallery="catalog-dark" data-desc-position="bottom" }
+<span class="viz-tile__cap">[Stacked bar](#stacked-bar){ .viz-tile__name title="Jump to Stacked bar" } <span class="ver-badge">v0.13.0+</span></span>
 </div>
 
 <div class="viz-tile viz-tile--s" markdown>
@@ -1508,14 +1508,17 @@ Ancient-DNA misincorporation by distance from the read end. C>T at 5' and G>A at
 
 ## :material-bacteria-outline: Microbiome & ecology { #microbiome }
 
-### :material-chart-bar-stacked: Stacked taxonomy { #stacked-taxonomy }
+### :material-chart-bar-stacked: Stacked bar { #stacked-bar }
 
-<span class="ver-badge">v0.13.0+</span> `viz_kind: stacked_taxonomy`
+<span class="ver-badge">v0.13.0+</span> `viz_kind: stacked_bar`
 
-Per-sample composition at one taxonomic rank, the tail folded into `Other`, with optional metadata strips.
+Per-sample composition at one taxonomic rank, the tail folded into `Other`, with optional metadata strips. With `selection_enabled`, a click on a bar filters the dashboard to its sample (`selection_column` names the column when it is not `sample_id_col`); the other bars dim, and a second click clears it.
 
-![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light){ data-title="Stacked taxonomy" .viz-shot loading=lazy }
-![Stacked taxonomy](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark){ data-title="Stacked taxonomy" .viz-shot loading=lazy }
+!!! note "Renamed in v1.20.5"
+    This kind was `stacked_taxonomy`. The old name is still accepted and loads the same config, key for key, so existing dashboards need no change.
+
+![Stacked bar](../images/guides/advanced-visualizations/stacked_taxonomy_light.webp#only-light){ data-title="Stacked bar" .viz-shot loading=lazy }
+![Stacked bar](../images/guides/advanced-visualizations/stacked_taxonomy_dark.webp#only-dark){ data-title="Stacked bar" .viz-shot loading=lazy }
 
 **Input:** one row per sample, taxon and rank (long format).
 
@@ -1536,13 +1539,13 @@ Per-sample composition at one taxonomic rank, the tail folded into `Other`, with
 
 ??? example "YAML"
     ```yaml
-    - tag: viz-stacked-taxonomy
+    - tag: viz-stacked-bar
       component_type: advanced_viz
       workflow_tag: my_workflow
       data_collection_tag: taxa_long
-      viz_kind: stacked_taxonomy
+      viz_kind: stacked_bar
       config:
-        viz_kind: stacked_taxonomy
+        viz_kind: stacked_bar
         sample_id_col: sample_id
         taxon_col: taxon
         rank_col: rank
