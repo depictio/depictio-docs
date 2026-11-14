@@ -284,13 +284,20 @@ nav:
       - Special Modes:
           - Authentication Modes: usage/guides/authentication-modes.md
           - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md
-  - Tutorials: tutorials/index.md
+  - Tutorials:
+      - tutorials/index.md
+      - What's new since your last visit: tutorials/whats-new.md
+      - Compare runs: tutorials/compare-runs.md
+      - Watch the data update: tutorials/data-updates.md
+      - Label samples: tutorials/metadata-panel.md
+      - Move a project to another instance: tutorials/instance-migration.md
   - Features:
       - Overview: features/README.md
       - Dashboard & Components:
           - Dashboards: features/dashboards.md
           - Components: features/components.md
           - Advanced Visualizations: features/advanced-visualizations.md
+          - MultiQC: features/multiqc.md
           - Proteins: features/proteins.md
           - Interactive Selection Filtering: features/interactive-selection-filtering.md
           - Comments and Annotations: features/comments-annotations.md

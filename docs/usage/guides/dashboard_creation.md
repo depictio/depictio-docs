@@ -263,22 +263,9 @@ Switching to Code Mode carries the UI settings over as a `px.scatter` call, whic
     </a>
 </div>
 
-## <img src="../../../roadmap/multiqc.png" width="24" style="vertical-align: middle;"> MultiQC Integration (v0.5.0+)
+## <img src="../../../roadmap/multiqc.png" width="24" style="vertical-align: middle;"> MultiQC Integration { #multiqc-integration }
 
-As of version 0.5.0, Depictio includes dedicated support for MultiQC quality control reports. This integration allows you to:
-
-- **Automatically scan and aggregate** MultiQC output reports
-- **Create components** directly from MultiQC data using the MultiQC API
-- **Link figures** with external metadata for enhanced analysis
-- **Filter datasets** to display specific samples based on QC metrics
-
-Components land on the dashboard with the report's own controls intact: the general statistics table keeps its **Mean / R1 / R2 / All** read selector and its **Table / Violin** toggle, and the dashboard filters apply on top.
-
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/multiqc/multiqc_dashboard.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/multiqc/multiqc_dashboard.png" width="600">
-    </a>
-</div>
+A MultiQC component draws one plot of a MultiQC report: the report's own controls stay, and the dashboard filters apply on top. Reports are added in the browser (**Add data**, or **Manage data** on a MultiQC collection) or with `depictio ingest`. See [MultiQC](../../features/multiqc.md) for the whole feature.
 
 ### <span style="color: #6495ED;">:material-plus-circle:</span> Adding MultiQC Components
 
@@ -286,13 +273,6 @@ Components land on the dashboard with the report's own controls intact: the gene
 2. In Step 3, choose a **Module**, then a **Plot** inside it. Both lists are read from the report itself. For an nf-core/ampliseq run that means `General Stats Table`, `cutadapt` and `fastqc`. The preview renders on the right as soon as you pick.
 3. Repeat for every plot you want: each one becomes its own component, and they can sit in different sections or tabs.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/multiqc/multiqc_design.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/multiqc/multiqc_design.png" width="600">
-    </a>
-</div>
+MultiQC data collections show no data preview in Step 2 because they aren't tabular, so `Rows` and `Columns` read `N/A`.
 
-MultiQC data collections show no data preview in Step 2 because they aren't tabular, so `Rows` and `Columns` read `N/A` and the visualizations are rendered by the MultiQC component itself.
-
-!!! tip "MultiQC Data Ingestion"
-    To ingest MultiQC reports into Depictio, use the Depictio-CLI with your project configuration file. MultiQC reports should be specified in your YAML configuration under the appropriate workflow section.
+The General Statistics table keeps its **Mean / R1 / R2 / All** read selector and its **Table / Violin** toggle. To filter MultiQC plots from a metadata table, link them with the `sample_mapping` resolver ([Link to sample metadata](../../features/multiqc.md#link-to-sample-metadata)). To compare the reports of several runs, see [MultiQC: compare runs](../../features/multiqc.md#compare-runs).
