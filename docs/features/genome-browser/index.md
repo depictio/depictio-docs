@@ -296,9 +296,9 @@ The component builder has a *Genome browser* type with the same settings.
 
 | Dashboard template | Tab |
 |--------------------|-----|
-| [nf-core/atacseq](../../pipeline-templates/nf-core/atacseq.md) 1.2.2 | Locus |
-| [nf-core/chipseq](../../pipeline-templates/nf-core/chipseq.md) 1.2.0 | Locus |
-| [nf-core/cutandrun](../../pipeline-templates/nf-core/cutandrun.md) 3.1 | Locus |
+| [nf-core/atacseq](../../pipeline-templates/nf-core/atacseq.md) 1.2.2, 2.1.2 | Locus |
+| [nf-core/chipseq](../../pipeline-templates/nf-core/chipseq.md) 1.2.0, 2.1.0 | Locus |
+| [nf-core/cutandrun](../../pipeline-templates/nf-core/cutandrun.md) 3.1, 3.2.2 | Locus |
 | nf-core/drop 1.0.0 | Locus |
 | [nf-core/nanoseq](../../pipeline-templates/nf-core/nanoseq.md) 3.0.0 | Locus |
 | nf-core/nascent 2.3.0 | Genome signal |
