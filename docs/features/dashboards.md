@@ -208,7 +208,7 @@ The **right panel** is the main canvas where visualization components are displa
 - :material-cog-outline: **Configured** through component edit menus
 - :material-link-variant: **Cross-panel filtering** - Responds to filters from the left panel
 - :material-view-sequential: **Grouped into sections** (v1.4.0+) - `grid_sections` splits the canvas into named, foldable boxes; see [Sections](#sections) below
-- :material-information-outline: **Described by an info popover** (v1.20.4+) - A tile with a `description` shows an info icon that opens it as a lead, labelled blocks (**How to read**, **Annotations**, **Reference lines**), **Note** or **Warning** callouts and a **Source** footer
+- :material-information-outline: **Described by an info popover** (v1.20.4+) - A tile with a `description` shows an info icon that opens it as a lead, labelled blocks (**How to read**, **Annotations**, **Reference lines**), **Note** or **Warning** callouts and a **Source** footer. The component's data source and settings move to a list icon. See [Describe a tile](../usage/guides/dashboard_usage.md#describe-a-tile)
 - :material-alert-circle-outline: **One error card for a page that cannot load** (v1.20.4+) - A dashboard or project that is not found, not allowed or unreachable shows the same card everywhere, with **Try again** when a retry can help
 - :material-cellphone: **Laid out for the screen** (v1.14.0+) - A read-only grid counts in half-height rows, so text and cards fit to the nearest half row while figures keep their pixels. On a phone, tiles reflow in reading order, quarter-width tiles two to a row and wider ones full width
 
