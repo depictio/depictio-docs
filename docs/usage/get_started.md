@@ -39,44 +39,16 @@ If you want to explore Depictio with existing demo data, you can use the provide
 
 #### <span style="color: #F68B33;">:material-web:</span> Using the Web Interface
 
-1. **Open the Projects section**: Click on the **"Projects"** link in the sidebar.
-2. **Click on "Create Project"**: This will open the project creation form.
-3. **Select Basic Project and enter project details**:
+1. **Open Projects**: click **Projects** in the sidebar, then **New project**.
+2. **Describe the project**: enter a **Project name** and, optionally, a **Description**. Tick **Make this project public** to let every user see it.
+3. **Click Add data**: this opens three steps, **Your data**, **What Depictio found** and **Create**. **Create without data** makes an empty project instead.
+4. **Your data**: drop files or folders on **Upload** (CSV, TSV, Parquet, Feather and more, 50 MB each). Or use **Read in place** for a folder, a bucket or one file URL, read where it is.
+5. **Check how it is read**: for a folder, **How should Depictio read this folder?** preselects **Flat tables**, **Custom workflows** or **Pipeline template**. A recognised pipeline shows as **Pipeline:** *name* **· Detected**, with **Change** to pick another.
+6. **What Depictio found**: check the tables, runs and source Depictio lists. Then click **Create project with N tables**, or **Next** and **Create Project** for a pipeline.
 
-    - **Project Name**: Enter a name for your project.
-    - **Description**: Optionally, provide a description for your project.
+<!-- video: project-creation/create-project-from-folder | New project from a results folder: Your data, the read level, What Depictio found, Create, then the project page -->
 
-        - **Advanced**: For workflow-based projects with multiple data collections.
-
-4. **Navigate to the "Data Collections" tab**: This is where you will add your data.
-5. **Add Data Collections**:
-
-    - Click on the **"Create Data Collection"** button.
-    - Enter a name for your data collection.
-    - Fill in required information such as:
-        - **Data Collection Name**: A unique name for your data collection.
-        - **Description**: Optionally, provide a description for your data collection.
-        - **File format**: Choose the format of your data (e.g., CSV, Parquet).
-
-6. **Upload Data**:
-
-    - Drag and drop your data files or use the file picker to select files from your local system.
-    - Supported formats include CSV, TSV, Excel, Parquet, and Feather.
-
-<div style="max-width: 1200px; margin: 1rem auto 2rem auto;">
-  <div style="padding: 56.25% 0 0 0; position: relative">
-    <iframe
-      src="https://player.vimeo.com/video/1108747290?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-      frameborder="0"
-      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
-      title="Creating Your First Basic Project - Step by Step Walkthrough"
-    ></iframe>
-  </div>
-  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>Basic Project Creation:</strong> Watch how to create a basic project from scratch - upload data, configure settings, and start visualizing in minutes</p>
-</div>
-<script src="https://player.vimeo.com/api/player.js"></script>
+See [Create a project](projects/guide.md#create-a-project) for every option, and [Add data](projects/guide.md#add-data) to add tables or runs later.
 
 #### Using the CLI
 
@@ -153,7 +125,7 @@ depictio ingest \
 
 This command will run the CLI tool with the default configuration file and the specified project configuration file. This will create a new project in Depictio with the palmer penguins dataset, including 2 data collections: `physical_features` and `demographic_data`.
 
-Once the data ingested into the system, you can go to the web interface and see the project created in the **Project Management** section.
+Once the data is ingested, the project appears on the **Projects** page. On the project page, **Project settings** holds its **Storage**, **Data refresh**, **Export** and **Create a template** sections, plus **Send** where migration is on.
 
 ##### <span style="color: #E53935;">:material-video:</span> Video Tutorial
 
@@ -168,6 +140,7 @@ Once the data ingested into the system, you can go to the web interface and see 
   ></iframe>
 </div>
 <script src="https://player.vimeo.com/api/player.js"></script>
+<p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">Recorded on an earlier version.</p>
 
 #### <span style="color: #F68B33;">:material-view-dashboard:</span> Creating Your First Dashboard
 

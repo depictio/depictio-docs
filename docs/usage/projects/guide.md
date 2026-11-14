@@ -1,33 +1,20 @@
 ---
 title: "Projects"
-description: "Complete guide to understanding, creating, and managing Depictio projects - from basic data uploads to advanced bioinformatics workflows."
+description: "Create, fill and manage Depictio projects: from a few uploaded tables to the runs of a pipeline."
 ---
 
 # <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects in Depictio
 
-Projects are the foundation of data organization in Depictio. They serve as containers for your data and dashboards, providing structure and access control for your analysis.
+Projects are the foundation of data organization in Depictio. They hold your data and dashboards, and decide who can use them.
 
-<div style="max-width: 1200px; margin: 1rem auto 2rem auto;">
-  <div style="padding: 56.25% 0 0 0; position: relative">
-    <iframe
-      src="https://player.vimeo.com/video/1108747300?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1"
-      frameborder="0"
-      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
-      title="Managing Projects in Depictio - Overview of Basic vs Advanced Types"
-    ></iframe>
-  </div>
-  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>Projects Management Overview:</strong> Discover how Depictio's project types organize your data workflow</p>
-</div>
-<script src="https://player.vimeo.com/api/player.js"></script>
+<!-- video: project-creation/create-project-from-folder | New project from a results folder: Your data, the read level, What Depictio found, Create, then the project page -->
 
 ## Understanding Project Architecture
 
 Every Depictio project contains:
 
 - **Core Project Information** - Name, description, and metadata
-- **Data Organization** - Either direct data collections (Basic) or workflow-based structure (Advanced)
+- **Data Organization** - Data collections on their own, or grouped in workflows with one or more runs
 - **Permission System** - Role-based access control with owners, editors, and viewers
 - **<span style="color: #F68B33;">Dashboard Integration</span>** - Each <span style="color: #F68B33;">:material-view-dashboard: dashboard</span> is linked to a project, allowing for interactive data exploration
 - **Storage Backend** - Automatic conversion to Delta Lake format for optimal performance
@@ -36,139 +23,206 @@ Every Depictio project contains:
 
 ```mermaid
 graph TD
-    A[Create Project] --> B{Project Type?}
-
-    B -->|Basic| C1[Create Data Collection]
-    C1 --> C2[Upload Data Files]
-    C2 --> D[Data Processing]
-
-    B -->|Advanced| D1[Define Project Config]
-    D1 --> D2[Configure Workflows]
-    D2 --> D2a{For each Workflow}
-    D2a --> D3[Define 1 or Multiple<br/>Data Collections]
-    D3 --> D2a
-    D2a -->|All Workflows<br/>Configured| D4[Run CLI Validation]
-    D4 --> D5[File Discovery & Scanning]
-    D5 --> D
-
-    D --> E[Create Dashboards :material-view-dashboard:]
-    E --> F[Share & Collaborate]
+    A[New project] --> B[Your data<br/>Upload or Read in place]
+    B --> C{How should Depictio<br/>read this folder?}
+    C -->|Flat tables| D[What Depictio found]
+    C -->|Pipeline template| D
+    C -->|Custom workflows| P[Project Builder]
+    P --> E
+    D --> E[Create]
+    Y[YAML + depictio ingest] --> E
+    E --> F[Create Dashboards :material-view-dashboard:]
+    F --> G[Share & Collaborate]
 
     %% Depictio teal theme styling - compatible with light/dark mode
     classDef default fill:#45B8AC,stroke:#2E7D73,stroke-width:2px,color:#fff
     classDef decision fill:#5FCBC4,stroke:#45B8AC,stroke-width:2px,color:#fff
     classDef highlight fill:#2E7D73,stroke:#45B8AC,stroke-width:2px,color:#fff
 
-    class A,D,E,F highlight
-    class B,D2a decision
+    class A,E,F,G highlight
+    class C decision
 ```
 
-## **Basic** Projects
+## Create a project <small>(v1.21.0+)</small> { #create-a-project }
 
+A project starts from its data. Depictio reads what you give it and works out whether it holds plain tables or the run of a pipeline. There is no Basic or Advanced choice to make.
 
-!!! success "Perfect for: Direct data analysis and quick insights"
+<!-- shot: project-creation/projects-page | The Projects page with the New project button in the header -->
 
-    **Use when:** You have tabular data files ready for analysis and want immediate visualization capabilities.
+### Name the project
 
+On **Projects**, click **New project**. In public or demo mode the button is disabled for users who are not admins.
 
-Basic projects provide an **easy onboarding experience** - upload your data and start creating interactive dashboards within minutes.
+The first screen asks for a **Project name**, an optional **Description**, and **Make this project public**. Then pick one of two choices:
 
-<div style="max-width: 1200px; margin: 1rem auto 2rem auto;">
-  <div style="padding: 56.25% 0 0 0; position: relative">
-    <iframe
-      src="https://player.vimeo.com/video/1108747290?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-      frameborder="0"
-      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
-      title="Creating Your First Basic Project - Step by Step Walkthrough"
-    ></iframe>
-  </div>
-  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>Basic Project Creation:</strong> Watch how to create a basic project from scratch - upload data and start visualizing in minutes</p>
-</div>
-<script src="https://player.vimeo.com/api/player.js"></script>
+- **Add data**: files, a folder, a pipeline run or your own pipeline's outputs.
+- **Create without data**: an empty project, filled later with [Add data](#add-data).
 
-### Core Features
+Under **Or start from**, **Import a project** brings in a project exported from Depictio (see [Project migration](../administration/migrate.md#web-ui)). **See an example** opens a finished project to explore, and shows only when the server holds one.
 
-- **🚀 Immediate Setup** - No configuration files needed
-- **📁 Direct File Upload from WebUI** - Drag and drop your data files
-- **🔄 Flexible Data Formats** - CSV, Excel, Parquet, Feather
-- **⚡ Fast Processing** - Direct conversion to Delta Lake format
-- **Instant Visualization** - Start creating <span style="color: #F68B33;">:material-view-dashboard: dashboards</span> immediately
+<!-- shot: project-creation/new-project-dialog | Screen 1 of New project: Project name, Description, Make this project public, Add data / Create without data, Or start from -->
 
-### Supported File Formats
+### Your data
 
-| Format      | Extension       | Best Use Case                           |
-| ----------- | --------------- | --------------------------------------- |
-| **CSV**     | `.csv`          | Most common, universal compatibility    |
-| **TSV**     | `.tsv`          | Tab-separated, good for scientific data |
-| **Excel**   | `.xlsx`, `.xls` | Business data, multiple sheets          |
-| **Parquet** | `.parquet`      | Large datasets, optimal performance     |
-| **Feather** | `.feather`      | Fast I/O, preserves data types          |
+**Add data** opens a stepper: **Your data**, **What Depictio found**, **Create**. The button in the dialog's header, **Use the whole window**, gives the stepper the full screen.
 
-### Creating a Basic Project
+*Your data* has two sides, which you can combine:
 
-=== "Web Interface"
+- **Upload**: drop files or whole folders from your computer, up to 50 MB each. Tables, MultiQC reports, phylogenetic trees, GeoJSON maps and images are recognised automatically.
+- **Read in place**: nothing is uploaded. Choose **Folder or bucket** for an `s3://` location, or a folder on the server's disk (**Browse** picks one where the server allows it, as under `depictio local`). Choose **One file URL** for a single `https://` or `s3://` CSV, TSV, Parquet or Feather file, gzipped or not.
 
-    1. **Navigate to Projects** - Click "Projects" in the main navigation
-    2. **Create Project** - Click the "Create Project" button
-    3. **Choose Basic Type** - Select "Basic Project" from the options
-    4. **Project Details** - Fill in name and description
-    5. **Project data management** - Navigate to the "Data Collections" tab
-    6. **Upload Data** - Add your data files to collections by creating a new collection
-        - Click "Add Data Collection"
-        - Drag and drop files or use the file picker
-        - Supported formats: CSV, TSV, Excel, Parquet, Feather
-    7. **<span style="color: #F68B33;">Start Visualizing</span>** - Create <span style="color: #F68B33;">:material-view-dashboard: dashboards</span> with your data
+<!-- shot: project-creation/your-data-upload | Your data step, Upload side, with a few dropped tables listed -->
+<!-- shot: project-creation/your-data-read-in-place | Your data step, Read in place side, Folder or bucket with an s3:// path and the Browse button -->
 
-=== "CLI Method"
+| Format      | Extension            | Best Use Case                           |
+| ----------- | -------------------- | --------------------------------------- |
+| **CSV**     | `.csv`               | Most common, universal compatibility    |
+| **TSV**     | `.tsv`, `.tab`       | Tab-separated, good for scientific data |
+| **Parquet** | `.parquet`, `.pq`    | Large datasets, optimal performance     |
+| **Feather** | `.feather`, `.arrow` | Fast I/O, preserves data types          |
 
-    1. **Create Configuration File** - Write a YAML file defining your project
+### How Depictio reads a folder { #read-levels }
 
-    ```yaml
-    # Create a basic project configuration file - basic_project.yaml
-    name: "My Basic Project"
-    project_type: "basic"
-    data_collections:
-      - data_collection_tag: "my_data"
-        config:
-          type: "Table"
-          metatype: "Metadata"
-          scan:
-            mode: "single"
-            scan_parameters:
-              filename: "/path/to/data.csv"
-          dc_specific_properties:
-            format: "CSV"
-            polars_kwargs:
-              separator: ","
-              has_header: true
-    ```
+Once a folder is read, **How should Depictio read this folder?** offers three levels, from the least to the most structured. The best fit is preselected, and a level that does not fit stays visible with the reason.
 
-    2. **Run CLI Command** - Use the Depictio CLI to create the project
+| Level | What it makes |
+|-------|---------------|
+| **Flat tables** | One collection per table file, with no workflow and no dashboards. |
+| **Custom workflows** | Collections you define yourself in the [Project Builder](#project-builder), grouped by the workflow that made them. |
+| **Pipeline template** | A recognised pipeline, read with Depictio's [template](templates.md) for it, dashboards included. |
 
-    ```bash
-    # Process the project
-    depictio ingest --project-config-path basic_project.yaml
-    ```
+When a pipeline is recognised, a line reads **Pipeline:** *name version* **· Detected**, with **Change** to pick another. When none is, **I know the pipeline** (or **Choose the pipeline** on the *Pipeline template* tile) opens the picker.
 
-## **Advanced** Projects
+<!-- shot: project-creation/read-levels | The three read-level tiles with Pipeline template preselected and the "Pipeline: X · Detected" line with Change -->
 
+### What Depictio found, then Create
 
-!!! info "Perfect for: Bioinformatics workflows and complex data pipelines"
+*What Depictio found* lists the facts and checks before anything is written: the pipeline, the runs, the source and the contents. For flat tables you tick the tables to keep, and **Create project with N tables** creates the project from there. For a pipeline, **Next** leads to *Create*, and **Create Project** starts the ingestion.
 
-    **Use when:** You have automated pipelines generating data with standardized file organization and need to process multiple samples systematically.
+<!-- shot: project-creation/what-depictio-found | What Depictio found step for a pipeline run: Pipeline, Runs, Source, Contents and the checks -->
 
+The project page then says in its header what the project holds: its **Pipeline**, its **Runs**, its **Data collections** and their **Source**.
 
-Advanced projects are designed for **core facility-like setups** where standardized workflows generate structured data across multiple samples, timepoints, or experimental conditions.
+<!-- shot: project-creation/project-header | A project page header with the Pipeline, Runs, Data collections and Source facts -->
 
-### Core Features
+### Project shapes
 
-- **🔬 Workflow Integration** - Connect to nf-core, Nextflow, Snakemake, Galaxy pipelines
-- **📊 Multi-sample Analysis** - Handle large number of samples
-- **🔍 File Discovery** - Regex-based pattern matching for file organization
-- **🔗 Cross-DC Links** - Interactive filtering across data collections (tables, MultiQC, etc.)
-- **📈 Scalable Processing** - Delta Lake backend for large-scale data
+What the read level picks shows in the project's shape. `project_type` is still accepted in YAML (`basic` or `advanced`) so older files and exports validate, but it changes nothing: every project can take data from the viewer and from the CLI.
+
+| Shape | Holds | Made with |
+|-------|-------|-----------|
+| Tables only | Data collections, no workflow | **Flat tables**, uploads, or a YAML with top-level `data_collections` |
+| One or more runs of a pipeline | A workflow whose collections are read from each run folder | **Custom workflows**, the [Project Builder](#project-builder), or a YAML with `workflows` |
+| From a template | A pipeline's workflow, recipes and dashboards | **Pipeline template**, or `depictio ingest DIR --template ID` |
+
+### Create a project with the CLI { #create-with-the-cli }
+
+A YAML file describes the project, and `depictio ingest` creates it. A project of tables only lists its data collections at the top level:
+
+```yaml
+# tables_project.yaml
+name: "My Project"
+data_collections:
+  - data_collection_tag: "my_data"
+    config:
+      type: "Table"
+      metatype: "Metadata"
+      scan:
+        mode: "single"
+        scan_parameters:
+          filename: "/path/to/data.csv"
+      dc_specific_properties:
+        format: "CSV"
+        polars_kwargs:
+          separator: ","
+          has_header: true
+```
+
+```bash
+depictio ingest --project-config-path tables_project.yaml
+```
+
+For a pipeline's outputs, see [Projects with a workflow](#projects-with-a-workflow) or [Template Projects](#template-projects).
+
+## Add data to a project { #add-data }
+
+**Add data** on the project page opens the same two sides as *Your data*: **Upload** and **Read in place**. What Depictio does depends on the folder. Another run of the project's pipeline is added as a run, and any other folder offers its tables as new collections.
+
+The button says what will happen: **Add run**, **Add N tables**, or **Add run and N tables**. Before you click it, *What Depictio found* shows the pipeline, the new runs, the source and the contents of the folder.
+
+<!-- shot: project-creation/add-data-run | Add data on a pipeline project: a second run folder, its What Depictio found facts and the Add run button -->
+<!-- video: project-creation/add-run | Add data on a pipeline project: point at a second run folder, Add run, then the new run on the project page -->
+
+A run whose MultiQC reports name samples already in the project is not added. The **Samples** row lists them with a warning: rename the samples in this run, or read it as its own project.
+
+<!-- shot: project-creation/duplicate-samples | Add data refusing a run: the Samples row warning that its samples are already in the project -->
+
+Only a project made from a pipeline template takes another run, and only when its collections walk a folder. A project read from an `s3://` run folder uses `s3_prefix` scans, which cannot take a second run. From the CLI, `depictio ingest --attach-run` does the same.
+
+### Edit a table { #edit-a-table }
+
+A table you added, uploaded or read from a folder, can be edited like a spreadsheet, typically a sample sheet. Tables from a pipeline run or a template stay read-only, since the next ingestion would overwrite them.
+
+Each table has a lock switch, **Read-only** by default. Turn it on to make the table **Editable**, then click a cell to change it: every save is a new version. Dropping a file on the table previews **Add columns**, **Fill missing** or **Replace** before anything is written.
+
+The table's past versions stay readable. **Restore** on one of them (**Restore v3**, for instance) writes it back as a new version, so nothing is lost.
+
+<!-- shot: project-creation/table-edit-lock | An uploaded table unlocked (Editable), with a cell being edited and the version history -->
+
+A table whose columns look like a latitude and longitude pair shows **Map coordinates…**, see [Map-capable Table DCs](#example-map-capable-table-dcs). Each collection records its origin, shown as its **Source** (or **Uploaded file**) and the date it was **Added**.
+
+### Manage a data collection { #managing-data-collections-from-the-viewer-v0120 }
+
+Each collection in the project's list has a **Manage data** button (append, replace, clear) for those who may change the project. A later CLI refresh keeps what was added in the browser (see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project)).
+
+| Action | What it does |
+|--------|--------------|
+| :material-plus-box: **Append** | Add more files to an existing DC. For MultiQC, the cache is invalidated and rewarmed |
+| :material-swap-horizontal: **Replace** | Swap the underlying data in place |
+| :material-broom: **Clear** | Drop all data from the DC while keeping the definition |
+
+<figure markdown="span">
+  ![Manage Data Collection modal with the Modify data and Clear contents tabs](../../images/react/manage_dc_modal.png)
+  <figcaption><em>Manage data</em>: <em>Modify data</em> appends or replaces, <em>Clear contents</em> drops the data and keeps the DC definition.</figcaption>
+</figure>
+
+MultiQC reports are checked for **uniformity** before a create or an append: the same modules, plot keys and MultiQC version across runs, and no sample twice. Reports that differ are refused, so plots stay consistent.
+
+Collections read from a manifest, a URL or a bucket are re-read from **Project settings** > **Data refresh**. By default only what changed is read again; **Read everything again** rebuilds every collection.
+
+## Project Builder <small>(v1.21.0+)</small> { #project-builder }
+
+The Project Builder defines a project's collections yourself, for a folder no shipped template fits. It writes the same YAML as the CLI uses.
+
+### In the app
+
+The builder lives at `/projects/build`. *New project* opens it when you pick **Custom workflows** for a folder (**Open the Project Builder**). It has three steps: **Source & project**, **Data collections**, **Review & create**.
+
+<!-- shot: project-creation/builder-source | Project Builder, Source & project step: the data root, the start choice (scratch, folder, template) and the project fields -->
+
+You start from scratch, from a folder, or from a shipped template to adjust. The builder covers every collection kind, path wildcards, run detection by regular expression, and links between collections. A GitHub URL fills the workflow's metadata from its RO-Crate or Nextflow manifest.
+
+<!-- shot: project-creation/builder-collections | Project Builder, Data collections step: a workflow tree, one collection with its path wildcard and the matching files -->
+<!-- shot: project-creation/builder-review | Project Builder, Review & create step: the links, the generated YAML and the Create button -->
+
+### Without a server
+
+On a machine with no Depictio server, such as an HPC login node, the builder runs on its own and reads only the folder you give it:
+
+```bash
+uv tool install 'depictio[builder]'
+depictio project-builder ./results            # --out DIR, --port 8129
+```
+
+It opens `http://127.0.0.1:8129/projects/build` and writes a template bundle to `<dir>/.depictio/template`. Run it against any server with:
+
+```bash
+depictio ingest ./results --template ./results/.depictio/template
+```
+
+## Projects with a workflow { #projects-with-a-workflow }
+
+A workflow groups the collections one pipeline writes, read from one or more run folders. This suits core-facility setups where standard pipelines produce the same files for many samples or runs. In YAML, collections sit under `workflows` instead of at the top level.
 
 ### Project Structure Example
 
@@ -201,16 +255,15 @@ study_directory/
 
 ### Configuration File Format
 
-Advanced projects require a YAML configuration that describes data organization patterns:
+A YAML configuration describes how the files are organized:
 
 ```yaml
 # =============================================================================
-# DEPICTIO ADVANCED PROJECT CONFIGURATION
+# DEPICTIO PROJECT WITH A WORKFLOW
 # =============================================================================
 
 # Project identification
 name: "RNA-seq Expression Study"
-project_type: "advanced"
 description: "Multi-sample RNA sequencing analysis"
 is_public: false
 
@@ -312,7 +365,7 @@ links:
 
 ### File Discovery Patterns
 
-Advanced projects use five scanning modes. Two walk a local directory tree,
+A collection uses one of five scanning modes. Two walk a local directory tree,
 `single` and `recursive`. Three fetch data from where it already is, `url`,
 `s3_prefix` and `manifest`, and are covered on
 [Remote data and manifests](remote-data.md).
@@ -360,7 +413,7 @@ contract, and how to refresh or share such a project.
 
 ### CLI Workflow
 
-Process advanced projects using the CLI:
+Ingest a project with a workflow using the CLI:
 
 ```bash
 # Complete workflow execution
@@ -381,66 +434,21 @@ The CLI executes this pipeline:
 `--skip STEP` leaves steps out, for instance `--skip dashboards`. See
 [Skipping steps](../../depictio-cli/usage.md#skipping-steps).
 
-## Managing Data Collections from the viewer (v0.12.0+)
+## Type-specific Data Collection configuration { #type-specific-data-collection-configuration }
 
-Data Collections can be created and managed directly from the viewer — no YAML edits or CLI runs required. Since **v1.18.0** every project offers **Create Data Collection** on its page, a project made by the CLI included: what you may do depends on your role, not on the project type. A later CLI refresh keeps what was added in the browser (see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project)).
-
-!!! info "Available from v0.12.0"
-    All flows in this section require Depictio **v0.12.0 or later**. See the [changelog](../../changelog/README.md#v0120-may-15-2026) for the full release notes.
-
-### MultiQC Data Collections
-
-MultiQC DCs support a full lifecycle from the *Manage Data Collection* modal:
-
-| Action | What it does |
-|--------|--------------|
-| :material-plus: **Create** | Upload one or more MultiQC reports (single file or folder) — the DC is materialised with cache prewarmed via Celery |
-| :material-plus-box: **Append** | Add more runs to an existing DC; the live cache is invalidated and rewarmed |
-| :material-swap-horizontal: **Replace** | Swap the underlying report set in place |
-| :material-broom: **Clear** | Drop all data from the DC while keeping the definition |
-
-<figure markdown="span">
-  ![Manage Data Collection modal — Modify data / Clear contents tabs](../../images/react/manage_dc_modal.png)
-  <figcaption><em>Manage Data Collection</em> modal — the <em>Modify data</em> tab handles append / replace; <em>Clear contents</em> drops data while keeping the DC definition. Shown against a Table DC; the same shell drives the MultiQC lifecycle, with the inner upload UI swapped for multiqc-folder ingest.</figcaption>
-</figure>
-
-#### Uniformity validation (React Beta)
-
-!!! info "Web interface"
-    The uniformity checklist UI and the *Check now* button are available in the web interface. The validator endpoint can be called from any client.
-
-Before ingest, MultiQC reports are checked for **uniformity** — the same module set and column schema across runs — so plot rendering stays consistent. The check runs automatically on **Create** and on every **Append**, and can be re-run on demand with the **Check now** button.
-
-Non-uniform reports surface a checklist of differences (missing modules, divergent columns) and block the destructive action until resolved.
-
-<figure markdown="span">
-  ![MultiQC uniformity checks — Modules, Plot keys, version, Sample uniqueness all passing, with Check now button](../../images/react/uniformity_checklist.png)
-  <figcaption>Uniformity checks panel inside the MultiQC create flow — module set, plot keys, MultiQC version, and sample uniqueness are validated; <em>Check now</em> re-runs the check on demand.</figcaption>
-</figure>
-
-### Type-specific Data Collection configuration
-
-!!! info "Web interface"
-    The UI for type-specific DC configuration is available in the web interface. YAML-level configuration is supported everywhere.
-
-Some visualization types need extra metadata declared **at the Data Collection level** (e.g. which columns hold coordinates, which hold sample IDs, log-fold-change, p-values, …). Declaring this on the DC means every figure built on top inherits the config — no need to re-specify it per component.
+Some visualization types need extra metadata declared **at the Data Collection level** (e.g. which columns hold coordinates, which hold sample IDs, log-fold-change, p-values, …). Declaring this on the DC means every figure built on top inherits the config, with no need to re-specify it per component.
 
 This pattern is being rolled out incrementally. The first shipped example is **:material-map-marker-multiple: Map**; advanced-viz types (volcano, ComplexHeatmap, UpSet, GSEA enrichment, rarefaction, …) will follow the same pattern.
 
-#### :material-map-marker-multiple: Example: Map-capable Table DCs
+#### :material-map-marker-multiple: Example: Map-capable Table DCs { #example-map-capable-table-dcs }
 
 Tabular DCs can be marked Map-capable so every Map figure built on them inherits the same coordinates without re-specifying `lat_column` / `lon_column`:
 
-- **In the React viewer**: the *Create DC* modal has a **Coordinates** tab. Columns are scanned and lat/lon candidates are detected inline — you confirm or override the pick.
+- **In the viewer**: a table whose columns look like a lat/lon pair shows **Map coordinates…**. You confirm or change the columns Depictio picked.
 - **At upload time**: `POST /create_from_upload` accepts `latColumn` and `lonColumn` query params with column-existence validation.
 - **In YAML**: use `DCTableCoordinatesConfig` on the DC's config block (see [YAML examples](yaml-examples.md)).
 
 Per-figure `lat_column`/`lon_column` overrides still work when set; if both are unset, the DC-level config is used.
-
-<figure markdown="span">
-  ![Create DC modal — Table tab with a coordinates table detected, lat/lon column pickers, save-as-coordinates toggle](../../images/react/create_dc_modal_table.png)
-  <figcaption><em>Create Data Collection</em> modal — Table tab. After dropping a TSV with lat/lon columns the modal surfaces a <em>"Looks like a coordinates table"</em> banner with column pickers and a save-as-coordinates toggle.</figcaption>
-</figure>
 
 #### :material-family-tree: Example: Phylogeny DCs and their metadata table
 
@@ -659,7 +667,7 @@ how a tile finds the structure of the protein it shows.
 <!-- prettier-ignore -->
 !!! success "Perfect for: nf-core pipelines and standardized bioinformatics workflows"
 
-    **Use when:** You have output from a supported pipeline (e.g. nf-core/ampliseq) and want a fully configured project + dashboards in one command — without writing any YAML.
+    **Use when:** You have output from a supported pipeline (e.g. nf-core/ampliseq) and want a fully configured project + dashboards in one command, without writing any YAML.
 
 Templates are pre-packaged project configurations that ship with Depictio. Each template bundles a project YAML (with `{DATA_ROOT}` placeholders), bundled dashboards, and referenced data transformation recipes for a specific pipeline version.
 
@@ -679,7 +687,7 @@ That single command:
 
 Without `--template`, the template is detected from the results directory when it can be, and since v1.16.0 a local directory no bundled template fits gets one [composed from the catalog](composed-dashboards.md). Running the same command again with `--update-config` refreshes the project and keeps its dashboards as edited in the viewer; see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project).
 
-The results directory can also be an `s3://` prefix, a manifest-driven template takes `--manifest <url or path>` in place of the directory, and any template can be pointed at other locations, collection by collection, with `--bind TAG=LOCATION`. The web UI creates a project from a run folder too, with **From a run folder**. See [Remote data and manifests](remote-data.md).
+The results directory can also be an `s3://` prefix, a manifest-driven template takes `--manifest <url or path>` in place of the directory, and any template can be pointed at other locations, collection by collection, with `--bind TAG=LOCATION`. In the viewer, **New project** with **Pipeline template** does the same, see [Create a project](#create-a-project). See [Remote data and manifests](remote-data.md).
 
 ### When to use templates
 
@@ -689,7 +697,7 @@ Use templates when:
 - ✅ You want a reproducible, versioned project setup you can share with collaborators
 - ✅ You prefer not to write project YAML from scratch
 
-Use a manual YAML config when:
+Use a YAML config or the [Project Builder](#project-builder) when:
 
 - ✅ Your pipeline is not yet covered by a bundled template
 - ✅ You need highly customized data collection patterns or scan configurations
@@ -722,44 +730,6 @@ Template: nf-core/ampliseq/2.16.0
 This tells you and your collaborators which template generated the project, enabling template discovery and making provenance visible throughout the UI.
 
 For full template reference — available templates, data validation levels, YAML structure, and all CLI flags — see **[Templates](templates.md)**.
-
----
-
-## Project Types Comparison
-
-Choose the right project type for your workflow:
-
-| Feature                  | Basic Projects                         | Advanced Projects             | Template Projects                         |
-| ------------------------ | -------------------------------------- | ----------------------------- | ----------------------------------------- |
-| **Setup Complexity**     | Minimal - Web UI or CLI                | CLI and YAML config; data collections can be added in the Web UI (v1.18.0+) | Single CLI command, no YAML needed (WebUI planned)            |
-| **Data Sources**         | UI File upload or CLI-based processing | CLI-based processing          | CLI-based (pipeline output)               |
-| **File Organization**    | Simple file management                 | Structured directory patterns | Fixed structure per template              |
-| **Multi-sample Support** | Single datasets                        | Multi samples support         | Full support (template-specific)          |
-| **Data Processing**      | Direct conversion                      | Aggregation & cross-DC links  | Recipes + cross-DC links (pre-configured) |
-| **Learning Curve**       | Immediate                              | Moderate (YAML knowledge)     | Minimal (just point at data dir)          |
-| **Scalability**          | Small-medium datasets                  | Large-scale studies           | Pipeline-scale (template-specific)        |
-
-### How to Choose the Right Project Type
-
-Choose **Basic** when:
-
-- ✅ You have a limited number of files ready for analysis
-- ✅ One-time analysis or ad-hoc exploration
-- ✅ Manual data preparation is acceptable
-- ✅ Quick insights are the primary goal
-
-Choose **Advanced** when:
-
-- ✅ Automated pipelines generate your data
-- ✅ Standardized file organization exists
-- ✅ You need to aggregate data across samples/runs
-- ✅ Regular data updates are expected
-
-Choose a **Template** when:
-
-- ✅ You ran a supported nf-core pipeline (e.g. ampliseq)
-- ✅ You want instant project + dashboards without writing YAML
-- ✅ Reproducibility and template provenance tracking matter
 
 ## <span style="color: #45B8AC;">:material-lock:</span> Project Permissions { #project-permissions }
 
@@ -1021,6 +991,4 @@ depictio data scan --project-config-path ./config.yaml
 - **[Dashboard Creation](../guides/dashboard_creation.md)** - Building interactive dashboards
 - **[API Documentation](../../api/reference.md)** - Programmatic project management
 
----
-
-_Projects form the foundation of data organization in Depictio. Choose the right project type for your workflow to unlock the full power of interactive data exploration and collaboration._
+_Projects form the foundation of data organization in Depictio. Start from your data, and add runs and tables as they come._
