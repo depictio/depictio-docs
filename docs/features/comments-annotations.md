@@ -277,7 +277,7 @@ every component, and on the tab itself.
 | Component | Annotations |
 |-----------|-------------|
 | :material-chart-scatter-plot: **Figures** | Every cartesian Plotly figure: all four shapes. 3D, polar, pie and hierarchical charts (sunburst, treemap, icicle) and parallel coordinates are comment-only |
-| :material-chart-bell-curve: **Advanced visualizations** | The single-panel cartesian kinds: volcano, MA, QQ, Manhattan, embedding (2D only), scatter, DA barplot, ANCOM-BC differentials, stacked taxonomy, rarefaction, enrichment, dot plot, lollipop (one gene shown), PR benchmark, ROC / PR curve, confusion matrix, metric CI bars, profile, GSEA running score (single panel) and coverage track (single panel, not in the Locus view) |
+| :material-chart-bell-curve: **Advanced visualizations** | The single-panel cartesian kinds: volcano, MA, QQ, Manhattan, embedding (2D only), scatter, DA barplot, ANCOM-BC differentials, stacked bar, rarefaction, enrichment, dot plot, lollipop (one gene shown), PR benchmark, ROC / PR curve, confusion matrix, metric CI bars, profile, GSEA running score (single panel) and coverage track (single panel, not in the Locus view) |
 | :material-chart-line: **MultiQC figures** | Line and bar graphs and other plots drawn on one pair of axes. Marked points are stored as **sample names**, so marking a line graph rings whole sample lines. Multi-panel figures are comment-only |
 | :material-table: **MultiQC General Stats** | Row annotations in the table view, keyed on the sample name (not in the violin view) |
 | :material-table-row: **Tables** | Tables with a row-id column (`row_selection_column` or `selection_column`): rows can be marked |
