@@ -1532,6 +1532,7 @@ Per-sample composition at one taxonomic rank, the tail folded into `Other`, with
 
 - Primary: Rank, Top-N taxa, Sort samples, Normalise
 - Cosmetic: Legend, log y
+- `y_zoom` (v1.20.4+): `auto` by default; when it crops the value axis, a break (`//`) and a caption say where the axis starts
 
 ??? example "YAML"
     ```yaml
@@ -1718,7 +1719,7 @@ A sample by locus grid of diploid genotypes (HLA typing). Each cell is split int
 
 **Controls**
 
-- Primary: Resolution, Order samples (and the Locus to order by)
+- Primary: Resolution, Colour by (v1.20.4+: allele group, zygosity or locus class), Order samples (and the Locus to order by), Group samples by (v1.20.4+, with `group_cols`)
 - Cosmetic: Allele labels, fade cells by read support, side bars
 
 ??? example "YAML"

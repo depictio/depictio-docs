@@ -193,7 +193,7 @@ YAML holds are replaced, matched by title. What else happens:
 Every import, the first one included, also drops what the project's data cannot fill:
 a highlight (a figure redrawn from another tab) whose source tab or figure is gone, and
 each list item of a text tile that cites a [live value](#text-live-values) whose data
-collection is missing or empty in the project.
+collection is missing or empty, or lacks a column the value reads (v1.20.4+).
 
 ### Export
 
@@ -1056,6 +1056,7 @@ total, as a fraction. Both are for text only: a card refuses them.
     - **Names** are lower-case letters, digits and `_`, start with a letter and have at
       most 12 characters. There is no space inside the braces. Validation fails on a
       placeholder that names no declared value, and on a value the tile never prints.
+    - **`{{legend:column}}`** (v1.20.4+) as the value of a list item prints the colour key of a column the dashboard colours with [`category_colors`](dashboards.md#category-colors), a dot and the value per line. A column without pinned colours prints a dash.
     - **Placeholders fill** prose, bold text, link labels, headings, tables and the
       title. Code spans stay literal.
     - **At import**, a list item that cites a value whose data collection is missing
