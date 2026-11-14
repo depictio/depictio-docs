@@ -270,6 +270,12 @@ def tile(page: Page, title: str) -> Locator:
     return page.locator(".react-grid-item").filter(has_text=title).first
 
 
+def wide(page: Page, width: int = 2100) -> Page:
+    """A wider window, for tiles whose labels need the room."""
+    page.set_viewport_size({"width": width, "height": 1000})
+    return page
+
+
 def mqc_tile(page: Page, plot: str, dash: str = QC_DASH) -> Locator:
     """A MultiQC tile by its plot ("general_stats" for General Stats), rendered once in view."""
     doc = api(page, f"/dashboards/get/{dashboard_id(page, dash)}")
@@ -359,7 +365,8 @@ for _topic, _name, _flow in [
     ("multiqc", "general_stats", lambda p: mqc_tile(dashboard(p), "general_stats")),
     ("multiqc", "overlay_multiqc", lambda p: mqc_tile(whats_new(p, "Overlay", close=True), "Sequence Counts")),
     ("multiqc", "overlay_general_stats", lambda p: mqc_tile(whats_new(p, "Overlay", close=True), "general_stats")),
-    ("multiqc", "split_multiqc", lambda p: mqc_tile(whats_new(p, "Split", close=True), "Sequence Counts")),
+    # A wider window widens the tile, so the sample names are not clipped.
+    ("multiqc", "split_multiqc", lambda p: mqc_tile(whats_new(wide(p), "Split", close=True), "Sequence Counts")),
 ]:
     shot(_topic, _name)(_flow)
 
