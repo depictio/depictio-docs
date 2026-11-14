@@ -133,7 +133,8 @@ that sample.
 
 cutandrun 3.2.2 still ships no `params.json`, so no variable is set from the run's
 parameters. Besides `DATA_ROOT`, `MULTIQC_REPROCESSED` says which MultiQC report
-to bind and `GENOME` (default `hg38`) sets the genome axis of the Locus tab.
+to bind and `GENOME` (default `hg38`) sets the genome axis of the Locus tab. The optional `TRACKS_URI` reads the genome
+browser files of that tab in place.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound

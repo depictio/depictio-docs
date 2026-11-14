@@ -125,7 +125,8 @@ parquet. The preseq curve and the DESeq2 QC are optional: 2.x skips preseq by
 default, and `--skip_deseq2_qc` or a design without replicated groups skips the
 QC. 70 of its 122 components carry a `use:` catalog reference, so a tile says
 where its panel comes from. The run writes no `params.json`, so nothing is set
-from its parameters: `GENOME` is the only variable besides `DATA_ROOT`.
+from its parameters: `GENOME` is the only variable besides `DATA_ROOT` and
+the optional `TRACKS_URI`, which reads the Locus tab's genome browser files in place.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound

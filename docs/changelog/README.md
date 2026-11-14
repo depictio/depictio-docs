@@ -8,6 +8,25 @@ hide:
 
 # Changelog
 
+## **[v1.20.3](https://github.com/depictio/depictio/releases/tag/v1.20.3)** (November 3, 2026)
+
+!!! success "Patch: the genome browser on the latest atacseq, chipseq and cutandrun templates"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.3
+ghcr.io/depictio/depictio-viewer:1.20.3
+ghcr.io/depictio/depictio-worker:1.20.3
+ghcr.io/depictio/depictio-cli:1.20.3
+```
+
+### **🧬 Pipeline Templates**
+
+* **A genome browser on the Locus tab of the latest atacseq (2.1.2), chipseq (2.1.0) and cutandrun (3.2.2) templates**: signal, peaks and alignments, read in place with the optional `TRACKS_URI` variable. See [Templates with a genome browser](../features/genome-browser/index.md#templates-with-a-genome-browser) ([#1324](https://github.com/depictio/depictio/pull/1324)).
+
+---
+
 ## **[v1.20.2](https://github.com/depictio/depictio/releases/tag/v1.20.2)** (November 2, 2026)
 
 !!! success "Patch: the genome browser's ranked-variant counter on public dashboards"
