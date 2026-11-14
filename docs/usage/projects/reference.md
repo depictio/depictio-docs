@@ -18,11 +18,10 @@ name:
   # Must be non-empty string
   # Example: "Multi-omics Cancer Study"
 
-# Required: Project type determines configuration structure
+# Optional, ignored since v1.21.0: kept so older files still validate
 project_type:
-  "basic" # Required: Options are "basic" or "advanced" (default: "basic")
-  # basic: Direct file upload/processing
-  # advanced: Workflow-integrated projects
+  "basic" # Options are "basic" or "advanced" (default: "basic")
+  # No longer decides what a project can do
 
 # Optional: Project visibility settings
 is_public:
@@ -59,7 +58,7 @@ links:  # Optional: Define relationships for cross-DC filtering
       #   "pattern" - Template substitution (e.g., "{sample}.bam")
 
 # =============================================================================
-# WORKFLOWS (Required for Advanced Projects)
+# WORKFLOWS (for projects with workflows)
 # =============================================================================
 
 workflows:

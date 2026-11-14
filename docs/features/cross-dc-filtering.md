@@ -140,7 +140,6 @@ same way.
 
 ```yaml
 name: "RNA-seq QC Analysis"
-project_type: "advanced"
 
 # Define links for cross-DC filtering
 links:

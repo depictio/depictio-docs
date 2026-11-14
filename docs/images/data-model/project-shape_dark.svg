@@ -2,8 +2,8 @@
   <rect width="1320" height="960" fill="#1f2129"/>
   <text x="46.0" y="52.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="25" fill="#e3e3e3" text-anchor="start" font-weight="normal">Two shapes of project</text>
   <text x="46.0" y="78.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#9aa0ac" text-anchor="start" font-weight="normal">nesting is embedding, in the same document. An arrow is a reference between documents.</text>
-  <text x="360.0" y="122.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="19" fill="#e3e3e3" text-anchor="middle" font-weight="bold">Advanced project</text>
-  <text x="360.0" y="146.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#9aa0ac" text-anchor="middle" font-weight="normal">defined in YAML, ingested by the CLI</text>
+  <text x="360.0" y="122.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="19" fill="#e3e3e3" text-anchor="middle" font-weight="bold">With workflows</text>
+  <text x="360.0" y="146.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#9aa0ac" text-anchor="middle" font-weight="normal">defined in YAML, or detected from a run folder</text>
   <rect x="60.0" y="165.0" width="600.0" height="470.0" rx="6" fill="#24303d"/>
   <path d="M60.1,164.8 C259.4,163.9 460.5,163.6 659.3,165.0" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
   <path d="M59.9,165.5 C258.5,164.8 458.6,163.7 659.4,164.6" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
@@ -60,7 +60,7 @@
   <path d="M94.5,594.7 C93.9,563.1 95.0,531.2 95.4,499.2" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>
   <text x="360.0" y="527.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#e3e3e3" text-anchor="middle" font-weight="bold">Workflow</text>
   <text x="360.0" y="551.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">a project can define several</text>
-  <text x="1000.0" y="122.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="19" fill="#e3e3e3" text-anchor="middle" font-weight="bold">Basic project</text>
+  <text x="1000.0" y="122.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="19" fill="#e3e3e3" text-anchor="middle" font-weight="bold">Tables only</text>
   <text x="1000.0" y="146.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#9aa0ac" text-anchor="middle" font-weight="normal">created in the web UI, or with the CLI</text>
   <rect x="740.0" y="165.0" width="520.0" height="470.0" rx="6" fill="#24303d"/>
   <path d="M740.2,165.0 C913.5,164.8 1085.1,164.5 1259.3,165.8" fill="none" stroke="#e3e3e3" stroke-width="1.7" stroke-linecap="round"/>

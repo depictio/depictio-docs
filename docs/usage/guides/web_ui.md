@@ -219,8 +219,8 @@ filters. The link grants no access: it only narrows what they could already open
 
     The Projects Guide covers:
 
-    - **Project Types** - Basic vs Advanced projects
-    - **Creating Projects** - Step-by-step instructions
+    - **Starting a project from a source** - Projects are created from their data
+    - **Creating Projects** - Step-by-step instructions, see [Create a project](../projects/guide.md#create-a-project)
     - **Configuration** - YAML setup and examples
     - **Data Collections** - File organization and processing
     - **Permissions** - Access control and collaboration
@@ -243,10 +243,13 @@ filters. The link grants no access: it only narrows what they could already open
 
 ### <span style="color: #45B8AC;">:material-link-variant:</span> Creating a project from a run folder or a manifest <small>(v1.16.0+)</small> { #creating-a-project-from-a-manifest }
 
-**+ New Project** offers four tabs: **Create New**, **Import**, **From
-Manifest** and **From a run folder**. The last two build a project from data
-the server reads, with no CLI involved, in three steps: **Source**, **Preview**
-(a dry run, nothing is created) and **Create**.
+**+ New Project** starts a project from a source. There is no Basic or Advanced choice
+since v1.21.0: the project is created from its data, and the pipeline is detected or
+picked as an optional correction. A folder can be read as **Flat tables**, **Custom
+workflows** (Project Builder) or **Pipeline template**. See
+[Create a project](../projects/guide.md#create-a-project). The run folder and manifest
+sources build a project from data the server reads, with no CLI involved, in three steps:
+**Source**, **Preview** (a dry run, nothing is created) and **Create**.
 
 - **From a run folder**: point at the results folder of one pipeline run, in a
   bucket or, on a `depictio local` server, on this computer. Depictio
@@ -358,7 +361,7 @@ Depictio's main pages and their URLs:
 
 ### <span style="color: #45B8AC;">:material-database-cog:</span> Project detail (/projects/{id}) { #project-detail }
 
-A single project's data. Since v1.17.0 the page starts with the project's type and its
+A single project's data. Since v1.17.0 the page starts with a sentence on what the project holds and its
 workflows, as cards to pick one from, then a switch between two views:
 
 - **Data collections** — the project's workflows, a sortable, filterable table of its data collections, its cross-DC links, and the details of the selected collection. For a [composed](../projects/composed-dashboards.md) project, a **Files the catalog did not recognise** card lists the tables left out, with the command that adds each <small>(v1.16.0+)</small>.
@@ -372,8 +375,8 @@ You can reach this page directly by clicking the **project badge** shown on any
 dashboard card or in the dashboards table, or the **project name** in an open
 dashboard's Settings <small>(v1.6.0+)</small>.
 
-[![A project page: type Advanced, the penguin_species_analysis workflow selected, and the switch between Data collections and Ingestion report, on Data collections](../../images/guides/web-ui/project_detail_light.webp#only-light)](../../images/guides/web-ui/project_detail_light.webp){target=_blank}
-[![A project page: type Advanced, the penguin_species_analysis workflow selected, and the switch between Data collections and Ingestion report, on Data collections](../../images/guides/web-ui/project_detail_dark.webp#only-dark)](../../images/guides/web-ui/project_detail_dark.webp){target=_blank}
+[![A project page: the penguin_species_analysis workflow selected, and the switch between Data collections and Ingestion report, on Data collections](../../images/guides/web-ui/project_detail_light.webp#only-light)](../../images/guides/web-ui/project_detail_light.webp){target=_blank}
+[![A project page: the penguin_species_analysis workflow selected, and the switch between Data collections and Ingestion report, on Data collections](../../images/guides/web-ui/project_detail_dark.webp#only-dark)](../../images/guides/web-ui/project_detail_dark.webp){target=_blank}
 
 Data that is not on the server's own disk is handled in two places
 <small>(v1.16.0+)</small>; the mechanisms are described on

@@ -16,27 +16,25 @@ This guide provides comprehensive YAML configuration examples for Depictio proje
 
 ## <span style="color: #45B8AC;">:material-rocket-launch:</span> Quick Start Examples
 
-Choose your starting point based on your project complexity:
+Choose your starting point based on your project complexity. `project_type` is optional and ignored since v1.21.0, so the examples omit it.
 
-=== "**Basic** Project (Minimal)"
+=== "Tables only (minimal)"
 
     Perfect for direct file upload and analysis:
 
     ```yaml
     name: "My Analysis Project"
-    project_type: "basic"
 
     # Files will be uploaded through the web interface
     # No additional configuration needed!
     ```
 
-=== "**Basic** Project (CLI)"
+=== "Tables only (CLI)"
 
-    For CLI-based basic projects with direct files:
+    For CLI-based projects with direct files:
 
     ```yaml
     name: "CSV Analysis Project"
-    project_type: "basic"
     is_public: false
 
     data_collections:
@@ -56,13 +54,12 @@ Choose your starting point based on your project complexity:
               has_header: true
     ```
 
-=== "Advanced Project (Minimal)"
+=== "Project with a workflow (minimal)"
 
     For workflow-generated data with pattern matching:
 
     ```yaml
     name: "RNA-seq Analysis"
-    project_type: "advanced"
 
     workflows:
       - name: "rnaseq_pipeline"
@@ -106,18 +103,17 @@ name: string                              # Required: Human-readable project nam
                                           # Example: "Multi-omics Cancer Study"
 
 
-# Advanced projects only: Workflow definitions
-workflows: [Workflow]                     # Default: [] (empty for basic projects)
+# Projects with workflows only: Workflow definitions
+workflows: [Workflow]                     # Default: [] (empty for tables-only projects)
                                           # Array of workflow configurations
                                           # See "Workflow Configuration" section
 
 # === REQUIRED FIELDS WITH DEFAULT VALUES ===
 
-# Project type determines the configuration structure
+# Legacy field, optional and ignored since v1.21.0
 project_type: "basic" | "advanced"        # Default: "basic"
-                                          # Options:
-                                          # - basic: Direct file upload/processing
-                                          # - advanced: Workflow-integrated projects
+                                          # Still accepted, but no longer decides
+                                          # what a project can do
 
 # Project visibility
 is_public: boolean                        # Default: false
@@ -138,9 +134,11 @@ data_management_platform_project_url: string | null    # Default: null
                                                         # Example: "https://labid.embl.org/projects/123"
 ```
 
-### Project Types Deep Dive
+### Project Shapes
 
-#### Basic Projects
+Since v1.21.0 there is no project type to choose. `project_type` is still accepted in YAML and kept in the model, so older files validate, but it is optional and ignored. A project has workflows or it does not.
+
+#### Tables only
 
 Designed to be minimal and easy to set up, WebUI compatible, and suitable for small-scale analyses.
 
@@ -157,7 +155,7 @@ Designed to be minimal and easy to set up, WebUI compatible, and suitable for sm
 - Data uploaded via web interface or defined in `data_collections`
 - No workflow integration needed (default workflow is created under the hood for system compatibility)
 
-#### Advanced Projects
+#### With workflows
 
 Designed for complex data processing pipelines, automated workflows, and large-scale analyses.
 
@@ -175,9 +173,9 @@ Designed for complex data processing pipelines, automated workflows, and large-s
 - Regex-based file discovery
 - Multi-run aggregation capabilities
 
-## <span style="color: #45B8AC;">:material-cog:</span> Workflow Configuration (Advanced)
+## <span style="color: #45B8AC;">:material-cog:</span> Workflow Configuration
 
-Advanced projects use workflows to describe data organization patterns. Each workflow corresponds to a computational pipeline that generates structured data.
+Projects with workflows use workflows to describe data organization patterns. Each workflow corresponds to a computational pipeline that generates structured data.
 
 ```yaml linenums="1"
 workflows:
@@ -832,7 +830,6 @@ links:
 
 ```yaml
 name: "My Project"
-project_type: "advanced"
 
 links:
   - source_dc_id: sample_metadata
@@ -909,7 +906,6 @@ When you run `depictio ingest`, the CLI will:
 
 ```yaml
 name: "RNA-seq Expression Analysis"
-project_type: "advanced"
 is_public: false
 
 # Cross-DC Links for interactive filtering
@@ -994,7 +990,6 @@ workflows:
 
 ```yaml
 name: "Strand-Seq data analysis"
-project_type: "advanced"
 data_management_platform_project_url: "https://labid.embl.org/core/projects/default/5baa8f07-bd00-46e7-b3cb-ec79d01f6f3c"
 
 # Cross-DC Links for interactive filtering
@@ -1137,7 +1132,6 @@ workflows:
 
 ```yaml
 name: "MultiQC Quality Control Analysis"
-project_type: "advanced"
 
 # Cross-DC Links for interactive filtering
 links:

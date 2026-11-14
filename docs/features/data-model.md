@@ -31,10 +31,10 @@ from the object names alone:
 
 | | Structure | Typical use |
 | --- | --- | --- |
-| **`advanced`** | Project :material-arrow-right: Workflow :material-arrow-right: DataCollection | Pipeline output. Defined in a YAML file and ingested by the CLI. |
-| **`basic`** | Project :material-arrow-right: DataCollection | A few files you want on a dashboard. Created in the web UI, or with the CLI. |
+| **With workflows** | Project :material-arrow-right: Workflow :material-arrow-right: DataCollection | Pipeline output. Defined in a YAML file and ingested by the CLI, or detected from a run folder. |
+| **Tables only** | Project :material-arrow-right: DataCollection | A few files you want on a dashboard. Created in the web UI, or with the CLI. |
 
-Nothing else changes between the two. The same data collection types, joins, links,
+The shape follows from the data, not from a type you choose. Nothing else changes between the two. The same data collection types, joins, links,
 permissions and dashboards apply either way. The workflow layer only exists to answer
 "which pipeline produced this, and in which of its runs".
 

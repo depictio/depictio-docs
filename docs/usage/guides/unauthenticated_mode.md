@@ -10,7 +10,7 @@
 
 In unauthenticated mode, user lands as a temporary anonymous user with limited access. This anonymous user can only access the existing **public dashboards** and play with the interactive features in a stateless manner (no database persistence), but cannot create or modify dashboards. This mode is ideal for quick demonstrations or public sharing of dashboards without requiring user authentication.
 
-If the user wants to create its own dashboard, modify existing ones using the same dataset, or create its own basic project and upload a dataset, they can switch to a temporary authenticated user mode. The temporary user will have a limited session duration (24h by default), after which dashboards will be cleared.
+If the user wants to create its own dashboard, modify existing ones using the same dataset, or create its own project and upload a dataset, they can switch to a temporary authenticated user mode. The temporary user will have a limited session duration (24h by default), after which dashboards will be cleared.
 
 Example unauthenticated mode URL is available on documentation landing page: [https://depictio.github.io/depictio-docs/latest/](https://depictio.github.io/depictio-docs/latest/).
 
