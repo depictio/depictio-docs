@@ -8,6 +8,36 @@ hide:
 
 # Changelog
 
+## **[v1.20.4](https://github.com/depictio/depictio/releases/tag/v1.20.4)** (November 3, 2026)
+
+!!! success "Patch: tiles that describe themselves, colour codes in tables and text, and one error card"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.4
+ghcr.io/depictio/depictio-viewer:1.20.4
+ghcr.io/depictio/depictio-worker:1.20.4
+ghcr.io/depictio/depictio-cli:1.20.4
+```
+
+### **✨ New Features**
+
+* **A structured info popover describes a tile**: a lead, labelled blocks, notes and warnings, and a source, written as labelled paragraphs of the `description`. The (i) icon now opens it, and the component's metadata moves to a list icon, **Data source and settings**, with its code ready to copy. See [Describe a tile](../usage/guides/dashboard_usage.md#describe-a-tile) ([#1328](https://github.com/depictio/depictio/pull/1328)).
+* **Colour codes in tables and text tiles**: a table column covered by `category_colors` draws a dot before each value, and a text tile prints one colour key per column named in its `{{legend:column}}` placeholder. See [Category colours](../features/dashboards.md#category-colors) ([95d49c3](https://github.com/depictio/depictio/commit/95d49c3b7c53cec4d9236ddd17fa733cb01b107c), [c732ec7](https://github.com/depictio/depictio/commit/c732ec7f9444ff3de998ad39ef76eb26ecf2df39)).
+
+### **🚀 Improvements**
+
+* **One error card for a page that cannot load**: not found, not allowed or unreachable, with **Try again** when it can help. See [Right Panel](../features/dashboards.md#right-panel) ([#1329](https://github.com/depictio/depictio/pull/1329)).
+* **A text line citing a column its collection lacks is removed on import**, instead of printing a dash. See [YAML Sync](../features/yaml-sync.md#text-live-values) ([305ad14](https://github.com/depictio/depictio/commit/305ad1413be2142502f481206d21db8887fb0797)).
+* **The stacked bar zoom draws an axis break, and the allele grid recolours cells and groups rows**. See [Allele grid](../features/advanced-visualizations.md#allele-grid) ([95d49c3](https://github.com/depictio/depictio/commit/95d49c3b7c53cec4d9236ddd17fa733cb01b107c)).
+
+### **🧬 Pipeline Templates**
+
+* **Colour keys and chart descriptions across the Overview templates**, and a review round on hlatyping, viralmetagenome, genomeqc, epitopeprediction and stableexpression ([155bca6](https://github.com/depictio/depictio/commit/155bca6e866330658e305329a9952f66b3817b59), [0128dda](https://github.com/depictio/depictio/commit/0128ddaee4b38b051e0c8b0104817531aeb163ad)).
+
+---
+
 ## **[v1.20.3](https://github.com/depictio/depictio/releases/tag/v1.20.3)** (November 3, 2026)
 
 !!! success "Patch: the genome browser on the latest atacseq, chipseq and cutandrun templates"
