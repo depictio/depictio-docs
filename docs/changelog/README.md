@@ -8,6 +8,98 @@ hide:
 
 # Changelog
 
+## **[v1.21.0](https://github.com/depictio/depictio/releases/tag/v1.21.0)** (upcoming)
+
+!!! success "Minor: projects start from their data, see what changed since your last visit, and travel between instances"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.21.0
+ghcr.io/depictio/depictio-viewer:1.21.0
+ghcr.io/depictio/depictio-worker:1.21.0
+ghcr.io/depictio/depictio-cli:1.21.0
+```
+
+### **♻️ Migration**
+
+* **No more Basic or Advanced projects**: a project starts from its data, and the pipeline is detected or picked as an optional correction. `project_type` is still accepted in YAML but no longer decides what a project can do. See [Create a project](../usage/projects/guide.md#create-a-project) ([196c0d1](https://github.com/depictio/depictio/commit/196c0d17882ad92f6718fd0aa712ecdef2c47c11), [9ad8702](https://github.com/depictio/depictio/commit/9ad87022701fde8bcd8ed6b1a68183be9e3c9a6e)).
+* **Single sign-on moves to OpenID Connect**: SAML and the Google OAuth settings are replaced by `DEPICTIO_AUTH_OIDC_PROVIDERS`. `DEPICTIO_AUTH_GOOGLE_OAUTH_*` still works for this release. See [Single sign-on](../installation/sso.md) ([#1356](https://github.com/depictio/depictio/pull/1356)).
+* **Migration UI wording is Send / Receive**: *Send* lives in the project settings, *Receive a project* in the Import dialog. The chart now allows any https destination (`DEPICTIO_MIGRATION_DESTINATION_DOMAINS: '["*"]'`). See [Move a project to another instance](../tutorials/instance-migration.md) ([174529b](https://github.com/depictio/depictio/commit/174529b42655463b2d5bb0538391a39cff32b95e), [#1387](https://github.com/depictio/depictio/pull/1387)).
+
+### **✨ New Features**
+
+* **Changed since your last visit**: a *What's new* key on the dashboard, *Off | Overlay | Split* views, *Before | Now* on every tile and a notifications bell. Off by default. See [What's new](../tutorials/whats-new.md) ([#1398](https://github.com/depictio/depictio/pull/1398)).
+* **Compare runs**: the project's *Runs* tab says what each run produced and each scan changed, with *Compare* and *Layout before &lt;run&gt;*. See [Compare runs](../tutorials/compare-runs.md) ([#1182](https://github.com/depictio/depictio/pull/1182), [#1398](https://github.com/depictio/depictio/pull/1398)).
+* **MultiQC reports compared across runs**: new samples keep their colours on an overlay, figures and General Stats split on the new samples, and a run naming samples already in the project is held back. See [MultiQC](../features/multiqc.md#compare-runs) ([#1182](https://github.com/depictio/depictio/pull/1182), [#1398](https://github.com/depictio/depictio/pull/1398)).
+* **Start a project from the data**: *Upload* or *Read in place* (a folder, a bucket or one file URL), read as flat tables, your own collections or a pipeline template. See [Create a project](../usage/projects/guide.md#create-a-project) ([29897db](https://github.com/depictio/depictio/commit/29897dbe5222591d5f0e38a986d5d85bb38d7150), [#1382](https://github.com/depictio/depictio/pull/1382)).
+* **Project Builder**: define the collections yourself, in the app or with `depictio project-builder` without a server. See [Project Builder](../usage/projects/guide.md#project-builder) ([#1182](https://github.com/depictio/depictio/pull/1182)).
+* **Add data to an existing project**: tables from a folder, or another run of the same pipeline. See [Add data](../usage/projects/guide.md#add-data) ([a751538](https://github.com/depictio/depictio/commit/a751538e33b01978d341fc9285e15bbc7b63c781)).
+* **Label samples from the dashboard**: the *Metadata* panel adds label columns to a samplesheet; each label becomes a group that filters and colours the linked charts, and can be saved to the table or exported as a sheet. See [Label samples](../tutorials/metadata-panel.md) ([#1375](https://github.com/depictio/depictio/pull/1375)).
+* **Editable tables** with a per-table lock and version restore ([#1382](https://github.com/depictio/depictio/pull/1382)).
+* **Send a project to another instance** with an invite code, approved there and served read-only. See [Move a project to another instance](../tutorials/instance-migration.md) ([#1334](https://github.com/depictio/depictio/pull/1334), [#1361](https://github.com/depictio/depictio/pull/1361)).
+* **Export a project as a ZIP** from its settings, and one *Import* dialog for a ZIP or another instance ([5861bc5](https://github.com/depictio/depictio/commit/5861bc504e4f99da4e5583f7803255796f708ccf), [33830d5](https://github.com/depictio/depictio/commit/33830d57a99bde79768f4dc855141aba3dd83a6a)).
+* **A TextInput filter with regular expressions**, and multi-value `always_selected` Selects. See [Components](../features/components.md) ([#1365](https://github.com/depictio/depictio/pull/1365)).
+* **Map coordinates** on a table's page, flagged when Add data meets a lat/lon pair ([#1389](https://github.com/depictio/depictio/pull/1389)).
+* **Results read from Google Cloud Storage** through its S3 API. See [Remote data](../usage/projects/remote-data.md) ([#1291](https://github.com/depictio/depictio/pull/1291)).
+
+### **🚀 Improvements**
+
+* **Refresh reads only what changed**, with a *Read everything again* switch. See [Watch the data update](../tutorials/data-updates.md) ([#1182](https://github.com/depictio/depictio/pull/1182)).
+* **One *Activity* tab** on the project page for the latest ingestion and its history ([#1398](https://github.com/depictio/depictio/pull/1398)).
+* **Admin tables** for projects, dashboards and users, and an `/activity` page for project members ([#1390](https://github.com/depictio/depictio/pull/1390)).
+* **Admins and editors import dashboards in public mode** ([#1388](https://github.com/depictio/depictio/pull/1388)).
+* **Received projects show up live** for admins, as a toast and a banner ([#1392](https://github.com/depictio/depictio/pull/1392)).
+* **A hands-on workshop Codespace** with an ampliseq run ingested ([#1372](https://github.com/depictio/depictio/pull/1372)).
+
+### **🔒 Security**
+
+* **Figure code can be limited to admins** with `DEPICTIO_VIEWER_CODE_FIGURES_LOCKED` ([#1374](https://github.com/depictio/depictio/pull/1374)).
+* **New projects are private by default** ([a895b31](https://github.com/depictio/depictio/commit/a895b31cc7ef2a91e21830769d130b4218a91170)).
+
+### **🧬 Pipeline Templates**
+
+* **nf-core/crisprseq**: guide comparison tabs, edit quartiles, replicate agreement and an indel size matrix ([e06f055](https://github.com/depictio/depictio/commit/e06f055ddaea2e64821df1b261547a9828dc1168)).
+* **nf-core/sarek 3.11.0**: a genome browser in *Explore* and an annotated burden heatmap ([7d62646](https://github.com/depictio/depictio/commit/7d62646f0751e4b868124831dcafd9f49de5fc4f)).
+* **mosdepth contigs in karyotype order** ([6a69091](https://github.com/depictio/depictio/commit/6a6909113d2f5d11e58a8b44a7a978c0ce6f19d4)).
+
+### **🐛 Bug Fixes**
+
+* **Tiles of optional collections stay queued for ingestion** ([#1373](https://github.com/depictio/depictio/pull/1373)).
+* **Owners and P.I.s can find people to share a project with** ([#1378](https://github.com/depictio/depictio/pull/1378)).
+* **A folder adds no duplicate tables, and an empty MultiQC collection is skipped** ([a895b31](https://github.com/depictio/depictio/commit/a895b31cc7ef2a91e21830769d130b4218a91170)).
+* **A sent project carries its image files and its dashboard logos**, and multi-GB bundles go through ([3ff9d12](https://github.com/depictio/depictio/commit/3ff9d12ec4cdc2eea82577a3a01c50abc1807533), [1649bc4](https://github.com/depictio/depictio/commit/1649bc492cc824c8aa476823bf744ba12642eefd), [#1383](https://github.com/depictio/depictio/pull/1383)).
+
+??? info "Beta releases leading up to v1.21.0"
+
+    **[v1.21.0-b1](https://github.com/depictio/depictio/releases/tag/v1.21.0-b1)** (November 5, 2026)
+
+    * OpenID Connect sign-in, publishing to another instance with invite codes, Google Cloud Storage reads ([#1356](https://github.com/depictio/depictio/pull/1356), [#1334](https://github.com/depictio/depictio/pull/1334), [#1361](https://github.com/depictio/depictio/pull/1361), [#1291](https://github.com/depictio/depictio/pull/1291)).
+
+    **[v1.21.0-b2](https://github.com/depictio/depictio/releases/tag/v1.21.0-b2)** (November 10, 2026)
+
+    * Projects start from a source with no Basic/Advanced choice, Add data takes a folder or a run, ZIP export, one Import dialog, Send / Receive wording, figure code lock, workshop Codespace ([#1372](https://github.com/depictio/depictio/pull/1372), [#1374](https://github.com/depictio/depictio/pull/1374), [#1378](https://github.com/depictio/depictio/pull/1378)).
+
+    **[v1.21.0-b3](https://github.com/depictio/depictio/releases/tag/v1.21.0-b3)** (November 11, 2026)
+
+    * One Add data flow with editable tables, the Metadata panel ([#1382](https://github.com/depictio/depictio/pull/1382), [#1375](https://github.com/depictio/depictio/pull/1375), [#1383](https://github.com/depictio/depictio/pull/1383)).
+
+    **[v1.21.0-b4](https://github.com/depictio/depictio/releases/tag/v1.21.0-b4)** (November 11, 2026)
+
+    * Dashboard import in public mode, any https send destination ([#1388](https://github.com/depictio/depictio/pull/1388), [#1387](https://github.com/depictio/depictio/pull/1387)).
+
+    **[v1.21.0-b5](https://github.com/depictio/depictio/releases/tag/v1.21.0-b5)** (November 11, 2026)
+
+    * Admin tables and the `/activity` page, map coordinates on a table ([#1390](https://github.com/depictio/depictio/pull/1390), [#1389](https://github.com/depictio/depictio/pull/1389)).
+
+    **[v1.21.0-b6](https://github.com/depictio/depictio/releases/tag/v1.21.0-b6)** (November 12, 2026)
+
+    * TextInput regex filter, live received-projects toast, crisprseq and sarek templates ([#1365](https://github.com/depictio/depictio/pull/1365), [#1392](https://github.com/depictio/depictio/pull/1392), [#1391](https://github.com/depictio/depictio/pull/1391)).
+
+    The stable release adds the Project Builder, the Runs tab scans and selective refresh ([#1182](https://github.com/depictio/depictio/pull/1182)), and changed since your last visit ([#1398](https://github.com/depictio/depictio/pull/1398)).
+
+---
+
 ## **[v1.20.2](https://github.com/depictio/depictio/releases/tag/v1.20.2)** (November 2, 2026)
 
 !!! success "Patch: the genome browser's ranked-variant counter on public dashboards"
