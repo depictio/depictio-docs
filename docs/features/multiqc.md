@@ -8,7 +8,8 @@ glightbox: true
 
 Depictio reads [:material-open-in-new: MultiQC](https://multiqc.info/){ target="_blank" } reports and draws their plots as dashboard components. A collection can hold the reports of several runs, linked to your sample metadata and compared run against run.
 
-<!-- shot: multiqc/figure | a MultiQC plot component on a dashboard, with the report's own controls -->
+[![A MultiQC plot component on a dashboard, with the report's own controls](../images/guides/multiqc/multiqc_figure_light.webp#only-light)](../images/guides/multiqc/multiqc_figure_light.webp){target=_blank}
+[![A MultiQC plot component on a dashboard, with the report's own controls](../images/guides/multiqc/multiqc_figure_dark.webp#only-dark)](../images/guides/multiqc/multiqc_figure_dark.webp){target=_blank}
 
 ## What Depictio reads
 
@@ -34,7 +35,8 @@ For an existing collection, the **Manage data** button opens **Manage Data Colle
 
 Uploads take at most 50 MB per file and 500 MB in all. Only `multiqc.parquet` is extracted from a dropped folder.
 
-<!-- shot: multiqc/manage | Manage Data Collection for a MultiQC collection, Modify data tab with Replace existing data and the folder drop zone -->
+[![Manage Data Collection for a MultiQC collection, with Append folders and Replace existing data](../images/guides/multiqc/manage_collection_light.webp#only-light)](../images/guides/multiqc/manage_collection_light.webp){target=_blank}
+[![Manage Data Collection for a MultiQC collection, with Append folders and Replace existing data](../images/guides/multiqc/manage_collection_dark.webp#only-dark)](../images/guides/multiqc/manage_collection_dark.webp){target=_blank}
 
 ### With the CLI
 
@@ -77,7 +79,8 @@ The General Statistics table, one row per sample and one column per headline met
   selected_plot: general_stats
 ```
 
-<!-- shot: multiqc/general-stats | the General Statistics table component, Table / Violin toggle and read selector -->
+[![The General Statistics table component, Table / Violin toggle and read selector](../images/guides/multiqc/general_stats_light.webp#only-light)](../images/guides/multiqc/general_stats_light.webp){target=_blank}
+[![The General Statistics table component, Table / Violin toggle and read selector](../images/guides/multiqc/general_stats_dark.webp#only-dark)](../images/guides/multiqc/general_stats_dark.webp){target=_blank}
 
 A [composed dashboard](../usage/projects/composed-dashboards.md) builds a **MultiQC** tab with every plot of the report, and puts General Statistics on its Overview tab. A run with several reports gets one tab each.
 
@@ -101,7 +104,7 @@ See [Cross-DC filtering](cross-dc-filtering.md#resolvers) for the resolvers, the
 
 Append each new run to the same MultiQC collection, and Depictio tells you which samples are new. It needs the changes feature: `DEPICTIO_DASHBOARD_VERSIONS_CHANGES_SINCE_ENABLED=true` ([What's new](../tutorials/whats-new.md#before-you-start)).
 
-<!-- video: multiqc/multiqc-compare-runs | append a run to a MultiQC collection, open What's new, Overlay then Split on the new samples, then Before | Now -->
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/multiqc/multiqc-compare-runs.webp" src="../images/guides/multiqc/multiqc-compare-runs.mp4"></video></figure>
 
 1. **Add the run.** Use **Add data** > **Add run**, `depictio ingest --attach-run`, or append its reports with **Manage data**. A run whose reports name samples the project already holds is held back, with the samples listed.
 2. **Read the Runs tab.** Each scan lists, per report, the samples and modules it gained or lost. See [Compare runs](../tutorials/compare-runs.md#3-read-what-a-scan-changed).
@@ -111,8 +114,11 @@ Append each new run to the same MultiQC collection, and Depictio tells you which
 6. **Hide what you had seen.** Only the new samples are drawn.
 7. **Before | Now** on a tile draws the reports you saw beside the reports now.
 
-<!-- shot: multiqc/overlay | a MultiQC plot under Overlay, new samples in their own colours, seen samples faded -->
-<!-- shot: multiqc/split-new-samples | MultiQC figures and General Stats under Split, new samples beside seen samples -->
+[![A MultiQC plot under Overlay, new samples in their own colours, seen samples faded](../images/guides/multiqc/overlay_multiqc_light.webp#only-light)](../images/guides/multiqc/overlay_multiqc_light.webp){target=_blank}
+[![A MultiQC plot under Overlay, new samples in their own colours, seen samples faded](../images/guides/multiqc/overlay_multiqc_dark.webp#only-dark)](../images/guides/multiqc/overlay_multiqc_dark.webp){target=_blank}
+
+[![A MultiQC figure under Split, new samples beside seen samples](../images/guides/multiqc/split_multiqc_light.webp#only-light)](../images/guides/multiqc/split_multiqc_light.webp){target=_blank}
+[![A MultiQC figure under Split, new samples beside seen samples](../images/guides/multiqc/split_multiqc_dark.webp#only-dark)](../images/guides/multiqc/split_multiqc_dark.webp){target=_blank}
 
 Depictio records the report set a dashboard version was saved with, so a past version, or **Before**, draws the reports it had.
 

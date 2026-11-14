@@ -8,7 +8,7 @@ glightbox: true
 
 A project made from a pipeline can hold several runs of it. The **Runs** tab says what each run produced and what each scan changed, and **Compare** opens a dashboard with what one run changed marked.
 
-<!-- video: compare-runs/compare-runs | attach a run, open it in the Runs tab, pick a scan, then Compare and Before | Now on a tile -->
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/compare-runs/compare-runs.webp" src="../images/guides/compare-runs/compare-runs.mp4"></video></figure>
 
 ## Before you start
 
@@ -27,11 +27,13 @@ If the run's MultiQC reports name samples the project already holds, the dialog 
 
 The **Runs** tab lists one row per run. New runs carry a dot. Unfold a run to see its folder, its files and its scans.
 
-<!-- shot: compare-runs/runs-tab | the project's Runs tab, one row per run, a new run marked with a dot -->
+[![The project's Runs tab, one row per run, new runs marked with a dot](../images/guides/compare-runs/runs_tab_light.webp#only-light)](../images/guides/compare-runs/runs_tab_light.webp){target=_blank}
+[![The project's Runs tab, one row per run, new runs marked with a dot](../images/guides/compare-runs/runs_tab_dark.webp#only-dark)](../images/guides/compare-runs/runs_tab_dark.webp){target=_blank}
 
 Each run has a **Produced** block: its ingestions, the Delta commits it wrote and its MultiQC reports. Each Delta commit has **View rows**, which opens that collection's Data table with the run's rows on top.
 
-<!-- shot: compare-runs/produced | the Produced block of a run: ingestion, Delta commits with View rows, MultiQC reports -->
+[![A run unfolded: its files, scans and the Produced block with its ingestion and MultiQC report](../images/guides/compare-runs/run_produced_light.webp#only-light)](../images/guides/compare-runs/run_produced_light.webp){target=_blank}
+[![A run unfolded: its files, scans and the Produced block with its ingestion and MultiQC report](../images/guides/compare-runs/run_produced_dark.webp#only-dark)](../images/guides/compare-runs/run_produced_dark.webp){target=_blank}
 
 ## 3. Read what a scan changed
 
@@ -44,23 +46,26 @@ Pick a scan under **Scans**. Each file then says what that scan did to it:
 
 A changed file shows its size and date before and after. A MultiQC report also lists the samples and modules it gained or lost. Turn on **Only what this scan changed** to hide the rest.
 
-<!-- shot: compare-runs/scans | a run unfolded, Scans picker on the right, files marked New / Changed / Unchanged, a MultiQC line with samples gained -->
+[![A run unfolded with the Scans picker, a changed file and Only what this scan changed switched on](../images/guides/compare-runs/scans_picker_light.webp#only-light)](../images/guides/compare-runs/scans_picker_light.webp){target=_blank}
+[![A run unfolded with the Scans picker, a changed file and Only what this scan changed switched on](../images/guides/compare-runs/scans_picker_dark.webp#only-dark)](../images/guides/compare-runs/scans_picker_dark.webp){target=_blank}
 
 ## 4. Compare a dashboard with the run
 
 Click **Compare** on the run. With several dashboards, a menu lists them under **What this ingestion changed in**.
 
-<!-- shot: compare-runs/compare-menu | the Compare button open on a run, listing the dashboards under What this ingestion changed in -->
+[![The Compare button open on a run, listing the dashboards under What this ingestion changed in](../images/guides/compare-runs/runs_compare_menu_light.webp#only-light)](../images/guides/compare-runs/runs_compare_menu_light.webp){target=_blank}
+[![The Compare button open on a run, listing the dashboards under What this ingestion changed in](../images/guides/compare-runs/runs_compare_menu_dark.webp#only-dark)](../images/guides/compare-runs/runs_compare_menu_dark.webp){target=_blank}
 
 The dashboard opens read-only, at `?before_run=<run id>`, with what that run changed marked. The header key reads **This ingestion**. Each changed tile's **Before | Now** draws the data just before the run beside the data now.
 
 This view never moves your own "last visit" mark.
 
+[![A dashboard opened at ?before_run, the tiles the run changed marked with a dot](../images/guides/compare-runs/dashboard_before_run_light.webp#only-light)](../images/guides/compare-runs/dashboard_before_run_light.webp){target=_blank}
+[![A dashboard opened at ?before_run, the tiles the run changed marked with a dot](../images/guides/compare-runs/dashboard_before_run_dark.webp#only-dark)](../images/guides/compare-runs/dashboard_before_run_dark.webp){target=_blank}
+
 ## 5. See the layout before the run
 
 **Layout before &lt;run&gt;** opens each dashboard's definition as it last was before the run. It shows the layout and components, not the data: an ingestion records no dashboard version, so the preview's data is whatever that version pinned.
-
-<!-- shot: compare-runs/layout-before | the Layout before <run> preview with its banner -->
 
 ## 6. Find the new rows in a table
 
@@ -68,7 +73,8 @@ From **View rows**, or from **Open in project** in the What's new panel, the col
 
 Click **Back to full table** to return to the plain table.
 
-<!-- shot: compare-runs/new-rows-table | the Data table with the new run's rows on top and Back to full table -->
+[![The Data table opened on the new run's rows, with Back to full table and Hide what you had seen](../images/guides/compare-runs/new_rows_table_light.webp#only-light)](../images/guides/compare-runs/new_rows_table_light.webp){target=_blank}
+[![The Data table opened on the new run's rows, with Back to full table and Hide what you had seen](../images/guides/compare-runs/new_rows_table_dark.webp#only-dark)](../images/guides/compare-runs/new_rows_table_dark.webp){target=_blank}
 
 ## Good to know
 

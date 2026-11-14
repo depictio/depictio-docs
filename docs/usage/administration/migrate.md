@@ -1,3 +1,7 @@
+---
+glightbox: true
+---
+
 # :material-database-arrow-right:{ style="color: #009688" } Project Migration
 
 Depictio supports **non-destructive project migration** between instances — move a project (MongoDB metadata + S3 data files + dashboards) from one Depictio deployment to another without touching any other project on the target.
@@ -109,7 +113,8 @@ Export and import are also in the viewer, with no CLI.
 
 The project's menu on the **Projects** page also has **Export as ZIP**.
 
-<!-- shot: project-creation/export-zip | Project settings, Export section, with the Export as ZIP button -->
+[![Project settings, Export section, with the Export as ZIP button](../../images/guides/project-creation/export_zip_light.webp#only-light)](../../images/guides/project-creation/export_zip_light.webp){target=_blank}
+[![Project settings, Export section, with the Export as ZIP button](../../images/guides/project-creation/export_zip_dark.webp#only-dark)](../../images/guides/project-creation/export_zip_dark.webp){target=_blank}
 
 ### Import a Project
 
@@ -118,7 +123,11 @@ The project's menu on the **Projects** page also has **Export as ZIP**.
 3. Choose the `.zip` file. Tick **Replace the project if it already exists** to overwrite a project with the same id.
 4. Click **Import project**. The project, its data and its dashboards are created, owned by your account.
 
-<!-- shot: project-creation/import-dialog | The Import a project dialog with the From another instance and From a ZIP file tabs -->
+[![The Import a project dialog, From another instance tab](../../images/guides/project-creation/import_from_instance_light.webp#only-light)](../../images/guides/project-creation/import_from_instance_light.webp){target=_blank}
+[![The Import a project dialog, From another instance tab](../../images/guides/project-creation/import_from_instance_dark.webp#only-dark)](../../images/guides/project-creation/import_from_instance_dark.webp){target=_blank}
+
+[![The Import a project dialog, From a ZIP file tab](../../images/guides/project-creation/import_from_zip_light.webp#only-light)](../../images/guides/project-creation/import_from_zip_light.webp){target=_blank}
+[![The Import a project dialog, From a ZIP file tab](../../images/guides/project-creation/import_from_zip_dark.webp#only-dark)](../../images/guides/project-creation/import_from_zip_dark.webp){target=_blank}
 
 <!-- prettier-ignore -->
 !!! note "Owner remapping"
@@ -137,12 +146,22 @@ A project can also go straight from one instance to another, with no file to car
 
 A project is updated only with the code that first brought it: send again with the same code to publish a new version. Admins see a banner on **Projects** when a project was received or needs a decision, and a live toast when `DEPICTIO_EVENTS_ENABLED` is on.
 
-<!-- shot: migration/receive-code | Receive a project: the Instance URL and Code shown once, with copy buttons -->
-<!-- shot: migration/send-destination | Send to another instance, Destination step: Destination URL and Invite code -->
-<!-- shot: migration/send-check | Send to another instance, Check step: what travels, imported right away, read-only there -->
-<!-- shot: migration/received-banner | The Projects page banner telling an admin a project was received -->
-<!-- shot: migration/read-only-badge | A received project with its Read-only badge -->
-<!-- video: migration/send-receive | Create a code on one instance, send a project from another, and open it on the first -->
+[![Receive a project: the Instance URL and Code shown once, with copy buttons](../../images/guides/migration/receive_project_dialog_light.webp#only-light)](../../images/guides/migration/receive_project_dialog_light.webp){target=_blank}
+[![Receive a project: the Instance URL and Code shown once, with copy buttons](../../images/guides/migration/receive_project_dialog_dark.webp#only-dark)](../../images/guides/migration/receive_project_dialog_dark.webp){target=_blank}
+
+[![Send to another instance, Destination step: Destination URL and Invite code](../../images/guides/migration/send_destination_light.webp#only-light)](../../images/guides/migration/send_destination_light.webp){target=_blank}
+[![Send to another instance, Destination step: Destination URL and Invite code](../../images/guides/migration/send_destination_dark.webp#only-dark)](../../images/guides/migration/send_destination_dark.webp){target=_blank}
+
+[![Send to another instance, Check step: what travels, imported right away, read-only there](../../images/guides/migration/send_checked_light.webp#only-light)](../../images/guides/migration/send_checked_light.webp){target=_blank}
+[![Send to another instance, Check step: what travels, imported right away, read-only there](../../images/guides/migration/send_checked_dark.webp#only-dark)](../../images/guides/migration/send_checked_dark.webp){target=_blank}
+
+[![The Projects page banner telling an admin a project was received](../../images/guides/migration/received_projects_light.webp#only-light)](../../images/guides/migration/received_projects_light.webp){target=_blank}
+[![The Projects page banner telling an admin a project was received](../../images/guides/migration/received_projects_dark.webp#only-dark)](../../images/guides/migration/received_projects_dark.webp){target=_blank}
+
+[![A received project with its Read-only badge](../../images/guides/migration/read_only_badge_light.webp#only-light)](../../images/guides/migration/read_only_badge_light.webp){target=_blank}
+[![A received project with its Read-only badge](../../images/guides/migration/read_only_badge_dark.webp#only-dark)](../../images/guides/migration/read_only_badge_dark.webp){target=_blank}
+
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/migration/send-receive.webp" src="../../images/guides/migration/send-receive.mp4"></video></figure>
 
 The controls need `DEPICTIO_MIGRATION_UI_ENABLED` on both sides. The receiving side also needs `DEPICTIO_MIGRATION_INBOUND_ENABLED`, and the sending side `DEPICTIO_MIGRATION_DESTINATION_DOMAINS` (`"*"` allows any host, the Helm chart default is `["*"]`). See [Publishing to another instance](publishing.md) for the full reference and [the tutorial](../../tutorials/instance-migration.md) for a walk-through.
 

@@ -619,16 +619,20 @@ hide:
 
     <article class="feature-row">
       <div class="feature-row-visual">
-        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the Create a Data Collection dialog">
-          <img src="images/landing/upload_light.webp" alt="The Create a Data Collection dialog, with a drop zone for a table file and a tab for MultiQC reports" loading="lazy">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: how Depictio reads a folder">
+          <img class="only-light" src="images/guides/project-creation/read_levels_light.webp" alt="The New project dialog asking how to read a folder: flat tables, custom workflows or a pipeline template, with the detected nf-core pipeline" loading="lazy">
+          <img class="only-dark" src="images/guides/project-creation/read_levels_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
       <div class="feature-row-text">
-        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"/></svg><span>Upload</span></span>
-        <h3>Or just drop the file in</h3>
-        <p>No pipeline to point at yet? Drop a CSV, TSV, Parquet or Feather file straight into a project from the browser, or a MultiQC report, and Depictio scans it and aggregates it into a Delta table for you. The collection is ready to build on without touching the CLI, and you can link two of them on a shared column from the same screen, so a filter on one reaches every component built on the other.</p>
-        <a class="feature-link" href="usage/projects/guide/">Start a project &rarr;</a>
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z"/></svg><span>New project</span></span>
+        <h3>Start from the data</h3>
+        <p>Upload a table, or point Depictio at a folder, a bucket or one file URL and read it in place. It detects the pipeline and offers how to read the folder: flat tables, your own collections with the Project Builder, or a pipeline template. Another run or more tables join the same project later through <strong>Add data</strong>.</p>
+        <span class="feature-links">
+          <a class="feature-link" href="usage/projects/guide/#create-a-project">Create a project &rarr;</a>
+          <a class="feature-link" href="usage/projects/guide/#project-builder">Project Builder &rarr;</a>
+        </span>
       </div>
     </article>
 
@@ -771,6 +775,24 @@ hide:
       </div>
     </article>
 
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the Metadata panel">
+          <img class="only-light" src="images/guides/metadata-panel/metadata_panel_labels_light.webp" alt="The Metadata panel on a dashboard, with a label column typed next to the samplesheet" loading="lazy">
+          <img class="only-dark" src="images/guides/metadata-panel/metadata_panel_labels_dark.webp" alt="" loading="lazy">
+          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
+        </button>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5,7A1.5,1.5 0 0,1 4,5.5A1.5,1.5 0 0,1 5.5,4A1.5,1.5 0 0,1 7,5.5A1.5,1.5 0 0,1 5.5,7M21.41,11.58L12.41,2.58C12.05,2.22 11.55,2 11,2H4C2.89,2 2,2.89 2,4V11C2,11.55 2.22,12.05 2.59,12.41L11.58,21.41C11.95,21.77 12.45,22 13,22C13.55,22 14.05,21.77 14.41,21.41L21.41,14.41C21.78,14.05 22,13.55 22,13C22,12.44 21.77,11.94 21.41,11.58Z"/></svg><span>Metadata</span></span>
+        <h3>Label samples where you look at them</h3>
+        <p>Open the <strong>Metadata</strong> panel on a dashboard and type labels next to the samplesheet. Each label becomes a group that filters and colours the linked charts, and you can save it back to the table or export it as a sheet.</p>
+        <span class="feature-links">
+          <a class="feature-link" href="tutorials/metadata-panel/">Label samples &rarr;</a>
+        </span>
+      </div>
+    </article>
+
       </div>
     </div>
 
@@ -855,6 +877,41 @@ hide:
       </div>
     </article>
 
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <div class="feature-frame feature-frame--video">
+          <video autoplay muted loop playsinline preload="none" poster="images/guides/whats-new/whats-new-overlay-split.webp" src="images/guides/whats-new/whats-new-overlay-split.mp4" aria-label="What's new on a dashboard: new points ringed in Overlay, then split from what was seen before"></video>
+        </div>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5,8H12V13L16.28,15.54L17,14.33L13.5,12.25V8M13,3A9,9 0 0,0 4,12H1L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3"/></svg><span>What's new</span></span>
+        <h3><em>"What's new"</em> since your last visit</h3>
+        <p>A dashboard remembers what you last saw. <strong>Overlay</strong> rings the new samples on every chart and fades the rest, <strong>Split</strong> sets them beside what you had seen, and <strong>Before | Now</strong> shows one tile as it was. A bell lists what changed while you were away.</p>
+        <span class="feature-links">
+          <a class="feature-link" href="tutorials/whats-new/"><em>"What's new"</em> &rarr;</a>
+        </span>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a MultiQC figure split on the new samples">
+          <img class="only-light" src="images/guides/multiqc/split_multiqc_light.webp" alt="A MultiQC Sequence Counts figure split into the new runs and the samples seen before" loading="lazy">
+          <img class="only-dark" src="images/guides/multiqc/split_multiqc_dark.webp" alt="" loading="lazy">
+          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
+        </button>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19,3H14V5H19V18L14,12V21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10,18H5L10,12M10,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H10V23H12V1H10V3Z"/></svg><span>Runs</span></span>
+        <h3>Compare runs, MultiQC included</h3>
+        <p>The <strong>Runs</strong> tab says what each run produced and what each scan changed. <strong>Compare</strong> opens a dashboard on the new samples, MultiQC figures and General Stats split on them, and a run naming samples already in the project is held back.</p>
+        <span class="feature-links">
+          <a class="feature-link" href="tutorials/compare-runs/">Compare runs &rarr;</a>
+          <a class="feature-link" href="features/multiqc/">MultiQC &rarr;</a>
+        </span>
+      </div>
+    </article>
+
       </div>
     </div>
 
@@ -906,6 +963,24 @@ hide:
         <h3>Add your tool without writing YAML</h3>
         <p>And the shelf is yours to stock. Drop one output file, bind its columns in Depictio's own component builder, and Tool Studio writes the catalog entry and opens the pull request for you, so the next person picks what you designed.</p>
         <a class="feature-link" href="https://depictio.github.io/depictio-tool-studio/" target="_blank" rel="noopener">Open Tool Studio &rarr;</a>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: sending a project to another instance">
+          <img class="only-light" src="images/guides/migration/send_checked_light.webp" alt="The Send to another instance dialog, the destination checked and ready to send" loading="lazy">
+          <img class="only-dark" src="images/guides/migration/send_checked_dark.webp" alt="" loading="lazy">
+          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
+        </button>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/></svg><span>Migration</span></span>
+        <h3>Send a project to another instance</h3>
+        <p>Ask the other instance for an invite code, paste it in the project settings and <strong>Send</strong>. The project lands there with its data, dashboards and images, waits for an admin to approve it, then is served read-only. A ZIP export covers the offline case.</p>
+        <span class="feature-links">
+          <a class="feature-link" href="tutorials/instance-migration/">Move a project &rarr;</a>
+        </span>
       </div>
     </article>
 
@@ -3543,6 +3618,20 @@ hide:
 
   [data-md-color-scheme="slate"] .feature-frame img.only-light {
     display: none;
+  }
+
+  .feature-frame--video {
+    cursor: default;
+  }
+
+  .feature-frame video {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
   }
 
   /* Magnifier badge, revealed on hover */

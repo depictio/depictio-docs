@@ -8,7 +8,7 @@ glightbox: true
 
 A project can travel from one Depictio instance to another with its data, dashboards, logos and comments. An administrator of the target creates a code, and the project's owner on the source sends the project with it.
 
-<!-- video: migration/send-receive | the target admin creates a code, the source owner pastes URL and code, Check, Send, the project appears read-only on the target -->
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/migration/send-receive.webp" src="../images/guides/migration/send-receive.mp4"></video></figure>
 
 ## Before you start
 
@@ -30,7 +30,8 @@ Under **Options**, set:
 
 Click **Create code**. The dialog shows the **Instance URL** and the **Code** once, with copy buttons. Send both to the project's owner.
 
-<!-- shot: migration/receive-code | the Receive dialog after Create code, Instance URL and Code with copy buttons -->
+[![The Receive dialog after Create code, Instance URL and Code with copy buttons](../images/guides/migration/receive_project_dialog_light.webp#only-light)](../images/guides/migration/receive_project_dialog_light.webp){target=_blank}
+[![The Receive dialog after Create code, Instance URL and Code with copy buttons](../images/guides/migration/receive_project_dialog_dark.webp#only-dark)](../images/guides/migration/receive_project_dialog_dark.webp){target=_blank}
 
 ## 2. Send the project from the source
 
@@ -38,7 +39,8 @@ On the source, open the project, click **Project settings** and pick **Send**. C
 
 In the **Destination** step, paste the **Destination URL** and the **Invite code**, and add a message if you like.
 
-<!-- shot: migration/send-destination | the Send dialog, Destination step, with Destination URL, Invite code and Message -->
+[![The Send dialog, Destination step, with Destination URL and Invite code](../images/guides/migration/send_destination_light.webp#only-light)](../images/guides/migration/send_destination_light.webp){target=_blank}
+[![The Send dialog, Destination step, with Destination URL and Invite code](../images/guides/migration/send_destination_dark.webp#only-dark)](../images/guides/migration/send_destination_dark.webp){target=_blank}
 
 The **Check** step asks the target what will happen, before anything is built:
 
@@ -47,7 +49,8 @@ The **Check** step asks the target what will happen, before anything is built:
 - **Creates the project there**, or **Updates the copy it already has**;
 - how much data travels, and any warnings.
 
-<!-- shot: migration/send-check | the Check step listing Imported right away, Read-only there, Creates the project there -->
+[![The Check step listing Imported right away, Read-only there, Creates the project there](../images/guides/migration/send_checked_light.webp#only-light)](../images/guides/migration/send_checked_light.webp){target=_blank}
+[![The Check step listing Imported right away, Read-only there, Creates the project there](../images/guides/migration/send_checked_dark.webp#only-dark)](../images/guides/migration/send_checked_dark.webp){target=_blank}
 
 Click **Send**. The dialog follows the push until the target imports it. Past pushes are listed under **Send**, and in **Admin** > **Migrations**.
 
@@ -57,13 +60,18 @@ With an invite code, the import starts at once. The Projects page shows "A proje
 
 A push through a pairing key instead waits for review: the banner reads **A project sent to this instance needs a decision**. Click a request to open its sheet, then **Approve** or **Reject**.
 
-<!-- shot: migration/received-banner | the Projects page banner: A project sent to this instance needs a decision, with the request sheet open -->
+[![The Projects page banner telling an admin a project was received](../images/guides/migration/received_projects_light.webp#only-light)](../images/guides/migration/received_projects_light.webp){target=_blank}
+[![The Projects page banner telling an admin a project was received](../images/guides/migration/received_projects_dark.webp#only-dark)](../images/guides/migration/received_projects_dark.webp){target=_blank}
+
+[![The migration request sheet with Revalidate, Reject and Approve](../images/guides/migration/request_sheet_light.webp#only-light)](../images/guides/migration/request_sheet_light.webp){target=_blank}
+[![The migration request sheet with Revalidate, Reject and Approve](../images/guides/migration/request_sheet_dark.webp#only-dark)](../images/guides/migration/request_sheet_dark.webp){target=_blank}
 
 ## 4. Lock or unlock editing
 
 A locked project shows a **Read-only** badge. Nobody can change its dashboards or data, owners included.
 
-<!-- shot: migration/read-only-badge | the imported project's header with the Read-only badge -->
+[![The imported project's header with the Read-only badge](../images/guides/migration/read_only_badge_light.webp#only-light)](../images/guides/migration/read_only_badge_light.webp){target=_blank}
+[![The imported project's header with the Read-only badge](../images/guides/migration/read_only_badge_dark.webp#only-dark)](../images/guides/migration/read_only_badge_dark.webp){target=_blank}
 
 An administrator changes this on the project's **Permissions** page, in the **Editing** row, with **Lock editing** / **Unlock editing**. Visibility is set apart, on the same page: a published copy is usually public and locked.
 

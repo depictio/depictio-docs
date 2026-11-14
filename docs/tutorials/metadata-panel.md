@@ -8,7 +8,7 @@ glightbox: true
 
 The **Metadata** panel opens the project's sample table beside the dashboard, where you add label columns such as `response` = *responder* / *non-responder*. Each label becomes a group that filters, colours and splits the linked charts, and the real table does not change.
 
-<!-- video: metadata-panel/metadata-labels | open Metadata, add a label column, fill a few cells, Compare in the charts, the charts colour and split by label -->
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/metadata-panel/metadata-labels.webp" src="../images/guides/metadata-panel/metadata-labels.mp4"></video></figure>
 
 ## Before you start
 
@@ -23,11 +23,13 @@ The **Metadata** panel opens the project's sample table beside the dashboard, wh
 
 Click **Metadata** in the dock. The panel opens on the right; it and **Analysis** share that edge, so opening one closes the other. Its badge counts your label columns.
 
-<!-- shot: metadata-panel/dock-button | the dock with the Metadata button and its label-count badge -->
+[![The dock with the Metadata button](../images/guides/metadata-panel/metadata_dock_button_light.webp#only-light)](../images/guides/metadata-panel/metadata_dock_button_light.webp){target=_blank}
+[![The dock with the Metadata button](../images/guides/metadata-panel/metadata_dock_button_dark.webp#only-dark)](../images/guides/metadata-panel/metadata_dock_button_dark.webp){target=_blank}
 
 The header row shows the table (a picker when there are several) and the key column the labels are keyed on, the one the table links by.
 
-<!-- shot: metadata-panel/panel | the Metadata drawer: table picker, key column, + column, label columns, Import and Export icons -->
+[![The Metadata drawer: table, key column, + column, label column and the File import and export icons](../images/guides/metadata-panel/metadata_panel_labels_light.webp#only-light)](../images/guides/metadata-panel/metadata_panel_labels_light.webp){target=_blank}
+[![The Metadata drawer: table, key column, + column, label column and the File import and export icons](../images/guides/metadata-panel/metadata_panel_labels_dark.webp#only-dark)](../images/guides/metadata-panel/metadata_panel_labels_dark.webp){target=_blank}
 
 ## 2. Add a label column
 
@@ -45,15 +47,20 @@ The file is read in your browser and never sent to the server. Rows that match n
 
 Open the label column's menu and click **Compare in the charts**, or click the chart icon in its header. Each label value becomes a group in **Analysis**, which filters, colours and splits the linked charts.
 
-<!-- shot: metadata-panel/groups | the Analysis panel with groups derived from labels (tag icon), charts coloured by them -->
+[![The Analysis panel with groups derived from labels, charts coloured by My groups](../images/guides/metadata-panel/metadata_groups_analysis_light.webp#only-light)](../images/guides/metadata-panel/metadata_groups_analysis_light.webp){target=_blank}
+[![The Analysis panel with groups derived from labels, charts coloured by My groups](../images/guides/metadata-panel/metadata_groups_analysis_dark.webp#only-dark)](../images/guides/metadata-panel/metadata_groups_analysis_dark.webp){target=_blank}
 
 Groups from labels carry a tag icon in **Analysis**. Rename or delete them from Metadata, not there.
+
+[![A figure coloured by the review label groups](../images/guides/metadata-panel/figure_coloured_by_label_light.webp#only-light)](../images/guides/metadata-panel/figure_coloured_by_label_light.webp){target=_blank}
+[![A figure coloured by the review label groups](../images/guides/metadata-panel/figure_coloured_by_label_dark.webp#only-dark)](../images/guides/metadata-panel/figure_coloured_by_label_dark.webp){target=_blank}
 
 ## 4. Keep, share or write the labels
 
 The column menu holds every action on a label column.
 
-<!-- shot: metadata-panel/column-menu | a label column's menu: Compare in the charts, Rename, Keep on my account, Share on this dashboard, Save to table, Delete -->
+[![A label column's menu: Stop comparing, Rename, Share on this dashboard, Save to table, Delete](../images/guides/metadata-panel/metadata_column_menu_light.webp#only-light)](../images/guides/metadata-panel/metadata_column_menu_light.webp){target=_blank}
+[![A label column's menu: Stop comparing, Rename, Share on this dashboard, Save to table, Delete](../images/guides/metadata-panel/metadata_column_menu_dark.webp#only-dark)](../images/guides/metadata-panel/metadata_column_menu_dark.webp){target=_blank}
 
 - **Rename** and **Delete**.
 - **Keep on my account**: a column from a file stays in the browser until you choose this.
@@ -68,7 +75,11 @@ The column menu holds every action on a label column.
 
 That page shows **Read-only** or **Editable** above the table, with a switch to unlock cell edits. Every save is a new version, and **Restore v&lt;N&gt;** writes a past version back as a new one.
 
-<!-- shot: metadata-panel/edit-lock | the table's page in the project, Read-only with the unlock switch, then Editable -->
+[![The table's page in the project, Read-only with the unlock switch](../images/guides/metadata-panel/table_locked_light.webp#only-light)](../images/guides/metadata-panel/table_locked_light.webp){target=_blank}
+[![The table's page in the project, Read-only with the unlock switch](../images/guides/metadata-panel/table_locked_dark.webp#only-dark)](../images/guides/metadata-panel/table_locked_dark.webp){target=_blank}
+
+[![The same table unlocked, Editable](../images/guides/metadata-panel/table_edit_mode_light.webp#only-light)](../images/guides/metadata-panel/table_edit_mode_light.webp){target=_blank}
+[![The same table unlocked, Editable](../images/guides/metadata-panel/table_edit_mode_dark.webp#only-dark)](../images/guides/metadata-panel/table_edit_mode_dark.webp){target=_blank}
 
 ## Good to know
 

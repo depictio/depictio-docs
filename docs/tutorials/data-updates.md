@@ -8,7 +8,7 @@ glightbox: true
 
 A refresh now reads again only the files that changed, and leaves unchanged collections alone. The project's **Activity** tab follows the refresh, and the new rows show on top of the table.
 
-<!-- video: data-updates/refresh-new-rows | Data refresh in the project settings, the run in Activity > History, then the new rows on top of the Data table -->
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/data-updates/refresh-new-rows.webp" src="../images/guides/data-updates/refresh-new-rows.mp4"></video></figure>
 
 ## Before you start
 
@@ -21,7 +21,8 @@ A refresh now reads again only the files that changed, and leaves unchanged coll
 
 On the project page, open **Project settings** and pick **Data refresh**. With several collections, pick one, or leave the field empty to refresh them all.
 
-<!-- shot: data-updates/refresh-settings | Project settings > Data refresh, the collection picker, the Read everything again switch and Refresh now -->
+[![Project settings, Data refresh: the collection picker, the Read everything again switch and Refresh now](../images/guides/data-updates/data_refresh_light.webp#only-light)](../images/guides/data-updates/data_refresh_light.webp){target=_blank}
+[![Project settings, Data refresh: the collection picker, the Read everything again switch and Refresh now](../images/guides/data-updates/data_refresh_dark.webp#only-dark)](../images/guides/data-updates/data_refresh_dark.webp){target=_blank}
 
 Click **Refresh now**. By default, Depictio:
 
@@ -40,9 +41,13 @@ The **Activity** tab has two views: **Latest ingestion** and **History**.
 - **Latest ingestion** shows the report of the last ingestion.
 - **History** lists ingestions, dashboard versions and comments, newest first. An ingestion opens onto its steps. The list refreshes every 3 seconds while one is running.
 
-<!-- shot: data-updates/activity | the Activity tab, History view, with an ingestion open on its steps -->
+[![The Activity tab, History view, with ingestions, dashboard versions and comments](../images/guides/data-updates/activity_history_light.webp#only-light)](../images/guides/data-updates/activity_history_light.webp){target=_blank}
+[![The Activity tab, History view, with ingestions, dashboard versions and comments](../images/guides/data-updates/activity_history_dark.webp#only-dark)](../images/guides/data-updates/activity_history_dark.webp){target=_blank}
 
 Where the server can read the project's files, **Run ingestion** sits beside the view switch. It starts an ingestion on the server and switches to **History**.
+
+[![The Activity tab of a project, on Latest ingestion](../images/guides/data-updates/activity_latest_light.webp#only-light)](../images/guides/data-updates/activity_latest_light.webp){target=_blank}
+[![The Activity tab of a project, on Latest ingestion](../images/guides/data-updates/activity_latest_dark.webp#only-dark)](../images/guides/data-updates/activity_latest_dark.webp){target=_blank}
 
 ## 3. Find the new rows
 

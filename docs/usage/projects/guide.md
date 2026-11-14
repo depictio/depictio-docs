@@ -1,13 +1,14 @@
 ---
 title: "Projects"
 description: "Create, fill and manage Depictio projects: from a few uploaded tables to the runs of a pipeline."
+glightbox: true
 ---
 
 # <span style="color: #45B8AC;">:material-folder-multiple:</span> Projects in Depictio
 
 Projects are the foundation of data organization in Depictio. They hold your data and dashboards, and decide who can use them.
 
-<!-- video: project-creation/create-project-from-folder | New project from a results folder: Your data, the read level, What Depictio found, Create, then the project page -->
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/project-creation/create-project-from-folder.webp" src="../../images/guides/project-creation/create-project-from-folder.mp4"></video></figure>
 
 ## Understanding Project Architecture
 
@@ -47,7 +48,8 @@ graph TD
 
 A project starts from its data. Depictio reads what you give it and works out whether it holds plain tables or the run of a pipeline. There is no Basic or Advanced choice to make.
 
-<!-- shot: project-creation/projects-page | The Projects page with the New project button in the header -->
+[![The Projects page with the New project button in the header](../../images/guides/project-creation/projects_page_light.webp#only-light)](../../images/guides/project-creation/projects_page_light.webp){target=_blank}
+[![The Projects page with the New project button in the header](../../images/guides/project-creation/projects_page_dark.webp#only-dark)](../../images/guides/project-creation/projects_page_dark.webp){target=_blank}
 
 ### Name the project
 
@@ -60,7 +62,8 @@ The first screen asks for a **Project name**, an optional **Description**, and *
 
 Under **Or start from**, **Import a project** brings in a project exported from Depictio (see [Project migration](../administration/migrate.md#web-ui)). **See an example** opens a finished project to explore, and shows only when the server holds one.
 
-<!-- shot: project-creation/new-project-dialog | Screen 1 of New project: Project name, Description, Make this project public, Add data / Create without data, Or start from -->
+[![Screen 1 of New project: Project name, Description, Make this project public, Add data / Create without data, Or start from Import a project](../../images/guides/project-creation/new_project_dialog_light.webp#only-light)](../../images/guides/project-creation/new_project_dialog_light.webp){target=_blank}
+[![Screen 1 of New project: Project name, Description, Make this project public, Add data / Create without data, Or start from Import a project](../../images/guides/project-creation/new_project_dialog_dark.webp#only-dark)](../../images/guides/project-creation/new_project_dialog_dark.webp){target=_blank}
 
 ### Your data
 
@@ -71,8 +74,11 @@ Under **Or start from**, **Import a project** brings in a project exported from 
 - **Upload**: drop files or whole folders from your computer, up to 50 MB each. Tables, MultiQC reports, phylogenetic trees, GeoJSON maps and images are recognised automatically.
 - **Read in place**: nothing is uploaded. Choose **Folder or bucket** for an `s3://` location, or a folder on the server's disk (**Browse** picks one where the server allows it, as under `depictio local`). Choose **One file URL** for a single `https://` or `s3://` CSV, TSV, Parquet or Feather file, gzipped or not.
 
-<!-- shot: project-creation/your-data-upload | Your data step, Upload side, with a few dropped tables listed -->
-<!-- shot: project-creation/your-data-read-in-place | Your data step, Read in place side, Folder or bucket with an s3:// path and the Browse button -->
+[![The Your data step with its Upload and Read in place sides](../../images/guides/project-creation/your_data_step_light.webp#only-light)](../../images/guides/project-creation/your_data_step_light.webp){target=_blank}
+[![The Your data step with its Upload and Read in place sides](../../images/guides/project-creation/your_data_step_dark.webp#only-dark)](../../images/guides/project-creation/your_data_step_dark.webp){target=_blank}
+
+[![Read in place, One file URL tab: the URL, the name, the format and a preview of the table](../../images/guides/project-creation/read_in_place_url_light.webp#only-light)](../../images/guides/project-creation/read_in_place_url_light.webp){target=_blank}
+[![Read in place, One file URL tab: the URL, the name, the format and a preview of the table](../../images/guides/project-creation/read_in_place_url_dark.webp#only-dark)](../../images/guides/project-creation/read_in_place_url_dark.webp){target=_blank}
 
 | Format      | Extension            | Best Use Case                           |
 | ----------- | -------------------- | --------------------------------------- |
@@ -93,17 +99,20 @@ Once a folder is read, **How should Depictio read this folder?** offers three le
 
 When a pipeline is recognised, a line reads **Pipeline:** *name version* **· Detected**, with **Change** to pick another. When none is, **I know the pipeline** (or **Choose the pipeline** on the *Pipeline template* tile) opens the picker.
 
-<!-- shot: project-creation/read-levels | The three read-level tiles with Pipeline template preselected and the "Pipeline: X · Detected" line with Change -->
+[![The read levels: Flat tables, Custom workflows and Pipeline template, with the detected pipeline](../../images/guides/project-creation/read_levels_light.webp#only-light)](../../images/guides/project-creation/read_levels_light.webp){target=_blank}
+[![The read levels: Flat tables, Custom workflows and Pipeline template, with the detected pipeline](../../images/guides/project-creation/read_levels_dark.webp#only-dark)](../../images/guides/project-creation/read_levels_dark.webp){target=_blank}
 
 ### What Depictio found, then Create
 
 *What Depictio found* lists the facts and checks before anything is written: the pipeline, the runs, the source and the contents. For flat tables you tick the tables to keep, and **Create project with N tables** creates the project from there. For a pipeline, **Next** leads to *Create*, and **Create Project** starts the ingestion.
 
-<!-- shot: project-creation/what-depictio-found | What Depictio found step for a pipeline run: Pipeline, Runs, Source, Contents and the checks -->
+[![What Depictio found step for a pipeline run: Pipeline, Source, Contents and the collections found](../../images/guides/project-creation/what_depictio_found_light.webp#only-light)](../../images/guides/project-creation/what_depictio_found_light.webp){target=_blank}
+[![What Depictio found step for a pipeline run: Pipeline, Source, Contents and the collections found](../../images/guides/project-creation/what_depictio_found_dark.webp#only-dark)](../../images/guides/project-creation/what_depictio_found_dark.webp){target=_blank}
 
 The project page then says in its header what the project holds: its **Pipeline**, its **Runs**, its **Data collections** and their **Source**.
 
-<!-- shot: project-creation/project-header | A project page header with the Pipeline, Runs, Data collections and Source facts -->
+[![A project page header with the Pipeline, Runs, Data collections and Source facts](../../images/guides/project-creation/project_header_found_light.webp#only-light)](../../images/guides/project-creation/project_header_found_light.webp){target=_blank}
+[![A project page header with the Pipeline, Runs, Data collections and Source facts](../../images/guides/project-creation/project_header_found_dark.webp#only-dark)](../../images/guides/project-creation/project_header_found_dark.webp){target=_blank}
 
 ### Project shapes
 
@@ -150,12 +159,15 @@ For a pipeline's outputs, see [Projects with a workflow](#projects-with-a-workfl
 
 The button says what will happen: **Add run**, **Add N tables**, or **Add run and N tables**. Before you click it, *What Depictio found* shows the pipeline, the new runs, the source and the contents of the folder.
 
-<!-- shot: project-creation/add-data-run | Add data on a pipeline project: a second run folder, its What Depictio found facts and the Add run button -->
-<!-- video: project-creation/add-run | Add data on a pipeline project: point at a second run folder, Add run, then the new run on the project page -->
+[![Add data on a pipeline project: a second run folder, its What Depictio found facts and the Add run button](../../images/guides/project-creation/add_data_run_light.webp#only-light)](../../images/guides/project-creation/add_data_run_light.webp){target=_blank}
+[![Add data on a pipeline project: a second run folder, its What Depictio found facts and the Add run button](../../images/guides/project-creation/add_data_run_dark.webp#only-dark)](../../images/guides/project-creation/add_data_run_dark.webp){target=_blank}
+
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/project-creation/add-run.webp" src="../../images/guides/project-creation/add-run.mp4"></video></figure>
 
 A run whose MultiQC reports name samples already in the project is not added. The **Samples** row lists them with a warning: rename the samples in this run, or read it as its own project.
 
-<!-- shot: project-creation/duplicate-samples | Add data refusing a run: the Samples row warning that its samples are already in the project -->
+[![Add data refusing a run: the Samples row warning that its samples are already in the project](../../images/guides/project-creation/duplicate_samples_light.webp#only-light)](../../images/guides/project-creation/duplicate_samples_light.webp){target=_blank}
+[![Add data refusing a run: the Samples row warning that its samples are already in the project](../../images/guides/project-creation/duplicate_samples_dark.webp#only-dark)](../../images/guides/project-creation/duplicate_samples_dark.webp){target=_blank}
 
 Only a project made from a pipeline template takes another run, and only when its collections walk a folder. A project read from an `s3://` run folder uses `s3_prefix` scans, which cannot take a second run. From the CLI, `depictio ingest --attach-run` does the same.
 
@@ -167,7 +179,8 @@ Each table has a lock switch, **Read-only** by default. Turn it on to make the t
 
 The table's past versions stay readable. **Restore** on one of them (**Restore v3**, for instance) writes it back as a new version, so nothing is lost.
 
-<!-- shot: project-creation/table-edit-lock | An uploaded table unlocked (Editable), with a cell being edited and the version history -->
+[![An uploaded table unlocked (Editable), with Save changes, Discard and Past versions](../../images/guides/metadata-panel/table_edit_mode_light.webp#only-light)](../../images/guides/metadata-panel/table_edit_mode_light.webp){target=_blank}
+[![An uploaded table unlocked (Editable), with Save changes, Discard and Past versions](../../images/guides/metadata-panel/table_edit_mode_dark.webp#only-dark)](../../images/guides/metadata-panel/table_edit_mode_dark.webp){target=_blank}
 
 A table whose columns look like a latitude and longitude pair shows **Map coordinates…**, see [Map-capable Table DCs](#example-map-capable-table-dcs). Each collection records its origin, shown as its **Source** (or **Uploaded file**) and the date it was **Added**.
 
@@ -198,12 +211,16 @@ The Project Builder defines a project's collections yourself, for a folder no sh
 
 The builder lives at `/projects/build`. *New project* opens it when you pick **Custom workflows** for a folder (**Open the Project Builder**). It has three steps: **Source & project**, **Data collections**, **Review & create**.
 
-<!-- shot: project-creation/builder-source | Project Builder, Source & project step: the data root, the start choice (scratch, folder, template) and the project fields -->
+[![Project Builder, Source & project step: the data root and the project fields](../../images/guides/project-creation/builder_source_light.webp#only-light)](../../images/guides/project-creation/builder_source_light.webp){target=_blank}
+[![Project Builder, Source & project step: the data root and the project fields](../../images/guides/project-creation/builder_source_dark.webp#only-dark)](../../images/guides/project-creation/builder_source_dark.webp){target=_blank}
 
 You start from scratch, from a folder, or from a shipped template to adjust. The builder covers every collection kind, path wildcards, run detection by regular expression, and links between collections. A GitHub URL fills the workflow's metadata from its RO-Crate or Nextflow manifest.
 
-<!-- shot: project-creation/builder-collections | Project Builder, Data collections step: a workflow tree, one collection with its path wildcard and the matching files -->
-<!-- shot: project-creation/builder-review | Project Builder, Review & create step: the links, the generated YAML and the Create button -->
+[![Project Builder, Data collections step: a workflow tree, one collection with its path wildcard and the matching files](../../images/guides/project-creation/builder_collections_light.webp#only-light)](../../images/guides/project-creation/builder_collections_light.webp){target=_blank}
+[![Project Builder, Data collections step: a workflow tree, one collection with its path wildcard and the matching files](../../images/guides/project-creation/builder_collections_dark.webp#only-dark)](../../images/guides/project-creation/builder_collections_dark.webp){target=_blank}
+
+[![Project Builder, Review & create step: the links, the generated YAML and the Create button](../../images/guides/project-creation/builder_review_light.webp#only-light)](../../images/guides/project-creation/builder_review_light.webp){target=_blank}
+[![Project Builder, Review & create step: the links, the generated YAML and the Create button](../../images/guides/project-creation/builder_review_dark.webp#only-dark)](../../images/guides/project-creation/builder_review_dark.webp){target=_blank}
 
 ### Without a server
 
