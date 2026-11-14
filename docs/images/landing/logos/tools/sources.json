@@ -1,10 +1,10 @@
 {
   "multiqc": {
-    "file": "multiqc.webp",
-    "width": 252,
+    "file": "multiqc.svg",
+    "width": 253,
     "height": 48,
     "wordmark": true,
-    "source": "https://raw.githubusercontent.com/MultiQC/MultiQC/HEAD/docs/images/MultiQC_logo.png"
+    "source": "https://raw.githubusercontent.com/MultiQC/logo/HEAD/logos/multiqc_logo_dark.svg"
   },
   "qiime2": {
     "file": "qiime2.webp",

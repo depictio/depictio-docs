@@ -55,7 +55,7 @@ Shorter clips, embedded alongside the documentation they belong to:
 
 ## Try it yourself
 
-- **[Live demo](https://demo.depictio.embl.org/)** is a running instance with example
+- **[Live demo](https://showcases.depictio.embl.org/)** is a running instance with example
   projects. No account needed, and it resets periodically.
 - **[Open in Codespaces](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&quickstart=1)**
   runs the Python package in a GitHub cloud workspace, nothing to install.

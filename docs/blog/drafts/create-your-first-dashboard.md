@@ -79,7 +79,7 @@ Chinstrap,Dream,46.5,17.9,192,3500,female,2007
 
 ### Using the Web Interface
 
-1. **Visit Depictio** → Go to [demo.depictio.embl.org](https://demo.depictio.embl.org)
+1. **Visit Depictio** → Go to [showcases.depictio.embl.org](https://showcases.depictio.embl.org)
 2. **Create Account** → Click "Sign Up" (or use demo mode)
 3. **New Project** → Click "+ Create Project"
 4. **Project Settings**:
@@ -311,13 +311,13 @@ Your dashboard now supports **cross-filtering**: selections in one component aut
 **Public Link:**
 ```bash
 # Your shareable dashboard URL
-https://demo.depictio.embl.org/dashboards/your-dashboard-id
+https://showcases.depictio.embl.org/dashboards/your-dashboard-id
 ```
 
 **Embed Code:**
 ```html
 <!-- Embed in website or documentation -->
-<iframe src="https://demo.depictio.embl.org/embed/your-dashboard-id"
+<iframe src="https://showcases.depictio.embl.org/embed/your-dashboard-id"
         width="100%" height="600px" frameborder="0">
 </iframe>
 ```

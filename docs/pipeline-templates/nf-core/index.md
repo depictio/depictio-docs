@@ -40,6 +40,16 @@ Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a 
 | [crisprseq](crisprseq.md) | CRISPR gene editing outcomes and screens | 2.3.0 |
 | [isoseq](isoseq.md) | PacBio Iso-Seq full-length transcripts | 3.0.1 |
 | [pairgenomealign](pairgenomealign.md) | Pairwise genome alignment | 3.0.4 |
+| [drop](drop.md) | RNA outlier detection: aberrant expression, splicing and mono-allelic expression | 1.0.0 |
+| [epitopeprediction](epitopeprediction.md) | MHC binding prediction for variant, protein and peptide inputs | 3.2.0 |
+| [genomeqc](genomeqc.md) | Genome assembly and annotation QC across genomes | 1.0.1 |
+| [hlatyping](hlatyping.md) | HLA class I typing with OptiType | 2.2.0 |
+| [nascent](nascent.md) | Nascent transcription time courses (GRO-seq, PRO-seq) | 2.3.0 |
+| [quantms](quantms.md) | Label-free DIA proteomics quantification | 1.1.1 |
+| [raredisease](raredisease.md) | Rare disease family analysis: ranked variants and inheritance models | 3.1.2 |
+| [rnavar](rnavar.md) | RNA-seq germline variant calling | 1.3.0 |
+| [stableexpression](stableexpression.md) | Most stable reference genes across public expression data | 1.1.0 |
+| [viralmetagenome](viralmetagenome.md) | Viral genome reconstruction from metagenomic reads | 1.2.0 |
 
 !!! tip "You do not have to name the template <small>(v1.10.0+)</small>"
     A pipeline can trigger the ingestion itself when it completes, and the

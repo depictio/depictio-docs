@@ -125,7 +125,7 @@ hide:
         <p class="kpi-figure"><span class="kpi-num">{{ stats.viz }}</span></p>
         <h3 class="kpi-label">advanced visualizations</h3>
         <p class="kpi-sub">Each with its own controls and views</p>
-        <div class="kpi-example kpi-viz"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_volcano_light.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_volcano_dark.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_sunburst_light.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_sunburst_dark.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_genome_chord_light.webp" alt="" width="320" height="184" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_genome_chord_dark.webp" alt="" width="320" height="184" loading="lazy" decoding="async"><img class="kpi-viz-light" src="images/landing/thumbs/kpi_oncoplot_light.webp" alt="" width="320" height="207" loading="lazy" decoding="async"><img class="kpi-viz-dark" src="images/landing/thumbs/kpi_oncoplot_dark.webp" alt="" width="320" height="207" loading="lazy" decoding="async"></div>
+        <div class="kpi-example kpi-viz">{{ stats.viz_marquee }}</div>
         <a class="kpi-link" href="features/advanced-visualizations/">See them all &rarr;</a>
       </article>
     </div>
@@ -154,8 +154,9 @@ hide:
         <button class="cshow-tab" type="button" role="tab" id="cshow-tab-card" aria-controls="cshow-card" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-teal);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5,3A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3H5M7,7H17V9H7V7M7,11H14V13H7V11M7,15H17V17H7V15Z"/></svg></span><span class="cshow-tab-text"><b>Card</b><small>Metrics at a glance</small></span></button>
         <button class="cshow-tab" type="button" role="tab" id="cshow-tab-table" aria-controls="cshow-table" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-blue);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5,4H19A2,2 0 0,1 21,6V18A2,2 0 0,1 19,20H5A2,2 0 0,1 3,18V6A2,2 0 0,1 5,4M5,8V12H11V8H5M13,8V12H19V8H13M5,14V18H11V14H5M13,14V18H19V14H13Z"/></svg></span><span class="cshow-tab-text"><b>Table</b><small>Sort, filter, export</small></span></button>
         <button class="cshow-tab" type="button" role="tab" id="cshow-tab-interactive" aria-controls="cshow-interactive" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-green);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z"/></svg></span><span class="cshow-tab-text"><b>Interactive</b><small>Filters for every tile</small></span></button>
-        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-multiqc" aria-controls="cshow-multiqc" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-orange);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.46,11.53A7.53,7.53 0 0,1 11.52,4.5V0.09A11.98,11.98 0 0,0 0.06,11.53ZM11.5,19.6A7.53,7.53 0 0,1 4.46,12.54H0.06A11.98,11.98 0 0,0 11.5,24ZM12.53,4.5A7.53,7.53 0 0,1 19.57,11.56H24A11.98,11.98 0 0,0 12.53,0.09ZM24,19.6A7.53,7.53 0 0,1 16.93,12.54H12.53A11.98,11.98 0 0,0 24,24Z"/></svg></span><span class="cshow-tab-text"><b>MultiQC</b><small>Your QC report, live</small></span></button>
+        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-multiqc" aria-controls="cshow-multiqc" aria-selected="false" tabindex="-1" style="--c-accent: var(--mqc-ink);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.46,11.53A7.53,7.53 0 0,1 11.52,4.5V0.09A11.98,11.98 0 0,0 0.06,11.53ZM11.5,19.6A7.53,7.53 0 0,1 4.46,12.54H0.06A11.98,11.98 0 0,0 11.5,24ZM12.53,4.5A7.53,7.53 0 0,1 19.57,11.56H24A11.98,11.98 0 0,0 12.53,0.09ZM24,19.6A7.53,7.53 0 0,1 16.93,12.54H12.53A11.98,11.98 0 0,0 24,24Z"/></svg></span><span class="cshow-tab-text"><b>MultiQC</b><small>Your QC report, live</small></span></button>
         <button class="cshow-tab" type="button" role="tab" id="cshow-tab-map" aria-controls="cshow-map" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-violet);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/></svg></span><span class="cshow-tab-text"><b>Map</b><small>Samples on a map</small></span></button>
+        <button class="cshow-tab" type="button" role="tab" id="cshow-tab-genome" aria-controls="cshow-genome" aria-selected="false" tabindex="-1" style="--c-accent: #0b7285;"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"/></svg></span><span class="cshow-tab-text"><b>Genome browser</b><small>Tracks next to the dashboard</small></span></button>
         <button class="cshow-tab" type="button" role="tab" id="cshow-tab-text" aria-controls="cshow-text" aria-selected="false" tabindex="-1" style="--c-accent: #e91e63;"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 19.11L12.11 17H7v-2h7v.12L16.12 13H7v-2h10v1.12l1.24-1.23c.48-.48 1.11-.75 1.8-.75c.33 0 .66.07.96.19V5a2 2 0 0 0-2-2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h5zM7 7h10v2H7zm14.7 7.35l-1 1l-2.05-2.05l1-1a.55.55 0 0 1 .77 0l1.28 1.28c.21.21.21.56 0 .77M12 19.94l6.06-6.06l2.05 2.05L14.06 22H12z"/></svg></span><span class="cshow-tab-text"><b>Text</b><small>Notes for the reader</small></span></button>
         <button class="cshow-tab" type="button" role="tab" id="cshow-tab-image" aria-controls="cshow-image" aria-selected="false" tabindex="-1" style="--c-accent: var(--depictio-pink);"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22,16V4A2,2 0 0,0 20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16M11,12L13.03,14.71L16,11L20,16H8M2,6V20A2,2 0 0,0 4,22H18V20H4V6"/></svg></span><span class="cshow-tab-text"><b>Image</b><small>Galleries from S3</small></span></button>
       </div>
@@ -340,7 +341,7 @@ hide:
             <a class="glightbox cshow-dark" href="images/landing/live/poster/viz_rarefaction_dark.webp" data-type="image" data-gallery="cshow-advanced_viz-dark" data-title="Rarefaction curves per habitat, nf-core/ampliseq" aria-label="Rarefaction curves per habitat, nf-core/ampliseq, open full size"><img src="images/landing/live/poster/viz_rarefaction_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
           </figure>
         </div>
-        <ul class="cshow-points"><li>50 visualizations: volcano, oncoplot, sunburst, genome tracks, 3D structures and more</li><li>Each comes with its own controls; some switch between views</li></ul>
+        <ul class="cshow-points"><li>{{ stats.viz }} visualizations: volcano, oncoplot, sunburst, genome tracks, 3D structures and more</li><li>Each comes with its own controls; some switch between views</li></ul>
         <a class="cshow-docs" href="features/advanced-visualizations/">Advanced viz docs &rarr;</a>
       </div>
       <div class="cshow-panel" role="tabpanel" id="cshow-card" aria-labelledby="cshow-tab-card" tabindex="0" style="--c-accent: var(--depictio-teal);">
@@ -395,7 +396,7 @@ hide:
         <ul class="cshow-points"><li>Range slider, slider, multi-select, date picker, segmented control, text search</li><li>Each filter applies to every linked component</li><li>Grouped in a filter panel at the side of the dashboard</li></ul>
         <a class="cshow-docs" href="features/components/#interactive-components">Interactive docs &rarr;</a>
       </div>
-      <div class="cshow-panel" role="tabpanel" id="cshow-multiqc" aria-labelledby="cshow-tab-multiqc" tabindex="0" style="--c-accent: var(--depictio-orange);">
+      <div class="cshow-panel" role="tabpanel" id="cshow-multiqc" aria-labelledby="cshow-tab-multiqc" tabindex="0" style="--c-accent: var(--mqc-ink);">
         <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.46,11.53A7.53,7.53 0 0,1 11.52,4.5V0.09A11.98,11.98 0 0,0 0.06,11.53ZM11.5,19.6A7.53,7.53 0 0,1 4.46,12.54H0.06A11.98,11.98 0 0,0 11.5,24ZM12.53,4.5A7.53,7.53 0 0,1 19.57,11.56H24A11.98,11.98 0 0,0 12.53,0.09ZM24,19.6A7.53,7.53 0 0,1 16.93,12.54H12.53A11.98,11.98 0 0,0 24,24Z"/></svg></span>MultiQC</h3>
         <div class="cshow-examples" role="group" aria-label="MultiQC examples">
           <span class="cshow-exgroup"><b>Plots</b><button class="cshow-ex" type="button" aria-pressed="true" data-ex="0">Status heatmap</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="1">Coverage lines</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="2">Insert size</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="3">Stacked bars</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="4">Variant effects</button></span>
@@ -443,6 +444,25 @@ hide:
         </div>
         <ul class="cshow-points"><li>Tile maps from latitude and longitude columns, no API key</li><li>A click or a lasso on the sites filters the dashboard</li></ul>
         <a class="cshow-docs" href="features/components/#map-components">Map docs &rarr;</a>
+      </div>
+      <div class="cshow-panel" role="tabpanel" id="cshow-genome" aria-labelledby="cshow-tab-genome" tabindex="0" style="--c-accent: #0b7285;">
+        <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4zm14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4zm-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42zM7 3h10v1l-.06.5H7.06L7 4zm.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06zm-2.03 3h9.88l.06.5v1H7v-1z"/></svg></span>Genome browser</h3>
+        <div class="cshow-examples" role="group" aria-label="Genome browser examples">
+          <button class="cshow-ex" type="button" aria-pressed="true" data-ex="0">Tracks</button>
+          <button class="cshow-ex" type="button" aria-pressed="false" data-ex="1">Navigator</button>
+        </div>
+        <div class="cshow-stage">
+          <figure class="cshow-shot" data-ex="0">
+            <a class="glightbox cshow-light" href="images/landing/components/genome_browser_light.webp" data-type="image" data-gallery="cshow-genome-light" data-title="Signal, peaks and annotations of a ChIP-seq run in the embedded genome browser, nf-core/chipseq" aria-label="Signal, peaks and annotations of a ChIP-seq run in the embedded genome browser, nf-core/chipseq, open full size"><img src="images/landing/components/genome_browser_light.webp" alt="The genome browser of a ChIP-seq dashboard: gene models, motif sites, signal tracks and MACS2 peaks of four libraries at one locus" width="1600" height="858" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/components/genome_browser_dark.webp" data-type="image" data-gallery="cshow-genome-dark" data-title="Signal, peaks and annotations of a ChIP-seq run in the embedded genome browser, nf-core/chipseq" aria-label="Signal, peaks and annotations of a ChIP-seq run in the embedded genome browser, nf-core/chipseq, open full size"><img src="images/landing/components/genome_browser_dark.webp" alt="" width="1600" height="858" loading="lazy" decoding="async"></a>
+          </figure>
+          <figure class="cshow-shot" data-ex="1" hidden>
+            <a class="glightbox cshow-light" href="images/landing/components/genome_navigator_light.webp" data-type="image" data-gallery="cshow-genome-light" data-title="Binned signal, one lane per library, driving the genome browser, nf-core/nascent" aria-label="Binned signal, one lane per library, driving the genome browser, nf-core/nascent, open full size"><img src="images/landing/components/genome_navigator_light.webp" alt="The nascent signal of eleven libraries in 250 kb windows along the genome, one lane each, coloured from 0 h to 72 h" width="1600" height="970" loading="lazy" decoding="async"></a>
+            <a class="glightbox cshow-dark" href="images/landing/components/genome_navigator_dark.webp" data-type="image" data-gallery="cshow-genome-dark" data-title="Binned signal, one lane per library, driving the genome browser, nf-core/nascent" aria-label="Binned signal, one lane per library, driving the genome browser, nf-core/nascent, open full size"><img src="images/landing/components/genome_navigator_dark.webp" alt="" width="1600" height="970" loading="lazy" decoding="async"></a>
+          </figure>
+        </div>
+        <ul class="cshow-points"><li>JBrowse 2 inside the dashboard, no browser server to run, bound to a manifest of track files: bigWig, BAM, VCF, BED, GFF</li><li>GenomeSpy lanes (the Navigator) show every library along the genome, here coloured by time point: brush a region and the browser opens on it</li><li>The browser's window is drawn as a band on the lanes, and a click on a feature filters the dashboard on its sample</li><li>Filters pick the tracks and frame the locus</li></ul>
+        <a class="cshow-docs" href="features/genome-browser/">Genome browser docs &rarr;</a>
       </div>
       <div class="cshow-panel" role="tabpanel" id="cshow-text" aria-labelledby="cshow-tab-text" tabindex="0" style="--c-accent: #e91e63;">
         <h3 class="cshow-heading"><span class="cshow-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 19.11L12.11 17H7v-2h7v.12L16.12 13H7v-2h10v1.12l1.24-1.23c.48-.48 1.11-.75 1.8-.75c.33 0 .66.07.96.19V5a2 2 0 0 0-2-2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h5zM7 7h10v2H7zm14.7 7.35l-1 1l-2.05-2.05l1-1a.55.55 0 0 1 .77 0l1.28 1.28c.21.21.21.56 0 .77M12 19.94l6.06-6.06l2.05 2.05L14.06 22H12z"/></svg></span>Text</h3>
@@ -494,7 +514,7 @@ hide:
           <span class="live-indicator"></span>
           <div class="demo-badge-content">
             <strong>Live interactive demo - Try it!</strong>
-            <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener" class="demo-direct-link">
+            <a href="https://showcases.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener" class="demo-direct-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
               </svg>
@@ -514,7 +534,7 @@ hide:
         <div class="demo-alternatives">
           <h4>Get started with Depictio</h4>
           <div class="demo-alt-buttons">
-            <a href="https://demo.depictio.embl.org/" class="demo-alt-btn demo-btn" target="_blank" rel="noopener">
+            <a href="https://showcases.depictio.embl.org/" class="demo-alt-btn demo-btn" target="_blank" rel="noopener">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
               </svg>
@@ -557,8 +577,8 @@ hide:
         <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
       </svg>
     </button>
-    <iframe id="demo-iframe" data-depictio-embed src="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
-      <p>Your browser does not support iframes. <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2">Click here to view the Depictio dashboard</a></p>
+    <iframe id="demo-iframe" data-depictio-embed src="https://showcases.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" width="100%" height="1080" frameborder="0" allowfullscreen style="zoom: 0.56;">
+      <p>Your browser does not support iframes. <a href="https://showcases.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2">Click here to view the Depictio dashboard</a></p>
     </iframe>
   </div>
 </section>
@@ -786,7 +806,7 @@ hide:
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9,2V8H11V10H5A2,2 0 0,0 3,12V14H1V20H7V14H5V12H11V14H9V20H15V14H13V12H19V14H17V20H23V14H21V12A2,2 0 0,0 19,10H13V8H15V2H9Z"/></svg><span>Explore</span></span>
         <h3>Pick a clade, filter everything</h3>
         <p>Click any internal node and the panel names what you picked: how many tips it holds, how deep it runs, how well the branch is supported, and how those tips break down by taxonomy. Send it through as a filter and every other component on the dashboard narrows to the same samples.</p>
-        <a class="feature-link" href="features/components/#phylogeny-interaction">Phylogeny interaction &rarr;</a>
+        <a class="feature-link" href="features/advanced-visualizations/#phylogenetic">Phylogeny interaction &rarr;</a>
       </div>
     </article>
 
@@ -970,7 +990,7 @@ hide:
   </article>
 
   <div class="installation-grid">
-    <a href="https://demo.depictio.embl.org/" class="installation-card demo" target="_blank" rel="noopener">
+    <a href="https://showcases.depictio.embl.org/" class="installation-card demo" target="_blank" rel="noopener">
       <div class="card-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z"/></svg>
       </div>
@@ -1824,6 +1844,19 @@ hide:
     background: var(--c-accent);
   }
 
+  /* MultiQC keeps its logo's own ink: near black on light, white on dark. */
+  :root {
+    --mqc-ink: #201637;
+  }
+
+  [data-md-color-scheme="slate"] {
+    --mqc-ink: #f3f0fa;
+  }
+
+  [data-md-color-scheme="slate"] #cshow-tab-multiqc[aria-selected="true"] .cshow-icon {
+    color: #201637;
+  }
+
   .cshow-tab-text {
     display: flex;
     flex-direction: column;
@@ -2415,7 +2448,8 @@ hide:
     min-height: 74px;
   }
 
-  /* Template and tool logos scroll by in two rows, opposite ways, and stop
+  /* Template and tool logos scroll by in four rows, the visualization
+     thumbnails in two, each row the opposite way to the one above, and stop
      under the pointer. hooks/landing_stats.py prints each row twice so the
      loop has no seam. */
   .kpi-marquee {
@@ -2533,7 +2567,7 @@ hide:
   .kpi-seg-table { background: var(--depictio-blue); }
   .kpi-seg-figure { background: var(--depictio-purple); }
   .kpi-seg-interactive { background: var(--depictio-green); }
-  .kpi-seg-multiqc { background: var(--depictio-orange); }
+  .kpi-seg-multiqc { background: var(--mqc-ink); }
 
   /* Two columns when they fit, one when the tile is narrow */
   .md-typeset ul.kpi-legend {
@@ -2575,28 +2609,31 @@ hide:
     flex: none;
   }
 
-  .kpi-viz {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.35rem;
+  .md-typeset .kpi-viz a {
+    display: block;
   }
 
   .md-typeset .kpi-viz img {
-    width: 100%;
-    aspect-ratio: 1;
+    width: 112px;
+    height: 84px;
     object-fit: cover;
-    object-position: center 60%;
+    object-position: center top;
     border-radius: 6px;
     border: 1px solid var(--md-default-fg-color--lightest);
   }
 
+  .md-typeset .kpi-viz a:hover img,
+  .md-typeset .kpi-viz a:focus-visible img {
+    border-color: var(--kpi-accent);
+  }
+
   .kpi-viz-dark,
   [data-md-color-scheme="slate"] .kpi-viz-light {
-    display: none;
+    display: none !important;
   }
 
   [data-md-color-scheme="slate"] .kpi-viz-dark {
-    display: block;
+    display: block !important;
   }
 
   .md-typeset .kpi-link {
@@ -4281,7 +4318,7 @@ function toggleFullscreen() {
 async function checkDemoAvailability() {
   const demoSection = document.querySelector('.live-demo-section');
   const iframe = document.getElementById('demo-iframe');
-  const demoUrl = 'https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2';
+  const demoUrl = 'https://showcases.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2';
 
   if (!demoSection || !iframe) return;
 
@@ -4318,7 +4355,7 @@ async function checkDemoAvailability() {
           </svg>
         </div>
         <h3>Live Demo Temporarily Unavailable</h3>
-        <p>The interactive demo is currently not accessible. Please try again later or <a href="https://demo.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
+        <p>The interactive demo is currently not accessible. Please try again later or <a href="https://showcases.depictio.embl.org/dashboard/646b0f3c1e4a2d7f8e5b8ca2" target="_blank" rel="noopener">visit the demo site directly</a>.</p>
         <div class="demo-alternative-actions">
           <a href="https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&amp;quickstart=1" class="md-button" target="_blank" rel="noopener">Open in Codespaces</a>
           <a href="usage/get_started/" class="md-button">View Documentation</a>

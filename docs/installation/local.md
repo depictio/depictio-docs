@@ -383,7 +383,7 @@ v1.16.0, `DEPICTIO_REMOTE_*`, the
 [remote data settings](env-reference.md#remote-data-sources): the hosts and
 buckets the server may read. And, since v1.19.0, `DEPICTIO_STRUCTURE_RESOLVER_*`:
 `DEPICTIO_STRUCTURE_RESOLVER_ENABLED=true depictio local up` lets the
-[protein tiles](../features/protein-tiles.md#structure-resolver) fetch models from
+[protein tiles](../features/proteins.md#structure-resolver) fetch models from
 AlphaFold DB and ESMFold. The `AWS_*` variables are not passed on, so the
 services never reach another S3 store with your shell's keys. A bucket on
 `DEPICTIO_REMOTE_CREDENTIALED_S3_BUCKETS` is then read with the default profile

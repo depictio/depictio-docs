@@ -17,7 +17,7 @@ hide:
       <a href="https://github.com/nf-core/proteinfamilies" target="_blank"><i class="mdi mdi-github"></i> GitHub</a>
     </p>
   </div>
-  <span class="template-status-draft template-banner-badge" data-tooltip="Draft: generated and not yet reviewed. Expect it to need fixes before it is usable."><i class="mdi mdi-pencil-outline"></i> Draft</span>
+  <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
 <div class="tpl-version-pick" data-latest="2.5.0">
@@ -54,7 +54,7 @@ every tab through the samplesheet links.
 !!! info "Structure tiles need the structure resolver"
     proteinfamilies publishes no structure files. The 3D tiles of the Family
     alignment and Profile HMM tabs fold the family representative from its
-    sequence through the [structure resolver](../../features/protein-tiles.md#structure-resolver),
+    sequence through the [structure resolver](../../features/proteins.md#structure-resolver),
     which is off by default: an administrator sets
     `DEPICTIO_STRUCTURE_RESOLVER_ENABLED=true` on the server. The sequence is
     sent to ESMFold on Meta's ESM Atlas, which folds at most 400 residues. With
@@ -219,7 +219,7 @@ histograms, the track and the structure agree.
     against mean conservation and sized by representative length, with the record
     of the picked family beside it, and the family size per sample. The predicted
     structure of the picked family's representative
-    [floats](../../features/protein-tiles.md#molecule-3d) over the
+    [floats](../../features/advanced-visualizations.md#molecule-3d) over the
     dashboard: it opens compact, stays on screen on every tab and follows the
     filters of the tab you read.
 
@@ -432,7 +432,7 @@ screenshots above come from that run.
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it a Draft.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it from Reviewed.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

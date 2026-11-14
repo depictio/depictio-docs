@@ -136,7 +136,7 @@ Translational regulation are pooled over the run and do not follow them. The
 *Sample sheet* section (the sample sheet and the optional design table) is pinned,
 collapsed, to the bottom of every child tab. Without a `METADATA_FILE` the design
 table and the group filters go; the library and assay filters remain.
-The template also has a **Locus** tab that embeds a [genome browser](../../features/genome-browser.md), opened on an
+The template also has a **Locus** tab that embeds a [genome browser](../../features/genome-browser/index.md), opened on an
 ORF, with the libraries' P-site, coverage and read tracks.
 
 === ":material-compass-outline: Overview"
@@ -475,7 +475,7 @@ Re-ingesting accumulates dashboards, so delete the project before repeating a ru
   </div>
   <div class="tpl-credit">
     <span class="tpl-credit-role"><i class="mdi mdi-eye-check-outline"></i> Reviewers</span>
-    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it Experimental.</span>
+    <span class="tpl-credit-note">Nobody has run it on their own data and signed it off yet, which is what keeps it from Reviewed.</span>
     <span class="tpl-person"><i class="mdi mdi-account-plus-outline"></i> Open</span>
   </div>
   <div class="tpl-credit">

@@ -344,7 +344,7 @@ remote and manifest collections can read a private bucket.
 
 ### External structure services <small>(v1.19.0+)</small> { #structure-resolver }
 
-The [protein tiles](protein-tiles.md#structure-resolver) can fetch a model the run did not
+The [protein tiles](proteins.md#structure-resolver) can fetch a model the run did not
 publish. The resolver is **off by default** (`DEPICTIO_STRUCTURE_RESOLVER_ENABLED`), because
 once on, exactly the accession, the gene and taxon, or the protein sequence leaves the
 server, to EBI's AlphaFold DB, UniProt or Meta's ESM Atlas. For an unpublished sequence that
@@ -423,7 +423,7 @@ Configure logging via environment variables:
 
 ### Genome browser track access <small>(v1.20.0+)</small> { #genome-browser-track-access }
 
-The [genome browser](genome-browser.md) runs inside the viewer, not in an iframe, and the
+The [genome browser](genome-browser/index.md) runs inside the viewer, not in an iframe, and the
 browser never talks to S3 or to a track host itself. Every track byte goes through the
 API's Range-capable track proxy:
 

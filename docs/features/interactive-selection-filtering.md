@@ -237,7 +237,7 @@ neutral *All* reference leads, and the ungrouped rows trail as a dimmed *Other*.
 
 ## :material-dna: Genome region selection { #genome-region-selection }
 
-A genome track (a [Genome view](components.md#genome-view) tile) can act as a **locus
+A genome track (a [Genome view](advanced-visualizations.md#genome-view) tile) can act as a **locus
 navigator**: brushing along its genome axis, typing a locus, or opening on its
 `default_region` selects a genomic region. A region is not a list of values, so it travels
 as two ordinary filters on the track's own collection, both under the source
@@ -288,18 +288,18 @@ navigating, gives a multi-track locus view.
 
 ## :material-molecule: Residue selection <small>(v1.19.0+)</small> { #residue-selection }
 
-The [protein tiles](protein-tiles.md) publish a pick the way a genome view publishes a
+The [protein tiles](advanced-visualizations.md#proteins) publish a pick the way a genome view publishes a
 region: a click or brush in a 3D model, an alignment, a logo or a PAE matrix becomes a filter
 on the entity column and a `position` range, plus the chain on a complex. Every table with
 those columns narrows, the last gesture wins, and cards and filter option lists ignore it as
 [they ignore a region](#region-scope). A hover marks the residue in every protein tile without
-filtering anything. See [Linked by residue](protein-tiles.md#residue-selection).
+filtering anything. See [Linked by residue](proteins.md#residue-selection).
 
 ---
 
 ## :material-card-account-details-outline: Record cards and their source { #record-cards }
 
-A [Record card](components.md#record-card) shows **one record** of a collection as labelled
+A [Record card](advanced-visualizations.md#record-card) shows **one record** of a collection as labelled
 fields: the detail half of a master/detail layout. It has no selector of its own. It
 follows a selection made elsewhere and shows the record whose id column matches the picked
 value, with an empty state naming its source while nothing is picked.

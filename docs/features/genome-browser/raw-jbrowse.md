@@ -1,5 +1,6 @@
 ---
 title: "Genome browser: Raw JBrowse configuration"
+icon: material/code-json
 description: Any JBrowse setting or track, merged last.
 glightbox: true
 ---
@@ -23,4 +24,4 @@ config_overrides:
         index: {location: {uri: "https://data.example.org/regions.bed.gz.tbi"}}
 ```
 
-[:material-arrow-left: All examples](../genome-browser.md#examples)
+[:material-arrow-left: All examples](index.md#examples)

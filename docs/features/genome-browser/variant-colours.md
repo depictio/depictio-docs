@@ -1,5 +1,6 @@
 ---
 title: "Genome browser: Variant colours"
+icon: material/palette
 description: Variants coloured by a category of the dashboard.
 glightbox: true
 ---
@@ -17,4 +18,4 @@ variant_color_by:
 
 Used in the [nf-core/oncoanalyser dashboard template](../../pipeline-templates/nf-core/oncoanalyser.md).
 
-[:material-arrow-left: All examples](../genome-browser.md#examples)
+[:material-arrow-left: All examples](index.md#examples)

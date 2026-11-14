@@ -1,5 +1,6 @@
 ---
 title: "Genome browser: Browser to dashboard"
+icon: material/cursor-default-click
 description: A click on a feature filters the dashboard on its sample.
 glightbox: true
 ---
@@ -20,4 +21,4 @@ selection_column: sample           # default: the collection's sample_column
 
 Used in the [nf-core/viralrecon dashboard template](../../pipeline-templates/nf-core/viralrecon.md).
 
-[:material-arrow-left: All examples](../genome-browser.md#examples)
+[:material-arrow-left: All examples](index.md#examples)

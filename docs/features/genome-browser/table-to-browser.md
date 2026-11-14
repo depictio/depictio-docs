@@ -1,5 +1,6 @@
 ---
 title: "Genome browser: Table to browser"
+icon: material/table-arrow-right
 description: A row picked in a table frames the browser on it.
 glightbox: true
 ---
@@ -26,4 +27,4 @@ row_selection_mode: single
 
 Used in the [nf-core/riboseq dashboard template](../../pipeline-templates/nf-core/riboseq.md).
 
-[:material-arrow-left: All examples](../genome-browser.md#examples)
+[:material-arrow-left: All examples](index.md#examples)

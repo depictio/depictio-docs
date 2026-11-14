@@ -1,5 +1,6 @@
 ---
 title: "Genome browser: Navigator"
+icon: material/compass-outline
 description: Brush a region on GenomeSpy lanes; the browser opens on it.
 glightbox: true
 ---
@@ -37,4 +38,4 @@ A `genome_view` tile on the same tab draws the calls of every sample along the w
 
 Used in the [nf-core/chipseq dashboard template](../../pipeline-templates/nf-core/chipseq.md), [nf-core/atacseq dashboard template](../../pipeline-templates/nf-core/atacseq.md) and [nf-core/cutandrun dashboard template](../../pipeline-templates/nf-core/cutandrun.md).
 
-[:material-arrow-left: All examples](../genome-browser.md#examples)
+[:material-arrow-left: All examples](index.md#examples)

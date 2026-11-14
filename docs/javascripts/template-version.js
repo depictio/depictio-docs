@@ -6,6 +6,13 @@
 
    navigation.instant is on, so the wiring runs on every page swap through
    document$ rather than once on DOMContentLoaded. */
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+// ISO date (YYYY-MM-DD) to "4 Nov 2026", without a Date object so the zone cannot shift the day.
+const formatDate = (iso) => {
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${d} ${MONTHS[m - 1]} ${y}`;
+};
+
 function initTemplateVersionPicker() {
   const select = document.querySelector('.tpl-version-select');
   if (!select) return;
@@ -43,16 +50,29 @@ function initTemplateVersionPicker() {
     rev.title = "The template's own revision, not the pipeline's";
     pick.appendChild(rev);
   }
+  let upd = pick?.querySelector('.tpl-template-upd');
+  if (pick && !upd) {
+    upd = document.createElement('span');
+    upd.className = 'tpl-template-upd';
+    upd.title = 'Last change to this template in the depictio repository';
+    pick.appendChild(upd);
+  }
 
   const apply = () => {
     if (badge) badge.hidden = select.value !== latest;
     blocks.forEach((block) => {
       const hidden = block.dataset.version !== select.value;
       block.hidden = hidden;
-      const version = block.querySelector('[data-template-version]')?.dataset.templateVersion;
+      const meta = block.querySelector('[data-template-version]');
+      const version = meta?.dataset.templateVersion;
+      const updated = meta?.dataset.templateUpdated;
       if (!hidden && rev) {
         rev.textContent = version ? `Template ${version}` : '';
         rev.hidden = !version;
+      }
+      if (!hidden && upd) {
+        upd.textContent = updated ? `Updated ${formatDate(updated)}` : '';
+        upd.hidden = !updated;
       }
       headingIds.get(block).forEach((id) => {
         tocItems(id).forEach((item) => {
