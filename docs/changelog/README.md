@@ -21,38 +21,34 @@ ghcr.io/depictio/depictio-worker:1.21.0
 ghcr.io/depictio/depictio-cli:1.21.0
 ```
 
-### **♻️ Migration**
+### **🕒 _"What's new"_ and run comparison**
 
-* **No more Basic or Advanced projects**: a project starts from its data. `project_type` is still accepted in YAML but ignored. See [Create a project](../usage/projects/guide.md#create-a-project) ([196c0d1](https://github.com/depictio/depictio/commit/196c0d17882ad92f6718fd0aa712ecdef2c47c11), [9ad8702](https://github.com/depictio/depictio/commit/9ad87022701fde8bcd8ed6b1a68183be9e3c9a6e)).
-* **Single sign-on moves to OpenID Connect** (`DEPICTIO_AUTH_OIDC_PROVIDERS`). The Google OAuth settings still work for this release. See [Single sign-on](../installation/sso.md) ([#1356](https://github.com/depictio/depictio/pull/1356)).
-
-### **✨ New Features**
-
-* **What's new since your last visit**: *Overlay* or *Split* views, *Before | Now* on each tile, and a notifications bell. Off by default. See [What's new](../tutorials/whats-new.md) ([#1398](https://github.com/depictio/depictio/pull/1398)).
+* **_"What's new"_ since your last visit**: *Overlay* or *Split* views, *Before | Now* on each tile, and a notifications bell. Off by default. See [_"What's new"_](../tutorials/whats-new.md) ([#1398](https://github.com/depictio/depictio/pull/1398)).
 * **Compare runs**: the *Runs* tab shows what each run produced and changed, and MultiQC figures split on the new samples. See [Compare runs](../tutorials/compare-runs.md) ([#1182](https://github.com/depictio/depictio/pull/1182), [#1398](https://github.com/depictio/depictio/pull/1398)).
+* **Refresh reads only what changed**. See [Watch the data update](../tutorials/data-updates.md) ([#1182](https://github.com/depictio/depictio/pull/1182)).
+
+### **📁 Projects**
+
+* ♻️ **No more Basic or Advanced projects**: a project starts from its data. `project_type` is still accepted in YAML but ignored. See [Create a project](../usage/projects/guide.md#create-a-project) ([196c0d1](https://github.com/depictio/depictio/commit/196c0d17882ad92f6718fd0aa712ecdef2c47c11), [9ad8702](https://github.com/depictio/depictio/commit/9ad87022701fde8bcd8ed6b1a68183be9e3c9a6e)).
 * **Start a project from its data**: upload it or read it in place, as flat tables, your own collections (*Project Builder*) or a pipeline template. See [Create a project](../usage/projects/guide.md#create-a-project) ([#1182](https://github.com/depictio/depictio/pull/1182), [#1382](https://github.com/depictio/depictio/pull/1382)).
 * **Add data to a project**: a folder of tables or another run. Tables become editable, with a lock and version restore. See [Add data](../usage/projects/guide.md#add-data) ([a751538](https://github.com/depictio/depictio/commit/a751538e33b01978d341fc9285e15bbc7b63c781), [#1382](https://github.com/depictio/depictio/pull/1382)).
 * **Label samples from the dashboard**: labels in the *Metadata* panel become groups that filter and colour the charts. See [Label samples](../tutorials/metadata-panel.md) ([#1375](https://github.com/depictio/depictio/pull/1375)).
 * **Send a project to another instance** with an invite code, or export it as a ZIP. See [Move a project](../tutorials/instance-migration.md) ([#1334](https://github.com/depictio/depictio/pull/1334), [#1361](https://github.com/depictio/depictio/pull/1361), [#1387](https://github.com/depictio/depictio/pull/1387)).
+* 🐛 **A sent project carries its images and logos**, and multi-GB bundles go through ([#1383](https://github.com/depictio/depictio/pull/1383)).
+* 🐛 **Owners and P.I.s can find people to share a project with** ([#1378](https://github.com/depictio/depictio/pull/1378)).
 
-### **🚀 Improvements**
+### **🔐 Sign-in and security**
 
-* **Refresh reads only what changed**. See [Watch the data update](../tutorials/data-updates.md) ([#1182](https://github.com/depictio/depictio/pull/1182)).
+* ♻️ **Single sign-on moves to OpenID Connect** (`DEPICTIO_AUTH_OIDC_PROVIDERS`). The Google OAuth settings still work for this release. See [Single sign-on](../installation/sso.md) ([#1356](https://github.com/depictio/depictio/pull/1356)).
+* 🔒 **Figure code can be limited to admins** (`DEPICTIO_VIEWER_CODE_FIGURES_LOCKED`), and new projects are private by default ([#1374](https://github.com/depictio/depictio/pull/1374), [a895b31](https://github.com/depictio/depictio/commit/a895b31cc7ef2a91e21830769d130b4218a91170)).
+
+### **🧩 Everything else**
+
 * **Admin tables and an `/activity` page** ([#1390](https://github.com/depictio/depictio/pull/1390)).
 * **Also new**: a regex TextInput filter ([#1365](https://github.com/depictio/depictio/pull/1365)), map coordinates on tables ([#1389](https://github.com/depictio/depictio/pull/1389)), Google Cloud Storage reads ([#1291](https://github.com/depictio/depictio/pull/1291)) and a workshop Codespace ([#1372](https://github.com/depictio/depictio/pull/1372)).
+* 🧬 **nf-core/crisprseq** guide comparison and **nf-core/sarek 3.11.0** genome browser ([e06f055](https://github.com/depictio/depictio/commit/e06f055ddaea2e64821df1b261547a9828dc1168), [7d62646](https://github.com/depictio/depictio/commit/7d62646f0751e4b868124831dcafd9f49de5fc4f)).
 
-### **🔒 Security**
-
-* **Figure code can be limited to admins** (`DEPICTIO_VIEWER_CODE_FIGURES_LOCKED`), and new projects are private by default ([#1374](https://github.com/depictio/depictio/pull/1374), [a895b31](https://github.com/depictio/depictio/commit/a895b31cc7ef2a91e21830769d130b4218a91170)).
-
-### **🧬 Pipeline Templates**
-
-* **nf-core/crisprseq** guide comparison and **nf-core/sarek 3.11.0** genome browser ([e06f055](https://github.com/depictio/depictio/commit/e06f055ddaea2e64821df1b261547a9828dc1168), [7d62646](https://github.com/depictio/depictio/commit/7d62646f0751e4b868124831dcafd9f49de5fc4f)).
-
-### **🐛 Bug Fixes**
-
-* **A sent project carries its images and logos**, and multi-GB bundles go through ([#1383](https://github.com/depictio/depictio/pull/1383)).
-* **Owners and P.I.s can find people to share a project with** ([#1378](https://github.com/depictio/depictio/pull/1378)).
+♻️ needs a change on upgrade, 🔒 security, 🧬 pipeline template, 🐛 bug fix.
 
 ??? info "Beta releases leading up to v1.21.0"
 
