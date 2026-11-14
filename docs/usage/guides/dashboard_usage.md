@@ -173,8 +173,33 @@ In edit mode, hovering a component reveals three icons in its top-right corner, 
 </div>
 
 - <span style="color: #888888;"><i class="mdi mdi-dots-grid"></i> **Drag handle**</span>: grab it to move the component in the grid.
-- <span style="color: #15aabf;"><i class="mdi mdi-information-outline"></i> **Info**</span>: the component's metadata: type, data source, configuration.
+- <span style="color: #12b886;"><i class="mdi mdi-information-outline"></i> **About this component**</span> <small>(v1.20.4+)</small>: the tile's description, in an info popover. A tile with a title shows this icon beside its title instead.
+- <span style="color: #15aabf;"><i class="mdi mdi-format-list-bulleted"></i> **Data source and settings**</span>: the component's type, data source and configuration, with its code in a block you can copy. Before v1.20.4 this was the (i) icon, **Component metadata**.
 - <span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> **Menu**</span>: **Edit** reopens the builder on this component, **History** shows it across the dashboard's saved versions, to compare or restore it alone (see [Component history](../../features/versioning.md#component-history)), **Duplicate** copies it, **Move to section** hands it to another section, **Copy to tab…** <small>(v1.14.0+)</small> adds a copy to another tab (see [Copy to tab](../../features/dashboards.md#copy-to-tab)), **Highlight on…** <small>(v1.14.0+)</small> shows a figure or advanced visualization on another tab without copying it (see [Highlight Components](../../features/components.md#highlight-components)), **Delete** removes it. A figure's menu also carries its **Font size**, and a tile resized by hand that could fit its content offers **Reset to auto height**.
+
+### Describe a tile <small>(v1.20.4+)</small> { #describe-a-tile }
+
+A component's `description` feeds both the one-line subtitle under its title and the
+info popover. A paragraph that opens with one of these labels becomes a block of its own:
+
+| Label | Shown as |
+| --- | --- |
+| *(first paragraph)* | The lead |
+| `How to read:` | A labelled block |
+| `Lines and annotations:`, `Annotations:`, `Reference lines:` | A labelled block, values in bold |
+| `Note:`, `Warning:`, `Caution:` | A callout |
+| `Source:`, `Sources:` | The footer |
+
+The label needs a capital letter and a colon, at the start of a paragraph. Anything else stays prose.
+
+```yaml
+description: |
+  Which lineages make up the community? Each dot is one phylum, its area the mean share of reads.
+
+  How to read: a large dot is a dominant phylum. Open [Phylogeny](tab:Phylogeny) for the full tree.
+
+  Note: with more than 3,000 ASVs, the tree keeps the 3,000 most abundant.
+```
 
 To find a component on any tab, press **⌘K** / **Ctrl+K** or click the magnifier in the header <small>(v1.14.0+)</small>. See [Spotlight search](spotlight-search.md).
 
