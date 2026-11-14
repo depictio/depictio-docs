@@ -17,8 +17,7 @@ Depictio supports four authentication modes, each designed for a different deplo
 | **Dashboard creation** | Registered users | Immediate | After sign-in | After sign-in |
 | **User management** | Full RBAC | Disabled | Disabled | Disabled |
 | **Temporary users (24h)** | No | No | Yes | Yes |
-| **Google OAuth** | Optional | Optional | Optional | Optional |
-| **[SAML SSO](../../installation/sso.md)** (v1.18.0+) | Optional | No | Optional | Optional |
+| **[OpenID Connect SSO](../../installation/sso.md)** | Optional | No | Optional | Optional |
 | **Guided tour** | No | No | Dashboards list | Yes |
 
 ## Auth Mode (Default)
@@ -29,13 +28,15 @@ Standard multi-user authentication with full access control.
 
 ```bash
 # Default - no special env vars needed
-# Optionally enable Google OAuth:
-DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED=true
-DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID=your-client-id
-DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET=your-secret
+# Optionally enable single sign-on, here with Google as an OpenID Connect provider:
+DEPICTIO_AUTH_OIDC_PROVIDERS='[{"id": "google", "label": "Sign in with Google", "discovery_url": "https://accounts.google.com/.well-known/openid-configuration"}]'
+DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_ID=your-client-id
+DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET=your-secret
 ```
 
-!!! tip "Google OAuth behind multiple workers"
+See [Single sign-on (OpenID Connect)](../../installation/sso.md) for the other providers.
+
+!!! tip "SSO behind multiple workers"
     Since **v1.5.2** the OAuth CSRF state is shared through MongoDB, so sign-in
     works with any number of workers or replicas. On earlier versions the state
     was per-process and the callback only succeeded when it happened to reach the
@@ -83,7 +84,7 @@ DEPICTIO_AUTH_PUBLIC_MODE=true
 
 - Every visitor gets a **temporary account** (24-hour session, cleaned after expiry) with
   **read-only** access to public dashboards, without a login screen
-- With Google OAuth or another identity provider enabled, a guest can
+- With an OpenID Connect provider enabled, a guest can
   [sign in](#guest-sign-in) to a persistent account
 - A short tour of the dashboards list ends by picking a dashboard, where a
   [landing hint](dashboard-guide.md#landing-hint) points to its Guide <small>(v1.17.4+)</small>
@@ -128,7 +129,7 @@ DEPICTIO_AUTH_DEMO_MODE=true
 - A 5-step interactive tour appears for new visitors:
     1. **Welcome** — explains the demo environment and 24h session limit
     2. **Explore Dashboards** — browse example dashboards
-    3. **Sign In** — create a temporary account or use Google OAuth
+    3. **Sign In** — create a temporary account or use single sign-on
     4. **Duplicate to Edit** — copy an existing dashboard to customize it
     5. **Explore Projects** — register a project and upload data
 - Tour state is persisted in the browser (won't re-show after completion)
@@ -181,13 +182,13 @@ DEPICTIO_AUTH_REGISTRATION_DISABLED=true
 **Behavior:**
 
 - `POST /auth/register` returns 403, and the Register view and the link to it are hidden
-- Google OAuth, and [SAML](../../installation/sso.md) since v1.18.0, become login-only doors: a known email signs in, an unknown one is refused instead of being provisioned an account
+- [OpenID Connect sign-in](../../installation/sso.md) becomes a login-only door: a known email signs in, an unknown one is refused instead of being provisioned an account
 - Existing accounts, roles and permissions are untouched
 - An administrator can still create accounts with [Add user](web_ui.md#add-a-user) (v1.19.0+)
 
 ### Password sign-in <small>(v1.8.2+)</small> { #password-login }
 
-Closes email and password sign-in so single sign-on (Google OAuth, or [SAML](../../installation/sso.md) since v1.19.0) is the only way in, for an instance whose accounts all come from one identity provider:
+Closes email and password sign-in so [single sign-on](../../installation/sso.md) is the only way in, for an instance whose accounts all come from one identity provider:
 
 ```bash
 DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED=true
@@ -196,9 +197,9 @@ DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED=true
 **Behavior:**
 
 - `POST /auth/login` refuses before reading any credential, so a valid password is not a way around the setting, and the sign-in card hides the form rather than showing one that always fails
-- Ignored unless Google OAuth or, since v1.19.0, SAML is configured, so forgetting the variables gives you the password form back instead of a locked instance
+- Ignored unless at least one OpenID Connect provider is enabled and configured, so forgetting the variables gives you the password form back instead of a locked instance
 - Since v1.19.0 it also closes `POST /auth/register` (403), and the refusal says to use single sign-on
-- `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` is no longer required: OAuth matches the admin by email, so pointing `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` at your own Google address is what makes you the admin, with no seeded local account
+- `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` is no longer required: SSO matches the admin by email, so pointing `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` at your own address at the identity provider is what makes you the admin, with no seeded local account
 
 ### Public-mode access code <small>(v1.8.2+)</small> { #public-access-code }
 
