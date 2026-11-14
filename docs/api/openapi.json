@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.20.0",
-    "x-generated-at": "2026-11-01T14:39:22Z",
-    "x-depictio-version": "v1.20.0"
+    "version": "1.21.0-b4",
+    "x-generated-at": "2026-11-11T12:34:45Z",
+    "x-depictio-version": "v1.21.0-b4"
   },
   "paths": {
     "/depictio/api/v1/projects/get/all": {
@@ -223,6 +223,55 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/IngestionReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/project-runs/{project_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Project Runs",
+        "description": "The project's runs: folder, dates, every scan, and the files each\ncollection found in each run. Read-only.",
+        "operationId": "get_project_runs_depictio_api_v1_projects_project_runs__project_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectRuns"
                 }
               }
             }
@@ -1652,6 +1701,64 @@
         }
       }
     },
+    "/depictio/api/v1/projects/share_candidates/{project_id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Find Share Candidates",
+        "description": "People a project could be shared with, for the sharing dialog.\n\n``/auth/list`` is admin-only, so without this an owner or P.I. who is not an\nadmin cannot find a person from another group. Gated like the grant itself,\nso only someone who manages this project's sharing can search the accounts;\na short query returns nothing rather than a page of the directory.",
+        "operationId": "find_share_candidates_depictio_api_v1_projects_share_candidates__project_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Part of an email, name or login (3+ characters)",
+              "default": "",
+              "title": "Q"
+            },
+            "description": "Part of an email, name or login (3+ characters)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/projects/group_members_preview/{project_id}/{group_id}": {
       "get": {
         "tags": [
@@ -1752,6 +1859,134 @@
         ]
       }
     },
+    "/depictio/api/v1/projects/{project_id}/lock": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Lock Project",
+        "description": "Publish a project read-only (admin only).\n\nFreezes the project and every dashboard it holds now; a dashboard created\nlater by a visitor (a copy) is not part of the release. Every content- or\ndata-mutating route then answers 409 until an administrator unlocks it.",
+        "operationId": "lock_project_depictio_api_v1_projects__project_id__lock_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ProjectLockRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/{project_id}/unlock": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Unlock Project",
+        "description": "Lift the published lock (admin only). The project becomes editable again.",
+        "operationId": "unlock_project_depictio_api_v1_projects__project_id__unlock_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ProjectLockRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/projects/toggle_public_private/{project_id}": {
       "post": {
         "tags": [
@@ -1791,6 +2026,122 @@
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/{project_id}/add_tables_from_folder": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Add Tables From Folder",
+        "description": "List the table files of a folder, or add one table data collection per file.\n\n``POST /projects/{project_id}/add_tables_from_folder``. Dry run (the\ndefault) lists; a real run needs ``files``, each a path from that listing.\nRefusals of a local folder or an s3 location answer ``{detail, code}``.",
+        "operationId": "add_tables_from_folder_depictio_api_v1_projects__project_id__add_tables_from_folder_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderTablesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FolderTablesReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/{project_id}/attach_run": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Attach Run",
+        "description": "Attach another run folder of the same pipeline to this project.\n\n``dry_run`` (the default) reports what the folder holds and writes nothing.\nA real call records the folder on the project and starts its ingestion;\npoll ``run_id`` via ``GET /projects/refresh_manifest/{run_id}``. Errors\nanswer ``{detail, code}``: ``not_a_pipeline_project``, ``other_pipeline``,\n``cannot_attach`` (422), ``already_attached`` (409), a published project 409.",
+        "operationId": "attach_run_depictio_api_v1_projects__project_id__attach_run_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttachRunRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachRunReport"
+                }
               }
             }
           },
@@ -3073,6 +3424,322 @@
         }
       }
     },
+    "/depictio/api/v1/datacollections/{data_collection_id}/edit_status": {
+      "get": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Table Edit Status Route",
+        "description": "Whether this Table DC is one a user added (editable) and whether the caller may edit it.\n\nReads Mongo only. ``code``/``reason`` say why a table is read-only (a pipeline\ntable, a URL table, ...), for the disabled state of the edit control.",
+        "operationId": "table_edit_status_route_depictio_api_v1_datacollections__data_collection_id__edit_status_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/datacollections/{data_collection_id}/edit_lock": {
+      "patch": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Patch Table Edit Lock",
+        "description": "Lock or unlock cell edits on a table a user added (locked by default).\n\nUnlocking marks it as metadata the project maintains by hand. Owners and\neditors only (403), 409 on a published project. Answers the new edit status.",
+        "operationId": "patch_table_edit_lock_depictio_api_v1_datacollections__data_collection_id__edit_lock_patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditLockRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/datacollections/{data_collection_id}/edit_data": {
+      "get": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Table Edit Data Route",
+        "description": "The whole table plus the Delta version it was read at (owners/editors only).",
+        "operationId": "table_edit_data_route_depictio_api_v1_datacollections__data_collection_id__edit_data_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/datacollections/{data_collection_id}/cells": {
+      "patch": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Patch Table Cells",
+        "description": "Edit cells of a table a user added, writing one new Delta version.\n\nBody: ``{\"base_version\": <delta_version read>, \"edits\": [{\"row\", \"column\",\n\"value\"}]}``. 403 for a viewer or a pipeline table, 409 when the project is\npublished or the table moved past ``base_version``, 422 (naming row and\ncolumn) when a value does not fit its column, 413 above the row limit.",
+        "operationId": "patch_table_cells_depictio_api_v1_datacollections__data_collection_id__cells_patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CellEditsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/datacollections/{data_collection_id}/restore_version": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Restore Table Version Route",
+        "description": "Bring a past Delta version of a table a user added back, as a new version.\n\nBody: ``{\"version\": <past version>, \"base_version\": <delta_version read>}``.\nSame rules as a cell edit: 403 for a viewer, a pipeline or a locked table,\n409 when published or past ``base_version``; 422 when ``version`` is not a\npast one, 404 when it can no longer be read.",
+        "operationId": "restore_table_version_route_depictio_api_v1_datacollections__data_collection_id__restore_version_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestoreVersionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/datacollections/{data_collection_id}/merge_file": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Merge Table File Route",
+        "description": "Preview or apply a file on a table a user added.\n\n``mode``: ``replace``, ``fill_missing``, ``add_columns`` or ``auto``. Rows are\nmatched on ``key``, or the best shared column when omitted. ``dry_run`` writes\nnothing and answers with the resulting rows. 403 for a viewer or a pipeline\ntable, 409 when published or past ``base_version``, 422 (with a ``code``) for\na file or key that cannot be used, 413 above the row limit.",
+        "operationId": "merge_table_file_route_depictio_api_v1_datacollections__data_collection_id__merge_file_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_merge_table_file_route_depictio_api_v1_datacollections__data_collection_id__merge_file_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/datacollections/create_from_upload": {
       "post": {
         "tags": [
@@ -3163,6 +3830,51 @@
         ]
       }
     },
+    "/depictio/api/v1/datacollections/url_preview": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Post Url Preview",
+        "description": "Show the start of the file at a remote URL, before a table is made from it.\n\nFor the \"One file URL\" source of Add data and New project: the\nfirst rows of a table, or in plain words why it is not shown. Read-only and bounded; the\nURL passes the same gateway ``/create_from_url`` uses. Refusals answer\n``{detail, code}``.",
+        "operationId": "post_url_preview_depictio_api_v1_datacollections_url_preview_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/URLPreviewRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/datacollections/multiqc_uniformity_check": {
       "post": {
         "tags": [
@@ -3176,6 +3888,51 @@
             "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/Body_multiqc_uniformity_check_depictio_api_v1_datacollections_multiqc_uniformity_check_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/datacollections/create_asset_from_upload": {
+      "post": {
+        "tags": [
+          "Data Collections"
+        ],
+        "summary": "Create Asset Data Collection From Upload",
+        "description": "Create a GeoJSON, phylogeny or image data collection from uploaded files.\n\n``kind`` is ``geojson`` or ``phylogeny`` (one file) or ``image`` (one\ncollection holding every file). Per-file cap 50MB, total 500MB. Write access\nand the publish lock are checked in ``_create_asset_dc_from_uploads``.",
+        "operationId": "create_asset_data_collection_from_upload_depictio_api_v1_datacollections_create_asset_from_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_create_asset_data_collection_from_upload_depictio_api_v1_datacollections_create_asset_from_upload_post"
               }
             }
           },
@@ -4572,6 +5329,74 @@
                     "type": "string"
                   },
                   "title": "Response List Available Resolvers Depictio Api V1 Links  Project Id  Resolvers Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/links/{project_id}/suggestions": {
+      "get": {
+        "tags": [
+          "DC Links"
+        ],
+        "summary": "Propose links for tables, from the values they share with other collections",
+        "description": "Links each ``source`` table could have, none of them created here.\n\nSkips a pair that is already linked, and any ``source`` that is not a\ntable of this project.",
+        "operationId": "suggest_links_depictio_api_v1_links__project_id__suggestions_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Project ID",
+              "title": "Project Id"
+            },
+            "description": "Project ID"
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Table collections to find links for",
+              "title": "Source"
+            },
+            "description": "Table collections to find links for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LinkSuggestion"
+                  },
+                  "title": "Response Suggest Links Depictio Api V1 Links  Project Id  Suggestions Get"
                 }
               }
             }
@@ -6014,6 +6839,56 @@
         }
       }
     },
+    "/depictio/api/v1/jbrowse/preview/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "JBrowse"
+        ],
+        "summary": "Preview Tracks Collection",
+        "description": "Genome view of a ``genomic_tracks`` DC alone, for its project page.\n\nThe payload of a ``jbrowse`` component that only names the collection: its\nfirst tracks, on the assembly's opening region. 404 for anything the\ncaller may not read, so a preview never tells whether a collection exists.",
+        "operationId": "preview_tracks_collection_depictio_api_v1_jbrowse_preview__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Preview Tracks Collection Depictio Api V1 Jbrowse Preview  Data Collection Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/jbrowse/assemblies": {
       "get": {
         "tags": [
@@ -6069,13 +6944,13 @@
       }
     },
     "/depictio/api/v1/jbrowse/tracks/{dc_id}/{track_key}/{role}": {
-      "get": {
+      "head": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Track File",
         "description": "Serve (a byte range of) one track's data or index file.",
-        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__get",
+        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__head",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -6131,13 +7006,13 @@
           }
         }
       },
-      "head": {
+      "get": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Track File",
         "description": "Serve (a byte range of) one track's data or index file.",
-        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__get",
+        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__head",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -6195,13 +7070,13 @@
       }
     },
     "/depictio/api/v1/jbrowse/assembly/{dc_id}/{role}": {
-      "get": {
+      "head": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Assembly File",
         "description": "Serve (a byte range of) a custom assembly file of a track collection.",
-        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__get",
+        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__head",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -6248,13 +7123,13 @@
           }
         }
       },
-      "head": {
+      "get": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Assembly File",
         "description": "Serve (a byte range of) a custom assembly file of a track collection.",
-        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__get",
+        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__head",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -6377,13 +7252,13 @@
       }
     },
     "/depictio/api/v1/jbrowse/preset/{name}/{role}": {
-      "get": {
+      "head": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Preset File",
         "description": "Serve (a byte range of) a built-in assembly's public UCSC file.\n\nPublic: the files are public reference data. Only the URLs hardcoded in the\npresets can be read, so the route cannot be pointed anywhere else.",
-        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__get",
+        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__head",
         "parameters": [
           {
             "name": "name",
@@ -6425,13 +7300,13 @@
           }
         }
       },
-      "head": {
+      "get": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Preset File",
         "description": "Serve (a byte range of) a built-in assembly's public UCSC file.\n\nPublic: the files are public reference data. Only the URLs hardcoded in the\npresets can be read, so the route cannot be pointed anywhere else.",
-        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__get",
+        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__head",
         "parameters": [
           {
             "name": "name",
@@ -6569,13 +7444,13 @@
       }
     },
     "/depictio/api/v1/jbrowse/ucsc/{genome}/{track}/{role}": {
-      "get": {
+      "head": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Ucsc File",
         "description": "Serve (a byte range of) a UCSC track file.\n\nPublic, like the preset files: only files listed in UCSC's own catalogue for\nthat genome, on UCSC's download server or an allow-listed host, can be read.",
-        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__get",
+        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__head",
         "parameters": [
           {
             "name": "genome",
@@ -6626,13 +7501,13 @@
           }
         }
       },
-      "head": {
+      "get": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Ucsc File",
         "description": "Serve (a byte range of) a UCSC track file.\n\nPublic, like the preset files: only files listed in UCSC's own catalogue for\nthat genome, on UCSC's download server or an allow-listed host, can be read.",
-        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__get",
+        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__head",
         "parameters": [
           {
             "name": "genome",
@@ -7814,7 +8689,7 @@
           "Migrate"
         ],
         "summary": "Export Project",
-        "description": "Export a project bundle from this instance.\n\nScoped to one project: cascades through workflows → data_collections →\nfiles / deltatables / runs → dashboards.  Optionally copies S3 data to\na target S3 store (modes all / files).\n\nAccess rules:\n- Admins can export any project, in every mode.\n- In public/demo mode the anonymous and temporary visitors are non-admin,\n  so they're allowed to export too — but only projects they can actually\n  read (public projects or ones shared with them), never arbitrary private\n  projects. Uses ``get_user_or_anonymous`` so tokenless public-mode\n  visitors resolve to the anonymous user instead of 401-ing.\n- On standard (non-public) instances export stays admin-only.\n\nNon-admin callers may not supply ``target_s3_config``: that triggers the\nserver-to-server S3 copy path (an exfiltration vector gated by\n``_validate_target_s3_endpoint``), which has no place in the UI export flow\nthat bundles S3 objects straight into the ZIP.",
+        "description": "Export a project bundle from this instance.\n\nScoped to one project: cascades through workflows → data_collections →\nfiles / deltatables / runs → dashboards.  Optionally copies S3 data to\na target S3 store (modes all / files).\n\nAccess rules:\n- Admins can export any project, in every mode.\n- In public/demo mode the anonymous and temporary visitors are non-admin,\n  so they're allowed to export too — but only projects they can actually\n  read (public projects or ones shared with them), never arbitrary private\n  projects. Uses ``get_user_or_anonymous`` so tokenless public-mode\n  visitors resolve to the anonymous user instead of 401-ing.\n- On standard (non-public) instances export stays admin-only.\n\nNon-admin callers may not supply ``target_s3_config``: that triggers the\nserver-to-server S3 copy path (an exfiltration vector gated by\n``_validate_target_s3_endpoint``), which has no place in the UI export flow\nthat bundles S3 objects straight into the ZIP.\n\nThe ZIP is written to a temporary file and streamed from there, so memory\nuse does not grow with the project's data. Data above\n``DEPICTIO_MIGRATION_MAX_BUNDLE_BYTES`` is refused with a 413.",
         "operationId": "export_project_depictio_api_v1_migrate_export_project_post",
         "requestBody": {
           "content": {
@@ -7859,7 +8734,7 @@
           "Migrate"
         ],
         "summary": "Import Project",
-        "description": "Import a project bundle into this instance (non-destructive upsert).\n\nDocuments are upserted in dependency order.  Owner IDs that do not exist\non this instance are remapped to the calling admin (or the specified\nowner_user_id).",
+        "description": "Import a project bundle into this instance (upsert by id).\n\nThe bundle is validated first: every document must belong to the bundled\nproject, and none may collide with another project's ids here. Owner ids\nthat do not exist on this instance are remapped to the calling admin (or\nthe specified owner_user_id). ``s3://`` locations are rewritten to this\ninstance's bucket. Each dashboard family records the state the import\nreplaces, then an ``import`` version.",
         "operationId": "import_project_depictio_api_v1_migrate_import_project_post",
         "requestBody": {
           "content": {
@@ -7952,6 +8827,1434 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MigrateImportResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/inbound/info": {
+      "get": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Inbound Info",
+        "description": "What a source needs to know about this instance before it builds a bundle.",
+        "operationId": "inbound_info_depictio_api_v1_migrate_inbound_info_get",
+        "parameters": [
+          {
+            "name": "X-Depictio-Pairing-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Pairing-Key"
+            }
+          },
+          {
+            "name": "X-Depictio-Invite-Code",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Invite-Code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/inbound/preflight": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Inbound Preflight",
+        "description": "Would a push of this project be accepted? Nothing is stored.",
+        "operationId": "inbound_preflight_depictio_api_v1_migrate_inbound_preflight_post",
+        "parameters": [
+          {
+            "name": "X-Depictio-Pairing-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Pairing-Key"
+            }
+          },
+          {
+            "name": "X-Depictio-Invite-Code",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Invite-Code"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreflightBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/inbound/probe": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Inbound Probe",
+        "description": "Can THIS instance's credentials read ``bucket/key``? (decides server-side copy)\n\nLimited to the buckets the source is allowed to copy from, so the probe\ncannot be used to explore the rest of the object store.",
+        "operationId": "inbound_probe_depictio_api_v1_migrate_inbound_probe_post",
+        "parameters": [
+          {
+            "name": "X-Depictio-Pairing-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Pairing-Key"
+            }
+          },
+          {
+            "name": "X-Depictio-Invite-Code",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Invite-Code"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProbeBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/inbound/check": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Inbound Check",
+        "description": "``/info`` + ``/preflight`` + ``/probe`` in one round trip. Nothing is stored.\n\nThe three older routes stay for sources that predate this one. The probe\nruns only when a server-side copy is on the table, on the source's own\nbucket, with the same restrictions as ``/probe``.",
+        "operationId": "inbound_check_depictio_api_v1_migrate_inbound_check_post",
+        "parameters": [
+          {
+            "name": "X-Depictio-Pairing-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Pairing-Key"
+            }
+          },
+          {
+            "name": "X-Depictio-Invite-Code",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Invite-Code"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/inbound/requests": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Inbound Create Request",
+        "description": "Receive a bundle, validate it and park it for an admin's decision.\n\nWith an invite code: consume the invite and start the import now.",
+        "operationId": "inbound_create_request_depictio_api_v1_migrate_inbound_requests_post",
+        "parameters": [
+          {
+            "name": "X-Depictio-Pairing-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Pairing-Key"
+            }
+          },
+          {
+            "name": "X-Depictio-Invite-Code",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Invite-Code"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_inbound_create_request_depictio_api_v1_migrate_inbound_requests_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/inbound/requests/{request_id}": {
+      "get": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Inbound Request Status",
+        "description": "The state of a request, readable only by the source that made it\n(or by the bearer of the status token its upload returned).",
+        "operationId": "inbound_request_status_depictio_api_v1_migrate_inbound_requests__request_id__get",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          },
+          {
+            "name": "X-Depictio-Pairing-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Pairing-Key"
+            }
+          },
+          {
+            "name": "X-Depictio-Invite-Code",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Invite-Code"
+            }
+          },
+          {
+            "name": "X-Depictio-Request-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Depictio-Request-Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/requests/": {
+      "get": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "List Requests",
+        "description": "Requests, newest first, optionally of one status.",
+        "operationId": "list_requests_depictio_api_v1_migrate_requests__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/requests/{request_id}": {
+      "get": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Get Request",
+        "description": "One request in full, with its report recomputed while it is still pending.",
+        "operationId": "get_request_depictio_api_v1_migrate_requests__request_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/requests/{request_id}/approve": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Approve Request",
+        "description": "Approve a pending request and import it in the background.",
+        "operationId": "approve_request_depictio_api_v1_migrate_requests__request_id__approve_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ApproveBody"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/requests/{request_id}/reject": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Reject Request",
+        "description": "Reject a pending request and delete its staged bundle.",
+        "operationId": "reject_request_depictio_api_v1_migrate_requests__request_id__reject_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RejectBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/requests/{request_id}/revalidate": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Revalidate Request",
+        "description": "Recompute the report of a pending request against the current state.",
+        "operationId": "revalidate_request_depictio_api_v1_migrate_requests__request_id__revalidate_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/requests/{request_id}/retry": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Retry Request",
+        "description": "Run again an import that a restart interrupted, with its original decision.\n\nOnly a request marked ``retryable`` qualifies: its staged bundle was kept.\nAny other failure deleted the bundle, and the source must push again.",
+        "operationId": "retry_request_depictio_api_v1_migrate_requests__request_id__retry_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/requests/{request_id}/thumbnails": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Regenerate Thumbnails",
+        "description": "Queue new thumbnails for the dashboards an imported request brought in.\n\nA bundle carries no thumbnails, so an imported dashboard shows none until\nsomething captures it; this asks for that, once, by hand.",
+        "operationId": "regenerate_thumbnails_depictio_api_v1_migrate_requests__request_id__thumbnails_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/invites": {
+      "get": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "List Invites",
+        "operationId": "list_invites_depictio_api_v1_migrate_invites_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response List Invites Depictio Api V1 Migrate Invites Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Create Invite",
+        "description": "Issue an invite. The answer is the only time the code is shown.",
+        "operationId": "create_invite_depictio_api_v1_migrate_invites_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Create Invite Depictio Api V1 Migrate Invites Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/migrate/invites/{invite_id}/revoke": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Revoke Invite",
+        "description": "Stop an invite from accepting anything, including status reads.",
+        "operationId": "revoke_invite_depictio_api_v1_migrate_invites__invite_id__revoke_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "invite_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Invite Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Revoke Invite Depictio Api V1 Migrate Invites  Invite Id  Revoke Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/targets": {
+      "get": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Get Targets",
+        "operationId": "get_targets_depictio_api_v1_migrate_targets_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Targets Depictio Api V1 Migrate Targets Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Create Target",
+        "description": "Add a UI target. Admin only; the URL goes through the SSRF guard.",
+        "operationId": "create_target_depictio_api_v1_migrate_targets_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Create Target Depictio Api V1 Migrate Targets Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/migrate/targets/{target_id}": {
+      "delete": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Delete Target",
+        "operationId": "delete_target_depictio_api_v1_migrate_targets__target_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "target_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Target Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Delete Target Depictio Api V1 Migrate Targets  Target Id  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/push/targets": {
+      "get": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Push Targets",
+        "operationId": "push_targets_depictio_api_v1_migrate_push_targets_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Push Targets Depictio Api V1 Migrate Push Targets Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/migrate/push/destinations": {
+      "get": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Push Destinations",
+        "description": "Whether a destination URL may be typed, and the ones this user used lately.\n\nOnly URLs are remembered, never an invite code.",
+        "operationId": "push_destinations_depictio_api_v1_migrate_push_destinations_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Push Destinations Depictio Api V1 Migrate Push Destinations Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/migrate/push/preflight": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Preflight",
+        "description": "What the target says about this project, before anything is built.",
+        "operationId": "preflight_depictio_api_v1_migrate_push_preflight_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreflightRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Preflight Depictio Api V1 Migrate Push Preflight Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/migrate/push/check": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Preflight",
+        "description": "What the target says about this project, before anything is built.",
+        "operationId": "preflight_depictio_api_v1_migrate_push_check_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreflightRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Preflight Depictio Api V1 Migrate Push Check Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/migrate/push": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Start Push",
+        "description": "Record the push and build/upload it in the background.",
+        "operationId": "start_push_depictio_api_v1_migrate_push_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PushRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Start Push Depictio Api V1 Migrate Push Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "List Pushes",
+        "operationId": "list_pushes_depictio_api_v1_migrate_push_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response List Pushes Depictio Api V1 Migrate Push Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/push/{push_id}/retry": {
+      "post": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Retry Push",
+        "description": "Start a new push like a failed one (same project, target and message).",
+        "operationId": "retry_push_depictio_api_v1_migrate_push__push_id__retry_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "push_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Push Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/RetryRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Retry Push Depictio Api V1 Migrate Push  Push Id  Retry Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/migrate/push/{push_id}": {
+      "get": {
+        "tags": [
+          "Migrate"
+        ],
+        "summary": "Get Push",
+        "operationId": "get_push_depictio_api_v1_migrate_push__push_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "push_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Push Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Push Depictio Api V1 Migrate Push  Push Id  Get"
                 }
               }
             }
@@ -10797,7 +13100,7 @@
           "Dashboards"
         ],
         "summary": "Import Dashboard From Json",
-        "description": "Import a dashboard from JSON content with optional integrity validation.\n\nCreates a new dashboard from the provided JSON configuration.\nOptionally validates that data collection schemas match the export.\n\nPublic/demo mode hard-blocks imports: visitors are auto-minted as\nauthenticated temp users, so `get_current_user` doesn't stop them from\nPOSTing user-supplied JSON that bypasses the project-permission model.\nThe frontend disables the Import tab in `CreateDashboardModal` and the\nDash equivalent — this check is the matching server-side enforcement.\n\nArgs:\n    json_content: The JSON content defining the dashboard\n    project_id: Target project ID (required if not in JSON)\n    validate_integrity: Whether to validate data collection schemas (default: True)\n    current_user: Current authenticated user\n\nReturns:\n    Import result with dashboard ID and any validation warnings",
+        "description": "Import a dashboard from JSON content with optional integrity validation.\n\nCreates a new dashboard from the provided JSON configuration.\nOptionally validates that data collection schemas match the export.\n\nVisitors (temporary and anonymous users) are refused, see\n`refuse_visitor_import`; anyone else needs editor rights on the project.\n\nArgs:\n    json_content: The JSON content defining the dashboard\n    project_id: Target project ID (required if not in JSON)\n    validate_integrity: Whether to validate data collection schemas (default: True)\n    current_user: Current authenticated user\n\nReturns:\n    Import result with dashboard ID and any validation warnings",
         "operationId": "import_dashboard_from_json_depictio_api_v1_dashboards_import_json_post",
         "security": [
           {
@@ -11258,6 +13561,284 @@
         "responses": {
           "204": {
             "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/annotations/{dashboard_id}/tables": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Get Annotation Tables",
+        "description": "The project's tables, each with whether labels can be put on it and why\nnot, plus the labels shared on this dashboard and whether the caller may\nchange them.\n\nOpen to every reader of the dashboard, a temporary or anonymous one\nincluded: they label in the browser, on the same tables.\n\n``version_id`` reads the shared labels as that version of the family held\nthem (404 for another family's version), for a ``?version=`` view, which\nis read-only.",
+        "operationId": "get_annotation_tables_depictio_api_v1_dashboards_annotations__dashboard_id__tables_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "version_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Version Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Annotation Tables Depictio Api V1 Dashboards Annotations  Dashboard Id  Tables Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/annotations/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Get Annotations",
+        "description": "The caller's annotations on this dashboard. Absence is a normal answer.",
+        "operationId": "get_annotations_depictio_api_v1_dashboards_annotations__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Annotations Depictio Api V1 Dashboards Annotations  Dashboard Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Put Annotations",
+        "description": "Replace the caller's annotations (last write wins).",
+        "operationId": "put_annotations_depictio_api_v1_dashboards_annotations__dashboard_id__put",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DashboardAnnotationsPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Put Annotations Depictio Api V1 Dashboards Annotations  Dashboard Id  Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Delete Annotations",
+        "description": "Drop the caller's annotations on this dashboard.",
+        "operationId": "delete_annotations_depictio_api_v1_dashboards_annotations__dashboard_id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/annotations/{dashboard_id}/shared": {
+      "put": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Put Shared Labels",
+        "description": "Replace the label columns shared on this dashboard (last write wins).",
+        "operationId": "put_shared_labels_depictio_api_v1_dashboards_annotations__dashboard_id__shared_put",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SharedLabelsPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Put Shared Labels Depictio Api V1 Dashboards Annotations  Dashboard Id  Shared Put"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -12854,6 +15435,53 @@
                   "additionalProperties": true,
                   "title": "Response Poll Compute Group Compare Depictio Api V1 Advanced Viz Compute Group Compare  Job Id  Get"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/advanced_viz/geojson/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "Advanced Viz"
+        ],
+        "summary": "Get Geojson",
+        "description": "Return the file of a GeoJSON DC, for its preview on the project page.\n\nReads only the fixed key ingest writes in the instance bucket, never a\nstored location, so no project content can steer what is read.",
+        "operationId": "get_geojson_depictio_api_v1_advanced_viz_geojson__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -15499,7 +18127,7 @@
           "Authentication"
         ],
         "summary": "Get Current User Info Optional",
-        "description": "Get current user identity + server auth mode for the React viewer.\n\nUnlike ``/me``, this endpoint does NOT 401 when the Authorization header is\nmissing or invalid. It always returns 200 with an ``auth_mode`` field so the\nReact UI can render the right profile badge variant (\"Single user mode\",\n\"Anonymous\", or the actual user). The ``user`` field is ``null`` when no\nvalid token is supplied.\n\nBackward compatible: existing callers that read ``auth_mode`` and ``user``\nkeep working. The React /auth page additionally consumes ``is_public_mode``,\n``is_single_user_mode``, and ``google_oauth_enabled`` to decide which UI to\nrender with a single round-trip on page load.\n\nArgs:\n    token: Optional JWT access token from the Authorization header.\n\nReturns:\n    Dict with ``auth_mode`` ('single_user' | 'unauthenticated' | 'standard'),\n    ``user`` (minimal user identity or ``null``), plus mode flags.",
+        "description": "Get current user identity + server auth mode for the React viewer.\n\nUnlike ``/me``, this endpoint does NOT 401 when the Authorization header is\nmissing or invalid. It always returns 200 with an ``auth_mode`` field so the\nReact UI can render the right profile badge variant (\"Single user mode\",\n\"Anonymous\", or the actual user). The ``user`` field is ``null`` when no\nvalid token is supplied.\n\nBackward compatible: existing callers that read ``auth_mode`` and ``user``\nkeep working. The React /auth page additionally consumes ``is_public_mode``,\n``is_single_user_mode``, and ``sso_providers`` to decide which UI to\nrender with a single round-trip on page load.\n\nArgs:\n    token: Optional JWT access token from the Authorization header.\n\nReturns:\n    Dict with ``auth_mode`` ('single_user' | 'unauthenticated' | 'standard'),\n    ``user`` (minimal user identity or ``null``), plus mode flags.",
         "operationId": "get_current_user_info_optional_depictio_api_v1_auth_me_optional_get",
         "responses": {
           "200": {
@@ -16437,21 +19065,25 @@
         }
       }
     },
-    "/depictio/api/v1/auth/google/login": {
+    "/depictio/api/v1/auth/oidc/providers": {
       "get": {
         "tags": [
-          "Google OAuth"
+          "OIDC SSO"
         ],
-        "summary": "Google Oauth Login",
-        "description": "Initiate Google OAuth login flow.\n\nReturns:\n    GoogleOAuthLoginResponse: Contains authorization URL and state parameter",
-        "operationId": "google_oauth_login_depictio_api_v1_auth_google_login_get",
+        "summary": "List Oidc Providers",
+        "description": "Enabled, fully configured providers, in declared order (public).",
+        "operationId": "list_oidc_providers_depictio_api_v1_auth_oidc_providers_get",
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoogleOAuthLoginResponse"
+                  "items": {
+                    "$ref": "#/components/schemas/OIDCProviderPublic"
+                  },
+                  "type": "array",
+                  "title": "Response List Oidc Providers Depictio Api V1 Auth Oidc Providers Get"
                 }
               }
             }
@@ -16459,89 +19091,24 @@
         }
       }
     },
-    "/depictio/api/v1/auth/google/callback": {
+    "/depictio/api/v1/auth/oidc/{provider_id}/login": {
       "get": {
         "tags": [
-          "Google OAuth"
+          "OIDC SSO"
         ],
-        "summary": "Google Oauth Callback",
-        "description": "Handle Google OAuth callback and complete authentication.\n\nArgs:\n    code: Authorization code from Google OAuth\n    state: State parameter for CSRF protection\n    error: Error parameter if OAuth failed\n\nReturns:\n    GoogleOAuthResponse: Contains authentication result and user/token data",
-        "operationId": "google_oauth_callback_depictio_api_v1_auth_google_callback_get",
+        "summary": "Oidc Login",
+        "description": "Start a login with ``provider_id``: redirect the browser to the provider.",
+        "operationId": "oidc_login_depictio_api_v1_auth_oidc__provider_id__login_get",
         "parameters": [
           {
-            "name": "code",
-            "in": "query",
+            "name": "provider_id",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Authorization code from Google",
-              "title": "Code"
-            },
-            "description": "Authorization code from Google"
-          },
-          {
-            "name": "state",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "description": "State parameter for CSRF protection",
-              "title": "State"
-            },
-            "description": "State parameter for CSRF protection"
-          },
-          {
-            "name": "error",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "Error parameter if OAuth failed",
-              "title": "Error"
-            },
-            "description": "Error parameter if OAuth failed"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GoogleOAuthResponse"
-                }
-              }
+              "title": "Provider Id"
             }
           },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/auth/saml/login": {
-      "get": {
-        "tags": [
-          "SAML SSO"
-        ],
-        "summary": "Saml Login",
-        "description": "Start an SP-initiated SAML login: redirect the browser to the IdP.",
-        "operationId": "saml_login_depictio_api_v1_auth_saml_login_get",
-        "parameters": [
           {
             "name": "next",
             "in": "query",
@@ -16583,14 +19150,73 @@
         }
       }
     },
-    "/depictio/api/v1/auth/saml/callback": {
-      "post": {
+    "/depictio/api/v1/auth/oidc/{provider_id}/callback": {
+      "get": {
         "tags": [
-          "SAML SSO"
+          "OIDC SSO"
         ],
-        "summary": "Saml Acs",
-        "description": "Assertion Consumer Service: validate the IdP response, mint a session ticket.",
-        "operationId": "saml_acs_depictio_api_v1_auth_saml_callback_post",
+        "summary": "Oidc Callback",
+        "description": "Finish a login: verify what the provider sent and hand off a session ticket.",
+        "operationId": "oidc_callback_depictio_api_v1_auth_oidc__provider_id__callback_get",
+        "parameters": [
+          {
+            "name": "provider_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Provider Id"
+            }
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Code"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "State"
+            }
+          },
+          {
+            "name": "error",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Error"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -16599,24 +19225,14 @@
                 "schema": {}
               }
             }
-          }
-        }
-      }
-    },
-    "/depictio/api/v1/auth/saml/metadata": {
-      "get": {
-        "tags": [
-          "SAML SSO"
-        ],
-        "summary": "Saml Metadata",
-        "description": "Serve the SP metadata XML (import this in the IdP to register the client).",
-        "operationId": "saml_metadata_depictio_api_v1_auth_saml_metadata_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
+          },
+          "422": {
+            "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -16902,6 +19518,50 @@
         "title": "Annotation",
         "description": "The shape a thread carries."
       },
+      "AnnotationColumn": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "dcId": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Dcid"
+          },
+          "keyColumn": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Keycolumn"
+          },
+          "values": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Values"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "dcId",
+          "keyColumn"
+        ],
+        "title": "AnnotationColumn"
+      },
       "AnnotationPatch": {
         "properties": {
           "geometry": {
@@ -17073,6 +19733,28 @@
         "type": "object",
         "title": "AnnotationStyle"
       },
+      "ApproveBody": {
+        "properties": {
+          "lock": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lock"
+          },
+          "make_public": {
+            "type": "boolean",
+            "title": "Make Public",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "ApproveBody"
+      },
       "ArrowNote": {
         "properties": {
           "kind": {
@@ -17128,6 +19810,147 @@
         ],
         "title": "ArrowNote",
         "description": "A numbered note with an arrow pointing at a data point.\n\n``x``/``y`` are the arrow head in data coordinates; ``ax``/``ay`` offset\nthe label from it in pixels, so the label keeps its place on resize."
+      },
+      "AttachRunDC": {
+        "properties": {
+          "tag": {
+            "type": "string",
+            "title": "Tag"
+          },
+          "matched": {
+            "type": "integer",
+            "title": "Matched",
+            "default": 0
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "ok"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tag"
+        ],
+        "title": "AttachRunDC",
+        "description": "What one data collection would find in the new folder."
+      },
+      "AttachRunReport": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "data_root": {
+            "type": "string",
+            "title": "Data Root"
+          },
+          "template_id": {
+            "type": "string",
+            "title": "Template Id"
+          },
+          "detected": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DetectedTemplate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "exact",
+              "closest",
+              "none",
+              "other_pipeline"
+            ],
+            "title": "Match",
+            "default": "none"
+          },
+          "new_runs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "New Runs"
+          },
+          "existing_runs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Existing Runs"
+          },
+          "data_collections": {
+            "items": {
+              "$ref": "#/components/schemas/AttachRunDC"
+            },
+            "type": "array",
+            "title": "Data Collections"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": true
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id",
+          "data_root",
+          "template_id"
+        ],
+        "title": "AttachRunReport"
+      },
+      "AttachRunRequest": {
+        "properties": {
+          "data_root": {
+            "type": "string",
+            "title": "Data Root"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": true
+          },
+          "storage": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunStorageIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "data_root"
+        ],
+        "title": "AttachRunRequest",
+        "description": "Body of POST /projects/{project_id}/attach_run."
       },
       "Author": {
         "properties": {
@@ -17789,6 +20612,43 @@
         ],
         "title": "Body_compare_models_endpoint_depictio_api_v1_workflows_compare_workflow_models_post"
       },
+      "Body_create_asset_data_collection_from_upload_depictio_api_v1_datacollections_create_asset_from_upload_post": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          },
+          "files": {
+            "items": {
+              "type": "string",
+              "contentMediaType": "application/octet-stream"
+            },
+            "type": "array",
+            "title": "Files"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id",
+          "name",
+          "kind",
+          "files"
+        ],
+        "title": "Body_create_asset_data_collection_from_upload_depictio_api_v1_datacollections_create_asset_from_upload_post"
+      },
       "Body_create_data_collection_from_upload_depictio_api_v1_datacollections_create_from_upload_post": {
         "properties": {
           "project_id": {
@@ -17922,6 +20782,74 @@
         ],
         "title": "Body_import_project_zip_depictio_api_v1_migrate_import_project_zip_post"
       },
+      "Body_inbound_create_request_depictio_api_v1_migrate_inbound_requests_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "sha256": {
+            "type": "string",
+            "title": "Sha256"
+          },
+          "transfer_mode": {
+            "type": "string",
+            "title": "Transfer Mode"
+          },
+          "requester_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requester Email"
+          },
+          "requester_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requester Name"
+          },
+          "source_user_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source User Id"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file",
+          "sha256",
+          "transfer_mode"
+        ],
+        "title": "Body_inbound_create_request_depictio_api_v1_migrate_inbound_requests_post"
+      },
       "Body_login_depictio_api_v1_auth_login_post": {
         "properties": {
           "grant_type": {
@@ -17980,6 +20908,52 @@
           "password"
         ],
         "title": "Body_login_depictio_api_v1_auth_login_post"
+      },
+      "Body_merge_table_file_route_depictio_api_v1_datacollections__data_collection_id__merge_file_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "mode": {
+            "type": "string",
+            "title": "Mode",
+            "default": "auto"
+          },
+          "key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key"
+          },
+          "base_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Version"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_merge_table_file_route_depictio_api_v1_datacollections__data_collection_id__merge_file_post"
       },
       "Body_multiqc_uniformity_check_depictio_api_v1_datacollections_multiqc_uniformity_check_post": {
         "properties": {
@@ -18592,6 +21566,149 @@
         ],
         "title": "CLIValidationResponse",
         "description": "Response model for CLI config validation.\n\nArgs:\n    success: Whether the validation was successful.\n    message: A human-readable message about the validation result.\n    is_admin: Whether the user is an admin.\n    user_id: The user's ID if validation was successful.\n    email: The user's email if validation was successful."
+      },
+      "CellEdit": {
+        "properties": {
+          "row": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Row"
+          },
+          "column": {
+            "type": "string",
+            "title": "Column"
+          },
+          "value": {
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "row",
+          "column"
+        ],
+        "title": "CellEdit",
+        "description": "One cell: ``row`` is 0-based in the Delta version the client read."
+      },
+      "CellEditsRequest": {
+        "properties": {
+          "base_version": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Base Version",
+            "description": "Delta version the client read."
+          },
+          "edits": {
+            "items": {
+              "$ref": "#/components/schemas/CellEdit"
+            },
+            "type": "array",
+            "maxItems": 5000,
+            "minItems": 1,
+            "title": "Edits"
+          }
+        },
+        "type": "object",
+        "required": [
+          "base_version",
+          "edits"
+        ],
+        "title": "CellEditsRequest"
+      },
+      "CheckBody": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "project_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Name"
+          },
+          "requester_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requester Email"
+          },
+          "source_depictio_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Depictio Version"
+          },
+          "bundle_format_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bundle Format Version"
+          },
+          "total_bytes": {
+            "type": "integer",
+            "title": "Total Bytes",
+            "default": 0
+          },
+          "source_s3_endpoint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source S3 Endpoint"
+          },
+          "source_bucket": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Bucket"
+          },
+          "probe_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Probe Key"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id"
+        ],
+        "title": "CheckBody"
       },
       "CliAgent": {
         "properties": {
@@ -19974,13 +23091,45 @@
         "title": "DCTableCoordinatesConfig",
         "description": "Table DC variant carrying explicit lat/lon column hints for Map components.\n\nSame dc_type (\"table\") as DCTableConfig — this is a programmatic specialisation\nmaterialised at deserialisation time when the persisted config dict carries\n`lat_column` / `lon_column` keys. All table-format handling (CSV/TSV/Parquet,\npolars_kwargs, keep_columns, columns_description) is inherited unchanged."
       },
+      "DashboardAnnotationsPayload": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "const": 2,
+            "title": "Version",
+            "default": 2
+          },
+          "columns": {
+            "items": {
+              "$ref": "#/components/schemas/AnnotationColumn"
+            },
+            "type": "array",
+            "title": "Columns"
+          },
+          "activeColumnId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Activecolumnid"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "DashboardAnnotationsPayload",
+        "description": "Body of ``PUT /dashboards/annotations/{dashboard_id}``."
+      },
       "DashboardData": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -20152,6 +23301,15 @@
             "type": "string",
             "title": "Guide Intro",
             "default": ""
+          },
+          "shared_labels": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Shared Labels",
+            "default": []
           },
           "advanced_viz_controls": {
             "type": "string",
@@ -20372,6 +23530,18 @@
             ],
             "title": "Inherited Category Colors"
           },
+          "published_lock": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published Lock"
+          },
           "source_key": {
             "anyOf": [
               {
@@ -20508,7 +23678,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -20571,7 +23741,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -20687,6 +23857,21 @@
                 "type": "null"
               }
             ]
+          },
+          "origin": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DataOrigin"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "edit_unlocked": {
+            "type": "boolean",
+            "title": "Edit Unlocked",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -20707,6 +23892,51 @@
         ],
         "title": "DataCollectionSource",
         "description": "Origin/source type of a data collection."
+      },
+      "DataOrigin": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "upload",
+              "url",
+              "folder",
+              "run",
+              "manifest"
+            ],
+            "title": "Kind"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "added_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Added At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind"
+        ],
+        "title": "DataOrigin",
+        "description": "Where a data collection's data came from, recorded by the route that created it."
       },
       "DeleteFilesBatchRequest": {
         "properties": {
@@ -20822,6 +24052,19 @@
         "title": "DetectedTemplate",
         "description": "What the run folder said about the run that produced it.\n\nThe other fields are None when the folder did not say. ``template_id`` is\nnullable to match the viewer's type, but a report always names one: a\nfolder no installed template fits is a 422 ``template_not_detected``.\n``GET /projects/folder_inspect`` answers in the same shape, and there it\ncan be None.\n\n``match`` says how the template was chosen: ``exact`` when its version is\nthe run's, ``closest`` when it is another version of the same pipeline,\n``none`` when no installed template fits the run."
       },
+      "EditLockRequest": {
+        "properties": {
+          "unlocked": {
+            "type": "boolean",
+            "title": "Unlocked"
+          }
+        },
+        "type": "object",
+        "required": [
+          "unlocked"
+        ],
+        "title": "EditLockRequest"
+      },
       "Evidence": {
         "properties": {
           "claim": {
@@ -20876,6 +24119,24 @@
         ],
         "title": "Evidence",
         "description": "A structured claim an agent backs its comment with, for one-click checks."
+      },
+      "ExistingCollection": {
+        "properties": {
+          "data_collection_id": {
+            "type": "string",
+            "title": "Data Collection Id"
+          },
+          "data_collection_tag": {
+            "type": "string",
+            "title": "Data Collection Tag"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data_collection_id",
+          "data_collection_tag"
+        ],
+        "title": "ExistingCollection"
       },
       "ExpectedDataCollection": {
         "properties": {
@@ -20984,7 +24245,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -21475,6 +24736,235 @@
         "type": "object",
         "title": "FolderNames",
         "description": "How many entries of one kind a folder holds, and the first\n:data:`MAX_NAMES` names, sorted."
+      },
+      "FolderTableCreated": {
+        "properties": {
+          "path": {
+            "type": "string",
+            "title": "Path"
+          },
+          "data_collection_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Collection Id"
+          },
+          "data_collection_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Collection Tag"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ingested",
+              "failed",
+              "skipped"
+            ],
+            "title": "Status"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "path",
+          "status"
+        ],
+        "title": "FolderTableCreated"
+      },
+      "FolderTableFile": {
+        "properties": {
+          "path": {
+            "type": "string",
+            "title": "Path"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "format": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Format"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "table": {
+            "type": "boolean",
+            "title": "Table"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "compression": {
+            "type": "string",
+            "enum": [
+              "none",
+              "gzip"
+            ],
+            "title": "Compression",
+            "default": "none"
+          },
+          "existing": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExistingCollection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "path",
+          "name",
+          "table"
+        ],
+        "title": "FolderTableFile"
+      },
+      "FolderTablesReport": {
+        "properties": {
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "local",
+              "s3"
+            ],
+            "title": "Source"
+          },
+          "files": {
+            "items": {
+              "$ref": "#/components/schemas/FolderTableFile"
+            },
+            "type": "array",
+            "title": "Files"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "default": false
+          },
+          "created": {
+            "items": {
+              "$ref": "#/components/schemas/FolderTableCreated"
+            },
+            "type": "array",
+            "title": "Created"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": true
+          },
+          "storage_saved": {
+            "type": "boolean",
+            "title": "Storage Saved",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "location",
+          "source"
+        ],
+        "title": "FolderTablesReport"
+      },
+      "FolderTablesRequest": {
+        "properties": {
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "files": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Files"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "title": "Dry Run",
+            "default": true
+          },
+          "storage": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunStorageIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recursive": {
+            "type": "boolean",
+            "title": "Recursive",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "location"
+        ],
+        "title": "FolderTablesRequest"
       },
       "FoundRun": {
         "properties": {
@@ -22057,6 +25547,22 @@
                 "type": "null"
               }
             ]
+          },
+          "is_public": {
+            "type": "boolean",
+            "title": "Is Public",
+            "default": false
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
           }
         },
         "type": "object",
@@ -22095,92 +25601,6 @@
         ],
         "title": "GeoNote",
         "description": "A numbered note pinned to a place on a map."
-      },
-      "GoogleOAuthLoginResponse": {
-        "properties": {
-          "authorization_url": {
-            "type": "string",
-            "title": "Authorization Url",
-            "description": "Google OAuth authorization URL"
-          },
-          "state": {
-            "type": "string",
-            "title": "State",
-            "description": "State parameter for CSRF protection"
-          }
-        },
-        "type": "object",
-        "required": [
-          "authorization_url",
-          "state"
-        ],
-        "title": "GoogleOAuthLoginResponse",
-        "description": "Response model for Google OAuth login initiation."
-      },
-      "GoogleOAuthResponse": {
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "title": "Success",
-            "description": "Whether the OAuth operation succeeded"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message",
-            "description": "Human-readable message"
-          },
-          "user_created": {
-            "type": "boolean",
-            "title": "User Created",
-            "description": "Whether a new user was created"
-          },
-          "user": {
-            "anyOf": [
-              {
-                "additionalProperties": true,
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "User",
-            "description": "User information"
-          },
-          "token": {
-            "anyOf": [
-              {
-                "additionalProperties": true,
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Token",
-            "description": "Authentication token data"
-          },
-          "redirect_url": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Redirect Url",
-            "description": "URL to redirect user to"
-          }
-        },
-        "type": "object",
-        "required": [
-          "success",
-          "message",
-          "user_created"
-        ],
-        "title": "GoogleOAuthResponse",
-        "description": "Response model for Google OAuth operations."
       },
       "GranularityConfig": {
         "properties": {
@@ -22229,7 +25649,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -22534,6 +25954,100 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "ImportHop": {
+        "properties": {
+          "source_instance": {
+            "type": "string",
+            "title": "Source Instance",
+            "default": "unknown"
+          },
+          "source_depictio_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Depictio Version"
+          },
+          "bundle_format_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bundle Format Version"
+          },
+          "exported_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exported At"
+          },
+          "imported_at": {
+            "type": "string",
+            "title": "Imported At"
+          },
+          "target_depictio_version": {
+            "type": "string",
+            "title": "Target Depictio Version",
+            "default": "unknown"
+          },
+          "bundle_sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bundle Sha256"
+          },
+          "migration_request_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Migration Request Id"
+          },
+          "via": {
+            "type": "string",
+            "enum": [
+              "push",
+              "cli",
+              "zip"
+            ],
+            "title": "Via",
+            "default": "cli"
+          },
+          "dashboard_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Dashboard Ids",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "ImportHop",
+        "description": "One import of this project into an instance.\n\nA project that travelled A -> B -> C carries two hops, oldest first. No\nrequester email: the project document is readable on public projects; the\nrequest that brought it here keeps that."
       },
       "IngestManifestRequest": {
         "properties": {
@@ -22987,6 +26501,35 @@
               }
             ],
             "title": "Recipe Url"
+          },
+          "recipe_summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipe Summary"
+          },
+          "recipe_description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipe Description"
+          },
+          "recipe_inputs": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeInput"
+            },
+            "type": "array",
+            "title": "Recipe Inputs"
           }
         },
         "type": "object",
@@ -23809,6 +27352,41 @@
         "title": "InstanceLook",
         "description": "The instance-wide default chrome style, set from the /admin Branding panel.\n\nKept apart from ``BrandTheme``: a dashboard carries a ``BrandTheme`` too,\nand the app's chrome is not something one dashboard can restyle. ``None``\nmeans Glass. Each reader can still pick their own look in their profile."
       },
+      "InviteCreate": {
+        "properties": {
+          "lock_on_import": {
+            "type": "boolean",
+            "title": "Lock On Import",
+            "default": true
+          },
+          "expires_in_hours": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires In Hours"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "title": "InviteCreate"
+      },
       "JoinDefinition": {
         "properties": {
           "id": {
@@ -24437,6 +28015,90 @@
         "title": "LinkResolutionResponse",
         "description": "Response with resolved target values from a link resolution request.\n\nContains the resolved values that should be used to filter the target DC,\nalong with metadata about the resolution process.\n\nExample response:\n    {\n        \"resolved_values\": [\"S1_R1\", \"S1_R2\", \"S2_R1\"],\n        \"link_id\": \"link_001\",\n        \"resolver_used\": \"sample_mapping\",\n        \"match_count\": 3,\n        \"target_type\": \"multiqc\",\n        \"source_count\": 2,\n        \"unmapped_values\": []\n    }"
       },
+      "LinkSuggestion": {
+        "properties": {
+          "source_dc_id": {
+            "type": "string",
+            "title": "Source Dc Id"
+          },
+          "source_dc_tag": {
+            "type": "string",
+            "title": "Source Dc Tag"
+          },
+          "source_column": {
+            "type": "string",
+            "title": "Source Column"
+          },
+          "target_dc_id": {
+            "type": "string",
+            "title": "Target Dc Id"
+          },
+          "target_dc_tag": {
+            "type": "string",
+            "title": "Target Dc Tag"
+          },
+          "target_type": {
+            "type": "string",
+            "enum": [
+              "table",
+              "multiqc",
+              "image",
+              "genomic_tracks"
+            ],
+            "title": "Target Type"
+          },
+          "resolver": {
+            "type": "string",
+            "enum": [
+              "direct",
+              "sample_mapping"
+            ],
+            "title": "Resolver"
+          },
+          "target_field": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Field"
+          },
+          "matched": {
+            "type": "integer",
+            "title": "Matched",
+            "description": "Distinct source values found in the target"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total",
+            "description": "Distinct source values read"
+          },
+          "examples": {
+            "items": {
+              "$ref": "#/components/schemas/LinkValueExample"
+            },
+            "type": "array",
+            "title": "Examples"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_dc_id",
+          "source_dc_tag",
+          "source_column",
+          "target_dc_id",
+          "target_dc_tag",
+          "target_type",
+          "resolver",
+          "matched",
+          "total"
+        ],
+        "title": "LinkSuggestion",
+        "description": "A link worth proposing: a source column whose values the target holds."
+      },
       "LinkUpdateRequest": {
         "properties": {
           "source_dc_id": {
@@ -24526,6 +28188,27 @@
         "type": "object",
         "title": "LinkUpdateRequest",
         "description": "Request to update an existing DC link.\n\nAll fields are optional - only provided fields will be updated."
+      },
+      "LinkValueExample": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "targets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Targets"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source"
+        ],
+        "title": "LinkValueExample",
+        "description": "One source value and what a link would reach with it (nothing: not found)."
       },
       "LocalDirEntry": {
         "properties": {
@@ -24962,6 +28645,26 @@
             "type": "boolean",
             "title": "Conflict",
             "default": false
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings",
+            "default": []
+          },
+          "report": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Report"
           }
         },
         "type": "object",
@@ -25038,7 +28741,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -25253,6 +28956,25 @@
         "title": "MyGroup",
         "description": "A group the caller belongs to, annotated with their role in it."
       },
+      "OIDCProviderPublic": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "OIDCProviderPublic",
+        "description": "What the sign-in page needs to draw a provider's button. Nothing secret."
+      },
       "Permission": {
         "properties": {
           "owners": {
@@ -25394,13 +29116,164 @@
         ],
         "title": "PointCoord"
       },
+      "PreflightBody": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "project_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Name"
+          },
+          "requester_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requester Email"
+          },
+          "source_depictio_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Depictio Version"
+          },
+          "bundle_format_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bundle Format Version"
+          },
+          "total_bytes": {
+            "type": "integer",
+            "title": "Total Bytes",
+            "default": 0
+          },
+          "source_s3_endpoint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source S3 Endpoint"
+          },
+          "source_bucket": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Bucket"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id"
+        ],
+        "title": "PreflightBody"
+      },
+      "PreflightRequest": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "target_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Id"
+          },
+          "destination_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Destination Url"
+          },
+          "invite_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Invite Code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id"
+        ],
+        "title": "PreflightRequest",
+        "description": "A registered target (``target_id``) or a destination URL + invite code."
+      },
+      "ProbeBody": {
+        "properties": {
+          "bucket": {
+            "type": "string",
+            "title": "Bucket"
+          },
+          "key": {
+            "type": "string",
+            "title": "Key"
+          }
+        },
+        "type": "object",
+        "required": [
+          "bucket",
+          "key"
+        ],
+        "title": "ProbeBody"
+      },
       "Project": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -25520,6 +29393,22 @@
             "title": "Project Type",
             "default": "basic"
           },
+          "layout": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "runs",
+                  "pipeline",
+                  "tables"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Layout"
+          },
           "realtime": {
             "anyOf": [
               {
@@ -25540,6 +29429,37 @@
               }
             ]
           },
+          "provenance": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProjectProvenance"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "published_lock": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublishedLock"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pending_owner_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Owner Email"
+          },
           "triggered_by": {
             "type": "string",
             "title": "Triggered By",
@@ -25553,6 +29473,23 @@
           "permissions"
         ],
         "title": "Project"
+      },
+      "ProjectLockRequest": {
+        "properties": {
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "title": "ProjectLockRequest"
       },
       "ProjectPermissionRequest": {
         "properties": {
@@ -25572,6 +29509,159 @@
           "permissions"
         ],
         "title": "ProjectPermissionRequest"
+      },
+      "ProjectProvenance": {
+        "properties": {
+          "created_with_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created With Version"
+          },
+          "imported_from": {
+            "items": {
+              "$ref": "#/components/schemas/ImportHop"
+            },
+            "type": "array",
+            "title": "Imported From",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "ProjectProvenance",
+        "description": "Which Depictio produced this project, and how it got here."
+      },
+      "ProjectRun": {
+        "properties": {
+          "run_tag": {
+            "type": "string",
+            "title": "Run Tag"
+          },
+          "workflow": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workflow"
+          },
+          "run_location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Location"
+          },
+          "folder_created": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Folder Created"
+          },
+          "folder_modified": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Folder Modified"
+          },
+          "registered": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Registered"
+          },
+          "run_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Hash"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "files": {
+            "type": "integer",
+            "title": "Files"
+          },
+          "dc_files": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Dc Files"
+          },
+          "scans": {
+            "items": {
+              "$ref": "#/components/schemas/RunScan"
+            },
+            "type": "array",
+            "title": "Scans"
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_tag",
+          "workflow",
+          "run_location",
+          "folder_created",
+          "folder_modified",
+          "registered",
+          "run_hash",
+          "status",
+          "files",
+          "dc_files",
+          "scans"
+        ],
+        "title": "ProjectRun"
+      },
+      "ProjectRuns": {
+        "properties": {
+          "runs": {
+            "items": {
+              "$ref": "#/components/schemas/ProjectRun"
+            },
+            "type": "array",
+            "title": "Runs"
+          }
+        },
+        "type": "object",
+        "required": [
+          "runs"
+        ],
+        "title": "ProjectRuns"
       },
       "ProjectS3Config": {
         "properties": {
@@ -25933,6 +30023,138 @@
         "title": "PublishedAnnotation",
         "description": "What a viewer gets of a published annotation: the shape and its label."
       },
+      "PublishedLock": {
+        "properties": {
+          "locked_at": {
+            "type": "string",
+            "title": "Locked At"
+          },
+          "locked_by_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Locked By Id"
+          },
+          "locked_by_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Locked By Email"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "migration",
+              "admin"
+            ],
+            "title": "Source",
+            "default": "admin"
+          },
+          "migration_request_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Migration Request Id"
+          },
+          "dashboard_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Dashboard Ids",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "PublishedLock",
+        "description": "A project frozen read-only on this instance.\n\n``dashboard_ids`` are the dashboards published with it: a visitor's copy of\na public dashboard lives in the same project but is not part of the release,\nso it stays editable by its owner."
+      },
+      "PushRequest": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "target_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Id"
+          },
+          "destination_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Destination Url"
+          },
+          "invite_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Invite Code"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id"
+        ],
+        "title": "PushRequest"
+      },
       "PydanticObjectId": {
         "type": "string",
         "maxLength": 24,
@@ -25974,6 +30196,36 @@
         "type": "object",
         "title": "RealtimeConfig",
         "description": "Project-level real-time configuration (stored in project.yaml or Project model)."
+      },
+      "RecipeInput": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "name"
+        ],
+        "title": "RecipeInput",
+        "description": "One input of a derived collection: another collection, or a file."
       },
       "RefLine": {
         "properties": {
@@ -26077,6 +30329,21 @@
           "pattern"
         ],
         "title": "Regex"
+      },
+      "RejectBody": {
+        "properties": {
+          "reason": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reason"
+        ],
+        "title": "RejectBody"
       },
       "RenameVersionRequest": {
         "properties": {
@@ -26204,6 +30471,46 @@
         ],
         "title": "RestoreComponentRequest",
         "description": "Put one component back, leaving every other component alone."
+      },
+      "RestoreVersionRequest": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Version",
+            "description": "Past Delta version to bring back."
+          },
+          "base_version": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Base Version",
+            "description": "Delta version the client read."
+          }
+        },
+        "type": "object",
+        "required": [
+          "version",
+          "base_version"
+        ],
+        "title": "RestoreVersionRequest"
+      },
+      "RetryRequest": {
+        "properties": {
+          "invite_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Invite Code"
+          }
+        },
+        "type": "object",
+        "title": "RetryRequest"
       },
       "Review": {
         "properties": {
@@ -26617,6 +30924,51 @@
         ],
         "title": "RunReportFile",
         "description": "One file the run's engine wrote about the run, such as its execution report.\n\n``location`` is its real path, or its ``s3://`` URL. ``size`` is in bytes,\nNone when unknown."
+      },
+      "RunScan": {
+        "properties": {
+          "scan_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scan Time"
+          },
+          "files_total": {
+            "type": "integer",
+            "title": "Files Total"
+          },
+          "files_new": {
+            "type": "integer",
+            "title": "Files New"
+          },
+          "files_updated": {
+            "type": "integer",
+            "title": "Files Updated"
+          },
+          "files_skipped": {
+            "type": "integer",
+            "title": "Files Skipped"
+          },
+          "files_failed": {
+            "type": "integer",
+            "title": "Files Failed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scan_time",
+          "files_total",
+          "files_new",
+          "files_updated",
+          "files_skipped",
+          "files_failed"
+        ],
+        "title": "RunScan"
       },
       "RunStorageIn": {
         "properties": {
@@ -27097,6 +31449,21 @@
         "title": "ScanURL",
         "description": "Remote single-file acquisition: the DC's data lives at an absolute\ns3:// or https:// URL instead of a scanned local path. Validation is\nsyntactic only: reachability/SSRF checks happen at the API fetch gateway."
       },
+      "SharedLabelsPayload": {
+        "properties": {
+          "columns": {
+            "items": {
+              "$ref": "#/components/schemas/AnnotationColumn"
+            },
+            "type": "array",
+            "title": "Columns"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "SharedLabelsPayload",
+        "description": "Body of ``PUT /dashboards/annotations/{dashboard_id}/shared``: the label\ncolumns every reader of the dashboard sees, read-only. Same caps as a\nreader's own labels."
+      },
       "SourceOverride": {
         "properties": {
           "path": {
@@ -27252,6 +31619,35 @@
           "with_dc"
         ],
         "title": "TableJoinConfig"
+      },
+      "TargetCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "url": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Url"
+          },
+          "pairing_key": {
+            "type": "string",
+            "maxLength": 512,
+            "minLength": 32,
+            "title": "Pairing Key"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "url",
+          "pairing_key"
+        ],
+        "title": "TargetCreate"
       },
       "TemplateCatalog": {
         "properties": {
@@ -27786,7 +32182,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -27892,7 +32288,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -28125,7 +32521,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6ae74f15c0276ba4f22f8cc5"
+            "default": "6af460dd8d32cdc6c941c8ef"
           }
         },
         "type": "object",
@@ -28178,6 +32574,27 @@
         ],
         "title": "TransformConfig",
         "description": "Config for a transformed data collection in project.yaml."
+      },
+      "URLPreviewRequest": {
+        "properties": {
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "max_rows": {
+            "type": "integer",
+            "maximum": 50.0,
+            "minimum": 1.0,
+            "title": "Max Rows",
+            "default": 10
+          }
+        },
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "title": "URLPreviewRequest",
+        "description": "Body of POST /datacollections/url_preview."
       },
       "UnrecognisedFile": {
         "properties": {
@@ -28438,7 +32855,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -28606,7 +33023,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -28688,7 +33105,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -28774,7 +33191,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -29037,7 +33454,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -29212,7 +33629,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -29329,7 +33746,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
@@ -29434,7 +33851,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6ae74f15c0276ba4f22f8cc4"
+            "default": "6af460dd8d32cdc6c941c8ee"
           },
           "description": {
             "anyOf": [
