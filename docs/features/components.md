@@ -733,6 +733,47 @@ Filter by selecting multiple values:
 | Default | Initially selected values |
 | Placeholder | Hint text when empty |
 
+### TextInput <small>(v1.21.0+)</small> { #text-input }
+
+Keeps the rows of a string column whose text matches what is typed, read as a **regular
+expression**: `^CCA` keeps values starting with `CCA`, `GG$` those ending with `GG`, a plain word
+is a substring match. Case is ignored.
+
+| Option | Description |
+|--------|-------------|
+| `placeholder` | Hint in the empty box, e.g. `'e.g. ^CCA\|GG$'` |
+| `case_sensitive` | `true` matches letter case exactly. Off by default |
+| `match_mode` | `regex` (default) or `contains`, which reads the text literally (`A+` finds the characters `A+`) |
+| `default_value` | A pattern the box starts with, and returns to on **Reset all** |
+
+An empty box is no filter. A pattern that does not compile, or is longer than 512 characters, is
+flagged under the box and filters nothing.
+
+Under the box, a line says what the pattern caught (*24 of 122 values match*), counted on the
+column's distinct values with the filter's own matcher, so a pattern that keeps nothing says so.
+**show** opens the matching values, laid out in columns, with a box to narrow them and **Copy**
+(the first 100 values; the filter keeps every match). The list follows what you type.
+
+The pipe is the usual regex alternation: `^CCA|GG$` keeps values that start with `CCA` or end
+with `GG`. In the list each top-level alternative is marked in its own colour, with a chip saying
+how many of the listed values it catches.
+
+![TextInput with the pattern ^CCA|GG$: one coloured chip per alternative and the matching protospacers, each match marked in its alternative's colour](../images/guides/components/text_input_matches_light.webp#only-light){ .viz-shot loading=lazy }
+![TextInput with the pattern ^CCA|GG$: one coloured chip per alternative and the matching protospacers, each match marked in its alternative's colour](../images/guides/components/text_input_matches_dark.webp#only-dark){ .viz-shot loading=lazy }
+
+The matcher is the server's regular-expression engine, so exotic syntax (lookbehind, named
+groups) can differ from a JavaScript console.
+
+```yaml
+- tag: guide-pattern
+  component_type: interactive
+  workflow_tag: nf-core/crisprseq
+  data_collection_tag: guide_summary
+  interactive_component_type: TextInput
+  column_name: guide
+  placeholder: 'e.g. ^CCA|GG$'
+```
+
 ### DatePicker
 
 Filter by date range:
