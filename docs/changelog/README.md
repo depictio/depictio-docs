@@ -28,7 +28,7 @@ ghcr.io/depictio/depictio-cli:1.20.5
 ### **🐛 Bug Fixes**
 
 * **A genome view keeps its strongest rows by a data-defined cut-off**: scores in [0, 1] that are not p-values no longer lose the rows the track exists to show ([#1338](https://github.com/depictio/depictio/pull/1338)).
-* **A section keeps its highlights when its one data-bound tile is pruned**, so a germline-only sarek run keeps its findings ([#1337](https://github.com/depictio/depictio/pull/1337)).
+* **A section keeps its highlights when its one data-bound tile is pruned**, for example when a run lacks the data that tile reads ([#1337](https://github.com/depictio/depictio/pull/1337)).
 
 ### **🧬 Pipeline Templates**
 
