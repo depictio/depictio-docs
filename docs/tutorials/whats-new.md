@@ -8,7 +8,7 @@ glightbox: true
 
 When you come back to a dashboard, Depictio shows what changed since you last looked: new data, edited components and new comments. On most figures it also marks which points, bars or samples are new.
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/whats-new/whats-new-overlay-split.webp" src="../images/guides/whats-new/whats-new-overlay-split.mp4"></video></figure>
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/whats-new/whats-new-overlay-split.webp" src="../../images/guides/whats-new/whats-new-overlay-split.mp4"></video></figure>
 
 ## Before you start
 
@@ -72,7 +72,7 @@ A changed tile carries a dot. Its menu holds **Mark as seen**, **Compare with la
 [![The Before | Now modal, Before (your last visit) on the left, Now on the right](../images/guides/whats-new/before_now_light.webp#only-light)](../images/guides/whats-new/before_now_light.webp){target=_blank}
 [![The Before | Now modal, Before (your last visit) on the left, Now on the right](../images/guides/whats-new/before_now_dark.webp#only-dark)](../images/guides/whats-new/before_now_dark.webp){target=_blank}
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/whats-new/before-now.webp" src="../images/guides/whats-new/before-now.mp4"></video></figure>
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/whats-new/before-now.webp" src="../../images/guides/whats-new/before-now.mp4"></video></figure>
 
 ## 4. Mark the changes as seen
 

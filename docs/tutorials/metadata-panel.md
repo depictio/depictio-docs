@@ -8,7 +8,7 @@ glightbox: true
 
 The **Metadata** panel opens the project's sample table beside the dashboard, where you add label columns such as `response` = *responder* / *non-responder*. Each label becomes a group that filters, colours and splits the linked charts, and the real table does not change.
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/metadata-panel/metadata-labels.webp" src="../images/guides/metadata-panel/metadata-labels.mp4"></video></figure>
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/metadata-panel/metadata-labels.webp" src="../../images/guides/metadata-panel/metadata-labels.mp4"></video></figure>
 
 ## Before you start
 

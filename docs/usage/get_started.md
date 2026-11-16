@@ -50,7 +50,7 @@ If you want to explore Depictio with existing demo data, you can use the provide
 5. **Check how it is read**: for a folder, **How should Depictio read this folder?** preselects **Flat tables**, **Custom workflows** or **Pipeline template**. A recognised pipeline shows as **Pipeline:** *name* **· Detected**, with **Change** to pick another.
 6. **What Depictio found**: check the tables, runs and source Depictio lists. Then click **Create project with N tables**, or **Next** and **Create Project** for a pipeline.
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/project-creation/create-project-from-folder.webp" src="../images/guides/project-creation/create-project-from-folder.mp4"></video></figure>
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/project-creation/create-project-from-folder.webp" src="../../images/guides/project-creation/create-project-from-folder.mp4"></video></figure>
 
 See [Create a project](projects/guide.md#create-a-project) for every option, and [Add data](projects/guide.md#add-data) to add tables or runs later.
 

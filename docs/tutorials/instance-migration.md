@@ -8,7 +8,7 @@ glightbox: true
 
 A project can travel from one Depictio instance to another with its data, dashboards, logos and comments. An administrator of the target creates a code, and the project's owner on the source sends the project with it.
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/migration/send-receive.webp" src="../images/guides/migration/send-receive.mp4"></video></figure>
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/migration/send-receive.webp" src="../../images/guides/migration/send-receive.mp4"></video></figure>
 
 ## Before you start
 

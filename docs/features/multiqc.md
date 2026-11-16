@@ -104,7 +104,7 @@ See [Cross-DC filtering](cross-dc-filtering.md#resolvers) for the resolvers, the
 
 Append each new run to the same MultiQC collection, and Depictio tells you which samples are new. It needs the changes feature: `DEPICTIO_DASHBOARD_VERSIONS_CHANGES_SINCE_ENABLED=true` ([What's new](../tutorials/whats-new.md#before-you-start)).
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/multiqc/multiqc-compare-runs.webp" src="../images/guides/multiqc/multiqc-compare-runs.mp4"></video></figure>
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/multiqc/multiqc-compare-runs.webp" src="../../images/guides/multiqc/multiqc-compare-runs.mp4"></video></figure>
 
 1. **Add the run.** Use **Add data** > **Add run**, `depictio ingest --attach-run`, or append its reports with **Manage data**. A run whose reports name samples the project already holds is held back, with the samples listed.
 2. **Read the Runs tab.** Each scan lists, per report, the samples and modules it gained or lost. See [Compare runs](../tutorials/compare-runs.md#3-read-what-a-scan-changed).

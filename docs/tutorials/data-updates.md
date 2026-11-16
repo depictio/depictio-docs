@@ -8,7 +8,7 @@ glightbox: true
 
 A refresh now reads again only the files that changed, and leaves unchanged collections alone. The project's **Activity** tab follows the refresh, and the new rows show on top of the table.
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/data-updates/refresh-new-rows.webp" src="../images/guides/data-updates/refresh-new-rows.mp4"></video></figure>
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/data-updates/refresh-new-rows.webp" src="../../images/guides/data-updates/refresh-new-rows.mp4"></video></figure>
 
 ## Before you start
 

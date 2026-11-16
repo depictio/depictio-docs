@@ -8,7 +8,7 @@ glightbox: true
 
 A project made from a pipeline can hold several runs of it. The **Runs** tab says what each run produced and what each scan changed, and **Compare** opens a dashboard with what one run changed marked.
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../images/guides/compare-runs/compare-runs.webp" src="../images/guides/compare-runs/compare-runs.mp4"></video></figure>
+<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/compare-runs/compare-runs.webp" src="../../images/guides/compare-runs/compare-runs.mp4"></video></figure>
 
 ## Before you start
 
