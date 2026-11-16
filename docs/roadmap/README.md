@@ -178,11 +178,11 @@ something arrived.
 
     | Capability | Since | Docs |
     | ---------- | ----- | ---- |
-    | Changed since your last visit: What's new, Overlay and Split, Before / Now, a notifications bell | v1.21.0 | [What's new](../tutorials/whats-new.md) |
-    | Runs compared: what each run produced and each scan changed, MultiQC split on the new samples | v1.21.0 | [Compare runs](../tutorials/compare-runs.md) · [MultiQC](../features/multiqc.md#compare-runs) |
+    | Changed since your last visit: What's new, Overlay and Split, Before / Now, a notifications bell | v1.21.0 | [_"What's new"_](../features/whats-new.md) |
+    | Runs compared: what each run produced and each scan changed, MultiQC split on the new samples | v1.21.0 | [Runs and run comparison](../features/runs.md) · [MultiQC](../features/multiqc.md#compare-runs) |
     | A project starts from its data, with no Basic or Advanced choice; a Project Builder for your own collections | v1.21.0 | [Create a project](../usage/projects/guide.md#create-a-project) |
-    | Sample labels from the dashboard, saved to the table or exported as a sheet | v1.21.0 | [Label samples](../tutorials/metadata-panel.md) |
-    | A project sent to another instance with an invite code, served read-only there | v1.21.0 | [Move a project](../tutorials/instance-migration.md) |
+    | Sample labels from the dashboard, saved to the table or exported as a sheet | v1.21.0 | [Metadata panel](../features/metadata-panel.md) |
+    | A project sent to another instance with an invite code, served read-only there | v1.21.0 | [Send to another instance](../usage/administration/migrate.md#send-to-another-instance) |
     | OpenID Connect sign-in | v1.21.0 | [Single sign-on](../installation/sso.md) |
 
 ??? success "v1.17 to v1.20: embedding, groups and SAML, proteins, the genome browser"

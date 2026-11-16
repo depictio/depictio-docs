@@ -163,7 +163,7 @@ A project is updated only with the code that first brought it: send again with t
 
 <figure markdown="span"><video autoplay controls muted loop playsinline poster="../../../images/guides/migration/send-receive.webp" src="../../../images/guides/migration/send-receive.mp4"></video></figure>
 
-The controls need `DEPICTIO_MIGRATION_UI_ENABLED` on both sides. The receiving side also needs `DEPICTIO_MIGRATION_INBOUND_ENABLED`, and the sending side `DEPICTIO_MIGRATION_DESTINATION_DOMAINS` (`"*"` allows any host, the Helm chart default is `["*"]`). See [Publishing to another instance](publishing.md) for the full reference and [the tutorial](../../tutorials/instance-migration.md) for a walk-through.
+The controls need `DEPICTIO_MIGRATION_UI_ENABLED` on both sides. The receiving side also needs `DEPICTIO_MIGRATION_INBOUND_ENABLED`, and the sending side `DEPICTIO_MIGRATION_DESTINATION_DOMAINS` (`"*"` allows any host, the Helm chart default is `["*"]`). See [Publishing to another instance](publishing.md) for the full reference.
 
 ## S3 Data Scope
 

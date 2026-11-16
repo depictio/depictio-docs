@@ -186,17 +186,18 @@ A table whose columns look like a latitude and longitude pair shows **Map coordi
 
 ### Manage a data collection { #managing-data-collections-from-the-viewer-v0120 }
 
-Each collection in the project's list has a **Manage data** button (append, replace, clear) for those who may change the project. A later CLI refresh keeps what was added in the browser (see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project)).
+In the project's list of collections, the :material-database-cog-outline: icon of a row (**Manage data (append / replace / clear)**) opens **Manage Data Collection**. Without edit rights on the project it is greyed out, with **Owner permission required**. A later CLI refresh keeps what was added in the browser (see [Refreshing a project](../../depictio-cli/usage.md#refreshing-a-project)).
 
-| Action | What it does |
-|--------|--------------|
-| :material-plus-box: **Append** | Add more files to an existing DC. For MultiQC, the cache is invalidated and rewarmed |
-| :material-swap-horizontal: **Replace** | Swap the underlying data in place |
-| :material-broom: **Clear** | Drop all data from the DC while keeping the definition |
+| Tab | What it does | Button |
+|-----|--------------|--------|
+| **Modify data** | Drop files or folders to add them to the collection. A table takes one file of at most 5 MB; MultiQC takes folders holding `multiqc.parquet` (50 MB per file, 500 MB in all) | **Append folders** |
+| **Modify data**, **Replace existing data** on | The collection is wiped and ingested again from the dropped files | **Replace all data** |
+| **Clear contents** | Deletes all the data and reports. The collection, its name and its links stay. Type the collection name to confirm | **Clear data collection** |
 
+<!-- TODO recapture: Manage data modal (v1.21.0) -->
 <figure markdown="span">
   ![Manage Data Collection modal with the Modify data and Clear contents tabs](../../images/react/manage_dc_modal.png)
-  <figcaption><em>Manage data</em>: <em>Modify data</em> appends or replaces, <em>Clear contents</em> drops the data and keeps the DC definition.</figcaption>
+  <figcaption><em>Manage Data Collection</em>: <em>Modify data</em> appends or replaces, <em>Clear contents</em> drops the data and keeps the collection.</figcaption>
 </figure>
 
 MultiQC reports are checked for **uniformity** before a create or an append: the same modules, plot keys and MultiQC version across runs, and no sample twice. Reports that differ are refused, so plots stay consistent.

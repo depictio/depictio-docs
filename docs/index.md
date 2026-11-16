@@ -788,7 +788,7 @@ hide:
         <h3>Label samples where you look at them</h3>
         <p>Open the <strong>Metadata</strong> panel on a dashboard and type labels next to the samplesheet. Each label becomes a group that filters and colours the linked charts, and you can save it back to the table or export it as a sheet.</p>
         <span class="feature-links">
-          <a class="feature-link" href="tutorials/metadata-panel/">Label samples &rarr;</a>
+          <a class="feature-link" href="features/metadata-panel/">Metadata panel &rarr;</a>
         </span>
       </div>
     </article>
@@ -888,7 +888,7 @@ hide:
         <h3><em>"What's new"</em> since your last visit</h3>
         <p>A dashboard remembers what you last saw. <strong>Overlay</strong> rings the new samples on every chart and fades the rest, <strong>Split</strong> sets them beside what you had seen, and <strong>Before | Now</strong> shows one tile as it was. A bell lists what changed while you were away.</p>
         <span class="feature-links">
-          <a class="feature-link" href="tutorials/whats-new/"><em>"What's new"</em> &rarr;</a>
+          <a class="feature-link" href="features/whats-new/"><em>"What's new"</em> &rarr;</a>
         </span>
       </div>
     </article>
@@ -906,7 +906,7 @@ hide:
         <h3>Compare runs, MultiQC included</h3>
         <p>The <strong>Runs</strong> tab says what each run produced and what each scan changed. <strong>Compare</strong> opens a dashboard on the new samples, MultiQC figures and General Stats split on them, and a run naming samples already in the project is held back.</p>
         <span class="feature-links">
-          <a class="feature-link" href="tutorials/compare-runs/">Compare runs &rarr;</a>
+          <a class="feature-link" href="features/runs/">Runs and run comparison &rarr;</a>
           <a class="feature-link" href="features/multiqc/">MultiQC &rarr;</a>
         </span>
       </div>
@@ -979,7 +979,7 @@ hide:
         <h3>Send a project to another instance</h3>
         <p>Ask the other instance for an invite code, paste it in the project settings and <strong>Send</strong>. The project lands there with its data, dashboards and images, waits for an admin to approve it, then is served read-only. A ZIP export covers the offline case.</p>
         <span class="feature-links">
-          <a class="feature-link" href="tutorials/instance-migration/">Move a project &rarr;</a>
+          <a class="feature-link" href="usage/administration/migrate/#send-to-another-instance">Move a project &rarr;</a>
         </span>
       </div>
     </article>
