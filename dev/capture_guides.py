@@ -605,6 +605,192 @@ def landing_design(page):
     page.wait_for_timeout(5000)
 
 
+# ── dashboard creation: the component builder on the ampliseq Alpha Diversity tab ────
+
+
+def show_filters(page: Page) -> Locator:
+    """Open the filter panel if it is closed; returns the Habitat select."""
+    hab = page.locator('input[placeholder^="Select habitat"]').first
+    for _ in range(3):
+        if hab.is_visible():
+            break
+        page.get_by_role("button", name=re.compile("^(Filters|Show filters)$")).first.click()
+        page.wait_for_timeout(2000)
+    return hab
+
+
+def shannon_floor(page: Page) -> None:
+    """Alpha filters > Shannon diversity from 6.58: the three Groundwater samples drop out, 9 stay.
+    (A tab filter: the sample-scope Habitat select does not survive the builder round trip.)"""
+    show_filters(page)
+    thumb = page.locator("[role=slider]").first
+    thumb.focus()
+    for _ in range(80):  # one step at a time until the low end reads 6.58
+        if float(thumb.get_attribute("aria-valuenow") or 0) >= 6.58:
+            break
+        page.keyboard.press("ArrowRight"); page.wait_for_timeout(120)
+    page.evaluate("document.activeElement && document.activeElement.blur()")
+    page.mouse.move(900, 600)
+    page.get_by_text("1 filter active").first.wait_for()
+    page.wait_for_timeout(5000)
+
+
+def step_to(page: Page, kind: str, dc: str, design: bool = True, edit: bool = False) -> Page:
+    """New component of `kind` on `dc`, up to step 3 (or step 2 with design=False)."""
+    if not edit:
+        amp_add(page, "manual")
+    else:
+        page.get_by_role("button", name="Add", exact=True).first.click(); page.wait_for_timeout(600)
+        page.get_by_role("menuitem", name="Component").click(); page.wait_for_timeout(2500)
+        page.get_by_test_id("component-source-manual").click(); page.wait_for_timeout(3000)
+    page.get_by_text(kind, exact=True).first.click(); page.wait_for_timeout(3000)
+    page.get_by_role("textbox", name="Data Collection").click(); page.wait_for_timeout(600)
+    page.get_by_role("option", name=dc).first.click(); page.wait_for_timeout(2500)
+    if design:
+        page.get_by_role("button", name="Next Step").click(); page.wait_for_timeout(4000)
+    return page
+
+
+def choose(page: Page, placeholder: str, option: str, settle: int = 1000) -> None:
+    page.locator(f'input[placeholder^="{placeholder}"]').first.click(); page.wait_for_timeout(600)
+    page.get_by_role("option", name=re.compile(rf"^\s*{re.escape(option)}\b")).first.click()
+    page.wait_for_timeout(settle)
+
+
+@shot("dashboard_creation", "step_one")
+def step_one(page):
+    amp_add(page, "manual")
+    page.get_by_text("Figure", exact=True).first.hover(); page.wait_for_timeout(800)
+
+
+@shot("dashboard_creation", "step_two")
+def step_two(page):
+    """Data Source with its information and preview: alpha_diversity_multi_canonical, 12 rows."""
+    step_to(page, "Figure", "alpha_diversity_multi_canonical", design=False)
+    page.mouse.move(720, 500); page.wait_for_timeout(1500)
+
+
+def rarefaction_scatter(page: Page) -> None:
+    step_to(page, "Figure", "alpha_rarefaction_summary")
+    for ph, opt in [("Choose visualization type", "Scatter"), ("Select x axis", "depth"),
+                    ("Select y axis", "faith_pd"), ("Select color by", "habitat")]:
+        choose(page, ph, opt)
+    page.mouse.move(1000, 140); page.wait_for_timeout(4000)
+
+
+@shot("dashboard_creation", "figure_design_scatter")
+def figure_design_scatter(page):
+    """Faith PD against sequencing depth, coloured by habitat: the rarefaction points."""
+    rarefaction_scatter(page)
+
+
+@shot("dashboard_creation", "figure_design_code")
+def figure_design_code(page):
+    """Code Mode takes the scatter over, then goes past the form: marginal violins, a layout override."""
+    rarefaction_scatter(page)
+    page.get_by_text("Code Mode", exact=True).click(); page.wait_for_timeout(3000)
+    page.locator(".monaco-editor").first.click(); page.wait_for_timeout(300)
+    page.keyboard.press("Meta+A"); page.keyboard.press("Delete")
+    page.keyboard.insert_text(
+        'fig = px.scatter(df, x="depth", y="faith_pd", color="habitat", marginal_y="violin")\n'
+        'fig.update_layout(legend_title_text="Habitat", xaxis_title="Sequencing depth")\n')
+    page.wait_for_timeout(800)
+    page.get_by_role("button", name="Execute Code").click()
+    page.mouse.move(1000, 140); page.wait_for_timeout(6000)
+
+
+@shot("dashboard_creation", "interactive_design")
+def interactive_design(page):
+    """A RangeSlider on Shannon diversity."""
+    step_to(page, "Interactive", "alpha_diversity_multi_canonical")
+    choose(page, "Pick a column", "shannon")
+    choose(page, "Pick a control type", "Range slider", settle=4000)
+    page.mouse.move(1000, 140); page.wait_for_timeout(1500)
+
+
+@shot("dashboard_creation", "card_design")
+def card_design(page):
+    """A card on the median of observed_features, its aggregation list open."""
+    step_to(page, "Card", "alpha_diversity_multi_canonical")
+    choose(page, "Pick a column", "observed_features", settle=1500)
+    choose(page, "Pick aggregation", "Median", settle=3000)
+    page.locator('input[placeholder^="Pick aggregation"]').first.click(); page.wait_for_timeout(1500)
+
+
+def alpha_filtered(page: Page, filtered: bool) -> Page:
+    """The Alpha Diversity tab in edit mode, where the builder below is opened from."""
+    amp(page, ALPHA, settle=3000)
+    goto(page, page.url.replace(BASE_URL, "").replace("/dashboard/", "/dashboard-edit/"), settle=8000)
+    show_filters(page)
+    if filtered:
+        shannon_floor(page)
+    page.mouse.move(900, 600); page.wait_for_timeout(2000)
+    return page
+
+
+@shot("dashboard_creation", "builder_filter_baseline")
+def builder_filter_baseline(page):
+    """No filter: the Shannon card's median over the 12 samples."""
+    alpha_filtered(page, False)
+
+
+@shot("dashboard_creation", "builder_filter_active")
+def builder_filter_active(page):
+    """Shannon from 6.58: the same cards over the 9 samples left."""
+    alpha_filtered(page, True)
+
+
+def table_with_filter(page: Page) -> Page:
+    """Edit mode, Shannon from 6.58, then a new Table on alpha_diversity_multi_canonical."""
+    amp(page, ALPHA, settle=3000)
+    goto(page, page.url.replace(BASE_URL, "").replace("/dashboard/", "/dashboard-edit/"), settle=7000)
+    shannon_floor(page)
+    step_to(page, "Table", "alpha_diversity_multi_canonical", edit=True)
+    page.mouse.move(1000, 140); page.wait_for_timeout(2000)
+    return page
+
+
+@shot("dashboard_creation", "builder_filter_preview_on")
+def builder_filter_preview_on(page):
+    table_with_filter(page)
+
+
+@shot("dashboard_creation", "builder_filter_preview_off")
+def builder_filter_preview_off(page):
+    table_with_filter(page).get_by_text(re.compile("^Previewing with")).first.click()
+    page.mouse.move(1000, 140); page.wait_for_timeout(4000)
+
+
+def restore_dashboard(page: Page, dashboard: str, doc: dict) -> None:
+    page.evaluate("""async ([id, doc]) => {
+        const t = JSON.parse(localStorage.getItem('local-store') || '{}').access_token;
+        await fetch('/depictio/api/v1/dashboards/save/' + id, {method: 'POST',
+            headers: {Authorization: 'Bearer ' + t, 'Content-Type': 'application/json'},
+            body: JSON.stringify(doc)}); }""", [dashboard, doc])
+
+
+@shot("dashboard_creation", "builder_filter_after_save")
+def builder_filter_after_save(page):
+    """Create the table and land back on the tab, still filtered; the tab is restored after the shot."""
+    amp(page, ALPHA, settle=2000)
+    tab = _ids[ALPHA]
+    before = api(page, f"/dashboards/get/{tab}")
+    try:
+        table_with_filter(page)
+        page.get_by_role("button", name="Create component").first.click()
+        page.wait_for_timeout(9000)
+        new = next(c["index"] for c in api(page, f"/dashboards/get/{tab}")["stored_metadata"]
+                   if c["index"] not in {x["index"] for x in before["stored_metadata"]})
+        page.locator(f'[data-component-id="{new}"], [id*="{new}"]').first.evaluate(
+            "e => e.scrollIntoView({block: 'start'})")
+        page.mouse.move(900, 500); page.mouse.wheel(0, -110)
+        page.mouse.move(1000, 140); page.wait_for_timeout(4000)
+    except Exception:
+        restore_dashboard(page, tab, before)
+        raise
+    return {"after": lambda: restore_dashboard(page, tab, before)}
+
+
 # ── compare runs, data updates ───────────────────────────────────────────────
 
 
@@ -1239,8 +1425,12 @@ def run_shots(browser, names: list[str]) -> None:
             ctx = context(browser, theme, device_scale_factor=2)
             page = ctx.new_page()
             page.set_default_timeout(20000)
+            after = None
             try:
                 target = flow(page)
+                if isinstance(target, dict) and "after" in target:  # undo what the flow changed
+                    after = target.pop("after")
+                    target = target or None
                 if isinstance(target, dict) and "keep_hover" in target:  # the shot is of a hover
                     target.pop("keep_hover").hover()
                 else:
@@ -1254,6 +1444,8 @@ def run_shots(browser, names: list[str]) -> None:
             except Exception as exc:  # one broken shot must not stop the rest
                 print(f"FAILED {topic}/{name} ({theme}): {str(exc).splitlines()[0]}")
             finally:
+                if after:
+                    after()
                 ctx.close()
 
 
