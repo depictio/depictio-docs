@@ -17,7 +17,7 @@ Depictio supports four authentication modes, each designed for a different deplo
 | **Dashboard creation** | Registered users | Immediate | After sign-in | After sign-in |
 | **User management** | Full RBAC | Disabled | Disabled | Disabled |
 | **Temporary users (24h)** | No | No | Yes | Yes |
-| **[OpenID Connect SSO](../../installation/sso.md)** | Optional | No | Optional | Optional |
+| **[OpenID Connect SSO](../../installation/sso/index.md)** | Optional | No | Optional | Optional |
 | **Guided tour** | No | No | Dashboards list | Yes |
 
 ## Auth Mode (Default)
@@ -34,7 +34,7 @@ DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_ID=your-client-id
 DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET=your-secret
 ```
 
-See [Single sign-on (OpenID Connect)](../../installation/sso.md) for the other providers.
+See [Single sign-on (OpenID Connect)](../../installation/sso/index.md) for the other providers.
 
 !!! tip "SSO behind multiple workers"
     Since **v1.5.2** the OAuth CSRF state is shared through MongoDB, so sign-in
@@ -184,13 +184,13 @@ DEPICTIO_AUTH_REGISTRATION_DISABLED=true
 **Behavior:**
 
 - `POST /auth/register` returns 403, and the Register view and the link to it are hidden
-- [OpenID Connect sign-in](../../installation/sso.md) becomes a login-only door: a known email signs in, an unknown one is refused instead of being provisioned an account
+- [OpenID Connect sign-in](../../installation/sso/index.md) becomes a login-only door: a known email signs in, an unknown one is refused instead of being provisioned an account
 - Existing accounts, roles and permissions are untouched
 - An administrator can still create accounts with [Add user](web_ui.md#add-a-user) (v1.19.0+)
 
 ### Password sign-in <small>(v1.8.2+)</small> { #password-login }
 
-Closes email and password sign-in so [single sign-on](../../installation/sso.md) is the only way in, for an instance whose accounts all come from one identity provider:
+Closes email and password sign-in so [single sign-on](../../installation/sso/index.md) is the only way in, for an instance whose accounts all come from one identity provider:
 
 ```bash
 DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED=true

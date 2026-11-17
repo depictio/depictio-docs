@@ -455,7 +455,7 @@ The full variable list is in the [environment reference](../installation/env-ref
 
 ### OpenID Connect sign-in { #oidc-sign-in }
 
-[OpenID Connect single sign-on](../installation/sso.md) uses the authorization code flow
+[OpenID Connect single sign-on](../installation/sso/index.md) uses the authorization code flow
 with PKCE (`S256`). A callback is accepted only if it answers a login this instance
 started, and only once: the `state` is stored server-side in MongoDB and consumed
 atomically. The `nonce` binds the `id_token` to the login, and the token is verified

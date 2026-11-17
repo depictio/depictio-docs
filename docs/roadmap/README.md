@@ -183,7 +183,7 @@ something arrived.
     | A project starts from its data, with no Basic or Advanced choice; a Project Builder for your own collections | v1.21.0 | [Create a project](../usage/projects/guide.md#create-a-project) |
     | Sample labels from the dashboard, saved to the table or exported as a sheet | v1.21.0 | [Metadata panel](../features/metadata-panel.md) |
     | A project sent to another instance with an invite code, served read-only there | v1.21.0 | [Send to another instance](../usage/administration/migrate.md#send-to-another-instance) |
-    | OpenID Connect sign-in | v1.21.0 | [Single sign-on](../installation/sso.md) |
+    | OpenID Connect sign-in | v1.21.0 | [Single sign-on](../installation/sso/index.md) |
 
 ??? success "v1.17 to v1.20: embedding, groups and SAML, proteins, the genome browser"
 
@@ -195,7 +195,7 @@ something arrived.
     | Scope banner on one-unit tabs, linked views, zoom synced across residue tiles | v1.19.1 | [Scope banner](../features/dashboards.md#scope-banner) · [Linked view](../features/dashboards.md#linked-view) |
     | Protein tiles linked by residue, with structures from the run, AlphaFold DB or ESMFold | v1.19.0 | [Proteins](../features/proteins.md) |
     | Add user: an administrator creates an account with an initial password | v1.19.0 | [Adding a user](../usage/guides/web_ui.md#add-a-user) |
-    | SAML 2.0 sign-in, with groups from the identity provider | v1.18.0 | [Single sign-on (SAML)](../installation/sso.md) |
+    | SAML 2.0 sign-in, with groups from the identity provider | v1.18.0 | [Single sign-on (SAML)](../installation/sso/index.md) |
     | User groups: share a project with a whole lab | v1.18.0 | [Groups](../usage/administration/groups.md) |
     | Remembered filters, and filter links that carry the active filters | v1.18.0 | [Remembered filters](../usage/guides/dashboard_usage.md#remembered-filters) |
     | Viewers may comment | v1.17.2 | [Viewers can comment](../features/comments-annotations.md#viewers-can-comment) |

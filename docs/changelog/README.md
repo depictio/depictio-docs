@@ -24,7 +24,7 @@ ghcr.io/depictio/depictio-cli:1.21.0
 ### **♻️ Migration**
 
 * **Projects**: **No more Basic or Advanced projects**. The *New project* dialog no longer asks for a type, and the project header says what it holds: tables, workflows or a template. `project_type` is still read from YAML but ignored. See [Create a project](../usage/projects/guide.md#create-a-project) ([196c0d1](https://github.com/depictio/depictio/commit/196c0d17882ad92f6718fd0aa712ecdef2c47c11), [9ad8702](https://github.com/depictio/depictio/commit/9ad87022701fde8bcd8ed6b1a68183be9e3c9a6e), [29897db](https://github.com/depictio/depictio/commit/29897dbe5222591d5f0e38a986d5d85bb38d7150)).
-* **Sign-in**: **Single sign-on moves to OpenID Connect**. Providers go in `DEPICTIO_AUTH_OIDC_PROVIDERS` and SAML is removed. `DEPICTIO_AUTH_GOOGLE_OAUTH_*` still works for this release. See [Single sign-on](../installation/sso.md) ([#1356](https://github.com/depictio/depictio/pull/1356)).
+* **Sign-in**: **Single sign-on moves to OpenID Connect**. Providers go in `DEPICTIO_AUTH_OIDC_PROVIDERS` and SAML is removed. `DEPICTIO_AUTH_GOOGLE_OAUTH_*` still works for this release. See [Single sign-on](../installation/sso/index.md) ([#1356](https://github.com/depictio/depictio/pull/1356)).
 
 ### **✨ New Features**
 
@@ -357,7 +357,7 @@ ghcr.io/depictio/depictio-cli:1.19.0
 
 ### **🐛 Bug Fixes**
 
-* **SAML sign-in reads the identity provider's response**. See [Single sign-on (SAML)](../installation/sso.md) ([#1247](https://github.com/depictio/depictio/pull/1247)).
+* **SAML sign-in reads the identity provider's response**. See [Single sign-on (SAML)](../installation/sso/index.md) ([#1247](https://github.com/depictio/depictio/pull/1247)).
 * **The API image builds again** ([#1244](https://github.com/depictio/depictio/pull/1244)).
 * **Dashboards with advanced visualizations export again** ([#1239](https://github.com/depictio/depictio/pull/1239)).
 
@@ -373,7 +373,7 @@ No images were published for v1.18.1: the API image failed to build ([#1244](htt
 
 ### **🐛 Bug Fixes**
 
-* **SAML loads in the API image**, where every SAML route answered 500 in 1.18.0. See [Single sign-on (SAML)](../installation/sso.md) ([#1243](https://github.com/depictio/depictio/pull/1243)).
+* **SAML loads in the API image**, where every SAML route answered 500 in 1.18.0. See [Single sign-on (SAML)](../installation/sso/index.md) ([#1243](https://github.com/depictio/depictio/pull/1243)).
 * **File-backed genome tracks render with sign-in on**. See [Genome view](../features/advanced-visualizations.md#genome-view) ([#1242](https://github.com/depictio/depictio/pull/1242)).
 
 ---
@@ -398,9 +398,9 @@ ghcr.io/depictio/depictio-cli:1.18.0
 
 ### **✨ New Features**
 
-* **SAML 2.0 sign-in**, off until `DEPICTIO_AUTH_SAML_ENABLED` is set. Use v1.19.0 or later. See [Single sign-on (SAML)](../installation/sso.md) ([#968](https://github.com/depictio/depictio/pull/968)).
+* **SAML 2.0 sign-in**, off until `DEPICTIO_AUTH_SAML_ENABLED` is set. Use v1.19.0 or later. See [Single sign-on (SAML)](../installation/sso/index.md) ([#968](https://github.com/depictio/depictio/pull/968)).
 * **User groups**: share a project with a whole lab, and let group admins manage their members. See [Groups](../usage/administration/groups.md) ([#972](https://github.com/depictio/depictio/pull/972)).
-* **Groups from the identity provider** with `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS`. See [Group and profile sync](../installation/sso.md#group-and-profile-sync) ([#972](https://github.com/depictio/depictio/pull/972)).
+* **Groups from the identity provider** with `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS`. See [Group and profile sync](../installation/sso/groups-and-access.md#group-and-profile-sync) ([#972](https://github.com/depictio/depictio/pull/972)).
 * **Remembered filters**: a dashboard reopens on the filters you left. See [Remembered filters](../usage/guides/dashboard_usage.md#remembered-filters) ([#967](https://github.com/depictio/depictio/pull/967)).
 * **Filter links**: the address bar carries the active filters. See [Filter links](../usage/guides/dashboard_usage.md#filter-links) ([#967](https://github.com/depictio/depictio/pull/967)).
 

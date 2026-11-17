@@ -115,7 +115,7 @@ Base class for service configurations with internal/external URL handling.
 | `DEPICTIO_VIEWER_EXTERNAL_HOST` | `localhost` | - |
 | `DEPICTIO_VIEWER_EXTERNAL_PORT` | `5080` | Host-side port mapped to the viewer container |
 | `DEPICTIO_VIEWER_EXTERNAL_PROTOCOL` | `http` | - |
-| `DEPICTIO_VIEWER_PUBLIC_URL` | - | Public URL of the viewer, where magic links and the [OpenID Connect](sso.md) hand-off land |
+| `DEPICTIO_VIEWER_PUBLIC_URL` | - | Public URL of the viewer, where magic links and the [OpenID Connect](sso/index.md) hand-off land |
 | `DEPICTIO_VIEWER_EXTERNAL_SERVICE` | `false` | - |
 | `DEPICTIO_VIEWER_HOST` | `0.0.0.0` | - |
 | `DEPICTIO_VIEWER_WORKERS` | `4` | Gunicorn worker processes |
@@ -275,7 +275,7 @@ by hand. See [From a run folder](../usage/projects/remote-data.md#from-a-run-fol
 **Config Class:** `AuthConfig`
 **Environment Prefix:** `DEPICTIO_AUTH_`
 
-Authentication and authorization settings including JWT configuration, unauthenticated mode and OpenID Connect single sign-on. The removed `DEPICTIO_AUTH_SAML_*` variables are ignored, see [From SAML to OIDC](sso.md#from-saml-to-oidc).
+Authentication and authorization settings including JWT configuration, unauthenticated mode and OpenID Connect single sign-on. The removed `DEPICTIO_AUTH_SAML_*` variables are ignored, see [From SAML to OIDC](sso/migration.md#from-saml-to-oidc).
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -290,10 +290,10 @@ Authentication and authorization settings including JWT configuration, unauthent
 | `DEPICTIO_AUTH_ANONYMOUS_USER_EMAIL` | `anonymous@depict.io` | Default anonymous user email |
 | `DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS` | `24` | Number of hours until temporary users expire |
 | `DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_MINUTES` | `0` | Number of minutes until temporary users expire |
-| `DEPICTIO_AUTH_OIDC_PROVIDERS` | _(empty)_ | JSON list of OpenID Connect providers (Keycloak, Google, Microsoft Entra ID, Authentik, ...). Keys: `id`, `label`, `enabled`, `issuer`, `discovery_url`, `client_id`, `client_secret`, `scopes`, `redirect_uri`, `claims`, `sso_provider`, `assume_email_verified`, `token_endpoint_auth_method`, `authorize_params`, `fetch_userinfo`. See [Single sign-on (OpenID Connect)](sso.md#provider-keys) |
+| `DEPICTIO_AUTH_OIDC_PROVIDERS` | _(empty)_ | JSON list of OpenID Connect providers (Keycloak, Google, Microsoft Entra ID, Authentik, ...). Keys: `id`, `label`, `enabled`, `issuer`, `discovery_url`, `client_id`, `client_secret`, `scopes`, `redirect_uri`, `claims`, `sso_provider`, `assume_email_verified`, `token_endpoint_auth_method`, `authorize_params`, `fetch_userinfo`. See [Single sign-on (OpenID Connect)](sso/configuration.md#provider-keys) |
 | `DEPICTIO_AUTH_OIDC_<ID>_CLIENT_ID` | - | Client id of the provider whose `id` is `<ID>` (upper case, `-` as `_`). Overrides `client_id` in `DEPICTIO_AUTH_OIDC_PROVIDERS` |
 | `DEPICTIO_AUTH_OIDC_<ID>_CLIENT_SECRET` | - | Client secret of that provider. Overrides `client_secret`; use it from a secret store |
-| `DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED` | `false` | **Deprecated**, still works for one release: mapped to an OIDC provider with id `google`. See [From Google OAuth to OIDC](sso.md#from-google-oauth-to-oidc) |
+| `DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED` | `false` | **Deprecated**, still works for one release: mapped to an OIDC provider with id `google`. See [From Google OAuth to OIDC](sso/migration.md#from-google-oauth-to-oidc) |
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID` | - | **Deprecated**: use `DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_ID` |
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET` | - | **Deprecated**: use `DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET` |
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI` | - | **Deprecated**: the `redirect_uri` of the `google` provider |

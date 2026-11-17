@@ -81,8 +81,8 @@ See [Project permissions](../projects/guide.md#project-permissions).
 
 ## Groups from the identity provider { #sso-managed-groups }
 
-With `claims.groups` set on an [OpenID Connect provider](../../installation/sso.md#claim-mapping), each sign-in through it mirrors the user's groups
+With `claims.groups` set on an [OpenID Connect provider](../../installation/sso/configuration.md#claim-mapping), each sign-in through it mirrors the user's groups
 as **SSO-managed** groups, badged *SSO*: created when first seen, membership synced both
 ways at every sign-in. Groups created by hand are never touched; a login whose token
 carries no groups claim removes the user from every SSO-managed group. See
-[Group and profile sync](../../installation/sso.md#group-and-profile-sync).
+[Group and profile sync](../../installation/sso/groups-and-access.md#group-and-profile-sync).

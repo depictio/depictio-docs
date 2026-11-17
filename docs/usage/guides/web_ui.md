@@ -65,7 +65,7 @@ in Classic, Paper has it in the top bar or the dock.
 
 ### <span style="color: #1E88E5;">:material-shield-key-outline:</span> Single sign-on login
 
-An instance with [OpenID Connect single sign-on](../../installation/sso.md) shows one button
+An instance with [OpenID Connect single sign-on](../../installation/sso/index.md) shows one button
 per identity provider (for example *Sign in with Google* or the label the administrator
 set). It sends you to the provider and back. If the account does not exist, it is created
 automatically, unless registration is closed.

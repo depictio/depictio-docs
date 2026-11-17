@@ -164,7 +164,7 @@ DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET=change-me
 The redirect URI to register at the provider is
 `https://<api-host>/depictio/api/v1/auth/oidc/<id>/callback`. Full reference, provider
 recipes and migration from the former SAML and `DEPICTIO_AUTH_GOOGLE_OAUTH_*` settings:
-[Single sign-on (OpenID Connect)](sso.md).
+[Single sign-on (OpenID Connect)](sso/index.md).
 
 ### Authentication Keys
 
