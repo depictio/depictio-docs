@@ -53,6 +53,11 @@ The file is read in your browser and never sent to the server. Rows that match n
 [![The Analysis panel with groups derived from labels, charts coloured by My groups](../images/guides/metadata-panel/metadata_groups_analysis_light.webp#only-light)](../images/guides/metadata-panel/metadata_groups_analysis_light.webp){target=_blank}
 [![The Analysis panel with groups derived from labels, charts coloured by My groups](../images/guides/metadata-panel/metadata_groups_analysis_dark.webp#only-dark)](../images/guides/metadata-panel/metadata_groups_analysis_dark.webp){target=_blank}
 
+**Compare groups in cards**, under **In cards** in **Analysis**, adds each group's value to the cards. Closed, **Analysis** leaves the figures coloured and the cards comparing the groups.
+
+[![Cards with each review group's value and figures coloured by fail, pass and recheck](../images/guides/metadata-panel/labels_on_dashboard_light.webp#only-light){ width="760" }](../images/guides/metadata-panel/labels_on_dashboard_light.webp){target=_blank}
+[![Cards with each review group's value and figures coloured by fail, pass and recheck](../images/guides/metadata-panel/labels_on_dashboard_dark.webp#only-dark){ width="760" }](../images/guides/metadata-panel/labels_on_dashboard_dark.webp){target=_blank}
+
 Groups from labels carry a tag icon in **Analysis**: rename or delete them from Metadata, not there. **Analysis** is a temporary view: colours, groups and card comparisons are never saved with the dashboard.
 
 ## The column menu

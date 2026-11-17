@@ -36,8 +36,8 @@ The **What's new** key sits in the dashboard header, beside settings and theme, 
 [![Dashboard header with the What's new key and its count badge](../images/guides/whats-new/whats_new_key_light.webp#only-light){ width="496" }](../images/guides/whats-new/whats_new_key_light.webp){target=_blank}
 [![Dashboard header with the What's new key and its count badge](../images/guides/whats-new/whats_new_key_dark.webp#only-dark){ width="496" }](../images/guides/whats-new/whats_new_key_dark.webp){target=_blank}
 
-[![The What's new panel with Data, Dashboard and Comments sections and Mark as seen](../images/guides/whats-new/whats_new_panel_light.webp#only-light){ width="286" }](../images/guides/whats-new/whats_new_panel_light.webp){target=_blank}
-[![The What's new panel with Data, Dashboard and Comments sections and Mark as seen](../images/guides/whats-new/whats_new_panel_dark.webp#only-dark){ width="286" }](../images/guides/whats-new/whats_new_panel_dark.webp){target=_blank}
+[![The What's new panel: Off, Overlay and Split, the run chips, new runs under Data, and Mark as seen](../images/guides/whats-new/whats_new_panel_light.webp#only-light){ width="265" }](../images/guides/whats-new/whats_new_panel_light.webp){target=_blank}
+[![The What's new panel: Off, Overlay and Split, the run chips, new runs under Data, and Mark as seen](../images/guides/whats-new/whats_new_panel_dark.webp#only-dark){ width="265" }](../images/guides/whats-new/whats_new_panel_dark.webp){target=_blank}
 
 The panel lists the changes in three sections:
 
@@ -56,14 +56,22 @@ The panel lists the changes in three sections:
 | Mode | What the figures show |
 |------|-----------------------|
 | **Off** | The figures as they are now |
-| **Overlay** | New points ringed, removed points ghosted, a bar's previous value outlined. What was already there fades. In a MultiQC figure the samples you had seen fade, and in a table the rows of runs you had seen fade |
-| **Split** | Each figure drawn twice: what is new beside what you had seen. Cards compare the two sides |
+| **Overlay** | Each new run in its own colour, the runs you had seen in grey, in one panel. In a MultiQC figure the samples you had seen fade, and in a table the rows of runs you had seen fade |
+| **Split** | Each figure drawn once per side: all runs, each new run, and what you had seen. Cards compare the sides |
 
-[![A scatter under Overlay, new points ringed and old ones faded](../images/guides/whats-new/overlay_scatter_light.webp#only-light){ width="545" }](../images/guides/whats-new/overlay_scatter_light.webp){target=_blank}
-[![A scatter under Overlay, new points ringed and old ones faded](../images/guides/whats-new/overlay_scatter_dark.webp#only-dark){ width="545" }](../images/guides/whats-new/overlay_scatter_dark.webp){target=_blank}
+The chips under the modes pick the runs: **All new runs**, or one run. With one run picked, Split draws **All**, that run and the **Other runs**.
 
-[![Figures under Split, one panel per side with the split legend](../images/guides/whats-new/split_view_light.webp#only-light)](../images/guides/whats-new/split_view_light.webp){target=_blank}
-[![Figures under Split, one panel per side with the split legend](../images/guides/whats-new/split_view_dark.webp#only-dark)](../images/guides/whats-new/split_view_dark.webp){target=_blank}
+[![A scatter under Overlay, each new run in its colour and the runs seen before in grey](../images/guides/whats-new/overlay_scatter_light.webp#only-light){ width="560" }](../images/guides/whats-new/overlay_scatter_light.webp){target=_blank}
+[![A scatter under Overlay, each new run in its colour and the runs seen before in grey](../images/guides/whats-new/overlay_scatter_dark.webp#only-dark){ width="560" }](../images/guides/whats-new/overlay_scatter_dark.webp){target=_blank}
+
+[![A bar chart and a violin plot under Overlay, the new runs coloured and the runs seen before in grey](../images/guides/whats-new/overlay_figures_light.webp#only-light){ width="800" }](../images/guides/whats-new/overlay_figures_light.webp){target=_blank}
+[![A bar chart and a violin plot under Overlay, the new runs coloured and the runs seen before in grey](../images/guides/whats-new/overlay_figures_dark.webp#only-dark){ width="800" }](../images/guides/whats-new/overlay_figures_dark.webp){target=_blank}
+
+[![Cards and figures under Split on run_09: All, New: run_09 and Other runs side by side](../images/guides/whats-new/split_view_light.webp#only-light){ width="800" }](../images/guides/whats-new/split_view_light.webp){target=_blank}
+[![Cards and figures under Split on run_09: All, New: run_09 and Other runs side by side](../images/guides/whats-new/split_view_dark.webp#only-dark){ width="800" }](../images/guides/whats-new/split_view_dark.webp){target=_blank}
+
+[![A bar chart and a violin plot under Split on run_09, one panel per side](../images/guides/whats-new/split_figures_light.webp#only-light){ width="800" }](../images/guides/whats-new/split_figures_light.webp){target=_blank}
+[![A bar chart and a violin plot under Split on run_09, one panel per side](../images/guides/whats-new/split_figures_dark.webp#only-dark){ width="800" }](../images/guides/whats-new/split_figures_dark.webp){target=_blank}
 
 Split compares runs: every Delta row carries the run that wrote it (`depictio_run_id`), so the two sides are the new runs and the runs you had seen. MultiQC rows have no run column and split on new samples instead (see [MultiQC: compare runs](multiqc.md#compare-runs)). The two sides are temporary groups: never saved and never applied as a filter.
 
