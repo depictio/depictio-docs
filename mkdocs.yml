@@ -246,13 +246,14 @@ nav:
       - CLI:
           - installation/cli.md
       - Configuration: installation/configuration.md
-      - Single sign-on (OIDC):
-          - installation/sso/index.md
-          - Configuration reference: installation/sso/configuration.md
-          - Provider recipes: installation/sso/providers.md
-          - Groups and access: installation/sso/groups-and-access.md
-          - Migration: installation/sso/migration.md
-          - Troubleshooting and security: installation/sso/troubleshooting.md
+      - Single sign-on:
+          - OpenID Connect:
+              - installation/sso/index.md
+              - Configuration: installation/sso/configuration.md
+              - Providers: installation/sso/providers.md
+              - Groups and access: installation/sso/groups-and-access.md
+              - Migration: installation/sso/migration.md
+              - Troubleshooting: installation/sso/troubleshooting.md
       - Environment Reference: installation/env-reference.md
 
   - Usage:
