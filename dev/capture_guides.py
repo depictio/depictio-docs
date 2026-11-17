@@ -10,7 +10,8 @@ is recorded in light theme at 1x and kept as H.264, minus its idle waits.
     python dev/capture_guides.py whats_new_panel runs_compare_menu     # just these
     python dev/capture_guides.py --videos [compare-runs ...]           # videos
 
-Writes docs/images/guides/<topic>/<name>_{light,dark}.webp, and <name>.mp4 with
+Writes docs/images/guides/<topic>/<name>_{light,dark}.webp (topic "landing":
+docs/images/landing/), and <name>.mp4 with
 a <name>.webp poster. Needs Playwright with Chromium, Pillow and ffmpeg.
 
 The instance holds the demo state the flows find by name: "Sequencing QC study"
@@ -68,6 +69,11 @@ localStorage.setItem('theme-store', JSON.stringify('%s'));}catch(e){}"""
 
 SHOTS: list = []  # (topic, name, flow)
 VIDEOS: list = []  # (topic, name, flow, speed)
+
+
+def topic_dir(topic: str) -> Path:
+    """The landing page keeps its images in docs/images/landing, the guides under guides/."""
+    return OUT.parent / "landing" if topic == "landing" else OUT / topic
 
 
 def shot(topic: str, name: str):
@@ -471,6 +477,132 @@ def visibility_chips(page):
     top, last = head.bounding_box(), chips.last.bounding_box()
     return {"x": top["x"] - 24, "y": top["y"] - 14, "width": top["width"] + 48,
             "height": last["y"] + last["height"] - top["y"] + 30}
+
+
+# ── landing page: the ampliseq project and dashboard, 1440x900 like the 16:10 frame ──
+
+
+@shot("landing", "explore")
+def landing_explore(page):
+    """Phylogeny tab, full tree: a mostly-Chloroflexota clade (199 tips) selected and sent as a filter."""
+    amp(page, "Phylogeny", settle=10000)
+    t = tile(page, "Phylogenetic tree")
+    t.evaluate("e => e.scrollIntoView({block: 'start'})")
+    page.mouse.wheel(0, -90)
+    page.wait_for_timeout(2000)
+    t.get_by_text("Full tree", exact=True).click()
+    page.wait_for_timeout(8000)
+    # A node click as Plotly reports it (hit-testing one marker among 5,000 is unreliable),
+    # on internal nodes until one holds 100 to 400 tips, mostly one phylum. The internal
+    # nodes are the trace whose customdata is [id, branch length].
+    ids = t.evaluate("""el => el.querySelector('.js-plotly-plot')._fullData
+        .find(d => d.customdata && d.customdata[0].length === 2).customdata.map(c => c[0])""")
+    for node in ids[::23]:
+        t.evaluate("""(el, id) => el.querySelector('.js-plotly-plot').emit('plotly_click',
+            {points: [{customdata: [id]}]})""", node)
+        page.wait_for_timeout(300)
+        info = page.get_by_test_id("phylo-selection-info").first.inner_text()
+        tips = re.search(r"(\d+) tips", info)
+        if info.startswith("Mostly") and tips and 100 <= int(tips.group(1)) <= 400:
+            break
+    page.wait_for_timeout(1500)
+    btn = page.get_by_test_id("phylo-filter-subtree")
+    for _ in range(3):  # the panel can re-render under the first click
+        btn.click(); page.wait_for_timeout(2500)
+        if "Filtered" in btn.inner_text():
+            break
+    page.mouse.move(1000, 140)
+    page.wait_for_timeout(8000)
+
+
+@shot("landing", "project")
+def landing_project(page):
+    goto(page, f"/projects/{project_id(page, SOIL)}", settle=5000)
+
+
+@shot("landing", "ingest")
+def landing_ingest(page):
+    """Activity > Latest ingestion: the report of the soil_2019 ingestion."""
+    goto(page, f"/projects/{project_id(page, SOIL)}?tab=activity", settle=5000)
+    page.get_by_text("Latest ingestion", exact=True).first.click()
+    page.wait_for_timeout(3000)
+    page.get_by_text("Latest ingestion", exact=True).first.evaluate("e => e.scrollIntoView({block: 'start'})")
+    page.mouse.wheel(0, -110)
+    page.wait_for_timeout(1500)
+    page.evaluate("""() => {  // the runs live in a scratch folder: show the short path
+        const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        for (let n; (n = w.nextNode());) n.nodeValue = n.nodeValue.replace(/\\/\\S*\\/scratchpad\\/ampliseq\\//g, '~/'); }""")
+
+
+@shot("landing", "multiqc")
+def landing_multiqc(page):
+    amp(page, "MultiQC", settle=12000)
+    tile(page, "cutadapt / Filtered Reads").evaluate("e => e.scrollIntoView({block: 'start'})")
+    page.mouse.wheel(0, -100)
+    page.wait_for_timeout(4000)
+
+
+@shot("landing", "organise")
+def landing_organise(page):
+    """Community & Diversity: named sections, the tab groups in the sidebar."""
+    amp(page, COMM, settle=10000)
+    page.get_by_text("Community at a glance", exact=True).first.evaluate("e => e.scrollIntoView({block: 'start'})")
+    page.mouse.wheel(0, -260)
+    page.wait_for_timeout(3000)
+
+
+@shot("landing", "operate")
+def landing_operate(page):
+    goto(page, "/admin/backups", settle=4000)
+    if page.get_by_test_id("backup-list-table").locator("tbody tr").count() == 0:
+        page.get_by_role("button", name="Create backup").click()
+        page.wait_for_timeout(15000)
+        goto(page, "/admin/backups", settle=4000)
+    page.wait_for_timeout(2000)
+    page.get_by_text("Backups on the server", exact=True).first.evaluate("e => e.scrollIntoView({block: 'start'})")
+    page.wait_for_timeout(1000)
+    page.mouse.move(900, 500)
+    page.mouse.wheel(0, -120)
+    page.wait_for_timeout(1500)
+
+
+def amp_add(page: Page, source: str) -> Page:
+    """The ampliseq Alpha Diversity tab in edit mode, Add > Component > `source`."""
+    amp(page, ALPHA, settle=4000)
+    goto(page, page.url.replace(BASE_URL, "").replace("/dashboard/", "/dashboard-edit/"), settle=6000)
+    page.get_by_role("button", name="Add", exact=True).first.click()
+    page.wait_for_timeout(600)
+    page.get_by_role("menuitem", name="Component").click()
+    page.wait_for_timeout(2500)
+    page.get_by_test_id(f"component-source-{source}").click()
+    page.wait_for_timeout(4000)
+    return page
+
+
+@shot("landing", "catalog")
+def landing_catalog(page):
+    """Needs the preview bundle: cd depictio/viewer && pnpm run build:catalog-preview."""
+    amp_add(page, "catalog").get_by_text("Clustered abundance heatmap", exact=True).first.click()
+    page.wait_for_timeout(12000)
+
+
+@shot("landing", "design")
+def landing_design(page):
+    """Figure design: a stacked bar of phylum relative abundance per sample, previewed."""
+    amp_add(page, "manual").get_by_text("Figure", exact=True).first.click()
+    page.wait_for_timeout(2500)
+    for field, option in [(page.get_by_role("textbox", name="Data Collection"), "taxonomy_rel_abundance")]:
+        field.click(); page.wait_for_timeout(600)
+        page.get_by_role("option", name=option).first.click(); page.wait_for_timeout(1500)
+    page.get_by_role("button", name="Next Step").click()
+    page.wait_for_timeout(4000)
+    for placeholder, option in [("Choose visualization type...", "Bar Chart"), ("Select x axis*...", "name"),
+                                ("Select y axis*...", "rel_abundance"), ("Select color by...", "Phylum")]:
+        page.get_by_placeholder(placeholder).click()
+        page.wait_for_timeout(600)
+        page.get_by_role("option", name=re.compile(rf"^\s*{re.escape(option)}\b")).first.click()
+        page.wait_for_timeout(1000)
+    page.wait_for_timeout(5000)
 
 
 # ── compare runs, data updates ───────────────────────────────────────────────
@@ -1118,7 +1250,7 @@ def run_shots(browser, names: list[str]) -> None:
                     png = page.screenshot(clip=target, animations="disabled")
                 else:
                     png = (target or page).screenshot(animations="disabled")
-                save(png, OUT / topic / f"{name}_{theme}.webp")
+                save(png, topic_dir(topic) / f"{name}_{theme}.webp")
             except Exception as exc:  # one broken shot must not stop the rest
                 print(f"FAILED {topic}/{name} ({theme}): {str(exc).splitlines()[0]}")
             finally:

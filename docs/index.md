@@ -602,7 +602,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the project page">
-          <img src="images/landing/project_light.webp" alt="A project page showing its type, the template it was built from, its workflow and its data collections" loading="lazy">
+          <img class="only-light" src="images/landing/project_light.webp" alt="A project page: its pipeline, runs and data collections, its dashboards, and the Data, Runs and Activity sections" loading="lazy">
+          <img class="only-dark" src="images/landing/project_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -689,7 +690,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the component design step">
-          <img src="images/landing/design_light.webp" alt="The Figure Component Design step, with a box plot preview beside its parameter groups" loading="lazy">
+          <img class="only-light" src="images/landing/design_light.webp" alt="The Figure Component Design step, with a stacked bar preview of phylum abundance per sample beside its parameter groups" loading="lazy">
+          <img class="only-dark" src="images/landing/design_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -704,7 +706,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the catalog browser">
-          <img src="images/landing/catalog_light.webp" alt="The catalog browser, listing the tools recognised in the project and previewing a clustered heatmap" loading="lazy">
+          <img class="only-light" src="images/landing/catalog_light.webp" alt="The catalog browser, listing the tools recognised in the project and previewing a clustered heatmap" loading="lazy">
+          <img class="only-dark" src="images/landing/catalog_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -747,7 +750,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: sections across tabs">
-          <img src="images/landing/organise_light.webp" alt="A dashboard split into named sections across tabs" loading="lazy">
+          <img class="only-light" src="images/landing/organise_light.webp" alt="A dashboard tab split into named sections, with a row of summary cards on top" loading="lazy">
+          <img class="only-dark" src="images/landing/organise_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -819,7 +823,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a clade selected on a phylogenetic tree">
-          <img class="only-light" src="images/landing/explore_light.webp" alt="A clade selected on a phylogenetic tree, its summary panel open and the dashboard filtered to the 250 tips it holds" loading="lazy">
+          <img class="only-light" src="images/landing/explore_light.webp" alt="A clade selected on a phylogenetic tree, its summary panel open and the dashboard filtered to the 127 tips it holds" loading="lazy">
           <img class="only-dark" src="images/landing/explore_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
@@ -835,7 +839,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a MultiQC tab in a dashboard">
-          <img src="images/landing/multiqc_light.webp" alt="A MultiQC tab in a dashboard, with four FastQC module plots each placed as its own card" loading="lazy">
+          <img class="only-light" src="images/landing/multiqc_light.webp" alt="A MultiQC tab in a dashboard, with the general statistics table, cutadapt and FastQC module plots each placed as its own card" loading="lazy">
+          <img class="only-dark" src="images/landing/multiqc_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
