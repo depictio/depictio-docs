@@ -133,18 +133,7 @@ Once the data is ingested, the project appears on the **Projects** page. On the 
 
 ##### <span style="color: #E53935;">:material-video:</span> Video Tutorial
 
-<div style="padding: 64.29% 0 0 0; position: relative">
-  <iframe
-    src="https://player.vimeo.com/video/1105745104?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-    referrerpolicy="strict-origin-when-cross-origin"
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
-    title="depictio-cli-registration-1753809368201"
-  ></iframe>
-</div>
-<script src="https://player.vimeo.com/api/player.js"></script>
-<p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">Recorded on an earlier version.</p>
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../images/guides/web-ui/cli-config.webp" src="../../images/guides/web-ui/cli-config.mp4"></video></figure>
 
 #### <span style="color: #F68B33;">:material-view-dashboard:</span> Creating Your First Dashboard
 

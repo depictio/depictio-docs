@@ -38,30 +38,18 @@ in Classic, Paper has it in the top bar or the dock.
 
 ### <span style="color: #6495ED;">:material-account-plus:</span> Registering an Account (Sign Up)
 
-1. **Navigate to the Registration page** by clicking the **Register** button on the login screen.
+[![The Sign in page: Email, Password, Sign in, and Create an account](../../images/guides/web-ui/login_light.webp#only-light){ width="466" }](../../images/guides/web-ui/login_light.webp){target=_blank}
+[![The Sign in page: Email, Password, Sign in, and Create an account](../../images/guides/web-ui/login_dark.webp#only-dark){ width="466" }](../../images/guides/web-ui/login_dark.webp){target=_blank}
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/register_login/login.png" target="_blank">
-        <img src="../../../images/guides/register_login/login.png" width="600">
-    </a>
-</div>
-
-2. **Enter your email address** in the "Email" field.
-
-3. **Create a password** and enter it in the "Password" field. You can click the eye icon to view the password as you type and **Confirm your password** by re-entering it in the "Confirm Password" field.
-
-4. Click the **Register** button to submit your registration details.
-
-5. After successful registration, you can return to the login page by clicking the **Back to Login** button.
+1. On the **Sign in** page, click **Create an account**.
+2. Enter your **Email**, a **Password**, and the same password again in **Confirm password**.
+3. Click **Create account**. **Already have an account? Sign in** goes back to the sign-in form.
 
 ### <span style="color: #45B8AC;">:material-login:</span> Logging In (Sign In)
 
-1. **Open the Depictio Login page**.
-2. **Enter your email address** in the "Email" field.
-3. **Enter your password** in the "Password" field.
-4. If you want to see the password as you type it, click the eye icon next to the password field.
-5. Once both fields are filled in, click the **Login** button.
-6. You will be redirected to the Depictio landing page (currently `/dashboards`).
+1. Open the **Sign in** page.
+2. Enter your **Email** and **Password**. The eye icon shows the password as you type.
+3. Click **Sign in**. You land on the **Dashboards** page (`/dashboards`).
 
 ### <span style="color: #1E88E5;">:material-shield-key-outline:</span> Single sign-on login
 
@@ -187,12 +175,10 @@ until the next one. See [Release check](#release-check).
 3. The dashboard will be duplicated and added to the section with the suffix **"(copy)"**.
 
 !!! note
-    <div style="border: 0px solid grey; padding: 1px; text-align: center;">
-    <a href="../../../images/guides/dashboard_creation/dashboard_status.png" target="_blank">
-    <img src="../../../images/guides/dashboard_creation/dashboard_status.png" width="100">
-    </a>
-    </div>
-    Both "public" and "private" dashboards are listed in the **Dashboards** section. Public dashboards are accessible to all users, while private dashboards are only visible to the user who created them.
+    [![The Visibility column of the Dashboards page, with Public and Private chips](../../images/guides/web-ui/visibility_chips_light.webp#only-light){ width="118" }](../../images/guides/web-ui/visibility_chips_light.webp){target=_blank}
+    [![The Visibility column of the Dashboards page, with Public and Private chips](../../images/guides/web-ui/visibility_chips_dark.webp#only-dark){ width="118" }](../../images/guides/web-ui/visibility_chips_dark.webp){target=_blank}
+
+    The **Visibility** column of the **Dashboards** page says whether a dashboard is **Public** or **Private**. Public dashboards are open to all users; private ones only to the user who created them.
     Only the user who created a private dashboard can edit, or delete it.
 
 #### <span style="color: #45B8AC;">:material-link-variant:</span> Share a filtered listing <small>(v1.10.1+)</small> { #share-a-filtered-listing }

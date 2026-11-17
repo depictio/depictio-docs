@@ -2,20 +2,9 @@
 
 ## <span style="color: #E53935;">:material-video:</span> Video example
 
-<div style="max-width: 1200px; margin: 1rem auto 2rem auto;">
-<div style="padding: 64.29% 0 0 0; position: relative">
-  <iframe
-    src="https://player.vimeo.com/video/1108747263?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-    referrerpolicy="strict-origin-when-cross-origin"
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
-    title="depictio-long-demo-1754777542047"
-  ></iframe>
-  </div>
-  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>Depictio UI overview:</strong> Discover how to build a dashboard with Depictio</p>
-</div>
-<script src="https://player.vimeo.com/api/player.js"></script>
+A new dashboard on the nf-core/ampliseq project: **New dashboard**, then **Edit**, a card with the median Shannon diversity, a box plot of Shannon diversity per habitat, and **Save**.
+
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/dashboard_creation/create-dashboard.webp" src="../../../images/guides/dashboard_creation/create-dashboard.mp4"></video></figure>
 
 ## <span style="color: #9966CC;">:material-plus-box:</span> Add a component to the dashboard
 

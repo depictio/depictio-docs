@@ -436,6 +436,43 @@ for _topic, _name, _flow in [
     shot(_topic, _name)(_flow)
 
 
+# ── sign in, public mode: BASE_URL on a stack with single-user mode off ────────
+
+
+@shot("web-ui", "login")
+def login_page(page):
+    """Run with BASE_URL on a stack with password auth (DEPICTIO_AUTH_SINGLE_USER_MODE=false)."""
+    goto(page, "/auth", settle=4000)
+    page.get_by_role("textbox", name="Email").first.wait_for()
+    return {"x": 470, "y": 150, "width": 500, "height": 600}
+
+
+def guest(page: Page, path: str = "/dashboards") -> Page:
+    """Run with BASE_URL on a stack with DEPICTIO_AUTH_PUBLIC_MODE=true: /auth mints a guest."""
+    goto(page, "/dashboards", settle=5000)
+    return goto(page, path, settle=4000) if path != "/dashboards" else page
+
+
+shot("public-mode", "guest_dashboards")(lambda p: guest(p) and None)
+shot("public-mode", "guest_sign_in")(
+    lambda p: guest(p, "/auth/login") and {"x": 470, "y": 110, "width": 500, "height": 690})
+shot("public-mode", "guest_account")(
+    lambda p: guest(p, "/profile") and {"x": 270, "y": 80, "width": 880, "height": 570})
+
+
+@shot("web-ui", "visibility_chips")
+def visibility_chips(page):
+    """The Visibility column of /dashboards: one Public, one Private chip per row."""
+    goto(page, "/dashboards", settle=5000)
+    head = page.get_by_role("button", name="Visibility")
+    head.evaluate("e => e.scrollIntoView({inline: 'center', block: 'nearest'})")
+    page.wait_for_timeout(1000)
+    chips = page.get_by_text(re.compile("^(Public|Private)$"))
+    top, last = head.bounding_box(), chips.last.bounding_box()
+    return {"x": top["x"] - 24, "y": top["y"] - 14, "width": top["width"] + 48,
+            "height": last["y"] + last["height"] - top["y"] + 30}
+
+
 # ── compare runs, data updates ───────────────────────────────────────────────
 
 
@@ -901,6 +938,107 @@ def metadata_video(page, clock):
     page.wait_for_timeout(2200)
     scroll(page, 560)
     page.wait_for_timeout(2500)
+
+
+@video("web-ui", "cli-config", speed=1.3)
+def cli_config_video(page, clock):
+    """Account settings > CLI agents: Add configuration, name it, Create, Copy."""
+    goto(page, "/profile", settle=1500)
+    page.evaluate("""async () => {  // a previous take's configuration, so the name is free
+        const t = JSON.parse(localStorage.getItem('local-store') || '{}').access_token;
+        const h = {Authorization: 'Bearer ' + t};
+        const all = await (await fetch('/depictio/api/v1/auth/list_tokens', {headers: h})).json();
+        for (const c of all.filter(c => ['workstation', 'laptop'].includes(c.name)))
+            await fetch('/depictio/api/v1/auth/me/tokens/' + (c._id || c.id), {method: 'DELETE', headers: h}); }""")
+    goto(page, "/profile", settle=4000)
+    clock.start()
+    glide(page, page.get_by_text("CLI agents", exact=True).first, pause=800)
+    scroll(page, 420)
+    glide(page, page.get_by_role("button", name="Add configuration").first, pause=1000)
+    type_slowly(page, dialog(page).get_by_role("textbox").first, "workstation")
+    glide(page, dialog(page).get_by_role("button", name="Create"), pause=2500)
+    glide(page, dialog(page).get_by_role("button", name="Copy"), pause=2500)
+    glide(page, dialog(page).get_by_role("button", name="Done"), pause=600)
+    scroll(page, 300)
+    page.wait_for_timeout(2000)
+
+
+def drop_dashboards(page: Page, *titles: str) -> None:
+    """Delete the dashboards a previous take of a video created."""
+    goto(page, "/dashboards", settle=1500)
+    for d in api(page, "/dashboards/list") or []:
+        if d["title"] in titles:
+            page.evaluate("""async id => {
+                const t = JSON.parse(localStorage.getItem('local-store') || '{}').access_token;
+                await fetch('/depictio/api/v1/dashboards/delete/' + id,
+                            {method: 'DELETE', headers: {Authorization: 'Bearer ' + t}}); }""",
+                          d["dashboard_id"])
+    _ids.pop(titles[0], None)
+
+
+def pick(page: Page, field: Locator, option: str) -> None:
+    """Open a select and click the option whose label starts with `option`."""
+    glide(page, field, pause=500)
+    glide(page, page.get_by_role("option", name=re.compile(rf"^\s*{re.escape(option)}\b")).first, pause=700)
+
+
+def new_component(page: Page, kind: str, dc: str = "alpha_diversity_multi_canonical") -> None:
+    glide(page, page.get_by_role("button", name="Add", exact=True).first, pause=600)
+    glide(page, page.get_by_role("menuitem", name="Component"), pause=1200)
+    glide(page, page.get_by_test_id("component-source-manual"), pause=1200)
+    glide(page, page.get_by_text(kind, exact=True).first, pause=1500)
+    pick(page, page.get_by_role("textbox", name="Data Collection"), dc)
+    glide(page, page.get_by_role("button", name="Next Step"), pause=2500)
+
+
+@video("dashboard_creation", "create-dashboard", speed=2.0)
+def create_dashboard_video(page, clock):
+    """New dashboard on the ampliseq project, a card and a box plot, then Save."""
+    drop_dashboards(page, "Soil diversity")
+    goto(page, "/dashboards", settle=4000)
+    clock.start()
+    glide(page, page.get_by_role("button", name="New dashboard").first, pause=1200)
+    type_slowly(page, dialog(page).get_by_test_id("dashboard-title-input"), "Soil diversity")
+    pick(page, dialog(page).get_by_test_id("dashboard-projects"), SOIL)
+    glide(page, dialog(page).get_by_role("button", name="Create Dashboard"), pause=1500)
+    glide(page, page.get_by_text("Soil diversity", exact=True).first, pause=300)
+    clock.cut()
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(5000)
+    clock.resume()
+    glide(page, page.get_by_role("button", name="Edit", exact=True), pause=300)
+    clock.cut()
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(4000)
+    close = page.get_by_role("button", name="Close filters")
+    if close.is_visible():
+        close.click()
+        page.wait_for_timeout(1000)
+    clock.resume()
+    new_component(page, "Card")
+    type_slowly(page, page.get_by_role("textbox", name="Card title"), "Median Shannon")
+    pick(page, page.get_by_role("textbox", name="Select your column"), "shannon")
+    pick(page, page.get_by_role("textbox", name="Select your aggregation method"), "Median")
+    page.wait_for_timeout(1500)
+    glide(page, page.get_by_role("button", name="Create component"), pause=300)
+    clock.cut()
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(4000)
+    clock.resume()
+    new_component(page, "Figure")
+    pick(page, page.get_by_placeholder("Choose visualization type..."), "Box Plot")
+    pick(page, page.get_by_placeholder("Select x axis*..."), "habitat")
+    pick(page, page.get_by_placeholder("Select y axis*..."), "shannon")
+    pick(page, page.get_by_placeholder("Select color by..."), "habitat")
+    page.wait_for_timeout(2500)
+    glide(page, page.get_by_role("button", name="Create component"), pause=300)
+    clock.cut()
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(6000)
+    clock.resume()
+    glide(page, page.get_by_role("button", name="Save", exact=True), pause=2500)
+    page.mouse.move(1000, 600, steps=10)
+    page.wait_for_timeout(3000)
 
 
 @video("data-updates", "refresh-new-rows")
