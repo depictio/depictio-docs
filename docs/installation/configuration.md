@@ -146,7 +146,7 @@ DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS=24
 ### Single sign-on (OpenID Connect)
 
 Users can sign in through any OpenID Connect identity provider (Keycloak, Google,
-Microsoft Entra ID, Authentik, ...), with their groups mirrored from it. Providers are
+Authentik, ...), with their groups mirrored from it. Providers are
 declared as a JSON list; credentials go in their own variables:
 
 ```bash
@@ -163,7 +163,7 @@ DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET=change-me
 
 The redirect URI to register at the provider is
 `https://<api-host>/depictio/api/v1/auth/oidc/<id>/callback`. Full reference, provider
-recipes and migration from the former SAML and `DEPICTIO_AUTH_GOOGLE_OAUTH_*` settings:
+recipes and migration from the former `DEPICTIO_AUTH_GOOGLE_OAUTH_*` settings:
 [Single sign-on (OpenID Connect)](sso/index.md).
 
 ### Authentication Keys

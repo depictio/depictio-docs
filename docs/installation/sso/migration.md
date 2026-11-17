@@ -1,85 +1,15 @@
 ---
-title: Migrating to OpenID Connect
-description: Move an existing SAML 2.0 or Google OAuth sign-in to OpenID Connect, with the variable-by-variable mapping.
+title: From Google OAuth to OIDC
+description: Move an existing Google OAuth sign-in to OpenID Connect, with the variable-by-variable mapping.
 icon: material/swap-horizontal
 ---
 
-# :material-swap-horizontal: Migration
+# :material-swap-horizontal: From Google OAuth to OIDC
+
+<a id="from-google-oauth-to-oidc"></a>
 
 Existing accounts are matched by email, so nobody loses their projects, dashboards or group
-memberships when you switch. SSO-managed groups already created through SAML keep working:
-the next OIDC sign-in re-syncs them from `claims.groups`.
-
----
-
-## :material-transfer: From SAML to OIDC { #from-saml-to-oidc }
-
-SAML support is **removed**. The `DEPICTIO_AUTH_SAML_*` variables are ignored, and the API
-logs an **error at startup** listing each one it found with its replacement, so a forgotten
-variable does not silently remove your sign-in button.
-
-Most SAML IdPs (Keycloak, Entra ID, Authentik, Okta, ...) offer OIDC as well. In the IdP,
-create an OIDC client next to the SAML one (see the [recipes](providers.md)), then map
-the settings:
-
-| Old variable | New setting |
-|--------------|-------------|
-| `DEPICTIO_AUTH_SAML_ENABLED` | the provider entry's `enabled` |
-| `DEPICTIO_AUTH_SAML_IDP_ENTITY_ID` | `issuer` |
-| `DEPICTIO_AUTH_SAML_IDP_SSO_URL` | `issuer` (discovery finds the endpoints), or `discovery_url` |
-| `DEPICTIO_AUTH_SAML_IDP_CERT` | nothing: signing keys come from the IdP's JWKS |
-| `DEPICTIO_AUTH_SAML_SP_ENTITY_ID` | `client_id` |
-| `DEPICTIO_AUTH_SAML_SP_BASE_URL` | `redirect_uri` (the default is built from the API external URL) |
-| `DEPICTIO_AUTH_SAML_NAME_ID_FORMAT` | nothing |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_EMAIL` | `claims.email` |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_USERNAME` | `claims.login` |
-| `DEPICTIO_AUTH_SAML_LOGIN_LABEL` | `label` |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS` | `claims.groups` |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_TITLE` | `claims.title` |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_DISPLAY_NAME` | `claims.display_name` |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_LOGIN` | `claims.login` |
-
-Also needed:
-
-- A **client secret** (`DEPICTIO_AUTH_OIDC_<ID>_CLIENT_SECRET`): SAML had none.
-- The **redirect URI** registered at the IdP changes from the SAML ACS
-  (`…/auth/saml/callback`) to `…/auth/oidc/<id>/callback`. The SAML metadata endpoint no
-  longer exists.
-- Group values: a SAML attribute and the matching OIDC claim often carry the same names,
-  but check once. Names that differ create new groups, and the old ones lose their SSO
-  members.
-- The `saml` Python extra (`pip install "depictio[server,saml]"`) is gone: the plain
-  `server` extra is enough.
-
-For example, a Keycloak SAML setup becomes:
-
-```bash
-# before
-DEPICTIO_AUTH_SAML_ENABLED=true
-DEPICTIO_AUTH_SAML_IDP_ENTITY_ID=https://idp.example.org/realms/example
-DEPICTIO_AUTH_SAML_IDP_SSO_URL=https://idp.example.org/realms/example/protocol/saml
-DEPICTIO_AUTH_SAML_IDP_CERT=/run/secrets/idp.pem
-DEPICTIO_AUTH_SAML_SP_ENTITY_ID=depictio
-DEPICTIO_AUTH_SAML_LOGIN_LABEL="Sign in with your institution"
-DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS=groups
-
-# after
-DEPICTIO_AUTH_OIDC_PROVIDERS='[{
-  "id": "keycloak",
-  "label": "Sign in with your institution",
-  "issuer": "https://idp.example.org/realms/example",
-  "claims": {"groups": "groups"}
-}]'
-DEPICTIO_AUTH_OIDC_KEYCLOAK_CLIENT_ID=depictio
-DEPICTIO_AUTH_OIDC_KEYCLOAK_CLIENT_SECRET=change-me
-```
-
-On Kubernetes, move the SAML values under `auth:` to `oidc.providers` and
-`secrets.oidcClients`, as in [On Kubernetes](configuration.md#on-kubernetes).
-
----
-
-## :material-google: From Google OAuth to OIDC { #from-google-oauth-to-oidc }
+memberships when you switch.
 
 Google is now a plain OIDC provider: the dedicated Google sign-in code is gone. The old
 variables **keep working for one release** and are mapped onto a provider with the id

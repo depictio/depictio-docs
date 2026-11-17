@@ -412,7 +412,7 @@ ghcr.io/depictio/depictio-cli:1.18.0
 ### **🔒 Security**
 
 * **One permission check for every resource**. See [Group-Based Access](../features/security.md#group-based-access) ([#972](https://github.com/depictio/depictio/pull/972)).
-* **SAML sign-in ends on a single-use ticket**. See [SAML sign-in](../features/security.md#saml-sign-in) ([#968](https://github.com/depictio/depictio/pull/968)).
+* **SAML sign-in ends on a single-use ticket**. See [SAML sign-in](../features/security.md#oidc-sign-in) ([#968](https://github.com/depictio/depictio/pull/968)).
 * **A phylogeny tree is read only from allowed locations**. See [Folders on the server's disk](../features/security.md#folders-on-the-servers-disk) ([#1237](https://github.com/depictio/depictio/pull/1237)).
 
 ### **🐛 Bug Fixes**

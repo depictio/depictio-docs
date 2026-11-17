@@ -1,6 +1,6 @@
 ---
 title: SSO provider recipes
-description: Step-by-step OpenID Connect setup for Keycloak, Google, Microsoft Entra ID, Authentik and any other compliant identity provider.
+description: Step-by-step OpenID Connect setup for Keycloak, Google, Authentik and any other compliant identity provider.
 icon: material/puzzle-outline
 ---
 
@@ -9,7 +9,7 @@ icon: material/puzzle-outline
 Ready-to-adapt settings for common identity providers. The keys are described in the
 [configuration reference](configuration.md#provider-keys).
 
-All values are placeholders: replace `idp.example.org`, the realm, tenant and client
+All values are placeholders: replace `idp.example.org`, the realm and client
 credentials with your own. In every recipe the redirect URI to register is
 `https://depictio.example.org/depictio/api/v1/auth/oidc/<id>/callback`, with the `<id>` of
 that recipe.
@@ -81,59 +81,6 @@ DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET=change-me
   screen, or close registration so that only pre-provisioned accounts can sign in.
 - Google sends **no groups claim**, so there is no group sync. Leave `claims.groups` unset.
 - Google sends `email_verified`, so `assume_email_verified` is not needed.
-
----
-
-## :material-microsoft: Microsoft Entra ID { #recipe-entra }
-
-1. In the Entra admin center, under **App registrations**, register a new application
-   (single tenant, unless you know you need more).
-2. **Redirect URI**, platform **Web**:
-   `https://depictio.example.org/depictio/api/v1/auth/oidc/entra/callback`.
-3. Under **Certificates & secrets**, create a client secret.
-4. Use the **tenant-specific** issuer, `https://login.microsoftonline.com/<tenant-id>/v2.0`.
-   The generic `common` or `organizations` endpoints return tokens whose issuer contains
-   the signing-in user's own tenant id, which can never match a fixed configured issuer.
-5. For groups, under **Token configuration** > **Add groups claim**, choose the group types
-   you need, and emit the `groups` claim in the ID token.
-
-```bash
-DEPICTIO_AUTH_OIDC_PROVIDERS='[
-  {
-    "id": "entra",
-    "label": "Sign in with Microsoft",
-    "issuer": "https://login.microsoftonline.com/<tenant-id>/v2.0",
-    "claims": { "groups": "groups", "display_name": "name" }
-  }
-]'
-DEPICTIO_AUTH_OIDC_ENTRA_CLIENT_ID=00000000-0000-0000-0000-000000000000
-DEPICTIO_AUTH_OIDC_ENTRA_CLIENT_SECRET=change-me
-```
-
-Two Entra specifics:
-
-- **Group claim values are object ids** (GUIDs) by default, not names. Depictio takes group
-  names verbatim, so groups would be named after GUIDs. Configure the groups claim to emit
-  group names where Entra supports it (groups synchronized from on-premises Active
-  Directory), or keep the GUIDs. A user in too many groups (more than 200 in a JWT) gets an
-  **overage**: the token carries no `groups` claim, only a pointer to Microsoft Graph, which
-  Depictio does not follow. Because an absent claim removes the user from every SSO-managed
-  group (see [Group claim semantics](groups-and-access.md#group-claim-semantics)), restrict
-  the claim to the groups assigned to the application to avoid it.
-- **`email` may be absent**, for accounts without a mailbox, and Entra never sends
-  `email_verified`. If your users' sign-in names are their email addresses, you can map the
-  email to `preferred_username`:
-
-    ```json
-    "claims": { "email": "preferred_username" },
-    "assume_email_verified": true
-    ```
-
-    !!! warning "Only with a directory you control"
-        `assume_email_verified` tells Depictio to trust the address without any proof from
-        the IdP, and `preferred_username` is a display-oriented claim. This is safe only for
-        a single-tenant app whose directory you administer, where users cannot choose their
-        own sign-in name; never with a multi-tenant or external-guest configuration.
 
 ---
 

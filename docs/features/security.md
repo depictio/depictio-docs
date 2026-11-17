@@ -451,8 +451,6 @@ API's Range-capable track proxy:
 
 The full variable list is in the [environment reference](../installation/env-reference.md#genome-browser).
 
-<a id="saml-sign-in"></a>
-
 ### OpenID Connect sign-in { #oidc-sign-in }
 
 [OpenID Connect single sign-on](../installation/sso/index.md) uses the authorization code flow

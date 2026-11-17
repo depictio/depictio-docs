@@ -28,8 +28,7 @@ Common causes:
 
 - **Issuer mismatch.** The `issuer` you configured must equal the `issuer` field of the
   discovery document, and the `iss` of the tokens, character for character (scheme, host,
-  path, realm). Open `<issuer>/.well-known/openid-configuration` and copy the value. For
-  Entra ID, use the tenant-specific issuer.
+  path, realm). Open `<issuer>/.well-known/openid-configuration` and copy the value.
 - **Redirect URI mismatch.** The IdP rejects the authorization request, before Depictio is
   involved, when the callback differs from the registered one. Compare it with
   `https://<api-host>/depictio/api/v1/auth/oidc/<id>/callback`, mind the scheme (`https`
@@ -43,9 +42,6 @@ Common causes:
   `GET /depictio/api/v1/auth/oidc/providers` lists what is shown.
 - **Groups disappear.** The groups claim is missing from the token; see
   [Group claim semantics](groups-and-access.md#group-claim-semantics).
-- **Startup error about SAML.** A line starting `SAML SSO has been removed and these
-  variables are IGNORED` lists each `DEPICTIO_AUTH_SAML_*` variable found and the OIDC
-  setting that replaces it: see [From SAML to OIDC](migration.md#from-saml-to-oidc).
 - **`sso_failed` after a long pause at the IdP.** The `state` lives 10 minutes; start again.
 
 ---

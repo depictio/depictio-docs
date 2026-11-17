@@ -1,6 +1,6 @@
 ---
 title: Single sign-on (OpenID Connect)
-description: Let users sign in through any OpenID Connect identity provider (Keycloak, Google, Microsoft Entra ID, Authentik, ...), and mirror their groups and profile from it.
+description: Let users sign in through any OpenID Connect identity provider (Keycloak, Google, Authentik, ...), and mirror their groups and profile from it.
 icon: material/shield-key-outline
 ---
 
@@ -8,16 +8,15 @@ icon: material/shield-key-outline
 
 Depictio can send its users to an identity provider (IdP) and take them back signed in.
 It speaks **OpenID Connect (OIDC)**, so any compliant provider works: Keycloak, Google,
-Microsoft Entra ID, Authentik, Okta, GitLab and so on. You can declare several providers at
+Authentik, Okta, GitLab and so on. You can declare several providers at
 once; the sign-in page then shows one button per provider, next to password sign-in.
 
 OIDC is off until you declare a provider in `DEPICTIO_AUTH_OIDC_PROVIDERS`.
 
-!!! info "Replaces SAML and the Google-specific sign-in"
-    OpenID Connect replaces both the SAML 2.0 sign-in and the dedicated Google OAuth sign-in
+!!! info "Replaces the Google-specific sign-in"
+    OpenID Connect replaces the dedicated Google OAuth sign-in
     ([depictio#1336](https://github.com/depictio/depictio/issues/1336)). Existing users keep
-    their accounts. Coming from either one? Jump to
-    [From SAML to OIDC](migration.md#from-saml-to-oidc) or
+    their accounts. Coming from it? See
     [From Google OAuth to OIDC](migration.md#from-google-oauth-to-oidc).
 
 <figure markdown="span">
@@ -69,7 +68,7 @@ viewer. There is no provider-specific code path.
 
 ### Email and accounts { #email-and-accounts }
 
-Accounts are matched **by email**. A user who signed in before through SAML, Google or a
+Accounts are matched **by email**. A user who signed in before through Google or a
 password, with the same address, lands on the same account, with the same projects and
 permissions. A new address creates an account, unless
 [registration is closed](../../usage/guides/authentication-modes.md#registration). A new
@@ -82,8 +81,7 @@ email is refused with the error `email_not_verified`.
 
 Some IdPs assert only verified emails but never send the claim. For those,
 set `assume_email_verified: true` on the provider. Use it only when you control the IdP's
-user directory and know it never holds unverified addresses (see the
-[Entra ID recipe](providers.md#recipe-entra) for a typical case).
+user directory and know it never holds unverified addresses.
 
 ---
 
@@ -141,7 +139,7 @@ user directory and know it never holds unverified addresses (see the
 
     ---
 
-    Keycloak, Google, Microsoft Entra ID, Authentik and any other provider.
+    Keycloak, Google, Authentik and any other provider.
 
 -   :material-account-group-outline:{ .lg .middle } **[Groups and access](groups-and-access.md)**
 
@@ -153,7 +151,7 @@ user directory and know it never holds unverified addresses (see the
 
     ---
 
-    From SAML or from the Google OAuth sign-in.
+    From the Google OAuth sign-in.
 
 -   :material-stethoscope:{ .lg .middle } **[Troubleshooting and security](troubleshooting.md)**
 
