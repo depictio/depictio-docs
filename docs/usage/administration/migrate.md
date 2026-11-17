@@ -16,36 +16,14 @@ Migration works as a scoped upsert: every document is written via `ReplaceOne(..
 
 ## How It Works
 
-The CLI and UI paths differ in how S3 data is transferred:
+The CLI and the browser differ in how the files travel, and **Send** goes straight from one instance to the other. All three end in the same scoped upsert on the target: projects (with their workflows and data collections), then files, Delta tables and runs, then dashboards.
 
-```
-CLI path (S3 copied directly)
-──────────────────────────────────────────────────────────────────
-Source instance                        Target instance
-depictio migrate                       API: /migrate/import-project
-    │                                       │
-    ├─ POST /migrate/export-project         ├─ Upsert: projects
-    │     → ZIP (no S3 data inside)         │     (workflows + data_collections
-    │       ├─ bundle.json                  │      are embedded in project doc)
-    │       ├─ migrate_metadata.json        ├─ Upsert: files / deltatables / runs
-    │       └─ s3_metadata.json             └─ Upsert: dashboards
-    │
-    └─ S3 copy: source S3 → target S3 (direct, not via ZIP)
+<figure markdown="span">
+  [![Three ways to move a project: the CLI sends a ZIP without the data and copies the files bucket to bucket, the browser exports a ZIP with the data, and Send goes instance to instance with an invite code issued on the target](../../images/guides/migration/migration-paths_light.png#only-light)](../../images/guides/migration/migration-paths_light.png){target=_blank}
+  [![Three ways to move a project: the CLI sends a ZIP without the data and copies the files bucket to bucket, the browser exports a ZIP with the data, and Send goes instance to instance with an invite code issued on the target](../../images/guides/migration/migration-paths_dark.png#only-dark)](../../images/guides/migration/migration-paths_dark.png){target=_blank}
+</figure>
 
-
-UI path (S3 bundled inside ZIP)
-──────────────────────────────────────────────────────────────────
-Browser                                Target instance
-    │                                       │
-    ├─ POST /migrate/export-project         ├─ POST /migrate/import-project-zip
-    │     → ZIP (S3 data included)          │     extracts bundle.json
-    │       ├─ bundle.json                  │     restores s3_data/* → S3
-    │       ├─ migrate_metadata.json        └─ Upsert: same order as CLI path
-    │       ├─ s3_metadata.json
-    │       └─ s3_data/<original S3 paths>
-    │
-    └─ ZIP downloaded to browser, re-uploaded to target UI
-```
+The CLI calls `POST /migrate/export-project` on the source and `/migrate/import-project` on the target. The browser's import goes through `POST /migrate/import-project-zip`, which restores `s3_data/` before the upsert. See [Send to another instance](#send-to-another-instance) for the third path.
 
 ### ZIP Archive Contents
 
