@@ -41,6 +41,10 @@ from playwright.sync_api import Locator, Page, sync_playwright
 
 BASE_URL = os.environ.get("BASE_URL", "http://127.0.0.1:8058").rstrip("/")
 TARGET_URL = os.environ.get("TARGET_URL", "http://127.0.0.1:8059").rstrip("/")
+# TARGET_URL may name a host that only exists here (https://depictio.lab-b.org): TARGET_RESOLVE is the
+# address:port Chromium resolves it to (a TLS endpoint forwarding to the target), so its pages are
+# visited under that name; the source API reaches it through its own HTTPS_PROXY.
+TARGET_RESOLVE = os.environ.get("TARGET_RESOLVE", "")
 OUT = Path(__file__).resolve().parent.parent / "docs" / "images" / "guides"
 VIEWPORT = {"width": 1440, "height": 900}
 MAX_WIDTH, QUALITY = 1600, 80
@@ -577,6 +581,131 @@ def amp_add(page: Page, source: str) -> Page:
     page.get_by_test_id(f"component-source-{source}").click()
     page.wait_for_timeout(4000)
     return page
+
+
+@shot("landing", "build")
+def landing_build(page):
+    """Edit mode, the Observed ASVs card held mid-resize over its dashed target; the tab is restored."""
+    amp(page, ALPHA, settle=2000)
+    tab = _ids[ALPHA]
+    before = api(page, f"/dashboards/get/{tab}")
+    goto(page, page.url.replace(BASE_URL, "").replace("/dashboard/", "/dashboard-edit/"), settle=8000)
+    close = page.get_by_role("button", name="Close filters")
+    if close.is_visible():
+        close.click(); page.wait_for_timeout(1500)
+    card = tile(page, "Observed ASVs")
+    card.hover(); page.wait_for_timeout(800)
+    b = card.locator("xpath=ancestor-or-self::*[contains(@class,'react-grid-item')][1]") \
+        .locator(".react-resizable-handle-se").first.bounding_box()
+    x, y = b["x"] + b["width"] / 2, b["y"] + b["height"] / 2
+    page.mouse.move(x, y); page.mouse.down()
+    for i in range(1, 11):
+        page.mouse.move(x + 28 * i, y + 13 * i); page.wait_for_timeout(60)
+    page.wait_for_timeout(900)
+
+    def release():
+        page.mouse.up()
+        restore_dashboard(page, tab, before)
+    return {"hold": True, "after": release}
+
+
+@shot("landing", "map")
+def landing_map(page):
+    """The repo's Floating Map Demo project (depictio/projects/test/floating_map_demo, ingested
+    with its two_tabs dashboard): the Sampling Sites panel expanded over the Sites tab."""
+    dashboard(page, settle=12000, title="Floating Map Demo")
+    close = page.get_by_role("button", name="Close filters")
+    if close.is_visible():
+        close.click(); page.wait_for_timeout(1500)
+    tile(page, "Samples by habitat").locator(".main-svg .bars path").first.wait_for(timeout=60000)
+    page.get_by_role("button", name="Expand map panel").click()
+    page.mouse.move(1439, 450); page.wait_for_timeout(6000)
+
+
+HABITAT_LABEL = "site"
+
+
+def label_by_habitat(page: Page) -> None:
+    """A `site` label holding each sample's habitat (read off the grid's own habitat column),
+    compared in the charts and, from the Analysis panel, in the cards."""
+    grid = page.get_by_test_id("annotation-grid")
+    if not page.get_by_test_id(f"label-menu-{HABITAT_LABEL}").count():
+        page.get_by_test_id("label-add").click()
+        page.get_by_test_id("label-name-input").fill(HABITAT_LABEL)
+        page.get_by_test_id("label-name-save").click()
+        page.wait_for_timeout(800)
+    col = grid.locator(".ag-header-cell", has_text=HABITAT_LABEL).first.get_attribute("col-id")
+    values = grid.locator(".ag-center-cols-container .ag-row").evaluate_all(
+        "rs => rs.map(r => [+r.getAttribute('row-index'), r.querySelector('[col-id=habitat]').innerText.trim()])"
+        ".sort((a, b) => a[0] - b[0]).map(r => r[1])")
+    paste(page, grid.locator(f".ag-center-cols-container [row-index='0'] [col-id='{col}']"), values)
+    page.wait_for_timeout(800)
+    page.get_by_test_id(f"label-menu-{HABITAT_LABEL}").click()
+    page.wait_for_timeout(600)
+    page.get_by_role("menuitem", name="Compare in the charts").click()
+    page.wait_for_timeout(1500)
+
+
+def drop_habitat_label(page: Page) -> None:
+    """Back to the review label compared, as the other captures expect."""
+    amp(page, settle=5000).get_by_test_id("metadata-button").click()
+    page.locator("[data-testid=annotation-grid] .ag-row").first.wait_for(timeout=30000)
+    page.get_by_test_id(f"label-menu-{HABITAT_LABEL}").click()
+    page.get_by_role("menuitem", name="Delete").click()
+    page.wait_for_timeout(600)
+    confirm = page.get_by_role("dialog").get_by_role("button", name="Delete")
+    if confirm.count():
+        confirm.click()
+    page.wait_for_timeout(1000)
+    page.get_by_test_id(f"label-menu-{LABEL}").click()
+    page.wait_for_timeout(600)
+    item = page.get_by_role("menuitem", name="Compare in the charts")
+    if item.count():
+        item.click()
+    page.wait_for_timeout(1000)
+
+
+@shot("landing", "group")
+def landing_group(page):
+    """Samples labelled by habitat, the labels compared in every chart and card of the
+    Alpha Diversity tab; the label is deleted afterwards."""
+    metadata_panel(tall(page, 1380), labels=False)
+    label_by_habitat(page)
+    coloured_by_groups(page, close=True)
+    page.keyboard.press("Escape")
+    return {**tiles(page, "Shannon", "Evenness", RAREFACTION), "after": lambda: drop_habitat_label(page)}
+
+
+# The Floating Map Demo, ingested from a copy (LIVE_DIR/project.yaml, `realtime: enabled`) in two
+# steps: before/ holds it without its three Soil samples, full/ the whole reference table.
+MAP_DEMO = "Floating Map Demo"
+LIVE_DIR = Path(os.environ.get("LIVE_DIR", Path(tempfile.gettempdir()) / "live"))
+LIVE_CLI = os.environ.get("LIVE_CLI", "depictio")
+LIVE_SERVER = os.environ.get("LIVE_SERVER", "local")
+
+
+def live_ingest(stage: str) -> None:
+    """Copy the `stage` tables into LIVE_DIR and ingest them, as a pipeline run landing."""
+    for name in ("sampling_sites.tsv", "taxonomy.tsv"):
+        (LIVE_DIR / name).write_bytes((LIVE_DIR / stage / name).read_bytes())
+    subprocess.run([LIVE_CLI, "ingest", "--project-config-path", str(LIVE_DIR / "project.yaml"),
+                    "--server", LIVE_SERVER, "--update-config"], check=True, capture_output=True)
+
+
+@shot("landing", "live")
+def landing_live(page):
+    """The map demo open with 9 samples; the 3 Soil samples are ingested while it is open and the
+    dashboard redraws itself, the Real-time updates menu listing the event."""
+    live_ingest("before")
+    dashboard(page, settle=10000, title=MAP_DEMO)
+    close = page.get_by_role("button", name="Close filters")
+    if close.is_visible():
+        close.click(); page.wait_for_timeout(1500)
+    page.wait_for_timeout(2000)
+    live_ingest("full")
+    page.wait_for_timeout(8000)
+    page.get_by_role("button", name="Real-time updates").click()
+    page.wait_for_timeout(1500)
 
 
 @shot("landing", "catalog")
@@ -1414,7 +1543,7 @@ class Clock:
 
 
 def context(browser, theme: str, **extra):
-    ctx = browser.new_context(viewport=VIEWPORT, **extra)
+    ctx = browser.new_context(viewport=VIEWPORT, ignore_https_errors=bool(TARGET_RESOLVE), **extra)
     ctx.add_init_script(SETUP % theme)
     return ctx
 
@@ -1433,6 +1562,8 @@ def run_shots(browser, names: list[str]) -> None:
                     target = target or None
                 if isinstance(target, dict) and "keep_hover" in target:  # the shot is of a hover
                     target.pop("keep_hover").hover()
+                elif isinstance(target, dict) and target.pop("hold", False):  # mid-gesture: hands off
+                    target = target or None
                 else:
                     page.mouse.move(1439, 450)  # no hover toolbars in the shot
                 page.wait_for_timeout(800)
@@ -1494,6 +1625,7 @@ def run_videos(browser, names: list[str]) -> None:
 if __name__ == "__main__":
     args = sys.argv[1:]
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        rules = [f"--host-resolver-rules=MAP {urlparse(TARGET_URL).hostname} {TARGET_RESOLVE}"] if TARGET_RESOLVE else []
+        browser = p.chromium.launch(args=rules)
         (run_videos if "--videos" in args else run_shots)(browser, [a for a in args if not a.startswith("--")])
         browser.close()

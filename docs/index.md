@@ -675,7 +675,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a dashboard in edit mode">
-          <img src="images/landing/build_light.webp" alt="A card held mid-drag, over the dashed outline of the slot it is about to land in" loading="lazy">
+          <img class="only-light" src="images/landing/build_light.webp" alt="The nf-core/ampliseq Alpha Diversity tab in edit mode, the Observed ASVs card pulled by its corner over the dashed outline of its new size" loading="lazy">
+          <img class="only-dark" src="images/landing/build_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -855,14 +856,15 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a dashboard compared by selection group">
-          <img src="images/landing/group_light.webp" alt="The same dashboard split into panels, one per selection group" loading="lazy">
+          <img class="only-light" src="images/landing/group_light.webp" alt="Samples labelled by habitat: every card compares the four habitats beside All, and the rarefaction curves are coloured the same way" loading="lazy">
+          <img class="only-dark" src="images/landing/group_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"/></svg><span>Group</span></span>
         <h3>Slice it, then compare</h3>
-        <p>Lasso points on a plot, pick rows in a table, or select a region on the map, then save what you picked as a named group. Every component on the dashboard then colours by that grouping at once, or splits into one panel per group, so treated and control sit side by side instead of in two browser tabs. Groups survive a reload and travel with the dashboard, so the comparison is something you share rather than something you rebuild.</p>
+        <p>Lasso points on a plot, pick rows in a table, select a region on the map, or label samples in the <strong>Metadata</strong> panel, and each set becomes a named group. Every figure then colours by the groups at once, or splits into one panel per group, and every card compares them side by side, so treated and control sit together instead of in two browser tabs. A label can be shared on the dashboard, so others see the same comparison.</p>
         <a class="feature-link" href="features/interactive-selection-filtering/#selection-groups">Selection groups &rarr;</a>
       </div>
     </article>
@@ -870,7 +872,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a floating map panel">
-          <img src="images/landing/map_light.webp" alt="The sampling-sites map floating over the dashboard, its points coloured by habitat" loading="lazy">
+          <img class="only-light" src="images/landing/map_light.webp" alt="The Sampling Sites map, expanded over the dashboard, its points coloured by habitat" loading="lazy">
+          <img class="only-dark" src="images/landing/map_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -927,7 +930,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a live dashboard">
-          <img class="only-light" src="images/landing/live_light.webp" alt="A live dashboard with its event log, new rows highlighted as they arrive" loading="lazy">
+          <img class="only-light" src="images/landing/live_light.webp" alt="Three Soil samples ingested while the dashboard was open: the cards and the bar chart now count them, and the Real-time updates menu lists the events" loading="lazy">
           <img class="only-dark" src="images/landing/live_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
@@ -935,7 +938,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M11,15H6L13,1V9H18L11,23V15Z"/></svg><span>Live</span></span>
         <h3>Watch a run as it lands</h3>
-        <p>Opt a project into real-time events and its dashboards hold a WebSocket open. Each time the CLI ingests new data the server broadcasts on that channel and the affected components refresh themselves, with no reload and no polling. A log beside the grid lists the events as they arrive, so you can watch a run fill a dashboard in while it is still running.</p>
+        <p>Opt a project into real-time events and its dashboards hold a WebSocket open. Each time the CLI ingests new data the server broadcasts on that channel and the affected components refresh themselves, with no reload and no polling. The <strong>Real-time updates</strong> menu lists the events as they arrive, so you can watch a run fill a dashboard in while it is still running.</p>
         <a class="feature-link" href="usage/guides/realtime-events/">Real-time events &rarr;</a>
       </div>
     </article>
@@ -974,7 +977,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: sending a project to another instance">
-          <img class="only-light" src="images/guides/migration/send_checked_light.webp" alt="The Send to another instance dialog, the destination checked and ready to send" loading="lazy">
+          <img class="only-light" src="images/guides/migration/send_checked_light.webp" alt="The Send to another instance dialog, the destination https://depictio.lab-b.org checked and ready to send" loading="lazy">
           <img class="only-dark" src="images/guides/migration/send_checked_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
@@ -982,7 +985,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/></svg><span>Migration</span></span>
         <h3>Send a project to another instance</h3>
-        <p>Ask the other instance for an invite code, paste it in the project settings and <strong>Send</strong>. The project lands there with its data, dashboards and images, waits for an admin to approve it, then is served read-only. A ZIP export covers the offline case.</p>
+        <p>Ask the other instance for an invite code, paste it in the project settings and <strong>Send</strong>. The project lands there with its data, dashboards and images, is imported right away under that code and is served read-only. A ZIP export covers the offline case.</p>
         <span class="feature-links">
           <a class="feature-link" href="usage/administration/migrate/#send-to-another-instance">Move a project &rarr;</a>
         </span>
