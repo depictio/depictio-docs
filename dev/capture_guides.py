@@ -18,8 +18,8 @@ The instance holds the demo state the flows find by name: "Sequencing QC study"
 samplesheet linked to the MultiQC collection, an uploaded library_prep table,
 a run_summary read from a URL, and the "Sequencing QC overview" dashboard,
 visited before its newest runs came in), "Soil microbiome 16S" (nf-core/ampliseq
-2.18.0 read in place, more runs attached in the UI, plus a "Sequencing review"
-dashboard) and, for migration, a second instance at TARGET_URL. Videos create
+2.18.0 megatest split by SRA batch into water_2019 and sediment_2019, visited, then
+soil_2019 attached, with the template's dashboard) and, for migration, a second instance at TARGET_URL. Videos create
 what they show (a project, a run, a send): run them on a fresh state.
 """
 
@@ -33,6 +33,7 @@ import sys
 import tempfile
 import time
 from pathlib import Path
+from urllib.parse import urlparse
 
 from PIL import Image
 from playwright.sync_api import Locator, Page, sync_playwright
@@ -47,6 +48,7 @@ NEW = "Lake sediment 16S"  # the name typed in New project (not a project of the
 SCATTER, BOX = "Reads vs GC content", "Duplicate reads by condition"
 # What's new and the Metadata panel run on the ampliseq template dashboard of SOIL: the megatest
 # split by SRA batch into water_2019 and sediment_2019 (seen) and soil_2019 (attached after the mark).
+NEW_RUN = "soil_2019"
 AMP, ALPHA, ORD, COMM = "nf-core/ampliseq", "Alpha Diversity", "Ordination & Clustering", "Community & Diversity"
 SHANNON_BOX, RAREFACTION, COMPOSITION = "Shannon diversity per group", "Rarefaction curves", "Composition per sample"
 PHYLUM_BAR, PCOA = "Phylum composition per group", "Sample ordination"
@@ -370,7 +372,7 @@ def profile_mark_mode(page):
 
 @shot("whats-new", "editor_history")
 def editor_history(page):
-    goto(page, f"/dashboard-edit/{dashboard_id(page, QC_DASH)}", 7000).get_by_role("button", name="Settings").first.click()
+    goto(page, f"/dashboard-edit/{dashboard_id(page, AMP)}", 7000).get_by_role("button", name="Settings").first.click()
     dialog(page).get_by_text("History", exact=True).first.click()
     page.wait_for_timeout(3000)
     return modal(page)
@@ -386,6 +388,21 @@ def project_whats_new(page):
 def bell(page):
     goto(page, "/projects").get_by_role("button", name="Notifications").first.click()
     page.wait_for_timeout(2500)
+
+
+def manage_dc(page: Page, tab: str) -> Locator:
+    """Manage Data Collection on the ampliseq metadata table, on one of its tabs."""
+    row = goto(page, f"/projects/{project_id(page, SOIL)}", 5000).locator("tr").filter(has=page.get_by_text("metadata", exact=True)).first
+    row.scroll_into_view_if_needed()
+    row.get_by_test_id("manage-dc-btn").click()
+    page.wait_for_timeout(2000)
+    modal(page).get_by_text(tab, exact=True).first.click()
+    page.wait_for_timeout(1200)
+    return modal(page)
+
+
+shot("project-creation", "manage_dc_modify")(lambda p: manage_dc(p, "Modify data"))
+shot("project-creation", "manage_dc_clear")(lambda p: manage_dc(p, "Clear contents"))
 
 
 @shot("multiqc", "manage_collection")
@@ -430,7 +447,27 @@ def runs_tab(page: Page, run: str | None = None, project: str = SOIL) -> Locator
     page.wait_for_timeout(3500)
     details = page.get_by_test_id(f"run-details-{run}")
     details.scroll_into_view_if_needed()
+    return short_path(details, run)
+
+
+def short_path(details: Locator, run: str) -> Locator:
+    """The runs live in a scratch folder: show the short path a reader would have."""
+    details.evaluate("""(el, run) => { const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        for (let n; (n = w.nextNode());) if (n.nodeValue.includes('/runs/' + run))
+            n.nodeValue = '~/runs/' + run; }""", run)
     return details
+
+
+def key_figures(page: Page) -> Page:
+    """The ampliseq Overview scrolled to its headline cards."""
+    page.get_by_text("Key figures", exact=True).first.evaluate("e => e.scrollIntoView({block: 'start'})")
+    page.mouse.wheel(0, -60)
+    page.wait_for_timeout(4000)
+    return page
+
+
+def samples_card(page: Page) -> Locator:
+    return page.locator(".react-grid-item").filter(has_text="in the sample sheet, by").first
 
 
 def ingestion_of(page: Page, run: str, project: str = SOIL) -> str:
@@ -442,30 +479,37 @@ def ingestion_of(page: Page, run: str, project: str = SOIL) -> str:
 
 @shot("compare-runs", "runs_compare_menu")
 def runs_compare_menu(page):
-    runs_tab(page, "soil_summer_2025").get_by_text("Compare", exact=True).click()
-    page.wait_for_timeout(1200)
-    return {"x": 270, "y": 300, "width": 1170, "height": 600}
+    """One dashboard: Compare opens it, and its tooltip names the dashboard (several get a menu)."""
+    details = runs_tab(page, NEW_RUN)
+    button = details.get_by_text("Compare", exact=True)
+    button.evaluate("e => e.scrollIntoView({block: 'center'})")
+    page.wait_for_timeout(800)
+    box, b = details.bounding_box(), button.bounding_box()
+    return {"keep_hover": button, "x": box["x"], "y": b["y"] - 216, "width": box["width"], "height": 266}
 
 
 @shot("compare-runs", "scans_picker")
 def scans_picker(page, all_files: bool = False):
-    details = runs_tab(page, "run_04", project=QC)
-    details.get_by_test_id("run-scan").filter(has_text=re.compile(r"\d+ changed")).last.click()  # the edit
+    details = runs_tab(page, NEW_RUN)
+    details.get_by_test_id("run-scan").filter(has_text=re.compile(r"\d+ (changed|new)")).last.click()
     if all_files:
         details.get_by_text("Only what this scan changed").click()
     page.wait_for_timeout(2000)
-    return details
+    box = details.bounding_box()
+    end = details.get_by_text(re.compile("computed for this run", re.I)).first.bounding_box()
+    return {"x": box["x"], "y": box["y"], "width": box["width"], "height": end["y"] - box["y"] - 8}
 
 
 @shot("compare-runs", "new_rows_table")
 def new_rows_table(page):
-    goto(page, f"/projects/{project_id(page, QC)}?table={dc_id(page, QC, 'sample_qc')}&new_runs=run_04,run_05", 6000)
+    dc = dc_id(page, SOIL, "alpha_diversity_multi_canonical")
+    goto(page, f"/projects/{project_id(page, SOIL)}?table={dc}&new_runs={NEW_RUN}", 6000)
     page.get_by_text("Back to full table").first.scroll_into_view_if_needed()
     page.wait_for_timeout(1500)
 
 
 def activity(page: Page, view: str) -> dict:
-    goto(page, f"/projects/{project_id(page, QC)}?tab=activity", 5000).get_by_text(view, exact=True).first.click()
+    goto(page, f"/projects/{project_id(page, SOIL)}?tab=activity", 5000).get_by_text(view, exact=True).first.click()
     page.wait_for_timeout(3000)
     page.get_by_text("Latest ingestion", exact=True).first.evaluate("e => e.scrollIntoView({block: 'start'})")
     page.wait_for_timeout(800)
@@ -481,10 +525,10 @@ def data_refresh(page):
 
 for _topic, _name, _flow in [
     ("compare-runs", "runs_tab", lambda p: runs_tab(p)),
-    ("compare-runs", "run_produced", lambda p: runs_tab(p, "soil_summer_2025")),
+    ("compare-runs", "run_produced", lambda p: runs_tab(p, NEW_RUN)),
     ("compare-runs", "scans_all_files", lambda p: scans_picker(p, all_files=True)),
-    ("compare-runs", "dashboard_before_run", lambda p: dashboard(
-        p, f"?before_run={ingestion_of(p, 'soil_summer_2025')}", 10000, "Sequencing review") and None),
+    ("compare-runs", "dashboard_before_run", lambda p: key_figures(dashboard(
+        p, f"?before_run={ingestion_of(p, NEW_RUN)}", 10000, AMP)) and None),
     ("data-updates", "activity_latest", lambda p: activity(p, "Latest ingestion")),
     ("data-updates", "activity_history", lambda p: activity(p, "History")),
 ]:
@@ -794,17 +838,35 @@ def before_now_video(page, clock):
 
 @video("compare-runs", "compare-runs")
 def compare_runs_video(page, clock):
-    details = runs_tab(page).page.get_by_test_id("run-details-soil_summer_2025")
+    """The new run's Compare, then Before | Now on the phylum bars: the Soil group is new."""
+    runs_tab(page)
     clock.start()
-    if not details.is_visible():
-        glide(page, page.get_by_test_id("run-row-soil_summer_2025").locator("td").first, pause=2500)
-    glide(page, details.get_by_text("Compare", exact=True), pause=1200)
-    glide(page, page.get_by_role("menuitem", name="Sequencing review"), pause=3500)
+    glide(page, page.get_by_test_id(f"run-row-{NEW_RUN}").locator("td").first, pause=300)
+    details = page.get_by_test_id(f"run-details-{NEW_RUN}")
+    details.wait_for()
+    short_path(details, NEW_RUN)
+    page.wait_for_timeout(2000)
+    glide(page, details.get_by_text("Compare", exact=True), pause=1500)
     clock.cut()
-    target = mqc_tile(page, "general_stats", "Sequencing review")
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(8000)
     clock.resume()
+    page.mouse.move(1425, 500, steps=8)
+    scroll(page, 700, steps=20)
+    page.wait_for_timeout(2500)
+    clock.cut()  # the same ?before_run view, on the tab whose figures the run changed
+    run_q = page.url.split("?", 1)[1]
+    amp(page, COMM, settle=2000)
+    goto(page, f"{urlparse(page.url).path}?{run_q}", settle=10000)
+    target = tile(page, PHYLUM_BAR)
+    target.evaluate("e => e.scrollIntoView({block: 'center'})")
+    page.wait_for_timeout(2500)
+    clock.resume()
+    page.wait_for_timeout(1500)
     glide(page, target.get_by_test_id("component-updated-dot"), pause=1200)
-    glide(page, page.get_by_test_id("component-updated-before-now"), pause=8000)
+    glide(page, page.get_by_test_id("component-updated-before-now"), pause=300)
+    page.mouse.move(700, 860, steps=10)
+    page.wait_for_timeout(8000)
 
 
 @video("multiqc", "multiqc-compare-runs", speed=1.2)

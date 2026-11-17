@@ -117,15 +117,15 @@ The first visit sets the mark and shows nothing. A visit is recorded 10 seconds 
 
 The bell in the sidebar lists the dashboards and projects that changed since your mark. It checks every 60 seconds, and shows a toast when an ingestion finishes (with `DEPICTIO_EVENTS_ENABLED`). Each item links to the dashboard, or to the project's **Runs** tab on that run. Its check mark clears one item, **Mark all as seen** clears them all.
 
-[![The notifications bell open, with items and Mark all as seen](../images/guides/whats-new/notifications_bell_light.webp#only-light)](../images/guides/whats-new/notifications_bell_light.webp){target=_blank}
-[![The notifications bell open, with items and Mark all as seen](../images/guides/whats-new/notifications_bell_dark.webp#only-dark)](../images/guides/whats-new/notifications_bell_dark.webp){target=_blank}
+[![The notifications bell open: soil_2019 is new in nf-core/ampliseq, with Mark all as seen](../images/guides/whats-new/notifications_bell_light.webp#only-light){ width="800" }](../images/guides/whats-new/notifications_bell_light.webp){target=_blank}
+[![The notifications bell open: soil_2019 is new in nf-core/ampliseq, with Mark all as seen](../images/guides/whats-new/notifications_bell_dark.webp#only-dark){ width="800" }](../images/guides/whats-new/notifications_bell_dark.webp){target=_blank}
 
 ## Last viewed in History
 
 In the editor, **Settings → History** tags the version you last viewed **Last viewed**. See [The History section](versioning.md#history).
 
-[![Editor History with a version tagged Last viewed](../images/guides/whats-new/editor_history_light.webp#only-light){ width="685" }](../images/guides/whats-new/editor_history_light.webp){target=_blank}
-[![Editor History with a version tagged Last viewed](../images/guides/whats-new/editor_history_dark.webp#only-dark){ width="685" }](../images/guides/whats-new/editor_history_dark.webp){target=_blank}
+[![Dashboard settings, History of the nf-core/ampliseq dashboard, v2 tagged Last viewed](../images/guides/whats-new/editor_history_light.webp#only-light){ width="685" }](../images/guides/whats-new/editor_history_light.webp){target=_blank}
+[![Dashboard settings, History of the nf-core/ampliseq dashboard, v2 tagged Last viewed](../images/guides/whats-new/editor_history_dark.webp#only-dark){ width="685" }](../images/guides/whats-new/editor_history_dark.webp){target=_blank}
 
 ## Read-only views { #read-only-views }
 

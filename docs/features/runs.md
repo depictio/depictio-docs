@@ -29,15 +29,15 @@ Every Delta row carries the run that wrote it, in `depictio_run_id`: that is how
 
 One row per run, new runs marked with a dot. Unfold a run to see its folder, its files and its scans. A run's files are read only once you unfold it.
 
-[![The project's Runs tab, one row per run, new runs marked with a dot](../images/guides/compare-runs/runs_tab_light.webp#only-light)](../images/guides/compare-runs/runs_tab_light.webp){target=_blank}
-[![The project's Runs tab, one row per run, new runs marked with a dot](../images/guides/compare-runs/runs_tab_dark.webp#only-dark)](../images/guides/compare-runs/runs_tab_dark.webp){target=_blank}
+[![The project's Runs tab with water_2019, sediment_2019 and soil_2019](../images/guides/compare-runs/runs_tab_light.webp#only-light){ width="800" }](../images/guides/compare-runs/runs_tab_light.webp){target=_blank}
+[![The project's Runs tab with water_2019, sediment_2019 and soil_2019](../images/guides/compare-runs/runs_tab_dark.webp#only-dark){ width="800" }](../images/guides/compare-runs/runs_tab_dark.webp){target=_blank}
 
 ### Produced
 
 The **Produced** block of a run lists its ingestions, the Delta commits it wrote and its MultiQC reports. Each Delta commit has **View rows**, which opens that collection's Data table with the run's rows on top (see [New rows in the Data table](#new-rows-in-the-data-table)).
 
-[![A run unfolded: its files, scans and the Produced block with its ingestion and MultiQC report](../images/guides/compare-runs/run_produced_light.webp#only-light)](../images/guides/compare-runs/run_produced_light.webp){target=_blank}
-[![A run unfolded: its files, scans and the Produced block with its ingestion and MultiQC report](../images/guides/compare-runs/run_produced_dark.webp#only-dark)](../images/guides/compare-runs/run_produced_dark.webp){target=_blank}
+[![soil_2019 unfolded: its MultiQC file, the recipes computed for it and the Produced block with its ingestion and collections](../images/guides/compare-runs/run_produced_light.webp#only-light){ width="689" }](../images/guides/compare-runs/run_produced_light.webp){target=_blank}
+[![soil_2019 unfolded: its MultiQC file, the recipes computed for it and the Produced block with its ingestion and collections](../images/guides/compare-runs/run_produced_dark.webp#only-dark){ width="689" }](../images/guides/compare-runs/run_produced_dark.webp){target=_blank}
 
 ### Scans and file statuses
 
@@ -52,20 +52,20 @@ Pick a scan under **Scans**. Each file then says what that scan did to it:
 
 A changed file shows its size and date before and after. A MultiQC report also lists the samples and modules it gained or lost. **Only what this scan changed** hides the rest.
 
-[![A run unfolded with the Scans picker, a changed file and Only what this scan changed switched on](../images/guides/compare-runs/scans_picker_light.webp#only-light)](../images/guides/compare-runs/scans_picker_light.webp){target=_blank}
-[![A run unfolded with the Scans picker, a changed file and Only what this scan changed switched on](../images/guides/compare-runs/scans_picker_dark.webp#only-dark)](../images/guides/compare-runs/scans_picker_dark.webp){target=_blank}
+[![The Scans picker of soil_2019: its one scan brought the MultiQC file, marked New, with Only what this scan changed on](../images/guides/compare-runs/scans_picker_light.webp#only-light){ width="800" }](../images/guides/compare-runs/scans_picker_light.webp){target=_blank}
+[![The Scans picker of soil_2019: its one scan brought the MultiQC file, marked New, with Only what this scan changed on](../images/guides/compare-runs/scans_picker_dark.webp#only-dark){ width="800" }](../images/guides/compare-runs/scans_picker_dark.webp){target=_blank}
 
 ## Compare a dashboard with a run { #compare-a-dashboard-with-a-run }
 
-**Compare** on a run opens a dashboard with what that run changed marked. With several dashboards, a menu lists them under **What this ingestion changed in**.
+**Compare** on a run opens a dashboard with what that run changed marked. With one dashboard, its tooltip names it; with several, a menu lists them under **What this ingestion changed in**.
 
-[![The Compare button open on a run, listing the dashboards under What this ingestion changed in](../images/guides/compare-runs/runs_compare_menu_light.webp#only-light)](../images/guides/compare-runs/runs_compare_menu_light.webp){target=_blank}
-[![The Compare button open on a run, listing the dashboards under What this ingestion changed in](../images/guides/compare-runs/runs_compare_menu_dark.webp#only-dark)](../images/guides/compare-runs/runs_compare_menu_dark.webp){target=_blank}
+[![Compare on soil_2019 with its tooltip, What this ingestion changed in nf-core/ampliseq](../images/guides/compare-runs/runs_compare_menu_light.webp#only-light){ width="800" }](../images/guides/compare-runs/runs_compare_menu_light.webp){target=_blank}
+[![Compare on soil_2019 with its tooltip, What this ingestion changed in nf-core/ampliseq](../images/guides/compare-runs/runs_compare_menu_dark.webp#only-dark){ width="800" }](../images/guides/compare-runs/runs_compare_menu_dark.webp){target=_blank}
 
 The dashboard opens read-only at `?before_run=<run id>`. Its header key reads **This ingestion**, and each changed tile's **Before | Now** draws the data just before the run beside the data now. This view never moves your own _"What's new"_ mark.
 
-[![A dashboard opened at ?before_run, the tiles the run changed marked with a dot](../images/guides/compare-runs/dashboard_before_run_light.webp#only-light)](../images/guides/compare-runs/dashboard_before_run_light.webp){target=_blank}
-[![A dashboard opened at ?before_run, the tiles the run changed marked with a dot](../images/guides/compare-runs/dashboard_before_run_dark.webp#only-dark)](../images/guides/compare-runs/dashboard_before_run_dark.webp){target=_blank}
+[![The nf-core/ampliseq Overview opened at ?before_run for soil_2019, the four key figure cards marked with a dot](../images/guides/compare-runs/dashboard_before_run_light.webp#only-light){ width="800" }](../images/guides/compare-runs/dashboard_before_run_light.webp){target=_blank}
+[![The nf-core/ampliseq Overview opened at ?before_run for soil_2019, the four key figure cards marked with a dot](../images/guides/compare-runs/dashboard_before_run_dark.webp#only-dark){ width="800" }](../images/guides/compare-runs/dashboard_before_run_dark.webp){target=_blank}
 
 **Layout before &lt;run&gt;** opens each dashboard's definition as it last was before the run (a `?version=` preview). It shows the layout and components, not the data: an ingestion records no dashboard version, so the preview's data is whatever that version pinned.
 
@@ -75,8 +75,8 @@ MultiQC rows have no run column: MultiQC figures compare on new samples instead.
 
 **View rows** in **Produced**, or **Open in project** in the [_"What's new"_ panel](whats-new.md#panel), opens the collection's Data table read-only at `?table=<collection>&new_runs=<runs>`. The new rows come first and are marked, the rows you had seen follow, faded. **Hide what you had seen** drops them, **Back to full table** returns to the plain table.
 
-[![The Data table opened on the new run's rows, with Back to full table and Hide what you had seen](../images/guides/compare-runs/new_rows_table_light.webp#only-light)](../images/guides/compare-runs/new_rows_table_light.webp){target=_blank}
-[![The Data table opened on the new run's rows, with Back to full table and Hide what you had seen](../images/guides/compare-runs/new_rows_table_dark.webp#only-dark)](../images/guides/compare-runs/new_rows_table_dark.webp){target=_blank}
+[![The alpha diversity table opened on soil_2019: its three samples first and marked, the water and sediment rows faded below](../images/guides/compare-runs/new_rows_table_light.webp#only-light){ width="800" }](../images/guides/compare-runs/new_rows_table_light.webp){target=_blank}
+[![The alpha diversity table opened on soil_2019: its three samples first and marked, the water and sediment rows faded below](../images/guides/compare-runs/new_rows_table_dark.webp#only-dark){ width="800" }](../images/guides/compare-runs/new_rows_table_dark.webp){target=_blank}
 
 ## Data refresh
 
@@ -108,8 +108,8 @@ The project's **Activity** tab has two views:
 
 Where the server can read the project's files, **Run ingestion** beside the view switch starts an ingestion on the server and switches to **History**.
 
-[![The Activity tab, History view, with ingestions, dashboard versions and comments](../images/guides/data-updates/activity_history_light.webp#only-light){ width="620" }](../images/guides/data-updates/activity_history_light.webp){target=_blank}
-[![The Activity tab, History view, with ingestions, dashboard versions and comments](../images/guides/data-updates/activity_history_dark.webp#only-dark){ width="620" }](../images/guides/data-updates/activity_history_dark.webp){target=_blank}
+[![The Activity tab, History view: the ingestion of each run and the dashboard versions, newest first](../images/guides/data-updates/activity_history_light.webp#only-light){ width="727" }](../images/guides/data-updates/activity_history_light.webp){target=_blank}
+[![The Activity tab, History view: the ingestion of each run and the dashboard versions, newest first](../images/guides/data-updates/activity_history_dark.webp#only-dark){ width="727" }](../images/guides/data-updates/activity_history_dark.webp){target=_blank}
 
 **Activity** replaces the **Ingestion report** and **Timeline** tabs. Old links (`?tab=ingestion`, `?tab=timeline`, `#ingestion`, `#ingestion-history`) still open it. With _"What's new"_ off, **History** is the list of ingestion runs it was before.
 

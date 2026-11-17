@@ -194,11 +194,11 @@ In the project's list of collections, the :material-database-cog-outline: icon o
 | **Modify data**, **Replace existing data** on | The collection is wiped and ingested again from the dropped files | **Replace all data** |
 | **Clear contents** | Deletes all the data and reports. The collection, its name and its links stay. Type the collection name to confirm | **Clear data collection** |
 
-<!-- TODO recapture: Manage data modal (v1.21.0) -->
-<figure markdown="span">
-  ![Manage Data Collection modal with the Modify data and Clear contents tabs](../../images/react/manage_dc_modal.png)
-  <figcaption><em>Manage Data Collection</em>: <em>Modify data</em> appends or replaces, <em>Clear contents</em> drops the data and keeps the collection.</figcaption>
-</figure>
+[![Manage Data Collection, Modify data: the Replace existing data switch and the file drop zone](../../images/guides/project-creation/manage_dc_modify_light.webp#only-light){ width="620" }](../../images/guides/project-creation/manage_dc_modify_light.webp){target=_blank}
+[![Manage Data Collection, Modify data: the Replace existing data switch and the file drop zone](../../images/guides/project-creation/manage_dc_modify_dark.webp#only-dark){ width="620" }](../../images/guides/project-creation/manage_dc_modify_dark.webp){target=_blank}
+
+[![Manage Data Collection, Clear contents: the warning and the collection name to type to confirm](../../images/guides/project-creation/manage_dc_clear_light.webp#only-light){ width="620" }](../../images/guides/project-creation/manage_dc_clear_light.webp){target=_blank}
+[![Manage Data Collection, Clear contents: the warning and the collection name to type to confirm](../../images/guides/project-creation/manage_dc_clear_dark.webp#only-dark){ width="620" }](../../images/guides/project-creation/manage_dc_clear_dark.webp){target=_blank}
 
 MultiQC reports are checked for **uniformity** before a create or an append: the same modules, plot keys and MultiQC version across runs, and no sample twice. Reports that differ are refused, so plots stay consistent.
 
