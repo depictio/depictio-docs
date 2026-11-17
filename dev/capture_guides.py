@@ -45,16 +45,17 @@ MAX_WIDTH, QUALITY = 1600, 80
 QC, QC_DASH, SOIL = "Sequencing QC study", "Sequencing QC overview", "Soil microbiome 16S"
 NEW = "Lake sediment 16S"  # the name typed in New project (not a project of the instance)
 SCATTER, BOX = "Reads vs GC content", "Duplicate reads by condition"
-BAR, VIOLIN = "Reads per run", "Mapping rate by condition"
-MD_DASH = "Sample review"  # the Metadata panel's dashboard: figures and multi-metric cards, created after every run
-# The review label of every sample, from its QC (fail: Q30 < 86.5 or mapped < 88; recheck: duplicates > 22 or Q30 < 88.5).
-LABEL, LABELS = "review", dict(zip(
-    "DONOR_A DONOR_B DONOR_C DONOR_D DONOR_E EXOME_A1 EXOME_A2 EXOME_B1 EXOME_B2 EXOME_B3 GM12878 GM18507 GM19240 "
-    "HG001 HG002 HG003 HG004 HeLa K562 NA12878 NA12891 NA12892 PATIENT_001 PATIENT_002 PATIENT_003 PATIENT_010 "
-    "PATIENT_011 PATIENT_012 PATIENT_013 PROJ_WGS_S1 PROJ_WGS_S2 PROJ_WGS_S3 RNASEQ_LIB01 RNASEQ_LIB02 RNASEQ_LIB03 "
-    "RNASEQ_LIB04".split(),
-    "recheck pass pass pass pass recheck pass pass pass pass pass recheck pass recheck fail recheck pass fail pass "
-    "pass pass pass pass recheck pass recheck pass fail fail pass pass pass recheck fail pass pass".split()))
+# What's new and the Metadata panel run on the ampliseq template dashboard of SOIL: the megatest
+# split by SRA batch into water_2019 and sediment_2019 (seen) and soil_2019 (attached after the mark).
+AMP, ALPHA, ORD, COMM = "nf-core/ampliseq", "Alpha Diversity", "Ordination & Clustering", "Community & Diversity"
+SHANNON_BOX, RAREFACTION, COMPOSITION = "Shannon diversity per group", "Rarefaction curves", "Composition per sample"
+PHYLUM_BAR, PCOA = "Phylum composition per group", "Sample ordination"
+# The QC review of every sample, from its read tracking (overall_summary.tsv): fail when Cutadapt
+# kept under 85 % of the reads or DADA2 under 70 %, recheck when DADA2 kept under 80 %.
+LABEL, LABELS = "review", {
+    "SRR10070130": "pass", "SRR10070131": "pass", "SRR10070132": "fail", "SRR10070133": "fail",
+    "SRR10070134": "pass", "SRR10070141": "recheck", "SRR10070149": "pass", "SRR10070150": "recheck",
+    "SRR10070151": "pass", "SRR10102392": "pass", "SRR10102393": "pass", "SRR10102394": "pass"}
 DRAWER = {"x": 640, "y": 70, "width": 800, "height": 830}  # the docked panel on the right
 HEADER = {"x": 270, "y": 80, "width": 1150, "height": 250}  # a project page's title and facts
 
@@ -275,8 +276,23 @@ def dashboard(page: Page, query: str = "", settle: int = 9000, title: str = QC_D
     return goto(page, f"/dashboard/{dashboard_id(page, title)}{query}", settle=settle)
 
 
+def amp(page: Page, tab: str = ALPHA, settle: int = 9000) -> Page:
+    """A tab of the ampliseq dashboard, its filter panel closed."""
+    if tab not in _ids:
+        tabs = api(page, f"/dashboards/tabs/{dashboard_id(page, AMP)}")["child_tabs"]
+        _ids.update({t["title"]: t["dashboard_id"] for t in tabs})
+    goto(page, f"/dashboard/{_ids[tab]}", settle=settle)
+    close = page.get_by_role("button", name="Close filters")
+    if close.is_visible():
+        close.click()
+        page.wait_for_timeout(1500)
+    return page
+
+
 def tile(page: Page, title: str) -> Locator:
-    return page.locator(".react-grid-item").filter(has_text=title).first
+    """The tile titled `title`; else the first whose text holds it (a prefix of a long title)."""
+    exact = page.locator(".react-grid-item").filter(has=page.get_by_text(title, exact=True))
+    return exact.first if exact.count() else page.locator(".react-grid-item").filter(has_text=title).first
 
 
 def wide(page: Page, width: int = 2100) -> Page:
@@ -296,10 +312,10 @@ def mqc_tile(page: Page, plot: str, dash: str = QC_DASH) -> Locator:
 
 
 def whats_new(page: Page, view: str | None = None, hide_seen: bool = False, close: bool = False,
-              run: str | None = None) -> Page:
+              run: str | None = None, tab: str | None = None) -> Page:
     """The dashboard with its What's new panel open, Off | Overlay | Split picked,
     on all the new runs or on one (`run`)."""
-    dashboard(page).get_by_test_id("changes-pill").first.click()
+    (amp(page, tab) if tab else dashboard(page)).get_by_test_id("changes-pill").first.click()
     page.wait_for_timeout(1500)
     if view:
         page.get_by_test_id("changes-view").get_by_text(view, exact=True).click()
@@ -330,15 +346,15 @@ def tiles(page: Page, *titles: str) -> dict:
     return union(page, *(tile(page, t) for t in titles), pad=2)
 
 
-def dot_menu(page: Page, title: str = SCATTER) -> Page:
-    tile(dashboard(page), title).get_by_test_id("component-updated-dot").click()
+def dot_menu(page: Page, title: str = SCATTER, tab: str | None = None) -> Page:
+    tile(amp(page, tab) if tab else dashboard(page), title).get_by_test_id("component-updated-dot").click()
     page.wait_for_timeout(1000)
     return page
 
 
 @shot("whats-new", "before_now")
 def before_now(page):
-    dot_menu(page, BOX).get_by_test_id("component-updated-before-now").click()
+    dot_menu(page, SHANNON_BOX, ALPHA).get_by_test_id("component-updated-before-now").click()
     page.wait_for_timeout(9000)
     return modal(page)
 
@@ -382,17 +398,17 @@ def multiqc_manage(page):
 
 
 for _topic, _name, _flow in [
-    ("whats-new", "whats_new_key", lambda p: dashboard(p) and {"x": 940, "y": 4, "width": 496, "height": 76}),
-    ("whats-new", "whats_new_panel", lambda p: whats_new(p).get_by_test_id("changes-panel")),
-    ("whats-new", "overlay_scatter", lambda p: tile(whats_new(p, "Overlay", close=True), SCATTER)),
-    ("whats-new", "overlay_figures", lambda p: tiles(whats_new(tall(p), "Overlay", close=True), BAR, VIOLIN)),
-    # One run picked: All | New: run_09 | Other runs, three panels a figure can hold.
+    ("whats-new", "whats_new_key", lambda p: amp(p) and {"x": 940, "y": 4, "width": 496, "height": 76}),
+    ("whats-new", "whats_new_panel", lambda p: whats_new(p, tab=ALPHA).get_by_test_id("changes-panel")),
+    ("whats-new", "overlay_scatter", lambda p: tile(whats_new(p, "Overlay", close=True, tab=ORD), PCOA)),
+    ("whats-new", "overlay_figures", lambda p: tiles(
+        whats_new(tall(p, 1300), "Overlay", close=True, tab=COMM), PHYLUM_BAR, COMPOSITION)),
     ("whats-new", "split_view", lambda p: tiles(
-        whats_new(tall(p), "Split", close=True, run="run_09"), "Median reads", SCATTER, BOX)),
+        whats_new(tall(p), "Split", close=True, tab=ALPHA), "Observed ASVs", "Evenness", RAREFACTION)),
     ("whats-new", "split_figures", lambda p: tiles(
-        whats_new(tall(p), "Split", close=True, run="run_09"), BAR, VIOLIN)),
-    ("whats-new", "hide_seen", lambda p: whats_new(p, "Overlay", hide_seen=True) and None),
-    ("whats-new", "tile_dot_menu", lambda p: dot_menu(p) and None),
+        whats_new(tall(p, 1300), "Split", close=True, tab=COMM), PHYLUM_BAR, COMPOSITION)),
+    ("whats-new", "hide_seen", lambda p: whats_new(p, "Overlay", hide_seen=True, tab=ALPHA) and None),
+    ("whats-new", "tile_dot_menu", lambda p: dot_menu(p, "Observed ASVs", ALPHA) and None),
     ("multiqc", "multiqc_figure", lambda p: mqc_tile(dashboard(p), "Sequence Counts")),
     ("multiqc", "general_stats", lambda p: mqc_tile(dashboard(p), "general_stats")),
     ("multiqc", "overlay_multiqc", lambda p: mqc_tile(whats_new(p, "Overlay", close=True), "Sequence Counts")),
@@ -479,7 +495,7 @@ for _topic, _name, _flow in [
 
 
 def metadata_panel(page: Page, labels: bool = True) -> Page:
-    dashboard(page, settle=7000, title=MD_DASH).get_by_test_id("metadata-button").click()
+    amp(page, settle=7000).get_by_test_id("metadata-button").click()
     page.locator("[data-testid=annotation-grid] .ag-row").first.wait_for(timeout=30000)
     page.wait_for_timeout(1500)
     if labels:
@@ -505,7 +521,10 @@ def add_labels(page: Page, slow: bool = False) -> None:
     page.wait_for_timeout(800)
     grid = page.get_by_test_id("annotation-grid")
     col = grid.locator(".ag-header-cell", has_text=LABEL).first.get_attribute("col-id")
-    values = [LABELS[k] for k in sorted(LABELS)]  # the grid's rows, in key order
+    keys = grid.locator(".ag-cell[col-id=__key]").evaluate_all(  # the key column may be pinned
+        "cs => cs.map(c => [+c.closest('.ag-row').getAttribute('row-index'), c.innerText.trim()])"
+        ".sort((a, b) => a[0] - b[0]).map(r => r[1])")
+    values = [LABELS[k] for k in keys]  # the grid's rows, in its order
     typed = 3 if slow else 0
     cell = lambda row: grid.locator(f".ag-center-cols-container [row-index='{row}'] [col-id='{col}']")  # noqa: E731
     for row in range(typed):
@@ -519,10 +538,6 @@ def add_labels(page: Page, slow: bool = False) -> None:
         glide(page, cell(typed), click=False, pause=300)
     paste(page, cell(typed), values[typed:])
     page.wait_for_timeout(1500 if slow else 600)
-    if slow:  # down the whole column, and back
-        scroll(page, 1400, steps=20)
-        page.wait_for_timeout(600)
-        scroll(page, -1400, steps=20)
     column_menu(page, slow)
     page.get_by_role("menuitem", name="Compare in the charts").click()
     page.wait_for_timeout(1500)
@@ -561,14 +576,13 @@ def library_table(page: Page, mode: str) -> None:
 
 
 for _topic, _name, _flow in [
-    ("metadata-panel", "metadata_dock_button", lambda p: union(p, dashboard(p, settle=7000, title=MD_DASH).get_by_test_id(
+    ("metadata-panel", "metadata_dock_button", lambda p: union(p, amp(p, settle=7000).get_by_test_id(
         "metadata-button").locator("xpath=ancestor::*[contains(@class,'hy-dock')][1]"), pad=14)),
     ("metadata-panel", "metadata_panel_labels", lambda p: metadata_panel(p) and DRAWER),
     ("metadata-panel", "metadata_column_menu", lambda p: column_menu(metadata_panel(p)) and DRAWER),
     ("metadata-panel", "metadata_groups_analysis", lambda p: coloured_by_groups(p) and None),
-    ("metadata-panel", "figure_coloured_by_label", lambda p: tile(coloured_by_groups(p, close=True), SCATTER)),
     ("metadata-panel", "labels_on_dashboard", lambda p: tiles(
-        coloured_by_groups(tall(p), close=True), "Total reads", SCATTER, BOX)),
+        coloured_by_groups(tall(p), close=True), "Observed ASVs", "Evenness", RAREFACTION)),
     ("metadata-panel", "table_locked", lambda p: library_table(p, "locked")),
     ("metadata-panel", "table_edit_mode", lambda p: library_table(p, "editing")),
 ]:
@@ -743,26 +757,30 @@ def pick_view(page: Page, view: str, settle: int = 6000, run: str | None = None)
 
 @video("whats-new", "whats-new-overlay-split", speed=1.2)
 def overlay_split_video(page, clock):
-    """Overlay on the scatter and box, then the bar and violin; Split on one run there,
-    then back up to the cards. The wheel turns in the gap between the tiles: over a
-    figure it would ask for the zoom key."""
-    dashboard(page, settle=8000).mouse.move(1400, 500)
+    """Alpha Diversity: Overlay down the rarefaction curves to the box plot, then Split
+    and back up to the cards. The wheel turns in the margin: over a figure it would ask
+    for the zoom key."""
+    amp(page, settle=8000).mouse.move(1400, 500)
     clock.start()
     pick_view(page, "Overlay")
-    page.mouse.move(700, 600, steps=15)
-    page.wait_for_timeout(1500)
-    page.mouse.move(854, 600, steps=6)
-    scroll(page, 520)
+    page.mouse.move(1425, 600, steps=10)
+    scroll(page, 560)
     page.wait_for_timeout(2500)
-    pick_view(page, "Split", settle=6000, run="run_09")
-    page.mouse.move(854, 600, steps=10)
-    scroll(page, -520)
+    scroll(page, 560)
+    page.wait_for_timeout(2000)
+    pick_view(page, "Split", settle=5000)
+    page.mouse.move(1425, 600, steps=10)
+    scroll(page, -560)
+    page.wait_for_timeout(2000)
+    scroll(page, -560)
     page.wait_for_timeout(3000)
 
 
 @video("whats-new", "before-now")
 def before_now_video(page, clock):
-    dot = tile(dashboard(page, settle=8000), BOX).get_by_test_id("component-updated-dot")
+    dot = tile(amp(page, settle=8000), SHANNON_BOX).get_by_test_id("component-updated-dot")
+    dot.scroll_into_view_if_needed()
+    page.wait_for_timeout(3000)
     clock.start()
     glide(page, dot, pause=1200)
     glide(page, page.get_by_test_id("component-updated-before-now"), pause=7000)
@@ -805,7 +823,7 @@ def multiqc_video(page, clock):
 @video("metadata-panel", "metadata-labels", speed=1.25)
 def metadata_video(page, clock):
     """Needs no review column yet (labels are kept on the account): delete it first."""
-    dashboard(page, settle=8000, title=MD_DASH)
+    amp(page, settle=8000)
     clock.start()
     glide(page, page.get_by_test_id("metadata-button"), pause=600)
     page.locator("[data-testid=annotation-grid] .ag-row").first.wait_for(timeout=30000)
@@ -816,7 +834,7 @@ def metadata_video(page, clock):
     glide(page, page.get_by_text("My groups", exact=True).first, pause=1500)
     glide(page, page.get_by_text("Compare groups in cards", exact=True), pause=3000)
     glide(page, page.get_by_test_id("analysis-button"), pause=2500)
-    page.mouse.move(800, 550, steps=12)
+    page.mouse.move(1425, 550, steps=12)
     scroll(page, 560)
     page.wait_for_timeout(2200)
     scroll(page, 560)

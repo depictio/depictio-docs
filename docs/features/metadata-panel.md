@@ -55,8 +55,8 @@ The file is read in your browser and never sent to the server. Rows that match n
 
 **Compare groups in cards**, under **In cards** in **Analysis**, adds each group's value to the cards. Closed, **Analysis** leaves the figures coloured and the cards comparing the groups.
 
-[![Cards with each review group's value and figures coloured by fail, pass and recheck](../images/guides/metadata-panel/labels_on_dashboard_light.webp#only-light){ width="760" }](../images/guides/metadata-panel/labels_on_dashboard_light.webp){target=_blank}
-[![Cards with each review group's value and figures coloured by fail, pass and recheck](../images/guides/metadata-panel/labels_on_dashboard_dark.webp#only-dark){ width="760" }](../images/guides/metadata-panel/labels_on_dashboard_dark.webp){target=_blank}
+[![The Alpha Diversity cards with each review group's value, and the rarefaction curves coloured by fail, pass and recheck](../images/guides/metadata-panel/labels_on_dashboard_light.webp#only-light){ width="644" }](../images/guides/metadata-panel/labels_on_dashboard_light.webp){target=_blank}
+[![The Alpha Diversity cards with each review group's value, and the rarefaction curves coloured by fail, pass and recheck](../images/guides/metadata-panel/labels_on_dashboard_dark.webp#only-dark){ width="644" }](../images/guides/metadata-panel/labels_on_dashboard_dark.webp){target=_blank}
 
 Groups from labels carry a tag icon in **Analysis**: rename or delete them from Metadata, not there. **Analysis** is a temporary view: colours, groups and card comparisons are never saved with the dashboard.
 

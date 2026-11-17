@@ -36,8 +36,8 @@ The **What's new** key sits in the dashboard header, beside settings and theme, 
 [![Dashboard header with the What's new key and its count badge](../images/guides/whats-new/whats_new_key_light.webp#only-light){ width="496" }](../images/guides/whats-new/whats_new_key_light.webp){target=_blank}
 [![Dashboard header with the What's new key and its count badge](../images/guides/whats-new/whats_new_key_dark.webp#only-dark){ width="496" }](../images/guides/whats-new/whats_new_key_dark.webp){target=_blank}
 
-[![The What's new panel: Off, Overlay and Split, the run chips, new runs under Data, and Mark as seen](../images/guides/whats-new/whats_new_panel_light.webp#only-light){ width="265" }](../images/guides/whats-new/whats_new_panel_light.webp){target=_blank}
-[![The What's new panel: Off, Overlay and Split, the run chips, new runs under Data, and Mark as seen](../images/guides/whats-new/whats_new_panel_dark.webp#only-dark){ width="265" }](../images/guides/whats-new/whats_new_panel_dark.webp){target=_blank}
+[![The What's new panel: Off, Overlay and Split, the new run under Data, and Mark as seen](../images/guides/whats-new/whats_new_panel_light.webp#only-light){ width="374" }](../images/guides/whats-new/whats_new_panel_light.webp){target=_blank}
+[![The What's new panel: Off, Overlay and Split, the new run under Data, and Mark as seen](../images/guides/whats-new/whats_new_panel_dark.webp#only-dark){ width="374" }](../images/guides/whats-new/whats_new_panel_dark.webp){target=_blank}
 
 The panel lists the changes in three sections:
 
@@ -61,17 +61,19 @@ The panel lists the changes in three sections:
 
 The chips under the modes pick the runs: **All new runs**, or one run. With one run picked, Split draws **All**, that run and the **Other runs**.
 
-[![A scatter under Overlay, each new run in its colour and the runs seen before in grey](../images/guides/whats-new/overlay_scatter_light.webp#only-light){ width="560" }](../images/guides/whats-new/overlay_scatter_light.webp){target=_blank}
-[![A scatter under Overlay, each new run in its colour and the runs seen before in grey](../images/guides/whats-new/overlay_scatter_dark.webp#only-dark){ width="560" }](../images/guides/whats-new/overlay_scatter_dark.webp){target=_blank}
+The examples below are the nf-core/ampliseq dashboard after a third run, `soil_2019`, came in.
 
-[![A bar chart and a violin plot under Overlay, the new runs coloured and the runs seen before in grey](../images/guides/whats-new/overlay_figures_light.webp#only-light){ width="800" }](../images/guides/whats-new/overlay_figures_light.webp){target=_blank}
-[![A bar chart and a violin plot under Overlay, the new runs coloured and the runs seen before in grey](../images/guides/whats-new/overlay_figures_dark.webp#only-dark){ width="800" }](../images/guides/whats-new/overlay_figures_dark.webp){target=_blank}
+[![The sample ordination under Overlay: the new soil run in its colour, the runs seen before in grey](../images/guides/whats-new/overlay_scatter_light.webp#only-light){ width="491" }](../images/guides/whats-new/overlay_scatter_light.webp){target=_blank}
+[![The sample ordination under Overlay: the new soil run in its colour, the runs seen before in grey](../images/guides/whats-new/overlay_scatter_dark.webp#only-dark){ width="491" }](../images/guides/whats-new/overlay_scatter_dark.webp){target=_blank}
 
-[![Cards and figures under Split on run_09: All, New: run_09 and Other runs side by side](../images/guides/whats-new/split_view_light.webp#only-light){ width="800" }](../images/guides/whats-new/split_view_light.webp){target=_blank}
-[![Cards and figures under Split on run_09: All, New: run_09 and Other runs side by side](../images/guides/whats-new/split_view_dark.webp#only-dark){ width="800" }](../images/guides/whats-new/split_view_dark.webp){target=_blank}
+[![Phylum composition per group and per sample under Overlay: the new run beside the runs seen before](../images/guides/whats-new/overlay_figures_light.webp#only-light){ width="661" }](../images/guides/whats-new/overlay_figures_light.webp){target=_blank}
+[![Phylum composition per group and per sample under Overlay: the new run beside the runs seen before](../images/guides/whats-new/overlay_figures_dark.webp#only-dark){ width="661" }](../images/guides/whats-new/overlay_figures_dark.webp){target=_blank}
 
-[![A bar chart and a violin plot under Split on run_09, one panel per side](../images/guides/whats-new/split_figures_light.webp#only-light){ width="800" }](../images/guides/whats-new/split_figures_light.webp){target=_blank}
-[![A bar chart and a violin plot under Split on run_09, one panel per side](../images/guides/whats-new/split_figures_dark.webp#only-dark){ width="800" }](../images/guides/whats-new/split_figures_dark.webp){target=_blank}
+[![The Alpha Diversity cards and rarefaction curves under Split: All, New: soil_2019 and Seen before](../images/guides/whats-new/split_view_light.webp#only-light){ width="643" }](../images/guides/whats-new/split_view_light.webp){target=_blank}
+[![The Alpha Diversity cards and rarefaction curves under Split: All, New: soil_2019 and Seen before](../images/guides/whats-new/split_view_dark.webp#only-dark){ width="643" }](../images/guides/whats-new/split_view_dark.webp){target=_blank}
+
+[![Phylum composition per group and per sample under Split, one panel per side](../images/guides/whats-new/split_figures_light.webp#only-light){ width="661" }](../images/guides/whats-new/split_figures_light.webp){target=_blank}
+[![Phylum composition per group and per sample under Split, one panel per side](../images/guides/whats-new/split_figures_dark.webp#only-dark){ width="661" }](../images/guides/whats-new/split_figures_dark.webp){target=_blank}
 
 Split compares runs: every Delta row carries the run that wrote it (`depictio_run_id`), so the two sides are the new runs and the runs you had seen. MultiQC rows have no run column and split on new samples instead (see [MultiQC: compare runs](multiqc.md#compare-runs)). The two sides are temporary groups: never saved and never applied as a filter.
 
@@ -86,8 +88,8 @@ Under **Overlay**, the **Hide what you had seen** switch draws only the new runs
 
 A tile whose definition or data changed carries a dot. Hover it for what changed; click it for its menu.
 
-[![The dot menu of a changed tile with Mark as seen, Compare with last visit, Before | Now](../images/guides/whats-new/tile_dot_menu_light.webp#only-light)](../images/guides/whats-new/tile_dot_menu_light.webp){target=_blank}
-[![The dot menu of a changed tile with Mark as seen, Compare with last visit, Before | Now](../images/guides/whats-new/tile_dot_menu_dark.webp#only-dark)](../images/guides/whats-new/tile_dot_menu_dark.webp){target=_blank}
+[![The dot menu of a changed card with Mark as seen and Before | Now](../images/guides/whats-new/tile_dot_menu_light.webp#only-light)](../images/guides/whats-new/tile_dot_menu_light.webp){target=_blank}
+[![The dot menu of a changed card with Mark as seen and Before | Now](../images/guides/whats-new/tile_dot_menu_dark.webp#only-dark)](../images/guides/whats-new/tile_dot_menu_dark.webp){target=_blank}
 
 | Item | What it does |
 |------|--------------|
