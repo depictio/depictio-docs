@@ -88,6 +88,7 @@ extra_javascript:
   - javascripts/template-catalog.js
   - javascripts/asciinema.js
   - javascripts/theme-video.js
+  - javascripts/lazy-video.js
 
 # Markdown Extensions
 markdown_extensions:

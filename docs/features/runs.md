@@ -9,7 +9,7 @@ glightbox: true
 
 A project made from a pipeline can hold several runs of it. The project's **Runs** tab says what each run produced and what each scan changed, and **Compare** opens a dashboard with what one run changed marked.
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/compare-runs/compare-runs.webp" src="../../images/guides/compare-runs/compare-runs.mp4"></video></figure>
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../images/guides/compare-runs/compare-runs.webp" src="../../images/guides/compare-runs/compare-runs.mp4"></video></figure>
 
 | Needs | For |
 |-------|-----|
@@ -82,8 +82,8 @@ MultiQC rows have no run column: MultiQC figures compare on new samples instead.
 
 **Project settings → Data refresh** reads again a collection the server can reach: one from a manifest, a URL or a bucket prefix. Pick a collection, or leave the field empty to refresh them all, then **Refresh now**. Data ingested from a local folder is refreshed with the CLI ([`depictio ingest`](../depictio-cli/usage.md#ingest-command)).
 
-[![Project settings, Data refresh: the collection picker, the Read everything again switch and Refresh now](../images/guides/data-updates/data_refresh_light.webp#only-light)](../images/guides/data-updates/data_refresh_light.webp){target=_blank}
-[![Project settings, Data refresh: the collection picker, the Read everything again switch and Refresh now](../images/guides/data-updates/data_refresh_dark.webp#only-dark)](../images/guides/data-updates/data_refresh_dark.webp){target=_blank}
+[![Project settings, Data refresh: the collection picker, the Read everything again switch and Refresh now](../images/guides/data-updates/data_refresh_light.webp#only-light){ width="688" }](../images/guides/data-updates/data_refresh_light.webp){target=_blank}
+[![Project settings, Data refresh: the collection picker, the Read everything again switch and Refresh now](../images/guides/data-updates/data_refresh_dark.webp#only-dark){ width="688" }](../images/guides/data-updates/data_refresh_dark.webp){target=_blank}
 
 By default a refresh reads only what changed:
 
@@ -95,7 +95,7 @@ By default a refresh reads only what changed:
 
 Manifest and URL collections are read again on every refresh: their hash names the source, not its content. A refresh that rewrites identical rows writes a commit, but _"What's new"_ does not count it.
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/data-updates/refresh-new-rows.webp" src="../../images/guides/data-updates/refresh-new-rows.mp4"></video></figure>
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../images/guides/data-updates/refresh-new-rows.webp" src="../../images/guides/data-updates/refresh-new-rows.mp4"></video></figure>
 
 ## The Activity tab
 
@@ -108,8 +108,8 @@ The project's **Activity** tab has two views:
 
 Where the server can read the project's files, **Run ingestion** beside the view switch starts an ingestion on the server and switches to **History**.
 
-[![The Activity tab, History view, with ingestions, dashboard versions and comments](../images/guides/data-updates/activity_history_light.webp#only-light)](../images/guides/data-updates/activity_history_light.webp){target=_blank}
-[![The Activity tab, History view, with ingestions, dashboard versions and comments](../images/guides/data-updates/activity_history_dark.webp#only-dark)](../images/guides/data-updates/activity_history_dark.webp){target=_blank}
+[![The Activity tab, History view, with ingestions, dashboard versions and comments](../images/guides/data-updates/activity_history_light.webp#only-light){ width="620" }](../images/guides/data-updates/activity_history_light.webp){target=_blank}
+[![The Activity tab, History view, with ingestions, dashboard versions and comments](../images/guides/data-updates/activity_history_dark.webp#only-dark){ width="620" }](../images/guides/data-updates/activity_history_dark.webp){target=_blank}
 
 **Activity** replaces the **Ingestion report** and **Timeline** tabs. Old links (`?tab=ingestion`, `?tab=timeline`, `#ingestion`, `#ingestion-history`) still open it. With _"What's new"_ off, **History** is the list of ingestion runs it was before.
 

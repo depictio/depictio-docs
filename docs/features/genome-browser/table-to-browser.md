@@ -8,7 +8,7 @@ glightbox: true
 # Table to browser
 
 <figure markdown="span">
-  <video autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/table_to_browser.webp" src="../../../images/guides/genome-browser/table_to_browser.mp4"></video>
+  <video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/table_to_browser.webp" src="../../../images/guides/genome-browser/table_to_browser.mp4"></video>
 </figure>
 
 Pick a row in a table: the browser moves to its locus and its record card follows. With no row picked, the browser opens on the best row of the collection (`sort_by`). The toolbar steps through the rows, lists them in a picker, and shows where they fall along the genome. A contig spelled `21` in the table and `chr21` in the assembly (or the reverse) is matched.

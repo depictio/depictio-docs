@@ -8,8 +8,8 @@ glightbox: true
 
 Depictio reads [:material-open-in-new: MultiQC](https://multiqc.info/){ target="_blank" } reports and draws their plots as dashboard components. A collection can hold the reports of several runs, linked to your sample metadata and compared run against run.
 
-[![A MultiQC plot component on a dashboard, with the report's own controls](../images/guides/multiqc/multiqc_figure_light.webp#only-light)](../images/guides/multiqc/multiqc_figure_light.webp){target=_blank}
-[![A MultiQC plot component on a dashboard, with the report's own controls](../images/guides/multiqc/multiqc_figure_dark.webp#only-dark)](../images/guides/multiqc/multiqc_figure_dark.webp){target=_blank}
+[![A MultiQC plot component on a dashboard, with the report's own controls](../images/guides/multiqc/multiqc_figure_light.webp#only-light){ width="545" }](../images/guides/multiqc/multiqc_figure_light.webp){target=_blank}
+[![A MultiQC plot component on a dashboard, with the report's own controls](../images/guides/multiqc/multiqc_figure_dark.webp#only-dark){ width="545" }](../images/guides/multiqc/multiqc_figure_dark.webp){target=_blank}
 
 ## What Depictio reads
 
@@ -35,8 +35,8 @@ For an existing collection, the **Manage data** button opens **Manage Data Colle
 
 Uploads take at most 50 MB per file and 500 MB in all. Only `multiqc.parquet` is extracted from a dropped folder.
 
-[![Manage Data Collection for a MultiQC collection, with Append folders and Replace existing data](../images/guides/multiqc/manage_collection_light.webp#only-light)](../images/guides/multiqc/manage_collection_light.webp){target=_blank}
-[![Manage Data Collection for a MultiQC collection, with Append folders and Replace existing data](../images/guides/multiqc/manage_collection_dark.webp#only-dark)](../images/guides/multiqc/manage_collection_dark.webp){target=_blank}
+[![Manage Data Collection for a MultiQC collection, with Append folders and Replace existing data](../images/guides/multiqc/manage_collection_light.webp#only-light){ width="620" }](../images/guides/multiqc/manage_collection_light.webp){target=_blank}
+[![Manage Data Collection for a MultiQC collection, with Append folders and Replace existing data](../images/guides/multiqc/manage_collection_dark.webp#only-dark){ width="620" }](../images/guides/multiqc/manage_collection_dark.webp){target=_blank}
 
 ### With the CLI
 
@@ -104,7 +104,7 @@ See [Cross-DC filtering](cross-dc-filtering.md#resolvers) for the resolvers, the
 
 Append each new run to the same MultiQC collection, and Depictio tells you which samples are new. It needs the changes feature: `DEPICTIO_DASHBOARD_VERSIONS_CHANGES_SINCE_ENABLED=true` ([_"What's new"_](whats-new.md#turn-it-on)).
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/multiqc/multiqc-compare-runs.webp" src="../../images/guides/multiqc/multiqc-compare-runs.mp4"></video></figure>
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../images/guides/multiqc/multiqc-compare-runs.webp" src="../../images/guides/multiqc/multiqc-compare-runs.mp4"></video></figure>
 
 1. **Add the run.** Use **Add data** > **Add run**, `depictio ingest --attach-run`, or append its reports with **Manage data**. A run whose reports name samples the project already holds is held back, with the samples listed.
 2. **Read the Runs tab.** Each scan lists, per report, the samples and modules it gained or lost. See [Runs and run comparison](runs.md#scans-and-file-statuses).
@@ -114,8 +114,8 @@ Append each new run to the same MultiQC collection, and Depictio tells you which
 6. **Hide what you had seen.** Only the new samples are drawn.
 7. **Before | Now** on a tile draws the reports you saw beside the reports now.
 
-[![A MultiQC plot under Overlay, new samples in their own colours, seen samples faded](../images/guides/multiqc/overlay_multiqc_light.webp#only-light)](../images/guides/multiqc/overlay_multiqc_light.webp){target=_blank}
-[![A MultiQC plot under Overlay, new samples in their own colours, seen samples faded](../images/guides/multiqc/overlay_multiqc_dark.webp#only-dark)](../images/guides/multiqc/overlay_multiqc_dark.webp){target=_blank}
+[![A MultiQC plot under Overlay, new samples in their own colours, seen samples faded](../images/guides/multiqc/overlay_multiqc_light.webp#only-light){ width="545" }](../images/guides/multiqc/overlay_multiqc_light.webp){target=_blank}
+[![A MultiQC plot under Overlay, new samples in their own colours, seen samples faded](../images/guides/multiqc/overlay_multiqc_dark.webp#only-dark){ width="545" }](../images/guides/multiqc/overlay_multiqc_dark.webp){target=_blank}
 
 [![A MultiQC figure under Split, new samples beside seen samples](../images/guides/multiqc/split_multiqc_light.webp#only-light)](../images/guides/multiqc/split_multiqc_light.webp){target=_blank}
 [![A MultiQC figure under Split, new samples beside seen samples](../images/guides/multiqc/split_multiqc_dark.webp#only-dark)](../images/guides/multiqc/split_multiqc_dark.webp){target=_blank}

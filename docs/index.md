@@ -880,7 +880,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <div class="feature-frame feature-frame--video">
-          <video autoplay muted loop playsinline preload="none" poster="images/guides/whats-new/whats-new-overlay-split.webp" src="images/guides/whats-new/whats-new-overlay-split.mp4" aria-label="What's new on a dashboard: new points ringed in Overlay, then split from what was seen before"></video>
+          <video data-autoplay muted loop playsinline preload="none" poster="images/guides/whats-new/whats-new-overlay-split.webp" src="images/guides/whats-new/whats-new-overlay-split.mp4" aria-label="What's new on a dashboard: new points ringed in Overlay, then split from what was seen before"></video>
         </div>
       </div>
       <div class="feature-row-text">

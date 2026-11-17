@@ -8,7 +8,7 @@ glightbox: true
 # :material-dna: Genome browser <small>(v1.20.0+)</small>
 
 <figure markdown="span">
-  <video autoplay controls muted loop playsinline poster="../../images/guides/genome-browser/table_to_browser.webp" src="../../images/guides/genome-browser/table_to_browser.mp4"></video>
+  <video preload="none" data-autoplay controls muted loop playsinline poster="../../images/guides/genome-browser/table_to_browser.webp" src="../../images/guides/genome-browser/table_to_browser.mp4"></video>
   <figcaption>A row picked in a table: its record card and the genome browser follow (nf-core/riboseq dashboard template).</figcaption>
 </figure>
 

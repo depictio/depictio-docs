@@ -9,7 +9,7 @@ glightbox: true
 
 The **Metadata** panel opens the project's sample table beside the dashboard, where you add label columns such as `response` = *responder* / *non-responder*. Each label becomes a group that filters, colours and splits the linked charts. The table itself does not change unless you save to it.
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/metadata-panel/metadata-labels.webp" src="../../images/guides/metadata-panel/metadata-labels.mp4"></video></figure>
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../images/guides/metadata-panel/metadata-labels.webp" src="../../images/guides/metadata-panel/metadata-labels.mp4"></video></figure>
 
 ## Eligible tables
 
@@ -24,13 +24,13 @@ No switch is needed: the **Metadata** button shows in the dock when the project 
 
 **Metadata** in the dock opens the panel on the right. It shares that edge with **Analysis**, so opening one closes the other. Its badge counts your label columns.
 
-[![The dock with the Metadata button](../images/guides/metadata-panel/metadata_dock_button_light.webp#only-light)](../images/guides/metadata-panel/metadata_dock_button_light.webp){target=_blank}
-[![The dock with the Metadata button](../images/guides/metadata-panel/metadata_dock_button_dark.webp#only-dark)](../images/guides/metadata-panel/metadata_dock_button_dark.webp){target=_blank}
+[![The dock with the Metadata button](../images/guides/metadata-panel/metadata_dock_button_light.webp#only-light){ width="326" }](../images/guides/metadata-panel/metadata_dock_button_light.webp){target=_blank}
+[![The dock with the Metadata button](../images/guides/metadata-panel/metadata_dock_button_dark.webp#only-dark){ width="326" }](../images/guides/metadata-panel/metadata_dock_button_dark.webp){target=_blank}
 
 The header row shows the table (a picker when there are several) and the key column the labels are keyed on: the one the table links by. A table with several rows per key shows the first row per key.
 
-[![The Metadata drawer: table, key column, + column, label column and the File import and export icons](../images/guides/metadata-panel/metadata_panel_labels_light.webp#only-light)](../images/guides/metadata-panel/metadata_panel_labels_light.webp){target=_blank}
-[![The Metadata drawer: table, key column, + column, label column and the File import and export icons](../images/guides/metadata-panel/metadata_panel_labels_dark.webp#only-dark)](../images/guides/metadata-panel/metadata_panel_labels_dark.webp){target=_blank}
+[![The Metadata drawer: table, key column, + column, label column and the File import and export icons](../images/guides/metadata-panel/metadata_panel_labels_light.webp#only-light){ width="540" }](../images/guides/metadata-panel/metadata_panel_labels_light.webp){target=_blank}
+[![The Metadata drawer: table, key column, + column, label column and the File import and export icons](../images/guides/metadata-panel/metadata_panel_labels_dark.webp#only-dark){ width="540" }](../images/guides/metadata-panel/metadata_panel_labels_dark.webp){target=_blank}
 
 ## Label columns
 
@@ -57,8 +57,8 @@ Groups from labels carry a tag icon in **Analysis**: rename or delete them from 
 
 ## The column menu
 
-[![A label column's menu: Stop comparing, Rename, Share on this dashboard, Save to table, Delete](../images/guides/metadata-panel/metadata_column_menu_light.webp#only-light)](../images/guides/metadata-panel/metadata_column_menu_light.webp){target=_blank}
-[![A label column's menu: Stop comparing, Rename, Share on this dashboard, Save to table, Delete](../images/guides/metadata-panel/metadata_column_menu_dark.webp#only-dark)](../images/guides/metadata-panel/metadata_column_menu_dark.webp){target=_blank}
+[![A label column's menu: Stop comparing, Rename, Share on this dashboard, Save to table, Delete](../images/guides/metadata-panel/metadata_column_menu_light.webp#only-light){ width="540" }](../images/guides/metadata-panel/metadata_column_menu_light.webp){target=_blank}
+[![A label column's menu: Stop comparing, Rename, Share on this dashboard, Save to table, Delete](../images/guides/metadata-panel/metadata_column_menu_dark.webp#only-dark){ width="540" }](../images/guides/metadata-panel/metadata_column_menu_dark.webp){target=_blank}
 
 | Item | What it does |
 |------|--------------|

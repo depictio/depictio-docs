@@ -8,7 +8,7 @@ glightbox: true
 
 Projects are the foundation of data organization in Depictio. They hold your data and dashboards, and decide who can use them.
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../../images/guides/project-creation/create-project-from-folder.webp" src="../../../images/guides/project-creation/create-project-from-folder.mp4"></video></figure>
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/project-creation/create-project-from-folder.webp" src="../../../images/guides/project-creation/create-project-from-folder.mp4"></video></figure>
 
 ## Understanding Project Architecture
 
@@ -62,8 +62,8 @@ The first screen asks for a **Project name**, an optional **Description**, and *
 
 Under **Or start from**, **Import a project** brings in a project exported from Depictio (see [Project migration](../administration/migrate.md#web-ui)). **See an example** opens a finished project to explore, and shows only when the server holds one.
 
-[![Screen 1 of New project: Project name, Description, Make this project public, Add data / Create without data, Or start from Import a project](../../images/guides/project-creation/new_project_dialog_light.webp#only-light)](../../images/guides/project-creation/new_project_dialog_light.webp){target=_blank}
-[![Screen 1 of New project: Project name, Description, Make this project public, Add data / Create without data, Or start from Import a project](../../images/guides/project-creation/new_project_dialog_dark.webp#only-dark)](../../images/guides/project-creation/new_project_dialog_dark.webp){target=_blank}
+[![Screen 1 of New project: Project name, Description, Make this project public, Add data / Create without data, Or start from Import a project](../../images/guides/project-creation/new_project_dialog_light.webp#only-light){ width="569" }](../../images/guides/project-creation/new_project_dialog_light.webp){target=_blank}
+[![Screen 1 of New project: Project name, Description, Make this project public, Add data / Create without data, Or start from Import a project](../../images/guides/project-creation/new_project_dialog_dark.webp#only-dark){ width="569" }](../../images/guides/project-creation/new_project_dialog_dark.webp){target=_blank}
 
 ### Your data
 
@@ -162,7 +162,7 @@ The button says what will happen: **Add run**, **Add N tables**, or **Add run an
 [![Add data on a pipeline project: a second run folder, its What Depictio found facts and the Add run button](../../images/guides/project-creation/add_data_run_light.webp#only-light)](../../images/guides/project-creation/add_data_run_light.webp){target=_blank}
 [![Add data on a pipeline project: a second run folder, its What Depictio found facts and the Add run button](../../images/guides/project-creation/add_data_run_dark.webp#only-dark)](../../images/guides/project-creation/add_data_run_dark.webp){target=_blank}
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../../images/guides/project-creation/add-run.webp" src="../../../images/guides/project-creation/add-run.mp4"></video></figure>
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/project-creation/add-run.webp" src="../../../images/guides/project-creation/add-run.mp4"></video></figure>
 
 A run whose MultiQC reports name samples already in the project is not added. The **Samples** row lists them with a warning: rename the samples in this run, or read it as its own project.
 

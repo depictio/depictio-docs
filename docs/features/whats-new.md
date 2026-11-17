@@ -9,7 +9,7 @@ glightbox: true
 
 When you come back to a dashboard, _"What's new"_ lists what changed since you last looked: new data, edited components and new comments. On most figures it also marks which points, bars or samples are new.
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/whats-new/whats-new-overlay-split.webp" src="../../images/guides/whats-new/whats-new-overlay-split.mp4"></video></figure>
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../images/guides/whats-new/whats-new-overlay-split.webp" src="../../images/guides/whats-new/whats-new-overlay-split.mp4"></video></figure>
 
 ## Turn it on { #turn-it-on }
 
@@ -33,11 +33,11 @@ See [Dashboard Versions](../installation/env-reference.md#dashboard-versions) an
 
 The **What's new** key sits in the dashboard header, beside settings and theme, with the number of changes on its corner. It shows only when something changed since your mark. The project page has the same key among its header actions.
 
-[![Dashboard header with the What's new key and its count badge](../images/guides/whats-new/whats_new_key_light.webp#only-light)](../images/guides/whats-new/whats_new_key_light.webp){target=_blank}
-[![Dashboard header with the What's new key and its count badge](../images/guides/whats-new/whats_new_key_dark.webp#only-dark)](../images/guides/whats-new/whats_new_key_dark.webp){target=_blank}
+[![Dashboard header with the What's new key and its count badge](../images/guides/whats-new/whats_new_key_light.webp#only-light){ width="496" }](../images/guides/whats-new/whats_new_key_light.webp){target=_blank}
+[![Dashboard header with the What's new key and its count badge](../images/guides/whats-new/whats_new_key_dark.webp#only-dark){ width="496" }](../images/guides/whats-new/whats_new_key_dark.webp){target=_blank}
 
-[![The What's new panel with Data, Dashboard and Comments sections and Mark as seen](../images/guides/whats-new/whats_new_panel_light.webp#only-light)](../images/guides/whats-new/whats_new_panel_light.webp){target=_blank}
-[![The What's new panel with Data, Dashboard and Comments sections and Mark as seen](../images/guides/whats-new/whats_new_panel_dark.webp#only-dark)](../images/guides/whats-new/whats_new_panel_dark.webp){target=_blank}
+[![The What's new panel with Data, Dashboard and Comments sections and Mark as seen](../images/guides/whats-new/whats_new_panel_light.webp#only-light){ width="286" }](../images/guides/whats-new/whats_new_panel_light.webp){target=_blank}
+[![The What's new panel with Data, Dashboard and Comments sections and Mark as seen](../images/guides/whats-new/whats_new_panel_dark.webp#only-dark){ width="286" }](../images/guides/whats-new/whats_new_panel_dark.webp){target=_blank}
 
 The panel lists the changes in three sections:
 
@@ -59,8 +59,8 @@ The panel lists the changes in three sections:
 | **Overlay** | New points ringed, removed points ghosted, a bar's previous value outlined. What was already there fades. In a MultiQC figure the samples you had seen fade, and in a table the rows of runs you had seen fade |
 | **Split** | Each figure drawn twice: what is new beside what you had seen. Cards compare the two sides |
 
-[![A scatter under Overlay, new points ringed and old ones faded](../images/guides/whats-new/overlay_scatter_light.webp#only-light)](../images/guides/whats-new/overlay_scatter_light.webp){target=_blank}
-[![A scatter under Overlay, new points ringed and old ones faded](../images/guides/whats-new/overlay_scatter_dark.webp#only-dark)](../images/guides/whats-new/overlay_scatter_dark.webp){target=_blank}
+[![A scatter under Overlay, new points ringed and old ones faded](../images/guides/whats-new/overlay_scatter_light.webp#only-light){ width="545" }](../images/guides/whats-new/overlay_scatter_light.webp){target=_blank}
+[![A scatter under Overlay, new points ringed and old ones faded](../images/guides/whats-new/overlay_scatter_dark.webp#only-dark){ width="545" }](../images/guides/whats-new/overlay_scatter_dark.webp){target=_blank}
 
 [![Figures under Split, one panel per side with the split legend](../images/guides/whats-new/split_view_light.webp#only-light)](../images/guides/whats-new/split_view_light.webp){target=_blank}
 [![Figures under Split, one panel per side with the split legend](../images/guides/whats-new/split_view_dark.webp#only-dark)](../images/guides/whats-new/split_view_dark.webp){target=_blank}
@@ -87,7 +87,7 @@ A tile whose definition or data changed carries a dot. Hover it for what changed
 | **Compare with last visit** | Turns the overlay on for this tile only. Figures, MultiQC and advanced visualisations |
 | **Before \| Now** | A read-only modal with **Before (your last visit)** beside **Now**, both drawn with the same filters |
 
-<figure markdown="span"><video autoplay controls muted loop playsinline poster="../../images/guides/whats-new/before-now.webp" src="../../images/guides/whats-new/before-now.mp4"></video></figure>
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../images/guides/whats-new/before-now.webp" src="../../images/guides/whats-new/before-now.mp4"></video></figure>
 
 ## Mark modes
 
@@ -114,8 +114,8 @@ The bell in the sidebar lists the dashboards and projects that changed since you
 
 In the editor, **Settings → History** tags the version you last viewed **Last viewed**. See [The History section](versioning.md#history).
 
-[![Editor History with a version tagged Last viewed](../images/guides/whats-new/editor_history_light.webp#only-light)](../images/guides/whats-new/editor_history_light.webp){target=_blank}
-[![Editor History with a version tagged Last viewed](../images/guides/whats-new/editor_history_dark.webp#only-dark)](../images/guides/whats-new/editor_history_dark.webp){target=_blank}
+[![Editor History with a version tagged Last viewed](../images/guides/whats-new/editor_history_light.webp#only-light){ width="685" }](../images/guides/whats-new/editor_history_light.webp){target=_blank}
+[![Editor History with a version tagged Last viewed](../images/guides/whats-new/editor_history_dark.webp#only-dark){ width="685" }](../images/guides/whats-new/editor_history_dark.webp){target=_blank}
 
 ## Read-only views { #read-only-views }
 

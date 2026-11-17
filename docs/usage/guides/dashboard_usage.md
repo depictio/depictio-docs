@@ -166,8 +166,8 @@ and **Customise** starts from the main tab's brand.
 
 In edit mode, hovering a component reveals three icons in its top-right corner, and resize handles on its edges and corners.
 
-[![A tile in edit mode with its Plotly modebar and tile toolbar icons](../../images/guides/dashboard-guide/tile_toolbar_icons_light.webp#only-light)](../../images/guides/dashboard-guide/tile_toolbar_icons_light.webp){target=_blank}
-[![A tile in edit mode with its Plotly modebar and tile toolbar icons](../../images/guides/dashboard-guide/tile_toolbar_icons_dark.webp#only-dark)](../../images/guides/dashboard-guide/tile_toolbar_icons_dark.webp){target=_blank}
+[![A tile in edit mode with its Plotly modebar and tile toolbar icons](../../images/guides/dashboard-guide/tile_toolbar_icons_light.webp#only-light){ width="235" }](../../images/guides/dashboard-guide/tile_toolbar_icons_light.webp){target=_blank}
+[![A tile in edit mode with its Plotly modebar and tile toolbar icons](../../images/guides/dashboard-guide/tile_toolbar_icons_dark.webp#only-dark){ width="235" }](../../images/guides/dashboard-guide/tile_toolbar_icons_dark.webp){target=_blank}
 
 - <span style="color: #888888;"><i class="mdi mdi-dots-grid"></i> **Drag handle**</span>: grab it to move the component in the grid.
 - <span style="color: #12b886;"><i class="mdi mdi-information-outline"></i> **About this component**</span> <small>(v1.20.4+)</small>: the tile's description, in an info popover. A tile with a title shows this icon beside its title instead.
