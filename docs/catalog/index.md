@@ -53,12 +53,8 @@ render on real fixture data, and copy its **`use:`** snippet.
   <button class="catalog-fs-btn" type="button" onclick="toggleCatalogFullscreen(this)" title="Toggle fullscreen" aria-label="Toggle fullscreen">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
   </button>
-  <div class="catalog-iframe-light">
-    <iframe src="../assets/component-catalog-light.html" title="Depictio Tools Catalog (light)" width="100%" height="1100px" frameborder="0" loading="lazy"></iframe>
-  </div>
-  <div class="catalog-iframe-dark">
-    <iframe src="../assets/component-catalog-dark.html" title="Depictio Tools Catalog (dark)" width="100%" height="1100px" frameborder="0" loading="lazy"></iframe>
-  </div>
+  <iframe data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" title="Depictio Tools Catalog" width="100%" height="1100px" frameborder="0" loading="lazy"></iframe>
+  <a class="catalog-open-link" href="{{ catalog_site.base }}latest/" target="_blank" rel="noopener">Open the catalog in its own tab</a>
 </div>
 
 ## :material-sitemap: How a render is defined
@@ -149,14 +145,11 @@ A small sample of that file, right beside its YAML, so `depictio catalog validat
 [Open Tool Studio :material-arrow-right:](https://depictio.github.io/depictio-tool-studio/){ .catalog-cta .catalog-cta--studio target=_blank }
 </div>
 
-!!! note "The catalog always shows the latest version"
+!!! note "One catalog per release"
 
-    The gallery above is served from a single shared copy, so it shows the
-    current catalog no matter which documentation version you are reading.
-    Browsing the docs for an older release will still show today's tools and
-    renders, which may not all have existed in that release.
-
-    This is a deliberate trade-off: the gallery is ~32 MB, and publishing a
-    copy inside every released version is what pushed the documentation site
-    past the size limit its hosting allows. Serving per-version catalogs again
-    is planned.
+    The catalog is its own site,
+    [depictio.github.io/depictio-catalog]({{ catalog_site.base }}), built from
+    the depictio source of each release: this page shows the catalog of
+    Depictio {{ catalog_site.version }}. It opens on the list of tools and
+    downloads an output's previews only when you open it. Releases older than
+    the ten most recent show the current catalog instead, under `latest`.

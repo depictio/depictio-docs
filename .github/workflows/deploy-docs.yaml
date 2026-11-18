@@ -15,10 +15,6 @@ on:
         description: 'Alias (latest, beta, or none)'
         required: false
         default: 'beta'
-      depictio_ref:
-        description: 'depictio/depictio ref to build the component catalog from'
-        required: false
-        default: 'main'
 
 jobs:
   deploy-mike:
@@ -62,54 +58,6 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
 
-      # The component catalog gallery is generated on the fly from the depictio
-      # source repo and is NOT committed to this repo (see .gitignore). mkdocs
-      # copies docs/assets/ into the build regardless of gitignore, so the freshly
-      # generated HTML ships with this mike version.
-      - name: Checkout depictio source (catalog gallery)
-        uses: actions/checkout@v4
-        with:
-          repository: depictio/depictio
-          ref: ${{ github.event.inputs.depictio_ref || 'main' }}
-          path: depictio-src
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      # Same major as depictio's own CI. pnpm 9 rejects the frozen install once
-      # the lockfile carries patchedDependencies (ERR_PNPM_LOCKFILE_CONFIG_MISMATCH).
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - name: Build catalog gallery bundle
-        working-directory: depictio-src
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm --filter ./depictio/viewer run build:catalog-preview
-
-      # Run from depictio-src so uv resolves its pyproject.toml (installs the
-      # depictio package + deps into an isolated env, separate from the docs env).
-      # The previews render through server-side builders (celery, multiqc,
-      # plotly-complexheatmap...), which live in the `server` extra: without it,
-      # their tiles show "No module named ..." instead of a figure.
-      #
-      # Python is pinned to depictio's CI version: `ubuntu-latest` now ships 3.14,
-      # for which pyarrow (pulled in by multiqc) has no wheel, so uv tried to
-      # build it from source and cmake failed ("Could not find ... Arrow").
-      - name: Generate catalog gallery HTML (light + dark)
-        working-directory: depictio-src
-        env:
-          UV_PYTHON: '3.12'
-        run: |
-          uv run --extra server python -m depictio.cli catalog gallery \
-            --theme light --no-open --out "$GITHUB_WORKSPACE/docs/assets/component-catalog-light.html"
-          uv run --extra server python -m depictio.cli catalog gallery \
-            --theme dark --no-open --out "$GITHUB_WORKSPACE/docs/assets/component-catalog-dark.html"
-
       - name: Deploy with mike
         env:
           # Keeps the bulky image subtrees out of the per-version build; they
@@ -130,17 +78,20 @@ jobs:
             uv run mike deploy --push "$VERSION"
           fi
 
-      # Runs after mike has pushed, so writes to gh-pages stay ordered. The
-      # catalog gallery goes to the site-root assets/, which holds other files,
-      # so it is published by name rather than by mirroring a directory.
+      # Runs after mike has pushed, so writes to gh-pages stay ordered.
       - name: Publish shared image root
         run: ./scripts/publish-shared-images.sh
 
-      - name: Publish shared catalog gallery
+      # The catalog is its own site now (depictio/depictio-catalog, built by
+      # depictio's deploy-catalog.yaml); hooks/catalog_site.py points the page
+      # at it. Pages of earlier versions still embed the old one-page
+      # gallery from the site-root assets/: these few-hundred-byte stubs stand
+      # in for those two ~65 MB files and send the iframe to the catalog site.
+      - name: Publish catalog gallery stubs for archived versions
         run: |
           ./scripts/publish-shared-images.sh --dest assets \
-            --file docs/assets/component-catalog-light.html \
-            --file docs/assets/component-catalog-dark.html
+            --file redirects/assets/component-catalog-light.html \
+            --file redirects/assets/component-catalog-dark.html
 
       # A page and the images it points at now live in different places, so
       # they can disagree, and nothing at build time notices: the deploy

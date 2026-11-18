@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Check that every image the published site points at is actually there.
 
-Images and the catalog gallery are published once at the site root rather than
-copied into each version (see hooks/shared_images.py), so a page and the file
-it wants now live in different places. Nothing at build time notices when the
+Images (and, for archived versions, the catalog gallery stubs) are published
+once at the site root rather than copied into each version (see
+hooks/shared_images.py), so a page and the file it wants now live in different
+places. Nothing at build time notices when the
 two disagree: the deploy succeeds and the pages come out with broken images.
 
 This reads the deploy branch through git, so it needs no checkout of what is a
