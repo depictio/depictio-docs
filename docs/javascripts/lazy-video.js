@@ -30,6 +30,16 @@
     document.querySelectorAll(SELECTOR).forEach(function (video) { observer.observe(video); });
   }
 
+  const RATE = 1.5;
+  document.addEventListener('play', function (event) {
+    const video = event.target;
+    if (!(video instanceof HTMLVideoElement) || video.dataset.rateSet) return;
+    const rate = parseFloat(video.dataset.rate) || RATE;
+    video.defaultPlaybackRate = rate;
+    video.playbackRate = rate;
+    video.dataset.rateSet = '1';
+  }, true);
+
   // Material's instant navigation swaps the page content without a reload.
   if (window.document$ && window.document$.subscribe) window.document$.subscribe(watch);
   else document.addEventListener('DOMContentLoaded', watch);
