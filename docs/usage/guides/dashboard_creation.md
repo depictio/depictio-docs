@@ -10,8 +10,8 @@ A new dashboard on the nf-core/ampliseq project: **New dashboard**, then **Edit*
 
 ### <span style="color: #45B8AC;">:material-numeric-1-circle:</span> Step 1: Component Selection
 
-[![Step 1 of the component builder: the component type cards](../../../images/guides/dashboard_creation/step_one_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/step_one_light.webp){target=_blank}
-[![Step 1 of the component builder: the component type cards](../../../images/guides/dashboard_creation/step_one_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/step_one_dark.webp){target=_blank}
+[![Step 1 of the component builder: the component type cards](../../images/guides/dashboard_creation/step_one_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/step_one_light.webp){target=_blank}
+[![Step 1 of the component builder: the component type cards](../../images/guides/dashboard_creation/step_one_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/step_one_dark.webp){target=_blank}
 
 1. Open a dashboard in edit mode, then **Add** > **Component** > **New component**.
 2. Pick a component type: **Figure**, **Card**, **Interactive**, **Table**, **MultiQC**, **Image**, **Map**, **Text** or **Advanced viz**. Clicking a card takes you straight to the next step.
@@ -24,8 +24,8 @@ A new dashboard on the nf-core/ampliseq project: **New dashboard**, then **Edit*
 
 ### <span style="color: #6495ED;">:material-numeric-2-circle:</span> Step 2: Data Selection
 
-[![Step 2: alpha_diversity_multi_canonical selected, with its data collection information](../../../images/guides/dashboard_creation/step_two_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/step_two_light.webp){target=_blank}
-[![Step 2: alpha_diversity_multi_canonical selected, with its data collection information](../../../images/guides/dashboard_creation/step_two_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/step_two_dark.webp){target=_blank}
+[![Step 2: alpha_diversity_multi_canonical selected, with its data collection information](../../images/guides/dashboard_creation/step_two_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/step_two_light.webp){target=_blank}
+[![Step 2: alpha_diversity_multi_canonical selected, with its data collection information](../../images/guides/dashboard_creation/step_two_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/step_two_dark.webp){target=_blank}
 
 1. Choose the **data collection** from the dropdown.
 2. Check **Data Collection Information**: type, row and column counts, Delta table version, and the column preview underneath.
@@ -37,8 +37,8 @@ A new dashboard on the nf-core/ampliseq project: **New dashboard**, then **Edit*
 
 ### <span style="color: #F68B33;">:material-numeric-3-circle:</span> Step 3: Customize Your Component
 
-[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../../images/guides/dashboard_creation/figure_design_scatter_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/figure_design_scatter_light.webp){target=_blank}
-[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../../images/guides/dashboard_creation/figure_design_scatter_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/figure_design_scatter_dark.webp){target=_blank}
+[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../images/guides/dashboard_creation/figure_design_scatter_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/figure_design_scatter_light.webp){target=_blank}
+[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../images/guides/dashboard_creation/figure_design_scatter_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/figure_design_scatter_dark.webp){target=_blank}
 
 1. **Customise your component**:
 
@@ -85,19 +85,19 @@ Take the nf-core/ampliseq Alpha Diversity tab with its Shannon diversity filter
 raised to 6.58, which drops the three Groundwater samples. The cards summarise
 the 9 samples left, not all 12:
 
-[![The Alpha Diversity tab without filters: a median Shannon of 7.70 over 12 samples](../../../images/guides/dashboard_creation/builder_filter_baseline_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/builder_filter_baseline_light.webp){target=_blank}
-[![The Alpha Diversity tab without filters: a median Shannon of 7.70 over 12 samples](../../../images/guides/dashboard_creation/builder_filter_baseline_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/builder_filter_baseline_dark.webp){target=_blank}
+[![The Alpha Diversity tab without filters: a median Shannon of 7.70 over 12 samples](../../images/guides/dashboard_creation/builder_filter_baseline_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/builder_filter_baseline_light.webp){target=_blank}
+[![The Alpha Diversity tab without filters: a median Shannon of 7.70 over 12 samples](../../images/guides/dashboard_creation/builder_filter_baseline_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/builder_filter_baseline_dark.webp){target=_blank}
 
-[![The same tab with Shannon diversity from 6.58: the cards over the 9 samples left](../../../images/guides/dashboard_creation/builder_filter_active_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/builder_filter_active_light.webp){target=_blank}
-[![The same tab with Shannon diversity from 6.58: the cards over the 9 samples left](../../../images/guides/dashboard_creation/builder_filter_active_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/builder_filter_active_dark.webp){target=_blank}
+[![The same tab with Shannon diversity from 6.58: the cards over the 9 samples left](../../images/guides/dashboard_creation/builder_filter_active_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/builder_filter_active_light.webp){target=_blank}
+[![The same tab with Shannon diversity from 6.58: the cards over the 9 samples left](../../images/guides/dashboard_creation/builder_filter_active_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/builder_filter_active_dark.webp){target=_blank}
 
 *No filter: a median Shannon of 7.70 over 12 samples. From 6.58 up: 8.63 over 9.*
 
 Open the builder from there and the design step carries that filter, with a
 banner naming how many filters are active:
 
-[![The Table design step previewing with 1 active dashboard filter: only the 9 samples left](../../../images/guides/dashboard_creation/builder_filter_preview_on_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/builder_filter_preview_on_light.webp){target=_blank}
-[![The Table design step previewing with 1 active dashboard filter: only the 9 samples left](../../../images/guides/dashboard_creation/builder_filter_preview_on_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/builder_filter_preview_on_dark.webp){target=_blank}
+[![The Table design step previewing with 1 active dashboard filter: only the 9 samples left](../../images/guides/dashboard_creation/builder_filter_preview_on_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/builder_filter_preview_on_light.webp){target=_blank}
+[![The Table design step previewing with 1 active dashboard filter: only the 9 samples left](../../images/guides/dashboard_creation/builder_filter_preview_on_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/builder_filter_preview_on_dark.webp){target=_blank}
 
 The table holds only the 9 samples left, not the collection's 12.
 
@@ -105,8 +105,8 @@ The table holds only the 9 samples left, not the collection's 12.
 dataset, which matters when a narrow filter would otherwise leave you designing
 against an empty table:
 
-[![Apply to preview switched off: the preview shows all 12 rows](../../../images/guides/dashboard_creation/builder_filter_preview_off_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/builder_filter_preview_off_light.webp){target=_blank}
-[![Apply to preview switched off: the preview shows all 12 rows](../../../images/guides/dashboard_creation/builder_filter_preview_off_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/builder_filter_preview_off_dark.webp){target=_blank}
+[![Apply to preview switched off: the preview shows all 12 rows](../../images/guides/dashboard_creation/builder_filter_preview_off_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/builder_filter_preview_off_light.webp){target=_blank}
+[![Apply to preview switched off: the preview shows all 12 rows](../../images/guides/dashboard_creation/builder_filter_preview_off_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/builder_filter_preview_off_dark.webp){target=_blank}
 
 !!! info "The toggle only affects the preview"
     Whichever way you leave it, the saved component always follows the
@@ -116,8 +116,8 @@ against an empty table:
 Save, and the new component arrives already filtered, with no flash of
 unfiltered data on the way, and the filters you had set are still applied:
 
-[![The saved table back on the tab, already filtered to 9 rows](../../../images/guides/dashboard_creation/builder_filter_after_save_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/builder_filter_after_save_light.webp){target=_blank}
-[![The saved table back on the tab, already filtered to 9 rows](../../../images/guides/dashboard_creation/builder_filter_after_save_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/builder_filter_after_save_dark.webp){target=_blank}
+[![The saved table back on the tab, already filtered to 9 rows](../../images/guides/dashboard_creation/builder_filter_after_save_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/builder_filter_after_save_light.webp){target=_blank}
+[![The saved table back on the tab, already filtered to 9 rows](../../images/guides/dashboard_creation/builder_filter_after_save_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/builder_filter_after_save_dark.webp){target=_blank}
 
 The banner appears only when at least one filter is active, and is suppressed
 for **Text** and **MultiQC** components, which have no notion of row filtering.
@@ -196,25 +196,25 @@ brackets are both tracked, so `agg([` continues across a line break just as
 
 `faith_pd` against sequencing `depth`, coloured by `habitat`, from `alpha_rarefaction_summary`. The preview redraws on every change.
 
-[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../../images/guides/dashboard_creation/figure_design_scatter_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/figure_design_scatter_light.webp){target=_blank}
-[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../../images/guides/dashboard_creation/figure_design_scatter_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/figure_design_scatter_dark.webp){target=_blank}
+[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../images/guides/dashboard_creation/figure_design_scatter_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/figure_design_scatter_light.webp){target=_blank}
+[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../images/guides/dashboard_creation/figure_design_scatter_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/figure_design_scatter_dark.webp){target=_blank}
 
 ##### <span style="color: #7A5DC7;">:material-code-braces:</span> Figure design - scatter plot - code mode
 
 Switching to Code Mode carries the UI settings over as a `px.scatter` call, which you can then take past what the form exposes: here, marginal violins and a `fig.update_layout()` override.
 
-[![Code Mode with marginal violins and a layout override, executed](../../../images/guides/dashboard_creation/figure_design_code_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/figure_design_code_light.webp){target=_blank}
-[![Code Mode with marginal violins and a layout override, executed](../../../images/guides/dashboard_creation/figure_design_code_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/figure_design_code_dark.webp){target=_blank}
+[![Code Mode with marginal violins and a layout override, executed](../../images/guides/dashboard_creation/figure_design_code_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/figure_design_code_light.webp){target=_blank}
+[![Code Mode with marginal violins and a layout override, executed](../../images/guides/dashboard_creation/figure_design_code_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/figure_design_code_dark.webp){target=_blank}
 
 ##### <span style="color: #9966CC;">:material-tune-vertical:</span> Interactive design - RangeSlider example
 
-[![An interactive Range slider on shannon, previewed](../../../images/guides/dashboard_creation/interactive_design_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/interactive_design_light.webp){target=_blank}
-[![An interactive Range slider on shannon, previewed](../../../images/guides/dashboard_creation/interactive_design_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/interactive_design_dark.webp){target=_blank}
+[![An interactive Range slider on shannon, previewed](../../images/guides/dashboard_creation/interactive_design_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/interactive_design_light.webp){target=_blank}
+[![An interactive Range slider on shannon, previewed](../../images/guides/dashboard_creation/interactive_design_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/interactive_design_dark.webp){target=_blank}
 
 ##### <span style="color: #E6779F;">:material-card:</span> Card design - metrics selection
 
-[![A card on the median of observed_features, its aggregation list open](../../../images/guides/dashboard_creation/card_design_light.webp#only-light){ width="800" }](../../../images/guides/dashboard_creation/card_design_light.webp){target=_blank}
-[![A card on the median of observed_features, its aggregation list open](../../../images/guides/dashboard_creation/card_design_dark.webp#only-dark){ width="800" }](../../../images/guides/dashboard_creation/card_design_dark.webp){target=_blank}
+[![A card on the median of observed_features, its aggregation list open](../../images/guides/dashboard_creation/card_design_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/card_design_light.webp){target=_blank}
+[![A card on the median of observed_features, its aggregation list open](../../images/guides/dashboard_creation/card_design_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/card_design_dark.webp){target=_blank}
 
 ## <img src="../../../roadmap/multiqc.png" width="24" style="vertical-align: middle;"> MultiQC Integration { #multiqc-integration }
 
