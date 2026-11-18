@@ -38,7 +38,8 @@
 }
 
 /* Limit TOC depth to level 2 on changelog page */
-body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list {
+body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list,
+body.page-changelog .md-sidebar--secondary .md-nav__item > .md-nav {
     display: none;
 }
 
