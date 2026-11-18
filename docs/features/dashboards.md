@@ -216,16 +216,18 @@ Available component types include:
 
 | Component Type                              | Description                                    |
 | ------------------------------------------- | ---------------------------------------------- |
-| :material-chart-scatter-plot: **Figures**   | Interactive charts and visualizations          |
-| :material-table: **Tables**                 | Data tables with filtering and pagination      |
-| :material-card-text: **Cards**              | Summary statistics and KPIs                    |
-| :material-tune: **Interactive Filters**     | Dropdowns, sliders, and other controls         |
-| :material-format-header-1: **Text/Headers** | Headings and prose; block markdown since v1.14.0 |
-| :material-star-four-points-outline: **Highlights** | Another tab's figure, redrawn here (v1.14.0+) |
-| :material-map-marker-multiple: **Maps**     | Geospatial scatter, density and choropleth maps |
-| :depictio-multiqc: **MultiQC**             | Quality control report visualizations          |
-| :material-image: **Images**                 | Display grid of static images (PNG, JPEG, SVG) |
-| :material-chart-timeline: **Genome browser** | Embedded genome browser over a track manifest (v1.20.0+), see [Genome browser](genome-browser/index.md) |
+| :material-chart-box: **Figures** | Interactive charts and visualizations |
+| :depictio-formkit-number: **Cards** | Summary statistics and KPIs |
+| :depictio-bx-slider-alt: **Interactive** | Dropdowns, sliders, and other controls |
+| :octicons-table-24: **Tables** | Data tables with filtering and pagination |
+| :depictio-multiqc: **MultiQC** | Quality control report visualizations |
+| :material-image-area: **Images** | Display grid of static images (PNG, JPEG, SVG) |
+| :material-map-marker-multiple: **Maps** | Geospatial scatter, density and choropleth maps |
+| :material-dna: **Genome browser** | Embedded genome browser over a track manifest (v1.20.0+), see [Genome browser](genome-browser/index.md) |
+| :material-text-box-edit: **Text** | Headings and prose; block markdown since v1.14.0 |
+| :material-chart-scatter-plot-hexbin: **Advanced viz** | Volcano, clustering, Manhattan, taxonomy bar, see [Advanced visualizations](advanced-visualizations.md) |
+
+A [Highlight](components.md#highlight-components) (v1.14.0+) is not a type of its own: it redraws a figure from another tab.
 
 A map can also leave the grid entirely and become a dashboard-wide panel that follows the
 viewer across every tab. See [Components](components.md#dashboard-wide-map-panel). Since

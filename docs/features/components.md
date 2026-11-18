@@ -23,49 +23,37 @@ Depictio provides a variety of component types for building interactive dashboar
 
     ---
 
-    Charts and plots (scatter, bar, histogram, line, box, pie, and more)
+    Interactive data visualizations
+
+-   :depictio-formkit-number:{ .lg .middle .dp-card } **[Card](#card-components)**
+
+    ---
+
+    Statistical summary cards
+
+-   :depictio-bx-slider-alt:{ .lg .middle .dp-interactive } **[Interactive](#interactive-components)**
+
+    ---
+
+    Interactive data controls
 
 -   :octicons-table-24:{ .lg .middle .dp-table } **[Table](#table-components)**
 
     ---
 
-    Interactive data tables with filtering and sorting
-
--   :material-numeric:{ .lg .middle .dp-card } **[Card](#card-components)**
-
-    ---
-
-    Metric display with aggregations
-
--   :material-text-box-edit:{ .lg .middle .dp-text } **[Text](#text-components)**
-
-    ---
-
-    Headings and prose, with block markdown and links to tabs since v1.14.0
-
--   :material-star-four-points-outline:{ .lg .middle .dp-highlight } **[Highlight](#highlight-components)**
-
-    ---
-
-    Another tab's figure, redrawn on this one (v1.14.0+)
-
--   :material-tune-variant:{ .lg .middle .dp-interactive } **[Interactive](#interactive-components)**
-
-    ---
-
-    User input components for filtering (slider, dropdown, date picker)
+    Data tables and grids
 
 -   :depictio-multiqc:{ .lg .middle .dp-multiqc } **[MultiQC](#multiqc-components)**
 
     ---
 
-    Quality control report visualizations
+    MultiQC quality control reports and visualizations
 
 -   :material-image-area:{ .lg .middle .dp-image } **[Image](#image-components)**
 
     ---
 
-    Image galleries with S3/MinIO storage integration
+    Interactive image grid with modal viewer
 
 -   :material-map-marker-multiple:{ .lg .middle .dp-map } **[Map](#map-components)**
 
@@ -77,15 +65,23 @@ Depictio provides a variety of component types for building interactive dashboar
 
     ---
 
-    Embedded genome browser over a track manifest, with two-way cross-filtering (v1.20.0+)
+    Genome browser over a collection of genomic tracks
 
--   :material-chart-scatter-plot-hexbin:{ .lg .middle .dp-advanced-viz } **[Advanced Visualizations](advanced-visualizations.md)**
+-   :material-text-box-edit:{ .lg .middle .dp-text } **[Text](#text-components)**
 
     ---
 
-    Domain-specific scientific viz (volcano, MA, manhattan, ComplexHeatmap, UpSet, sankey, …) backed by canonical column schemas
+    Section headings and notes to document the dashboard
+
+-   :material-chart-scatter-plot-hexbin:{ .lg .middle .dp-advanced-viz } **[Advanced viz](advanced-visualizations.md)**
+
+    ---
+
+    Composite analysis viz: volcano, clustering, Manhattan, taxonomy bar
 
 </div>
+
+The ten types of **New component**, in the order, colours and icons of the app. A [Highlight](#highlight-components) is not a type of its own: it shows a figure from another tab again.
 
 ### Building under active filters <small>(v1.5.2+)</small> { #building-under-filters }
 
@@ -96,7 +92,7 @@ Text and MultiQC, which have no row filtering. See
 
 ---
 
-## :material-chart-scatter-plot: Figure Components <small>(v0.0.1+)</small> { #figure-components }
+## :material-chart-box: Figure Components <small>(v0.0.1+)</small> { #figure-components }
 
 Figure components display data visualizations using Plotly charts. They support both **UI Mode** (drag-and-drop configuration) and **Code Mode** (Python code for custom plots).
 
@@ -233,7 +229,7 @@ See [Interactive Selection Filtering](interactive-selection-filtering.md) for de
 
 ---
 
-## :material-table: Table Components <small>(v0.0.2+)</small> { #table-components }
+## :octicons-table-24: Table Components <small>(v0.0.2+)</small> { #table-components }
 
 Table components display data in interactive tables with built-in filtering and sorting.
 
@@ -274,7 +270,7 @@ See [Interactive Selection Filtering](interactive-selection-filtering.md) for de
 
 ---
 
-## :material-chart-multiline: Advanced Visualizations { #advanced-visualizations }
+## :material-chart-scatter-plot-hexbin: Advanced Visualizations { #advanced-visualizations }
 
 Domain charts that know their column roles: a volcano binds a feature, an effect size and a
 significance, a genome view a chromosome and a position. Over forty kinds cover differential
@@ -285,7 +281,7 @@ the data it reads, its controls and a YAML example.
 ---
 
 
-## :material-card-text: Card Components <small>(v0.0.1+)</small> { #card-components }
+## :depictio-formkit-number: Card Components <small>(v0.0.1+)</small> { #card-components }
 
 Card components display metrics with aggregations. A card shows a **hero metric** (primary value) and can optionally display **secondary metrics** below it for at-a-glance summaries.
 
@@ -550,7 +546,7 @@ following its section, and `variant: default` opts a card out.
 
 ---
 
-## :material-format-header-1: Text Components <small>(v0.2.0+)</small> { #text-components }
+## :material-text-box-edit: Text Components <small>(v0.2.0+)</small> { #text-components }
 
 Text components are presentational tiles for section delimiters, narrative intros, and small inline annotations. They have no data binding — they just render a heading + optional paragraph at the position they occupy in the grid.
 
@@ -688,7 +684,7 @@ header & style**. A missing tab or figure draws a placeholder saying so.
 
 ---
 
-## :material-tune: Interactive Components <small>(v0.0.1+)</small> { #interactive-components }
+## :depictio-bx-slider-alt: Interactive Components <small>(v0.0.1+)</small> { #interactive-components }
 
 Interactive components let users filter data across the dashboard. These components affect all linked visualization components.
 
@@ -820,7 +816,7 @@ See [MultiQC](multiqc.md) for adding reports, General Stats, links to metadata a
 
 ---
 
-## :material-image-multiple: Image Components <small>(v0.7.0+)</small> { #image-components }
+## :material-image-area: Image Components <small>(v0.7.0+)</small> { #image-components }
 
 Image components display image galleries from S3/MinIO storage, with metadata filtering and thumbnail previews.
 
@@ -1106,7 +1102,7 @@ Ticking rows selects them on the map. Lasso, click and row-ticking all build the
 
 ---
 
-## :material-chart-timeline: Genome Browser Components <small>(v1.20.0+)</small> { #genome-browser-components }
+## :material-dna: Genome Browser Components <small>(v1.20.0+)</small> { #genome-browser-components }
 
 The `jbrowse` component embeds a genome browser in the dashboard. It is bound to a
 [`genomic_tracks` data collection](../usage/projects/guide.md#example-genomic-tracks-dcs),

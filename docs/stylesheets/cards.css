@@ -81,16 +81,17 @@
   --card-accent: #d6336c; --card-shade: 85%; --card-on: #fff;
 }
 
-/* Ink: the accent darkened for light pages, lifted for slate. Declared on the
-   card and on its icon, so an icon's own class colours the icon too. */
+/* Ink: the app's Glass type tiles (builder-glass.css, .bgl-tile-icon): the
+   accent mixed 82% with black on light pages, 70% with white on slate. Declared
+   on the card and on its icon, so an icon's own class colours the icon too. */
 .md-typeset .grid.cards:not(.roadmap-nav) > ul > li,
 .md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child > .twemoji:first-child {
-  --card-ink: color-mix(in srgb, var(--card-accent) var(--card-shade), #000);
+  --card-ink: color-mix(in oklab, var(--card-accent) 82%, #000);
 }
 
 [data-md-color-scheme="slate"] .md-typeset .grid.cards:not(.roadmap-nav) > ul > li,
 [data-md-color-scheme="slate"] .md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child > .twemoji:first-child {
-  --card-ink: color-mix(in srgb, var(--card-accent) 85%, #fff);
+  --card-ink: color-mix(in oklab, var(--card-accent) 70%, #fff);
 }
 
 /* --- Grid ---------------------------------------------------------------- */
@@ -166,9 +167,21 @@
   margin: 0 0 0.85rem;
   border-radius: 11px;
   color: var(--card-ink);
-  background: color-mix(in srgb, var(--card-accent) 15%, transparent);
+  background: color-mix(in srgb, var(--card-accent) 13%, transparent);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--card-accent) 22%, transparent);
   transition: background-color 0.2s, color 0.2s;
+}
+
+/* MultiQC: as in the app's type grid, its own mark on a neutral well, not an
+   accent tile. The dark logo (#201637) on light pages, the white one on slate. */
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child > .twemoji.dp-multiqc:first-child {
+  color: #201637;
+  background: color-mix(in srgb, var(--md-default-fg-color) 6%, var(--md-default-bg-color));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--md-default-fg-color) 10%, transparent);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child > .twemoji.dp-multiqc:first-child {
+  color: #fff;
 }
 
 .md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child > .twemoji:first-child svg {
@@ -303,5 +316,17 @@
   .md-typeset .grid.cards:not(.roadmap-nav) > ul > li * {
     transition: none !important;
     transform: none !important;
+  }
+}
+
+/* The MultiQC mark keeps its neutral well on hover too. */
+@media (hover: hover) {
+  .md-typeset .grid.cards:not(.roadmap-nav) > ul > li:hover > p:first-child > .twemoji.dp-multiqc:first-child {
+    color: #201637;
+    background: color-mix(in srgb, var(--md-default-fg-color) 6%, var(--md-default-bg-color));
+  }
+
+  [data-md-color-scheme="slate"] .md-typeset .grid.cards:not(.roadmap-nav) > ul > li:hover > p:first-child > .twemoji.dp-multiqc:first-child {
+    color: #fff;
   }
 }
