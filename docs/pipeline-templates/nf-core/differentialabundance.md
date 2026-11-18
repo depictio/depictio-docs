@@ -73,16 +73,15 @@ nf-core/differentialabundance run:
     auto-detected from `{DATA_ROOT}/input/`; pass
     `--var SAMPLESHEET_FILE=...` to point somewhere else.
 
-    GSEA is opt-in in the pipeline. For a run that did not run it, add
-    `--var NO_GSEA=true`: the two enrichment collections are pruned and the
-    Enrichment tab drops out instead of scanning for tables that were never
-    written.
+    GSEA is opt-in in the pipeline. A run without `--functional_method gsea` sets
+    `NO_GSEA` from its params: the two enrichment collections are pruned and the
+    Enrichment tab drops out. `--var NO_GSEA=false` overrides.
 
     | Variable | Required | Meaning |
     |---|---|---|
     | `DATA_ROOT` | yes | The run's output directory (`tables/`, `other/`, `pipeline_info/`) |
     | `SAMPLESHEET_FILE` | no | The pipeline's `--input` observation sheet, CSV or TSV; auto-detected from `{DATA_ROOT}/input/` |
-    | `NO_GSEA` | no | Set for a run without GSEA; prunes the Enrichment tab |
+    | `NO_GSEA` | no | Set from the run's params when `functional_method` is not `gsea`; prunes the Enrichment tab |
 
 === "From the pipeline itself (v1.10.0+)"
 
@@ -306,8 +305,8 @@ nextflow run nf-core/differentialabundance -r 2.0.0 \
   --outdir results -profile docker
 ```
 
-Leave out the two GSEA flags to skip enrichment, and pass `--var NO_GSEA=true` to
-Depictio for that run.
+Leave out the two GSEA flags to skip enrichment; Depictio reads that from the run's
+params and sets `NO_GSEA`.
 
 Then point Depictio at the results:
 

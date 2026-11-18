@@ -53,18 +53,19 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
 .gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
 .gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.0.1" data-template-updated="2026-11-04">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/genomeqc 1.0.1</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.0.1</span>
+<span class="gtd-badge gtd-updated">Updated 4 Nov 2026</span>
 </div>
 
-### Template variables
+### :material-code-braces: Template variables
 
 Variables you provide when running the template: `DATA_ROOT` is the results directory given to `depictio ingest`, the others are set with `--var NAME=value`:
 
@@ -77,43 +78,42 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 
 **Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`
 
-### Data collections
+### :material-database-outline: Data collections
 
-25 data collections — <span class="gtd-badge gtd-req">5 required</span> <span class="gtd-badge gtd-opt">20 optional</span> · <span class="gtd-badge gtd-direct">18 direct</span> <span class="gtd-badge gtd-derived">7 derived</span>.
+24 data collections — <span class="gtd-badge gtd-req">5 required</span> <span class="gtd-badge gtd-opt">19 optional</span> · <span class="gtd-badge gtd-direct">17 direct</span> <span class="gtd-badge gtd-derived">7 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`{METADATA_FILE}`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc\.parquet$`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quast_assembly_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`^transposed_report\.tsv$`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quast_assembly_report` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`quast/assembly_report.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quast_length_ladder` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`quast/length_ladder.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `busco_batch_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`^.+-busco\.batch_summary\.txt$`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `busco_batch_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`busco/batch_summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `busco_composition` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`busco/composition.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `tidk_search_windows` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`tidk/search_windows.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `busco_karyotype` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/genomeqc/busco_karyotype.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `agat_statistics` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`agat/statistics.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `agat_gene_models` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`agat/gene_models.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `gene_overlaps` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/genomeqc/gene_overlaps.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `orthofinder_species_stats` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`orthofinder/species_stats.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `orthofinder_orthogroup_matrix` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`orthofinder/orthogroup_matrix.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `orthofinder_orthologue_matrix` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`orthofinder/orthologue_matrix.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `ortho_seq_count` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`^species_ortho_seq_count\.tsv$`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `fcsgx_contamination` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`^fcs_table\.tsv$`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `fcsgx_actions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`fcsgx/actions.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `fcsadaptor_actions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`fcsadaptor/actions.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `tiara_classifications` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`tiara/classifications.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `tiara_class_counts` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/genomeqc/tiara_class_counts.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `repeatmasker_repeat_classes` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`repeatmasker/repeat_classes.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `repeatmasker_masking_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`repeatmasker/masking_summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `genomes` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/genomeqc/genomes.py`</code> | <span class="gtd-badge gtd-req">required</span> |
+| `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc\.parquet$</code> | <span class="gtd-badge gtd-req">required</span> |
+| `quast_assembly_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">^transposed_report\.tsv$</code> | <span class="gtd-badge gtd-req">required</span> |
+| `quast_assembly_report` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/quast/assembly_report.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">quast/assembly_report.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quast_length_ladder` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/quast/length_ladder.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">quast/length_ladder.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `busco_batch_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">^.+-busco\.batch_summary\.txt$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `busco_batch_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/busco/batch_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">busco/batch_summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `busco_composition` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/busco/composition.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">busco/composition.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `tidk_search_windows` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/tidk/search_windows.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">tidk/search_windows.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `busco_karyotype` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/genomeqc/recipes/busco_karyotype.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/genomeqc/busco_karyotype.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `agat_statistics` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/agat/statistics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">agat/statistics.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `agat_gene_models` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/agat/gene_models.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">agat/gene_models.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `gene_overlaps` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/genomeqc/recipes/gene_overlaps.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/genomeqc/gene_overlaps.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `orthofinder_species_stats` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/orthofinder/species_stats.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">orthofinder/species_stats.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `orthofinder_orthogroup_matrix` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/orthofinder/orthogroup_matrix.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">orthofinder/orthogroup_matrix.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `ortho_seq_count` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">^species_ortho_seq_count\.tsv$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `fcsgx_contamination` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">^fcs_table\.tsv$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `fcsgx_actions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/fcsgx/actions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">fcsgx/actions.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `fcsadaptor_actions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/fcsadaptor/actions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">fcsadaptor/actions.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `tiara_classifications` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/tiara/classifications.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">tiara/classifications.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `tiara_class_counts` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/genomeqc/recipes/tiara_class_counts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/genomeqc/tiara_class_counts.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `repeatmasker_repeat_classes` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/repeatmasker/repeat_classes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">repeatmasker/repeat_classes.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `repeatmasker_masking_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/repeatmasker/masking_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">repeatmasker/masking_summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `genomes` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/genomeqc/recipes/genomes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/genomeqc/genomes.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 
-### Conditional routes
+### :material-directions-fork: Conditional routes
 
-Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (24 collections are unaffected by any variable — present on every run.)
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (23 collections are unaffected by any variable — present on every run.)
 
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 
@@ -124,9 +124,9 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td></tr>
 </tbody></table></div>
 
-### Cross-DC links
+### :material-vector-link: Cross-DC links
 
-26 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+25 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -143,7 +143,6 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>genomes</code> <span class="col">·&nbsp;genome</span></td><td class="arr">→</td><td><code>agat_gene_models</code></td><td>Filter the gene models by the genomes picked in the left panel</td></tr>
 <tr><td><code>genomes</code> <span class="col">·&nbsp;genome</span></td><td class="arr">→</td><td><code>gene_overlaps</code></td><td>Filter the gene overlaps by the genomes picked in the left panel</td></tr>
 <tr><td><code>genomes</code> <span class="col">·&nbsp;genome</span></td><td class="arr">→</td><td><code>orthofinder_species_stats</code></td><td>Filter the orthogroup assignment by the genomes picked in the left panel</td></tr>
-<tr><td><code>genomes</code> <span class="col">·&nbsp;genome</span></td><td class="arr">→</td><td><code>orthofinder_orthologue_matrix</code></td><td>Keep the rows of the orthologue matrix of the genomes picked in the left panel</td></tr>
 <tr><td><code>genomes</code> <span class="col">·&nbsp;genome</span></td><td class="arr">→</td><td><code>fcsgx_actions</code></td><td>Filter the FCS-GX calls by the genomes picked in the left panel</td></tr>
 <tr><td><code>genomes</code> <span class="col">·&nbsp;genome</span></td><td class="arr">→</td><td><code>fcsadaptor_actions</code></td><td>Filter the FCS-adaptor calls by the genomes picked in the left panel</td></tr>
 <tr><td><code>genomes</code> <span class="col">·&nbsp;genome</span></td><td class="arr">→</td><td><code>tiara_classifications</code></td><td>Filter the Tiara classes by the genomes picked in the left panel</td></tr>
@@ -160,7 +159,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>busco_karyotype</code> <span class="col">·&nbsp;sequence</span></td><td class="arr">→</td><td><code>tidk_search_windows</code></td><td>Carry the sequences kept by the Karyotype tab's length slider to the telomeric repeat windows</td></tr>
 </tbody></table></div>
 
-### Recipes
+### :material-chef-hat: Recipes
 
 Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `OUTPUT_SCHEMA` columns.
 
@@ -177,7 +176,6 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`nf-core/genomeqc/genomes.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/genomeqc/recipes/genomes.py) | The nf-core/genomeqc genome hub: one row per assembly, every per-genome number. | `genome`, `assembly_label`, `total_length`, `n_contigs`, `largest_contig`, `n50`, `n90`, `l50`, `l90`, `gc_percent`, `ns_per_100_kbp`, `busco_lineage`, `busco_complete_pct`, `busco_single_pct`, `busco_duplicated_pct`, `busco_fragmented_pct`, `busco_missing_pct`, `protein_complete_pct`, `protein_duplicated_pct`, `protein_missing_pct`, `sequences_with_busco`, `repeat_unit`, `genes`, `transcripts`, `transcripts_per_gene`, `exons_per_transcript`, `single_exon_gene_pct`, `mean_gene_length`, `mean_cds_length`, `overlapping_pct`, `contained_same_strand`, `genes_in_orthogroups_pct`, `unassigned_genes`, `species_specific_orthogroups`, `syntenic_sequences`, `contaminant_pct`, `gx_flagged_ranges`, `gx_flagged_bp`, `adaptor_ranges`, `tiara_sequences`, `prokaryotic_sequences`, `unknown_sequences`, `masked_pct`, `interspersed_pct` |
 | [`nf-core/genomeqc/tiara_class_counts.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/genomeqc/recipes/tiara_class_counts.py) | Sequences per Tiara class and assembly, from the per-sequence Tiara table. | `genome`, `tiara_class`, `sequences`, `share_pct` |
 | [`orthofinder/orthogroup_matrix.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/orthofinder/orthogroup_matrix.py) | Which genomes each orthogroup reaches, from ``Orthogroups.GeneCount.tsv``. | `orthogroup`, `n_genomes`, `total_genes`, `copy_class`, `sharing` |
-| [`orthofinder/orthologue_matrix.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/orthofinder/orthologue_matrix.py) | One-to-one orthologues between every pair of species, as a square matrix. | `genome` |
 | [`orthofinder/species_stats.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/orthofinder/species_stats.py) | How much of each proteome OrthoFinder placed, from ``Statistics_PerSpecies.tsv``. | `genome`, `genes`, `genes_in_orthogroups`, `unassigned_genes`, `genes_in_orthogroups_pct`, `unassigned_genes_pct`, `orthogroups`, `orthogroups_pct`, `species_specific_orthogroups`, `genes_in_species_specific`, `genes_in_species_specific_pct`, `genes_in_shared_orthogroups` |
 | [`quast/assembly_report.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/quast/assembly_report.py) | One row per assembly, from QUAST's transposed report. | `assembly_id`, `assembler`, `sample`, `n_contigs`, `total_length`, `largest_contig`, `n50`, `n75`, `l50`, `l75`, `gc_percent`, `ns_per_100_kbp`, `predicted_rrna_genes`, `contigs_over_1kb`, `length_over_1kb` |
 | [`quast/length_ladder.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/quast/length_ladder.py) | The contig-length ladder of each assembly, one row per length threshold. | `assembly_id`, `assembler`, `sample`, `min_contig_length`, `n_contigs`, `total_length`, `length_fraction` |

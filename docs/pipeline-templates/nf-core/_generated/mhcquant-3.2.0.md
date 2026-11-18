@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="1.2.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/mhcquant 3.2.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.2.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -76,8 +76,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `METADATA_ID_COL` | — | Samplesheet id column. mhcquant fixes it to ID (one per raw file); the template joins on the derived sample_id and run_id keys instead, so this only records the auto-detected value. |
 | `GROUP_COL` | — | Samplesheet column the dashboard groups and filters samples by. Defaults to Condition, the column the mhcquant input schema requires. |
 | `GROUP_COL_DISPLAY` | — | Reader-facing label of GROUP_COL, used in filter and card titles. |
-| `NO_QUANTIFICATION` | — | Set (--var NO_QUANTIFICATION=true) for a run without --quantify: the peptide tables carry no replicate intensities, so the replicate collections and the Reproducibility tab are removed. |
-| `NO_ION_ANNOTATION` | — | Set (--var NO_ION_ANNOTATION=true) for a run without --annotate_ions: intermediate_results/ion_annotations/ is absent, so the fragment-ion collection is removed. |
+
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `NO_QUANTIFICATION`, `NO_ION_ANNOTATION`
 
 ### :material-database-outline: Data collections
 

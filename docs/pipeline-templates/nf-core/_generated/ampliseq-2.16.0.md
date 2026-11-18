@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.2.0" data-template-updated="2026-10-31">
+<div class="gtd-versions" data-template-version="1.3.1" data-template-updated="2026-11-16">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/ampliseq 2.16.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.2.0</span>
-<span class="gtd-badge gtd-updated">Updated 31 Oct 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.3.1</span>
+<span class="gtd-badge gtd-updated">Updated 16 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -78,7 +78,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `METADATA_ID_COL` | — | Metadata sample-ID column name (links join on it). Auto-detected as the first metadata column; defaults to 'sample'. |
 | `GROUP_COL` | — | Metadata column for grouping/facetting in dashboards. Auto-detected as first annotation column if not provided. |
 
-**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`, `IS_MULTIREGION`, `SKIP_TAXONOMY`, `SKIP_ALPHA_RAREFACTION`, `SKIP_ANCOM`
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`, `IS_MULTIREGION`, `SKIP_TAXONOMY`, `SKIP_ALPHA_RAREFACTION`, `SKIP_ANCOM`, `SKIP_QIIME`
 
 ### :material-database-outline: Data collections
 
@@ -191,7 +191,7 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`qiime2/alpha_diversity_multi_canonical.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/alpha_diversity_multi_canonical.py) | Per-sample multi-metric alpha-diversity DC for ampliseq. | `sample_id` |
 | [`qiime2/alpha_rarefaction.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/alpha_rarefaction.py) | Transform QIIME2 alpha rarefaction wide CSV to long-format rarefaction curves. | `sample`, `depth`, `iter`, `faith_pd` |
 | [`qiime2/alpha_rarefaction_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/alpha_rarefaction_summary.py) | Per-sample rarefaction summary: one row per (sample, depth), not per iteration. | `sample`, `depth`, `faith_pd` |
-| [`qiime2/ancombc.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/ancombc.py) | Merge ANCOM-BC differential abundance results (5 files) into one long-format table. | `id`, `contrast`, `lfc`, `p_val`, `q_val`, `w`, `se`, `Kingdom`, `Phylum`, `neg_log10_qval`, `significant` |
+| [`qiime2/ancombc.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/ancombc.py) | Merge ANCOM-BC differential abundance results (5 slices) into one long-format table. | `id`, `contrast`, `lfc`, `p_val`, `q_val`, `w`, `se`, `Kingdom`, `Phylum`, `neg_log10_qval`, `significant`, `taxonomy` |
 | [`qiime2/embedding_pcoa.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/embedding_pcoa.py) | Canonical-schema embedding DC for ampliseq (PCoA on Bray-Curtis). | `sample_id`, `dim_1`, `dim_2` |
 | [`qiime2/rarefaction_canonical.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/rarefaction_canonical.py) | Canonical-schema rarefaction DC for ampliseq (multi-metric). | `sample_id`, `depth`, `iter`, `shannon`, `observed_features`, `faith_pd` |
 | [`qiime2/stacked_taxonomy_canonical.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/stacked_taxonomy_canonical.py) | Canonical-schema stacked-taxonomy DC for ampliseq. | `sample_id`, `taxon`, `rank`, `abundance` |

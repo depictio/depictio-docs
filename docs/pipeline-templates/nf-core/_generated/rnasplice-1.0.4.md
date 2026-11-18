@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="2.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="3.0.1" data-template-updated="2026-11-16">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/rnasplice 1.0.4</span>
-<span class="gtd-badge gtd-template-ver">Template 2.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 3.0.1</span>
+<span class="gtd-badge gtd-updated">Updated 16 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -80,8 +80,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `GENOME` | — | UCSC assembly name the event loci link out to and the genome browser opens on (the genome the run aligned to). |
 | `TRACKS_URI` | — | s3:// or https:// folder holding the run's results (the folder DATA_ROOT mirrors), to read the genome-browser tracks (stranded bigWig, BAM) in place instead of uploading them from DATA_ROOT. Without it the `tracks` collection uploads whichever of those files DATA_ROOT holds. |
 | `SPLICING_FDR` | — | Significance cut-off on the adjusted p-values of every splicing tool (SUPPA2: its empirical p-value). |
-| `MIN_DPSI` | — | Minimal absolute change in percent spliced-in (0 to 1) for an rMATS or SUPPA2 event to be called. |
-| `RMATS_MIN_READS` | — | Mean junction reads per replicate an rMATS event needs in both conditions to be kept. |
+| `MIN_DPSI` | — | Optional extra floor on the absolute change in percent spliced-in (0 to 1) for an rMATS or SUPPA2 event to be called. 0 (default) keeps the tool's own call: the rMATS FDR already tests the change against rMATS --cstat (default 0.0001) and SUPPA2 diffSplice has a lower bound of 0 by default. Raise it to ask for a larger shift; any value above 0 is your own working value. |
+| `RMATS_MIN_READS` | — | Mean junction reads per replicate an rMATS event needs in both conditions to be kept. 10 is the template's working value (rMATS and nf-core/rnasplice set no such minimum); 0 keeps every event. |
 
 ### :material-database-outline: Data collections
 

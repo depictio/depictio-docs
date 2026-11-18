@@ -20,11 +20,12 @@ hide:
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="3.26.0">
+<div class="tpl-version-pick" data-latest="3.28.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Pipeline version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
-    <option value="3.26.0" selected>3.26.0</option>
+    <option value="3.28.0" selected>3.28.0</option>
+    <option value="3.26.0">3.26.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
@@ -50,8 +51,8 @@ nf-core/rnaseq run:
 !!! info "The STAR + Salmon route"
     This template binds the pipeline default: STAR for alignment, Salmon for
     quantification, with the merged matrices read from `star_salmon/`. A
-    `--skip_alignment` run writes the same file names under `salmon/`; pass
-    `--var PSEUDOALIGNER_ONLY=true` and the expression collections are repointed
+    `--skip_alignment` run writes the same file names under `salmon/`; its params
+    set `PSEUDOALIGNER_ONLY` and the expression collections are repointed
     there. The STAR, samtools, Picard, Qualimap and RSeQC tiles then have nothing
     to show, and the RSeQC figure drops.
 
@@ -82,7 +83,7 @@ nf-core/rnaseq run:
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/rnaseq -r 3.26.0 -profile docker --outdir results
+    nextflow run nf-core/rnaseq -r 3.28.0 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -126,9 +127,20 @@ report too.
     re-packed so there are no empty rows. `SKIP_MULTIQC` and
     `SKIP_QUANTIFICATION_MERGE` prune the QC and the expression side.
 
-<div class="tpl-version-block" data-version="3.26.0" markdown>
+!!! note "Trimmed share on 3.28.0"
+    rnaseq 3.28.0's MultiQC reports Trim Galore with its own module, so
+    `pct_trimmed` is computed from `multiqc_trim_galore.txt` (bases written over
+    bases processed). Cutadapt reports keep their own value.
+
+<div class="tpl-version-block" data-version="3.28.0" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/rnaseq-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="3.26.0" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/rnaseq-3.26.0.md"
 
 </div>
 
@@ -331,7 +343,7 @@ Depictio reads the **output** of nf-core/rnaseq, it does not run the pipeline.
 Run the pipeline first:
 
 ```bash
-nextflow run nf-core/rnaseq -r 3.26.0 \
+nextflow run nf-core/rnaseq -r 3.28.0 \
   --input samplesheet.csv \
   --genome GRCh38 \
   --outdir results \
@@ -345,12 +357,12 @@ depictio ingest results/ \
   --template nf-core/rnaseq/latest
 ```
 
-Non-default routes need their flag by hand, since the CLI does not yet read
-rnaseq's own `params.json` for them: `--var PSEUDOALIGNER_ONLY=true` for
-`--skip_alignment`, `--var SKIP_MULTIQC=true` for `--skip_multiqc` or
-`--skip_qc`, `--var SKIP_QUANTIFICATION_MERGE=true` for the merge.
+Non-default routes are set from the run's params: `PSEUDOALIGNER_ONLY` from
+`--skip_alignment`, `SKIP_MULTIQC` from `--skip_multiqc` only (`--skip_qc` keeps
+MultiQC), `SKIP_QUANTIFICATION_MERGE` from `--skip_quantification_merge`.
+`--var SKIP_MULTIQC=false` overrides.
 
-See [nf-co.re/rnaseq/usage](https://nf-co.re/rnaseq/3.26.0/docs/usage) for full
+See [nf-co.re/rnaseq/usage](https://nf-co.re/rnaseq/3.28.0/docs/usage) for full
 pipeline documentation.
 
 ---
@@ -390,16 +402,16 @@ path-qualified.
 ## :material-flask-outline: Validation runs
 
 The repository ships
-[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnaseq/3.26.0/download_test_data.sh),
+[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnaseq/3.28.0/download_test_data.sh),
 which fetches the subset of nf-core's AWS megatest run that the template needs:
 
 ```bash
-bash depictio/projects/nf-core/rnaseq/3.26.0/download_test_data.sh \
+bash depictio/projects/nf-core/rnaseq/3.28.0/download_test_data.sh \
   /tmp/rnaseq_test
 ```
 
 The run is
-`s3://nf-core-awsmegatests/rnaseq/results-e7ca46272c8f9d5ceee3f71759f4ba551d3217a4/`:
+`s3://nf-core-awsmegatests/rnaseq/results-f24c6c0e9469d04975d87c3a8bf9020800978782/`:
 eight libraries from four ENCODE cell lines, two replicates each, human GRCh37,
 Trim Galore then STAR + Salmon. The manifest fetches only the
 `aligner_star_salmon/` route and mirrors it below the destination, so the
@@ -419,7 +431,7 @@ depictio ingest /tmp/rnaseq_test \
 ## :material-link-variant: Additional resources
 
 - [nf-co.re/rnaseq](https://nf-co.re/rnaseq): official pipeline documentation
-- [nf-co.re/rnaseq/3.26.0/results](https://nf-co.re/rnaseq/3.26.0/results): AWS test results
+- [nf-co.re/rnaseq/3.28.0/results](https://nf-co.re/rnaseq/3.28.0/results): AWS test results
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes
 

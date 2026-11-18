@@ -20,11 +20,12 @@ hide:
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="2.5.0">
+<div class="tpl-version-pick" data-latest="2.6.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Template version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Template version">
-    <option value="2.5.0" selected>2.5.0</option>
+    <option value="2.6.0" selected>2.6.0</option>
+    <option value="2.5.0">2.5.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
@@ -99,7 +100,7 @@ every tab through the samplesheet links.
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/proteinfamilies -r 2.5.0 -profile docker --outdir results
+    nextflow run nf-core/proteinfamilies -r 2.6.0 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -132,9 +133,15 @@ writes.
     logo, the hits lane and the table of members on the model. A run with no
     update sample has no `updated` family.
 
-<div class="tpl-version-block" data-version="2.5.0" markdown>
+<div class="tpl-version-block" data-version="2.6.0" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/proteinfamilies-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="2.5.0" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/proteinfamilies-2.5.0.md"
 
 </div>
 
@@ -332,7 +339,7 @@ Depictio reads the **output** of nf-core/proteinfamilies, it does not run the
 pipeline. Run the pipeline first:
 
 ```bash
-nextflow run nf-core/proteinfamilies -r 2.5.0 \
+nextflow run nf-core/proteinfamilies -r 2.6.0 \
   --input samplesheet.csv \
   --outdir results \
   -profile docker
@@ -353,7 +360,7 @@ The run can also write samplesheets for [proteinfold](proteinfold.md) and
 [proteinannotator](proteinannotator.md); `--skip_proteinfold_samplesheet` and
 `--skip_proteinannotator_samplesheet` turn them off.
 
-See [nf-co.re/proteinfamilies/usage](https://nf-co.re/proteinfamilies/2.5.0/docs/usage)
+See [nf-co.re/proteinfamilies/usage](https://nf-co.re/proteinfamilies/2.6.0/docs/usage)
 for full pipeline documentation.
 
 ---
@@ -391,12 +398,12 @@ Only the HMMs and the hmmalign alignments are optional.
 ## :material-flask-outline: Validation runs
 
 The repository ships
-[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/proteinfamilies/2.5.0/download_test_data.sh),
+[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/proteinfamilies/2.6.0/download_test_data.sh),
 which fetches the subset of nf-core's AWS megatest run that the template needs
 (files up to 5 MB) and copies the vendored samplesheet into `input/`:
 
 ```bash
-bash depictio/projects/nf-core/proteinfamilies/2.5.0/download_test_data.sh \
+bash depictio/projects/nf-core/proteinfamilies/2.6.0/download_test_data.sh \
   /tmp/proteinfamilies_test
 depictio ingest /tmp/proteinfamilies_test \
   --template nf-core/proteinfamilies/latest
@@ -407,7 +414,8 @@ The run is
 the `test_full` profile: two samples of 50,000 metagenomic protein sequences
 each, one creating families from scratch and one updating an existing family
 library before creating new families from its unmatched sequences. The
-screenshots above come from that run.
+screenshots above come from that run. It is the 2.5.0 run: the 2.6.0 release run
+is empty, so 2.6.0 was checked on its own `-profile test` run.
 
 ---
 

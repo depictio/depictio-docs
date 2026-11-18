@@ -93,7 +93,7 @@ The airrflow template covers the reporting half of a standard nf-core/airrflow r
     | `SAMPLESHEET_FILE` | `{DATA_ROOT}/pipeline_info/samplesheet.valid.tsv` | The validated samplesheet, the hub data collection |
     | `GROUP_COL` | `treatment` | Samplesheet column holding the condition; must exist in the samplesheet |
     | `GROUP_COL_DISPLAY` | `Condition` | Reader-facing label of that column in filter titles |
-    | `SKIP_CLONAL_ANALYSIS`, `SKIP_REPORT`, `SKIP_THRESHOLD_REPORT`, `SKIP_MULTIQC`, `ASSEMBLED_MODE` | unset | Mirror the run's route flags; see *Conditional routes* below |
+    | `SKIP_CLONAL_ANALYSIS`, `SKIP_REPORT`, `SKIP_THRESHOLD_REPORT`, `SKIP_MULTIQC`, `ASSEMBLED_MODE` | from the run's params | Mirror the run's route flags; see *Conditional routes* below |
 
 === "From the pipeline itself (v1.10.0+)"
 
@@ -116,12 +116,10 @@ tables (diversity, clone sizes, pairwise overlap, distance threshold). Most tile
 are catalog renders bound to `enchantr`, airrflow's own R package rather than an
 nf-core module, so the tile chrome names where each panel comes from.
 
-The route flags in the *Conditional routes* table are not read back from
-`params.json` yet, so a run started with `--skip_clonal_analysis`,
-`--skip_report`, `--skip_report_threshold`, `--skip_multiqc` or
-`--mode assembled` needs the matching `--var SKIP_...=true` (or
-`--var ASSEMBLED_MODE=true`). Omitting one still
-ingests: the affected collections are optional and simply come up empty.
+The route flags in the *Conditional routes* table are set from the run's
+`pipeline_info/params_<timestamp>.json`: `--skip_clonal_analysis`, `--skip_report`,
+`--skip_report_threshold` (or a fixed `--clonal_threshold`), `--skip_multiqc` and
+`--mode assembled`. `--var SKIP_REPORT=false` (or any of them) overrides.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound

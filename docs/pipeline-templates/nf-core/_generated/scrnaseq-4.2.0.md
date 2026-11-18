@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.0.0" data-template-updated="2026-11-04">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/scrnaseq 4.2.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.0.0</span>
+<span class="gtd-badge gtd-updated">Updated 4 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -192,7 +192,7 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`cellranger/cluster_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cellranger/cluster_summary.py) | One row per graph-based cluster, summarising `cellranger_cell_qc`. | `sample`, `graphclust`, `cluster_label`, `n_cells`, `pct_cells`, `median_n_umi`, `median_n_genes`, `median_pct_mito`, `pct_flagged`, `pct_cellbender_cell` |
 | [`cellranger/diffexp.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cellranger/diffexp.py) | Cluster marker genes from Cell Ranger's differential-expression tables. | `sample`, `resolution`, `cluster`, `cluster_label`, `rank_in_cluster`, `gene_id`, `gene`, `mean_counts`, `log2fc`, `adjusted_pvalue` |
 | [`cellranger/hvg_dispersion.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cellranger/hvg_dispersion.py) | Feature selection, the step between the count matrix and the PCA nobody sees. | `sample`, `gene`, `normalized_dispersion`, `mean_expression`, `detection_rate`, `selection` |
-| [`cellranger/library_metrics_long.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cellranger/library_metrics_long.py) | Long, threshold-annotated form of the 5 metrics 10x's QC guidance gives a | `sample`, `metric`, `value`, `unit`, `threshold`, `status` |
+| [`cellranger/library_metrics_long.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cellranger/library_metrics_long.py) | Long, threshold-annotated form of the 4 metrics 10x's QC guidance gives an | `sample`, `metric`, `value`, `unit`, `threshold`, `status` |
 | [`cellranger/mapping_breakdown.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cellranger/mapping_breakdown.py) | Long region breakdown of Cell Ranger's confidently-mapped-reads accounting, | `sample`, `region`, `fraction` |
 | [`cellranger/marker_expression.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cellranger/marker_expression.py) | Dot-plot table: mean log-normalised expression and detection rate of the | `cluster_label`, `gene`, `mean_expression`, `frac_expressing` |
 | [`cellranger/marker_matrix.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/cellranger/marker_matrix.py) | Wide companion to `cellranger_marker_expression`, for the `complex_heatmap` | `gene` |

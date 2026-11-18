@@ -53,10 +53,10 @@ pass to `--template`. Pick the row matching the run you want to explore.
 
 | `--template` id | Produced by a run with | Benchmark tools | Expected in the results directory |
 | --- | --- | --- | --- |
-| `nf-core/variantbenchmarking/1.4.0/categories/small` | `--analysis germline --variant_type small` | hap.py, rtg-tools vcfeval | `small/` and `multiqc/multiqc_data/multiqc.parquet` |
-| `nf-core/variantbenchmarking/1.4.0/categories/indel` | `--analysis somatic --variant_type indel` | som.py, rtg-tools vcfeval | `indel/` and `multiqc/multiqc_data/multiqc.parquet` |
-| `nf-core/variantbenchmarking/1.4.0/categories/structural` | `--variant_type structural` | truvari, SURVIVOR, through MultiQC only | `multiqc/multiqc_data/multiqc.parquet` |
-| `nf-core/variantbenchmarking/1.4.0` | any of the above, or several runs collected under one root | rtg-tools vcfeval, hap.py, som.py, Truvari, SVanalyzer, Wittyer | any of `small/`, `indel/`, `sv/`, `cnv/`; all optional |
+| `nf-core/variantbenchmarking/1.6.1/categories/small` | `--analysis germline --variant_type small` | hap.py, rtg-tools vcfeval | `small/` and `multiqc/multiqc_data/multiqc.parquet` |
+| `nf-core/variantbenchmarking/1.6.1/categories/indel` | `--analysis somatic --variant_type indel` | som.py, rtg-tools vcfeval | `indel/` and `multiqc/multiqc_data/multiqc.parquet` |
+| `nf-core/variantbenchmarking/1.6.1/categories/structural` | `--variant_type structural` | truvari, SURVIVOR, through MultiQC only | `multiqc/multiqc_data/multiqc.parquet` |
+| `nf-core/variantbenchmarking/1.6.1` | any of the above, or several runs collected under one root | rtg-tools vcfeval, hap.py, som.py, Truvari, SVanalyzer, Wittyer | any of `small/`, `indel/`, `sv/`, `cnv/`; all optional |
 
 Each category is a self-contained project with its own dashboard, so three pipeline runs
 give you three projects. The umbrella template shows the tab of each route it finds, so
@@ -65,11 +65,11 @@ out.
 
 !!! warning "Category ids must pin the version"
     `latest` is resolved only in the **last** segment of a template id. So
-    `nf-core/variantbenchmarking/latest` works and resolves to `1.4.0`, but
+    `nf-core/variantbenchmarking/latest` works and resolves to `1.6.1`, but
     `nf-core/variantbenchmarking/latest/categories/small` does **not**: the literal
     `latest` is never substituted mid-path, the directory it names does not exist, and
     the run fails with `Template ... not found`. Always spell category ids with the
-    pinned version, `nf-core/variantbenchmarking/1.4.0/categories/small`.
+    pinned version, `nf-core/variantbenchmarking/1.6.1/categories/small`.
 
     See `_resolve_template_id_in` in
     [`depictio/cli/cli/utils/templates.py`](https://github.com/depictio/depictio/blob/main/depictio/cli/cli/utils/templates.py).
@@ -93,7 +93,7 @@ have to pass. None of the four templates needs a `--var` flag.
 
     ```bash
     depictio ingest /path/to/germline_results \
-      --template nf-core/variantbenchmarking/1.4.0/categories/small
+      --template nf-core/variantbenchmarking/1.6.1/categories/small
     ```
 
     Two tabs: hap.py and rtg-tools benchmark metrics, plus the run's MultiQC report.
@@ -102,7 +102,7 @@ have to pass. None of the four templates needs a `--var` flag.
 
     ```bash
     depictio ingest /path/to/somatic_results \
-      --template nf-core/variantbenchmarking/1.4.0/categories/indel
+      --template nf-core/variantbenchmarking/1.6.1/categories/indel
     ```
 
     Two tabs: som.py metrics with allele-fraction strata and confidence intervals, plus
@@ -112,7 +112,7 @@ have to pass. None of the four templates needs a `--var` flag.
 
     ```bash
     depictio ingest /path/to/sv_results \
-      --template nf-core/variantbenchmarking/1.4.0/categories/structural
+      --template nf-core/variantbenchmarking/1.6.1/categories/structural
     ```
 
     One MultiQC tab. The structural benchmark numbers are published only inside the
@@ -122,7 +122,7 @@ have to pass. None of the four templates needs a `--var` flag.
 
     ```bash
     depictio ingest /path/to/megatest_results \
-      --template nf-core/variantbenchmarking/1.4.0
+      --template nf-core/variantbenchmarking/1.6.1
     ```
 
     An Overview, then a tab for each variant type the data root holds: Germline,
@@ -143,10 +143,10 @@ template uses the short unprefixed tag.
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Template</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Template">
-    <option value="small" selected>1.4.0/categories/small</option>
-    <option value="indel">1.4.0/categories/indel</option>
-    <option value="structural">1.4.0/categories/structural</option>
-    <option value="all">1.4.0 (all variant types)</option>
+    <option value="small" selected>1.6.1/categories/small</option>
+    <option value="indel">1.6.1/categories/indel</option>
+    <option value="structural">1.6.1/categories/structural</option>
+    <option value="all">1.6.1 (all variant types)</option>
   </select>
 </div>
 
@@ -154,7 +154,7 @@ template uses the short unprefixed tag.
 
 ### Germline small variants
 
---8<-- "pipeline-templates/nf-core/_generated/variantbenchmarking-1.4.0-categories-small.md"
+--8<-- "pipeline-templates/nf-core/_generated/variantbenchmarking-1.6.1-categories-small.md"
 
 </div>
 
@@ -162,7 +162,7 @@ template uses the short unprefixed tag.
 
 ### Somatic indels
 
---8<-- "pipeline-templates/nf-core/_generated/variantbenchmarking-1.4.0-categories-indel.md"
+--8<-- "pipeline-templates/nf-core/_generated/variantbenchmarking-1.6.1-categories-indel.md"
 
 </div>
 
@@ -170,7 +170,7 @@ template uses the short unprefixed tag.
 
 ### Structural variants
 
---8<-- "pipeline-templates/nf-core/_generated/variantbenchmarking-1.4.0-categories-structural.md"
+--8<-- "pipeline-templates/nf-core/_generated/variantbenchmarking-1.6.1-categories-structural.md"
 
 </div>
 
@@ -186,7 +186,7 @@ template uses the short unprefixed tag.
 
 ## :material-view-dashboard-outline: Dashboard tabs
 
-The umbrella template, `nf-core/variantbenchmarking/1.4.0`, builds one dashboard: the
+The umbrella template, `nf-core/variantbenchmarking/1.6.1`, builds one dashboard: the
 **Overview**, then one child tab per variant type, in two groups. A run benchmarks one
 variant type, so it shows the Overview and the tab of its route; a data root holding
 several routes shows the tab of each. Each tab below carries the **same icon and colour
@@ -396,7 +396,7 @@ Depictio reads the **output** of nf-core/variantbenchmarking, it does not run th
 pipeline. Run the pipeline first, once per variant type:
 
 ```bash
-nextflow run nf-core/variantbenchmarking -r 1.4.0 \
+nextflow run nf-core/variantbenchmarking -r 1.6.1 \
   --input samplesheet.csv \
   --outdir results/ \
   --genome GRCh38 \
@@ -411,7 +411,7 @@ run produced:
 
 ```bash
 depictio ingest results/ \
-  --template nf-core/variantbenchmarking/1.4.0/categories/small
+  --template nf-core/variantbenchmarking/1.6.1/categories/small
 ```
 
 To benchmark somatic indels as well, run the pipeline again with
@@ -419,7 +419,7 @@ To benchmark somatic indels as well, run the pipeline again with
 with the `categories/indel` template. Point the umbrella template at a root holding both
 result sets instead, if you would rather have one project than two.
 
-See [nf-co.re/variantbenchmarking/usage](https://nf-co.re/variantbenchmarking/1.4.0/docs/usage)
+See [nf-co.re/variantbenchmarking/usage](https://nf-co.re/variantbenchmarking/1.6.1/docs/usage)
 for full pipeline documentation.
 
 ---
@@ -460,22 +460,23 @@ reads no MultiQC report, and shows the tab of each route it finds under the root
 ## :material-flask-outline: Validation runs
 
 The repository ships
-[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/variantbenchmarking/1.4.0/download_test_data.sh),
+[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/variantbenchmarking/1.6.1/download_test_data.sh),
 which pulls a real run from nf-core's public megatest bucket:
 
 ```bash
-bash depictio/projects/nf-core/variantbenchmarking/1.4.0/download_test_data.sh \
+bash depictio/projects/nf-core/variantbenchmarking/1.6.1/download_test_data.sh \
   /tmp/variantbenchmarking_test
 ```
 
 It fetches the `small/` and `indel/` summary tables plus the hap.py per-sample files from
-`s3://nf-core-awsmegatests/variantbenchmarking/`, then prints the follow-up commands.
+the 1.6.1 release run in `s3://nf-core-awsmegatests/variantbenchmarking/`
+(`results-c4c9440bfb6e6bc0a7787ff9ecfad4838308f3a1`), then prints the follow-up commands.
 
 !!! note "The fixture suits the umbrella template"
     No published megatest contains a `multiqc/` directory, and the script does not fetch
     one, so this fixture will not satisfy the three category templates, which each
     require a MultiQC report. Use it with
-    `--template nf-core/variantbenchmarking/1.4.0`, which reads no MultiQC report and
+    `--template nf-core/variantbenchmarking/1.6.1`, which reads no MultiQC report and
     covers both variant types the fixture provides.
 
 ---
@@ -483,7 +484,7 @@ It fetches the `small/` and `indel/` summary tables plus the hap.py per-sample f
 ## :material-link-variant: Additional resources
 
 - [nf-co.re/variantbenchmarking](https://nf-co.re/variantbenchmarking): official pipeline documentation
-- [nf-co.re/variantbenchmarking/1.4.0/results](https://nf-co.re/variantbenchmarking/1.4.0/results): AWS test results
+- [nf-co.re/variantbenchmarking/1.6.1/results](https://nf-co.re/variantbenchmarking/1.6.1/results): AWS test results
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes
 

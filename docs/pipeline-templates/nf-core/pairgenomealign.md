@@ -82,8 +82,8 @@ the long alignments land on the target:
     The samplesheet carries only the genome id and its FASTA, so the design is an
     optional TSV: the genome id in a `sample` column (or the first column) and one
     column per factor. `GROUP_COL` picks the factor the filters and colours use,
-    the first by default. A run with `--skip_assembly_qc` needs
-    `--var SKIP_ASSEMBLY_QC=true`.
+    the first by default. `SKIP_ASSEMBLY_QC` is set from `--skip_assembly_qc` in
+    the run's params; `--var SKIP_ASSEMBLY_QC=false` overrides.
 
 === "From the pipeline itself (v1.10.0+)"
 

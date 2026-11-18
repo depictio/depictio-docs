@@ -76,7 +76,7 @@ default grouping.
     | `GROUP_COL` | `input_type` | column the dashboard groups and filters samples by; `input_type` (Variants, Proteins or Peptides) is derived from the input file |
     | `GROUP_COL_DISPLAY` | `Input type` | reader-facing label of `GROUP_COL` in filters and cards |
     | `NO_VARIANT_INPUT` | unset | set for a sheet with no VCF: drops the variant peptides and the mutant against wild type pairs |
-    | `NO_WILD_TYPE` | unset | set for a run without `--wild_type`: drops the mutant against wild type pairs |
+    | `NO_WILD_TYPE` | from the run's params | set from a run without `--wild_type`: drops the mutant against wild type pairs; `--var NO_WILD_TYPE=false` overrides |
     | `SINGLE_PREDICTOR` | unset | set for a run with one tool per MHC class: drops the tool agreement |
 
 === "From the pipeline itself (v1.10.0+)"

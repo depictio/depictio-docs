@@ -54,18 +54,19 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
 .gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
 .gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="2.0.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.0.1" data-template-updated="2026-11-03">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/nascent 2.3.0</span>
-<span class="gtd-badge gtd-template-ver">Template 2.0.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.0.1</span>
+<span class="gtd-badge gtd-updated">Updated 3 Nov 2026</span>
 </div>
 
-### Template variables
+### :material-code-braces: Template variables
 
 Variables you provide when running the template: `DATA_ROOT` is the results directory given to `depictio ingest`, the others are set with `--var NAME=value`:
 
@@ -81,36 +82,36 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 
 **Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`
 
-### Data collections
+### :material-database-outline: Data collections
 
 20 data collections — <span class="gtd-badge gtd-req">10 required</span> <span class="gtd-badge gtd-opt">10 optional</span> · <span class="gtd-badge gtd-direct">3 direct</span> <span class="gtd-badge gtd-derived">17 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`{METADATA_FILE}`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `subread_gene_counts` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`subread/gene_counts.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `subread_library_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`subread/library_summary.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `subread_correlation` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`subread/correlation.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `bedgraph_strand_index` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`.*\.(?:plus\|minus)\.bedGraph$`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `bedtools_strand_windows` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`bedtools/strand_bins.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `bedtools_strand_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`bedtools/strand_summary.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `samples` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/samples.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `bedtools_strand_bins` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/strand_bins.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `gene_dynamics` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/gene_dynamics.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `gene_trajectories` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/gene_trajectories.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `top_gene_trajectories` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/top_gene_trajectories.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `top_gene_heatmap` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/top_gene_heatmap.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `sample_similarity` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/sample_similarity.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `sample_drift` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/sample_drift.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `signal_window_dynamics` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/signal_window_dynamics.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `signal_window_series` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/signal_window_series.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `signal_window_heatmap` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/signal_window_heatmap.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `chromosome_signal` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/chromosome_signal.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `tracks` | <span class="gtd-badge gtd-derived">derived</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/nascent/tracks.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `subread_gene_counts` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/subread/gene_counts.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">subread/gene_counts.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `subread_library_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/subread/library_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">subread/library_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `subread_correlation` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/subread/correlation.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">subread/correlation.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `bedgraph_strand_index` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*\.(?:plus&#124;minus)\.bedGraph$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `bedtools_strand_windows` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bedtools/strand_bins.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bedtools/strand_bins.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `bedtools_strand_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/bedtools/strand_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">bedtools/strand_summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `samples` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/samples.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/samples.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `bedtools_strand_bins` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/strand_bins.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/strand_bins.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `gene_dynamics` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/gene_dynamics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/gene_dynamics.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `gene_trajectories` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/gene_trajectories.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/gene_trajectories.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `top_gene_trajectories` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/top_gene_trajectories.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/top_gene_trajectories.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `top_gene_heatmap` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/top_gene_heatmap.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/top_gene_heatmap.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `sample_similarity` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/sample_similarity.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/sample_similarity.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `sample_drift` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/sample_drift.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/sample_drift.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `signal_window_dynamics` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/signal_window_dynamics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/signal_window_dynamics.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `signal_window_series` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/signal_window_series.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/signal_window_series.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `signal_window_heatmap` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/signal_window_heatmap.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/signal_window_heatmap.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `chromosome_signal` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/chromosome_signal.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/chromosome_signal.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `tracks` | <span class="gtd-badge gtd-derived">derived</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/nascent/recipes/tracks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/nascent/tracks.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 
-### Conditional routes
+### :material-directions-fork: Conditional routes
 
 Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (18 collections are unaffected by any variable — present on every run.)
 
@@ -124,7 +125,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><th class="dc"><code>tracks</code></th><td></td><td class="swap" title="re-sourced when TRACKS_URI is set">⇄</td></tr>
 </tbody></table></div>
 
-### Cross-DC links
+### :material-vector-link: Cross-DC links
 
 20 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
@@ -154,7 +155,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>tracks</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>samples</code></td><td>Narrow the sample hub to the libraries picked in the genome browser</td></tr>
 </tbody></table></div>
 
-### Recipes
+### :material-chef-hat: Recipes
 
 Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `OUTPUT_SCHEMA` columns.
 

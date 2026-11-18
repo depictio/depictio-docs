@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.3.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="1.3.2" data-template-updated="2026-11-16">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/eager 2.4.5</span>
-<span class="gtd-badge gtd-template-ver">Template 1.3.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.3.2</span>
+<span class="gtd-badge gtd-updated">Updated 16 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables

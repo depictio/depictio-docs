@@ -56,12 +56,11 @@ through to the protein a fusion would produce:
     every tab. The fusion name stays the key a fusion selection fans out on,
     across the consensus, the three callers and the FusionInspector tables.
 
-!!! note "Route flags are not auto-detected"
-    rnafusion's `--tools` selection is not read back from `params.json`, so a run
-    that skipped a step needs the matching variable: `SKIP_ARRIBA`,
-    `SKIP_STARFUSION`, `SKIP_FUSIONCATCHER`, `SKIP_FUSIONINSPECTOR`,
-    `SKIP_CTATSPLICING` or `SKIP_QC`. Each prunes the matching data collections
-    and the tiles that read them.
+!!! note "Route flags come from the run's params"
+    `SKIP_ARRIBA`, `SKIP_STARFUSION`, `SKIP_FUSIONCATCHER`, `SKIP_FUSIONINSPECTOR`
+    and `SKIP_CTATSPLICING` are set when the run's `--tools` leaves the step out
+    (and is not `all`), `SKIP_QC` from `--skip_qc`. Each prunes the matching data
+    collections and the tiles that read them; `--var SKIP_ARRIBA=false` overrides.
 
 ---
 

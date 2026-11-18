@@ -60,10 +60,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="2.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.3.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/viralrecon 3.0.0</span>
-<span class="gtd-badge gtd-template-ver">Template 2.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.3.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables

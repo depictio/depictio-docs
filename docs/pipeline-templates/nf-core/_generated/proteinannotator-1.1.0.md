@@ -53,15 +53,16 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
 .gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
 .gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.1.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/proteinannotator 1.1.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.1.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -74,10 +75,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `METADATA_FILE` | — | Optional design table (TSV or CSV): sample id in the first column (or a column named sample), one column per factor. Enables the design filter and the design card. |
 | `METADATA_ID_COL` | — | Design table sample-id column (links join on it). Auto-detected as the first column; defaults to 'sample'. |
 | `GROUP_COL` | — | Design column the dashboards group and filter by. Auto-detected as the first factor column of METADATA_FILE. |
-| `SKIP_INTERPROSCAN` | — | Set (--var SKIP_INTERPROSCAN=true) for a run with --skip_interproscan: no functional_annotation/, so the InterProScan collections are pruned. |
-| `SKIP_S4PRED` | — | Set (--var SKIP_S4PRED=true) for a run with --skip_s4pred: no s4pred/, so the secondary-structure collections are pruned (the residue table keeps its sequence and domains). |
 
-**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`, `SKIP_INTERPROSCAN`, `SKIP_S4PRED`
 
 ### :material-database-outline: Data collections
 

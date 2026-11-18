@@ -20,11 +20,12 @@ hide:
   <span class="template-status-reviewed template-banner-badge" data-tooltip="Reviewed: tested, CI passes, and reviewed by the Depictio team or community."><i class="mdi mdi-check-circle-outline"></i> Reviewed</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="2.18.0">
+<div class="tpl-version-pick" data-latest="3.1.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Pipeline version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
-    <option value="2.18.0" selected>2.18.0</option>
+    <option value="3.1.0" selected>3.1.0</option>
+    <option value="2.18.0">2.18.0</option>
     <option value="2.16.0">2.16.0</option>
     <option value="2.14.0">2.14.0</option>
   </select>
@@ -63,10 +64,11 @@ differential taxa, one tab per step:
     ```
 
     The results directory is the only thing you have to pass. The samplesheet is picked up
-    from `input/`, and `pipeline_info/params.json` fills in the metadata file the
-    run was given (`--metadata`) and the route flags: multi-region, `--skip_qiime`,
-    `--skip_taxonomy`, `--skip_alpha_rarefaction`, `--skip_ancom`, and the depth of
-    the Phylum rank in the taxonomy database.
+    from `input/`, and the run's params fill in the metadata file the run was
+    given (`--metadata`), the route flags (multi-region, `--skip_qiime`,
+    `--skip_taxonomy`, `--skip_alpha_rarefaction`, ANCOM-BC off without
+    `--ancombc` or `--metadata`), the depth of the Phylum rank in the taxonomy
+    database and, from 3.x, the DADA2 database label (`DADA2_REF_DB`).
 
 === "Choose the grouping column"
 
@@ -88,7 +90,7 @@ differential taxa, one tab per step:
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/ampliseq -r 2.18.0 -profile docker --outdir results
+    nextflow run nf-core/ampliseq -r 3.1.0 -profile docker --outdir results
     ```
 
     No ingestion command and no template named: the pipeline ingests its own
@@ -101,8 +103,14 @@ differential taxa, one tab per step:
 
 Running without `METADATA_FILE` prunes the metadata-dependent collections
 (see the *Conditional routes* table); the multi-region, `--skip_qiime`,
-`--skip_taxonomy`, `--skip_alpha_rarefaction` and `--skip_ancom` routes are
-auto-detected from the run's `params.json`.
+`--skip_taxonomy`, `--skip_alpha_rarefaction` and ANCOM-BC routes are set from
+the run's params.
+
+!!! info "ampliseq 3.x"
+    3.0.0 renamed the samplesheet columns `sampleID`, `forwardReads` and
+    `reverseReads` to `sample`, `fastq_1` and `fastq_2`; the 3.1.0 template links
+    on `sample`. Domain is read as the top rank, `<rank>_confidence` columns are
+    no longer counted as samples, and sbdi-gtdb's Phylum is back at level 2.
 
 !!! info "Self-adapting layout"
     The dashboard adapts to whatever the run actually produced: components bound to
@@ -111,9 +119,15 @@ auto-detected from the run's `params.json`.
     there are no empty rows. One template therefore covers 16S/ITS, single- vs.
     multi-region (SIDLE), and `skip_qiime` runs without edits.
 
-<div class="tpl-version-block" data-version="2.18.0" markdown>
+<div class="tpl-version-block" data-version="3.1.0" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/ampliseq-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="2.18.0" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/ampliseq-2.18.0.md"
 
 </div>
 
@@ -385,7 +399,7 @@ ordination embedding narrows nothing, since its collection has no outgoing link.
 Depictio reads the **output** of nf-core/ampliseq, it does not run the pipeline. Run the pipeline first:
 
 ```bash
-nextflow run nf-core/ampliseq -r 2.18.0 \
+nextflow run nf-core/ampliseq -r 3.1.0 \
   --input samplesheet.tsv \
   --FW_primer GTGYCAGCMGCCGCGGTAA \
   --RV_primer GGACTACNVGGGTWTCTAAT \
@@ -401,7 +415,7 @@ depictio ingest results/ \
   --var GROUP_COL=habitat
 ```
 
-See [nf-co.re/ampliseq/usage](https://nf-co.re/ampliseq/2.18.0/docs/usage) for full pipeline documentation.
+See [nf-co.re/ampliseq/usage](https://nf-co.re/ampliseq/3.1.0/docs/usage) for full pipeline documentation.
 
 ---
 
@@ -414,7 +428,7 @@ from `params.json`.
 ```text
 <DATA_ROOT>/
 ├── input/
-│   ├── Samplesheet.tsv                            # auto-detected (or --var SAMPLESHEET_FILE)
+│   ├── samplesheet.csv                            # auto-detected, CSV or TSV (or --var SAMPLESHEET_FILE)
 │   └── Metadata.tsv                               # read from params.json (or --var METADATA_FILE)
 ├── pipeline_info/
 │   ├── params_<timestamp>.json                    # route flags and the metadata path
@@ -427,7 +441,8 @@ from `params.json`.
 │   │   └── <metric>_vector/metadata.tsv           # shannon, observed_features, faith_pd, evenness
 │   ├── barplot/level-<N>[.<label>].csv            # N = Phylum depth of the database
 │   ├── rel_abundance_tables/rel-table-<N>.tsv     # Phylum down to Genus
-│   ├── ancombc/differentials/                     # requires --metadata, skipped by --skip_ancom
+│   ├── rel_abundance_tables/rel-table-ASV_with-DADA2-<db>-tax.tsv  # 3.x; <db> is DADA2_REF_DB
+│   ├── ancombc/differentials/                     # requires --metadata and --ancombc
 │   │   └── Category-<GROUP_COL>-level-<N>/
 │   │       └── {lfc,p_val,q_val,se,w}_slice[.<label>].csv  # .<label>: a second database
 │   └── phylogenetic_tree/tree.nwk                 # or --var TREE_FILE
@@ -442,15 +457,15 @@ from `params.json`.
 
 ## :material-flask-outline: Validation runs
 
-The template is validated against the nf-core AWS megatest of the 2.18.0
+The template is validated against the nf-core AWS megatest of the 3.1.0
 release, a 16S run with sample metadata, and the screenshots above come from
 the bundled Ammer catchment reference project resolved with
 `GROUP_COL=habitat`. `megatest.yaml` lists the tables-only subset of that run
 the template needs:
 
 ```bash
-python scripts/nfcore_megatest.py fetch --pipeline ampliseq --version 2.18.0 --dest /tmp/ampliseq_test
-depictio ingest /tmp/ampliseq_test --template nf-core/ampliseq/2.18.0 --var GROUP_COL=habitat
+python scripts/nfcore_megatest.py fetch --pipeline ampliseq --version 3.1.0 --dest /tmp/ampliseq_test
+depictio ingest /tmp/ampliseq_test --template nf-core/ampliseq/3.1.0 --var GROUP_COL=habitat
 ```
 
 Do not pass `--project` when ingesting: the dashboard is attached to the
@@ -462,7 +477,7 @@ Re-ingesting accumulates dashboards, so delete the project before repeating a ru
 ## :material-link-variant: Additional resources
 
 - [nf-co.re/ampliseq](https://nf-co.re/ampliseq): official pipeline documentation
-- [nf-co.re/ampliseq/2.18.0/results](https://nf-co.re/ampliseq/2.18.0/results): AWS test results
+- [nf-co.re/ampliseq/3.1.0/results](https://nf-co.re/ampliseq/3.1.0/results): AWS test results
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes
 

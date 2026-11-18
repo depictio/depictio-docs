@@ -20,11 +20,12 @@ hide:
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="3.11.0">
+<div class="tpl-version-pick" data-latest="3.12.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Pipeline version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
-    <option value="3.11.0" selected>3.11.0</option>
+    <option value="3.12.0" selected>3.12.0</option>
+    <option value="3.11.0">3.11.0</option>
     <option value="3.10.0">3.10.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
@@ -96,7 +97,7 @@ through the sample links.
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/sarek -r 3.11.0 -profile docker --outdir results
+    nextflow run nf-core/sarek -r 3.12.0 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -122,9 +123,15 @@ recipes keep one pass per sample, so no tile counts a sample twice.
     re-packed so there are no empty rows. A run without SnpEff in `--tools`
     drops the Consequences, Genes and Protein tabs instead of failing to ingest.
 
-<div class="tpl-version-block" data-version="3.11.0" markdown>
+<div class="tpl-version-block" data-version="3.12.0" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/sarek-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="3.11.0" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/sarek-3.11.0.md"
 
 </div>
 
@@ -483,21 +490,21 @@ Run the pipeline first, with the callers you want to compare and SnpEff among
 the tools:
 
 ```bash
-nextflow run nf-core/sarek -r 3.11.0 \
+nextflow run nf-core/sarek -r 3.12.0 \
   --input samplesheet.csv \
   --genome GATK.GRCh38 \
   --tools haplotypecaller,deepvariant,strelka,freebayes,manta,snpeff \
   --outdir results -profile docker
 ```
 
-Then point Depictio at the results. sarek 3.11.0 ships a MultiQC parquet, so no
+Then point Depictio at the results. sarek 3.12.0 ships a MultiQC parquet, so no
 reprocess step is needed:
 
 ```bash
 depictio ingest results/ --template nf-core/sarek/latest
 ```
 
-See [nf-co.re/sarek/usage](https://nf-co.re/sarek/3.11.0/docs/usage) for full pipeline documentation.
+See [nf-co.re/sarek/usage](https://nf-co.re/sarek/3.12.0/docs/usage) for full pipeline documentation.
 
 ---
 
@@ -537,12 +544,12 @@ The template was validated against the AWS megatest of the 3.10.0 release,
 `test_full_germline_ncbench_agilent/` profile: one NA12878 exome sequenced at two
 depths, five germline callers (DeepVariant, FreeBayes, HaplotypeCaller, Manta,
 Strelka) and both annotators. The screenshots above come from that run. The 3.11.0
-release publishes a run folder of the same layout, and a bump check against it
-found every path the template reads unchanged. `megatest.yaml` lists the tables-only subset the template needs, plus the
+and 3.12.0 releases publish run folders of the same layout; the 3.12.0 template
+is pinned to its own run, `results-786a11bb4f989751d1c4bb87908ffc6096635ff3`. `megatest.yaml` lists the tables-only subset the template needs, plus the
 per-caller VCFs and their SnpEff twins:
 
 ```bash
-bash depictio/projects/nf-core/sarek/3.11.0/download_test_data.sh /tmp/sarek_test
+bash depictio/projects/nf-core/sarek/3.12.0/download_test_data.sh /tmp/sarek_test
 depictio ingest /tmp/sarek_test --template nf-core/sarek/latest
 ```
 
@@ -555,7 +562,7 @@ Re-ingesting accumulates dashboards, so delete the project before repeating a ru
 ## :material-link-variant: Additional resources
 
 - [nf-co.re/sarek](https://nf-co.re/sarek): official pipeline documentation
-- [nf-co.re/sarek/3.11.0/results](https://nf-co.re/sarek/3.11.0/results): AWS test results
+- [nf-co.re/sarek/3.12.0/results](https://nf-co.re/sarek/3.12.0/results): AWS test results
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes
 

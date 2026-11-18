@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="2.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.2.1" data-template-updated="2026-11-12">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/sarek 3.10.0</span>
-<span class="gtd-badge gtd-template-ver">Template 2.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.2.1</span>
+<span class="gtd-badge gtd-updated">Updated 12 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -79,7 +79,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 
 52 data collections — <span class="gtd-badge gtd-req">9 required</span> <span class="gtd-badge gtd-opt">43 optional</span> · <span class="gtd-badge gtd-direct">20 direct</span> <span class="gtd-badge gtd-derived">32 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|

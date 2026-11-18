@@ -20,11 +20,12 @@ hide:
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="1.0.4">
+<div class="tpl-version-pick" data-latest="2.0.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Pipeline version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
-    <option value="1.0.4" selected>1.0.4</option>
+    <option value="2.0.0" selected>2.0.0</option>
+    <option value="1.0.4">1.0.4</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
@@ -52,10 +53,17 @@ group, then the sample) apply to every tab, and `Splicing filters` (one contrast
 then genes) to every splicing tab. The contrast sheet is linked to every
 splicing collection, so one contrast pick scopes every splicing tab.
 
-!!! warning "MultiQC 1.18 writes no parquet"
-    rnasplice 1.0.4 pins MultiQC 1.18, and Depictio reads only
-    `multiqc.parquet` (MultiQC 1.31 and later). Rebuild it from the tool outputs
-    before ingesting:
+!!! info "2.0.0: copy the run's sheets under `input/`"
+    rnasplice 2.0.0 publishes neither its validated sample sheet nor its contrast
+    sheet, so copy the run's `--input` and `--contrasts` sheets to
+    `input/samplesheet.csv` and `input/contrastsheet.csv`. The DEXSeq, SUPPA and
+    rMATS recipes read both the 1.0.4 and the 2.0.0 file layouts, and take each
+    effect's sign from the files.
+
+!!! warning "1.0.4: MultiQC 1.18 writes no parquet"
+    rnasplice 2.0.0 ships a `multiqc.parquet`. 1.0.4 pins MultiQC 1.18, and
+    Depictio reads only `multiqc.parquet` (MultiQC 1.31 and later). Rebuild it
+    from the tool outputs before ingesting a 1.0.4 run:
 
     ```bash
     python -m depictio.dev_scripts.multiqc_reprocess --src <outdir> --dest <outdir>/multiqc/multiqc_data
@@ -80,8 +88,8 @@ splicing collection, so one contrast pick scopes every splicing tab.
       --template nf-core/rnasplice/latest
     ```
 
-    The results directory is the only thing you have to pass: the validated sample sheet
-    always carries `condition`, which `GROUP_COL` defaults to. Add a design table
+    Pass the results directory, with the run's sheets under `input/` for 2.0.0: the
+    sample sheet always carries `condition`, which `GROUP_COL` defaults to. Add a design table
     with more factors, name the assembly the event loci link to in UCSC, or read
     the pseudo-alignment route:
 
@@ -97,7 +105,7 @@ splicing collection, so one contrast pick scopes every splicing tab.
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/rnasplice -r 1.0.4 -profile docker --outdir results
+    nextflow run nf-core/rnasplice -r 2.0.0 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -106,7 +114,7 @@ splicing collection, so one contrast pick scopes every splicing tab.
 
 The calls are thresholded by variables with generic defaults: `SPLICING_FDR`
 (0.05) on every tool's adjusted p-value, SUPPA2's empirical p-value included,
-`MIN_DPSI` (0.1) on the PSI change of rMATS and SUPPA2 events, and
+`MIN_DPSI` (0, an optional extra floor) on the PSI change of rMATS and SUPPA2 events, and
 `RMATS_MIN_READS` (10) mean junction reads per replicate an rMATS event needs in
 both conditions.
 
@@ -114,7 +122,7 @@ both conditions.
 
 ## :material-book-open-variant: Reference
 
-The template reads the MultiQC report, the validated sample and contrast sheets,
+The template reads the MultiQC report, the run's sample and contrast sheets,
 the merged Salmon gene TPMs and the result tables of the five splicing tools. A
 pipeline-local `splicing_genes` recipe joins the tools into one row per gene,
 linked on `gene_id` to every tool collection, so the `Gene` filter of the left
@@ -128,9 +136,15 @@ comes from.
     visualizations are dropped entirely, and the remaining components are
     re-packed so there are no empty rows.
 
-<div class="tpl-version-block" data-version="1.0.4" markdown>
+<div class="tpl-version-block" data-version="2.0.0" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/rnasplice-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="1.0.4" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/rnasplice-1.0.4.md"
 
 </div>
 
@@ -389,21 +403,22 @@ you want (each has its own switch: `--dexseq_exon`, `--edger_exon`,
 `--dexseq_dtu`, `--rmats`, `--suppa`):
 
 ```bash
-nextflow run nf-core/rnasplice -r 1.0.4 \
+nextflow run nf-core/rnasplice -r 2.0.0 \
   --input samplesheet.csv \
   --contrasts contrastsheet.csv \
   --genome GRCh38 \
   --outdir results -profile docker
 ```
 
-Then rebuild the MultiQC parquet and point Depictio at the results:
+Then copy the two sheets under `input/` and point Depictio at the results:
 
 ```bash
-python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/multiqc/multiqc_data
+mkdir -p results/input
+cp samplesheet.csv contrastsheet.csv results/input/
 depictio ingest results/ --template nf-core/rnasplice/latest --var GENOME=hg38
 ```
 
-See [nf-co.re/rnasplice/usage](https://nf-co.re/rnasplice/1.0.4/docs/usage) for full pipeline documentation.
+See [nf-co.re/rnasplice/usage](https://nf-co.re/rnasplice/2.0.0/docs/usage) for full pipeline documentation.
 
 ---
 
@@ -415,50 +430,51 @@ value of `QUANT_ROUTE`.
 
 ```text
 <DATA_ROOT>/
-├── pipeline_info/
-│   ├── samplesheet.valid.csv                  # the hub: sample and condition
-│   └── params_*.json
-├── contrastsheet/contrastsheet.valid.csv      # contrast, treatment, control
+├── input/
+│   ├── samplesheet.csv                        # the run's --input, the hub: sample and condition
+│   └── contrastsheet.csv                      # the run's --contrasts: contrast, treatment, control
+├── pipeline_info/params_*.json
 ├── multiqc/multiqc_data/
-│   └── multiqc.parquet                        # rebuilt with multiqc_reprocess
+│   └── multiqc.parquet                        # shipped by 2.0.0
 ├── <route>/
 │   ├── tximport/salmon.merged.gene_tpm.tsv    # sample PCA and heatmap
-│   ├── dexseq_dtu/results/dexseq/{DEXSeqResults,perGeneQValue}.*.tsv
-│   └── suppa/diffsplice/per_local_event/*_local_diffsplice.dpsi
+│   ├── dexseq_dtu/**/*.dexseq.{results,gene_qvalues}.tsv
+│   └── suppa/diffsplice/per_local_event/local_*.dpsi
 └── star_salmon/                               # alignment-based tools
-    ├── dexseq_exon/results/{DEXSeqResults,perGeneQValue}.*.csv
+    ├── dexseq_exon/results/*.dexseq.{results,gene_qvalues}.tsv
     ├── edger/contrast_*.usage.*.csv
-    ├── rmats/*/rmats_post/*.MATS.JCEC.txt
+    ├── rmats/<contrast>[_paired]/**/*.MATS.JCEC.txt
     └── log/*.SJ.out.tab                       # STAR junctions, the Splicing Events sashimi
 ```
 
+A 1.0.4 run keeps its sheets in `pipeline_info/samplesheet.valid.csv` and
+`contrastsheet/contrastsheet.valid.csv`, and its DEXSeq tables as
+`{DEXSeqResults,perGeneQValue}.*`.
+
 `METADATA_FILE` is optional: a TSV or CSV with the sample id in the first column
 and one column per design factor, whose first annotation column then becomes
-`GROUP_COL`. The MultiQC reprocess also needs the FastQC zips, Trim Galore
-reports, STAR logs, samtools stats, featureCounts summaries and Salmon folders
-of the run.
+`GROUP_COL`. For 1.0.4, the MultiQC reprocess also needs the FastQC zips, Trim
+Galore reports, STAR logs, samtools stats, featureCounts summaries and Salmon
+folders of the run.
 
 ---
 
 ## :material-flask-outline: Validation runs
 
-The AWS megatest prefix for rnasplice is a truncated sync with no splicing
-output, so the template was validated on an EMBL cluster run of the release's
-`test_full` profile instead: six samples in two conditions, a contrast and its
-mirror, both quantification routes and all five splicing tools enabled, aligned
-to GRCh37 (hence `GENOME=hg19` for the UCSC links). The screenshots above come
-from that run, with the design table vendored under `input/metadata.tsv`.
-`megatest.yaml` has no pinned `results_sha` and lists the tables-only subset of
-a run the template needs, so a usable S3 run can be pinned later without
-rewriting it. Until then the download script resolves the latest published
-prefix, which holds no splicing tables: to reproduce the full dashboard, run the
-`test_full` profile yourself, then rebuild the parquet and ingest with the
-vendored design table:
+The 2.0.0 template is validated on the release's AWS megatest,
+`results-aceb47ab77cf0edfb290a44035328ed5b7eb0be8`, the first complete one for the
+pipeline (`test_full`: six samples in two conditions, a contrast and its mirror,
+aligned to GRCh37, hence `GENOME=hg19` for the UCSC links). The run's sample and
+contrast sheets and a design table are vendored under `input/`. 1.0.4 was
+validated on an EMBL cluster run of the same profile, and the screenshots above
+come from that run.
 
 ```bash
-python -m depictio.dev_scripts.multiqc_reprocess --src <outdir> --dest <outdir>/multiqc/multiqc_data
-depictio ingest <outdir> --template nf-core/rnasplice/latest \
-  --var METADATA_FILE=depictio/projects/nf-core/rnasplice/1.0.4/input/metadata.tsv \
+bash depictio/projects/nf-core/rnasplice/2.0.0/download_test_data.sh /tmp/rnasplice_test
+mkdir -p /tmp/rnasplice_test/input
+cp depictio/projects/nf-core/rnasplice/2.0.0/input/* /tmp/rnasplice_test/input/
+depictio ingest /tmp/rnasplice_test --template nf-core/rnasplice/latest \
+  --var METADATA_FILE=/tmp/rnasplice_test/input/metadata.tsv \
   --var GENOME=hg19
 ```
 
@@ -471,7 +487,7 @@ Re-ingesting accumulates dashboards, so delete the project before repeating a ru
 ## :material-link-variant: Additional resources
 
 - [nf-co.re/rnasplice](https://nf-co.re/rnasplice): official pipeline documentation
-- [nf-co.re/rnasplice/1.0.4/results](https://nf-co.re/rnasplice/1.0.4/results): AWS test results (truncated for this release)
+- [nf-co.re/rnasplice/2.0.0/results](https://nf-co.re/rnasplice/2.0.0/results): AWS test results
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes
 

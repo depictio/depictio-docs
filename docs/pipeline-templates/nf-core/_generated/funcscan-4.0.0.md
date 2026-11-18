@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.1.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/funcscan 4.0.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.1.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -73,10 +73,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 |---|:--:|---|
 | `DATA_ROOT` | ✓ | Root directory containing funcscan pipeline output (reports/, cazyme/, multiqc/) |
 | `SAMPLESHEET_FILE` | — | Path to the funcscan samplesheet (sample,fasta). Auto-detected from {DATA_ROOT}/input/ when omitted. The AWS megatest does not publish it; see megatest.yaml post_fetch_help for the curl line. |
-| `SKIP_ARG` | — | Set (--var SKIP_ARG=true) for a run without --run_arg_screening. Prunes the hAMRonization data collections and the Resistome tab. |
-| `SKIP_AMP` | — | Set (--var SKIP_AMP=true) for a run without --run_amp_screening. Prunes the AMPcombi data collections and the AMPs tab. |
-| `SKIP_BGC` | — | Set (--var SKIP_BGC=true) for a run without --run_bgc_screening. Prunes the comBGC data collections and the BGCs tab. |
-| `SKIP_CAZYME` | — | Set (--var SKIP_CAZYME=true) for a run without --run_cazyme_screening. Prunes the run_dbCAN data collections and the CAZymes tab. |
+
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `SKIP_ARG`, `SKIP_AMP`, `SKIP_BGC`, `SKIP_CAZYME`
 
 ### :material-database-outline: Data collections
 

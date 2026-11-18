@@ -20,11 +20,12 @@ hide:
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="1.1.1">
+<div class="tpl-version-pick" data-latest="1.2.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Pipeline version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
-    <option value="1.1.1" selected>1.1.1</option>
+    <option value="1.2.0" selected>1.2.0</option>
+    <option value="1.1.1">1.1.1</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
@@ -95,7 +96,7 @@ per-condition tables by condition.
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/quantms -r 1.1.1 -profile docker --outdir results
+    nextflow run nf-core/quantms -r 1.2.0 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
@@ -111,7 +112,7 @@ The template reads the design quantms parsed from the SDRF, the mzML spectrum
 statistics, the DIA-NN precursor report and protein-group matrix, and the MSstats
 comparisons. Derived collections (the run summary, the protein summary, the
 per-condition statistics, the run projection and the replicate pairs) are recipes
-over those tables. There is no MultiQC tab: quantms 1.1.1 reports through pmultiqc
+over those tables. There is no MultiQC tab: quantms 1.x reports through pmultiqc
 custom content, which has no `multiqc.parquet`, so the plots of that report are
 rebuilt from the result tables.
 
@@ -128,9 +129,15 @@ this release reports no mass error, so Identification has no mass-accuracy view.
     re-packed so there are no empty rows. With one condition there is no contrast,
     and Differential abundance shows empty panels.
 
-<div class="tpl-version-block" data-version="1.1.1" markdown>
+<div class="tpl-version-block" data-version="1.2.0" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/quantms-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="1.1.1" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/quantms-1.1.1.md"
 
 </div>
 
@@ -252,7 +259,7 @@ Depictio reads the **output** of nf-core/quantms, it does not run the pipeline.
 Run the pipeline first, on an SDRF of a DIA experiment:
 
 ```bash
-nextflow run nf-core/quantms -r 1.1.1 \
+nextflow run nf-core/quantms -r 1.2.0 \
   --input sdrf.tsv \
   --outdir results \
   -profile docker
@@ -265,7 +272,7 @@ directory of the DIA results:
 depictio ingest results/ --template nf-core/quantms/latest
 ```
 
-See [nf-co.re/quantms/usage](https://nf-co.re/quantms/1.1.1/docs/usage) for full pipeline documentation.
+See [nf-co.re/quantms/usage](https://nf-co.re/quantms/1.2.0/docs/usage) for full pipeline documentation.
 
 ---
 
@@ -282,7 +289,7 @@ scans recursively and matches on file name.
 ├── sdrfparsing/
 │   ├── *_openms_design.tsv                     # runs, sample, MSstats condition
 │   └── *_config.tsv                            # acquisition settings
-├── mzmlstatistics/*_mzml_info.tsv
+├── mzmlstatistics/*_ms_info.tsv                # *_mzml_info.tsv up to 1.1.1
 ├── diannsummary/
 │   ├── diann_report.tsv                        # precursors
 │   └── diann_report.pg_matrix.tsv              # protein groups
@@ -294,12 +301,12 @@ scans recursively and matches on file name.
 ## :material-flask-outline: Validation runs
 
 The repository ships
-[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/1.1.1/download_test_data.sh),
+[`download_test_data.sh`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/1.2.0/download_test_data.sh),
 which fetches the tables of nf-core's AWS megatest run that the template needs and
 copies the vendored SDRF into `input/`:
 
 ```bash
-bash depictio/projects/nf-core/quantms/1.1.1/download_test_data.sh \
+bash depictio/projects/nf-core/quantms/1.2.0/download_test_data.sh \
   /tmp/quantms_test
 depictio ingest /tmp/quantms_test --template nf-core/quantms/latest
 ```
@@ -308,7 +315,10 @@ The run is
 `s3://nf-core-awsmegatests/quantms/results-600505011027ab196bb18b1320607468bdae951a/`,
 whose `mode_dia/` folder holds four label-free DIA runs of two conditions. It
 therefore has a single contrast, and the per-contrast views read one. The other
-two modes of that run (`mode_lfq`, `mode_tmt`) are not read.
+two modes of that run (`mode_lfq`, `mode_tmt`) are not read. It is a 1.1.1 run:
+the 1.2.0 release run is empty, so 1.2.0 was checked on its own `-profile
+test_dia` run, whose spectrum tables are `<run>_ms_info.tsv` with an `MS_peaks`
+column per MS level. The recipes read both layouts.
 
 ---
 

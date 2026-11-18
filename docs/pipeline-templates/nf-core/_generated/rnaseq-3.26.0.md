@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="2.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.4.0" data-template-updated="2026-11-17">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/rnaseq 3.26.0</span>
-<span class="gtd-badge gtd-template-ver">Template 2.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.4.0</span>
+<span class="gtd-badge gtd-updated">Updated 17 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -73,10 +73,9 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 |---|:--:|---|
 | `DATA_ROOT` | ✓ | Root directory containing rnaseq pipeline output for one aligner route (multiqc/, star_salmon/, salmon/, trimgalore/) |
 | `SAMPLESHEET_FILE` | — | Path to the rnaseq samplesheet (sample, fastq_1, fastq_2, strandedness). Auto-detected from {DATA_ROOT}/input/ (CSV or TSV) when omitted. |
-| `PSEUDOALIGNER_ONLY` | — | Set (--var PSEUDOALIGNER_ONLY=true) for a --skip_alignment run: there is no star_salmon/, so the expression panels read the matrices under salmon/ instead. Matches the run's params.json skip_alignment. |
-| `SKIP_MULTIQC` | — | Set (--var SKIP_MULTIQC=true) for a run with --skip_multiqc or --skip_qc. Prunes the MultiQC data collection: no report was written, so the QC tab has nothing to read. |
-| `SKIP_QUANTIFICATION_MERGE` | — | Set (--var SKIP_QUANTIFICATION_MERGE=true) for a run with --skip_quantification_merge. The merged salmon.merged.gene_*.tsv matrices are absent, so every expression panel loses its source and only the QC tab survives. |
 | `TRACKS_URI` | — | s3:// or https:// folder holding the aligner route's results (the folder DATA_ROOT mirrors), to read the genome-browser tracks (stranded bigWig, BAM) in place instead of uploading them from DATA_ROOT. For the megatest: s3://nf-core-awsmegatests/rnaseq/results-e7ca46272c8f9d5ceee3f71759f4ba551d3217a4/aligner_star_salmon |
+
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `PSEUDOALIGNER_ONLY`, `SKIP_MULTIQC`, `SKIP_QUANTIFICATION_MERGE`
 
 ### :material-database-outline: Data collections
 

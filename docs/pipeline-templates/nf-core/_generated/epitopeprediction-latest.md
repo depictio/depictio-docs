@@ -54,18 +54,19 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
 .gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
 .gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.2.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/epitopeprediction 3.2.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.2.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
-### Template variables
+### :material-code-braces: Template variables
 
 Variables you provide when running the template: `DATA_ROOT` is the results directory given to `depictio ingest`, the others are set with `--var NAME=value`:
 
@@ -77,28 +78,29 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `GROUP_COL` | — | Samplesheet column the dashboard groups and filters samples by. Defaults to input_type (Variants, Proteins or Peptides), derived from the sheet; name any design column added to the sheet instead. |
 | `GROUP_COL_DISPLAY` | — | Reader-facing label of GROUP_COL, used in filter and card titles. |
 | `NO_VARIANT_INPUT` | — | Set (--var NO_VARIANT_INPUT=true) for a run whose samplesheet has no VCF: variant_peptides/ is absent and no mutant peptide has a wild type, so both collections are removed. |
-| `NO_WILD_TYPE` | — | Set (--var NO_WILD_TYPE=true) for a run without --wild_type, or with no missense variant: no wild-type peptide was predicted, so the mutant / wild-type collection is removed. |
 | `SINGLE_PREDICTOR` | — | Set (--var SINGLE_PREDICTOR=true) for a run with one prediction tool per MHC class: no peptide is scored by two tools, so the agreement collection and the Predictors tab are removed. |
 
-### Data collections
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `NO_WILD_TYPE`
+
+### :material-database-outline: Data collections
 
 9 data collections — <span class="gtd-badge gtd-req">6 required</span> <span class="gtd-badge gtd-opt">3 optional</span> · <span class="gtd-badge gtd-direct">9 direct</span> <span class="gtd-badge gtd-derived">0 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `samples` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/epitopeprediction/samples.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc\.parquet$`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `epitopeprediction_predictions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`epitopeprediction/predictions.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `epitopeprediction_peptides` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`epitopeprediction/peptides.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `epitopeprediction_allele_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`epitopeprediction/allele_summary.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `epitopeprediction_predictor_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`epitopeprediction/predictor_summary.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `epitopeprediction_predictor_agreement` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`epitopeprediction/predictor_agreement.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `epitopeprediction_wildtype_pairs` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`epitopeprediction/wildtype_pairs.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `epitopeprediction_variant_peptides` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`epitopeprediction/variant_peptides.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `samples` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/epitopeprediction/recipes/samples.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/epitopeprediction/samples.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc\.parquet$</code> | <span class="gtd-badge gtd-req">required</span> |
+| `epitopeprediction_predictions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/predictions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">epitopeprediction/predictions.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `epitopeprediction_peptides` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/peptides.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">epitopeprediction/peptides.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `epitopeprediction_allele_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/allele_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">epitopeprediction/allele_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `epitopeprediction_predictor_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/predictor_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">epitopeprediction/predictor_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `epitopeprediction_predictor_agreement` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/predictor_agreement.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">epitopeprediction/predictor_agreement.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `epitopeprediction_wildtype_pairs` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/wildtype_pairs.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">epitopeprediction/wildtype_pairs.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `epitopeprediction_variant_peptides` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/variant_peptides.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">epitopeprediction/variant_peptides.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 
-### Conditional routes
+### :material-directions-fork: Conditional routes
 
 Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (6 collections are unaffected by any variable — present on every run.)
 
@@ -113,7 +115,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><th class="dc"><code>epitopeprediction_variant_peptides</code></th><td class="minus" title="removed when NO_VARIANT_INPUT is set">−</td><td></td><td></td></tr>
 </tbody></table></div>
 
-### Cross-DC links
+### :material-vector-link: Cross-DC links
 
 14 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
@@ -137,14 +139,14 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>epitopeprediction_predictor_summary</code> <span class="col">·&nbsp;predictor</span></td><td class="arr">→</td><td><code>epitopeprediction_predictions</code></td><td>Carry a tool pick on the Predictors tab to the predictions</td></tr>
 </tbody></table></div>
 
-### Recipes
+### :material-chef-hat: Recipes
 
 Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `OUTPUT_SCHEMA` columns.
 
 | Recipe | Transforms | Output |
 |---|---|---|
 | [`epitopeprediction/allele_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/allele_summary.py) | Binding per allele of nf-core/epitopeprediction, one row per sample and allele. | `allele_key`, `sample`, `allele`, `hla_locus`, `mhc_class`, `predictors`, `peptides`, `binders`, `binder_rate`, `median_ic50_nm`, `best_ic50_nm`, `median_affinity_score` |
-| [`epitopeprediction/peptides.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/peptides.py) | Peptides of nf-core/epitopeprediction, one row per sample and peptide. | `peptide_key`, `sample`, `sequence`, `peptide_id`, `length`, `length_class`, `origin`, `call`, `binder`, `alleles_scored`, `binding_alleles`, `binder_calls`, `predictors`, `best_allele`, `best_predictor`, `best_ic50_nm`, `best_affinity_class`, `binding_allele_list`, `gene`, `transcript`, `consequence`, `HGVSp`, `genomic_anchor`, `uniprot`, `protein_ids`, `source_records`, `wildtype`, `wt_best_ic50_nm`, `agretopicity` |
+| [`epitopeprediction/peptides.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/peptides.py) | Peptides of nf-core/epitopeprediction, one row per sample and peptide. | `peptide_key`, `sample`, `sequence`, `peptide_id`, `length`, `length_class`, `mhc_class`, `origin`, `call`, `binder`, `alleles_scored`, `binding_alleles`, `binder_calls`, `predictors`, `best_allele`, `best_predictor`, `best_ic50_nm`, `best_affinity_class`, `binding_allele_list`, `gene`, `transcript`, `consequence`, `HGVSp`, `genomic_anchor`, `uniprot`, `protein_ids`, `source_records`, `wildtype`, `wt_best_ic50_nm`, `agretopicity` |
 | [`epitopeprediction/predictions.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/predictions.py) | Binding predictions of nf-core/epitopeprediction, one row per prediction. | `row_id`, `sample`, `sequence`, `length`, `length_class`, `origin`, `predictor`, `mhc_class`, `allele`, `hla_locus`, `affinity_score`, `ic50_nm`, `log10_ic50`, `percentile_rank`, `binder`, `call`, `affinity_class`, `peptide_id`, `gene`, `consequence`, `HGVSp`, `genomic_anchor`, `wildtype`, `wt_ic50_nm`, `agretopicity` |
 | [`epitopeprediction/predictor_agreement.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/predictor_agreement.py) | Agreement between prediction tools of nf-core/epitopeprediction. | `pair_key`, `sample`, `sequence`, `length_class`, `allele`, `hla_locus`, `mhc_class`, `predictor_pair`, `predictor_a`, `predictor_b`, `ic50_a_nm`, `ic50_b_nm`, `log10_ratio`, `abs_log10_ratio`, `binder_a`, `binder_b`, `agreement`, `concordant` |
 | [`epitopeprediction/predictor_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/epitopeprediction/predictor_summary.py) | Binder calls per tool of nf-core/epitopeprediction, one row per sample and tool. | `summary_key`, `sample`, `predictor`, `mhc_class`, `peptides`, `scored`, `unsupported`, `binders`, `binder_rate`, `alleles`, `median_ic50_nm` |
