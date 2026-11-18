@@ -5,7 +5,7 @@
     **Do not copy-paste this entire configuration blindly.** This reference shows all available options with their defaults and descriptions. Only specify values that differ from defaults or are required for your specific use case.
 
 
-This is a complete reference of all configuration options available in Depictio YAML files. For getting started and examples, see the [YAML Examples Guide](yaml-examples.md).
+This is a complete reference of all configuration options available in Depictio YAML files, as of v1.21.0. For getting started and examples, see the [YAML Examples Guide](yaml-examples.md). For a folder no template recognises, `depictio project-builder <dir>` (v1.21.0+) defines the collections in the browser and writes an ad-hoc template next to the data, which `depictio ingest <dir> --template <bundle>` runs.
 
 ```yaml
 # =============================================================================
@@ -17,6 +17,8 @@ name:
   "My Project Name" # Required: Human-readable project name
   # Must be non-empty string
   # Example: "Multi-omics Cancer Study"
+
+description: null # Optional: plain text shown with the project (HTML is removed)
 
 # Optional, ignored since v1.21.0: kept so older files still validate
 project_type:
@@ -32,7 +34,7 @@ is_public:
 # Optional: CLI integration path
 yaml_config_path:
   null # Optional: Path to this YAML file (default: null)
-  # Auto-populated by CLI, rarely set manually
+  # Set by the CLI to the file's absolute path; never set by hand
 
 # Optional: External project management integration
 data_management_platform_project_url:
@@ -40,22 +42,72 @@ data_management_platform_project_url:
   # Must start with http:// or https://
   # Example: "https://labid.embl.org/projects/123"
 
+layout:
+  null # Optional: "runs", "pipeline" or "tables" (default: null = detected)
+  # Overrides the layout the viewer detects; no backend effect
+
+realtime: # Optional: real-time updates (default: null)
+  enabled: true # Default: true
+  debounce_ms: 1000 # Default: 1000
+  watch_data_collections: null # DC tags to watch (default: null = all)
+
+# Accepted, but `depictio ingest` only scans the collections of `workflows`:
+# declare data collections under a workflow (see below).
+data_collections: [] # Optional (default: [])
+
+# Set by Depictio, never written by hand: permissions (the CLI user becomes
+# owner), registration_time, last_modified, hash, triggered_by (what ran the
+# last ingestion, default "manual"), template_origin, provenance,
+# published_lock, pending_owner_email.
+
 # =============================================================================
 # LINKS (Cross-DC Interactive Filtering)
 # =============================================================================
 
 links:  # Optional: Define relationships for cross-DC filtering
-  - source_dc_id: "sample_metadata"    # Required: DC containing the filter
+  - source_dc_tag: "sample_metadata"   # Required (or source_dc_id): DC holding the filter
     source_column: "sample_id"         # Required: Column to filter on
-    target_dc_id: "multiqc_fastqc"     # Required: DC to update when filtered
-    target_type: "multiqc"             # Required: "table" or "multiqc"
-    link_config:
-      resolver: "sample_mapping"       # Required: "direct", "sample_mapping", "pattern"
+    target_dc_tag: "multiqc_fastqc"    # Required (or target_dc_id): DC to update when filtered
+    target_type: "multiqc"             # Required: "table", "multiqc", "image" or "genomic_tracks"
+    # source_dc_id / target_dc_id take a DC id (the `id` pinned on a DC),
+    # never a tag: a tag written there matches nothing
+    link_config:                       # Optional (default: resolver "direct")
+      resolver: "sample_mapping"       # Default "direct"
       target_field: "sample_name"      # Optional: Field to match in target DC
+      # mappings: {S1: [S1_R1, S1_R2]} # Optional: explicit variants (sample_mapping)
+      # pattern: "{sample}.bam"        # Optional: must contain {sample} (pattern)
+      # columns: {chrom: chromosome, pos: position}  # Required by "region"
+      # case_sensitive: true           # Default: true
       # Resolvers:
       #   "direct" - Same value in both DCs
       #   "sample_mapping" - Canonical ID → MultiQC sample variants
       #   "pattern" - Template substitution (e.g., "{sample}.bam")
+      #   "regex" - Target values matched by a regex
+      #   "wildcard" - Glob matching (e.g., "S1*")
+      #   "region" - Genomic region renamed onto the target's chrom/pos columns
+    description: null                  # Optional
+    enabled: true                      # Default: true; disabled links are ignored
+
+# =============================================================================
+# JOINS (tables combined at ingestion)
+# =============================================================================
+
+joins: # Optional: run by `depictio ingest` on the client, stored as a new Table DC
+  - name: "expression_with_metadata" # Required: letters, digits, _ and - (1-100 chars)
+    left_dc: "gene_expression"       # Required: DC tag, or "workflow.tag" across workflows
+    right_dc: "sample_metadata"      # Required: must differ from left_dc
+    on_columns: ["sample_id"]        # Required: at least one, no duplicates
+    how: "inner"                     # Default "inner"; "left", "right", "outer"
+    workflow_name: null              # Optional: workflow unscoped tags are looked up in
+    persist: true                    # Default: true (write the result as a Delta table)
+    description: null                # Optional
+    granularity:                     # Optional: aggregate the finer table first
+      aggregate_to: "sample_id"      # Required: aggregation key column
+      numeric_default: "mean"        # Default "mean"; also sum, min, max, first, last, count, median
+      categorical_default: "first"   # Default "first"
+      column_overrides:              # Optional
+        - column: "reads"
+          function: "sum"
 
 # =============================================================================
 # WORKFLOWS (for projects with workflows)
@@ -85,17 +137,22 @@ workflows:
       "https://github.com/nf-core/rnaseq" # Optional: Source code repository
       # Example: "https://github.com/user/workflow"
     workflow_tag:
-      "nextflow/rnaseq_pipeline" # Optional: Auto-generated workflow identifier
-      # Format: "engine/name" or "catalog/name"
+      "nextflow/rnaseq_pipeline" # Optional: workflow identifier (CLI --workflow-name)
+      # Default from a YAML file: the workflow `name`
 
     # Optional: Workflow registry information
     catalog:
       name:
-        "nf-core" # Optional: Catalog name
-        # Options: "nf-core", "smk-wf-catalog", "workflowhub"
+        "nf-core" # Required in a catalog: "nf-core", "smk-wf-catalog" or "workflowhub"
       url:
-        "https://nf-co.re/rnaseq" # Optional: Catalog URL
-        # Example: "https://nf-co.re/rnaseq"
+        "https://nf-co.re/rnaseq" # Required in a catalog: http(s):// or git:// URL
+
+    # Optional: run settings and provenance
+    config:
+      version: null # Optional
+      workflow_parameters: null # Optional: free mapping of pipeline parameters
+      # Filled by ingestion when the run tells: engine_name, pipeline_version,
+      # nextflow_version, tools_executed
 
     # Required: Data location configuration
     data_location:
@@ -108,12 +165,19 @@ workflows:
       locations: # Required: Root directories to search
         - "{DATA_ROOT}/rnaseq_studies/cohort_2024" # Supports environment variable expansion: {VAR_NAME}
         - "/backup/rnaseq_data" # Examples: "/absolute/path/to/data", "{DATA_ROOT}/project1"
+        # The CLI checks that each local location exists (a directory, or a
+        # local manifest file). A location may also be an s3:// or https://
+        # URL, for remote scan modes (http:// only with DEPICTIO_REMOTE_ALLOW_HTTP)
 
       runs_regex:
         "batch_[A-C]" # Required for "sequencing-runs" structure
         # Optional for "flat" structure
         # Regex pattern to identify individual runs
         # Example: "run_\\d+", "sample_.*", "batch[A-Z]"
+
+      # attached_locations: written by `depictio ingest --attach-run`, not by hand
+
+    # runs, registration_time: written by ingestion, not by hand
 
     # Required: Data collections for this workflow
     data_collections:
@@ -128,31 +192,52 @@ workflows:
           "Per-sample gene expression quantification" # Optional: Description of the data collection
           # Used in UI tooltips and documentation
 
+        optional: false # Default: false. In a template, the DC is dropped when
+        # its source is absent instead of failing the run
+
         # Required: Data collection configuration
         config:
           # Required: Type of data collection
           type:
             "table" # Required: Data collection type
             # Options:
+            # Case-insensitive, stored lowercase. Options:
             #   "table" - Tabular data (CSV, TSV, Excel, Parquet, Feather)
             #   "MultiQC" - MultiQC quality control reports
-            #   "Image" - Image files with metadata
+            #   "Image" - A table with a column of image paths; see "IMAGE" below
             #   "geojson" - GeoJSON boundary files for choropleth maps
             #   "phylogeny" - Newick / Nexus trees for the phylogenetic viz
             #   "indexed_file" - Indexed genomic files (VCF, BAM, bigWig,
             #     bigBed, GFF3, FASTA, bgzip + tabix), range-read by the
-            #     browser; see the guide's "Indexed-file DCs" example
+            #     browser; see the "INDEXED FILE" block below
             #   "genomic_tracks" - Manifest of genome-browser tracks, one row
             #     per track file; see the "GENOMIC TRACKS" block below
+            #   "jbrowse2" - legacy, superseded by "genomic_tracks"
 
-          # Required: Data aggregation strategy
+          source:
+            "native" # Optional (default "native"): where the data comes from
+            # "native" - scanned files (needs scan)
+            # "transformed" - computed by a recipe (needs transform, no scan)
+            # "joined", "aggregated" - derived, no scan
+
+          transform: # Required when source is "transformed"; see Recipes
+            # recipe: "nf-core/ampliseq/taxonomy_rel_abundance.py"  # Required: a .py recipe
+            # source_overrides:                 # Optional: repoint a recipe source
+            #   rel_table: {path: "custom/rel-table.tsv"}  # path or glob_pattern, exactly one
+            # params: {marker_panel: "{MARKER_PANEL}"}      # Optional: passed to transform()
+            # scope: null   # Optional (v1.21.0+): "run" (once per run), "aggregate"
+            #               # (over every run) or "pipeline"; null = the recipe's default
+            # materialized, run_params: written by Depictio, not by hand
+
+          # Optional: a free label, not checked
           metatype:
-            "aggregate" # Required: Data collection metatype
-            # Options:
+            "aggregate" # Optional (default: null)
+            # Conventions:
             #   "metadata" - Single annotation/metadata file per project
             #   "aggregate" - Multiple files combined into unified dataset
+            # A join with a "Metadata" side gets no depictio_run_id column
 
-          # Required: File discovery configuration
+          # Required for native DCs except MultiQC: File discovery configuration
           scan:
             # Required: File scanning strategy
             mode:
@@ -177,10 +262,15 @@ workflows:
                 wildcards: # Optional: what each {name} placeholder of the pattern stands for
                   - name: "sample_id" # The placeholder, and since v1.16.0 a column of the table holding what it matched
                     wildcard_regex: "[^/]+" # Regex the placeholder is replaced by
+              max_depth: null # Optional: directory levels searched below each run (0 = run directory only)
+              ignore: null # Optional: glob patterns skipped, e.g. ["work", "*.tmp"]
 
               # For mode: "single" - specify exact file (alternative to regex_config)
               # filename: "metadata/sample_info.csv"  # Required for single mode: File path
               # Can be absolute or relative path
+              # scope: null   # Optional (v1.21.0+): "project" reads one file for every
+              #               # run; null (default) or "run" binds each run its own file
+              # run_files is written by the CLI on --attach-run, not by hand
 
               # For mode: "url" - one remote file, fetched by the server
               # url: "https://data.example.org/run42/metadata.tsv"  # Required: absolute s3:// or https:// URL
@@ -208,49 +298,44 @@ workflows:
               # Values: "csv", "tsv", "xlsx", "xls", "parquet", "feather"
               # Case-insensitive, normalized to lowercase
 
-            # Required: Data reading configuration using Polars
+            # Optional (default: {}): keyword arguments passed as they are to
+            # polars: scan_csv (csv, tsv), scan_parquet, scan_ipc (feather) or
+            # read_excel (xls, xlsx). A key the reader does not take fails at ingestion.
             polars_kwargs:
-              # Common options
+              # Common options (scan_csv)
               separator:
-                "\t" # Required for CSV/TSV: Column separator character
-                # Default: "," for CSV, "\t" for TSV
+                "\t" # Optional: Column separator character
+                # Unset: tab for a .tsv/.tab file (or format tsv), else ","
                 # Example: ",", "\t", "|", ";"
               has_header:
-                true # Required: First row contains column names
-                # true: First row is headers, false: First row is data
+                true # Optional (default: true): First row contains column names
               skip_rows:
                 0 # Optional: Number of rows to skip at file beginning (default: 0)
                 # Useful for files with metadata headers
 
               # Advanced options
-              column_types: # Optional: Explicit column type mapping
+              schema_overrides: # Optional: Explicit column type mapping
                 Name: "String" # Forces specific data types
                 Length: "Int64" # Example types: "String", "Int64", "Float64", "Boolean"
                 EffectiveLength: "Float64"
                 TPM: "Float64"
                 NumReads: "Float64"
-              column_names:
-                null # Optional: Override column names when has_header: false
+              new_columns:
+                null # Optional: Rename the columns, e.g. when has_header: false
                 # Example: ["sample", "gene", "expression"]
               null_values:
-                ["", "NULL", "null", "None"] # Optional: Values to treat as null/missing
-                # Default: ["", "NULL", "null", "None"]
+                ["", "NA"] # Optional: Values to treat as null/missing (default: none)
               n_rows:
                 null # Optional: Limit number of rows to read
                 # Useful for testing configurations
               encoding:
-                "utf8" # Optional: File encoding (default: "utf8")
-                # Example: "utf8", "latin1", "ascii"
+                "utf8" # Optional: "utf8" (default) or "utf8-lossy"
 
-              # Excel-specific options (for .xlsx, .xls files)
-              sheet_name:
-                null # Optional: Excel sheet name to read
-                # Example: "Results", "Sheet1"
-              sheet_id:
-                null # Optional: Excel sheet index (0-based)
-                # Example: 0 (first sheet), 1 (second sheet)
+              # Excel-specific options (read_excel, for .xlsx, .xls files)
+              # sheet_name: "Results"   # Optional: sheet to read (default: the first)
+              # sheet_id: 1             # Optional: 1-based sheet index, instead of sheet_name
 
-            # Optional: Column filtering for performance
+            # Optional (default: all columns): Column filtering for performance
             keep_columns: # Optional: Column filtering
               - "Name" # If specified, only these columns are retained
               - "TPM" # Improves performance for large datasets
@@ -262,17 +347,14 @@ workflows:
               TPM: "Transcripts per million" # Used in dashboard tooltips and documentation
               NumReads: "Estimated read count" # Example format: column_name: "Description"
 
-        # Optional: Data joining configuration (client-side pre-computed)
-        # NOTE: Joins combine Table DCs during depictio ingest
-        # Use project-level "links" for runtime cross-DC filtering in UI
-        join: # Optional: Join this collection with others
-          on_columns:
-            ["sample_id"] # Column names for joining
-            # Must exist in both datasets
-          how:
-            "inner" # Join type: "inner", "outer", "left", "right"
-          with_dc:
-            ["qc_summary"] # Target data collection tags
+            # Optional, for Map components: both or neither
+            # lat_column: "latitude"   # Column holding the latitude
+            # lon_column: "longitude"  # Column holding the longitude; must differ
+            # crs: "EPSG:4326"         # Default: "EPSG:4326"
+
+          # Legacy: config.join {on_columns, how, with_dc} is still accepted but
+          # no longer joins anything (its on_columns only order the Delta table).
+          # Declare joins at project level, under "joins" above.
 
       # --- MultiQC DATA COLLECTION (v0.5.0+) ---
       - data_collection_tag:
@@ -286,22 +368,53 @@ workflows:
           type:
             "MultiQC" # Required: Identifies this as a MultiQC data collection
             # NOTE: MultiQC type has special handling:
-            #   - Automatically detects multiqc_data/multiqc.parquet in each run
-            #   - No scan configuration needed (auto-detected)
-            #   - No metatype specification required
-            #   - No dc_specific_properties needed
+            #   - scan is optional. Without it, ingestion looks for
+            #     <location>/*/multiqc_data/multiqc.parquet (also under */multiqc/
+            #     and */*/); the templates declare a recursive scan instead
+            #   - metatype and dc_specific_properties are optional: samples,
+            #     modules and plots are filled at ingestion
             #   - Requires MultiQC 1.29+ to generate parquet format
+
+          # scan:                       # Optional, as the templates do
+          #   mode: "recursive"
+          #   scan_parameters:
+          #     regex_config:
+          #       pattern: "multiqc/multiqc_data/multiqc.parquet"
 
         # NOTE: For MultiQC, use project-level "links" instead of joins
         # Links enable interactive filtering with sample_mapping resolver
         # Example link configuration (at project level):
         #   links:
-        #     - source_dc_id: "sample_metadata"
+        #     - source_dc_tag: "sample_metadata"
         #       source_column: "sample_id"
-        #       target_dc_id: "multiqc_data"
+        #       target_dc_tag: "multiqc_data"
         #       target_type: "multiqc"
         #       link_config:
         #         resolver: "sample_mapping"
+
+      # --- IMAGE DATA COLLECTION ---
+      - data_collection_tag: "cell_images" # Required
+
+        config:
+          type: "image" # A table whose image_column holds image paths
+          metatype: "Metadata"
+          scan:
+            mode: single
+            scan_parameters:
+              filename: "path/to/images.csv" # The table, not the images
+
+          dc_specific_properties:
+            format: "csv" # Required: csv, tsv, parquet, feather, xls, xlsx or mixed
+            image_column: "image_path" # Required: column of image paths
+            s3_base_folder:
+              "s3://my-bucket/project/images/" # Optional: paths in image_column
+              # are relative to it; must start with s3://
+            local_images_path:
+              null # Optional: local folder `depictio ingest` uploads to
+              # s3_base_folder (which the CLI then requires)
+            thumbnail_size: 150 # Optional: pixels, 50 to 1000 (default 150)
+            supported_formats: [".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".bmp", ".tiff"] # Default
+            # polars_kwargs, keep_columns, columns_description: as for a Table DC
 
       # --- GeoJSON DATA COLLECTION ---
       - data_collection_tag:
@@ -320,7 +433,7 @@ workflows:
             #   - Requires a single .geojson file
 
           metatype:
-            "GeoJSON" # Required: Metatype identifier
+            "GeoJSON" # Optional: free label
 
           # Required: File discovery configuration
           scan:
@@ -331,7 +444,7 @@ workflows:
           # Required: GeoJSON-specific configuration
           dc_specific_properties:
             feature_id_key:
-              "properties.NAME" # Required: GeoJSON property path to match locations_column
+              "properties.NAME" # Optional (default "id"): GeoJSON property path to match locations_column
               # Maps to Plotly's featureidkey parameter
               # Common values: "id", "properties.NAME", "properties.ISO_A3"
 
@@ -345,12 +458,12 @@ workflows:
           type:
             "phylogeny" # Required: Identifies this as a tree data collection
             # NOTE: file-backed, nothing is parsed or converted
-            #   - Read where it was found; served as raw Newick via
+            #   - Ingestion copies the file as is to S3; served as raw Newick via
             #     /advanced_viz/phylogeny/{dc_id}/newick
             #   - Referenced by tree_dc_id in an advanced_viz component
             #     of kind "phylogenetic"
 
-          metatype: "Aggregate" # Required: Metatype identifier
+          metatype: "Aggregate" # Optional: free label
 
           scan:
             mode: single
@@ -390,7 +503,7 @@ workflows:
             #   - Rendered by the "jbrowse" component; filterable and
             #     linkable like any table (target_type: "genomic_tracks")
 
-          metatype: "Metadata" # Required: Metatype identifier
+          metatype: "Metadata" # Optional: free label
 
           scan:
             mode: single
@@ -408,6 +521,8 @@ workflows:
             sample_column: "sample" # Entity the track belongs to; used for cross-filtering
             format_column: "format" # Track format column (default "format")
             default_format: "bigwig" # Used when no column and no file extension tells
+            # Track formats: bigwig, bedgraph, bed, bigbed, narrowpeak,
+            # broadpeak, vcf, bam, cram, gff3, gtf, fasta
             index_column: "index_uri" # Index location (default "index_uri"; inferred otherwise)
             order_column: "order" # Tracks open in ascending order of this column
             name_column: "name" # Track label
@@ -440,7 +555,33 @@ workflows:
             presets: {} # Optional: named JBrowse config fragments a component can pick
 
             keep_columns: null # Optional: as for a Table DC
-            columns_description: {} # Optional: as for a Table DC
+            columns_description: null # Optional: as for a Table DC
+
+      # --- INDEXED FILE DATA COLLECTION ---
+      - data_collection_tag: "variant_files" # Required
+
+        config:
+          type: "indexed_file" # Files read whole or by range from S3; no table
+          metatype: "Aggregate" # Optional: free label
+          scan:
+            mode: recursive
+            scan_parameters:
+              regex_config:
+                pattern: "variants/.*\\.vcf\\.gz"
+
+          dc_specific_properties:
+            format:
+              "vcf" # Required: vcf, bam, bigwig, bigbed, gff3, fasta, tabix,
+              # pdb, mmcif or pae (aliases: bw, bb, gff, cif, ent)
+            index_suffix:
+              null # Optional: index sidecar suffix, starting with "."
+              # (default: the format's, e.g. .tbi; "" for no index)
+            sample_regex:
+              null # Optional: regex on the file path naming the sample
+              # (named group "sample"; default: the file name without suffixes)
+            sample_col: "sample" # Default "sample": the sample column name elsewhere in the project
+            assembly: null # Optional: genome assembly, e.g. "hg38"
+            max_file_size_mb: 512 # Default 512 (1 to 51200): larger files are skipped
 ```
 
 A `genomic_tracks` collection is shown by the [genome browser](../../features/genome-browser/index.md);
@@ -530,4 +671,6 @@ scan:
 - **[YAML Examples](yaml-examples.md)** - Complete configuration examples and patterns
 - **[Project Guide](guide.md)** - Comprehensive project management guide
 - **[Remote data and manifests](remote-data.md)** - Choosing between a URL, a prefix and a manifest
+- **[Templates](templates.md)** and **[Recipes](recipes.md)** - The `template:` block, `optional` and `transform`
+- **[Cross-DC Filtering](../../features/cross-dc-filtering.md)** - How links resolve
 - **[CLI Reference](../../depictio-cli/usage.md)** - Command-line interface documentation
