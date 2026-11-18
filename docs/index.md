@@ -930,7 +930,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a live dashboard">
-          <img class="only-light" src="images/landing/live_light.webp" alt="Three Soil samples ingested while the dashboard was open: the cards and the bar chart now count them, and the Real-time updates menu lists the events" loading="lazy">
+          <img class="only-light" src="images/landing/live_light.webp" alt="A live dashboard with its event log, new rows highlighted as they arrive" loading="lazy">
           <img class="only-dark" src="images/landing/live_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
@@ -938,7 +938,7 @@ hide:
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M11,15H6L13,1V9H18L11,23V15Z"/></svg><span>Live</span></span>
         <h3>Watch a run as it lands</h3>
-        <p>Opt a project into real-time events and its dashboards hold a WebSocket open. Each time the CLI ingests new data the server broadcasts on that channel and the affected components refresh themselves, with no reload and no polling. The <strong>Real-time updates</strong> menu lists the events as they arrive, so you can watch a run fill a dashboard in while it is still running.</p>
+        <p>Opt a project into real-time events and its dashboards hold a WebSocket open. Each time the CLI ingests new data the server broadcasts on that channel and the affected components refresh themselves, with no reload and no polling. A log beside the grid lists the events as they arrive, so you can watch a run fill a dashboard in while it is still running.</p>
         <a class="feature-link" href="usage/guides/realtime-events/">Real-time events &rarr;</a>
       </div>
     </article>
@@ -3647,6 +3647,59 @@ hide:
     height: 100%;
     object-fit: cover;
     object-position: center top;
+  }
+
+  /* Animated media say so before they play: a ring in the brand purple and a
+     "Video" pill on frames that play in place, a play button on posters that
+     open a video in the lightbox. */
+  .feature-frame--video,
+  .md-typeset .cshow-shot a[data-type="video"] img {
+    box-shadow: 0 0 0 2px rgba(124, 77, 255, 0.55), 0 18px 40px -14px rgba(124, 77, 255, 0.35);
+  }
+
+  .feature-frame--video::after,
+  .md-typeset .cshow-shot[data-video].is-live::after {
+    content: "Video";
+    position: absolute;
+    left: 0.7rem;
+    bottom: 0.7rem;
+    z-index: 2;
+    padding: 0.28rem 0.65rem 0.28rem 1.65rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(15, 17, 20, 0.62) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M8 5v14l11-7z'/%3E%3C/svg%3E") no-repeat 0.55rem center / 0.85rem;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    pointer-events: none;
+  }
+
+  .md-typeset .cshow-shot[data-video].is-live::after {
+    left: 1.3rem;
+    bottom: 1.3rem;
+  }
+
+  .md-typeset .cshow-shot a[data-type="video"]::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4rem;
+    height: 4rem;
+    margin: -2rem 0 0 -2rem;
+    border-radius: 50%;
+    background: rgba(124, 77, 255, 0.88) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M8 5v14l11-7z'/%3E%3C/svg%3E") no-repeat 56% center / 1.9rem;
+    box-shadow: 0 0 0 0.45rem rgba(124, 77, 255, 0.22), 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.25s ease;
+    pointer-events: none;
+  }
+
+  .md-typeset .cshow-shot a[data-type="video"]:hover::after,
+  .md-typeset .cshow-shot a[data-type="video"]:focus-visible::after {
+    transform: scale(1.08);
   }
 
   /* Magnifier badge, revealed on hover */
