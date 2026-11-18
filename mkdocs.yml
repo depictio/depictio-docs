@@ -291,19 +291,15 @@ extra:
     provider: google
     property: G-J14FKHSHLC
 
-  # DocBot (EMBL-EBI docs chatbot), rendered by overrides/main.html. The depictio
-  # team is live on DocBot dev (November 2026). Two forms:
-  # - link: an "Ask DocBot" button that opens the DocBot page in a new tab. Works
-  #   from any origin, so it is on by default.
-  # - widget: the embedded chat (enabled). DocBot's API answers only origins on
-  #   its CORS allow-list, and https://depictio.github.io is not on it yet: the
-  #   widget then opens but cannot load or answer. Turn it on once DocBot adds the
-  #   origin (DEPICTIO_DOCS_DOCBOT=1 to test locally); it replaces the button.
-  # Switch both URLs to production (www.ebi.ac.uk) once DocBot deploys depictio there.
+  # DocBot (EMBL-EBI docs chatbot), the embedded widget rendered by
+  # overrides/main.html, on every page, locked to the depictio team. The team is
+  # live on DocBot dev (November 2026). The widget only works once DocBot adds
+  # https://depictio.github.io to its CORS allow-list; before that it opens but
+  # cannot load or answer. Switch the backend to production (www.ebi.ac.uk) once
+  # DocBot deploys depictio there. DEPICTIO_DOCS_DOCBOT=false turns it off.
   docbot:
-    enabled: !ENV [DEPICTIO_DOCS_DOCBOT, false]
+    enabled: !ENV [DEPICTIO_DOCS_DOCBOT, true]
     team: depictio
-    link: https://wwwdev.ebi.ac.uk/docbot/?selected=depictio
     # Production: https://www.ebi.ac.uk/docbot/api
     backend: https://wwwdev.ebi.ac.uk/docbot/api
     sdk: https://docbot-64c680.gitdocs.ebi.ac.uk

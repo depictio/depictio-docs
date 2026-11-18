@@ -23,11 +23,5 @@
       backendurl="{{ docbot.backend }}"
       enableselector="false"
     ></docbot-modal>
-  {% elif docbot and docbot.link %}
-    <a class="dp-docbot-fab" href="{{ docbot.link }}" target="_blank" rel="noopener"
-       title="Ask DocBot, the EMBL-EBI docs assistant, about Depictio (opens in a new tab)">
-      {% include ".icons/material/chat-question-outline.svg" %}
-      <span>Ask DocBot</span>
-    </a>
   {% endif %}
 {% endblock %}
