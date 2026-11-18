@@ -7,34 +7,86 @@ description: "Depictio supports four authentication modes to fit different deplo
 
 Depictio supports four authentication modes, each designed for a different deployment scenario. Only one mode is active at a time.
 
-## Quick Comparison
+## Quick comparison
 
-| | **Auth** (default) | **Single-User** | **Public** | **Demo** |
-|---|---|---|---|---|
-| **Use case** | Multi-user, enterprise | Personal instance | Public-facing showcase | Guided product tour |
-| **Login required** | Yes | No | No (browse); Yes (create) | No (browse); Yes (create) |
-| **Anonymous access** | None | Full admin | Read-only | Read-only + guided tour |
-| **Dashboard creation** | Registered users | Immediate | After sign-in | After sign-in |
-| **User management** | Full RBAC | Disabled | Disabled | Disabled |
-| **Temporary users (24h)** | No | No | Yes | Yes |
-| **[OpenID Connect SSO](../../installation/sso/index.md)** | Optional | No | Optional | Optional |
-| **Guided tour** | No | No | Dashboards list | Yes |
+<div class="grid cards" markdown>
 
-## Auth Mode (Default)
+-   :material-shield-account-outline:{ .lg .middle .dp-blue } **[Auth](#auth-mode)** · default
 
-Standard multi-user authentication with full access control.
+    ---
 
-**When to use:** Teams and organizations that need user accounts, roles, and project-level permissions.
+    For teams. Everyone signs in to an account of their own, with a role on each project.
 
-```bash
-# Default - no special env vars needed
-# Optionally enable single sign-on, here with Google as an OpenID Connect provider:
-DEPICTIO_AUTH_OIDC_PROVIDERS='[{"id": "google", "label": "Sign in with Google", "discovery_url": "https://accounts.google.com/.well-known/openid-configuration"}]'
-DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_ID=your-client-id
-DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET=your-secret
-```
+    Nothing to set.
 
-See [Single sign-on (OpenID Connect)](../../installation/sso/index.md) for the other providers.
+-   :material-laptop:{ .lg .middle .dp-orange } **[Single-user](#single-user-mode)**
+
+    ---
+
+    For your own instance. No sign-in page: every visitor is signed in as the admin.
+
+    `DEPICTIO_AUTH_SINGLE_USER_MODE=true`
+
+-   :material-earth:{ .lg .middle .dp-teal } **[Public](#public-mode)**
+
+    ---
+
+    For a showcase. Every visitor gets a guest account of their own; SSO can turn it into a real one.
+
+    `DEPICTIO_AUTH_PUBLIC_MODE=true`
+
+-   :material-compass-outline:{ .lg .middle .dp-violet } **[Demo](#demo-mode)**
+
+    ---
+
+    Public mode as a read-only demo: the same guests, never asked to sign in.
+
+    `DEPICTIO_AUTH_PUBLIC_MODE=true` and `DEPICTIO_AUTH_DEMO_MODE=true`
+
+</div>
+
+[![What a visitor gets in each mode: the sign-in page in Auth mode, the admin's session in Single-user mode, a temporary guest account of their own in Public and Demo mode, behind an optional access code](../../images/guides/authentication-modes/auth-modes_light.png#only-light)](../../images/guides/authentication-modes/auth-modes_light.png){target=_blank}
+[![What a visitor gets in each mode: the sign-in page in Auth mode, the admin's session in Single-user mode, a temporary guest account of their own in Public and Demo mode, behind an optional access code](../../images/guides/authentication-modes/auth-modes_dark.png#only-dark)](../../images/guides/authentication-modes/auth-modes_dark.png){target=_blank}
+
+??? abstract "Side by side"
+
+    | | [:material-shield-account-outline: Auth](#auth-mode) | [:material-laptop: Single-user](#single-user-mode) | [:material-earth: Public](#public-mode) | [:material-compass-outline: Demo](#demo-mode) |
+    |---|---|---|---|---|
+    | **A visitor gets** | The sign-in page | The admin's session | A guest account, 24 h | A guest account, 24 h |
+    | **Register** | :material-check: unless [disabled](#registration) | :material-close: | :material-close: | :material-close: |
+    | **[SSO](../../installation/sso/index.md)** | :material-check: | Not used | :material-check: a guest [signs in](#guest-sign-in) | At `/auth/login` only |
+    | **Create projects** | :material-check: | :material-check: | Admins only | Admins only |
+    | **Duplicate a dashboard** | :material-check: | :material-check: | :material-check: the copy expires with the guest | :material-check: the copy expires with the guest |
+    | **Guided tour** | Builder tour | Builder tour | Explorer tour | Explorer tour |
+
+## :material-shield-account-outline: Auth mode <small>default</small> { #auth-mode }
+
+For teams and organizations: every visitor signs in, to an account of their own, and sees
+what their roles allow.
+
+**Turn it on:** nothing to set. It is the mode whenever the other three are off.
+[Single sign-on](../../installation/sso/index.md) is optional, here with Google:
+
+=== "Environment"
+
+    ```bash
+    DEPICTIO_AUTH_OIDC_PROVIDERS='[{"id": "google", "label": "Sign in with Google", "discovery_url": "https://accounts.google.com/.well-known/openid-configuration"}]'
+    DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_ID=your-client-id
+    DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET=your-secret
+    ```
+
+=== "Helm values"
+
+    ```yaml
+    oidc:
+      providers:
+        - id: google
+          label: "Sign in with Google"
+          discovery_url: "https://accounts.google.com/.well-known/openid-configuration"
+    secrets:
+      oidcClients:
+        google: {clientId: "<client-id>", clientSecret: "<client-secret>"}
+    ```
 
 !!! tip "SSO behind multiple workers"
     Since **v1.5.2** the OAuth CSRF state is shared through MongoDB, so sign-in
@@ -45,52 +97,82 @@ See [Single sign-on (OpenID Connect)](../../installation/sso/index.md) for the o
 **Behavior:**
 
 - Users register or are created by admins, unless [registration is disabled](#registration)
+- A first SSO sign-in creates the account, under the same rule
 - JWT-based authentication (RS256)
-- Role-based access: admin and regular users
-- Project and dashboard-level permissions (owner, editor, viewer)
+- Admin and regular users; owner, editor and viewer on each project and dashboard
 
-## Single-User Mode
+## :material-laptop: Single-user mode { #single-user-mode }
 
-Zero-friction mode for personal or self-hosted instances.
+For an instance only you use: there is no sign-in page, and every visitor is signed in as
+the admin.
 
-**When to use:** You are the only user and want immediate full access without login.
+**Turn it on:**
 
-```bash
-DEPICTIO_AUTH_SINGLE_USER_MODE=true
-```
+=== "Environment"
 
-**Behavior:**
+    ```bash
+    DEPICTIO_AUTH_SINGLE_USER_MODE=true
+    ```
 
-- An anonymous user is created with **admin privileges**
-- No login screen — full access immediately
-- Dashboard creation, project management, and all features available
-- Sidebar shows a "Single User Mode" badge
-- User management UI is hidden (unnecessary with one user)
+=== "Helm values"
 
-## Public Mode
-
-Read-only anonymous access with optional sign-in for full features.
-
-**When to use:** Sharing dashboards publicly — visitors can browse without an account, but must sign in to create or edit content.
-
-```bash
-DEPICTIO_AUTH_PUBLIC_MODE=true
-
-# Backward-compatible alias:
-# DEPICTIO_AUTH_UNAUTHENTICATED_MODE=true
-```
+    ```yaml
+    backend:
+      env:
+        DEPICTIO_AUTH_SINGLE_USER_MODE: "true"
+    ```
 
 **Behavior:**
 
-- Every visitor gets a **temporary account** (24-hour session, cleaned after expiry) with
-  **read-only** access to public dashboards, without a login screen
-- With an OpenID Connect provider enabled, a guest can
-  [sign in](#guest-sign-in) to a persistent account
+- The session is the bootstrap admin's (`DEPICTIO_BOOTSTRAP_ADMIN_EMAIL`): whoever reaches
+  the URL can do anything, so keep the instance on your machine or a private network
+- Projects, dashboards and every admin page are available at once
+- The sidebar shows *Single user mode*
+- Provisioning and magic links are refused (403)
+- Set together with public mode, single-user mode wins
+
+## :material-earth: Public mode { #public-mode }
+
+For a public showcase: there is no sign-in page, and every visitor gets a guest account of
+their own.
+
+**Turn it on:**
+
+=== "Environment"
+
+    ```bash
+    DEPICTIO_AUTH_PUBLIC_MODE=true
+    # Optional: how long a guest account lives (default 24 hours, plus minutes)
+    DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS=24
+    DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_MINUTES=0
+    ```
+
+=== "Helm values"
+
+    ```yaml
+    backend:
+      env:
+        DEPICTIO_AUTH_PUBLIC_MODE: "true"
+        DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS: "24"
+    ```
+
+`DEPICTIO_AUTH_UNAUTHENTICATED_MODE=true` is still read as an alias. To ask visitors for a
+shared code first, add an [access code](#public-access-code).
+
+**Behavior:**
+
+- On the first page load, the viewer creates a guest account, `temp_user_<id>@depictio.temp`,
+  and signs the visitor in with it: no modal, no shared anonymous user. The account and what
+  it made are removed when it expires
+- A guest reads the public dashboards and can duplicate one into a copy of their own, which
+  expires with the account
+- Creating a project, importing a dashboard or registering is refused (403) for anyone but
+  an admin; admins and project editors can import <small>(v1.21.0+)</small>
+- With an OpenID Connect provider enabled, a guest can [sign in](#guest-sign-in) to a
+  persistent account
 - A short tour of the dashboards list ends by picking a dashboard, where a
   [landing hint](dashboard-guide.md#landing-hint) points to its Guide <small>(v1.17.4+)</small>
-- After sign-in, users can create dashboards, duplicate existing ones, and manage projects
-- Sidebar shows a "Public Mode" badge
-- Admins and project editors can import dashboards (**New dashboard**, **Import** tab) <small>(v1.21.0+)</small>. Visitors still get a 403
+- The sidebar shows a *Public Mode* badge
 - Admins can create CLI tokens in **Profile** > **CLI agents** to refresh dashboards and ingest data without switching public mode off <small>(v1.21.0+)</small>
 
 ### Signing in as a guest <small>(v1.17.3+)</small> { #guest-sign-in }
@@ -107,35 +189,37 @@ A public showcase where signed-in readers comment combines `DEPICTIO_AUTH_PUBLIC
 an identity provider and `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT`. Keep
 [registration](#registration) open, or a first-time reader's account is never created.
 
-**Configuration:**
+## :material-compass-outline: Demo mode { #demo-mode }
 
-```bash
-# Temporary user session duration (default: 24h)
-DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS=24
-```
+Public mode run as a read-only demo: the same guest accounts, without a prompt to sign in.
 
-## Demo Mode
+**Turn it on:** set both. Demo mode alone does not open the instance: without public mode,
+visitors meet the sign-in page.
 
-Extends Public Mode with a guided interactive tour for first-time visitors.
+=== "Environment"
 
-**When to use:** Product demos, onboarding, trade shows — guide users through Depictio's features step by step. Can also be repurposed as a self-service tutorial environment.
+    ```bash
+    DEPICTIO_AUTH_PUBLIC_MODE=true
+    DEPICTIO_AUTH_DEMO_MODE=true
+    ```
 
-```bash
-DEPICTIO_AUTH_PUBLIC_MODE=true
-DEPICTIO_AUTH_DEMO_MODE=true
-```
+=== "Helm values"
+
+    ```yaml
+    backend:
+      env:
+        DEPICTIO_AUTH_PUBLIC_MODE: "true"
+        DEPICTIO_AUTH_DEMO_MODE: "true"
+    ```
 
 **Behavior:**
 
-- All Public Mode features, plus:
-- A 5-step interactive tour appears for new visitors:
-    1. **Welcome** — explains the demo environment and 24h session limit
-    2. **Explore Dashboards** — browse example dashboards
-    3. **Sign In** — create a temporary account or use single sign-on
-    4. **Duplicate to Edit** — copy an existing dashboard to customize it
-    5. **Explore Projects** — register a project and upload data
-- Tour state is persisted in the browser (won't re-show after completion)
-- Sidebar shows a "Demo Mode" badge
+- Everything in public mode: guest accounts, the access code, the same explorer tour
+- Guests are never offered **Sign in**, even with an identity provider; an admin signs in at
+  `/auth/login`
+- No landing hint on dashboards, the tour does that job
+- Monitoring is off even for an admin, and profile pictures cannot be changed
+- The sidebar shows a *Demo Mode* badge
 
 ## Pipeline provisioning and magic links (v1.1.3+)
 
@@ -218,7 +302,8 @@ DEPICTIO_AUTH_PUBLIC_ACCESS_CODE=your-shared-code
 - Checked in `/auth/public/create_temporary_user` after the rate limiter, so it is no more brute-forceable than any other credential there
 - Ignored outside public and demo mode
 
-On Kubernetes, all three go under `backend.env` in your values file.
+On Kubernetes, the first two go under `backend.env` in your values file, and the access
+code under `secrets.publicAccessCode`, which keeps it in the Secret.
 
 ## Choosing a Mode
 
@@ -231,5 +316,5 @@ Product demo or guided tutorial?  → Demo Mode
 
 ## Related
 
-- [Configuration Guide](../../installation/configuration.md) — Full environment variable reference
-- [Environment Reference](../../installation/env-reference.md) — All 160+ variables
+- [Configuration Guide](../../installation/configuration.md): full environment variable reference
+- [Environment Reference](../../installation/env-reference.md): all 160+ variables

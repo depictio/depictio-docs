@@ -11,6 +11,7 @@ cd dev/diagrams && uv run python data_model.py && uv run python architecture.py
 uv run python nextflow_trigger.py
 uv run python protein_tiles.py
 uv run python migration.py
+uv run python project_lifecycle.py
 ```
 
 Each script writes `<name>_light` and `<name>_dark`, as both SVG and PNG, into
@@ -40,7 +41,11 @@ status` is dirty after a regeneration, something in the figure actually changed.
 | `architecture.py` | The system architecture figure on the Features overview. |
 | `nextflow_trigger.py` | The trigger flow on the Nextflow trigger page. |
 | `migration.py` | The three ways to move a project, on the Project Migration page. |
+| `project_lifecycle.py` | A project's life, from its data to shared dashboards and every new run, on the Projects overview. |
 | `protein_tiles.py` | Linking by residue and the structure resolver, the two figures on the Protein tiles page. |
+| `concepts.py` | The app's colours and icons per concept (project, data collection, link...) and the drawing helpers built on them, shared with the workshop figures. |
+| `cross_dc_filtering.py` | A filter travelling along two ampliseq links, on the Cross-DC Filtering page. |
+| `auth_modes.py` | What a visitor gets in each authentication mode, on the Authentication Modes page. |
 
 `sketch.py` is a port of the generator in the main
 [depictio](https://github.com/depictio/depictio) repository, which produces the
