@@ -5,18 +5,51 @@ description: "Publish an nf-core run to Depictio from inside the pipeline, with 
 
 # <span style="color: #0dc09d;">:simple-nextflow:</span> Nextflow subworkflow <small>(v1.22.0+)</small>
 
-The `depictio/publish` subworkflow publishes a run to Depictio from inside an nf-core pipeline, as its last task. Unlike the [trigger](nextflow-trigger.md), which runs outside the pipeline once it completes, it ships with the pipeline like any nf-core subworkflow.
+`depictio/publish` is a piece of Nextflow code that a **pipeline developer** adds to an nf-core pipeline. With it, the pipeline itself turns each run into Depictio dashboards, as its last step, with no Depictio server involved. It is not a CLI command and not something you click in the app.
 
 <figure markdown="span">
   [![A pipeline's outputs go through one DEPICTIO_PUBLISH call into one task in the depictio-allinone image, which leaves a self-contained artifact in outdir/depictio that docker or apptainer reopens](../images/guides/nextflow-publish/publish-flow.png)](../images/guides/nextflow-publish/publish-flow.png){target=_blank}
 </figure>
 
-## What it does
+## What it is
 
-- Waits for the run's published outputs, then hands its `depictio/ingest` module the whole `--outdir` and the samplesheet, which nf-core does not publish but templates read from `input/`.
-- Detects the [template](../pipeline-templates/nf-core/index.md) from the run's `pipeline_info/`, at the closest bundled release, and sets its route variables from the run's params ([template variables](../usage/projects/templates.md#template-variables)). Nothing in it names a pipeline.
-- The task starts a single-user Depictio, ingests the run, stops it and publishes the result into `<outdir>/depictio/`: an **artifact** anyone reopens later. Nothing outlives the task.
+Two Nextflow components, in the nf-core layout:
+
+| Component | Kind | What it does |
+|---|---|---|
+| `depictio/ingest` | module (`DEPICTIO_INGEST`) | One task: starts a temporary single-user Depictio, ingests the run into it, stops it and emits its data folder |
+| `depictio/publish` | subworkflow (`DEPICTIO_PUBLISH`) | The glue: waits until the run's results are published, adds the samplesheet, then calls `DEPICTIO_INGEST`. This is what a pipeline calls |
+
+The subworkflow names no pipeline: it reads the [template](../pipeline-templates/nf-core/index.md) to use from the run's `pipeline_info/`, at the closest bundled release, and the template's route variables (`--skip_*`, `--tools`) from the run's params ([template variables](../usage/projects/templates.md#template-variables)). The same code therefore fits every pipeline Depictio has a template for.
+
+## Where it is
+
+They ship **inside the depictio Python package**, not in nf-core/modules, from v1.22.0 ([source on GitHub](https://github.com/depictio/depictio/tree/v1.22.0/depictio/cli/configs/nextflow)):
+
+```
+depictio/cli/configs/nextflow/
+├── depictio.config                   the onComplete trigger (see Nextflow trigger)
+├── modules/depictio/ingest/          the module
+│   ├── main.nf                       the DEPICTIO_INGEST process
+│   ├── meta.yml, environment.yml     nf-core metadata, conda environment
+│   └── tests/main.nf.test
+└── subworkflows/depictio/publish/    the subworkflow
+    ├── main.nf                       the DEPICTIO_PUBLISH workflow
+    ├── nextflow.config               its process settings (publishDir, errorStrategy, args)
+    ├── meta.yml
+    └── tests/main.nf.test
+```
+
+With depictio installed, `depictio config nextflow` prints the path of `depictio.config`, so its folder is `$(dirname "$(depictio config nextflow)")`.
+
+## Who does what
+
+- **The pipeline developer** copies both folders into the pipeline once, and calls `DEPICTIO_PUBLISH` at the end of `main.nf` (below).
+- **Whoever runs the pipeline** adds `--depictio true`, or leaves it on by default. After the run, `results/depictio/<run>_depictio/` sits next to the other results: a self-contained folder with the data and dashboards.
+- **Anyone who gets that folder** opens it with one command ([Reopen the artifact](#reopen-the-artifact)), on a laptop or a cluster node. No server to install or keep running.
 - A failed ingestion never fails the run (`errorStrategy 'ignore'`).
+
+Compared with the [Nextflow trigger](nextflow-trigger.md): the trigger runs outside the pipeline once it completes, and pushes the run to a Depictio server that already runs. `depictio/publish` runs inside the pipeline, and produces the dashboards itself.
 
 ## Add it to a pipeline
 
@@ -28,7 +61,13 @@ cp -r "$NF/subworkflows/depictio" subworkflows/local/
 cp -r "$NF/modules/depictio" modules/local/
 ```
 
-The subworkflow's `include` of `DEPICTIO_INGEST` follows the package layout: point it at `modules/local/depictio/ingest/main`. Then, in the pipeline's `main.nf`, after the main workflow, and in its `nextflow.config`:
+In v1.22.0 the subworkflow includes the module with `../../../modules/depictio/ingest/main`, the package's layout. Once copied as above, that path no longer resolves: change line 9 of `subworkflows/local/depictio/publish/main.nf` to
+
+```groovy
+include { DEPICTIO_INGEST } from '../../../../modules/local/depictio/ingest/main'
+```
+
+Then, in the pipeline's `main.nf`, after the main workflow, and in its `nextflow.config`:
 
 ```groovy
 // main.nf
