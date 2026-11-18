@@ -17,7 +17,7 @@ Depictio supports four authentication modes, each designed for a different deplo
 
     For teams. Everyone signs in to an account of their own, with a role on each project.
 
-    Nothing to set.
+    Nothing to set with Helm. With Compose, `DEPICTIO_AUTH_SINGLE_USER_MODE=false`.
 
 -   :material-laptop:{ .lg .middle .dp-orange } **[Single-user](#single-user-mode)**
 
@@ -64,7 +64,9 @@ Depictio supports four authentication modes, each designed for a different deplo
 For teams and organizations: every visitor signs in, to an account of their own, and sees
 what their roles allow.
 
-**Turn it on:** nothing to set. It is the mode whenever the other three are off.
+**Turn it on:** it is the mode whenever the other three are off. That is the Helm chart's
+default. The root `docker-compose.yaml` starts in single-user mode instead, so with Compose set
+`DEPICTIO_AUTH_SINGLE_USER_MODE=false` in `.env`.
 [Single sign-on](../../installation/sso/index.md) is optional, here with Google:
 
 === "Environment"
@@ -106,7 +108,7 @@ what their roles allow.
 For an instance only you use: there is no sign-in page, and every visitor is signed in as
 the admin.
 
-**Turn it on:**
+**Turn it on:** with the root `docker-compose.yaml` it is already on. Otherwise:
 
 === "Environment"
 
@@ -245,7 +247,7 @@ the same value, through `--provisioning-key` or the identically-named variable.
 
 !!! warning "Treat the key like a password"
     Anyone holding it can create accounts on the instance. Keep it separate
-    from `DEPICTIO_AUTH_INTERNAL_API_KEY_ENV`, whose scope is deliberately
+    from `DEPICTIO_AUTH_INTERNAL_API_KEY` (alias `DEPICTIO_AUTH_INTERNAL_API_KEY_ENV`), whose scope is deliberately
     different. Pass it through a secret store rather than a shell history, and
     rotate it if a CI log ever captures it.
 
@@ -309,7 +311,7 @@ code under `secrets.publicAccessCode`, which keeps it in the Secret.
 
 ```
 Personal analytics tool?          → Single-User Mode
-Team/org with user accounts?      → Auth Mode (default)
+Team/org with user accounts?      → Auth Mode (Helm default)
 Public dashboard gallery?         → Public Mode
 Product demo or guided tutorial?  → Demo Mode
 ```

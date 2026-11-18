@@ -106,11 +106,13 @@ helm install depictio helm-charts/depictio \
 
 ### Single-user vs Multi-user mode
 
+The chart starts in multi-user mode (sign-in required), unlike the root `docker-compose.yaml`.
+
 ```yaml
 # my-values.yaml
 backend:
   env:
-    DEPICTIO_AUTH_SINGLE_USER_MODE: "true"   # default — no login required
+    # DEPICTIO_AUTH_SINGLE_USER_MODE: "true"   # no login, every visitor is the admin
     # DEPICTIO_AUTH_PUBLIC_MODE: "true"        # public read-only with sign-in
 ```
 
@@ -119,8 +121,10 @@ backend:
 ```yaml
 # my-values.yaml
 secrets:
-  s3RootUser: "myadmin"
+  s3RootUser: "myadmin"                      # generated when empty
   s3RootPassword: "mysecurepassword"
+  bootstrapAdminEmail: "admin@example.org"   # first admin, read on an empty database
+  bootstrapAdminPassword: "change-me"
 ```
 
 These keys were `secrets.minioRootUser` and `secrets.minioRootPassword` before
@@ -288,10 +292,11 @@ your deployment does.
     Pods created by the Percona MongoDB operator are also untouched, since the
     operator owns those pod specs.
 
-### Celery workers (background callbacks)
+### Celery workers
 
-The Celery worker is included and enabled by default (`celery.enabled: true`).
-Design mode always requires Celery. View mode behaviour is controlled separately:
+The Celery worker is enabled by default (`celery.enabled: true`): editor previews, large renders
+and thumbnails run on it. `DEPICTIO_CELERY_WORKERS` sets its processes (the chart sets `2`); each
+holds its own data, so size it with the pod's memory limit:
 
 ```yaml
 # my-values.yaml
@@ -299,7 +304,6 @@ celery:
   replicas: 1
   env:
     DEPICTIO_CELERY_WORKERS: "4"
-    DEPICTIO_CELERY_ENABLED: "true"   # async view mode (recommended for production)
 ```
 
 !!! note "No ingestion worker in the chart <small>(v1.15.0)</small>"

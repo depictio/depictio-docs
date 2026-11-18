@@ -120,40 +120,26 @@ The FastAPI backend submits tasks to Celery workers, which use Redis as both a m
 
 ### :material-help-circle: When Background Processing is Used
 
-| Context | Background Processing |
-|---------|----------------------|
-| :material-pencil: Editor (design mode) | Always required |
-| :material-eye: Viewer app | Optional (`DEPICTIO_CELERY_ENABLED`) |
-| :material-cog: Management app | Never (no heavy computations) |
+The worker always runs; there is nothing to turn on.
 
-### :material-cog-outline: Configuration
-
-To enable background processing:
-
-1. **Set the environment variable** in your `.env` file or Docker Compose configuration:
-
-```bash
-DEPICTIO_CELERY_ENABLED=true
-```
-
-2. **Restart the full Docker Compose stack** to apply the change:
-
-```bash
-docker compose down && docker compose up -d
-```
-
-!!! note "Full Restart Required"
-    After changing `DEPICTIO_CELERY_ENABLED`, you must restart the entire Docker Compose stack for the change to take effect across all services.
+| Work | Runs on the worker |
+|------|--------------------|
+| :material-pencil: Figure previews in the editor | By default (`DEPICTIO_CELERY_OFFLOAD_PREVIEW`) |
+| :material-eye: Dashboard renders | When the source table is 50 MB or more, or always with `DEPICTIO_CELERY_OFFLOAD_RENDERING` |
+| :material-camera: Dashboard thumbnails | Always |
+| :material-database-import: Offloaded ingestion | On the separate [ingestion worker](../installation/docker.md#ingestion-worker) |
 
 ### :material-variable: Environment Variables
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_CELERY_ENABLED` | `false` | Enable background callbacks |
+| `DEPICTIO_CELERY_WORKERS` | `4` | Worker processes, set on the worker container |
 | `DEPICTIO_CELERY_BROKER_HOST` | `redis` | Redis broker hostname |
 | `DEPICTIO_CELERY_BROKER_PORT` | `6379` | Redis broker port |
 | `DEPICTIO_CELERY_BROKER_DB` | `1` | Redis database for Celery broker |
 | `DEPICTIO_CELERY_RESULT_BACKEND_DB` | `2` | Redis database for Celery results |
+
+All of them, including the offload thresholds: [Celery Task Queue](../installation/env-reference.md#celery-task-queue).
 
 ---
 
