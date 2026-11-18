@@ -158,6 +158,57 @@ hooks:
 # Plugins
 plugins:
   - search
+  # llms.txt (an index of the pages) and llms-full.txt (every page as clean
+  # Markdown) at the site root, for AI agents and LLM tools; see llmstxt.org.
+  - llmstxt:
+      # mike serves every version under its own folder; agents read the latest.
+      base_url: https://depictio.github.io/depictio-docs/latest/
+      full_output: llms-full.txt
+      markdown_description: >
+        Depictio turns bioinformatics pipeline results into interactive, shareable
+        dashboards: a FastAPI backend, a React viewer, MongoDB, S3 storage and a
+        Python CLI that ingests results. Every CLI command and option is also
+        available as JSON at depictio-cli/cli-reference.json.
+      sections:
+        Start:
+          - index.md: What depictio is, with the main features
+          - usage/get_started.md: First steps, from install to a first dashboard
+          - tutorials/index.md: Tutorials
+        Installation:
+          - installation/README.md
+          - installation/docker.md
+          - installation/kubernetes.md
+          - installation/local.md
+          - installation/cli.md
+          - installation/configuration.md
+          - installation/env-reference.md
+          - installation/sso/*.md
+          - installation/upgrade/*.md
+        Using depictio:
+          - usage/README.md
+          - usage/guides/*.md
+          - usage/administration/*.md
+        Projects:
+          - usage/projects/*.md
+        CLI:
+          - depictio-cli/index.md
+          - depictio-cli/tasks.md: One command per task
+          - depictio-cli/usage.md: Every command and option, generated from the CLI
+          - depictio-cli/nextflow-trigger.md
+          - depictio-cli/minimal_config.md
+        Features:
+          - features/*.md
+        API:
+          - api/*.md
+        # The per-pipeline template pages (140) and the changelog would make
+        # llms-full.txt several MB; the catalog page lists every template.
+        Templates:
+          - pipeline-templates/README.md: Every pipeline template, with links to each one
+        Developer:
+          - developer/*.md
+        Optional:
+          - FAQ/*.md
+          - roadmap/README.md
   # Click a screenshot to open it full size. manual: true keeps this opt-in, so
   # a page only gets lightboxes when its front matter says `glightbox: true`
   # (or an image carries `.on-glb`); every other page renders as before. Images

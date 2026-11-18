@@ -8,7 +8,7 @@ description: Every depictio 1.21.0 command and option, generated from its --help
 
 # :material-book-open-variant: Command reference { .dp-cli-title }
 
-Every command and option of `depictio` 1.21.0, generated from its `--help`; `depictio <command> -h` prints the same. `depictio` alone prints a quick start, and `depictio-cli` is the same command. For step-by-step use, see [Common tasks](tasks.md).
+Every command and option of `depictio` 1.21.0, generated from its `--help`; `depictio <command> -h` prints the same. `depictio` alone prints a quick start, and `depictio-cli` is the same command. For step-by-step use, see [Common tasks](tasks.md). Scripts and AI agents can read the same reference as JSON: [`cli-reference.json`](cli-reference.json){ download }.
 
 ## Overview { #quick-reference }
 
