@@ -3,6 +3,11 @@ site_name: Depictio Documentation
 site_url: https://depictio.github.io/depictio-docs/
 site_description: "Documentation for Depictio"
 
+# Hand-written notes the CLI reference includes with pymdownx.snippets
+# (scripts/cli-reference/render.py): not pages of their own.
+exclude_docs: |
+  /depictio-cli/_notes/
+
 # Repository Information
 repo_url: https://github.com/depictio/depictio
 repo_name: depictio/depictio
@@ -71,6 +76,7 @@ extra_css:
   - stylesheets/neoteroi-mkdocs-v1.1.3.css
   - stylesheets/asciinema.css
   - stylesheets/cards.css
+  - stylesheets/cli.css
   # - stylesheets/css-v1.0.4.css
   - https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
   - https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css
