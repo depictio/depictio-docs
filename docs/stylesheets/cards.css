@@ -100,12 +100,21 @@
   gap: 0.8rem;
 }
 
-/* Three cards share one row, and six make two, once the column is wide enough
-   (Material's auto-fit would wrap the third alone). */
+/* Three per row on wide screens, so a row never ends on one lonely card:
+   3, 6 and 9 fill their rows, 5 is 3 + 2. Two or four cards sit two per row.
+   The grid is the div: Material makes its ul display: contents. */
 @media screen and (min-width: 60em) {
-  .md-typeset .grid.cards:not(.roadmap-nav) > ul:has(> li:nth-child(3):last-child),
-  .md-typeset .grid.cards:not(.roadmap-nav) > ul:has(> li:nth-child(6):last-child) {
+  .md-typeset .grid.cards:not(.roadmap-nav) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md-typeset .grid.cards:not(.roadmap-nav):has(> ul > li:nth-child(2):last-child),
+  .md-typeset .grid.cards:not(.roadmap-nav):has(> ul > li:nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md-typeset .grid.cards:not(.roadmap-nav):has(> ul > li:only-child) {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
