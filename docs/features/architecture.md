@@ -11,6 +11,10 @@ Depictio is built on a modern microservices architecture that provides flexibili
 [![Depictio v1.21.0: the browser reaches the viewer (nginx), which proxies the FastAPI backend; the CLI calls the API and writes Delta tables to S3; an optional identity provider handles SSO. The API and the Celery workers (queue celery, and an optional ingestion queue) read and write MongoDB, the S3 store (SeaweedFS or yours) and Redis. Outbound calls are all optional](../images/architecture/system_light.png#only-light)](../images/architecture/system_light.png){target=_blank}
 [![Depictio v1.21.0: the browser reaches the viewer (nginx), which proxies the FastAPI backend; the CLI calls the API and writes Delta tables to S3; an optional identity provider handles SSO. The API and the Celery workers (queue celery, and an optional ingestion queue) read and write MongoDB, the S3 store (SeaweedFS or yours) and Redis. Outbound calls are all optional](../images/architecture/system_dark.png#only-dark)](../images/architecture/system_dark.png){target=_blank}
 
+The figure draws the default: the browser reads indexed files (genome tracks, 3D structures)
+from S3 through presigned URLs. With `DEPICTIO_S3_BROWSER_ACCESS=proxy` <small>(v1.22.0+)</small>
+they go through the API instead (see [Data Flow](#data-flow)).
+
 ## :material-view-module: Microservices Overview
 
 Depictio's architecture consists of six main components organized by category:
@@ -166,7 +170,7 @@ The figure at the top of this page draws it:
 
 1. :material-console: **CLI** reads the run's files, writes the Delta tables to S3 itself, then registers them through the API (`/deltatables/upsert`), which records the metadata in MongoDB. *Add data* in the web UI does the same on the server.
 2. :material-api: **API** answers every figure, table and card: it reads the Delta tables from S3, with the frames cached in Redis.
-3. :material-react: **React viewer** only talks to the API, through its nginx proxy. It never reaches MongoDB, Redis or S3, except for genome tracks of indexed files, read from S3 through presigned URLs.
+3. :material-react: **React viewer** only talks to the API, through its nginx proxy. It never reaches MongoDB, Redis or S3, except for indexed files (genome tracks, 3D structures), read from S3 through presigned URLs. With [`DEPICTIO_S3_BROWSER_ACCESS=proxy`](../installation/env-reference.md#s3-browser-access) <small>(v1.22.0+)</small> the API streams those too, for an S3 store browsers cannot reach.
 
 ---
 

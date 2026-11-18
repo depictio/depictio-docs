@@ -57,7 +57,8 @@ Depictio supports four authentication modes, each designed for a different deplo
     | **[SSO](../../installation/sso/index.md)** | :material-check: | Not used | :material-check: a guest [signs in](#guest-sign-in) | At `/auth/login` only |
     | **Create projects** | :material-check: | :material-check: | Admins only | Admins only |
     | **Duplicate a dashboard** | :material-check: | :material-check: | :material-check: the copy expires with the guest | :material-check: the copy expires with the guest |
-    | **Guided tour** | Builder tour | Builder tour | Explorer tour | Explorer tour |
+    | **[Guided tours](web_ui.md#guided-tours)** | Builder chapters | Builder chapters | Guest chapter | Guest chapter |
+    | **[Landing card](dashboard-guide.md#landing-hint)** | :material-check: | :material-check: | :material-check: | What's new line only |
 
 ## :material-shield-account-outline: Auth mode <small>default</small> { #auth-mode }
 
@@ -172,8 +173,9 @@ shared code first, add an [access code](#public-access-code).
   an admin; admins and project editors can import <small>(v1.21.0+)</small>
 - With an OpenID Connect provider enabled, a guest can [sign in](#guest-sign-in) to a
   persistent account
-- A short tour of the dashboards list ends by picking a dashboard, where a
-  [landing hint](dashboard-guide.md#landing-hint) points to its Guide <small>(v1.17.4+)</small>
+- A welcome card and a three-step [tour](web_ui.md#guided-tours) of the dashboards list
+  <small>(v1.22.0+)</small>; on a dashboard, the [landing card](dashboard-guide.md#landing-hint)
+  points to its Guide <small>(v1.17.4+)</small>
 - The sidebar shows a *Public Mode* badge
 - Admins can create CLI tokens in **Profile** > **CLI agents** to refresh dashboards and ingest data without switching public mode off <small>(v1.21.0+)</small>
 
@@ -181,7 +183,7 @@ shared code first, add an [access code](#public-access-code).
 
 When Google or another identity provider is configured, a guest finds **Sign in** where
 they would need it: the avatar menu, the sidebar's mode line (*Public mode · Sign in*),
-the profile page, the tour's welcome step and, when
+the profile page, the tour's welcome card and, when
 [viewers may comment](../../features/comments-annotations.md#viewers-can-comment), the
 comments buttons, which open a *Sign in to comment* prompt. `/auth/login` shows the
 sign-in form with **Continue as guest**, and a sign-in returns to the page it started
@@ -216,10 +218,11 @@ visitors meet the sign-in page.
 
 **Behavior:**
 
-- Everything in public mode: guest accounts, the access code, the same explorer tour
+- Everything in public mode: guest accounts, the access code, the same guest tour
 - Guests are never offered **Sign in**, even with an identity provider; an admin signs in at
   `/auth/login`
-- No landing hint on dashboards, the tour does that job
+- No landing card introducing a dashboard, the tour does that job; it still appears with
+  a What's new line when a dashboard changed since the last visit
 - Monitoring is off even for an admin, and profile pictures cannot be changed
 - The sidebar shows a *Demo Mode* badge
 

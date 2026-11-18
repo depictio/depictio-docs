@@ -80,6 +80,14 @@ secrets:
   s3RootPassword: "your-secret-key"
 ```
 
+### Browsers that cannot reach S3 <small>(v1.22.0+)</small> { #s3-browser-access }
+
+3D structures and file-backed genome tracks are read by the browser, through URLs presigned for
+the S3 public endpoint. When browsers cannot reach S3 (an IP-only install, a store kept on the
+cluster network), set `DEPICTIO_S3_BROWSER_ACCESS=proxy` and the API streams those files itself.
+See [Browser access to indexed files](env-reference.md#s3-browser-access); Helm picks the mode
+for you ([`s3.browserAccess`](kubernetes.md#s3-browser-access)).
+
 ## Authentication { #authentication-configuration }
 
 The sign-in mode is one switch, compared in [Authentication Modes](../usage/guides/authentication-modes.md):
@@ -87,7 +95,7 @@ The sign-in mode is one switch, compared in [Authentication Modes](../usage/guid
 ```bash
 DEPICTIO_AUTH_SINGLE_USER_MODE=true    # one person, no login (the Compose default)
 DEPICTIO_AUTH_PUBLIC_MODE=true         # anonymous read-only, sign in to create
-DEPICTIO_AUTH_DEMO_MODE=true           # with PUBLIC_MODE: adds the guided tour
+DEPICTIO_AUTH_DEMO_MODE=true           # with PUBLIC_MODE: never offers sign-in to guests
 ```
 
 With none set (and `SINGLE_USER_MODE=false` under Compose), everyone signs in. Restricting
@@ -200,7 +208,12 @@ Visualisations, nf-core/ampliseq and nf-core/viralrecon. Every other
 ```bash
 DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS=true    # seed none of them
 DEPICTIO_SEED_PROJECTS=iris,penguins        # or only these
+DEPICTIO_SEED_EXTRA_PROJECTS=genome_tracks_examples   # add an optional one
 ```
+
+Since v1.22.0 the Genome Tracks Showcase is optional: a fresh database seeds it only when
+`DEPICTIO_SEED_EXTRA_PROJECTS` names `genome_tracks_examples`. An instance that already has it
+keeps it.
 
 ## Analytics and telemetry { #analytics }
 
@@ -235,8 +248,9 @@ Off or bounded by default. Each link goes to the variables.
 ## Version and development { #development }
 
 ```bash
-DEPICTIO_VERSION=1.21.0       # image tag; unset uses the release the compose file pins, `next` follows main
-DEPICTIO_DEV_MODE=true        # API reload, worker restart on code change, no telemetry or walkthrough
+DEPICTIO_VERSION=1.22.0       # image tag; unset uses the release the compose file pins, `next` follows main
+DEPICTIO_DEV_MODE=true        # API reload, worker restart on code change, no telemetry, tours or landing card
+DEPICTIO_WALKTHROUGH_DISABLED=true   # no guided tours or dashboard landing card, for every user
 ```
 
 `DEPICTIO_DEV_MODE` is not a security switch: since v1.5.2 it no longer touches OAuth state

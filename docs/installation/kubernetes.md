@@ -169,6 +169,27 @@ An external S3 is not affected by the move from MinIO to SeaweedFS, and the
     missing, then verifies it; an existing bucket is left untouched. See
     [Required S3 permissions](env-reference.md#required-s3-permissions).
 
+### Browser access to indexed files <small>(v1.22.0+)</small> { #s3-browser-access }
+
+3D structures and file-backed genome tracks are read by the browser. `s3.browserAccess` sets
+[`DEPICTIO_S3_BROWSER_ACCESS`](env-reference.md#s3-browser-access) on the backend and the worker:
+
+| Value | Mode |
+|-------|------|
+| `""` (default) | Picked by the chart: `presigned` when it routes the bundled store (`ingress.enabled` or `gateway.enabled`, with `global.domain` set), or when an external store has `DEPICTIO_S3_PUBLIC_URL` in `s3.env`; `proxy` otherwise |
+| `presigned` | Browsers read S3 directly, through presigned URLs |
+| `proxy` | The API streams the files: for an S3 store with no public route |
+
+```yaml
+# my-values.yaml
+s3:
+  browserAccess: proxy   # any other value than "", presigned or proxy fails the install
+```
+
+The automatic choice reads `s3.env`, not `backend.env`. With the URL in `backend.env`, as in
+[External S3](#external-s3) above, it picks `proxy`: set `browserAccess: presigned`, or move
+`DEPICTIO_S3_PUBLIC_URL` to `s3.env`, if browsers reach the store.
+
 ### Ingress
 
 Depictio's Helm chart supports three ingress topologies. Pick based on
@@ -311,6 +332,27 @@ celery:
     [ingestion worker](docker.md#ingestion-worker) to read the `ingestion` queue. Leave
     `DEPICTIO_INGESTION_ASYNC_DELTATABLE_UPSERT` and `DEPICTIO_INGESTION_BROWSER_TRIGGER`
     off on Kubernetes: with either on, the jobs they create are never picked up.
+
+### Pod labels and internet egress <small>(v1.22.0+)</small> { #pod-labels }
+
+`backend.podLabels` and `celery.podLabels` add labels to the backend and worker pods (the pod
+template only, never the selector). Both default to the label SciLifeLab Serve reads to allow
+outbound traffic, which it denies by default:
+
+```yaml
+# values.yaml defaults
+backend:
+  podLabels:
+    networking/allow-internet-egress: "true"
+celery:
+  podLabels:
+    networking/allow-internet-egress: "true"
+```
+
+The backend dials out for the UCSC track catalogue and genome files, remote tracks, structure
+lookups, OIDC and migration targets; the worker for remote data at ingestion. The label does
+nothing on clusters without that policy. To keep a pod off the internet on Serve, set the label to
+`"false"`: an empty map in an override file does not remove it, since Helm merges maps.
 
 ### Resource limits
 

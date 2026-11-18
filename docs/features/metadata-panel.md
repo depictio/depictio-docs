@@ -29,6 +29,8 @@ No switch is needed: the **Metadata** button shows in the dock when the project 
 
 The header row shows the table (a picker when there are several) and the key column the labels are keyed on: the one the table links by. A table with several rows per key shows the first row per key.
 
+The dashboard's [Guide](../usage/guides/dashboard-guide.md) has a **Label your samples** part <small>(v1.22.0+)</small>: a live demo on the dashboard's own table, where labels typed are not saved, and a button that opens this panel.
+
 [![The Metadata drawer: table, key column, + column, label column and the File import and export icons](../images/guides/metadata-panel/metadata_panel_labels_light.webp#only-light){ width="540" }](../images/guides/metadata-panel/metadata_panel_labels_light.webp){target=_blank}
 [![The Metadata drawer: table, key column, + column, label column and the File import and export icons](../images/guides/metadata-panel/metadata_panel_labels_dark.webp#only-dark){ width="540" }](../images/guides/metadata-panel/metadata_panel_labels_dark.webp){target=_blank}
 

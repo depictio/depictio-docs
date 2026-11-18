@@ -49,6 +49,11 @@ The panel lists the changes in three sections:
 
 **Mark as seen** in the panel header resets the count: the next changes start from here.
 
+Since v1.22.0 two more ways lead to the panel. On a dashboard with changes, the
+[landing card](../usage/guides/dashboard-guide.md#landing-hint) adds a line naming the new
+runs, whose button opens the panel. The dashboard's [Guide](../usage/guides/dashboard-guide.md)
+has a **What's new** part that embeds the same panel.
+
 ## Off, Overlay and Split
 
 **Show on the dashboard** draws the changes on every changed figure at once:
