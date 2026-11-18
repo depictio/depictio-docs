@@ -229,7 +229,7 @@ something arrived.
     | SeaweedFS as the bundled S3 store, replacing MinIO | v1.12.0 | [Upgrading to v1.12.0](../installation/upgrade/v1.12.0-seaweedfs.md) |
     | An opt-in feedback link that carries the dashboard and tab | v1.11.0 | [Feedback](../installation/env-reference.md#feedback) |
     | The funnel overview follows the values of one column | v1.11.0 | [Funnel filtering](../features/dashboards.md#funnel-filtering) |
-    | Ingestion triggered by the pipeline itself, when it completes | v1.10.0 | [Nextflow trigger](../depictio-cli/nextflow-trigger.md) |
+    | Ingestion triggered by the pipeline itself, when it completes | v1.10.0 | [Nextflow trigger](../workflows/nextflow/trigger.md) |
     | A run directory identifies its own pipeline, so a template needs no flag | v1.10.0 | [Templates](../usage/projects/templates.md#pipeline-id) |
     | nf-core/variantbenchmarking template and benchmarking viz kinds | v1.10.0 | [variantbenchmarking](../pipeline-templates/nf-core/variantbenchmarking.md) |
     | Backups created, scheduled and restored from the admin panel | v1.9.0 | [Backup & Restore](../usage/administration/backup.md#from-the-admin-panel) |

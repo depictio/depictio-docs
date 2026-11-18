@@ -153,6 +153,7 @@ markdown_extensions:
 # landing_stats fills the home page's "Depictio in numbers" placeholders from
 # docs/data/landing_stats.json (rebuilt by dev/landing_stats.py).
 hooks:
+  - hooks/nextflow_lexer.py
   - hooks/shared_images.py
   - hooks/landing_stats.py
 
@@ -195,8 +196,12 @@ plugins:
           - depictio-cli/index.md
           - depictio-cli/tasks.md: One command per task
           - depictio-cli/usage.md: Every command and option, generated from the CLI
-          - depictio-cli/nextflow-trigger.md
           - depictio-cli/minimal_config.md
+        Workflow managers:
+          - workflows/index.md
+          - workflows/nextflow/index.md
+          - workflows/nextflow/trigger.md
+          - workflows/nextflow/subworkflow.md
         Features:
           - features/*.md
         API:
@@ -210,6 +215,11 @@ plugins:
         Optional:
           - FAQ/*.md
           - roadmap/README.md
+  # Old addresses of moved pages keep working.
+  - redirects:
+      redirect_maps:
+        depictio-cli/nextflow-trigger.md: workflows/nextflow/trigger.md
+        depictio-cli/nextflow-publish.md: workflows/nextflow/subworkflow.md
   # Click a screenshot to open it full size. manual: true keeps this opt-in, so
   # a page only gets lightboxes when its front matter says `glightbox: true`
   # (or an image carries `.on-glb`); every other page renders as before. Images
@@ -281,16 +291,18 @@ extra:
     provider: google
     property: G-J14FKHSHLC
 
-  # DocBot (EMBL-EBI docs chatbot), rendered by overrides/main.html. Off until
-  # the depictio team is registered with DocBot and depictio.github.io is in its
-  # CORS allow-list (see dev/docbot/). DEPICTIO_DOCS_DOCBOT=1 turns it on for
-  # testing with `mkdocs serve`.
+  # DocBot (EMBL-EBI docs chatbot), the embedded widget rendered by
+  # overrides/main.html, on every page, locked to the depictio team. The team is
+  # live on DocBot dev (November 2026). The widget only works once DocBot adds
+  # https://depictio.github.io to its CORS allow-list; before that it opens but
+  # cannot load or answer. Switch the backend to production (www.ebi.ac.uk) once
+  # DocBot deploys depictio there. Off until the CORS entry is in; then set the
+  # default below to true. DEPICTIO_DOCS_DOCBOT=1 turns it on to test locally.
   docbot:
     enabled: !ENV [DEPICTIO_DOCS_DOCBOT, false]
-    # Placeholder until DocBot assigns the team ID
     team: depictio
-    # Dev backend: https://wwwdev.ebi.ac.uk/docbot/api
-    backend: https://www.ebi.ac.uk/docbot/api
+    # Production: https://www.ebi.ac.uk/docbot/api
+    backend: https://wwwdev.ebi.ac.uk/docbot/api
     sdk: https://docbot-64c680.gitdocs.ebi.ac.uk
 
 # Navigation Structure
@@ -339,11 +351,16 @@ nav:
           - Template System Reference: usage/projects/templates.md
           - Composed dashboards: usage/projects/composed-dashboards.md
           - Remote data and manifests: usage/projects/remote-data.md
+      - Workflow managers:
+          - workflows/index.md
+          - Nextflow:
+              - workflows/nextflow/index.md
+              - onComplete trigger: workflows/nextflow/trigger.md
+              - Subworkflow (depictio/publish): workflows/nextflow/subworkflow.md
       - CLI:
           - depictio-cli/index.md
           - Common tasks: depictio-cli/tasks.md
           - Command reference: depictio-cli/usage.md
-          - Nextflow trigger: depictio-cli/nextflow-trigger.md
           - Minimal project YAML: depictio-cli/minimal_config.md
       - Administration:
           - usage/administration/index.md
@@ -355,7 +372,13 @@ nav:
       - Special Modes:
           - Authentication Modes: usage/guides/authentication-modes.md
           - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md
-  - Tutorials: tutorials/index.md
+  - Tutorials:
+      - tutorials/index.md
+      - What's new since your last visit: tutorials/whats-new.md
+      - Compare runs: tutorials/compare-runs.md
+      - Watch the data update: tutorials/data-updates.md
+      - Label samples: tutorials/metadata-panel.md
+      - Move a project to another instance: tutorials/instance-migration.md
   - Features:
       - Overview: features/README.md
       - Dashboards:

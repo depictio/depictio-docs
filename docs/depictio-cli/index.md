@@ -102,7 +102,15 @@ The `depictio` command, from `pip install depictio`, ingests pipeline results, m
 
     A pipeline ingests its own results when it completes.
 
-    [:octicons-arrow-right-24: Nextflow trigger](nextflow-trigger.md)
+    [:octicons-arrow-right-24: Nextflow trigger](../workflows/nextflow/trigger.md)
+
+-   :material-package-variant-closed:{ .lg .middle .dp-orange } **Nextflow subworkflow**
+
+    ---
+
+    One task in an nf-core pipeline publishes the run, under Docker, Singularity or Apptainer.
+
+    [:octicons-arrow-right-24: Nextflow subworkflow](../workflows/nextflow/subworkflow.md)
 
 -   :material-file-document-outline:{ .lg .middle .dp-pink } **Minimal project YAML**
 
@@ -111,13 +119,5 @@ The `depictio` command, from `pip install depictio`, ingests pipeline results, m
     The smallest project file, for a pipeline with no template.
 
     [:octicons-arrow-right-24: Minimal project YAML](minimal_config.md)
-
--   :material-package-variant-closed:{ .lg .middle .dp-orange } **Templates**
-
-    ---
-
-    How a supported pipeline becomes a project and dashboards.
-
-    [:octicons-arrow-right-24: Templates](../usage/projects/templates.md)
 
 </div>

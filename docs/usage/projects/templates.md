@@ -27,6 +27,12 @@ Every template declares its own variables. Variable names are **template-specifi
 - `GROUP_COL_DISPLAY` — title-cased version for chart labels
 - `ANNOTATION_COLS` — comma-separated list of all annotation columns
 
+**Variables set from the run's params** (v1.22.0+): a variable with a [`from_params`](#from-params) rule is set from the run's `pipeline_info/params_<timestamp>.json`, so a `--skip_multiqc` run needs no `--var SKIP_MULTIQC=true`.
+
+### Samplesheets in YAML or JSON <small>(v1.22.0+)</small> { #samplesheet-formats }
+
+A samplesheet can be a `.yaml`, `.yml` or `.json` list of records, one per row, read exactly as the same CSV: every value as text, then typed like a CSV column. It is accepted wherever a CSV/TSV sheet is: `--var SAMPLESHEET_FILE=` (local, `http(s)://` or `s3://`), auto-detection under `input/` (a CSV/TSV sheet wins when both exist) and `depictio manifest from-table`. Nested values are refused.
+
 ---
 
 ## Template YAML Structure
@@ -48,6 +54,9 @@ template:
       description: "Assembly the run was aligned to"
       required: false
       default: "hg38"     # v1.13.0+: used when the run does not set it
+    - name: "SKIP_MULTIQC"
+      description: "Set when the run used --skip_multiqc"
+      from_params: {param: skip_multiqc}   # v1.22.0+: set from the run's params
 
   dashboards:
     - "dashboards/base.yaml"
@@ -74,6 +83,20 @@ defaults for `GENOME` (`hg38`), the axis of their genome tracks, for `GROUP_COL`
 samplesheet has a usual grouping column, and for cut-offs such as `SPLICING_FDR` in
 nf-core/rnasplice.
 
+### Rules from the run's params <small>(v1.22.0+)</small> { #from-params }
+
+`from_params` sets a variable to `"true"` when its rule holds on the run's newest `pipeline_info/params_<timestamp>.json`. `nf-params.json` is never read, and without a params file no rule fires.
+
+| Rule | Holds when the param is |
+|---|---|
+| `{param: p}` | on: `true`, a non-empty string or list, a non-zero number |
+| `{param: p, is: false}` | off: `false`, `"null"`, empty or absent |
+| `{param: p, equals: v}` / `not_equals: v` | `v`, any case (`not_equals` also holds when absent) |
+| `{param: p, contains: v}` / `not_contains: v` | a list or comma-separated string holding `v` |
+| `{any: [...]}` / `{all: [...]}` | one / every nested rule |
+
+An explicit `--var` always wins, and `--var X=false` (or `0`, `null`, empty) unsets it. A `from_params` variable cannot be `required: true`, and an unknown key (`from_param:`, `equal:`) fails at load.
+
 ---
 
 ## Conditionals
@@ -83,7 +106,17 @@ Conditionals adapt the project based on which optional variables the user provid
 - **Remove data collections** (`remove_dc_tags`) — and automatically prune any links referencing them
 - **Override the dashboard list** (`dashboards`) — select different dashboard variants
 
-Rules fire on `if_var_absent` (variable not provided) or `if_var_present` (variable provided).
+Rules fire on `if_var_absent` (variable not provided) or `if_var_present` (variable provided). A variable set by a [`from_params`](#from-params) rule counts as provided.
+
+---
+
+## Check a template <small>(v1.22.0+)</small> { #template-check }
+
+`depictio template check` lists each variable and what sets it (a rule, auto-detection or `--var`). With `--fetch-schema` (or `--schema`) it checks every rule against the release's `nextflow_schema.json` and exits 1 when a rule reads a missing param; with `--run` (or `--params`) it shows which rules hold and which conditionals fire; `--against <release>` reports what the next release breaks or flips. See [`template check`](../../depictio-cli/usage.md#template-check).
+
+```bash
+depictio template check nf-core/rnaseq/3.28.0 --fetch-schema --run results/
+```
 
 ---
 
@@ -136,7 +169,7 @@ Here an nf-core/rnaseq run is ingested with its template named, as the [Template
 - `--template nf-core/ampliseq/2.16.0`, for a pipeline Depictio ships a template for,
   or `--project-config-path my_project.yaml`, for a pipeline of your own;
 - `--pipeline-id nf-core/ampliseq/2.16.0`, which the
-  [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) passes for you since
+  [Nextflow trigger](../../workflows/nextflow/trigger.md) passes for you since
   **v1.10.0**, read from the `manifest` block of its `nextflow.config`. Its version
   must match a shipped template, or the run stops with an error;
 - the results directory itself, local or an `s3://` prefix: the run information

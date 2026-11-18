@@ -27,7 +27,7 @@ Every Delta row carries the run that wrote it, in `depictio_run_id`: that is how
 
 ## The Runs tab
 
-One row per run, new runs marked with a dot. Unfold a run to see its folder, its files and its scans. A run's files are read only once you unfold it.
+One row per run, new runs marked with a dot. Unfold a run to see its folder, its files and its scans. A run's files are read only once you unfold it. Two workflows of a project that share a run tag keep their files and scans apart <small>(v1.22.0+)</small>.
 
 [![The project's Runs tab with water_2019, sediment_2019 and soil_2019](../images/guides/compare-runs/runs_tab_light.webp#only-light){ width="800" }](../images/guides/compare-runs/runs_tab_light.webp){target=_blank}
 [![The project's Runs tab with water_2019, sediment_2019 and soil_2019](../images/guides/compare-runs/runs_tab_dark.webp#only-dark){ width="800" }](../images/guides/compare-runs/runs_tab_dark.webp){target=_blank}

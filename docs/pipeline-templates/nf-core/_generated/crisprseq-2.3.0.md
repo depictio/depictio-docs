@@ -53,15 +53,16 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
 .gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
 .gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.3.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/crisprseq 2.3.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.3.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -75,11 +76,12 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `METADATA_ID_COL` | — | Samplesheet id column. The crisprseq input schema fixes it to sample. |
 | `GROUP_COL` | — | Samplesheet column the dashboard groups and filters libraries by. Defaults to protospacer, the guide each library was edited with. |
 | `GROUP_COL_DISPLAY` | — | Reader-facing label of GROUP_COL, used in filter and card titles. |
-| `SKIP_CLONALITY` | — | Set (--var SKIP_CLONALITY=true) for a run with --skip_clonality: clonality/ is absent, so the clonality collection is removed. |
+
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `SKIP_CLONALITY`
 
 ### :material-database-outline: Data collections
 
-12 data collections — <span class="gtd-badge gtd-req">11 required</span> <span class="gtd-badge gtd-opt">1 optional</span> · <span class="gtd-badge gtd-direct">5 direct</span> <span class="gtd-badge gtd-derived">7 derived</span>.
+14 data collections — <span class="gtd-badge gtd-req">13 required</span> <span class="gtd-badge gtd-opt">1 optional</span> · <span class="gtd-badge gtd-direct">5 direct</span> <span class="gtd-badge gtd-derived">9 derived</span>.
 
 **Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
@@ -94,13 +96,15 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `guide_outcomes` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_outcomes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/crisprseq/guide_outcomes.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `guide_alleles` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_alleles.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/crisprseq/guide_alleles.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `guide_indel_sizes` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_indel_sizes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/crisprseq/guide_indel_sizes.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `guide_indel_size_matrix` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_indel_size_matrix.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/crisprseq/guide_indel_size_matrix.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `guide_cut_site_profile` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_cut_site_profile.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/crisprseq/guide_cut_site_profile.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `guide_substitution_profile` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_substitution_profile.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/crisprseq/guide_substitution_profile.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `guide_substitutions` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_substitutions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/crisprseq/guide_substitutions.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `library_outcome_space` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/library_outcome_space.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/crisprseq/library_outcome_space.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 
 ### :material-directions-fork: Conditional routes
 
-Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (11 collections are unaffected by any variable — present on every run.)
+Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (13 collections are unaffected by any variable — present on every run.)
 
 <p class="gtd-legend"><span class="gtd-badge gtd-plus-chip">+ included</span><span class="gtd-badge gtd-minus-chip">− removed</span><span class="gtd-badge gtd-swap-chip">⇄ repointed</span></p>
 
@@ -113,7 +117,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 
 ### :material-vector-link: Cross-DC links
 
-11 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+12 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
@@ -130,6 +134,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>samples</code> <span class="col">·&nbsp;guide</span></td><td class="arr">→</td><td><code>guide_substitutions</code></td><td>Filter the guide substitution matrix by the guides of the selected libraries</td></tr>
 <tr><td><code>samples</code> <span class="col">·&nbsp;guide</span></td><td class="arr">→</td><td><code>guide_alleles</code></td><td>Filter the guide alleles by the guides of the selected libraries</td></tr>
 <tr><td><code>samples</code> <span class="col">·&nbsp;guide</span></td><td class="arr">→</td><td><code>guide_substitution_profile</code></td><td>Filter the guide substitution profiles by the guides of the selected libraries</td></tr>
+<tr><td><code>samples</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>library_outcome_space</code></td><td>Filter the library sample space by samplesheet libraries</td></tr>
 </tbody></table></div>
 
 ### :material-chef-hat: Recipes
@@ -144,9 +149,11 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`crisprseq/indels.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/crisprseq/indels.py) | Indel alleles per library, relative to the cut site. | `sample`, `allele`, `indel_type`, `start`, `length`, `size`, `offset`, `frame`, `peak`, `reads`, `pct_reads`, `pct_indel_reads`, `rank`, `cut_site` |
 | [`nf-core/crisprseq/guide_alleles.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_alleles.py) | The indel alleles of each guide, pooled over its libraries. | `guide`, `allele`, `libraries`, `pct_reads`, `reads`, `indel_type`, `size`, `offset`, `frame`, `peak`, `median_pct_reads`, `rank` |
 | [`nf-core/crisprseq/guide_cut_site_profile.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_cut_site_profile.py) | Indel position profile around the cut site per guide: mean library and interquartile band. | `guide`, `offset`, `mean_deletion_pct`, `median_deletion_pct`, `q1_deletion_pct`, `q3_deletion_pct`, `mean_insertion_pct`, `median_insertion_pct`, `q1_insertion_pct`, `q3_insertion_pct`, `libraries_with_signal` |
+| [`nf-core/crisprseq/guide_indel_size_matrix.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_indel_size_matrix.py) | Indel size per guide, as a guide by size matrix. | `size_guide`, `-30`, `-29`, `-28`, `-27`, `-26`, `-25`, `-24`, `-23`, `-22`, `-21`, `-20`, `-19`, `-18`, `-17`, `-16`, `-15`, `-14`, `-13`, `-12`, `-11`, `-10`, `-9`, `-8`, `-7`, `-6`, `-5`, `-4`, `-3`, `-2`, `-1`, `+1`, `+2`, `+3`, `+4`, `+5`, `+6`, `+7`, `+8`, `+9`, `+10`, `+11`, `+12`, `+13`, `+14`, `+15`, `+16`, `+17`, `+18`, `+19`, `+20`, `+21`, `+22`, `+23`, `+24`, `+25`, `+26`, `+27`, `+28`, `+29`, `+30` |
 | [`nf-core/crisprseq/guide_indel_sizes.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_indel_sizes.py) | Indel size distribution per guide: the mean library with its interquartile band. | `guide`, `size`, `mean_pct_reads`, `median_pct_reads`, `q1_pct_reads`, `q3_pct_reads`, `libraries_with_signal` |
 | [`nf-core/crisprseq/guide_outcomes.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_outcomes.py) | Edit outcome composition per guide. | `guide`, `outcome`, `level`, `reads`, `pct` |
 | [`nf-core/crisprseq/guide_substitution_profile.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_substitution_profile.py) | Substitution and gap rate around the cut site per guide: mean library and interquartile band. | `profile_guide`, `offset`, `mean_substitution_pct`, `median_substitution_pct`, `q1_substitution_pct`, `q3_substitution_pct`, `mean_gap_pct`, `median_gap_pct`, `q1_gap_pct`, `q3_gap_pct`, `libraries` |
 | [`nf-core/crisprseq/guide_substitutions.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_substitutions.py) | Substitution rate per guide and position, as a guide by offset matrix. | `guide`, `libraries`, `-20`, `-19`, `-18`, `-17`, `-16`, `-15`, `-14`, `-13`, `-12`, `-11`, `-10`, `-9`, `-8`, `-7`, `-6`, `-5`, `-4`, `-3`, `-2`, `-1`, `0`, `+1`, `+2`, `+3`, `+4`, `+5`, `+6`, `+7`, `+8`, `+9`, `+10`, `+11`, `+12`, `+13`, `+14`, `+15`, `+16`, `+17`, `+18`, `+19`, `+20` |
-| [`nf-core/crisprseq/guide_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_summary.py) | Editing outcome per guide, one row per protospacer. | `guide`, `edit_class`, `libraries`, `median_edited_pct`, `median_frameshift_of_indels_pct`, `median_frameshift_pct`, `median_inframe_pct`, `median_template_based_pct`, `min_edited_pct`, `max_edited_pct`, `dominant_indel_size`, `dominant_indel_share_pct`, `classification_mix`, `classified_reads` |
+| [`nf-core/crisprseq/guide_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/guide_summary.py) | Editing outcome per guide, one row per protospacer. | `guide`, `edit_quartile`, `libraries`, `median_edited_pct`, `q1_edited_pct`, `q3_edited_pct`, `iqr_edited_pct`, `median_frameshift_of_indels_pct`, `median_frameshift_pct`, `median_inframe_pct`, `median_template_based_pct`, `min_edited_pct`, `max_edited_pct`, `dominant_indel_size`, `dominant_indel_share_pct`, `classification_mix`, `classified_reads` |
+| [`nf-core/crisprseq/library_outcome_space.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/library_outcome_space.py) | Sample space of the libraries: where each one sits among the others by its edit outcomes. | `sample`, `guide`, `edit_quartile`, `dominant_outcome`, `classified_reads`, `dim_1`, `dim_2`, `dim_3`, `explained_pc1_pct`, `explained_pc2_pct`, `edited_pct`, `wt_pct`, `template_based_pct`, `delins_pct`, `ins_inframe_pct`, `ins_frameshift_pct`, `del_inframe_pct`, `del_frameshift_pct` |
 | [`nf-core/crisprseq/samples.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/crisprseq/recipes/samples.py) | Sample hub for nf-core/crisprseq (targeted): the run's samplesheet, one row per library. | `sample`, `guide`, `has_template` |

@@ -110,7 +110,7 @@ so the filters do not narrow them.
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. The MultiQC reprocess above still applies to a 3.0.0 run. See
-    [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 

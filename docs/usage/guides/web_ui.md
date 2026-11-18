@@ -121,7 +121,22 @@ The left sidebar provides easy access to various sections of the application. Th
 
 The button at the top of the sidebar folds it to icons. The top bar holds the theme
 toggle and your avatar, which opens [Account settings](#account-settings) <small>(v1.17.0+)</small>.
-The compass in the header of the Dashboards and Projects pages starts the guided tour.
+The compass in the header of the Dashboards and Projects pages starts the
+[tour](#guided-tours) of the page (*Take the tour of this page*; *Take the tour* for a guest).
+
+#### <span style="color: #7A5DC7;">:material-compass-outline:</span> Guided tours <small>(v1.22.0+)</small> { #guided-tours }
+
+Tours are short cards beside the page: nothing is dimmed, the control they describe is
+ringed, and the arrow keys and **Esc** move through them. A first visit to the Dashboards
+or Projects list opens a welcome card; for a builder it offers three journeys: *Explore a
+dashboard*, *Bring in a pipeline's results* and *Build a dashboard*. Each page then has one
+short chapter (Dashboards, Projects, the editor, the component builder), offered once on
+first arrival and never started on its own; a guest gets a three-step Dashboards chapter. A dashboard has
+no chapter: its [landing card](dashboard-guide.md#landing-hint) and
+[Guide](dashboard-guide.md) do that job. Seen chapters are remembered in this browser.
+When the deployment turns tours off
+([`DEPICTIO_WALKTHROUGH_DISABLED`](../../installation/env-reference.md#global-settings)),
+the compass stays, disabled, with *Guided tours are turned off on this deployment*.
 
 #### <span style="color: #45B8AC;">:material-server-outline:</span> Server information <small>(v1.17.0+)</small> { #server-information }
 
@@ -262,13 +277,17 @@ and close:
   `/cli-agents` page leads here.
 - **Preferences**, kept in this browser: **Theme**, light or dark; [**Look**](#looks),
   Paper, Classic or the instance default; **Font size** of figures, tables and cards.
-- **Getting started**: replay the guided tour of the app or of the builder.
+- **Getting started** <small>(v1.22.0+)</small>: the [guided tours](#guided-tours).
+  **Take the tour** starts the tour of the dashboards list, **Offer every tour again**
+  resets the tours you have seen, and the switch *Offer a tour on pages I open for the first
+  time* stops or resumes the offers. All three are disabled when the deployment turns tours off.
 - **Server**: the [server information](#server-information).
 
 **Sign out** is at the foot of the page.
 
 === "Account"
 
+    <!-- TODO v1.22.0 recapture: account_settings_{light,dark}.webp, /profile with the Account section open; the Getting started subtitle now reads "Tours of the pages, offered once each" (was "Replay the guided tour of Depictio"). Optionally add a "Getting started" tab with that section open: Take the tour, Offer every tour again, and the offers switch. -->
     [![Account settings: the Account section open, with the avatar, email, role, database ID and dates, then the Password, CLI agents, Preferences, Getting started and Server sections](../../images/guides/web-ui/account_settings_light.webp#only-light)](../../images/guides/web-ui/account_settings_light.webp){target=_blank}
     [![Account settings: the Account section open, with the avatar, email, role, database ID and dates, then the Password, CLI agents, Preferences, Getting started and Server sections](../../images/guides/web-ui/account_settings_dark.webp#only-dark)](../../images/guides/web-ui/account_settings_dark.webp){target=_blank}
 

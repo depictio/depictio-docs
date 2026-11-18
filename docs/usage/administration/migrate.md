@@ -143,6 +143,8 @@ A project is updated only with the code that first brought it: send again with t
 
 The controls need `DEPICTIO_MIGRATION_UI_ENABLED` on both sides. The receiving side also needs `DEPICTIO_MIGRATION_INBOUND_ENABLED`, and the sending side `DEPICTIO_MIGRATION_DESTINATION_DOMAINS` (`"*"` allows any host, the Helm chart default is `["*"]`). Every migration setting is in the [environment reference](../../installation/env-reference.md).
 
+A target behind a login page or SSO proxy fails with `Target redirected to <host/path> instead of answering` <small>(v1.22.0+)</small>: its `/depictio/api/v1/migrate/inbound` routes must be reachable without a login.
+
 ## S3 Data Scope
 
 When `mode=all` or `mode=files`, the migrate feature copies S3 objects for all supported data collection types:
@@ -154,8 +156,12 @@ When `mode=all` or `mode=files`, the migrate feature copies S3 objects for all s
 | Image                | `data_collections.config.dc_specific_properties.s3_base_folder` |
 | MultiQC              | `multiqc_reports.s3_location`                             |
 | Genomic tracks       | The `genomic_tracks/<dc_id>/` folder of the data bucket (files uploaded at ingestion; tracks read in place are not copied) |
+| Indexed files <small>(v1.22.0+)</small> | The `indexed_files/<dc_id>/` folder of the data bucket (VCF, BAM, PDB/mmCIF structures, PAE) |
 
 S3 objects are streamed directly from source to target (no full buffering in RAM).
+
+!!! warning "Projects migrated before 1.22.0"
+    Earlier versions did not copy `indexed_files/<dc_id>/`: on the target, 3D structures and file-backed tracks of such a project answer 404. Send or migrate the project again from a 1.22.0 source.
 
 ## Permissions
 

@@ -56,7 +56,7 @@ of the directory:
   a template. The web UI's [**From a run folder**](remote-data.md#from-a-run-folder)
   does not compose either: a folder no template reads gets **No matching
   template**, and a pipeline has to be picked.
-- The [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) passes
+- The [Nextflow trigger](../../workflows/nextflow/trigger.md) passes
   `--pipeline-id` for every pipeline that declares a `manifest`, so a pipeline
   Depictio ships no template for stops at the second step, with exit code 1,
   rather than being composed. Run `depictio ingest <results dir>` yourself.

@@ -54,15 +54,16 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
 .gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
 .gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="1.2.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/pairgenomealign 3.0.4</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.2.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -75,9 +76,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `METADATA_FILE` | — | Optional design table (TSV): genome id in a column named sample (or in the first column), one column per factor such as a clade. Enables the design filters and grouping. |
 | `METADATA_ID_COL` | — | Design table genome-id column. Auto-detected as the first column; defaults to 'sample'. |
 | `GROUP_COL` | — | Design column the dashboards group and filter genomes by. Auto-detected as the first factor column of METADATA_FILE. |
-| `SKIP_ASSEMBLY_QC` | — | Set (--var SKIP_ASSEMBLY_QC=true) for a run with --skip_assembly_qc: no assemblyscan/ reports, so the assembly statistics collection is pruned. |
 
-**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`, `SKIP_ASSEMBLY_QC`
 
 ### :material-database-outline: Data collections
 

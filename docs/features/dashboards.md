@@ -723,7 +723,7 @@ matches lands in **Other**. See
 
 A project records what invoked its latest ingestion, from `--triggered-by`.
 Anything other than a manual run shows a badge on the project's ingestion tab: a
-project the [Nextflow trigger](../depictio-cli/nextflow-trigger.md) ingests shows
+project the [Nextflow trigger](../workflows/nextflow/trigger.md) ingests shows
 **Triggered by Nextflow**, with the Nextflow logo. For a project built from a
 template, its tooltip also gives the pipeline and engine versions, the number of
 tools that ran and the directory that was ingested.

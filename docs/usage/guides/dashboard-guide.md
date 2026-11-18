@@ -11,6 +11,7 @@ tab list. It is not a walkthrough to click through once, but a page to come back
 it is built from the dashboard it sits on: its tabs, its sections, its filters, its
 components.
 
+<!-- TODO v1.22.0 recapture: images/guides/dashboard-guide/guide-tabs.webp, the Guide of a seeded dashboard; the jump-link row now starts with About this Guide and adds Metadata and What's new (the capture is from v1.11.2, old header). A capture of the landing card with its What's new line would also help #landing-hint. -->
 [![The Guide's tabs part, with the dashboard's own tab list as a live demo](../../images/guides/dashboard-guide/guide-tabs.webp)](../../images/guides/dashboard-guide/guide-tabs.webp){target=_blank}
 
 ---
@@ -20,29 +21,44 @@ components.
 Each part is a card with a short text, a live demo and a **Show me** button that rings
 the thing it is about inside the demo. A row of links at the top jumps to each part.
 
+Parts come in this order, and a part shows only when the dashboard has what it covers.
+
 | Part | What it shows |
 |------|---------------|
+| **About this Guide** <small>(v1.22.0+)</small> | What the Guide is for: one part per thing you can do, live examples that change nothing, **Show me** and the way back |
 | **Tabs** | The sidebar's own tab list, with its groups and the tab you are on. Pointing at a tab shows what it holds; clicking opens it |
 | **Sections** | The tab's own sections (else pinned ones, or a sibling tab's), drawn by the dashboard itself: headers, folding, the numbers a folded section of cards still shows, **Collapse all** |
 | **Filters** | A real card and filter from the dashboard. Picking a value changes the number without touching the dashboard's own filters |
 | **Components** | Pick a kind: one of the dashboard's own components of it, from this tab or a sibling, with its full action row, so every icon can be tried. A kind the dashboard lacks shows a stand-in. *In the editor* adds the grip, the resize corner and the ⋮ menu, whose items only describe what they would do |
 | **Analysis** | Select, save as a group and compare, overlaid or split, on the dashboard's own figure, table and card. See [Analysis](../../features/interactive-selection-filtering.md#analysis-panel) |
-| **Settings** | The reader's own page width and text size (*Settings → Your view*), and light or dark (the sidebar's sun / moon). **Show me what they do** plays them on the demo, then puts them back |
+| **Genome** | The genome browser's menus and gestures, where the dashboard has one |
+| **Label your samples** <small>(v1.22.0+)</small> | Only with a metadata table: a live demo of label columns on the dashboard's own table (nothing is saved) and a button that opens the [Metadata panel](../../features/metadata-panel.md) |
 | **Comments** <small>(v1.17.4+)</small> | Threads and annotations on one of the dashboard's own figures, through the real comment controls. It works without an account and writes nothing. See [Comments and Annotations](../../features/comments-annotations.md) |
 | **Versions** <small>(v1.17.4+)</small> | A component's real history, read-only for any reader (no **Restore**). A dashboard with no saved version gets a sample list. See [Component history](../../features/versioning.md#component-history) |
+| **What's new** <small>(v1.22.0+)</small> | The changes since your last visit, in the real [What's new](../../features/whats-new.md) panel; with no change, how the header will announce one |
+| **Settings** | The reader's own page width and text size (*Settings → Your view*), and light or dark (the sidebar's sun / moon). **Show me what they do** plays them on the demo, then puts them back |
 
 Everything the demos do stays in the Guide: no filter, group or setting of the dashboard
 changes.
 
 ---
 
-## Landing hint <small>(v1.17.4+)</small> { #landing-hint }
+## Landing card <small>(v1.17.4+)</small> { #landing-hint }
 
-A public-mode guest opening a dashboard (demo mode keeps its tour) gets a small note under
-the *Powered by Depictio* credit: what Depictio is, what this dashboard is, and a button to the Guide. It shows once
-per browser, on the main tab, and goes away with its close button or when the Guide is
-opened. It takes over from the public tour, which now stays on the dashboards list and
-ends by picking a dashboard. A dashboard with `show_guide: false` gets no hint.
+A reader who does not own the dashboard (a public-mode guest or a signed-in colleague)
+gets a small card under the *Powered by Depictio* credit on its main tab: what Depictio is,
+what this dashboard is, and a button to the Guide. Before v1.22.0 only public-mode guests
+saw it. It is remembered per dashboard, in this browser, and goes away with its close
+button or when the Guide is opened.
+
+Since v1.22.0, when something changed since the reader's last visit, the card comes back,
+owner included, with a [What's new](../../features/whats-new.md) line naming the new runs;
+its button opens the What's new panel.
+
+Demo mode keeps its tour of the dashboards list and gets no introduction. A dashboard with
+`show_guide: false` gets no card, and the card stays away while a
+[guided tour](web_ui.md#guided-tours) runs and wherever tours are turned off
+(`DEPICTIO_WALKTHROUGH_DISABLED`, dev mode, `?no-walkthrough=1`).
 
 ---
 

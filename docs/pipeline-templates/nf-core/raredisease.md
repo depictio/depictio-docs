@@ -94,7 +94,7 @@ browser's tracks.
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md). The
+    manifest. See [Nextflow trigger](../../workflows/nextflow/trigger.md). The
     trigger passes no `--var`, so a GRCh38 run reads on the `hg19` axis; ingest it
     by hand with `GENOME=hg38` instead.
 

@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="2.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.3.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/rnafusion 4.1.3</span>
-<span class="gtd-badge gtd-template-ver">Template 2.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.3.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -75,12 +75,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `SAMPLESHEET_FILE` | — | Path to the run samplesheet. Defaults to {DATA_ROOT}/input/samplesheet.csv. rnafusion does not publish the samplesheet, so fetch the one params.json `input` points at (see megatest.yaml post_fetch_help). |
 | `GENOME` | — | UCSC name of the assembly the run aligned to (hg38, hg19, mm10): the axis and gene lane of the genome browser. |
 | `TRACKS_URI` | — | s3:// or https:// folder holding the run's results (the folder DATA_ROOT mirrors), to read the genome-browser tracks (STAR alignments) in place instead of uploading them from DATA_ROOT. Without it the `tracks` collection uploads whichever of those files DATA_ROOT holds. |
-| `SKIP_ARRIBA` | — | Set when params.json `tools` does not include arriba. Prunes the Arriba data collection. |
-| `SKIP_STARFUSION` | — | Set when params.json `tools` does not include starfusion. Prunes the STAR-Fusion data collection. |
-| `SKIP_FUSIONCATCHER` | — | Set when params.json `tools` does not include fusioncatcher. Prunes the FusionCatcher data collection. |
-| `SKIP_FUSIONINSPECTOR` | — | Set when the run did not validate the calls with FusionInspector. Prunes the validated-fusion and protein-domain collections. |
-| `SKIP_CTATSPLICING` | — | Set when params.json `tools` does not include ctatsplicing. Prunes the splice-junction collections. |
-| `SKIP_QC` | — | Set when the run used --skip_qc (params.json skip_qc). Prunes the MultiQC collection and the Quality control tab. |
+
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `SKIP_ARRIBA`, `SKIP_STARFUSION`, `SKIP_FUSIONCATCHER`, `SKIP_FUSIONINSPECTOR`, `SKIP_CTATSPLICING`, `SKIP_QC`
 
 ### :material-database-outline: Data collections
 

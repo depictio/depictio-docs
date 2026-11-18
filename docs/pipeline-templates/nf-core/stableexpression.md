@@ -63,8 +63,9 @@ and never move a stability score, which is a statistic of the whole cohort.
     stableexpression takes a species, not a samplesheet, so there is nothing to
     supply: the design is `merged_data/whole_design.csv`, written by the run.
     `METADATA_FILE` can point to an annotated copy with extra columns (tissue,
-    treatment), and `GROUP_COL` (default `platform`) can name any of them. For a run
-    with `--skip_id_mapping`, pass `--var NO_ID_MAPPING=true`.
+    treatment), and `GROUP_COL` (default `platform`) can name any of them.
+    `NO_ID_MAPPING` is set from `--skip_id_mapping` in the run's params;
+    `--var NO_ID_MAPPING=false` overrides.
 
 === "From the pipeline itself (v1.10.0+)"
 
@@ -75,7 +76,7 @@ and never move a stability score, which is a statistic of the whole cohort.
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    manifest. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 

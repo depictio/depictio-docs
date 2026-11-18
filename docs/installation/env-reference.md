@@ -159,6 +159,25 @@ or any external S3 endpoint (AWS, NetApp, Ceph, MinIO, …) set with
 | `DEPICTIO_S3_ROOT_PASSWORD` | _(empty)_ | S3 secret key. Outside single-user mode the server refuses to start unless it has at least 8 characters and is not a well-known default (`minio123`, `changeme`, ...) |
 | `DEPICTIO_S3_BUCKET` | `depictio-bucket` | - |
 | `DEPICTIO_S3_VERIFY_TLS` | `true` | Verify TLS certificates when connecting to S3. Set to `false` only for local dev with self-signed certificates. |
+| `DEPICTIO_S3_BROWSER_ACCESS` <small>(v1.22.0+)</small> | `presigned` | How browsers read [indexed files](#s3-browser-access) (3D structures, GenomeSpy VCF/BAM/bigWig tracks): `presigned` or `proxy`. The Helm chart sets it, see [`s3.browserAccess`](kubernetes.md#s3-browser-access) |
+
+### Browser access to indexed files <small>(v1.22.0+)</small> { #s3-browser-access }
+
+The 3D structure viewer and GenomeSpy's file-backed tracks read their files from the
+browser, by HTTP range request.
+
+- **`presigned`** (default): the API hands out URLs signed for the S3 public endpoint
+  (`DEPICTIO_S3_PUBLIC_URL`, or the `EXTERNAL_*` host and port), and the browser reads S3
+  directly. S3 must be reachable from the reader's browser, with CORS allowing `Range`.
+- **`proxy`**: the API hands out its own URLs,
+  `GET|HEAD /depictio/api/v1/files/indexed/{dc_id}/object/{sample}/{name}`, and streams
+  each object by byte range. Each URL is signed for one object and one user and lives
+  15 minutes; the reader's access is checked again on every request. No CORS or CSP entry
+  for S3 is needed.
+
+Use `proxy` when browsers cannot reach S3: an IP-only install where S3 stays on the Compose
+network, a Serve app, a store with no public route. The symptom in `presigned` mode is a
+structure or track that fails with *Failed to fetch* while tables and figures load.
 
 ### Required S3 permissions
 
@@ -261,7 +280,7 @@ Keys, sign-in modes and OpenID Connect single sign-on. The modes are compared in
 | `DEPICTIO_AUTH_SINGLE_USER_MODE` | `false` | Single-user mode: no login, the anonymous user is an admin, and no secret is enforced at startup. **The root `docker-compose.yaml` sets it to `true` unless you set `false`**; the Helm chart leaves it `false` |
 | `DEPICTIO_AUTH_PUBLIC_MODE` | `false` | Public mode: anonymous read-only access with optional sign-in |
 | `DEPICTIO_AUTH_UNAUTHENTICATED_MODE` | `false` | Former name of `DEPICTIO_AUTH_PUBLIC_MODE`, still read as an alias |
-| `DEPICTIO_AUTH_DEMO_MODE` | `false` | Demo mode: public mode plus guided tour tooltips for first-time users |
+| `DEPICTIO_AUTH_DEMO_MODE` | `false` | Demo mode: public mode with the guest [tour](../usage/guides/web_ui.md#guided-tours) of the dashboards list, guests never offered sign-in, and no landing card introducing a dashboard |
 | `DEPICTIO_AUTH_PUBLIC_ACCESS_CODE` | - | Shared code a visitor enters before public mode hands out a temporary session. Ignored outside public and demo mode. With Helm, set `secrets.publicAccessCode`. See [Public-mode access code](../usage/guides/authentication-modes.md#public-access-code) |
 | `DEPICTIO_AUTH_ANONYMOUS_USER_EMAIL` | `anonymous@depict.io` | Default anonymous user email |
 | `DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS` | `24` | Number of hours until temporary users expire |
@@ -814,10 +833,10 @@ Top-level settings, plus the `DEPICTIO_` variables the server reads directly.
 | `DEPICTIO_CONTEXT` | `server` | `server` for the API and workers, `client` for the CLI. Server context enforces the secrets |
 | `DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS` | `false` | Skip seeding the bundled reference projects (Iris, Penguins, Advanced Visualisations, nf-core/ampliseq, nf-core/viralrecon) and their dashboards on API startup |
 | `DEPICTIO_SEED_PROJECTS` | _(empty = all)_ | Comma-separated allowlist of bundled reference projects to seed on startup, e.g. `iris` or `iris,penguins`. Names: `iris`, `penguins`, `ampliseq`, `advanced_viz_showcase`, `viralrecon`. Ignored when `DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS=true` |
-| `DEPICTIO_SEED_EXTRA_PROJECTS` | _(empty)_ | Comma-separated optional projects to seed on top of the default set, e.g. `catalog_conformance`. Test fixtures, for CI |
-| `DEPICTIO_WALKTHROUGH_DISABLED` | `false` | Hide the onboarding walkthrough overlay for every user. Useful for embedded iframes, screenshot staging and demos with their own narration |
+| `DEPICTIO_SEED_EXTRA_PROJECTS` | _(empty)_ | Comma-separated optional projects to seed on top of the default set: `catalog_conformance` (a CI test fixture) and `genome_tracks_examples` (the Genome Tracks Showcase, opt-in since v1.22.0 on a fresh database; an instance that already has it keeps it) |
+| `DEPICTIO_WALKTHROUGH_DISABLED` | `false` | Turn off the [guided tours](../usage/guides/web_ui.md#guided-tours) (coach cards) and, since v1.22.0, the dashboard [landing card](../usage/guides/dashboard-guide.md#landing-hint) for every user; the header compass stays, disabled. Useful for embedded iframes, screenshot staging and demos with their own narration |
 | `DEPICTIO_ENABLE_DEV_ENDPOINTS` | `false` | Expose the destructive test endpoints (`utils/drop_S3_content`, `utils/drop_all_collections`, `events/test-trigger`). Off, they answer 404 even for admins. Development only |
-| `DEPICTIO_DEV_MODE` | `false` | Development mode: the API runs under `uvicorn --reload`, the worker restarts on code changes, telemetry and the walkthrough are off, and the admin CLI config is re-exported at each start. Not a security switch |
+| `DEPICTIO_DEV_MODE` | `false` | Development mode: the API runs under `uvicorn --reload`, the worker restarts on code changes, telemetry, the guided tours and the landing card are off, and the admin CLI config is re-exported at each start. Not a security switch |
 | `DEPICTIO_DELTA_CACHE_DIR` | `/app/cache/delta_cache` | Local cache of Delta tables read by the API |
 
 ---

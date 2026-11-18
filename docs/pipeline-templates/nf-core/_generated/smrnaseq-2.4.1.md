@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="1.2.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/smrnaseq 2.4.1</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.2.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -76,10 +76,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `METADATA_ID_COL` | — | Design table sample-id column (links join on it). Auto-detected as the first column; defaults to 'sample'. |
 | `GROUP_COL` | — | Design column the dashboards group and colour by. Auto-detected as the first factor column of METADATA_FILE. |
 | `GENOME` | — | UCSC assembly name the novel precursor coordinates are linked out to (the genome the run mapped to). |
-| `SKIP_MIRDEEP` | — | Set (--var SKIP_MIRDEEP=true) for a run with --skip_mirdeep: no result_*.csv tables, so the miRDeep2 collections are pruned. |
-| `SKIP_MULTIQC` | — | Set (--var SKIP_MULTIQC=true) for a run with --skip_multiqc: no report, so the MultiQC and miRTrace collections are pruned. |
 
-**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`, `SKIP_MIRDEEP`, `SKIP_MULTIQC`
 
 ### :material-database-outline: Data collections
 

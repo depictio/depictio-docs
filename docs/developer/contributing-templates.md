@@ -271,8 +271,15 @@ scan mode the template declares.
 ## Step 5 — Test end-to-end & open a PR
 
 ```bash
+depictio template check <pipeline>/<version> --fetch-schema --run /path/to/run
 depictio ingest /path/to/run --template <pipeline>/<version>
 ```
+
+[`depictio template check`](../depictio-cli/usage.md#template-check) (v1.22.0+)
+lists each variable and what sets it, checks every `from_params` rule against the
+release's `nextflow_schema.json` (exit 1 when a rule reads a missing param), and
+shows which rules hold and which conditionals fire on the run. CI's
+`template-params` workflow runs it on every changed `template.yaml`.
 
 Check before submitting:
 
@@ -280,11 +287,24 @@ Check before submitting:
 - [ ] Every recipe has a docstring and a typed `OUTPUT_SCHEMA`; `depictio dev recipe run` passes for each.
 - [ ] Dashboard YAML is committed, follows the [Template authoring rules](#template-authoring-rules), and the template's `docs/dashboards.md` describes every tab.
 - [ ] No hardcoded absolute paths or URLs: only `{DATA_ROOT}`, `{MANIFEST_URL}` and other template variables.
+- [ ] `depictio template check <pipeline>/<version> --fetch-schema` passes.
 - [ ] A full `depictio ingest <path> --template …` completes without error and dashboards render with the template badge.
 
 In the PR, include: the pipeline name + docs link, the version tested, the
 reference dataset used (e.g. an nf-core AWS results URL), and a screenshot of at
 least one dashboard.
+
+### Version bumps <small>(v1.22.0+)</small> { #version-bumps }
+
+The weekly `nfcore-release-monitor` workflow reports new nf-core releases; its
+`## Params` section reads the template's `from_params` rules against both
+releases' schemas (a param removed or renamed, a rule that flips).
+`python scripts/bump_template_version.py --pipeline <p> --new-version <v>` copies
+the template. On the pull request, the `template-drift` workflow runs the previous
+version on its pinned megatest run and the copy on the release's run, and posts
+one comment: lost files, changed columns and tables, renamed params, unread new
+outputs. An error fails the check; run
+`python scripts/nfcore_monitor.py bump --target <p>/<v>` locally first.
 
 ## Step 6 — Document the template
 
@@ -508,6 +528,21 @@ main_dashboard:
 - `template.yaml` prunes data collections per route: no metadata, another
   classifier, a skipped step. Route alternates (the same card from two
   classifiers) share one grid slot.
+- A route a pipeline param decides takes a `from_params` rule (v1.22.0+), so
+  the run sets it and nobody passes `--var`. Keep `--var` for what no param says
+  (a samplesheet's content, a path, a genome build). Read the param in the
+  release's code, not only its name: rnaseq's `--skip_qc` keeps MultiQC. Rules
+  are listed in the [Template System Reference](../usage/projects/templates.md#from-params).
+
+    ```yaml
+    variables:
+      - name: SKIP_ARRIBA                  # rnafusion 4.1.3
+        description: "arriba not among --tools"
+        from_params: {all: [{param: tools, not_contains: arriba}, {param: tools, not_contains: all}]}
+    conditional:
+      - if_var_present: SKIP_ARRIBA
+        remove_dc_tags: [arriba_fusions]
+    ```
 - At import, a highlight whose source is gone is removed, and so is each `values`
   list item whose data collection is missing. Give highlight sources a short,
   meaningful `index`.

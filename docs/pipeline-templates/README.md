@@ -41,7 +41,7 @@ depictio ingest /data/my_ampliseq_run \
 
 <div class="template-cards" data-tpl-grid>
 
-  <a class="template-card" href="nf-core/ampliseq/" data-tpl-name="nf-core/ampliseq" data-tpl-status="reviewed" data-tpl-version="2.18.0" data-tpl-keywords="16S ITS CO1 18S amplicon metabarcoding microbiome dada2 qiime2 taxonomy diversity illumina pacbio iontorrent">
+  <a class="template-card" href="nf-core/ampliseq/" data-tpl-name="nf-core/ampliseq" data-tpl-status="reviewed" data-tpl-version="3.1.0" data-tpl-keywords="16S ITS CO1 18S amplicon metabarcoding microbiome dada2 qiime2 taxonomy diversity illumina pacbio iontorrent">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_dark.png" alt="nf-core/ampliseq">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/ampliseq/master/docs/images/nf-core-ampliseq_logo_light.png" alt="nf-core/ampliseq">
@@ -49,7 +49,7 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">16S · ITS · CO1 · 18S amplicon sequencing across Illumina, PacBio, and IonTorrent.</p>
       <div class="template-card-meta">
-        <span class="template-version">v2.18.0</span>
+        <span class="template-version">v3.1.0</span>
         <span class="template-status-reviewed"><i class="mdi mdi-check-circle-outline" style="vertical-align:-1px;"></i> Reviewed</span>
       </div>
     </div>
@@ -69,7 +69,7 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/variantbenchmarking/" data-tpl-name="nf-core/variantbenchmarking" data-tpl-status="experimental" data-tpl-version="1.4.0" data-tpl-keywords="benchmark variant caller truth set precision recall f1 germline somatic indel structural variant sv giab">
+  <a class="template-card" href="nf-core/variantbenchmarking/" data-tpl-name="nf-core/variantbenchmarking" data-tpl-status="experimental" data-tpl-version="1.6.1" data-tpl-keywords="benchmark variant caller truth set precision recall f1 germline somatic indel structural variant sv giab">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_dark.png" alt="nf-core/variantbenchmarking">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/variantbenchmarking/master/docs/images/nf-core-variantbenchmarking_logo_light.png" alt="nf-core/variantbenchmarking">
@@ -77,7 +77,7 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">Benchmark variant callers against truth sets: precision, recall and F1 for germline small variants, somatic indels and structural variants.</p>
       <div class="template-card-meta">
-        <span class="template-version">v1.4.0</span>
+        <span class="template-version">v1.6.1</span>
         <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
@@ -139,7 +139,7 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/rnaseq/" data-tpl-name="nf-core/rnaseq" data-tpl-status="experimental" data-tpl-version="3.26.0" data-tpl-keywords="rnaseq bulk expression salmon star quantification tpm counts transcriptome gene">
+  <a class="template-card" href="nf-core/rnaseq/" data-tpl-name="nf-core/rnaseq" data-tpl-status="experimental" data-tpl-version="3.28.0" data-tpl-keywords="rnaseq bulk expression salmon star quantification tpm counts transcriptome gene">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/rnaseq/master/docs/images/nf-core-rnaseq_logo_dark.png" alt="nf-core/rnaseq">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/rnaseq/master/docs/images/nf-core-rnaseq_logo_light.png" alt="nf-core/rnaseq">
@@ -147,7 +147,7 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">Bulk RNA-seq quantification: MultiQC funnel, Salmon expression overview and a per-gene explorer.</p>
       <div class="template-card-meta">
-        <span class="template-version">v3.26.0</span>
+        <span class="template-version">v3.28.0</span>
         <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
@@ -209,7 +209,7 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/eager/" data-tpl-name="nf-core/eager" data-tpl-status="experimental" data-tpl-version="2.4.5" data-tpl-keywords="eager ancient dna adna damage deamination mapdamage damageprofiler contamination endogenous authentication">
+  <a class="template-card" href="nf-core/eager/" data-tpl-name="nf-core/eager" data-tpl-status="experimental" data-tpl-version="2.5.3" data-tpl-keywords="eager ancient dna adna damage deamination mapdamage damageprofiler contamination endogenous authentication">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/eager/dev/docs/images/nf-core-eager_logo_dark.png" alt="nf-core/eager">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/eager/dev/docs/images/nf-core-eager_logo_light.png" alt="nf-core/eager">
@@ -217,7 +217,7 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">Ancient DNA: read preprocessing, mapping, damage patterns and contamination estimates to judge authenticity per library and sample.</p>
       <div class="template-card-meta">
-        <span class="template-version">v2.4.5</span>
+        <span class="template-version">v2.5.3</span>
         <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
@@ -279,7 +279,7 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/sarek/" data-tpl-name="nf-core/sarek" data-tpl-status="experimental" data-tpl-version="3.11.0" data-tpl-keywords="sarek variant calling germline somatic snv indel vcf vep snpeff wgs wes">
+  <a class="template-card" href="nf-core/sarek/" data-tpl-name="nf-core/sarek" data-tpl-status="experimental" data-tpl-version="3.12.0" data-tpl-keywords="sarek variant calling germline somatic snv indel vcf vep snpeff wgs wes">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/sarek/master/docs/images/nf-core-sarek_logo_dark.png" alt="nf-core/sarek">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/sarek/master/docs/images/nf-core-sarek_logo_light.png" alt="nf-core/sarek">
@@ -287,7 +287,7 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">Germline and somatic variant calling: alignment QC, variant counts per caller, annotated variants and their genome positions.</p>
       <div class="template-card-meta">
-        <span class="template-version">v3.11.0</span>
+        <span class="template-version">v3.12.0</span>
         <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
@@ -349,7 +349,7 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/mhcquant/" data-tpl-name="nf-core/mhcquant" data-tpl-status="experimental" data-tpl-version="3.2.0" data-tpl-keywords="mhcquant immunopeptidomics mhc hla peptides mass spectrometry binding prediction">
+  <a class="template-card" href="nf-core/mhcquant/" data-tpl-name="nf-core/mhcquant" data-tpl-status="experimental" data-tpl-version="3.3.0" data-tpl-keywords="mhcquant immunopeptidomics mhc hla peptides mass spectrometry binding prediction">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/mhcquant/master/docs/images/nf-core-mhcquant_logo_dark.png" alt="nf-core/mhcquant">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/mhcquant/master/docs/images/nf-core-mhcquant_logo_light.png" alt="nf-core/mhcquant">
@@ -357,7 +357,7 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">Immunopeptidomics: identified MHC peptides, length and anchor-motif signatures, replicate reproducibility and source proteins across runs.</p>
       <div class="template-card-meta">
-        <span class="template-version">v3.2.0</span>
+        <span class="template-version">v3.3.0</span>
         <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
@@ -377,7 +377,7 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/rnasplice/" data-tpl-name="nf-core/rnasplice" data-tpl-status="experimental" data-tpl-version="1.0.4" data-tpl-keywords="rnasplice splicing alternative splicing rmats suppa dexseq transcript usage">
+  <a class="template-card" href="nf-core/rnasplice/" data-tpl-name="nf-core/rnasplice" data-tpl-status="experimental" data-tpl-version="2.0.0" data-tpl-keywords="rnasplice splicing alternative splicing rmats suppa dexseq transcript usage">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/rnasplice/master/docs/images/nf-core-rnasplice_logo_dark.png" alt="nf-core/rnasplice">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/rnasplice/master/docs/images/nf-core-rnasplice_logo_light.png" alt="nf-core/rnasplice">
@@ -385,13 +385,13 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">Alternative splicing: differential splicing events and transcript usage between conditions, with the supporting expression.</p>
       <div class="template-card-meta">
-        <span class="template-version">v1.0.4</span>
+        <span class="template-version">v2.0.0</span>
         <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/proteinfamilies/" data-tpl-name="nf-core/proteinfamilies" data-tpl-status="experimental" data-tpl-version="2.5.0" data-tpl-keywords="proteinfamilies protein families clustering mmseqs hmmer profile hmm logo alignment famsa structure">
+  <a class="template-card" href="nf-core/proteinfamilies/" data-tpl-name="nf-core/proteinfamilies" data-tpl-status="experimental" data-tpl-version="2.6.0" data-tpl-keywords="proteinfamilies protein families clustering mmseqs hmmer profile hmm logo alignment famsa structure">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/proteinfamilies/master/docs/images/nf-core-proteinfamilies_logo_dark.png" alt="nf-core/proteinfamilies">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/proteinfamilies/master/docs/images/nf-core-proteinfamilies_logo_light.png" alt="nf-core/proteinfamilies">
@@ -399,7 +399,7 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">Protein families: how the input clustered, the families built or extended, and each family's alignment, conservation, structure and profile HMM.</p>
       <div class="template-card-meta">
-        <span class="template-version">v2.5.0</span>
+        <span class="template-version">v2.6.0</span>
         <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>
@@ -559,7 +559,7 @@ depictio ingest /data/my_ampliseq_run \
     </div>
   </a>
 
-  <a class="template-card" href="nf-core/quantms/" data-tpl-name="nf-core/quantms" data-tpl-status="experimental" data-tpl-version="1.1.1" data-tpl-keywords="quantms proteomics mass spectrometry dia label-free quantification peptide protein">
+  <a class="template-card" href="nf-core/quantms/" data-tpl-name="nf-core/quantms" data-tpl-status="experimental" data-tpl-version="1.2.0" data-tpl-keywords="quantms proteomics mass spectrometry dia label-free quantification peptide protein">
     <div class="template-card-logo">
       <img class="nf-core-dark" src="https://raw.githubusercontent.com/nf-core/quantms/master/docs/images/nf-core-quantms_logo_dark.png" alt="nf-core/quantms">
       <img class="nf-core-light" src="https://raw.githubusercontent.com/nf-core/quantms/master/docs/images/nf-core-quantms_logo_light.png" alt="nf-core/quantms">
@@ -567,7 +567,7 @@ depictio ingest /data/my_ampliseq_run \
     <div class="template-card-body">
       <p class="template-card-desc">Label-free DIA proteomics quantification: identifications, protein abundances and QC.</p>
       <div class="template-card-meta">
-        <span class="template-version">v1.1.1</span>
+        <span class="template-version">v1.2.0</span>
         <span class="template-status-experimental"><i class="mdi mdi-flask-outline" style="vertical-align:-1px;"></i> Experimental</span>
       </div>
     </div>

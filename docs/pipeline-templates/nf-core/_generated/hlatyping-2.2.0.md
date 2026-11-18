@@ -53,18 +53,19 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
 .gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
 .gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.1.0" data-template-updated="2026-11-04">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/hlatyping 2.2.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.1.0</span>
+<span class="gtd-badge gtd-updated">Updated 4 Nov 2026</span>
 </div>
 
-### Template variables
+### :material-code-braces: Template variables
 
 Variables you provide when running the template: `DATA_ROOT` is the results directory given to `depictio ingest`, the others are set with `--var NAME=value`:
 
@@ -76,21 +77,21 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `GROUP_COL` | — | Samplesheet column the dashboard groups and filters samples by. Defaults to seq_type (DNA or RNA), from the sheet; name any design column added to the sheet instead. |
 | `GROUP_COL_DISPLAY` | — | Reader-facing label of GROUP_COL, used in filter and card titles. |
 
-### Data collections
+### :material-database-outline: Data collections
 
-5 data collections — <span class="gtd-badge gtd-req">5 required</span> <span class="gtd-badge gtd-opt">0 optional</span> · <span class="gtd-badge gtd-direct">4 direct</span> <span class="gtd-badge gtd-derived">1 derived</span>.
+5 data collections — <span class="gtd-badge gtd-req">5 required</span> <span class="gtd-badge gtd-opt">0 optional</span> · <span class="gtd-badge gtd-direct">3 direct</span> <span class="gtd-badge gtd-derived">2 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `samples` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/hlatyping/samples.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc\.parquet$`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `optitype_genotypes` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`optitype/genotypes.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `optitype_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`optitype/summary.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `read_qc` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/hlatyping/read_qc.py`</code> | <span class="gtd-badge gtd-req">required</span> |
+| `samples` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/hlatyping/recipes/samples.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/hlatyping/samples.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc\.parquet$</code> | <span class="gtd-badge gtd-req">required</span> |
+| `optitype_genotypes` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/hlatyping/recipes/genotypes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/hlatyping/genotypes.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `optitype_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/optitype/summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">optitype/summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `read_qc` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/hlatyping/recipes/read_qc.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/hlatyping/read_qc.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 
-### Cross-DC links
+### :material-vector-link: Cross-DC links
 
 6 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
@@ -106,13 +107,13 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 <tr><td><code>optitype_genotypes</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>read_qc</code></td><td>Carry an allele pick to the read files of the samples that carry it</td></tr>
 </tbody></table></div>
 
-### Recipes
+### :material-chef-hat: Recipes
 
 Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `OUTPUT_SCHEMA` columns.
 
 | Recipe | Transforms | Output |
 |---|---|---|
+| [`nf-core/hlatyping/genotypes.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/hlatyping/recipes/genotypes.py) | OptiType genotypes of nf-core/hlatyping with the sample's design columns. | `call_id`, `sample_id`, `locus`, `haplotype`, `allele`, `allele_group`, `hla_class`, `zygosity`, `reads`, `objective` |
 | [`nf-core/hlatyping/read_qc.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/hlatyping/recipes/read_qc.py) | Read QC of nf-core/hlatyping: one row per sample and read file. | `read_key`, `sample`, `read`, `total_sequences`, `pct_gc`, `pct_duplicates`, `mean_length`, `fastqc_fail`, `fastqc_warn`, `fastqc_status`, `typing_reads`, `typing_share` |
 | [`nf-core/hlatyping/samples.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/hlatyping/recipes/samples.py) | Sample hub for nf-core/hlatyping: one row per sample of the run. | `sample`, `seq_type`, `input_format`, `read_layout`, `runs`, `input_files` |
-| [`optitype/genotypes.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/optitype/genotypes.py) | OptiType HLA class I genotypes, one row per sample, locus and haplotype. | `call_id`, `sample_id`, `locus`, `haplotype`, `allele`, `allele_group`, `hla_class`, `zygosity`, `reads`, `objective` |
 | [`optitype/summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/optitype/summary.py) | OptiType typing per sample: the genotype, its zygosity and its support. | `sample_id`, `hla_a`, `hla_b`, `hla_c`, `alleles`, `distinct_alleles`, `typed_loci`, `homozygous_loci`, `heterozygous_loci`, `homozygous_class`, `reads`, `objective`, `objective_per_read`, `solutions`, `runner_up_gap` |

@@ -54,18 +54,19 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
 .gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
 .gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="1.3.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/stableexpression 1.1.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.3.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
-### Template variables
+### :material-code-braces: Template variables
 
 Variables you provide when running the template: `DATA_ROOT` is the results directory given to `depictio ingest`, the others are set with `--var NAME=value`:
 
@@ -78,27 +79,28 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `GROUP_COL_DISPLAY` | — | Reader-facing label of GROUP_COL, used in filter and card titles. |
 | `TOP_PER_SECTION` | — | Candidates per expression section summarised as box statistics (stableexpression_stable_gene_distribution). Default 25, as many as the pipeline's report draws. |
 | `VALUES_PER_SECTION` | — | Candidates per expression section kept as one row per sample (stableexpression_stable_gene_values), the boxes the sample filters can redraw. Default 2; each gene adds a row per sample. |
-| `NO_ID_MAPPING` | — | Set (--var NO_ID_MAPPING=true) for a run with --skip_id_mapping: no ID mapping statistics are written, so the ID mapping collection and tab are removed. |
 
-### Data collections
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `NO_ID_MAPPING`
+
+### :material-database-outline: Data collections
 
 9 data collections — <span class="gtd-badge gtd-req">8 required</span> <span class="gtd-badge gtd-opt">1 optional</span> · <span class="gtd-badge gtd-direct">9 direct</span> <span class="gtd-badge gtd-derived">0 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `samples` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/stableexpression/samples.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `stableexpression_dataset_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`stableexpression/dataset_summary.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `stableexpression_dataset_funnel` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`stableexpression/dataset_funnel.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `stableexpression_id_mapping` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`stableexpression/id_mapping.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `stableexpression_gene_statistics` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`stableexpression/gene_statistics.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `stableexpression_gene_stability` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`stableexpression/gene_stability.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `stableexpression_score_components` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`stableexpression/score_components.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `stableexpression_stable_gene_distribution` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`stableexpression/stable_gene_distribution.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `stableexpression_stable_gene_values` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`stableexpression/stable_gene_values.py`</code> | <span class="gtd-badge gtd-req">required</span> |
+| `samples` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/stableexpression/recipes/samples.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/stableexpression/samples.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `stableexpression_dataset_summary` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/stableexpression/dataset_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">stableexpression/dataset_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `stableexpression_dataset_funnel` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/stableexpression/dataset_funnel.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">stableexpression/dataset_funnel.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `stableexpression_id_mapping` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/stableexpression/id_mapping.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">stableexpression/id_mapping.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `stableexpression_gene_statistics` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/stableexpression/gene_statistics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">stableexpression/gene_statistics.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `stableexpression_gene_stability` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/stableexpression/gene_stability.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">stableexpression/gene_stability.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `stableexpression_score_components` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/stableexpression/score_components.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">stableexpression/score_components.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `stableexpression_stable_gene_distribution` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/stableexpression/stable_gene_distribution.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">stableexpression/stable_gene_distribution.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `stableexpression_stable_gene_values` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/stableexpression/stable_gene_values.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">stableexpression/stable_gene_values.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 
-### Conditional routes
+### :material-directions-fork: Conditional routes
 
 Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (8 collections are unaffected by any variable — present on every run.)
 
@@ -111,7 +113,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><th class="dc"><code>stableexpression_id_mapping</code></th><td class="minus" title="removed when NO_ID_MAPPING is set">−</td></tr>
 </tbody></table></div>
 
-### Cross-DC links
+### :material-vector-link: Cross-DC links
 
 9 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
@@ -130,7 +132,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>stableexpression_gene_statistics</code> <span class="col">·&nbsp;gene_id</span></td><td class="arr">→</td><td><code>stableexpression_gene_stability</code></td><td>Carry a gene pick (expression level, platforms) to the candidates</td></tr>
 </tbody></table></div>
 
-### Recipes
+### :material-chef-hat: Recipes
 
 Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `OUTPUT_SCHEMA` columns.
 

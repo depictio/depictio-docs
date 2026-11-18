@@ -132,7 +132,7 @@ A manifest lists remote files, one entry per file. Its `type` is a **data collec
 
 The schema is closed: other CSV columns go into an `extra` field. A file listed twice is refused. Entries of the same `type` are aggregated into one collection. Other column names are mapped with `id_field`, `url_field`, `type_field` and `run_field` (see the [reference](reference.md#manifest-the-entries-of-a-data-manifest)).
 
-An nf-core samplesheet becomes a manifest in one command, each file column a `type` ([all options](../../depictio-cli/usage.md#manifest-from-table)):
+An nf-core samplesheet becomes a manifest in one command, each file column a `type` ([all options](../../depictio-cli/usage.md#manifest-from-table)). A YAML or JSON samplesheet, a list of records, is read exactly as the same CSV <small>(v1.22.0+)</small>:
 
 ```bash
 depictio manifest from-table samplesheet.csv --id-col sample --base-url s3://my-bucket/run42 -o manifest.json

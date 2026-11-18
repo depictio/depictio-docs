@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="3.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="4.2.0" data-template-updated="2026-11-04">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/chipseq 2.1.0</span>
-<span class="gtd-badge gtd-template-ver">Template 3.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 4.2.0</span>
+<span class="gtd-badge gtd-updated">Updated 4 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -75,22 +75,24 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `METADATA_FILE` | — | Optional design table (TSV): merged-library id (or sample group) in METADATA_ID_COL, one column per factor. GROUP_COL becomes the condition column of the design hub; the other factors are carried as extra columns. |
 | `METADATA_ID_COL` | — | Design table id column. Auto-detected as the first column. |
 | `GROUP_COL` | — | Design table factor the run compares, carried as the condition column. Auto-detected as the first factor column of METADATA_FILE. |
-| `GENOME` | — | UCSC assembly the run was aligned to (hg38, hg19, mm10, ...). Sets the genome axis of the Locus tab from that assembly; left empty, the axis is built from the contigs of the peak calls, which suits any reference. |
+| `GENOME` | — | UCSC assembly the run was aligned to (hg38, hg19, mm10, sacCer3, ...). Sets the genome axis and the genome browser of the Locus tab; left empty, the axis is built from the contigs of the peak calls (the browser needs the assembly). |
+| `TRACKS_URI` | — | s3:// or https:// folder holding the run's results (the pipeline --outdir), to read the genome-browser tracks (bigWig, MACS3 peaks, BAM) in place instead of uploading them from DATA_ROOT. |
 | `PRESEQ_RAN` | — | Set to true for a run made with --skip_preseq false. The Signal tab then counts distinct fragments with preseq instead of reading the Picard duplication rate in the same slot. |
 
 **Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`
 
 ### :material-database-outline: Data collections
 
-20 data collections — <span class="gtd-badge gtd-req">15 required</span> <span class="gtd-badge gtd-opt">5 optional</span> · <span class="gtd-badge gtd-direct">13 direct</span> <span class="gtd-badge gtd-derived">7 derived</span>.
+21 data collections — <span class="gtd-badge gtd-req">16 required</span> <span class="gtd-badge gtd-opt">5 optional</span> · <span class="gtd-badge gtd-direct">13 direct</span> <span class="gtd-badge gtd-derived">8 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
 | `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code> | <span class="gtd-badge gtd-opt">optional</span> |
 | `design` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/2.1.0/recipes/design_factors.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/chipseq/design_factors.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `samplesheet` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">samplesheet\.valid\.csv$</code> | <span class="gtd-badge gtd-req">required</span> |
+| `tracks` | <span class="gtd-badge gtd-derived">derived</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/2.1.0/recipes/tracks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/chipseq/tracks.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 | `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc\.parquet$</code> | <span class="gtd-badge gtd-req">required</span> |
 | `preseq_ccurve_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*\.lc_extrap\.txt$</code> | <span class="gtd-badge gtd-opt">optional</span> |
 | `preseq_complexity_curve` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/preseq/complexity_curve.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">preseq/complexity_curve.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
@@ -117,21 +119,25 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 
 <div class="gtd-mtx">
 <table>
-<thead><tr><th class="dc">Data collection</th><th><code>METADATA_FILE</code></th><th><code>PRESEQ_RAN</code></th></tr></thead>
+<thead><tr><th class="dc">Data collection</th><th><code>METADATA_FILE</code></th><th><code>PRESEQ_RAN</code></th><th><code>GENOME</code></th><th><code>TRACKS_URI</code></th></tr></thead>
 <tbody>
-<tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td></td></tr>
-<tr><th class="dc"><code>picard_markduplicates_metrics_raw</code></th><td></td><td class="minus" title="removed when PRESEQ_RAN is set">−</td></tr>
-<tr><th class="dc"><code>picard_markduplicates_metrics</code></th><td></td><td class="minus" title="removed when PRESEQ_RAN is set">−</td></tr>
+<tr><th class="dc"><code>metadata</code></th><td class="plus" title="included only when METADATA_FILE is set">+</td><td></td><td></td><td></td></tr>
+<tr><th class="dc"><code>tracks</code></th><td></td><td></td><td class="plus" title="included only when GENOME is set">+</td><td class="swap" title="re-sourced when TRACKS_URI is set">⇄</td></tr>
+<tr><th class="dc"><code>picard_markduplicates_metrics_raw</code></th><td></td><td class="minus" title="removed when PRESEQ_RAN is set">−</td><td></td><td></td></tr>
+<tr><th class="dc"><code>picard_markduplicates_metrics</code></th><td></td><td class="minus" title="removed when PRESEQ_RAN is set">−</td><td></td><td></td></tr>
 </tbody></table></div>
 
 ### :material-vector-link: Cross-DC links
 
-23 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
+26 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
 <div class="gtd-links">
 <table>
 <thead><tr><th>Source · column</th><th></th><th>Target</th><th>Filters</th></tr></thead>
 <tbody>
+<tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Show the genome tracks of the samples picked on the design sheet</td></tr>
+<tr><td><code>tracks</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>design</code></td><td>Filter the dashboard by the samples whose tracks are picked in the genome browser</td></tr>
+<tr><td><code>macs2_peaks</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>tracks</code></td><td>Open the genome tracks of the sample a picked peak was called in</td></tr>
 <tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>multiqc_data</code></td><td>Filter the MultiQC panels by the samples picked on the design sheet</td></tr>
 <tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>macs2_peaks</code></td><td>Filter the peak table by the samples picked on the design sheet</td></tr>
 <tr><td><code>design</code> <span class="col">·&nbsp;sample_id</span></td><td class="arr">→</td><td><code>macs2_peak_summary</code></td><td>Filter the peak QC summary by the samples picked on the design sheet</td></tr>
@@ -176,5 +182,6 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`nf-core/chipseq/design_factors.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/2.1.0/recipes/design_factors.py) | One row per merged library of a chipseq 2.x run, with its factors as columns. | `sample_id`, `role`, `is_control`, `antibody`, `condition`, `replicate`, `control_id` |
 | [`nf-core/chipseq/feature_classes.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/recipes/feature_classes.py) | Peaks per sample and HOMER feature class, in the long form of a composition. | `sample`, `annotation_class`, `peak_count`, `rank` |
 | [`nf-core/chipseq/peaks.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/2.1.0/recipes/peaks.py) | MACS3 peak calls of either peak type, in one tidy table. | `sample`, `peak_id`, `chr`, `start`, `end`, `width`, `summit`, `score`, `fold_enrichment`, `neg_log10_pvalue`, `neg_log10_qvalue`, `peak_type` |
+| [`nf-core/chipseq/tracks.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/chipseq/2.1.0/recipes/tracks.py) | Genome-browser track manifest: one row per track file the run published. | `track_id`, `sample_id`, `antibody`, `kind`, `format`, `uri`, `name`, `color`, `category`, `order` |
 | [`picard/markduplicates_metrics.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/picard/markduplicates_metrics.py) | Duplication metrics from a Picard MarkDuplicates report. | `sample`, `library`, `unpaired_reads_examined`, `read_pairs_examined`, `unmapped_reads`, `unpaired_read_duplicates`, `read_pair_duplicates`, `read_pair_optical_duplicates`, `duplicate_reads`, `reads_after_dedup`, `percent_duplication`, `estimated_library_size` |
 | [`preseq/complexity_curve.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/preseq/complexity_curve.py) | Library complexity curve with its confidence ribbon, one row per read depth. | `sample`, `total_reads`, `expected_distinct`, `lower_ci`, `upper_ci`, `ci_width` |

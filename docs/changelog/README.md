@@ -23,6 +23,49 @@ hide:
 
 ---
 
+## **[v1.22.0](https://github.com/depictio/depictio/releases/tag/v1.22.0)** (November 18, 2026)
+
+!!! success "Minor: one Nextflow subworkflow publishes any nf-core run, templates read their routes from the run, and nine new pipeline releases"
+
+### **♻️ Migration**
+
+* **Genome Tracks Showcase is opt-in**: a fresh instance no longer seeds it; set `DEPICTIO_SEED_EXTRA_PROJECTS=genome_tracks_examples` to keep it. Existing instances keep theirs. [Example projects](../installation/configuration.md#example-projects) ([#1421](https://github.com/depictio/depictio/pull/1421))
+* **Helm picks how browsers read indexed files**: the chart sets `DEPICTIO_S3_BROWSER_ACCESS=proxy` when it does not route the S3 store (no ingress or gateway, or no `global.domain`); `s3.browserAccess` forces a mode. ([#1426](https://github.com/depictio/depictio/pull/1426))
+* **Helm pods get an egress label**: `backend.podLabels` and `celery.podLabels` default to `networking/allow-internet-egress: "true"`, which SciLifeLab Serve needs; set it to `"false"` to opt out. [Kubernetes](../installation/kubernetes.md) ([#1425](https://github.com/depictio/depictio/pull/1425))
+* **The `depictio/ingest` Nextflow module uses the all-in-one image**: `ghcr.io/depictio/depictio-allinone:1.22.0` (CLI, server and databases in one image) instead of `depictio-cli`, so a pipeline task downloads nothing. ([#1407](https://github.com/depictio/depictio/pull/1407))
+
+### **✨ New Features**
+
+* **A pipeline can ship its own dashboards**: add the `depictio/publish` subworkflow to an nf-core pipeline, and its last step ingests the run into a temporary Depictio and publishes it as a folder (`results/depictio/`). Anyone reopens that folder with `depictio local up`, no server needed. [Publish from a pipeline](../workflows/nextflow/subworkflow.md) ([#1407](https://github.com/depictio/depictio/pull/1407))
+* **Template routes read from the run**: templates set their route variables (`--skip_*`, platform, tools) from the run's `params_<timestamp>.json`, so no `--var` is needed; `--var NAME=false` unsets one. ([#1408](https://github.com/depictio/depictio/pull/1408))
+* **`depictio template check`**: checks a template's variables against a run, a release's `nextflow_schema.json` or the next release, offline. [`template check`](../depictio-cli/usage.md#template-check) ([#1408](https://github.com/depictio/depictio/pull/1408))
+* **YAML and JSON samplesheets**: `depictio ingest` and `manifest from-table` read a YAML or JSON list of records exactly as the same CSV. [`manifest from-table`](../depictio-cli/usage.md#manifest-from-table) ([#1289](https://github.com/depictio/depictio/pull/1289))
+* **Onboarding coach**: short, non-blocking cards replace the walkthrough, one chapter per page; *Account settings* › *Getting started* replays or stops them. [Account settings](../usage/guides/web_ui.md#account-settings) ([#1423](https://github.com/depictio/depictio/pull/1423))
+* **Indexed files through the API**: `DEPICTIO_S3_BROWSER_ACCESS=proxy` streams 3D structures and GenomeSpy tracks through the API when browsers cannot reach S3. [S3 Storage](../installation/env-reference.md#s3-storage) ([#1426](https://github.com/depictio/depictio/pull/1426))
+
+### **🚀 Improvements**
+
+* **Landing card and Guide**: the landing card greets any reader who does not own the dashboard and names new runs; the Guide adds *Label your samples* and *What's new*. [Landing hint](../usage/guides/dashboard-guide.md#landing-hint) ([#1423](https://github.com/depictio/depictio/pull/1423))
+* **Large recipe tables in less memory**: Delta tables are written in slices and recipes can yield batches; the `hmm_profile` ingest peaks at 2.2 GB instead of 10.2 GB. ([#1424](https://github.com/depictio/depictio/pull/1424))
+* **A partial shared-samples check says so**: the *Checks* table and the attach card show *Needs a look* when only some MultiQC reports could be read. [Add data](../usage/projects/guide.md#add-data) ([#1424](https://github.com/depictio/depictio/pull/1424))
+
+### **🧬 Pipeline Templates**
+
+* **nf-core/ampliseq 3.1.0**: reads the renamed samplesheet columns (`sample`, `fastq_1`, `fastq_2`) and `Domain` as top rank; the seeded ampliseq project now comes from 3.1.0. [ampliseq](../pipeline-templates/nf-core/ampliseq.md) ([#1411](https://github.com/depictio/depictio/pull/1411))
+* **nf-core/rnasplice 2.0.0**: reads the new DEXSeq, SUPPA and rMATS layouts, with dPSI oriented from SUPPA's own header. [rnasplice](../pipeline-templates/nf-core/rnasplice.md) ([#1413](https://github.com/depictio/depictio/pull/1413))
+* **nf-core/rnaseq 3.28.0, sarek 3.12.0, mhcquant 3.3.0 and variantbenchmarking 1.6.1**: checked on each release's megatest; rnaseq's `pct_trimmed` now comes from MultiQC's Trim Galore data. ([#1410](https://github.com/depictio/depictio/pull/1410))
+* **nf-core/quantms 1.2.0, eager 2.5.3 and proteinfamilies 2.6.0**: validated on real runs; quantms reads the renamed `_ms_info.tsv`, and eager's genotyping collections are optional. ([#1415](https://github.com/depictio/depictio/pull/1415), [#1414](https://github.com/depictio/depictio/pull/1414), [#1412](https://github.com/depictio/depictio/pull/1412))
+* **Release drift checks**: a PR adding a template version runs both templates on both releases' runs and reports lost files, columns and params. ([#1417](https://github.com/depictio/depictio/pull/1417))
+
+### **🐛 Bug Fixes**
+
+* **The Runs tab keeps two workflows apart** when their runs share a tag. [The Runs tab](../features/runs.md#the-runs-tab) ([#1424](https://github.com/depictio/depictio/pull/1424))
+* **A sent project carries its indexed files** (VCF, BAM, structures); send again a project migrated before 1.22.0. [S3 Data Scope](../usage/administration/migrate.md#s3-data-scope) ([#1422](https://github.com/depictio/depictio/pull/1422))
+* **GeoJSON maps draw their regions again.** [Map Components](../features/components.md#map-components) ([#1422](https://github.com/depictio/depictio/pull/1422))
+* **Sending to a target behind a login page** fails with where it redirects, instead of "not JSON". [Send to another instance](../usage/administration/migrate.md#send-to-another-instance) ([#1422](https://github.com/depictio/depictio/pull/1422))
+
+---
+
 ## **[v1.21.0](https://github.com/depictio/depictio/releases/tag/v1.21.0)** (November 16, 2026)
 
 !!! success "Minor: projects start from their data, show what changed since your last visit, and move between instances"
@@ -558,7 +601,7 @@ hide:
 
 ### **✨ New Features**
 
-* **Nextflow trigger**: a `workflow.onComplete` snippet runs `depictio-cli run`, set up with `depictio-cli config nextflow --install`. [Nextflow trigger](../depictio-cli/nextflow-trigger.md) ([#1037](https://github.com/depictio/depictio/pull/1037))
+* **Nextflow trigger**: a `workflow.onComplete` snippet runs `depictio-cli run`, set up with `depictio-cli config nextflow --install`. [Nextflow trigger](../workflows/nextflow/trigger.md) ([#1037](https://github.com/depictio/depictio/pull/1037))
 * **`--pipeline-id <name>/<version>`**: picks the bundled template and stamps run versions. [Templates](../usage/projects/templates.md#pipeline-id) ([#1035](https://github.com/depictio/depictio/pull/1035), [#1036](https://github.com/depictio/depictio/pull/1036))
 * **`--triggered-by`**: shown as a badge on the ingestion tab. [Ingestion Report & Health](../features/dashboards.md#triggered-by)
 * **`--attach-run`** and env credentials `DEPICTIO_CLI_TOKEN`, `DEPICTIO_CLI_API_BASE_URL`, `DEPICTIO_CLI_CONFIG_PATH` overriding `CLI.yaml`. [CLI Usage](../depictio-cli/usage.md#environment-variables)

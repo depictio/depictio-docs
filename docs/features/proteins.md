@@ -116,7 +116,11 @@ The helpers in `depictio/recipes/lib/` (`protein_structure`, `msa`, `hmm`,
 ![The 3D model comes from a file of the run, or from the resolver: bucket cache, AlphaFold DB, UniProt, ESMFold](../images/guides/protein-tiles/schema_structure_resolver_light.png#only-light){ loading=lazy }
 ![The 3D model comes from a file of the run, or from the resolver: bucket cache, AlphaFold DB, UniProt, ESMFold](../images/guides/protein-tiles/schema_structure_resolver_dark.png#only-dark){ loading=lazy }
 
-`structure_source: file` reads the run's own files and makes no outbound call.
+`structure_source: file` reads the run's own files and makes no outbound call. The browser
+fetches them from S3 through presigned URLs, or through the API with
+[`DEPICTIO_S3_BROWSER_ACCESS=proxy`](../installation/env-reference.md#s3-browser-access)
+<small>(v1.22.0+)</small> when browsers cannot reach S3 (the tile otherwise fails with
+*Failed to fetch*).
 `structure_source: resolve` asks the server for a model by UniProt accession, by gene and
 taxon, or by sequence. The resolver is off until `DEPICTIO_STRUCTURE_RESOLVER_ENABLED=true`,
 and tries, first hit wins:

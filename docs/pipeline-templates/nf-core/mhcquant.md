@@ -20,11 +20,12 @@ hide:
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="3.2.0">
+<div class="tpl-version-pick" data-latest="3.3.0">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Pipeline version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
-    <option value="3.2.0" selected>3.2.0</option>
+    <option value="3.3.0" selected>3.3.0</option>
+    <option value="3.2.0">3.2.0</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
@@ -62,7 +63,7 @@ tables` sections are pinned to the bottom of every child tab.
     `Condition` already comes second.
 
 !!! note "No binding predictions"
-    mhcquant 3.2.0 no longer runs MHCflurry or any other binding predictor, so
+    Since 3.2.0, mhcquant no longer runs MHCflurry or any other binding predictor, so
     the template has no binder-rank view. The MHC signature tab reads the class
     and the presenting alleles from peptide lengths and positional motifs instead.
 
@@ -81,20 +82,21 @@ tables` sections are pinned to the bottom of every child tab.
 
     `METADATA_FILE` can be left out when the sheet already sits at
     `input/samplesheet.tsv` under the data root. A run started without
-    `--quantify` has no replicate intensities: add `--var NO_QUANTIFICATION=true`
-    and the replicate collections are dropped, with the Reproducibility tab. A
-    run without `--annotate_ions` takes `--var NO_ION_ANNOTATION=true`.
+    `--quantify` has no replicate intensities: `NO_QUANTIFICATION` is set from
+    its params and the replicate collections are dropped, with the
+    Reproducibility tab. A run without `--annotate_ions` sets `NO_ION_ANNOTATION`
+    the same way. `--var NO_QUANTIFICATION=false` overrides.
 
 === "From the pipeline itself (v1.10.0+)"
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/mhcquant -r 3.2.0 -profile docker --outdir results
+    nextflow run nf-core/mhcquant -r 3.3.0 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    manifest. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 
@@ -114,9 +116,15 @@ so a tile says where its panel comes from.
     visualizations are dropped entirely, and the remaining components are
     re-packed so there are no empty rows.
 
-<div class="tpl-version-block" data-version="3.2.0" markdown>
+<div class="tpl-version-block" data-version="3.3.0" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/mhcquant-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="3.2.0" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/mhcquant-3.2.0.md"
 
 </div>
 
@@ -229,7 +237,7 @@ to the Comet tables by `run_id`. The *Sample sheet* and the *Reference tables*
 
     !!! tip "Only with `--quantify`"
         Every tile here binds a replicate collection. A run without `--quantify`
-        takes `--var NO_QUANTIFICATION=true`: the tab is dropped, and the replicate
+        sets `NO_QUANTIFICATION` from its params: the tab is dropped, and the replicate
         columns of the per-sample summary stay empty.
 
 === ":material-magnify-scan:{ .mc-blue } Identification"
@@ -288,8 +296,8 @@ to the Comet tables by `run_id`. The *Sample sheet* and the *Reference tables*
         | Fragment ions (collapsed) | 2 cards, *Matched fragment ions per peptide* |
 
     !!! tip "Only with `--annotate_ions`"
-        A run without `--annotate_ions` takes `--var NO_ION_ANNOTATION=true`, and
-        the Fragment ions section is dropped.
+        A run without `--annotate_ions` sets `NO_ION_ANNOTATION` from its params,
+        and the Fragment ions section is dropped.
 
 === ":material-ruler:{ .mc-violet } MHC signature"
 
@@ -374,7 +382,7 @@ Run the pipeline first, with quantification and ion annotation if you want the
 Reproducibility tab and the fragment checks:
 
 ```bash
-nextflow run nf-core/mhcquant -r 3.2.0 \
+nextflow run nf-core/mhcquant -r 3.3.0 \
   --input samplesheet.tsv \
   --fasta proteome.fasta \
   --quantify --annotate_ions \
@@ -388,7 +396,7 @@ depictio ingest results/ --template nf-core/mhcquant/latest \
   --var METADATA_FILE=samplesheet.tsv --var GROUP_COL=Condition
 ```
 
-See [nf-co.re/mhcquant/usage](https://nf-co.re/mhcquant/3.2.0/docs/usage) for full pipeline documentation.
+See [nf-co.re/mhcquant/usage](https://nf-co.re/mhcquant/3.3.0/docs/usage) for full pipeline documentation.
 
 ---
 
@@ -420,16 +428,16 @@ and the spectral library are not read.
 
 ## :material-flask-outline: Validation runs
 
-The template was validated against the AWS megatest of the 3.2.0 release
-(`results-6ec12c97f7889a3e1f09ab89930723045c6bac68`, `test_full` profile: a
+The template was validated against the AWS megatest of the 3.3.0 release
+(`results-a4b6d51803af0fbde5acd8e9802df76280ba8306`, `test_full` profile: a
 PRIDE immunopeptidomics dataset of two samples with three raw replicates each,
-one sample per condition), and the screenshots above come from it. With one
+one sample per condition). The screenshots above come from the same dataset's 3.2.0 run. With one
 sample per condition, the sharing UpSet on that run is dominated by private
 peptides. `megatest.yaml` lists the tables-only subset the template needs, and
 the download script also places the vendored samplesheet under `input/`:
 
 ```bash
-bash depictio/projects/nf-core/mhcquant/3.2.0/download_test_data.sh /tmp/mhcquant_test
+bash depictio/projects/nf-core/mhcquant/3.3.0/download_test_data.sh /tmp/mhcquant_test
 depictio ingest /tmp/mhcquant_test --template nf-core/mhcquant/latest \
   --var GROUP_COL=Condition
 ```
@@ -443,7 +451,7 @@ Re-ingesting accumulates dashboards, so delete the project before repeating a ru
 ## :material-link-variant: Additional resources
 
 - [nf-co.re/mhcquant](https://nf-co.re/mhcquant): official pipeline documentation
-- [nf-co.re/mhcquant/3.2.0/results](https://nf-co.re/mhcquant/3.2.0/results): AWS test results
+- [nf-co.re/mhcquant/3.3.0/results](https://nf-co.re/mhcquant/3.3.0/results): AWS test results
 - [Template System Reference](../../usage/projects/templates.md): YAML format, variables, conditionals
 - [Recipes](../../usage/projects/recipes.md): how to read, test, and write recipes
 
