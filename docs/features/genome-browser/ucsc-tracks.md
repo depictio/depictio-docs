@@ -8,7 +8,7 @@ glightbox: true
 # UCSC tracks
 
 <figure markdown="span">
-  <video autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/ucsc_and_tracks.webp" src="../../../images/guides/genome-browser/ucsc_and_tracks.mp4"></video>
+  <video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/ucsc_and_tracks.webp" src="../../../images/guides/genome-browser/ucsc_and_tracks.mp4"></video>
 </figure>
 
 Any bigWig, bigBed or VCF track of the UCSC Genome Browser catalogue for the assembly opens next to the collection's tracks. The builder searches the catalogue by name; each track keeps its own menu, and force load lifts the download limit.

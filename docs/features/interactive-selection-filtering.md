@@ -17,16 +17,11 @@ Filter dashboard components by selecting points on scatter plots or rows in tabl
 - :material-table-row: **Select rows** in AG Grid tables
 - :material-map-marker-multiple: **Lasso or click** markers on scatter maps
 
-Selected values automatically filter other components on the same Data Collection.
+Selected values automatically filter other components on the same Data Collection, and on
+collections [linked](cross-dc-filtering.md) to it.
 
-```text
-┌─────────────────────┐         ┌─────────────────────┐
-│  Scatter Plot       │         │  Image Gallery      │
-│                     │         │                     │
-│  [lasso select]     │────────▶│  [auto-filters]     │
-│  ○ ○ ● ● ○         │         │  [shows 2 images]   │
-└─────────────────────┘         └─────────────────────┘
-```
+[![The image demo on sample_images: a MultiSelect keeps categories B and C, a lasso on the scatter picks S003, S006 and S008, two ticked table rows pick S006 and S008. Each writes one entry into the dashboard's filter list, with no source, scatter_selection and table_selection; all three must hold, so the gallery shows sample_006.png and sample_008.png and the total-samples card counts 2](../images/features/selection-filtering/selection-flow_light.png#only-light)](../images/features/selection-filtering/selection-flow_light.png){target=_blank}
+[![The image demo on sample_images: a MultiSelect keeps categories B and C, a lasso on the scatter picks S003, S006 and S008, two ticked table rows pick S006 and S008. Each writes one entry into the dashboard's filter list, with no source, scatter_selection and table_selection; all three must hold, so the gallery shows sample_006.png and sample_008.png and the total-samples card counts 2](../images/features/selection-filtering/selection-flow_dark.png#only-dark)](../images/features/selection-filtering/selection-flow_dark.png){target=_blank}
 
 ## :material-chart-scatter-plot: Scatter Plot Selection
 
@@ -173,7 +168,7 @@ One **Analysis** popover in the dashboard header drives all of it, in three sect
 **Color by column**, **Groups**, and **Group options**. Its **Reset** restores the
 defaults while keeping your saved groups.
 
-<div style="border: 1px solid grey; width: 232px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 232px; padding: 1px;">
     <a href="../../images/guides/selection-groups/analysis_panel.png" target="_blank">
         <img src="../../images/guides/selection-groups/analysis_panel.png" width="230">
     </a>
@@ -189,7 +184,7 @@ is worth making before you make one.
 stable palette, so a category keeps its colour across figures and survives filtering.
 Each recoloured figure carries a `by <column>` badge.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/selection-groups/color_by_species.jpg" target="_blank">
         <img src="../../images/guides/selection-groups/color_by_species.jpg" width="600">
     </a>
@@ -205,7 +200,7 @@ reach says so with a **not grouped** badge whose tooltip gives the reason, and g
 reach figures on other tabs by following the dashboard's links in reverse. A lasso drawn
 on a Manhattan plot now holds in Split.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/selection-groups/split_by_species.jpg" target="_blank">
         <img src="../../images/guides/selection-groups/split_by_species.jpg" width="600">
     </a>
@@ -224,7 +219,7 @@ from the whole frame rather than from each group, so the shapes are genuinely co
 Two optional references sit alongside: **All**, the unsplit frame, and **Other**, the rows
 in no group.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/selection-groups/overview_groups_compare.jpg" target="_blank">
         <img src="../../images/guides/selection-groups/overview_groups_compare.jpg" width="600">
     </a>
@@ -352,35 +347,18 @@ a single selecting tile.
 
 ## :material-link-variant: How It Works
 
-Selection filtering integrates with the existing interactive filtering system:
-
-```text
-┌─────────────────────────────────────────────────────────────┐
-│                 interactive-values-store                     │
-├─────────────────────────────────────────────────────────────┤
-│  [                                                          │
-│    {index: "dropdown-1", value: ["A", "B"], source: null},  │
-│    {index: "scatter-1", value: ["S1", "S2"],                │
-│     source: "scatter_selection"},                           │
-│    {index: "table-1", value: ["S3"],                        │
-│     source: "table_selection"},                             │
-│  ]                                                          │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-           ┌──────────────────┴──────────────────┐
-           │         All Components Filter        │
-           │  (cards, figures, tables, images)   │
-           └─────────────────────────────────────┘
-```
-
-Selection data is stored with a `source` field:
+Selection filtering integrates with the existing interactive filtering system: a selection
+is one more entry in the dashboard's filter list, next to the dropdowns and sliders, as the
+figure at the top of this page shows. Each entry names the component that wrote it (`index`), the
+values, and a `source`:
 
 - `scatter_selection` - From scatter plot lasso/box/click
 - `table_selection` - From table row selection
-- `null` - From interactive components (dropdowns, sliders)
+- `map_selection` - From a lasso or click on a map
+- `image_selection` - From a picked thumbnail
+- no source - From interactive components (dropdowns, sliders)
 
-All sources combine to filter dashboard components.
+All entries must hold at once: every component reads the whole list.
 
 ---
 

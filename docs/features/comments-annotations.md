@@ -21,7 +21,7 @@ There are two things you can attach to a dashboard:
   or a note with an arrow. Every annotation is also a thread, so it has the same badge, the
   same drawer and the same discussion as a plain comment.
 
-<div style="border: 1px solid grey; width: 802px; max-width: 100%; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 802px; max-width: 100%; padding: 1px;">
     <a href="../../images/guides/comments-annotations/overview.png" target="_blank">
         <img src="../../images/guides/comments-annotations/overview.png" width="800">
     </a>
@@ -101,13 +101,13 @@ There are two ways in, both visible only to editors and owners (and to viewers w
 
 <div class="grid" markdown>
 
-<div style="border: 1px solid grey; width: 312px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 312px; padding: 1px;">
     <a href="../../images/guides/comments-annotations/drawer_comments.png" target="_blank">
         <img src="../../images/guides/comments-annotations/drawer_comments.png" width="310">
     </a>
 </div>
 
-<div style="border: 1px solid grey; width: 312px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 312px; padding: 1px;">
     <a href="../../images/guides/comments-annotations/drawer_annotations.png" target="_blank">
         <img src="../../images/guides/comments-annotations/drawer_annotations.png" width="310">
     </a>
@@ -196,7 +196,7 @@ without one (bars, histograms) store plain coordinates.
 Drawing never touches the dashboard: annotate mode detaches the component's
 cross-filtering, so a lasso drawn for an annotation does not filter or clear anything.
 
-<div style="border: 1px solid grey; width: 702px; max-width: 100%; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 702px; max-width: 100%; padding: 1px;">
     <a href="../../images/guides/comments-annotations/annotate_mode.png" target="_blank">
         <img src="../../images/guides/comments-annotations/annotate_mode.png" width="700">
     </a>
@@ -250,7 +250,7 @@ popover also offers **Open discussion**, which jumps to the thread in the drawer
 :material-delete-outline: **Delete annotation**. The same editor opens from **Edit
 annotation** on the thread's card in the drawer.
 
-<div style="border: 1px solid grey; width: 702px; max-width: 100%; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 702px; max-width: 100%; padding: 1px;">
     <a href="../../images/guides/comments-annotations/inline_editor.png" target="_blank">
         <img src="../../images/guides/comments-annotations/inline_editor.png" width="700">
     </a>
@@ -277,7 +277,7 @@ every component, and on the tab itself.
 | Component | Annotations |
 |-----------|-------------|
 | :material-chart-scatter-plot: **Figures** | Every cartesian Plotly figure: all four shapes. 3D, polar, pie and hierarchical charts (sunburst, treemap, icicle) and parallel coordinates are comment-only |
-| :material-chart-bell-curve: **Advanced visualizations** | The single-panel cartesian kinds: volcano, MA, QQ, Manhattan, embedding (2D only), scatter, DA barplot, ANCOM-BC differentials, stacked taxonomy, rarefaction, enrichment, dot plot, lollipop (one gene shown), PR benchmark, ROC / PR curve, confusion matrix, metric CI bars, profile, GSEA running score (single panel) and coverage track (single panel, not in the Locus view) |
+| :material-chart-bell-curve: **Advanced visualizations** | The single-panel cartesian kinds: volcano, MA, QQ, Manhattan, embedding (2D only), scatter, DA barplot, ANCOM-BC differentials, stacked bar, rarefaction, enrichment, dot plot, lollipop (one gene shown), PR benchmark, ROC / PR curve, confusion matrix, metric CI bars, profile, GSEA running score (single panel) and coverage track (single panel, not in the Locus view) |
 | :material-chart-line: **MultiQC figures** | Line and bar graphs and other plots drawn on one pair of axes. Marked points are stored as **sample names**, so marking a line graph rings whole sample lines. Multi-panel figures are comment-only |
 | :material-table: **MultiQC General Stats** | Row annotations in the table view, keyed on the sample name (not in the violin view) |
 | :material-table-row: **Tables** | Tables with a row-id column (`row_selection_column` or `selection_column`): rows can be marked |
@@ -378,7 +378,7 @@ Running the same agent again updates its earlier pending (or rejected) proposals
 duplicating them; a re-proposed rejection goes back to review. One agent run can open at most
 50 threads.
 
-<div style="border: 1px solid grey; width: 312px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 312px; padding: 1px;">
     <a href="../../images/guides/comments-annotations/drawer_proposals.png" target="_blank">
         <img src="../../images/guides/comments-annotations/drawer_proposals.png" width="310">
     </a>

@@ -1,53 +1,42 @@
 ---
 title: "API"
 icon: material/api
-description: "Interact with Depictio programmatically using the REST API."
+description: "Depictio's REST API: logging in, the endpoint reference, live FastAPI docs and background jobs."
 ---
 
-# API Documentation
+# API
 
-Depictio provides a comprehensive REST API that allows you to interact with all aspects of the platform programmatically. This section provides an overview of the API and links to detailed documentation.
+The viewer and the CLI both work through Depictio's REST API, under `/depictio/api/v1`. Log in with `POST /auth/login`, then send the token as `Authorization: Bearer <token>`.
 
-## Overview
+<div class="grid cards" markdown>
 
-The Depictio API enables you to:
+-   :material-book-open-page-variant:{ .lg .middle .dp-blue } **API reference**
 
-- Manage projects and workflows
-- Create and configure dashboards
-- Upload and retrieve data
-- Manage users and permissions
+    ---
 
-All API endpoints follow RESTful principles and use JWT authentication for security.
+    Every endpoint, generated from the OpenAPI specification.
 
-## API Structure & Endpoints
+    [:octicons-arrow-right-24: API reference](reference.md)
 
-The Depictio API is organized around the following main resources:
+-   :material-api:{ .lg .middle .dp-teal } **FastAPI docs**
 
-- **Projects** - Manage top-level entities that encapsulate production-oriented pipelines/workflows
-- **Workflows** - Interact with standardized production-oriented workflows
-- **Run Configurations** - Define parameters and settings for workflow runs
-- **Runs** - Manage instances of workflow executions
-- **Files** - Access artifacts produced by workflow runs
-- **Data Collections** - Work with aggregated data from files following the same structure
-- **Dashboards** - Create and manage interactive visualization dashboards
-- **Users** - Handle user authentication and authorization
-- **Jobs** - Follow work the server finishes in the background (v1.15.0+)
-- **Export** - Serve one dashboard component to another website, as a Plotly spec or a self-contained page (v1.17.0+). See [Component export](../features/component-export.md#the-api)
+    ---
 
-## Authentication
+    Swagger UI and ReDoc, served live by your own server.
 
-All API requests require authentication using JWT (JSON Web Tokens). To authenticate:
+    [:octicons-arrow-right-24: FastAPI docs](fastapi_docs.md)
 
-1. Obtain a token by sending a POST request to the `/auth/login` endpoint with your credentials
-2. Include the token in the `Authorization` header of subsequent requests using the format: `Bearer <token>`
+-   :material-progress-clock:{ .lg .middle .dp-orange } **Jobs**
 
-## API Versioning
+    ---
 
-The Depictio API uses versioning to ensure backward compatibility. The current version is `v1`, which is reflected in the URL path:
+    Poll the work the server finishes in the background.
 
-```bash
-https://your-depictio-instance.com/depictio/api/v1/...
-```
+    [:octicons-arrow-right-24: Jobs](#jobs)
+
+</div>
+
+Serving one component to another website? See [Component export](../features/component-export.md#the-api).
 
 ## Jobs <small>(v1.15.0+)</small> { #jobs }
 
@@ -81,20 +70,3 @@ The project page uses these routes for its ingestion tab:
 `GET /utils/capabilities` lists `jobs`, `deltatables.async_upsert` and
 `ingestion.browser_trigger` in its `features` when each is turned on, so a client can
 check before relying on them.
-
-## In This Section
-
-<!-- - [API Overview](overview.md) - Detailed information about the API structure and authentication -->
-<!-- - [Endpoints](endpoints.md) - Summary of available API endpoints and their functionality -->
-- [API Reference](reference.md) - Interactive API documentation generated from the OpenAPI specification
-<!-- - [Integration](api_docs_integration.md) - Guide for integrating with the Depictio API -->
-- [FastAPI Docs](fastapi_docs.md) - Access to the auto-generated FastAPI documentation
-
-<!-- ## Key Concepts
-
-- **Authentication** - All requests require a JWT token obtained from the `/auth/token` endpoint
-- **Versioning** - The API uses versioning (current: v1) to ensure backward compatibility
-- **Resources** - The API is organized around resources like Projects, Workflows, and Dashboards
-- **JSON Format** - All requests and responses use JSON format (except file uploads/downloads)
-
-Explore the detailed documentation to learn how to leverage the Depictio API for your specific needs. -->

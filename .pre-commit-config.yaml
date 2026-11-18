@@ -33,6 +33,19 @@ repos:
         pass_filenames: false
         files: \.(md|yml|yaml)$
 
+      - id: check-cli-reference
+        name: CLI reference matches its JSON
+        entry: scripts/cli-reference/render.py --check
+        language: system
+        pass_filenames: false
+        files: ^(docs/depictio-cli/(usage\.md|cli-reference\.json)|scripts/cli-reference/render\.py)$
+
+      - id: check-video-budget
+        name: Videos stay under 30 s and 1.5 MB
+        entry: scripts/check-video-budget.py
+        language: system
+        files: ^docs/.*\.(mp4|webm)$
+
   # - repo: https://github.com/pre-commit/mirrors-prettier
   #   rev: v4.0.0-alpha.8
   #   hooks:

@@ -21,23 +21,14 @@ Depictio uses JSON Web Tokens (JWT) for secure authentication:
 | **Token Security** | Public/private key encryption (RS256) |
 | **Algorithm Pinning** | Algorithm pinned server-side (RS256/RS512); `alg=none` and algorithm-confusion attacks are rejected before any MongoDB access |
 | **Claim Validation** | Signature and `exp` claim are both verified on every request; expired tokens are rejected immediately |
-| **Session Management** | Configurable token lifetime and refresh |
-| **Secure Storage** | Tokens stored in HTTP-only cookies |
+| **Session Management** | Access token 1 hour, refresh token 7 days; a CLI token lasts 1 year |
+| **Storage** | The browser keeps the pair in local storage; the server keeps every live token in MongoDB, so deleting one revokes it |
 | **Token Refresh** | Automatic refresh before expiration |
 
 ### Authentication Flow
 
-```text
-┌─────────┐     ┌─────────────┐     ┌─────────────┐
-│  User   │────▶│  Login API  │────▶│  JWT Token  │
-│         │     │             │     │  (signed)   │
-└─────────┘     └─────────────┘     └──────┬──────┘
-                                           │
-                     ┌─────────────────────▼──────┐
-                     │  Subsequent API Requests   │
-                     │  (Token in Authorization)  │
-                     └────────────────────────────┘
-```
+[![Three ways in: a password, single sign-on or a CLI token. The API signs an access and a refresh token with its private key and keeps them in MongoDB; every request carries the access token, whose signature, expiry and presence in MongoDB are checked before the user's role](../images/security/sign-in_light.png#only-light)](../images/security/sign-in_light.png){target=_blank}
+[![Three ways in: a password, single sign-on or a CLI token. The API signs an access and a refresh token with its private key and keeps them in MongoDB; every request carries the access token, whose signature, expiry and presence in MongoDB are checked before the user's role](../images/security/sign-in_dark.png#only-dark)](../images/security/sign-in_dark.png){target=_blank}
 
 ### Registration Hardening
 
@@ -45,11 +36,8 @@ The `/register` endpoint strips the `is_admin` field from any incoming payload, 
 
 ### Session Configuration
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `JWT_ACCESS_TOKEN_EXPIRE_MINUTES` | 30 | Access token lifetime |
-| `JWT_REFRESH_TOKEN_EXPIRE_DAYS` | 7 | Refresh token lifetime |
-| `JWT_ALGORITHM` | RS256 | JWT signing algorithm |
+Token lifetimes are fixed. The signing algorithm is `DEPICTIO_AUTH_KEYS_ALGORITHM`, `RS256`
+by default: see the [environment reference](../installation/env-reference.md).
 
 ---
 
@@ -69,18 +57,8 @@ Depictio implements a hierarchical permission system for fine-grained access con
 
 Permissions are applied at multiple levels:
 
-```text
-┌─────────────────────────────────────────┐
-│               System Level              │
-│  (Admin: user management, settings)     │
-├─────────────────────────────────────────┤
-│              Project Level              │
-│  (Owner, Editor, Viewer per project)    │
-├─────────────────────────────────────────┤
-│             Dashboard Level             │
-│  (Inherited from project permissions)   │
-└─────────────────────────────────────────┘
-```
+[![An admin passes every check. Anyone else gets a project role, the highest of their own and their groups' roles, with a viewer floor on a public project; a dashboard takes the project role unless its own owners or editors name them. No role answers 404](../images/security/access_light.png#only-light)](../images/security/access_light.png){target=_blank}
+[![An admin passes every check. Anyone else gets a project role, the highest of their own and their groups' roles, with a viewer floor on a public project; a dashboard takes the project role unless its own owners or editors name them. No role answers 404](../images/security/access_dark.png#only-dark)](../images/security/access_dark.png){target=_blank}
 
 ### Project Permissions
 
@@ -133,19 +111,8 @@ Depictio uses [RestrictedPython](https://restrictedpython.readthedocs.io/) (Zope
 
 ### Security Architecture
 
-```text
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   User Code     │────▶│  compile_       │────▶│  Restricted     │
-│   (Python)      │     │  restricted()   │     │  Bytecode       │
-└─────────────────┘     └─────────────────┘     └────────┬────────┘
-                                                         │
-                        ┌────────────────────────────────▼────────┐
-                        │          Safe Execution Context         │
-                        │  • Approved libraries (plotly, pandas)  │
-                        │  • Custom guards (_getitem_, _getattr_) │
-                        │  • Read-only DataFrame copy             │
-                        └─────────────────────────────────────────┘
-```
+[![A code figure is checked (steps, then fig, and no reassigned df), compiled with compile_restricted, then run on the Celery worker with a copy of df, px, go, pd, pl, np and safe builtins. While it runs, the attribute guard and an audit hook refuse file readers and writers, other submodules, eval and SQL, writing files, processes, sockets, libraries and new imports](../images/security/code-figure_light.png#only-light)](../images/security/code-figure_light.png){target=_blank}
+[![A code figure is checked (steps, then fig, and no reassigned df), compiled with compile_restricted, then run on the Celery worker with a copy of df, px, go, pd, pl, np and safe builtins. While it runs, the attribute guard and an audit hook refuse file readers and writers, other submodules, eval and SQL, writing files, processes, sockets, libraries and new imports](../images/security/code-figure_dark.png#only-dark)](../images/security/code-figure_dark.png){target=_blank}
 
 ### Allowed Operations
 
@@ -172,6 +139,10 @@ RestrictedPython prevents these operations at compile-time:
 | **System Calls** | `os.*`, `sys.*`, `subprocess`, shell commands |
 | **Dangerous Built-ins** | `exec()`, `eval()`, `__import__()`, `compile()` |
 | **Attribute Access** | Private attributes (underscore methods) on unsafe objects |
+
+### Locking figure code <small>(v1.21.0+)</small> { #figure-code-lock }
+
+A code figure runs Python on a server worker. On an instance open to people you do not know, such as a workshop, set `DEPICTIO_VIEWER_CODE_FIGURES_LOCKED=true`. The server then refuses new figure code from anyone but an administrator, and the figure builder shows "Writing figure code is turned off on this server." Code already on a dashboard or shipped with a template or the catalogue keeps rendering, and saving, moving or duplicating dashboards still works. UI mode stays available for new figures.
 
 ### Past versions in a render <small>(v1.15.0+)</small> { #past-versions-in-a-render }
 
@@ -447,15 +418,18 @@ API's Range-capable track proxy:
 
 The full variable list is in the [environment reference](../installation/env-reference.md#genome-browser).
 
-### SAML sign-in <small>(v1.18.0+)</small> { #saml-sign-in }
+### OpenID Connect sign-in { #oidc-sign-in }
 
-[SAML single sign-on](../installation/sso.md) accepts a response only if it answers a
-request this instance made, and only once: the request IDs live in a one-shot store
-shared by the API workers (Redis, with an in-process fallback). The return path the
-identity provider echoes back is never trusted, and redirects stay on this site. The
-browser is handed a single-use ticket in the URL fragment, so no token travels in a query
-string. Accounts created by Google or SAML now get a random password hash instead of an
-invalid placeholder.
+[OpenID Connect single sign-on](../installation/sso/index.md) uses the authorization code flow
+with PKCE (`S256`). A callback is accepted only if it answers a login this instance
+started, and only once: the `state` is stored server-side in MongoDB and consumed
+atomically. The `nonce` binds the `id_token` to the login, and the token is verified
+against the provider's JWKS (signature, issuer, audience, expiry, with 60 seconds of
+clock-skew leeway). The email is trusted only when the provider asserts it is verified.
+The redirect URI comes from the configuration, never from the request, and redirects stay
+on this site. The browser is handed a single-use ticket in the URL fragment, so no token
+travels in a query string. Accounts created by single sign-on get a random password hash
+instead of an invalid placeholder.
 
 ### OAuth Callback Security
 

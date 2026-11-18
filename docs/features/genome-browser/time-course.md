@@ -8,7 +8,7 @@ glightbox: true
 # Time course
 
 <figure markdown="span">
-  <video autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/genomespy_jbrowse.webp" src="../../../images/guides/genome-browser/genomespy_jbrowse.mp4"></video>
+  <video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/genomespy_jbrowse.webp" src="../../../images/guides/genome-browser/genomespy_jbrowse.mp4"></video>
 </figure>
 
 The tracks and the navigator lanes share one sequential ramp, so a time course reads down the browser, each library on its own scale. Zoomed out, a track shows the mean of each window.

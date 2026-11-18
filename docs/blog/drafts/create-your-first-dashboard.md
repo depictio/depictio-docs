@@ -17,6 +17,9 @@ tags:
 
 # 🎨 Create Your First Dashboard: From Data to Interactive Insights
 
+!!! note "Project types were removed in v1.21.0"
+    This draft mentions the Basic and Advanced project types. Since v1.21.0 the UI no longer offers it: a project is created from its data. See the [Projects guide](../../usage/projects/guide.md).
+
 **Step-by-step guide to building your first interactive dashboard in Depictio - no coding required!**
 
 <!-- more -->

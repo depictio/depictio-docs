@@ -65,9 +65,9 @@ Switch to multi-user mode and set strong credentials in your `.env`:
 ```bash
 DEPICTIO_AUTH_SINGLE_USER_MODE=false
 
-# Required in multi-user mode — set on first boot
+# Required in multi-user mode, read on first boot
 DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
-DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=changeme
+DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=$(openssl rand -base64 24)
 
 # S3 password must be ≥ 8 chars and not a known default
 DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
@@ -92,26 +92,25 @@ cp .env.example .env
 Edit `.env`:
 
 ```bash
-# Application version (default: latest)
-DEPICTIO_VERSION=latest
+# Image tag. Unset: the release the compose file pins; `next` follows main
+DEPICTIO_VERSION=1.21.0
 
-# Admin account — REQUIRED on first boot (all modes)
+# First admin: required in multi-user mode on an empty database (single-user mode seeds its own)
 DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
 DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=change-me-strong-password-here
 
-# S3 credentials — REQUIRED in multi-user mode, ≥ 8 chars (enforced at startup from v1.0.0-b1)
+# S3 credentials: in multi-user mode at least 8 chars and not a known default
 # Named DEPICTIO_MINIO_* before v1.12.0; the old names still work
 DEPICTIO_S3_ROOT_USER=myadmin
 DEPICTIO_S3_ROOT_PASSWORD=change-me-strong-password-here
 ```
 
 !!! info "Bootstrap is idempotent"
-    The admin account is created only on first boot (when no non-anonymous admin exists in MongoDB). Restarting the container or changing the bootstrap vars afterwards has no effect — use the admin UI to manage credentials.
+    The admin account is created only on first boot (when no non-anonymous admin exists in MongoDB). Restarting the container or changing the bootstrap vars afterwards has no effect: use the admin UI to manage credentials.
 
 !!! tip "Full reference"
-    - **Complete env file**: `.env.complete.example` — all 160+ variables with defaults
-    - **Configuration Guide**: [Configuration](configuration.md) — common use cases
-    - **Full Reference**: [Environment Reference](env-reference.md) — all variables
+    - [Configuration](configuration.md): what to set first, then by topic
+    - [Environment Reference](env-reference.md): every variable, with its default
 
 ### External S3 { #external-s3 }
 
@@ -163,7 +162,7 @@ before v1.12.0, which still work.
 
 ### Development Mode
 
-Enable debug logging and hot-reload:
+Reload the API and restart the worker on code changes (telemetry and the walkthrough are off too):
 
 ```bash
 DEPICTIO_DEV_MODE=true docker compose up -d
@@ -171,23 +170,13 @@ DEPICTIO_DEV_MODE=true docker compose up -d
 
 Or set `DEPICTIO_DEV_MODE=true` in your `.env` file.
 
-### Background Callbacks (Celery)
+### Celery worker { #celery-worker }
 
-Depictio uses Celery for asynchronous processing. The `depictio-celery-worker` container always starts automatically — it is **required** for the dashboard editor (design mode).
-
-```bash
-# Configure view-mode behaviour in .env
-DEPICTIO_CELERY_ENABLED=true   # false = synchronous view mode (simpler for debugging)
-```
-
-| Mode | `DEPICTIO_CELERY_ENABLED` | Behaviour |
-|------|--------------------------|-----------|
-| Design mode (editor) | always on | Non-blocking figure preview — required |
-| View mode | `true` | Async data loading — recommended for production |
-| View mode | `false` | Synchronous — simpler for development |
-
-!!! info "Kubernetes/Helm"
-    Background callbacks are also supported in Kubernetes via the Helm chart (`celery.enabled: true` by default). See the [Kubernetes installation guide](kubernetes/).
+The `depictio-celery-worker` container always starts: figure previews in the editor, large
+renders and dashboard thumbnails run on it. Size it in `.env` with `DEPICTIO_CELERY_WORKERS`
+(default `4` processes); each process holds its own data, so memory sets the limit. When renders
+are offloaded is set by the `DEPICTIO_CELERY_OFFLOAD_*` variables: see
+[Celery Task Queue](env-reference.md#celery-task-queue).
 
 ### Ingestion worker <small>(v1.15.0+)</small> { #ingestion-worker }
 

@@ -13,23 +13,15 @@ Filter expressions let you pre-filter data **before** aggregation or option comp
 
 ## Overview
 
-```text
-┌─────────────────────────────────────────────────────────────────┐
-│                    Data Pipeline                                │
-│                                                                 │
-│  Delta Table ──▶ Interactive Filters ──▶ filter_expr ──▶ Result │
-│                  (user selections)       (YAML-defined)         │
-│                                                                 │
-│  Card:        filter_expr narrows data before aggregation       │
-│  Interactive: filter_expr scopes dropdown options / slider range │
-└─────────────────────────────────────────────────────────────────┘
-```
+[![Two components of the iris Petal tab with filter_expr col('petal.length') > 4. A card: 150 flowers, 50 after the dashboard's Variety filter, 34 after the expression, so it shows 34. An interactive: 150 flowers, 84 after the expression, so it offers Versicolor and Virginica but not Setosa; picking Versicolor carries the expression, and the other components get 34 rows](../images/features/filter-expressions/filter-expr-flow_light.png#only-light)](../images/features/filter-expressions/filter-expr-flow_light.png){target=_blank}
+[![Two components of the iris Petal tab with filter_expr col('petal.length') > 4. A card: 150 flowers, 50 after the dashboard's Variety filter, 34 after the expression, so it shows 34. An interactive: 150 flowers, 84 after the expression, so it offers Versicolor and Virginica but not Setosa; picking Versicolor carries the expression, and the other components get 34 rows](../images/features/filter-expressions/filter-expr-flow_dark.png#only-dark)](../images/features/filter-expressions/filter-expr-flow_dark.png){target=_blank}
 
 **Key behaviors:**
 
 - `filter_expr` applies **on top of** interactive filters (dual-layer)
 - On **cards**: narrows the dataset before computing the metric value
-- On **interactive components**: restricts available options/range to the filtered subset
+- On **interactive components**: restricts available options/range to the filtered subset,
+  and a value picked there carries the expression to the components it filters
 - Expressions are validated and executed in a sandboxed namespace for security
 
 ## Syntax

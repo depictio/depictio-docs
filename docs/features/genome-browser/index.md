@@ -8,7 +8,7 @@ glightbox: true
 # :material-dna: Genome browser <small>(v1.20.0+)</small>
 
 <figure markdown="span">
-  <video autoplay controls muted loop playsinline poster="../../images/guides/genome-browser/table_to_browser.webp" src="../../images/guides/genome-browser/table_to_browser.mp4"></video>
+  <video preload="none" data-autoplay controls muted loop playsinline poster="../../images/guides/genome-browser/table_to_browser.webp" src="../../images/guides/genome-browser/table_to_browser.mp4"></video>
   <figcaption>A row picked in a table: its record card and the genome browser follow (nf-core/riboseq dashboard template).</figcaption>
 </figure>
 
@@ -40,7 +40,7 @@ Both can share one colour ramp, so a time course reads the same on the lanes and
 
 Each example opens its own page: the clip, what it shows, and the few lines of YAML behind it.
 
-<div class="grid cards" markdown>
+<div class="grid cards dp-genome" markdown>
 
 -   [![Table to browser](../../images/guides/genome-browser/table_to_browser.webp){ .off-glb }](table-to-browser.md)
 
@@ -296,19 +296,19 @@ The component builder has a *Genome browser* type with the same settings.
 
 | Dashboard template | Tab |
 |--------------------|-----|
-| [nf-core/atacseq](../../pipeline-templates/nf-core/atacseq.md) 1.2.2 | Locus |
-| [nf-core/chipseq](../../pipeline-templates/nf-core/chipseq.md) 1.2.0 | Locus |
-| [nf-core/cutandrun](../../pipeline-templates/nf-core/cutandrun.md) 3.1 | Locus |
-| nf-core/drop 1.0.0 | Locus |
+| [nf-core/atacseq](../../pipeline-templates/nf-core/atacseq.md) 1.2.2, 2.1.2 | Locus |
+| [nf-core/chipseq](../../pipeline-templates/nf-core/chipseq.md) 1.2.0, 2.1.0 | Locus |
+| [nf-core/cutandrun](../../pipeline-templates/nf-core/cutandrun.md) 3.1, 3.2.2 | Locus |
+| [nf-core/drop](../../pipeline-templates/nf-core/drop.md) 1.0.0 | Locus |
 | [nf-core/nanoseq](../../pipeline-templates/nf-core/nanoseq.md) 3.0.0 | Locus |
-| nf-core/nascent 2.3.0 | Genome signal |
+| [nf-core/nascent](../../pipeline-templates/nf-core/nascent.md) 2.3.0 | Genome signal |
 | [nf-core/oncoanalyser](../../pipeline-templates/nf-core/oncoanalyser.md) 3.0.0 | Small variants, Structural variants |
-| nf-core/raredisease 3.1.2 | Locus |
+| [nf-core/raredisease](../../pipeline-templates/nf-core/raredisease.md) 3.1.2 | Locus |
 | [nf-core/riboseq](../../pipeline-templates/nf-core/riboseq.md) 2.0.0 | Locus |
 | [nf-core/rnafusion](../../pipeline-templates/nf-core/rnafusion.md) 4.1.3 | Breakpoints, Splice Junctions |
 | [nf-core/rnaseq](../../pipeline-templates/nf-core/rnaseq.md) 3.26.0 | Gene Explorer |
 | [nf-core/rnasplice](../../pipeline-templates/nf-core/rnasplice.md) 1.0.4 | Splicing Events |
-| nf-core/rnavar 1.3.0 | Genome |
+| [nf-core/rnavar](../../pipeline-templates/nf-core/rnavar.md) 1.3.0 | Genome |
 | [nf-core/sarek](../../pipeline-templates/nf-core/sarek.md) 3.10.0, 3.11.0 | Locus |
 | [nf-core/variantbenchmarking](../../pipeline-templates/nf-core/variantbenchmarking.md) 1.4.0 | Germline, Structural & CNV |
 | [nf-core/viralrecon](../../pipeline-templates/nf-core/viralrecon.md) 3.0.0 | Variants |

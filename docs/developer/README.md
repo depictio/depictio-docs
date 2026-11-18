@@ -1,67 +1,71 @@
 ---
 title: "Developer"
 icon: material/code-tags
-description: "Learn how to contribute to the Depictio project and become part of our community."
+description: "Contribute code, tools and templates to Depictio, or use its REST API."
 ---
 
 # Developer Documentation
 
-This section provides information for developers who want to contribute to Depictio. Whether you're interested in fixing bugs, adding new features, or improving documentation, you'll find guidance to help you get started.
+Contribute to Depictio, teach it new tools and pipelines, or drive it from your own code through its API.
 
-## Contributing to Depictio
+## :material-code-tags: Code and API
 
-Depictio is an open-source project that welcomes contributions from the community. There are many ways to contribute:
+<div class="grid cards" markdown>
 
-- **Code contributions**: Implement new features, develop new components, or fix bugs
-- **Frontend**: Develop new React components or renderers
-- **Testing**: Help test features or report bugs
-- **Design**: Contribute to the UI/UX design
-- **Documentation**: Improve or expand the documentation
-- **Community support**: Help answer questions and support other users
+-   :material-source-pull:{ .lg .middle .dp-purple } **Contributing guide**
 
-By contributing you agree to our [Code of Conduct](contributing.md#code-of-conduct). For detailed setup, see the [Contributing Guide](contributing.md).
+    ---
 
-## In This Section
+    Set up a development environment, run the tests and open a pull request.
 
-| Page | Description |
-|------|-------------|
-| [Contributing Guide](contributing.md) | How to set up development environment and contribute |
-| [Contributing a Tool](contributing-a-tool.md) | Teach Depictio to recognise a tool's output and render it |
-| [Tool Studio](tool-studio.md) | Author a catalog entry in the browser, no YAML |
-| [Contributing Templates](contributing-templates.md) | Ship a ready-made dashboard for a pipeline |
-| [Code of Conduct](contributing.md#code-of-conduct) | Community standards (Contributor Covenant v2.1) |
+    [:octicons-arrow-right-24: Contributing](contributing.md)
 
-## Getting Started
+-   :material-handshake-outline:{ .lg .middle .dp-pink } **Code of conduct**
 
-To begin contributing to Depictio, we recommend:
+    ---
 
-1. Familiarize yourself with the [project architecture](../features/architecture.md)
-2. Understand the [data model](../features/data-model.md) and object hierarchy
-3. Read the [contributing guidelines](contributing.md)
-4. Set up your development environment
-5. Start with small, manageable contributions
+    The community standards every contributor agrees to.
 
-## Quick Start
+    [:octicons-arrow-right-24: Code of conduct](contributing.md#code-of-conduct)
 
-```bash
-# Clone the repository
-git clone https://github.com/depictio/depictio.git
-cd depictio
+-   :material-api:{ .lg .middle .dp-blue } **API**
 
-# Install with pixi (recommended)
-pixi install
+    ---
 
-# Or with uv
-uv sync
+    The REST API behind the viewer and the CLI, with its reference.
 
-# Run tests
-pytest depictio/tests/ -xvs
+    [:octicons-arrow-right-24: API](../api/README.md)
 
-# Start development server
-pixi run api                      # FastAPI backend
-pnpm -C depictio/viewer dev       # React viewer at http://localhost:5173
-```
+</div>
 
-See the [Contributing Guide](contributing.md) for detailed setup instructions.
+## :material-hammer-wrench: Tools and templates
 
-We look forward to your contributions and are here to help you get started!
+<div class="grid cards" markdown>
+
+-   :material-hammer-wrench:{ .lg .middle .dp-teal } **Contributing a tool**
+
+    ---
+
+    Teach Depictio to recognise a tool's output and render it.
+
+    [:octicons-arrow-right-24: Contributing a tool](contributing-a-tool.md)
+
+-   :material-test-tube:{ .lg .middle .dp-green } **Tool Studio**
+
+    ---
+
+    Author a catalog entry in the browser and open the pull request.
+
+    [:octicons-arrow-right-24: Tool Studio](tool-studio.md)
+
+-   :material-view-dashboard-variant:{ .lg .middle .dp-orange } **Contributing templates**
+
+    ---
+
+    Ship a project and its dashboards for one pipeline, in one folder.
+
+    [:octicons-arrow-right-24: Contributing templates](contributing-templates.md)
+
+</div>
+
+New contributor? Read the [architecture](../features/architecture.md) and the [data model](../features/data-model.md), then the [contributing guide](contributing.md).

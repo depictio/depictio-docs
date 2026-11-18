@@ -697,24 +697,21 @@ A template carries two version numbers. They move independently.
 
 <div class="grid cards" markdown>
 
--   :material-pipe:{ .lg .middle } **Pipeline version**
+-   :material-pipe:{ .lg .middle .dp-green } **Pipeline version**
 
     ---
 
-    The pipeline release whose outputs the template reads. It is the last part of the
-    template id: `nf-core/rnaseq/3.26.0`. A new pipeline release gets a template of its own.
+    The pipeline release the template reads, last in its id: `nf-core/rnaseq/3.26.0`.
 
-    *Choose it* with `--template`, or with the **Pipeline version** picker on a template's page.
+    *Choose it* with `--template`, or the **Pipeline version** picker on a template's page.
 
--   :material-layers-outline:{ .lg .middle } **Template version**
+-   :material-layers-outline:{ .lg .middle .dp-orange } **Template version**
 
     ---
 
-    The revision of the template itself: its data collections, recipes and dashboards, for
-    one pipeline release. It moves when the template improves, for example `2.0.0` to `2.1.0`.
+    The revision of the template itself, such as `2.0.0` to `2.1.0`, for one pipeline release.
 
-    *Find it* beside the picker on a template's page, in the ingest log, and in the project
-    and dashboard settings.
+    *Find it* beside the picker, in the ingest log, and in the project and dashboard settings.
 
 </div>
 

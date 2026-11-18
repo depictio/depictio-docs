@@ -1,222 +1,142 @@
 ---
 title: "Configuration"
 icon: material/cog
-description: "Configure Depictio with environment variables for various features and integrations."
+description: "What to set for a first Depictio deployment, then the settings by topic."
 ---
 
 # Configuration Guide
 
-Depictio uses environment variables to configure various aspects of the application. This guide covers common configuration scenarios and use cases.
+Depictio reads its configuration from environment variables. This page covers what to set for a
+first deployment, then each topic. Every variable, with its default, is in the
+[Environment Reference](env-reference.md).
 
-!!! tip "Complete Reference"
+| Deployment | Where the variables go |
+|------------|------------------------|
+| Docker Compose | `.env` next to `docker-compose.yaml`, started from the repository's [`.env.example`](https://github.com/depictio/depictio/blob/main/.env.example) |
+| Helm | `backend.env` in your values file; credentials under `secrets.*`; worker sizing under `celery.env` |
+| `depictio local up` | The shell that runs it. See [Python package](local.md) |
 
-    For the complete list of all 160+ environment variables, see the [Environment Reference](env-reference.md) or use the `.env.complete.example` file in the repository.
+## First deployment { #first-deployment }
 
-## Configuration Files
-
-The repository includes two environment file templates:
-
-| File | Purpose |
-|------|---------|
-| `.env.example` | **Quick start** - Minimal configuration (S3 and admin credentials) |
-| `.env.complete.example` | **Complete reference** - All 160+ variables with defaults and comments |
-
-## Quick Start Configuration
-
-For most users, the minimal configuration is sufficient:
+With no `.env`, the root `docker-compose.yaml` starts in **single-user mode**: no login, and no
+secret is checked. That suits one person on one machine. For a server other people reach, set:
 
 ```bash
-cp .env.example .env
-```
-
-**Minimal `.env` file:**
-
-```bash
+DEPICTIO_AUTH_SINGLE_USER_MODE=false
 DEPICTIO_S3_ROOT_USER=depictio
-DEPICTIO_S3_ROOT_PASSWORD=change-me-strong-password-here
+DEPICTIO_S3_ROOT_PASSWORD=change-me     # openssl rand -base64 24
+DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.org
+DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=change-me     # openssl rand -base64 24
+DEPICTIO_VIEWER_PUBLIC_URL=https://depictio.example.org
+DEPICTIO_FASTAPI_PUBLIC_URL=https://depictio.example.org
 ```
 
-!!! warning "Password strength"
+| Variable | Why | Helm |
+|----------|-----|------|
+| `DEPICTIO_AUTH_SINGLE_USER_MODE=false` | Turns sign-in on, and with it the secret checks | Already `false` |
+| `DEPICTIO_S3_ROOT_USER`, `_ROOT_PASSWORD` | Bucket credentials. The server refuses a password under 8 characters or a well-known default such as `minio123` | `secrets.s3RootUser`, `secrets.s3RootPassword`; generated when empty |
+| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL`, `_ADMIN_PASSWORD` | The first admin, created once on an empty database. Without them the first start stops | `secrets.bootstrapAdminEmail`, `secrets.bootstrapAdminPassword` |
+| `DEPICTIO_VIEWER_PUBLIC_URL`, `DEPICTIO_FASTAPI_PUBLIC_URL` | The addresses browsers use behind your proxy: magic links and SSO land there | Derived from `global.domain` |
 
-    `DEPICTIO_S3_ROOT_PASSWORD` (`DEPICTIO_MINIO_ROOT_PASSWORD` before v1.12.0, still read) must be **≥ 8 characters**. The server enforces this at startup and will refuse to start with a short or well-known default value.
-
-## Advanced Configuration
-
-For full control, use the complete configuration file:
+Everything else has a working default. A refused secret is named in the startup error:
 
 ```bash
-cp .env.complete.example .env
-# Then uncomment and modify the variables you need
+docker compose logs depictio-backend
 ```
 
-All other settings use sensible defaults. The sections below cover common customization scenarios.
+## Storage { #storage-configuration }
 
-## Storage Configuration
+Depictio keeps its data in S3-compatible object storage: the bundled SeaweedFS store
+(Compose service `s3`, Helm `s3.enabled`), or an external S3 service. The settings are
+`DEPICTIO_S3_*`; the `DEPICTIO_MINIO_*` names of releases before v1.12.0 still work. An install
+that ran the bundled MinIO copies its data when it upgrades: see
+[Upgrading to v1.12.0: MinIO → SeaweedFS](upgrade/v1.12.0-seaweedfs.md). The server creates the
+bucket if needed and only needs rights on that bucket: see
+[Required S3 permissions](env-reference.md#required-s3-permissions).
 
-Depictio stores its data in S3-compatible object storage: either the store bundled
-with Docker Compose and the Helm chart, SeaweedFS since v1.12.0 (MinIO before), or an
-external S3 service. The settings are `DEPICTIO_S3_*`; the `DEPICTIO_MINIO_*` names of
-earlier releases still work. An install that ran the bundled MinIO has to copy its data
-to SeaweedFS when it upgrades: see
-[Upgrading to v1.12.0: MinIO → SeaweedFS](upgrade/v1.12.0-seaweedfs.md).
+### External S3 { #external-s3 }
 
-### External S3 Service
-
-If you have an external S3 service (AWS, NetApp, Ceph, your own MinIO, …), configure it as follows:
-
-For Docker Compose, add the following to your `.env` file:
+For AWS, NetApp, Ceph or your own MinIO. With Docker Compose, in `.env`, then start without the
+bundled store (`docker compose up -d --scale s3=0`):
 
 ```bash
-# External S3 service configuration
 DEPICTIO_S3_PUBLIC_URL=https://s3.example.com
+DEPICTIO_S3_EXTERNAL_SERVICE=true
+DEPICTIO_S3_BUCKET=your-bucket-name
 DEPICTIO_S3_ROOT_USER=your-access-key
 DEPICTIO_S3_ROOT_PASSWORD=your-secret-key
-DEPICTIO_S3_BUCKET=your-bucket-name
-DEPICTIO_S3_EXTERNAL_SERVICE=true
 ```
 
-For Kubernetes, you can set these values in your custom `values.yaml` file:
+With Helm, turn the bundled store off; the chart then sets `DEPICTIO_S3_EXTERNAL_SERVICE` itself:
 
 ```yaml
 s3:
-  enabled: false  # true runs the bundled store
+  enabled: false
   env:
     DEPICTIO_S3_PUBLIC_URL: "https://s3.example.com"
-    DEPICTIO_S3_ROOT_USER: "your-access-key"
-    DEPICTIO_S3_ROOT_PASSWORD: "your-secret-key"
     DEPICTIO_S3_BUCKET: "your-bucket-name"
-    DEPICTIO_S3_EXTERNAL_SERVICE: true
+secrets:
+  s3RootUser: "your-access-key"
+  s3RootPassword: "your-secret-key"
 ```
 
-Setting those values disables the bundled store and uses the external one instead.
+## Authentication { #authentication-configuration }
 
-## Bootstrap Authentication
-
-On first boot, Depictio seeds an initial admin account using two **required** environment variables. The seeding is idempotent — if the admin account already exists the step is a no-op, so the variables can be kept set across container restarts without side-effects.
-
-!!! warning "Breaking change in v0.13.12"
-
-    `initial_users.yaml` has been removed as of v0.13.12. The admin account is now seeded exclusively via the env vars below. Remove any volume mount or reference to `initial_users.yaml` from existing deployments.
-
-| Variable | Description |
-|---|---|
-| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | Email address for the initial admin account (required) |
-| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | Password for the initial admin account — must be ≥ 8 characters; the server **refuses to start** if the variable is absent or the value is too short or matches a known-default |
-
-**Minimal Docker Compose snippet:**
-
-```yaml
-services:
-  depictio-backend:
-    environment:
-      DEPICTIO_BOOTSTRAP_ADMIN_EMAIL: admin@example.com
-      DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD: change-me-very-strong-password
-```
-
-!!! tip "Container restarts"
-
-    These variables survive container restarts safely. On every boot the API checks whether the admin already exists; if it does, the bootstrap step is skipped and the variables have no further effect.
-
-## Authentication Configuration
-
-Depictio supports four authentication modes. See [Authentication Modes](../usage/guides/authentication-modes.md) for a full comparison.
+The sign-in mode is one switch, compared in [Authentication Modes](../usage/guides/authentication-modes.md):
 
 ```bash
-# Single-User Mode — personal instance, no login, full admin access
-DEPICTIO_AUTH_SINGLE_USER_MODE=true
-
-# Public Mode — anonymous read-only, sign in to create content
-DEPICTIO_AUTH_PUBLIC_MODE=true
-
-# Demo Mode — public mode + guided interactive tour
-DEPICTIO_AUTH_PUBLIC_MODE=true
-DEPICTIO_AUTH_DEMO_MODE=true
-
-# Temporary user session duration (Public/Demo modes)
-DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS=24
-
-# Backward-compatible alias for Public Mode:
-# DEPICTIO_AUTH_UNAUTHENTICATED_MODE=true
+DEPICTIO_AUTH_SINGLE_USER_MODE=true    # one person, no login (the Compose default)
+DEPICTIO_AUTH_PUBLIC_MODE=true         # anonymous read-only, sign in to create
+DEPICTIO_AUTH_DEMO_MODE=true           # with PUBLIC_MODE: adds the guided tour
 ```
 
-!!! info "Admin bypass in public / demo mode (v0.13.9+)"
+With none set (and `SINGLE_USER_MODE=false` under Compose), everyone signs in. Restricting
+registration or password sign-in, the public-mode access code and pipeline provisioning are on the
+same page. Every `DEPICTIO_AUTH_*` variable is in the
+[reference](env-reference.md#authentication).
 
-    Logged-in administrators are **not** subject to the public/demo read-only gate. Admins can still create projects and generate CLI tokens even when `DEPICTIO_AUTH_PUBLIC_MODE` or `DEPICTIO_AUTH_DEMO_MODE` is enabled. The gate logic is `is_public AND NOT is_admin`, so regular users (and anonymous visitors) are restricted while admins retain full write access.
+### Single sign-on (OpenID Connect)
 
-### Google OAuth Integration
-
-Configure Google OAuth for user authentication:
+Users can sign in through any OpenID Connect identity provider (Keycloak, Google,
+Authentik, ...), with their groups mirrored from it. Providers are
+declared as a JSON list; credentials go in their own variables:
 
 ```bash
-# Enable Google OAuth authentication
-DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED=true
-
-# Google OAuth credentials (obtain from Google Cloud Console)
-DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
-DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET=your-google-client-secret
-
-# OAuth redirect URI (adjust to your domain)
-DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI=http://localhost:8058/auth/google/callback
+DEPICTIO_AUTH_OIDC_PROVIDERS='[
+  {
+    "id": "google",
+    "label": "Sign in with Google",
+    "discovery_url": "https://accounts.google.com/.well-known/openid-configuration"
+  }
+]'
+DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_ID=1234567890-example.apps.googleusercontent.com
+DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET=change-me
 ```
 
-#### Setting up Google OAuth
+The redirect URI to register at the provider is
+`https://<api-host>/depictio/api/v1/auth/oidc/<id>/callback`. Full reference, provider
+recipes and migration from the former `DEPICTIO_AUTH_GOOGLE_OAUTH_*` settings:
+[Single sign-on (OpenID Connect)](sso/index.md).
 
-1. **Create a Google Cloud Project**:
-   - Go to [Google Cloud Console](https://console.cloud.google.com/)
-   - Create a new project or select an existing one
+### Keys { #authentication-keys }
 
-2. **Enable Google+ API**:
-   - Navigate to "APIs & Services" → "Library"
-   - Search for "Google+ API" and enable it
-
-3. **Create OAuth 2.0 Credentials**:
-   - Go to "APIs & Services" → "Credentials"
-   - Click "Create Credentials" → "OAuth 2.0 Client ID"
-   - Configure the consent screen if prompted
-   - Set application type to "Web application"
-   - Add authorized redirect URIs:
-     - `http://localhost:8058/auth/google/callback` (for local development)
-     - `https://your-domain.com/auth/google/callback` (for production)
-
-4. **Copy the credentials** to your environment variables
-
-### SAML single sign-on <small>(v1.18.0+)</small>
-
-Users can also sign in through their institution's SAML 2.0 identity provider, with their
-groups mirrored from it. See [Single sign-on (SAML)](sso.md).
-
-### Authentication Keys
-
-Configure JWT authentication keys:
+On first start the backend writes an RS256 key pair (`private_key.pem`, `public_key.pem`) and
+`secrets_key.bin`, which encrypts per-project storage credentials, into `DEPICTIO_AUTH_KEYS_DIR`
+(`/app/depictio/keys`). The backend and the Celery worker must share that folder: Compose mounts the
+`depictio_keys` volume on both, the Helm chart a volume of its own. To bring your own pair, put the
+two files in a folder, mount it read-only on the backend **and** the worker, and point
+`DEPICTIO_AUTH_KEYS_DIR` at it:
 
 ```bash
-# Authentication key configuration
-DEPICTIO_AUTH_KEYS_DIR=depictio/keys
-DEPICTIO_AUTH_KEYS_ALGORITHM=RS256
-DEPICTIO_AUTH_CLI_CONFIG_DIR=depictio/.depictio
-DEPICTIO_AUTH_INTERNAL_API_KEY=your-internal-api-key
+openssl genrsa -out private_key.pem 2048
+openssl rsa -in private_key.pem -pubout -out public_key.pem
+chmod 600 private_key.pem
 ```
 
-### Custom Internal API Key
+The internal API key, used between services, is generated too. Set
+`DEPICTIO_AUTH_INTERNAL_API_KEY` (e.g. `openssl rand -hex 32`) to choose it.
 
-If you want to use your own internal API key instead of the auto-generated one:
-
-```bash
-# Set your custom internal API key
-DEPICTIO_AUTH_INTERNAL_API_KEY=your-custom-internal-api-key-here
-```
-
-**Generating a secure API key:**
-
-```bash
-# Generate a secure random API key (Linux/macOS)
-openssl rand -hex 32
-
-# Or use Python
-python -c "import secrets; print(secrets.token_hex(32))"
-```
-
-### CORS Configuration
+### CORS
 
 Control which browser origins are allowed to make credentialed cross-origin requests to the FastAPI backend:
 
@@ -229,124 +149,37 @@ DEPICTIO_FASTAPI_CORS_ALLOWED_ORIGINS=https://app.example.com,https://dash.examp
 |---|---|
 | *(empty / unset)* | No credentialed cross-origin requests are permitted |
 | `https://app.example.com` | Only the listed origins are allowed |
-| `*` | **Rejected when credentials are used** — do not use a bare wildcard in production |
+| `*` | **Rejected when credentials are used**: list explicit origins |
 
-!!! note
+Leave it unset when the browser reaches the API on the viewer's own origin, as with the bundled
+nginx.
 
-    For single-host deployments where the browser and API share the same origin you can leave this variable unset.
+## Background workers { #background-workers }
 
-### Custom Public/Private Key Pairs
-
-By default, Depictio generates RS256 key pairs automatically. To use your own custom keys:
-
-#### 1. Generate Your Own Key Pair
-
-```bash
-# Generate private key
-openssl genrsa -out private_key.pem 2048
-
-# Generate public key from private key
-openssl rsa -in private_key.pem -pubout -out public_key.pem
-```
-
-#### 2. Configure Key Directory
-
-```bash
-# Set custom keys directory
-DEPICTIO_AUTH_KEYS_DIR=/path/to/your/custom/keys
-
-# Ensure the directory contains:
-# - private_key.pem
-# - public_key.pem
-```
-
-#### 3. File Structure
-
-Your custom keys directory should contain:
-
-```text
-/path/to/your/custom/keys/
-├── private_key.pem    # Your private key
-└── public_key.pem     # Your public key
-```
-
-#### 4. Security Considerations for Custom Keys
-
-- **Secure Storage**: Store keys in a secure location with proper file permissions
-- **Key Rotation**: Regularly rotate your keys for security
-- **Backup**: Securely backup your keys
-- **Access Control**: Limit access to key files
-
-```bash
-# Set proper permissions for key files
-chmod 600 /path/to/your/custom/keys/private_key.pem
-chmod 644 /path/to/your/custom/keys/public_key.pem
-```
-
-#### 5. Docker/Kubernetes Deployment with Custom Keys
-
-**Docker Compose:**
-
-```yaml
-version: '3.8'
-services:
-  depictio-backend:
-    image: depictio/depictio:latest
-    volumes:
-      - /path/to/your/custom/keys:/app/depictio/keys:ro
-    environment:
-      - DEPICTIO_AUTH_KEYS_DIR=/app/depictio/keys
-```
-
-**Kubernetes Secret:**
-
-```bash
-# Create secret from your key files
-kubectl create secret generic depictio-keys \
-  --from-file=private_key.pem=/path/to/your/custom/keys/private_key.pem \
-  --from-file=public_key.pem=/path/to/your/custom/keys/public_key.pem
-
-# Mount secret in your deployment
-apiVersion: v1
-kind: Deployment
-spec:
-  template:
-    spec:
-      containers:
-      - name: depictio-backend
-        volumeMounts:
-        - name: depictio-keys
-          mountPath: /app/depictio/keys
-          readOnly: true
-        env:
-        - name: DEPICTIO_AUTH_KEYS_DIR
-          value: /app/depictio/keys
-      volumes:
-      - name: depictio-keys
-        secret:
-          secretName: depictio-keys
-```
+The `depictio-celery-worker` container always runs: the dashboard editor's previews, large renders
+and thumbnails go through it, over Redis. Size it with `DEPICTIO_CELERY_WORKERS` on the worker
+(`celery.env` with Helm; default 4 processes, the chart sets 2). Each process holds its own data, so
+memory sets the limit. When renders offload, and how long the API waits, is set on the backend:
+see [Celery Task Queue](env-reference.md#celery-task-queue). Offloaded ingestion runs on a second
+worker: see [Ingestion worker](docker.md#ingestion-worker).
 
 ## Backup and Restore Configuration
 
-Configure backup and restore functionality:
+MongoDB backups run from the admin panel or on a schedule; S3 data is copied to a second bucket,
+a local folder, or both. Day-to-day use is in [Backup & Restore](../usage/administration/backup.md).
 
 ```bash
-# Backup Configuration
-DEPICTIO_BACKUP_BASE_DIR=/path/to/backup/base
-DEPICTIO_BACKUP_BACKUP_DIR=backups
-DEPICTIO_BACKUP_S3_BACKUP_STRATEGY=s3_to_s3
-DEPICTIO_BACKUP_S3_LOCAL_BACKUP_DIR=backups/s3_data_backups
-DEPICTIO_BACKUP_COMPRESS_LOCAL_BACKUPS=true
+DEPICTIO_BACKUP_AUTO_BACKUP_ENABLED=true
+DEPICTIO_BACKUP_AUTO_BACKUP_TIME_OF_DAY=03:00              # UTC
 DEPICTIO_BACKUP_BACKUP_FILE_RETENTION_DAYS=30
+DEPICTIO_BACKUP_S3_BACKUP_STRATEGY=s3_to_s3                # s3_to_s3, local or both
 ```
 
 ### Backup to Separate S3 Bucket
 
-For production deployments, it's recommended to backup to a separate S3 bucket:
+Keep the copy of S3 data apart from the primary bucket:
 
 ```bash
-# Enable backup to separate S3 bucket
 DEPICTIO_BACKUP_BACKUP_S3_ENABLED=true
 DEPICTIO_BACKUP_BACKUP_S3_BUCKET=depictio-backups
 DEPICTIO_BACKUP_BACKUP_S3_ENDPOINT_URL=https://s3.amazonaws.com
@@ -355,278 +188,65 @@ DEPICTIO_BACKUP_BACKUP_S3_SECRET_KEY=your-backup-s3-secret-key
 DEPICTIO_BACKUP_BACKUP_S3_REGION=us-east-1
 ```
 
-### Backup Strategies
+Scheduled backups, retention tiers and every `DEPICTIO_BACKUP_*` variable:
+[Backup & Restore](env-reference.md#backup-restore).
 
-Choose from different backup strategies:
+## Example projects { #example-projects }
 
-- **`s3_to_s3`**: Direct S3 to S3 backup (recommended for production)
-- **`local`**: Local file system backup
-- **`both`**: Both local and S3 backup
-
-## Performance Configuration
-
-Configure timeouts and performance settings:
+At startup the API seeds five reference projects with their dashboards: Iris, Penguins, Advanced
+Visualisations, nf-core/ampliseq and nf-core/viralrecon. Every other
+[pipeline template](../pipeline-templates/README.md) comes from ingesting a run.
 
 ```bash
-# HTTP and API Timeouts
-DEPICTIO_PERFORMANCE_HTTP_CLIENT_TIMEOUT=30
-DEPICTIO_PERFORMANCE_API_REQUEST_TIMEOUT=60
-
-# Browser/Screenshot Timeouts
-DEPICTIO_PERFORMANCE_BROWSER_NAVIGATION_TIMEOUT=60000
-DEPICTIO_PERFORMANCE_BROWSER_PAGE_LOAD_TIMEOUT=90000
-DEPICTIO_PERFORMANCE_SCREENSHOT_CAPTURE_TIMEOUT=90000
-
-# Service Readiness Configuration
-DEPICTIO_PERFORMANCE_SERVICE_READINESS_RETRIES=5
-DEPICTIO_PERFORMANCE_SERVICE_READINESS_DELAY=3
-DEPICTIO_PERFORMANCE_SERVICE_READINESS_TIMEOUT=10
+DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS=true    # seed none of them
+DEPICTIO_SEED_PROJECTS=iris,penguins        # or only these
 ```
 
-## Background Callbacks Configuration
+## Analytics and telemetry { #analytics }
 
-Depictio uses Celery for asynchronous background processing. **Celery is required** for the dashboard editor (design mode) to function properly, as it enables non-blocking figure preview rendering during component creation.
+| What | Default | Set |
+|------|---------|-----|
+| Anonymous installation [telemetry](../features/telemetry.md), once a day | On | `DEPICTIO_TELEMETRY_ENABLED=false` or `DO_NOT_TRACK=1` to stop it |
+| [Internal analytics](env-reference.md#internal-analytics): sessions stored in your MongoDB | Off | `DEPICTIO_ANALYTICS_ENABLED=true` |
+| Google Analytics 4 | Off | `DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true` and `DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-...` |
 
-### Required Setup
+All three are set on the backend. The viewer reads them from the API at boot, so with Helm they
+go in `backend.env` only, as in the chart's `examples/values-google-analytics.yaml`.
+
+## Optional features { #optional-features }
+
+Off or bounded by default. Each link goes to the variables.
+
+| Feature | Turn on with |
+|---------|--------------|
+| Live refresh over WebSocket | [`DEPICTIO_EVENTS_ENABLED`](env-reference.md#real-time-events) |
+| What changed since a reader's last visit | [`DEPICTIO_DASHBOARD_VERSIONS_CHANGES_SINCE_ENABLED`](env-reference.md#dashboard-versions) |
+| Background ingestion and the `/jobs` API | [`DEPICTIO_JOBS_ENABLED`](env-reference.md#jobs), then [`DEPICTIO_INGESTION_*`](env-reference.md#ingestion) |
+| Reading `https://` and `s3://` sources | [`DEPICTIO_REMOTE_*`](env-reference.md#remote-data-sources) |
+| Exporting and embedding a component | [`DEPICTIO_FASTAPI_EMBED_ENABLED`](env-reference.md#component-export) |
+| Remote genome browser tracks | [`DEPICTIO_JBROWSE_*`](env-reference.md#genome-browser) |
+| Protein structures from AlphaFold DB and ESMFold | [`DEPICTIO_STRUCTURE_RESOLVER_ENABLED`](env-reference.md#structure-resolver) |
+| Pushing projects to another instance | [`DEPICTIO_MIGRATION_*`](env-reference.md#project-migration) |
+| Comments by viewers | [`DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT`](env-reference.md#comments) |
+| A feedback link on every dashboard | [`DEPICTIO_FEEDBACK_*`](env-reference.md#feedback) |
+| Your logo, colours and fonts | [`DEPICTIO_BRANDING_*`](env-reference.md#branding) |
+| The new-release notice for admins | [`DEPICTIO_VERSION_CHECK_*`](env-reference.md#release-check) |
+
+## Version and development { #development }
 
 ```bash
-# Celery is ALWAYS enabled in the application
-# The Celery worker service is always started with docker-compose
-# This setting controls whether view mode also uses background callbacks
-DEPICTIO_CELERY_ENABLED=true
-
-# Configure number of Celery workers (default: 2)
-DEPICTIO_CELERY_WORKERS=4
+DEPICTIO_VERSION=1.21.0       # image tag; unset uses the release the compose file pins, `next` follows main
+DEPICTIO_DEV_MODE=true        # API reload, worker restart on code change, no telemetry or walkthrough
 ```
 
-### How Background Callbacks Work
-
-Celery provides asynchronous task processing for:
-
-- **Design Mode** (Dashboard Editor): Always uses background callbacks (required)
-  - Figure preview rendering during component creation
-  - Real-time parameter updates without UI blocking
-  - Essential for responsive dashboard building experience
-
-- **View Mode** (Dashboard Viewing): Optionally uses background callbacks (controlled by env var)
-  - When `DEPICTIO_CELERY_ENABLED=true`: Data loading executes asynchronously
-  - When `false`: Data loading runs synchronously (UI may block during long operations)
-
-Technical implementation:
-
-- Redis is used as the message broker for task queuing
-- A dedicated Celery worker service processes background tasks
-- All imports are done inside callback functions for proper serialization
-
-### Supported Components
-
-Background callbacks can apply to:
-
-- **Card components**: Initial render and filter updates (view mode only)
-- **Figure components**: Visualization rendering and filter updates (both design and view mode)
-- **Table components**: Data loading and pagination (view mode only)
-
-### Performance Considerations
-
-**Design Mode**:
-
-- Always uses background callbacks (not configurable)
-- UI remains responsive during figure preview generation
-- Required for stepper workflow to function
-
-**View Mode with Background Callbacks** (`DEPICTIO_CELERY_ENABLED=true`):
-
-- UI remains responsive during data operations
-- Better user experience with large datasets
-- Recommended for production and multi-user environments
-- Requires Redis and Celery worker service (always running)
-
-**View Mode Synchronous** (`DEPICTIO_CELERY_ENABLED=false`):
-
-- Only view mode operations run synchronously
-- Design mode still requires Celery (always uses background)
-- UI may block during long data operations
-- Simpler for debugging view mode issues
-
-### Docker Compose Configuration
-
-The `depictio-celery-worker` service is always started and running:
-
-```bash
-# Start all services (Celery worker included by default)
-docker compose up
-
-# The worker is always running - required for design mode
-# No need for profiles or conditional startup
-```
-
-## Development Settings
-
-Enable debug logging and hot-reload:
-
-```bash
-# Enable development mode (hot-reload, verbose logging)
-DEPICTIO_DEV_MODE=true
-
-# Enable Playwright debug mode (browser automation diagnostics)
-DEPICTIO_PLAYWRIGHT_DEV_MODE=true
-
-# Pin a specific version (default: latest)
-DEPICTIO_VERSION=1.5.2
-```
-
-!!! warning "`DEPICTIO_DEV_MODE` is not a security switch"
-    Up to v1.5.1 this flag also skipped OAuth state validation, so any deployment
-    that set it ran the Google OAuth callback without CSRF protection. That bypass
-    was removed in **v1.5.2**: the flag now only affects hot-reload and verbose
-    logging. See [Security](../features/security.md#oauth-callback-security).
-
-## Skip Bundled Example Projects
-
-Production deployments that ship their own catalogue can opt out of the
-bundled reference projects (Iris, Penguins, Advanced Visualisations,
-nf-core/ampliseq 2.18.0, nf-core/viralrecon 3.0.0) that Depictio otherwise seeds at
-API startup. These five are the only projects seeded at boot. Every other
-[pipeline template](../pipeline-templates/README.md), older nf-core/ampliseq
-versions included, is set up by ingesting a run with `depictio ingest`:
-
-```bash
-# Skip seeding the demo projects + dashboards on boot.
-# Default: false — preserves the current behaviour.
-DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS=true
-```
-
-When enabled, neither the seed projects nor their dashboards are
-created, so the project listing and admin views stay scoped to
-user-created content only. The toggle is opt-in so existing deployments
-keep their demo set after upgrading.
-
-## Analytics Configuration
-
-Depictio provides comprehensive analytics capabilities to track user interactions and system usage. You can configure both internal analytics and external Google Analytics integration.
-
-!!! info "Anonymous installation telemetry"
-
-    Separate from the analytics below, Depictio also sends an anonymous daily installation report (enabled by default, `DEPICTIO_TELEMETRY_*`). See the [Telemetry](../features/telemetry.md) page for what is sent and how to opt out.
-
-### Internal Analytics System
-
-Configure Depictio's built-in analytics tracking system:
-
-```bash
-# Enable internal analytics tracking
-DEPICTIO_ANALYTICS_ENABLED=true
-
-# Session timeout configuration (in minutes, range: 5-1440)
-DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES=30
-
-# Data retention period (in days, range: 1-365)
-DEPICTIO_ANALYTICS_CLEANUP_DAYS=90
-
-# Enable automatic cleanup of old analytics data
-DEPICTIO_ANALYTICS_CLEANUP_ENABLED=true
-```
-
-### Google Analytics Integration
-
-Configure Google Analytics 4 (GA4) for additional web analytics:
-
-```bash
-# Enable Google Analytics tracking
-DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true
-
-# GA4 Measurement ID (obtain from Google Analytics dashboard)
-DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX
-```
-
-#### Setting up Google Analytics 4
-
-1. **Create Google Analytics Account**:
-   - Go to [Google Analytics](https://analytics.google.com)
-   - Create a new GA4 property for your domain
-
-2. **Configure Data Stream**:
-   - Navigate to Admin → Property → Data Streams
-   - Create or select a web stream for your Depictio instance
-   - Set your domain as the website URL
-
-3. **Get Measurement ID**:
-   - Copy the Measurement ID (starts with `G-`)
-   - Replace `G-XXXXXXXXXX` with your actual ID
-
-4. **Configure Environment Variables**:
-   - Set both `DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true` and your tracking ID
-   - Ensure the same tracking ID is used for both backend and frontend services
-
-#### Analytics Features
-
-When analytics are enabled, the system tracks:
-
-**Internal Analytics**:
-
-- User session management and duration
-- Dashboard interactions and component usage
-- API endpoint usage patterns
-- User types (authenticated, anonymous, temporary)
-- Custom events and user flows
-
-**Google Analytics** (when enabled):
-
-- Page views and navigation events
-- Session duration and engagement metrics
-- User demographics and behavior flow
-- Custom events for dashboard interactions
-- Real-time analytics and reporting
-
-#### Kubernetes Configuration Example
-
-For Kubernetes deployments, use the provided example configuration:
-
-```yaml
-# Use the Google Analytics values file
-helm upgrade depictio ./helm-charts/depictio \
-  -f values.yaml \
-  -f examples/values-google-analytics.yaml
-
-# Or set values directly
-helm upgrade depictio ./helm-charts/depictio \
-  --set backend.env.DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true \
-  --set backend.env.DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX \
-  --set frontend.env.DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true \
-  --set frontend.env.DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-XXXXXXXXXX
-```
-
-#### Privacy Considerations
-
-- **GDPR Compliance**: Ensure compliance with data protection regulations
-- **User Consent**: Consider implementing user consent mechanisms for analytics
-- **Data Retention**: Configure appropriate `DEPICTIO_ANALYTICS_CLEANUP_DAYS` based on your data retention policies
-
-## Security Considerations
-
-- **Never commit sensitive credentials** to version control
-- **Use strong passwords** for the S3 store and other services
-- **Enable HTTPS** in production environments
-- **Regularly rotate API keys** and OAuth credentials
-- **Set appropriate backup retention policies**
-- **Use separate S3 buckets** for primary data and backups
-- **Enable authentication** in production (disable unauthenticated mode)
-- **Review analytics data collection** and ensure compliance with privacy regulations
-
-## Environment Variable Validation
-
-Depictio validates environment variables on startup. Check the logs for any configuration errors:
-
-```bash
-# Check application logs for configuration validation
-docker compose logs depictio-backend
-docker compose logs depictio-frontend
-```
-
-## Complete Reference
-
-For the complete list of all environment variables with their defaults and descriptions:
-
-- **`.env.complete.example`** - Complete env file with all 160+ variables (copy and uncomment)
-- **[Environment Reference](env-reference.md)** - Searchable documentation for all variables
-- **[Source Code](https://github.com/depictio/depictio/blob/main/depictio/api/v1/configs/settings_models.py)** - Pydantic settings models (source of truth)
+`DEPICTIO_DEV_MODE` is not a security switch: since v1.5.2 it no longer touches OAuth state
+validation. See [Security](../features/security.md#oauth-callback-security). Keep
+`DEPICTIO_MONGODB_WIPE` and `DEPICTIO_ENABLE_DEV_ENDPOINTS` off outside development.
+
+## Security checklist { #security }
+
+- Keep `.env` and Helm secrets out of version control; supply them from a secret store.
+- Turn single-user mode off on anything others can reach, and put a TLS proxy in front.
+- Back up the keys folder with the database: without `secrets_key.bin`, stored project credentials
+  cannot be read.
+- Keep backups in a bucket apart from the data.

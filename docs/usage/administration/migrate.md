@@ -1,3 +1,7 @@
+---
+glightbox: true
+---
+
 # :material-database-arrow-right:{ style="color: #009688" } Project Migration
 
 Depictio supports **non-destructive project migration** between instances — move a project (MongoDB metadata + S3 data files + dashboards) from one Depictio deployment to another without touching any other project on the target.
@@ -12,36 +16,14 @@ Migration works as a scoped upsert: every document is written via `ReplaceOne(..
 
 ## How It Works
 
-The CLI and UI paths differ in how S3 data is transferred:
+The CLI and the browser differ in how the files travel, and **Send** goes straight from one instance to the other. All three end in the same scoped upsert on the target: projects (with their workflows and data collections), then files, Delta tables and runs, then dashboards.
 
-```
-CLI path (S3 copied directly)
-──────────────────────────────────────────────────────────────────
-Source instance                        Target instance
-depictio migrate                       API: /migrate/import-project
-    │                                       │
-    ├─ POST /migrate/export-project         ├─ Upsert: projects
-    │     → ZIP (no S3 data inside)         │     (workflows + data_collections
-    │       ├─ bundle.json                  │      are embedded in project doc)
-    │       ├─ migrate_metadata.json        ├─ Upsert: files / deltatables / runs
-    │       └─ s3_metadata.json             └─ Upsert: dashboards
-    │
-    └─ S3 copy: source S3 → target S3 (direct, not via ZIP)
+<figure markdown="span">
+  [![Three ways to move a project: the CLI sends a ZIP without the data and copies the files bucket to bucket, the browser exports a ZIP with the data, and Send goes instance to instance with an invite code issued on the target](../../images/guides/migration/migration-paths_light.png#only-light)](../../images/guides/migration/migration-paths_light.png){target=_blank}
+  [![Three ways to move a project: the CLI sends a ZIP without the data and copies the files bucket to bucket, the browser exports a ZIP with the data, and Send goes instance to instance with an invite code issued on the target](../../images/guides/migration/migration-paths_dark.png#only-dark)](../../images/guides/migration/migration-paths_dark.png){target=_blank}
+</figure>
 
-
-UI path (S3 bundled inside ZIP)
-──────────────────────────────────────────────────────────────────
-Browser                                Target instance
-    │                                       │
-    ├─ POST /migrate/export-project         ├─ POST /migrate/import-project-zip
-    │     → ZIP (S3 data included)          │     extracts bundle.json
-    │       ├─ bundle.json                  │     restores s3_data/* → S3
-    │       ├─ migrate_metadata.json        └─ Upsert: same order as CLI path
-    │       ├─ s3_metadata.json
-    │       └─ s3_data/<original S3 paths>
-    │
-    └─ ZIP downloaded to browser, re-uploaded to target UI
-```
+The CLI calls `POST /migrate/export-project` on the source and `/migrate/import-project` on the target. The browser's import goes through `POST /migrate/import-project-zip`, which restores `s3_data/` before the upsert. See [Send to another instance](#send-to-another-instance) for the third path.
 
 ### ZIP Archive Contents
 
@@ -99,27 +81,67 @@ Each config file points to a different Depictio instance and carries its own API
 
 ## Web UI
 
-Migration is also available directly from the Projects page — no CLI required.
+Export and import are also in the viewer, with no CLI.
 
 ### Export a Project
 
-1. Open **Projects** (`/projects`).
-2. Expand the project you want to export.
-3. Open the **Project Management** accordion section.
-4. Click **Export Project** (violet button).
-5. A `.zip` file downloads automatically — this is the same bundle the CLI produces.
+1. Open the project and click **Project settings**.
+2. Open **Export**.
+3. Click **Export as ZIP**. `depictio_export_<project_id>.zip` downloads: the same bundle the CLI produces, with the data inside.
+
+The project's menu on the **Projects** page also has **Export as ZIP**.
+
+[![Project settings, Export section, with the Export as ZIP button](../../images/guides/project-creation/export_zip_light.webp#only-light){ width="688" }](../../images/guides/project-creation/export_zip_light.webp){target=_blank}
+[![Project settings, Export section, with the Export as ZIP button](../../images/guides/project-creation/export_zip_dark.webp#only-dark){ width="688" }](../../images/guides/project-creation/export_zip_dark.webp){target=_blank}
 
 ### Import a Project
 
-1. Click **Create New Project**.
-2. Switch to the **Import** tab.
-3. Drag-and-drop (or browse for) the `.zip` bundle.
-4. A preview shows the project name, export mode, and document counts.
-5. Click **Import Project** — the project is created and owned by your account.
+1. On **Projects**, click **New project**, then **Import a project** under **Or start from**.
+2. Open **From a ZIP file**. It is the only tab unless you are an admin on an instance with the migration UI on.
+3. Choose the `.zip` file. Tick **Replace the project if it already exists** to overwrite a project with the same id.
+4. Click **Import project**. The project, its data and its dashboards are created, owned by your account.
+
+[![The Import a project dialog, From another instance tab](../../images/guides/project-creation/import_from_instance_light.webp#only-light){ width="440" }](../../images/guides/project-creation/import_from_instance_light.webp){target=_blank}
+[![The Import a project dialog, From another instance tab](../../images/guides/project-creation/import_from_instance_dark.webp#only-dark){ width="440" }](../../images/guides/project-creation/import_from_instance_dark.webp){target=_blank}
+
+[![The Import a project dialog, From a ZIP file tab](../../images/guides/project-creation/import_from_zip_light.webp#only-light){ width="440" }](../../images/guides/project-creation/import_from_zip_light.webp){target=_blank}
+[![The Import a project dialog, From a ZIP file tab](../../images/guides/project-creation/import_from_zip_dark.webp#only-dark){ width="440" }](../../images/guides/project-creation/import_from_zip_dark.webp){target=_blank}
 
 <!-- prettier-ignore -->
 !!! note "Owner remapping"
     When importing via the UI, all project and dashboard owners in the bundle are automatically remapped to the importing user. This differs from the CLI, which only remaps owners that do not already exist on the target instance.
+
+## Send to another instance <small>(v1.21.0+)</small> { #send-to-another-instance }
+
+A project can also go straight from one instance to another, with no file to carry. The receiving instance issues a code, and the project's owner sends with it.
+
+1. **On the receiving instance**, an admin opens **New project** > **Import a project** > **From another instance**, or **Admin** > **Migrations** > **Receive a project**.
+2. Under **Options**, set **Code expires after** (1 day, 30 days or 1 year), **Imported project is read-only** and an optional **Note**.
+3. **Create code** shows the **Instance URL** and the **Code** once. Pass both to the project's owner.
+4. **On the sending instance**, the owner opens **Project settings** > **Send** > **Send to another instance**.
+5. Under **Destination**, paste the URL and the invite code. **Check** shows what will travel and whether it is imported right away. Then **Send**.
+6. On the receiving instance, the project appears with a **Read-only** badge when it was locked. An admin locks and unlocks it on its **Permissions** page.
+
+A project is updated only with the code that first brought it: send again with the same code to publish a new version. Admins see a banner on **Projects** when a project was received or needs a decision, and a live toast when `DEPICTIO_EVENTS_ENABLED` is on.
+
+[![Receive a project: the Instance URL and Code shown once, with copy buttons](../../images/guides/migration/receive_project_dialog_light.webp#only-light){ width="440" }](../../images/guides/migration/receive_project_dialog_light.webp){target=_blank}
+[![Receive a project: the Instance URL and Code shown once, with copy buttons](../../images/guides/migration/receive_project_dialog_dark.webp#only-dark){ width="440" }](../../images/guides/migration/receive_project_dialog_dark.webp){target=_blank}
+
+[![Send to another instance, Destination step: Destination URL and Invite code](../../images/guides/migration/send_destination_light.webp#only-light){ width="460" }](../../images/guides/migration/send_destination_light.webp){target=_blank}
+[![Send to another instance, Destination step: Destination URL and Invite code](../../images/guides/migration/send_destination_dark.webp#only-dark){ width="460" }](../../images/guides/migration/send_destination_dark.webp){target=_blank}
+
+[![Send to another instance, Check step: what travels, imported right away, read-only there](../../images/guides/migration/send_checked_light.webp#only-light){ width="429" }](../../images/guides/migration/send_checked_light.webp){target=_blank}
+[![Send to another instance, Check step: what travels, imported right away, read-only there](../../images/guides/migration/send_checked_dark.webp#only-dark){ width="429" }](../../images/guides/migration/send_checked_dark.webp){target=_blank}
+
+[![The Projects page banner telling an admin a project was received](../../images/guides/migration/received_projects_light.webp#only-light)](../../images/guides/migration/received_projects_light.webp){target=_blank}
+[![The Projects page banner telling an admin a project was received](../../images/guides/migration/received_projects_dark.webp#only-dark)](../../images/guides/migration/received_projects_dark.webp){target=_blank}
+
+[![A received project with its Read-only badge](../../images/guides/migration/read_only_badge_light.webp#only-light)](../../images/guides/migration/read_only_badge_light.webp){target=_blank}
+[![A received project with its Read-only badge](../../images/guides/migration/read_only_badge_dark.webp#only-dark)](../../images/guides/migration/read_only_badge_dark.webp){target=_blank}
+
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/migration/send-receive.webp" src="../../../images/guides/migration/send-receive.mp4"></video></figure>
+
+The controls need `DEPICTIO_MIGRATION_UI_ENABLED` on both sides. The receiving side also needs `DEPICTIO_MIGRATION_INBOUND_ENABLED`, and the sending side `DEPICTIO_MIGRATION_DESTINATION_DOMAINS` (`"*"` allows any host, the Helm chart default is `["*"]`). Every migration setting is in the [environment reference](../../installation/env-reference.md).
 
 ## S3 Data Scope
 
