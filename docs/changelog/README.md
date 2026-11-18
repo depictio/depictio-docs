@@ -8,7 +8,7 @@ hide:
 
 # Changelog
 
-## **[v1.21.0](https://github.com/depictio/depictio/releases/tag/v1.21.0)** (upcoming)
+## **[v1.21.0](https://github.com/depictio/depictio/releases/tag/v1.21.0)** (November 16, 2026)
 
 !!! success "Minor: projects start from their data, show what changed since your last visit, and move between instances"
 
