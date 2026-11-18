@@ -102,7 +102,7 @@ The `depictio` command, from `pip install depictio`, ingests pipeline results, m
 
     A pipeline ingests its own results when it completes.
 
-    [:octicons-arrow-right-24: Nextflow trigger](nextflow-trigger.md)
+    [:octicons-arrow-right-24: Nextflow trigger](../workflows/nextflow/trigger.md)
 
 -   :material-package-variant-closed:{ .lg .middle .dp-orange } **Nextflow subworkflow**
 
@@ -110,7 +110,7 @@ The `depictio` command, from `pip install depictio`, ingests pipeline results, m
 
     One task in an nf-core pipeline publishes the run, under Docker, Singularity or Apptainer.
 
-    [:octicons-arrow-right-24: Nextflow subworkflow](nextflow-publish.md)
+    [:octicons-arrow-right-24: Nextflow subworkflow](../workflows/nextflow/subworkflow.md)
 
 -   :material-file-document-outline:{ .lg .middle .dp-pink } **Minimal project YAML**
 

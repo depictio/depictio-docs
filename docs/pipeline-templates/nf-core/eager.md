@@ -108,7 +108,7 @@ back to the library hub, so a floor narrows the hub and, through it, every tab.
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. The samplesheet copy and the MultiQC regeneration above still
-    apply. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    apply. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 

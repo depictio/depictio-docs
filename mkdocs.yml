@@ -152,6 +152,7 @@ markdown_extensions:
 # landing_stats fills the home page's "Depictio in numbers" placeholders from
 # docs/data/landing_stats.json (rebuilt by dev/landing_stats.py).
 hooks:
+  - hooks/nextflow_lexer.py
   - hooks/shared_images.py
   - hooks/landing_stats.py
 
@@ -194,9 +195,12 @@ plugins:
           - depictio-cli/index.md
           - depictio-cli/tasks.md: One command per task
           - depictio-cli/usage.md: Every command and option, generated from the CLI
-          - depictio-cli/nextflow-trigger.md
-          - depictio-cli/nextflow-publish.md
           - depictio-cli/minimal_config.md
+        Workflow managers:
+          - workflows/index.md
+          - workflows/nextflow/index.md
+          - workflows/nextflow/trigger.md
+          - workflows/nextflow/subworkflow.md
         Features:
           - features/*.md
         API:
@@ -210,6 +214,11 @@ plugins:
         Optional:
           - FAQ/*.md
           - roadmap/README.md
+  # Old addresses of moved pages keep working.
+  - redirects:
+      redirect_maps:
+        depictio-cli/nextflow-trigger.md: workflows/nextflow/trigger.md
+        depictio-cli/nextflow-publish.md: workflows/nextflow/subworkflow.md
   # Click a screenshot to open it full size. manual: true keeps this opt-in, so
   # a page only gets lightboxes when its front matter says `glightbox: true`
   # (or an image carries `.on-glb`); every other page renders as before. Images
@@ -339,12 +348,16 @@ nav:
           - Template System Reference: usage/projects/templates.md
           - Composed dashboards: usage/projects/composed-dashboards.md
           - Remote data and manifests: usage/projects/remote-data.md
+      - Workflow managers:
+          - workflows/index.md
+          - Nextflow:
+              - workflows/nextflow/index.md
+              - onComplete trigger: workflows/nextflow/trigger.md
+              - Subworkflow (depictio/publish): workflows/nextflow/subworkflow.md
       - CLI:
           - depictio-cli/index.md
           - Common tasks: depictio-cli/tasks.md
           - Command reference: depictio-cli/usage.md
-          - Nextflow trigger: depictio-cli/nextflow-trigger.md
-          - Nextflow subworkflow: depictio-cli/nextflow-publish.md
           - Minimal project YAML: depictio-cli/minimal_config.md
       - Administration:
           - usage/administration/index.md

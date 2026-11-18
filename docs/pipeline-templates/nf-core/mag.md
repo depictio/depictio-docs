@@ -96,7 +96,7 @@ and a pick there reaches every per-assembly and per-bin collection through the
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. The samplesheet copy and the MultiQC parquet above still apply.
-    See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 

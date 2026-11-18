@@ -76,7 +76,7 @@ and never move a stability score, which is a statistic of the whole cohort.
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    manifest. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 

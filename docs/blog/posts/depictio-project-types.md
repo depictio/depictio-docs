@@ -411,7 +411,7 @@ Both project types deliver the same rich, interactive dashboard experience - the
 
 Now that you understand project types, you're ready to create your first interactive dashboard:
 
-- **🎨 [Create Your First Dashboard](./create-your-first-dashboard.md)** - Step-by-step tutorial
+- **🎨 [Create Your First Dashboard](create-your-first-dashboard.md)** - Step-by-step tutorial
 - **📊 [CLI Usage Guide](../../depictio-cli/usage.md)** - Complete command documentation
 - **🔧 [Advanced Configuration](../../usage/advanced-projects.md)** - Multi-collection joins, custom workflows
 

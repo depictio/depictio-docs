@@ -110,7 +110,7 @@ splicing collection, so one contrast pick scopes every splicing tab.
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    manifest. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 The calls are thresholded by variables with generic defaults: `SPLICING_FDR`
 (0.05) on every tool's adjusted p-value, SUPPA2's empirical p-value included,

@@ -71,7 +71,7 @@ DEFAULT_GROUP = {"icon": "console-line", "accent": "purple", "guide": []}
 
 # Guide links for subcommands, by command path.
 SEE_ALSO: dict[str, list[tuple[str, str]]] = {
-    "config nextflow": [("Nextflow trigger", "nextflow-trigger.md")],
+    "config nextflow": [("Nextflow trigger", "../workflows/nextflow/trigger.md")],
     "data join": [("Cross-DC filtering", "../features/cross-dc-filtering.md")],
     "data versions": [("Dataset history", "../features/versioning.md#dataset-history")],
     "data vacuum": [("Data versions", "../features/versioning.md#data-versions")],

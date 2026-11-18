@@ -430,7 +430,7 @@ Every later `nextflow run` then triggers Depictio with no extra flag, and `--uni
 | <code class="dp-flag" id="config-nextflow-uninstall">--uninstall</code> | <span class="dp-type">flag</span> |  | Undo `--install`, leaving any other Nextflow settings alone. |
 | <code class="dp-flag" id="config-nextflow-default-enabled">--default-enabled</code> <span class="dp-sep">/</span> <code class="dp-flag">--default-disabled</code> | <span class="dp-type">flag</span> | on | With `--install`: whether a pipeline that sets no `--depictio_enabled` triggers Depictio (default) or stays opt-in. |
 
-:material-book-open-page-variant: [Nextflow trigger](nextflow-trigger.md)
+:material-book-open-page-variant: [Nextflow trigger](../workflows/nextflow/trigger.md)
 { .dp-cli-see }
 
 ### `config check` { #config-check .dp-cli-cmd .dp-green }

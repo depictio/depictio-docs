@@ -60,4 +60,4 @@ Templates for [nf-core](https://nf-co.re) pipelines. Each template configures a 
     depictio config nextflow --install
     ```
 
-    See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    See [Nextflow trigger](../../workflows/nextflow/trigger.md).

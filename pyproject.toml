@@ -17,6 +17,7 @@ dependencies = [
     "mkdocs-graphviz",
     "mkdocs-glightbox>=0.5.2",
     "mkdocs-llmstxt>=0.5.1",
+    "mkdocs-redirects>=1.2.3",
 ]
 version = "1.22.0"
 name = "depictio-docs"

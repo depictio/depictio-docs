@@ -23,7 +23,7 @@ Each release publishes the Docker images `ghcr.io/depictio/depictio-{api,viewer,
 
 ### **✨ New Features**
 
-* **A pipeline can ship its own dashboards**: add the `depictio/publish` subworkflow to an nf-core pipeline, and its last step ingests the run into a temporary Depictio and publishes it as a folder (`results/depictio/`). Anyone reopens that folder with `depictio local up`, no server needed. [Publish from a pipeline](../depictio-cli/nextflow-publish.md) ([#1407](https://github.com/depictio/depictio/pull/1407))
+* **A pipeline can ship its own dashboards**: add the `depictio/publish` subworkflow to an nf-core pipeline, and its last step ingests the run into a temporary Depictio and publishes it as a folder (`results/depictio/`). Anyone reopens that folder with `depictio local up`, no server needed. [Publish from a pipeline](../workflows/nextflow/subworkflow.md) ([#1407](https://github.com/depictio/depictio/pull/1407))
 * **Template routes read from the run**: templates set their route variables (`--skip_*`, platform, tools) from the run's `params_<timestamp>.json`, so no `--var` is needed; `--var NAME=false` unsets one. ([#1408](https://github.com/depictio/depictio/pull/1408))
 * **`depictio template check`**: checks a template's variables against a run, a release's `nextflow_schema.json` or the next release, offline. [`template check`](../depictio-cli/usage.md#template-check) ([#1408](https://github.com/depictio/depictio/pull/1408))
 * **YAML and JSON samplesheets**: `depictio ingest` and `manifest from-table` read a YAML or JSON list of records exactly as the same CSV. [`manifest from-table`](../depictio-cli/usage.md#manifest-from-table) ([#1289](https://github.com/depictio/depictio/pull/1289))
@@ -570,7 +570,7 @@ Earlier series are collapsed below; open one to read its releases.
 
     #### **✨ New Features**
 
-    * **Nextflow trigger**: a `workflow.onComplete` snippet runs `depictio-cli run`, set up with `depictio-cli config nextflow --install`. [Nextflow trigger](../depictio-cli/nextflow-trigger.md) ([#1037](https://github.com/depictio/depictio/pull/1037))
+    * **Nextflow trigger**: a `workflow.onComplete` snippet runs `depictio-cli run`, set up with `depictio-cli config nextflow --install`. [Nextflow trigger](../workflows/nextflow/trigger.md) ([#1037](https://github.com/depictio/depictio/pull/1037))
     * **`--pipeline-id <name>/<version>`**: picks the bundled template and stamps run versions. [Templates](../usage/projects/templates.md#pipeline-id) ([#1035](https://github.com/depictio/depictio/pull/1035), [#1036](https://github.com/depictio/depictio/pull/1036))
     * **`--triggered-by`**: shown as a badge on the ingestion tab. [Ingestion Report & Health](../features/dashboards.md#triggered-by)
     * **`--attach-run`** and env credentials `DEPICTIO_CLI_TOKEN`, `DEPICTIO_CLI_API_BASE_URL`, `DEPICTIO_CLI_CONFIG_PATH` overriding `CLI.yaml`. [CLI Usage](../depictio-cli/usage.md#environment-variables)

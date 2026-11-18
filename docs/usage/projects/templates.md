@@ -169,7 +169,7 @@ Here an nf-core/rnaseq run is ingested with its template named, as the [Template
 - `--template nf-core/ampliseq/2.16.0`, for a pipeline Depictio ships a template for,
   or `--project-config-path my_project.yaml`, for a pipeline of your own;
 - `--pipeline-id nf-core/ampliseq/2.16.0`, which the
-  [Nextflow trigger](../../depictio-cli/nextflow-trigger.md) passes for you since
+  [Nextflow trigger](../../workflows/nextflow/trigger.md) passes for you since
   **v1.10.0**, read from the `manifest` block of its `nextflow.config`. Its version
   must match a shipped template, or the run stops with an error;
 - the results directory itself, local or an `s3://` prefix: the run information

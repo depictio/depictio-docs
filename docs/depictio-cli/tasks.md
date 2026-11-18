@@ -134,7 +134,7 @@ Ingests again whenever files change, rewriting only the runs that moved. Install
 depictio config nextflow --install
 ```
 
-Once per machine: every pipeline then ingests its `--outdir` when it completes. See [Nextflow trigger](nextflow-trigger.md). To ship it inside an nf-core pipeline instead, use the [Nextflow subworkflow](nextflow-publish.md).
+Once per machine: every pipeline then ingests its `--outdir` when it completes. See [Nextflow trigger](../workflows/nextflow/trigger.md). To ship it inside an nf-core pipeline instead, use the [Nextflow subworkflow](../workflows/nextflow/subworkflow.md).
 
 ## Run locally
 

@@ -104,7 +104,7 @@ joining them per residue, per domain, per protein and per sample:
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    manifest. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 

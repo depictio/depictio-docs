@@ -95,7 +95,7 @@ differential taxa, one tab per step:
 
     No ingestion command and no template named: the pipeline ingests its own
     output directory when it finishes and picks this template from its own name
-    and version. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    and version. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 

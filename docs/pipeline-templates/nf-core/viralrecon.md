@@ -82,7 +82,7 @@ reads to variant calls and lineage, one tab or tab group per step:
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output, and the template is picked from the pipeline's own name and version.
     Write the run into a `run_*` directory and point `--depictio_data_root` at
-    its parent. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    its parent. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 | Variable | Required | What it does |
 |---|---|---|
