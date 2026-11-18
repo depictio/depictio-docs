@@ -1166,28 +1166,10 @@ floating_initial_state: docked # compact (default), expanded, docked, hidden
 
 The CLI validates YAML files in two passes:
 
-```text
-┌──────────────────────────────────────────────────────────────┐
-│  Pass 1 — Schema + Domain  (always, no server needed)        │
-│                                                              │
-│  ✓ YAML syntax parsing                                       │
-│  ✓ Required fields (title, component required fields)        │
-│  ✓ visu_type enum (scatter, line, bar, box, histogram, ...)  │
-│  ✓ mode/code_content cross-field rule                        │
-│  ✓ selection_enabled/selection_column cross-field rule       │
-│  ✓ aggregation × column_type compatibility (if provided)     │
-│  ✓ interactive_type × column_type compatibility (if provided)│
-│  ✓ MultiQC: selected_module + selected_plot both required    │
-│  ✓ Image: image_column required                              │
-├──────────────────────────────────────────────────────────────┤
-│  Pass 2: Server Schema  (with a server, skip: --offline)     │
-│                                                              │
-│  ✓ Resolves workflow_tag + data_collection_tag → DC schema   │
-│  ✓ Checks column_name exists in delta table schema           │
-│  ✓ Infers column_type from schema → validates aggregation    │
-│    and interactive_component_type against inferred type      │
-└──────────────────────────────────────────────────────────────┘
-```
+| Pass | Runs | Checks |
+| --- | --- | --- |
+| **1. Schema and domain** | Always; no server needed. A failure stops here. | YAML syntax; required fields (`title`, each component's own); `visu_type` is a known chart type; `mode: code` has a `code_content`; `selection_enabled` has a `selection_column`; `aggregation` and `interactive_component_type` suit `column_type`, when it is given; MultiQC has both `selected_module` and `selected_plot`; an image has an `image_column` |
+| **2. Server schema** | With a server; `--offline` skips it. Without `--server`, the default server is tried and what it finds is shown as warnings. | `workflow_tag` and `data_collection_tag` resolve to a collection of the project; `column_name` is one of its columns; when `column_type` is not given, it is read from the collection and `aggregation` or `interactive_component_type` is checked against it |
 
 Error output is a clean per-component table — each invalid field gets its own row:
 

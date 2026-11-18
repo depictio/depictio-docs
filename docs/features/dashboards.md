@@ -48,46 +48,23 @@ Full editing capabilities:
 The dashboard interface uses a **three-panel layout** with a collapsible sidebar:
 
 !!! info "Paper look <small>(v1.17.0+)</small>"
-    The diagram below is the **Classic** look. In **Paper**, the default since v1.17.0, the
+    The figure below is the **Classic** look. In **Paper**, the default since v1.17.0, the
     header bar becomes a top bar with the dashboard title, the tab sidebar folds to an icon
     rail, and Search, Analysis, Comments and Edit move to a floating dock. The panels are
     the same. See [Paper and Classic](../usage/guides/web_ui.md#looks).
 
-```text
-┌──────────────────────────────────────────────────────────────────────────┐
-│                                Header Bar                                │
-├────────┬──────────────────┬──────────────────────────────────────────────┤
-│        │   LEFT PANEL     │            RIGHT PANEL                       │
-│ Side-  │   (Filters)      │          (Visualizations)                    │
-│  bar   │ ┌──────────────┐ │                                              │
-│        │ │ 2 active   ▾ │ │                                              │
-│ Tab 1  │ └──────────────┘ │  ▾ Cohort                                    │
-│ Tab 2  │ ▾ Sample      📌 │  ┌─────────────┐  ┌─────────────┐            │
-│ Tab 3  │ ┌──────────────┐ │  │    Card     │  │    Card     │            │
-│        │ │ MultiSelect  │ │  └─────────────┘  └─────────────┘            │
-│ [+]    │ └──────────────┘ │                                              │
-│        │ ▸ Time  (folded) │  ▸ Quality control                  (folded) │
-│ [=]    ├──────────────────┤                                              │
-│        │ Map dock     (3) │  ▾ Detail                                    │
-│        │ ┌──────────────┐ │  ┌─────────────┐  ┌─────────────┐            │
-│        │ │  (map here)  │ │  │   Figure    │  │    Table    │            │
-│        │ └──────────────┘ │  └─────────────┘  └─────────────┘            │
-│        │                  │  ▾ Raw Data                              📌 │
-│        │                  │  ┌────────────────────────────────────────┐ │
-│        │                  │  │        (shared table, read-only)       │ │
-│        │                  │  └────────────────────────────────────────┘ │
-└────────┴──────────────────┴──────────────────────────────────────────────┘
-```
+[![The iris demo's Iris Petal Analysis tab in the Classic look: tabs in the sidebar; the left panel with the 2 active summary, the Variety section pinned to every tab, Measurements with a set range slider, folded Scoped views and the map dock; the right panel with the Petal geometry cards and scatter, folded Variety separation and the Raw Data table pinned to the bottom](../images/features/dashboards/three-panels_light.png#only-light)](../images/features/dashboards/three-panels_light.png){target=_blank}
+[![The iris demo's Iris Petal Analysis tab in the Classic look: tabs in the sidebar; the left panel with the 2 active summary, the Variety section pinned to every tab, Measurements with a set range slider, folded Scoped views and the map dock; the right panel with the Petal geometry cards and scatter, folded Variety separation and the Raw Data table pinned to the bottom](../images/features/dashboards/three-panels_dark.png#only-dark)](../images/features/dashboards/three-panels_dark.png){target=_blank}
 
 Both panels can be organised into foldable **sections** <small>(v1.4.0+)</small>, and the
-left panel collapses to a narrow rail. `2 active` is the active-filter summary; `(3)` on
+left panel collapses to a narrow rail. `2 active` is the active-filter summary; the badge on
 the map dock is how many values that map is filtering on. A map can be lifted out of the
 grid into that dock, or float above the canvas.
 
-📌 marks a [section shown on every tab](#persistent-sections)
-<small>(v1.6.0+)</small>. Here *Sample* filters every tab and keeps its values
-across a switch, and *Raw Data* is pinned to the bottom of each one. This tab
-declares neither: both arrive from the tab that does.
+The pin marks a [section shown on every tab](#persistent-sections)
+<small>(v1.6.0+)</small>. Here *Variety* filters every tab and keeps its values
+across a switch, and *Raw Data* is pinned to the bottom of each one. The Iris Petal
+Analysis tab declares neither: both arrive from Overview, the tab that does.
 
 ### :material-tab: Sidebar (Tab Navigation)
 

@@ -325,23 +325,12 @@ Card components display metrics with aggregations. A card shows a **hero metric*
 
 Cards can display multiple aggregation results in a single component. The primary `aggregation` is shown as the large hero value, and `aggregations` are displayed as compact secondary rows below it.
 
-```text
-┌─────────────────────────────────┐
-│ Petal Length              [Icon]│
-├─────────────────────────────────┤
-│           4.5 cm                │
-│          (Average)              │
-├─────────────────────────────────┤
-│ Median:       4.35              │
-│ Std Dev:      0.82              │
-│ Min:          1.00              │
-│ Max:          6.90              │
-└─────────────────────────────────┘
-```
+[![The iris Sepal length card: 5.84, the average, as the hero value; median 5.8, std dev 0.828, min 4.3 and max 7.9 under it, listed one per row (vertical, the default), in one strip (compact) or in two columns (grid)](../images/features/components/card-stat-lists_light.png#only-light)](../images/features/components/card-stat-lists_light.png){target=_blank}
+[![The iris Sepal length card: 5.84, the average, as the hero value; median 5.8, std dev 0.828, min 4.3 and max 7.9 under it, listed one per row (vertical, the default), in one strip (compact) or in two columns (grid)](../images/features/components/card-stat-lists_dark.png#only-dark)](../images/features/components/card-stat-lists_dark.png){target=_blank}
 
 ### Secondary Layout Modes <small>(v0.13.0+)</small> { #secondary-layout-modes }
 
-The default layout above stacks `aggregations` as a vertical list under the hero metric. Set `secondary_layout` on the card to switch to a richer one. Each is tuned for a specific summary intent, and most read a companion field naming the column or cut-off they work from.
+The default layout, on the left above, stacks `aggregations` as a vertical list under the hero metric. Set `secondary_layout` on the card to switch to a richer one. Each is tuned for a specific summary intent, and most read a companion field naming the column or cut-off they work from.
 
 **From the `aggregations` list**
 
@@ -1143,12 +1132,8 @@ The genome browser has its own page: see [Genome browser](genome-browser/index.m
 
 Interactive components can filter across **linked Data Collections** using the Links system. See [Cross-DC Filtering](cross-dc-filtering.md) for details.
 
-```text
-┌─────────────────┐         ┌─────────────────┐
-│  Filter: Status │  link   │  Table: Samples │
-│  [MultiSelect]  │────────▶│  [auto-filters] │
-└─────────────────┘         └─────────────────┘
-```
+[![nf-core/ampliseq: the Habitat MultiSelect on metadata keeps the three Sediment samples; a direct link narrows the taxonomy_rel_abundance table to their rows, and a sample_mapping link narrows MultiQC's general statistics to every name the report recorded for them](../images/features/components/cross-dc-components_light.png#only-light)](../images/features/components/cross-dc-components_light.png){target=_blank}
+[![nf-core/ampliseq: the Habitat MultiSelect on metadata keeps the three Sediment samples; a direct link narrows the taxonomy_rel_abundance table to their rows, and a sample_mapping link narrows MultiQC's general statistics to every name the report recorded for them](../images/features/components/cross-dc-components_dark.png#only-dark)](../images/features/components/cross-dc-components_dark.png){target=_blank}
 
 ---
 
