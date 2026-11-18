@@ -38,7 +38,8 @@
 }
 
 /* Limit TOC depth to level 2 on changelog page */
-body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list {
+body.page-changelog .md-sidebar--secondary .md-nav__list .md-nav__list,
+body.page-changelog .md-sidebar--secondary .md-nav__item > .md-nav {
     display: none;
 }
 
@@ -325,33 +326,20 @@ h1 {
    widths pinned it open on mobile and squeezed the content — so these overrides
    are scoped to desktop and mobile keeps Material's native responsive drawer. */
 @media screen and (min-width: 76.25em) {
+    /* --dp-header-h is the header's real height (with the tabs, it is about
+       6rem), set by javascripts/sidebar-offset.js; 2.4rem without the script.
+       A fixed 2.4rem slid the top of the sidebars under the tabs bar. */
     .md-sidebar {
-        height: calc(100vh - 2.4rem) !important;
         position: sticky !important;
-        top: 2.4rem !important;
+        top: var(--dp-header-h, 2.4rem) !important;
+        height: calc(100vh - var(--dp-header-h, 2.4rem)) !important;
     }
 
-    .md-sidebar--primary,
-    .md-sidebar--secondary {
-        height: calc(100vh - 2.4rem) !important;
-    }
-
+    /* Minus the sidebar's own 1.2rem top and bottom padding, or the last
+       entries sit below the viewport and cannot be scrolled to. */
     .md-sidebar__scrollwrap {
-        height: calc(100vh - 2.4rem) !important;
-        max-height: calc(100vh - 2.4rem) !important;
-    }
-}
-
-/* Account for tabs when present (desktop only — see note above) */
-@media screen and (min-width: 76.25em) {
-    .md-tabs ~ .md-main .md-sidebar {
-        height: calc(100vh - 4.8rem) !important;
-        top: 4.8rem !important;
-    }
-
-    .md-tabs ~ .md-main .md-sidebar__scrollwrap {
-        height: calc(100vh - 4.8rem) !important;
-        max-height: calc(100vh - 4.8rem) !important;
+        height: calc(100vh - var(--dp-header-h, 2.4rem) - 2.4rem) !important;
+        max-height: calc(100vh - var(--dp-header-h, 2.4rem) - 2.4rem) !important;
     }
 }
 
@@ -2832,4 +2820,23 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
 
 .glightbox-container .goverlay {
     background: rgba(0, 0, 0, 0.96) !important;
+}
+
+/* A "docker" admonition, for image names: ??? docker "Docker images" */
+:root {
+  --md-admonition-icon--docker: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'><path d='M349.9 236.3h-66.1v-59.4h66.1zm0-204.3h-66.1v60.7h66.1zm78.2 144.8H362v59.4h66.1zm-156.3-72.1h-66.1v60.1h66.1zm78.1 0h-66.1v60.1h66.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1zm78.1 0h-66.1v59.4h66.1zm-78.1-72.1h-66.1v60.1h66.1z'/></svg>");
+}
+.md-typeset .admonition.docker,
+.md-typeset details.docker {
+  border-color: #1d63ed;
+}
+.md-typeset .docker > .admonition-title,
+.md-typeset .docker > summary {
+  background-color: rgba(29, 99, 237, 0.1);
+}
+.md-typeset .docker > .admonition-title::before,
+.md-typeset .docker > summary::before {
+  background-color: #1d63ed;
+  -webkit-mask-image: var(--md-admonition-icon--docker);
+          mask-image: var(--md-admonition-icon--docker);
 }
