@@ -308,7 +308,7 @@ The ten types of **New component**, in the order, colours and icons of the app.
 
 </div>
 
-[![Depictio system architecture: the React viewer, FastAPI, MongoDB, S3 storage, Redis and Celery workers](../images/architecture/system_light.png#only-light)](../images/architecture/system_light.png){target=_blank}
-[![Depictio system architecture: the React viewer, FastAPI, MongoDB, S3 storage, Redis and Celery workers](../images/architecture/system_dark.png#only-dark)](../images/architecture/system_dark.png){target=_blank}
+[![Depictio v1.21.0: the browser reaches the viewer (nginx), which proxies the FastAPI backend; the CLI calls the API and writes Delta tables to S3; an optional identity provider handles SSO. The API and the Celery workers (queue celery, and an optional ingestion queue) read and write MongoDB, the S3 store (SeaweedFS or yours) and Redis. Outbound calls are all optional](../images/architecture/system_light.png#only-light)](../images/architecture/system_light.png){target=_blank}
+[![Depictio v1.21.0: the browser reaches the viewer (nginx), which proxies the FastAPI backend; the CLI calls the API and writes Delta tables to S3; an optional identity provider handles SSO. The API and the Celery workers (queue celery, and an optional ingestion queue) read and write MongoDB, the S3 store (SeaweedFS or yours) and Redis. Outbound calls are all optional](../images/architecture/system_dark.png#only-dark)](../images/architecture/system_dark.png){target=_blank}
 
 New here? Start with the [component types](components.md), then [Layout and tabs](dashboards.md).

@@ -58,18 +58,8 @@ acquisitions streaming in the terminal on the right.
 
 The refresh is driven entirely by data ingestion. There is no separate "push" API to call:
 
-```text
-producer ingests / upserts a data collection
-        │  (depictio ingest …, or a POST to /deltatables/upsert)
-        ▼
-API re-reads the Delta table, recomputes column specs, bumps its version
-        │
-        ▼
-broadcasts a `data_collection_updated` event on the WebSocket channel
-        │  (/depictio/api/v1/events/ws)
-        ▼
-subscribed dashboards refetch and re-render (updated items highlight)
-```
+[![A producer upserts a data collection; the API (or the ingestion worker) re-reads the Delta table and publishes on Redis db 3, which reaches every API process; each sends data_collection_updated over WebSocket, and an open dashboard that reads the collection refetches. An optional MongoDB change stream feeds the same broadcast](../../images/architecture/realtime_light.png#only-light)](../../images/architecture/realtime_light.png){target=_blank}
+[![A producer upserts a data collection; the API (or the ingestion worker) re-reads the Delta table and publishes on Redis db 3, which reaches every API process; each sends data_collection_updated over WebSocket, and an open dashboard that reads the collection refetches. An optional MongoDB change stream feeds the same broadcast](../../images/architecture/realtime_dark.png#only-dark)](../../images/architecture/realtime_dark.png){target=_blank}
 
 Any producer that re-ingests or upserts a data collection triggers this. The CLI does it on
 every `depictio ingest`, and an external instrument or pipeline can do the same by POSTing to

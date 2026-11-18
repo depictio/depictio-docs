@@ -8,9 +8,8 @@ description: "Technical overview of Depictio's microservices architecture."
 
 Depictio is built on a modern microservices architecture that provides flexibility, scalability, and maintainability.
 
-<p align="center">
-  <img src="../../images/modularity/main.png" alt="Depictio architecture" width=800>
-</p>
+[![Depictio v1.21.0: the browser reaches the viewer (nginx), which proxies the FastAPI backend; the CLI calls the API and writes Delta tables to S3; an optional identity provider handles SSO. The API and the Celery workers (queue celery, and an optional ingestion queue) read and write MongoDB, the S3 store (SeaweedFS or yours) and Redis. Outbound calls are all optional](../images/architecture/system_light.png#only-light)](../images/architecture/system_light.png){target=_blank}
+[![Depictio v1.21.0: the browser reaches the viewer (nginx), which proxies the FastAPI backend; the CLI calls the API and writes Delta tables to S3; an optional identity provider handles SSO. The API and the Celery workers (queue celery, and an optional ingestion queue) read and write MongoDB, the S3 store (SeaweedFS or yours) and Redis. Outbound calls are all optional](../images/architecture/system_dark.png#only-dark)](../images/architecture/system_dark.png){target=_blank}
 
 ## :material-view-module: Microservices Overview
 
@@ -21,7 +20,7 @@ Depictio's architecture consists of six main components organized by category:
 | Component | Technology | Purpose |
 |-----------|------------|---------|
 | :material-api: **Backend** | FastAPI | RESTful API, authentication, business logic |
-| :material-react: **Frontend** | React + Vite + Mantine | Vite SPA; canonical URLs in **v1.0.0** |
+| :material-react: **Frontend** | React + Vite + Mantine | Vite SPA served by nginx, which also proxies the API; no state of its own |
 
 ### :material-database: Data Layer
 
@@ -34,8 +33,8 @@ Depictio's architecture consists of six main components organized by category:
 
 | Component | Technology | Purpose |
 |-----------|------------|---------|
-| :material-memory: **Cache/Broker** | Redis | Caching, session storage, Celery task broker |
-| :material-cog-refresh: **Worker** | Celery (Optional) | Background task processing |
+| :material-memory: **Cache/Broker** | Redis | DataFrame cache, Celery queue and results, live events |
+| :material-cog-refresh: **Worker** | Celery | Previews, code figures, screenshots, MultiQC; always on. A second worker for ingestion is optional |
 
 ---
 
@@ -73,10 +72,13 @@ as the store since v1.12.0 (MinIO before). Any S3 endpoint can replace it: see
 
 ### :material-memory: Redis Cache/Broker
 
-Redis serves dual purposes in Depictio:
+Redis serves three purposes in Depictio, each on its own database:
 
-- :material-cached: **Caching**: DataFrame caching and session storage for improved performance
-- :material-message-fast: **Task Broker**: Message broker and result backend for Celery background tasks
+- :material-cached: **Caching** (db 0): DataFrames read from Delta tables, and the per-address limit on sign-in attempts
+- :material-message-fast: **Task Broker** (db 1 and 2): message broker and result backend for Celery background tasks
+- :material-lightning-bolt: **Live events** (db 3): the pub/sub channel of [real-time events](#real-time-events-v114)
+
+Sessions are not kept in Redis: tokens live in MongoDB, and the browser keeps its own copy.
 
 ### :material-react: Frontend — React viewer
 
@@ -109,14 +111,8 @@ During the v0.12–v0.13 series the same surfaces ran at `/*-beta` paths alongsi
 
 Depictio supports **background task processing** using Celery and Redis for computations that would otherwise block the UI.
 
-```text
-┌─────────────┐     ┌─────────────────┐     ┌─────────────┐
-│ React/API   │────▶│  Celery Worker  │────▶│    Redis    │
-│  (Editor)   │     │                 │     │  (Broker)   │
-└─────────────┘     └─────────────────┘     └─────────────┘
-```
-
-The FastAPI backend submits tasks to Celery workers, which use Redis as both a message broker (for task queuing) and result backend (for storing task results).
+[![The API runs cheap work itself and queues the rest on Redis db 1, queue celery or the optional queue ingestion; a worker writes its result to db 2, which the API polls. Awaited: previews, code figures, renders of large tables, advanced viz. Fire and forget: screenshots, MultiQC prerender, remote data refresh. A job on ingestion: a big upsert or an ingestion run from the browser](../images/architecture/tasks_light.png#only-light)](../images/architecture/tasks_light.png){target=_blank}
+[![The API runs cheap work itself and queues the rest on Redis db 1, queue celery or the optional queue ingestion; a worker writes its result to db 2, which the API polls. Awaited: previews, code figures, renders of large tables, advanced viz. Fire and forget: screenshots, MultiQC prerender, remote data refresh. A job on ingestion: a big upsert or an ingestion run from the browser](../images/architecture/tasks_dark.png#only-dark)](../images/architecture/tasks_dark.png){target=_blank}
 
 ### :material-help-circle: When Background Processing is Used
 
@@ -126,6 +122,7 @@ The worker always runs; there is nothing to turn on.
 |------|--------------------|
 | :material-pencil: Figure previews in the editor | By default (`DEPICTIO_CELERY_OFFLOAD_PREVIEW`) |
 | :material-eye: Dashboard renders | When the source table is 50 MB or more, or always with `DEPICTIO_CELERY_OFFLOAD_RENDERING` |
+| :material-code-braces: Code figures | Always, to keep user code off the API |
 | :material-camera: Dashboard thumbnails | Always |
 | :material-database-import: Offloaded ingestion | On the separate [ingestion worker](../installation/docker.md#ingestion-worker) |
 
@@ -147,27 +144,17 @@ All of them, including the offload thresholds: [Celery Task Queue](../installati
 
 Depictio can push **live dashboard updates over WebSocket** when the data behind a dashboard changes, so viewers refresh without polling. The subsystem is disabled by default (`DEPICTIO_EVENTS_ENABLED`) and opt-in per project.
 
-```text
-┌────────────┐   upsert    ┌─────────────┐   pub/sub   ┌─────────────┐
-│  Producer  │────────────▶│   FastAPI   │────────────▶│    Redis    │
-│  (CLI /    │             │  event svc  │             │  (fan-out)  │
-│ instrument)│             └──────┬──────┘             └──────┬──────┘
-└────────────┘                    │ WebSocket                 │
-                                  ▼                           │
-                          ┌───────────────┐                   │
-                          │  Subscribed   │◀──────────────────┘
-                          │  dashboards   │
-                          └───────────────┘
-```
+[![A producer upserts a data collection; the API (or the ingestion worker) re-reads the Delta table and publishes on Redis db 3, which reaches every API process; each sends data_collection_updated over WebSocket, and an open dashboard that reads the collection refetches. An optional MongoDB change stream feeds the same broadcast](../images/architecture/realtime_light.png#only-light)](../images/architecture/realtime_light.png){target=_blank}
+[![A producer upserts a data collection; the API (or the ingestion worker) re-reads the Delta table and publishes on Redis db 3, which reaches every API process; each sends data_collection_updated over WebSocket, and an open dashboard that reads the collection refetches. An optional MongoDB change stream feeds the same broadcast](../images/architecture/realtime_dark.png#only-dark)](../images/architecture/realtime_dark.png){target=_blank}
 
 Moving parts:
 
-- :material-server-network: **Event service + connection manager** (FastAPI) — track WebSocket subscriptions per dashboard and broadcast `data_collection_updated` events.
-- :material-memory: **Redis pub/sub** — fans events out across API workers/replicas, on a dedicated Redis DB (default `3`, separate from cache and Celery).
-- :material-database-sync: **MongoDB change streams** (optional, requires a replica set) — detect data-collection changes at the database layer.
-- :material-transit-connection-variant: **WebSocket channel** `/depictio/api/v1/events/ws` — JWT-authenticated via a `token` query parameter and permission-checked at viewer level; the React viewer subscribes per dashboard and drives the live indicator.
+- :material-server-network: **Event service + connection manager** (FastAPI): track WebSocket subscriptions per dashboard and broadcast `data_collection_updated` events.
+- :material-memory: **Redis pub/sub**: fans events out across API workers and replicas, on a dedicated Redis DB (default `3`, separate from cache and Celery).
+- :material-database-sync: **MongoDB change streams** (optional, requires a replica set): detect data-collection changes at the database layer.
+- :material-transit-connection-variant: **WebSocket channel** `/depictio/api/v1/events/ws`: JWT-authenticated via a `token` query parameter and permission-checked at viewer level; the React viewer subscribes per dashboard and drives the live indicator.
 
-**Trigger path:** a producer re-ingests or upserts a data collection (`POST /deltatables/upsert`) → the API re-reads the Delta, recomputes column specs and bumps the version → broadcasts to subscribed dashboards, which refetch. Activation requires both the server flag and a `realtime` block in the project's `project.yaml`.
+Activation requires both the server flag and a `realtime` block in the project's `project.yaml`.
 
 See the [Real-time events guide](../usage/guides/realtime-events.md) for setup, and the [environment reference](../installation/env-reference.md#real-time-events) for the full `DEPICTIO_EVENTS_*` list.
 
@@ -175,22 +162,11 @@ See the [Real-time events guide](../usage/guides/realtime-events.md) for setup, 
 
 ## :material-arrow-decision: Data Flow
 
-```text
-┌─────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────┐
-│  CLI    │────▶│  FastAPI    │────▶│  MongoDB    │◀────│  React  │
-│         │     │  Backend    │     │             │     │  Viewer │
-└─────────┘     └──────┬──────┘     └─────────────┘     └────┬────┘
-                       │                                      │
-                       ▼                                      │
-                ┌─────────────┐                               │
-                │   S3        │◀──────────────────────────────┘
-                │  (Delta)    │
-                └─────────────┘
-```
+The figure at the top of this page draws it:
 
-1. :material-console: **CLI** ingests data, validates, stores in Delta format, registers in MongoDB
-2. :material-api: **API** serves metadata and data access endpoints
-3. :material-react: **React viewer** renders interactive visualizations, calls API for data
+1. :material-console: **CLI** reads the run's files, writes the Delta tables to S3 itself, then registers them through the API (`/deltatables/upsert`), which records the metadata in MongoDB. *Add data* in the web UI does the same on the server.
+2. :material-api: **API** answers every figure, table and card: it reads the Delta tables from S3, with the frames cached in Redis.
+3. :material-react: **React viewer** only talks to the API, through its nginx proxy. It never reaches MongoDB, Redis or S3, except for genome tracks of indexed files, read from S3 through presigned URLs.
 
 ---
 

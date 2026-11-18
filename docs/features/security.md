@@ -21,23 +21,14 @@ Depictio uses JSON Web Tokens (JWT) for secure authentication:
 | **Token Security** | Public/private key encryption (RS256) |
 | **Algorithm Pinning** | Algorithm pinned server-side (RS256/RS512); `alg=none` and algorithm-confusion attacks are rejected before any MongoDB access |
 | **Claim Validation** | Signature and `exp` claim are both verified on every request; expired tokens are rejected immediately |
-| **Session Management** | Configurable token lifetime and refresh |
-| **Secure Storage** | Tokens stored in HTTP-only cookies |
+| **Session Management** | Access token 1 hour, refresh token 7 days; a CLI token lasts 1 year |
+| **Storage** | The browser keeps the pair in local storage; the server keeps every live token in MongoDB, so deleting one revokes it |
 | **Token Refresh** | Automatic refresh before expiration |
 
 ### Authentication Flow
 
-```text
-┌─────────┐     ┌─────────────┐     ┌─────────────┐
-│  User   │────▶│  Login API  │────▶│  JWT Token  │
-│         │     │             │     │  (signed)   │
-└─────────┘     └─────────────┘     └──────┬──────┘
-                                           │
-                     ┌─────────────────────▼──────┐
-                     │  Subsequent API Requests   │
-                     │  (Token in Authorization)  │
-                     └────────────────────────────┘
-```
+[![Three ways in: a password, single sign-on or a CLI token. The API signs an access and a refresh token with its private key and keeps them in MongoDB; every request carries the access token, whose signature, expiry and presence in MongoDB are checked before the user's role](../images/security/sign-in_light.png#only-light)](../images/security/sign-in_light.png){target=_blank}
+[![Three ways in: a password, single sign-on or a CLI token. The API signs an access and a refresh token with its private key and keeps them in MongoDB; every request carries the access token, whose signature, expiry and presence in MongoDB are checked before the user's role](../images/security/sign-in_dark.png#only-dark)](../images/security/sign-in_dark.png){target=_blank}
 
 ### Registration Hardening
 
@@ -45,11 +36,8 @@ The `/register` endpoint strips the `is_admin` field from any incoming payload, 
 
 ### Session Configuration
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `JWT_ACCESS_TOKEN_EXPIRE_MINUTES` | 30 | Access token lifetime |
-| `JWT_REFRESH_TOKEN_EXPIRE_DAYS` | 7 | Refresh token lifetime |
-| `JWT_ALGORITHM` | RS256 | JWT signing algorithm |
+Token lifetimes are fixed. The signing algorithm is `DEPICTIO_AUTH_KEYS_ALGORITHM`, `RS256`
+by default: see the [environment reference](../installation/env-reference.md).
 
 ---
 
@@ -69,18 +57,8 @@ Depictio implements a hierarchical permission system for fine-grained access con
 
 Permissions are applied at multiple levels:
 
-```text
-┌─────────────────────────────────────────┐
-│               System Level              │
-│  (Admin: user management, settings)     │
-├─────────────────────────────────────────┤
-│              Project Level              │
-│  (Owner, Editor, Viewer per project)    │
-├─────────────────────────────────────────┤
-│             Dashboard Level             │
-│  (Inherited from project permissions)   │
-└─────────────────────────────────────────┘
-```
+[![An admin passes every check. Anyone else gets a project role, the highest of their own and their groups' roles, with a viewer floor on a public project; a dashboard takes the project role unless its own owners or editors name them. No role answers 404](../images/security/access_light.png#only-light)](../images/security/access_light.png){target=_blank}
+[![An admin passes every check. Anyone else gets a project role, the highest of their own and their groups' roles, with a viewer floor on a public project; a dashboard takes the project role unless its own owners or editors name them. No role answers 404](../images/security/access_dark.png#only-dark)](../images/security/access_dark.png){target=_blank}
 
 ### Project Permissions
 
@@ -133,19 +111,8 @@ Depictio uses [RestrictedPython](https://restrictedpython.readthedocs.io/) (Zope
 
 ### Security Architecture
 
-```text
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   User Code     │────▶│  compile_       │────▶│  Restricted     │
-│   (Python)      │     │  restricted()   │     │  Bytecode       │
-└─────────────────┘     └─────────────────┘     └────────┬────────┘
-                                                         │
-                        ┌────────────────────────────────▼────────┐
-                        │          Safe Execution Context         │
-                        │  • Approved libraries (plotly, pandas)  │
-                        │  • Custom guards (_getitem_, _getattr_) │
-                        │  • Read-only DataFrame copy             │
-                        └─────────────────────────────────────────┘
-```
+[![A code figure is checked (steps, then fig, and no reassigned df), compiled with compile_restricted, then run on the Celery worker with a copy of df, px, go, pd, pl, np and safe builtins. While it runs, the attribute guard and an audit hook refuse file readers and writers, other submodules, eval and SQL, writing files, processes, sockets, libraries and new imports](../images/security/code-figure_light.png#only-light)](../images/security/code-figure_light.png){target=_blank}
+[![A code figure is checked (steps, then fig, and no reassigned df), compiled with compile_restricted, then run on the Celery worker with a copy of df, px, go, pd, pl, np and safe builtins. While it runs, the attribute guard and an audit hook refuse file readers and writers, other submodules, eval and SQL, writing files, processes, sockets, libraries and new imports](../images/security/code-figure_dark.png#only-dark)](../images/security/code-figure_dark.png){target=_blank}
 
 ### Allowed Operations
 

@@ -12,6 +12,7 @@ uv run python nextflow_trigger.py
 uv run python protein_tiles.py
 uv run python migration.py
 uv run python project_lifecycle.py
+uv run python security.py
 ```
 
 Each script writes `<name>_light` and `<name>_dark`, as both SVG and PNG, into
@@ -38,13 +39,20 @@ status` is dirty after a regeneration, something in the figure actually changed.
 | --- | --- |
 | `sketch.py` | The toolkit: jittered strokes, boxes, arrows, the light and dark palettes, and the PNG pass. |
 | `data_model.py` | Data Model: the two project shapes, config to data, join vs link. |
-| `architecture.py` | The system architecture figure on the Features overview. |
+| `architecture.py` | The system architecture (Features overview and Architecture), the Celery task round trip, and live updates (Architecture and the Real-time events guide). |
+| `security.py` | Signing in and every request, how a role is resolved, and what a code figure goes through, on the Security page. |
+| `brand.py` | The app's brand colours as fill keys, and the card helpers `architecture.py` and `security.py` share. |
 | `nextflow_trigger.py` | The trigger flow on the Nextflow trigger page. |
 | `migration.py` | The three ways to move a project, on the Project Migration page. |
 | `project_lifecycle.py` | A project's life, from its data to shared dashboards and every new run, on the Projects overview. |
 | `protein_tiles.py` | Linking by residue and the structure resolver, the two figures on the Protein tiles page. |
 | `concepts.py` | The app's colours and icons per concept (project, data collection, link...) and the drawing helpers built on them, shared with the workshop figures. |
 | `cross_dc_filtering.py` | A filter travelling along two ampliseq links, on the Cross-DC Filtering page. |
+| `component_types.py` | The app's colour and icon per component type (figure, card, interactive, table, MultiQC...), shared by the dashboard figures. |
+| `dashboard_layout.py` | The three panels of a dashboard, on the iris demo's Petal tab, on the Dashboards page. |
+| `components_figures.py` | A card's three stat-list layouts and a filter reaching a table and MultiQC through links, on the Components page. |
+| `filter_expressions.py` | Where `filter_expr` narrows the rows of a card and of an interactive, on the Filter Expressions page. |
+| `selection_filtering.py` | Three tiles writing to the dashboard's filter list and every tile reading it, on the Interactive Selection Filtering page. |
 | `auth_modes.py` | What a visitor gets in each authentication mode, on the Authentication Modes page. |
 
 `sketch.py` is a port of the generator in the main

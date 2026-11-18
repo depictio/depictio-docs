@@ -309,12 +309,10 @@ code under `secrets.publicAccessCode`, which keeps it in the Secret.
 
 ## Choosing a Mode
 
-```
-Personal analytics tool?          → Single-User Mode
-Team/org with user accounts?      → Auth Mode (Helm default)
-Public dashboard gallery?         → Public Mode
-Product demo or guided tutorial?  → Demo Mode
-```
+- **Just you**, on a laptop or a workstation: single-user mode, the default of the Docker Compose quick start.
+- **A team** with accounts and roles: auth mode, the Helm chart's default.
+- **A public gallery** of dashboards anyone can open: public mode.
+- **A product demo** or a guided tutorial: demo mode.
 
 ## Related
 
