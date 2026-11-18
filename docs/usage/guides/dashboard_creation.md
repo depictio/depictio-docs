@@ -2,63 +2,43 @@
 
 ## <span style="color: #E53935;">:material-video:</span> Video example
 
-<div style="max-width: 1200px; margin: 1rem auto 2rem auto;">
-<div style="padding: 64.29% 0 0 0; position: relative">
-  <iframe
-    src="https://player.vimeo.com/video/1108747263?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-    frameborder="0"
-    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-    referrerpolicy="strict-origin-when-cross-origin"
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
-    title="depictio-long-demo-1754777542047"
-  ></iframe>
-  </div>
-  <p style="text-align: center; margin-top: 0.5rem; font-style: italic; color: #666;">🎬 <strong>Depictio UI overview:</strong> Discover how to build a dashboard with Depictio</p>
-</div>
-<script src="https://player.vimeo.com/api/player.js"></script>
+A new dashboard on the nf-core/ampliseq project: **New dashboard**, then **Edit**, a card with the median Shannon diversity, a box plot of Shannon diversity per habitat, and **Save**.
+
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/dashboard_creation/create-dashboard.webp" src="../../../images/guides/dashboard_creation/create-dashboard.mp4"></video></figure>
 
 ## <span style="color: #9966CC;">:material-plus-box:</span> Add a component to the dashboard
 
 ### <span style="color: #45B8AC;">:material-numeric-1-circle:</span> Step 1: Component Selection
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/step_one.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/step_one.png" width="600">
-    </a>
-</div>
+[![Step 1 of the component builder: the component type cards](../../images/guides/dashboard_creation/step_one_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/step_one_light.webp){target=_blank}
+[![Step 1 of the component builder: the component type cards](../../images/guides/dashboard_creation/step_one_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/step_one_dark.webp){target=_blank}
 
-1. Open a dashboard, click **Edit**, then **Add component**.
+1. Open a dashboard in edit mode, then **Add** > **Component** > **New component**.
 2. Pick a component type: **Figure**, **Card**, **Interactive**, **Table**, **MultiQC**, **Image**, **Map**, **Text** or **Advanced viz**. Clicking a card takes you straight to the next step.
 
 !!! tip "Or skip the stepper entirely (v1.9.0+)"
-    **Add component** now opens a chooser first. Alongside **New component**,
+    **Add** > **Component** opens a chooser first. Alongside **New component**,
     which is the flow described here, **Pick from catalog** offers
     pre-configured visualizations that Depictio recognised in the project's
     ingested data. See [Picking a component from the catalog](catalog-picker.md).
 
 ### <span style="color: #6495ED;">:material-numeric-2-circle:</span> Step 2: Data Selection
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/step_two.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/step_two.png" width="600">
-    </a>
-</div>
+[![Step 2: alpha_diversity_multi_canonical selected, with its data collection information](../../images/guides/dashboard_creation/step_two_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/step_two_light.webp){target=_blank}
+[![Step 2: alpha_diversity_multi_canonical selected, with its data collection information](../../images/guides/dashboard_creation/step_two_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/step_two_dark.webp){target=_blank}
 
-1. Choose the **workflow** and **data collection** from the dropdowns.
+1. Choose the **data collection** from the dropdown.
 2. Check **Data Collection Information**: type, row and column counts, Delta table version, and the column preview underneath.
 3. Click **Next Step**.
 
-    The first compatible data collection is pre-selected, so you only touch the dropdowns when you need another one. Here that is `joined_penguins_complete`, the join of `physical_features` and `demographic_data`. **Text** components skip this step entirely, since they read no data collection.
+    The first compatible data collection is pre-selected, so you only touch the dropdown when you need another one. Here it is `alpha_diversity_multi_canonical`, one row per sample with its diversity indices. **Text** components skip this step entirely, since they read no data collection.
 
     The **Selected Component** badge at the top of the step names the type you picked in step 1. Before v1.6.0 the MultiQC badge rendered white on white and read as an empty row.
 
 ### <span style="color: #F68B33;">:material-numeric-3-circle:</span> Step 3: Customize Your Component
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/design/figure_design_scatter.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/design/figure_design_scatter.png" width="600">
-    </a>
-</div>
+[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../images/guides/dashboard_creation/figure_design_scatter_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/figure_design_scatter_light.webp){target=_blank}
+[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../images/guides/dashboard_creation/figure_design_scatter_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/figure_design_scatter_dark.webp){target=_blank}
 
 1. **Customise your component**:
 
@@ -101,44 +81,32 @@ the **filtered** data rather than the whole data collection. Before v1.5.2 the
 builder always showed the unfiltered dataset, and returning to the dashboard
 reset the grid.
 
-Take a dashboard filtered on `variety = Virginica`. The card averages only the
-50 matching rows, not all 150:
+Take the nf-core/ampliseq Alpha Diversity tab with its Shannon diversity filter
+raised to 6.58, which drops the three Groundwater samples. The cards summarise
+the 9 samples left, not all 12:
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/builder_filter_baseline.png" target="_blank">
-        <img src="../../../images/react/builder_filter_baseline.png" width="600">
-    </a>
-</div>
+[![The Alpha Diversity tab without filters: a median Shannon of 7.70 over 12 samples](../../images/guides/dashboard_creation/builder_filter_baseline_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/builder_filter_baseline_light.webp){target=_blank}
+[![The Alpha Diversity tab without filters: a median Shannon of 7.70 over 12 samples](../../images/guides/dashboard_creation/builder_filter_baseline_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/builder_filter_baseline_dark.webp){target=_blank}
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/builder_filter_active.png" target="_blank">
-        <img src="../../../images/react/builder_filter_active.png" width="600">
-    </a>
-</div>
+[![The same tab with Shannon diversity from 6.58: the cards over the 9 samples left](../../images/guides/dashboard_creation/builder_filter_active_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/builder_filter_active_light.webp){target=_blank}
+[![The same tab with Shannon diversity from 6.58: the cards over the 9 samples left](../../images/guides/dashboard_creation/builder_filter_active_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/builder_filter_active_dark.webp){target=_blank}
 
-*No filter: 5.8433 across 150 rows. Filtered on Virginica: 6.588 across 50.*
+*No filter: a median Shannon of 7.70 over 12 samples. From 6.58 up: 8.63 over 9.*
 
 Open the builder from there and the design step carries that filter, with a
 banner naming how many filters are active:
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/builder_filter_preview_on.png" target="_blank">
-        <img src="../../../images/react/builder_filter_preview_on.png" width="600">
-    </a>
-</div>
+[![The Table design step previewing with 1 active dashboard filter: only the 9 samples left](../../images/guides/dashboard_creation/builder_filter_preview_on_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/builder_filter_preview_on_light.webp){target=_blank}
+[![The Table design step previewing with 1 active dashboard filter: only the 9 samples left](../../images/guides/dashboard_creation/builder_filter_preview_on_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/builder_filter_preview_on_dark.webp){target=_blank}
 
-The table reports **10 of 50 rows**: the filtered total, not the collection's
-150.
+The table holds only the 9 samples left, not the collection's 12.
 
 **Apply to preview** is on by default. Switch it off to preview the full
 dataset, which matters when a narrow filter would otherwise leave you designing
 against an empty table:
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/builder_filter_preview_off.png" target="_blank">
-        <img src="../../../images/react/builder_filter_preview_off.png" width="600">
-    </a>
-</div>
+[![Apply to preview switched off: the preview shows all 12 rows](../../images/guides/dashboard_creation/builder_filter_preview_off_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/builder_filter_preview_off_light.webp){target=_blank}
+[![Apply to preview switched off: the preview shows all 12 rows](../../images/guides/dashboard_creation/builder_filter_preview_off_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/builder_filter_preview_off_dark.webp){target=_blank}
 
 !!! info "The toggle only affects the preview"
     Whichever way you leave it, the saved component always follows the
@@ -148,11 +116,8 @@ against an empty table:
 Save, and the new component arrives already filtered, with no flash of
 unfiltered data on the way, and the filters you had set are still applied:
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/react/builder_filter_after_save.png" target="_blank">
-        <img src="../../../images/react/builder_filter_after_save.png" width="600">
-    </a>
-</div>
+[![The saved table back on the tab, already filtered to 9 rows](../../images/guides/dashboard_creation/builder_filter_after_save_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/builder_filter_after_save_light.webp){target=_blank}
+[![The saved table back on the tab, already filtered to 9 rows](../../images/guides/dashboard_creation/builder_filter_after_save_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/builder_filter_after_save_dark.webp){target=_blank}
 
 The banner appears only when at least one filter is active, and is suppressed
 for **Text** and **MultiQC** components, which have no notion of row filtering.
@@ -229,56 +194,31 @@ brackets are both tracked, so `agg([` continues across a line break just as
 
 ##### <span style="color: #6495ED;">:material-scatter-plot:</span> Figure design - scatter plot - UI mode
 
-`bill_length_mm` against `flipper_length_mm`, coloured by `species`. The preview redraws on every change.
+`faith_pd` against sequencing `depth`, coloured by `habitat`, from `alpha_rarefaction_summary`. The preview redraws on every change.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/design/figure_design_scatter.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/design/figure_design_scatter.png" width="600">
-    </a>
-</div>
+[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../images/guides/dashboard_creation/figure_design_scatter_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/figure_design_scatter_light.webp){target=_blank}
+[![Step 3 for a figure: a scatter plot of Faith PD against sequencing depth, coloured by habitat](../../images/guides/dashboard_creation/figure_design_scatter_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/figure_design_scatter_dark.webp){target=_blank}
 
 ##### <span style="color: #7A5DC7;">:material-code-braces:</span> Figure design - scatter plot - code mode
 
 Switching to Code Mode carries the UI settings over as a `px.scatter` call, which you can then take past what the form exposes: here, marginal violins and a `fig.update_layout()` override.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/design/figure_design_code.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/design/figure_design_code.png" width="600">
-    </a>
-</div>
+[![Code Mode with marginal violins and a layout override, executed](../../images/guides/dashboard_creation/figure_design_code_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/figure_design_code_light.webp){target=_blank}
+[![Code Mode with marginal violins and a layout override, executed](../../images/guides/dashboard_creation/figure_design_code_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/figure_design_code_dark.webp){target=_blank}
 
 ##### <span style="color: #9966CC;">:material-tune-vertical:</span> Interactive design - RangeSlider example
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/design/interactive_design.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/design/interactive_design.png" width="600">
-    </a>
-</div>
+[![An interactive Range slider on shannon, previewed](../../images/guides/dashboard_creation/interactive_design_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/interactive_design_light.webp){target=_blank}
+[![An interactive Range slider on shannon, previewed](../../images/guides/dashboard_creation/interactive_design_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/interactive_design_dark.webp){target=_blank}
 
 ##### <span style="color: #E6779F;">:material-card:</span> Card design - metrics selection
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/design/card_design.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/design/card_design.png" width="600">
-    </a>
-</div>
+[![A card on the median of observed_features, its aggregation list open](../../images/guides/dashboard_creation/card_design_light.webp#only-light){ width="800" }](../../images/guides/dashboard_creation/card_design_light.webp){target=_blank}
+[![A card on the median of observed_features, its aggregation list open](../../images/guides/dashboard_creation/card_design_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard_creation/card_design_dark.webp){target=_blank}
 
-## <img src="../../../roadmap/multiqc.png" width="24" style="vertical-align: middle;"> MultiQC Integration (v0.5.0+)
+## <img src="../../../roadmap/multiqc.png" width="24" style="vertical-align: middle;"> MultiQC Integration { #multiqc-integration }
 
-As of version 0.5.0, Depictio includes dedicated support for MultiQC quality control reports. This integration allows you to:
-
-- **Automatically scan and aggregate** MultiQC output reports
-- **Create components** directly from MultiQC data using the MultiQC API
-- **Link figures** with external metadata for enhanced analysis
-- **Filter datasets** to display specific samples based on QC metrics
-
-Components land on the dashboard with the report's own controls intact: the general statistics table keeps its **Mean / R1 / R2 / All** read selector and its **Table / Violin** toggle, and the dashboard filters apply on top.
-
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/multiqc/multiqc_dashboard.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/multiqc/multiqc_dashboard.png" width="600">
-    </a>
-</div>
+A MultiQC component draws one plot of a MultiQC report: the report's own controls stay, and the dashboard filters apply on top. Reports are added in the browser (**Add data**, or **Manage data** on a MultiQC collection) or with `depictio ingest`. See [MultiQC](../../features/multiqc.md) for the whole feature.
 
 ### <span style="color: #6495ED;">:material-plus-circle:</span> Adding MultiQC Components
 
@@ -286,13 +226,6 @@ Components land on the dashboard with the report's own controls intact: the gene
 2. In Step 3, choose a **Module**, then a **Plot** inside it. Both lists are read from the report itself. For an nf-core/ampliseq run that means `General Stats Table`, `cutadapt` and `fastqc`. The preview renders on the right as soon as you pick.
 3. Repeat for every plot you want: each one becomes its own component, and they can sit in different sections or tabs.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/multiqc/multiqc_design.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/multiqc/multiqc_design.png" width="600">
-    </a>
-</div>
+MultiQC data collections show no data preview in Step 2 because they aren't tabular, so `Rows` and `Columns` read `N/A`.
 
-MultiQC data collections show no data preview in Step 2 because they aren't tabular, so `Rows` and `Columns` read `N/A` and the visualizations are rendered by the MultiQC component itself.
-
-!!! tip "MultiQC Data Ingestion"
-    To ingest MultiQC reports into Depictio, use the Depictio-CLI with your project configuration file. MultiQC reports should be specified in your YAML configuration under the appropriate workflow section.
+The General Statistics table keeps its **Mean / R1 / R2 / All** read selector and its **Table / Violin** toggle. To filter MultiQC plots from a metadata table, link them with the `sample_mapping` resolver ([Link to sample metadata](../../features/multiqc.md#link-to-sample-metadata)). To compare the reports of several runs, see [MultiQC: compare runs](../../features/multiqc.md#compare-runs).

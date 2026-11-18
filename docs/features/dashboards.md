@@ -1,13 +1,13 @@
 ---
-title: "Dashboard Features"
+title: "Dashboard layout, tabs and sharing"
 icon: material/view-dashboard-variant
-description: "Guide to Depictio's dashboard modes, layouts, tabs, and organization features."
+description: "Dashboard modes, the filter panel and grid, sections, tabs, auto-save, the ingestion report and sharing."
 glightbox: true
 ---
 
-# :material-view-dashboard-variant: Dashboard Features
+# :material-view-dashboard-variant: Dashboard layout, tabs and sharing
 
-Depictio dashboards provide flexible, interactive data visualization with multiple modes, customizable layouts, and tabbed organization.
+A dashboard has a view mode and an edit mode, a filter panel beside a grid of sections, tabs, an ingestion report and sharing settings. For a task-by-task walk-through, see [Using a dashboard](../usage/guides/dashboard_usage.md).
 
 ---
 
@@ -48,46 +48,23 @@ Full editing capabilities:
 The dashboard interface uses a **three-panel layout** with a collapsible sidebar:
 
 !!! info "Paper look <small>(v1.17.0+)</small>"
-    The diagram below is the **Classic** look. In **Paper**, the default since v1.17.0, the
+    The figure below is the **Classic** look. In **Paper**, the default since v1.17.0, the
     header bar becomes a top bar with the dashboard title, the tab sidebar folds to an icon
     rail, and Search, Analysis, Comments and Edit move to a floating dock. The panels are
     the same. See [Paper and Classic](../usage/guides/web_ui.md#looks).
 
-```text
-┌──────────────────────────────────────────────────────────────────────────┐
-│                                Header Bar                                │
-├────────┬──────────────────┬──────────────────────────────────────────────┤
-│        │   LEFT PANEL     │            RIGHT PANEL                       │
-│ Side-  │   (Filters)      │          (Visualizations)                    │
-│  bar   │ ┌──────────────┐ │                                              │
-│        │ │ 2 active   ▾ │ │                                              │
-│ Tab 1  │ └──────────────┘ │  ▾ Cohort                                    │
-│ Tab 2  │ ▾ Sample      📌 │  ┌─────────────┐  ┌─────────────┐            │
-│ Tab 3  │ ┌──────────────┐ │  │    Card     │  │    Card     │            │
-│        │ │ MultiSelect  │ │  └─────────────┘  └─────────────┘            │
-│ [+]    │ └──────────────┘ │                                              │
-│        │ ▸ Time  (folded) │  ▸ Quality control                  (folded) │
-│ [=]    ├──────────────────┤                                              │
-│        │ Map dock     (3) │  ▾ Detail                                    │
-│        │ ┌──────────────┐ │  ┌─────────────┐  ┌─────────────┐            │
-│        │ │  (map here)  │ │  │   Figure    │  │    Table    │            │
-│        │ └──────────────┘ │  └─────────────┘  └─────────────┘            │
-│        │                  │  ▾ Raw Data                              📌 │
-│        │                  │  ┌────────────────────────────────────────┐ │
-│        │                  │  │        (shared table, read-only)       │ │
-│        │                  │  └────────────────────────────────────────┘ │
-└────────┴──────────────────┴──────────────────────────────────────────────┘
-```
+[![The iris demo's Iris Petal Analysis tab in the Classic look: tabs in the sidebar; the left panel with the 2 active summary, the Variety section pinned to every tab, Measurements with a set range slider, folded Scoped views and the map dock; the right panel with the Petal geometry cards and scatter, folded Variety separation and the Raw Data table pinned to the bottom](../images/features/dashboards/three-panels_light.png#only-light)](../images/features/dashboards/three-panels_light.png){target=_blank}
+[![The iris demo's Iris Petal Analysis tab in the Classic look: tabs in the sidebar; the left panel with the 2 active summary, the Variety section pinned to every tab, Measurements with a set range slider, folded Scoped views and the map dock; the right panel with the Petal geometry cards and scatter, folded Variety separation and the Raw Data table pinned to the bottom](../images/features/dashboards/three-panels_dark.png#only-dark)](../images/features/dashboards/three-panels_dark.png){target=_blank}
 
 Both panels can be organised into foldable **sections** <small>(v1.4.0+)</small>, and the
-left panel collapses to a narrow rail. `2 active` is the active-filter summary; `(3)` on
+left panel collapses to a narrow rail. `2 active` is the active-filter summary; the badge on
 the map dock is how many values that map is filtering on. A map can be lifted out of the
 grid into that dock, or float above the canvas.
 
-📌 marks a [section shown on every tab](#persistent-sections)
-<small>(v1.6.0+)</small>. Here *Sample* filters every tab and keeps its values
-across a switch, and *Raw Data* is pinned to the bottom of each one. This tab
-declares neither: both arrive from the tab that does.
+The pin marks a [section shown on every tab](#persistent-sections)
+<small>(v1.6.0+)</small>. Here *Variety* filters every tab and keeps its values
+across a switch, and *Raw Data* is pinned to the bottom of each one. The Iris Petal
+Analysis tab declares neither: both arrive from Overview, the tab that does.
 
 ### :material-tab: Sidebar (Tab Navigation)
 
@@ -130,7 +107,7 @@ did not itself select. Values that can still narrow the data carry a marker in t
 that would return nothing are dimmed, disabled and sorted last, and each control carries
 an `n/N available` badge that turns orange when nothing remains.
 
-<div style="border: 1px solid grey; width: 294px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 294px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-panel-highlighting.png" target="_blank">
         <img src="../../images/guides/funnel-filtering/funnel-panel-highlighting.png" width="292">
     </a>
@@ -143,7 +120,7 @@ The panel header carries the two funnel controls as one attached pair: the toggl
 overview beside it. The overview button stays mounted but disabled while funnelling is off,
 so switching it on does not reflow the header.
 
-<div style="border: 1px solid grey; width: 294px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 294px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-panel-header.png" target="_blank">
         <img src="../../images/guides/funnel-filtering/funnel-panel-header.png" width="292">
     </a>
@@ -165,7 +142,7 @@ searchable and capped at 200 rows. A stage that comes from a saved
 [selection group](interactive-selection-filtering.md#selection-groups) takes that
 group's colour.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-overview-modal.png" target="_blank">
         <img src="../../images/guides/funnel-filtering/funnel-overview-modal.png" width="600">
     </a>
@@ -174,7 +151,7 @@ group's colour.
 The stage order is editable, because the intermediate counts depend on the order the
 filters are applied in, and only the intermediate ones do.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-overview-reordered.png" target="_blank">
         <img src="../../images/guides/funnel-filtering/funnel-overview-reordered.png" width="600">
     </a>
@@ -199,7 +176,7 @@ find out.
     overview counts delta-backed data collections, so MultiQC collections, which have no
     row table, do not appear. Caps: 32 controls, 12 stages, 1000 values per control.
 
-### :material-chart-box: Right Panel (Visualizations)
+### :material-chart-box: Right Panel (Visualizations) { #right-panel }
 
 The **right panel** is the main canvas where visualization components are displayed:
 
@@ -208,22 +185,26 @@ The **right panel** is the main canvas where visualization components are displa
 - :material-cog-outline: **Configured** through component edit menus
 - :material-link-variant: **Cross-panel filtering** - Responds to filters from the left panel
 - :material-view-sequential: **Grouped into sections** (v1.4.0+) - `grid_sections` splits the canvas into named, foldable boxes; see [Sections](#sections) below
+- :material-information-outline: **Described by an info popover** (v1.20.4+) - A tile with a `description` shows an info icon that opens it as a lead, labelled blocks (**How to read**, **Annotations**, **Reference lines**), **Note** or **Warning** callouts and a **Source** footer. The component's data source and settings move to a list icon. See [Describe a tile](../usage/guides/dashboard_usage.md#describe-a-tile)
+- :material-alert-circle-outline: **One error card for a page that cannot load** (v1.20.4+) - A dashboard or project that is not found, not allowed or unreachable shows the same card everywhere, with **Try again** when a retry can help
 - :material-cellphone: **Laid out for the screen** (v1.14.0+) - A read-only grid counts in half-height rows, so text and cards fit to the nearest half row while figures keep their pixels. On a phone, tiles reflow in reading order, quarter-width tiles two to a row and wider ones full width
 
 Available component types include:
 
 | Component Type                              | Description                                    |
 | ------------------------------------------- | ---------------------------------------------- |
-| :material-chart-scatter-plot: **Figures**   | Interactive charts and visualizations          |
-| :material-table: **Tables**                 | Data tables with filtering and pagination      |
-| :material-card-text: **Cards**              | Summary statistics and KPIs                    |
-| :material-tune: **Interactive Filters**     | Dropdowns, sliders, and other controls         |
-| :material-format-header-1: **Text/Headers** | Headings and prose; block markdown since v1.14.0 |
-| :material-star-four-points-outline: **Highlights** | Another tab's figure, redrawn here (v1.14.0+) |
-| :material-map-marker-multiple: **Maps**     | Geospatial scatter, density and choropleth maps |
-| :material-microscope: **MultiQC**           | Quality control report visualizations          |
-| :material-image: **Images**                 | Display grid of static images (PNG, JPEG, SVG) |
-| :material-chart-timeline: **Genome browser** | Embedded genome browser over a track manifest (v1.20.0+), see [Genome browser](genome-browser/index.md) |
+| :material-chart-box: **Figures** | Interactive charts and visualizations |
+| :depictio-formkit-number: **Cards** | Summary statistics and KPIs |
+| :depictio-bx-slider-alt: **Interactive** | Dropdowns, sliders, and other controls |
+| :octicons-table-24: **Tables** | Data tables with filtering and pagination |
+| :depictio-multiqc: **MultiQC** | Quality control report visualizations |
+| :material-image-area: **Images** | Display grid of static images (PNG, JPEG, SVG) |
+| :material-map-marker-multiple: **Maps** | Geospatial scatter, density and choropleth maps |
+| :material-dna: **Genome browser** | Embedded genome browser over a track manifest (v1.20.0+), see [Genome browser](genome-browser/index.md) |
+| :material-text-box-edit: **Text** | Headings and prose; block markdown since v1.14.0 |
+| :material-chart-scatter-plot-hexbin: **Advanced viz** | Volcano, clustering, Manhattan, taxonomy bar, see [Advanced visualizations](advanced-visualizations.md) |
+
+A [Highlight](components.md#highlight-components) (v1.14.0+) is not a type of its own: it redraws a figure from another tab.
 
 A map can also leave the grid entirely and become a dashboard-wide panel that follows the
 viewer across every tab. See [Components](components.md#dashboard-wide-map-panel). Since
@@ -250,7 +231,7 @@ reports itself, though: a folded grid section of cards shows their numbers inlin
 other section shows a component count. A folded filter section keeps the count of active
 filters inside it.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/dashboards/sections_folded.png" target="_blank">
         <img src="../../images/guides/dashboards/sections_folded.png" width="600">
     </a>
@@ -260,7 +241,7 @@ Four folded grid sections: *Cohort* and *Morphometrics* hold cards, so their
 numbers ride along on the header; *Composition* and *Raw Data* hold figures and
 a table, so they report a component count instead.
 
-<div style="border: 1px solid grey; width: 302px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 302px; padding: 1px;">
     <a href="../../images/guides/dashboards/filter_sections.png" target="_blank">
         <img src="../../images/guides/dashboards/filter_sections.png" width="300">
     </a>
@@ -299,7 +280,7 @@ like a raw-data table, which would otherwise push every tab's own introduction
 down the page. The choice applies on all tabs, the owning one included, so the
 section keeps the same place wherever you land.
 
-<div style="border: 1px solid grey; width: 542px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 542px; padding: 1px;">
     <a href="../../images/guides/dashboards/sections_every_tab_dialog.png" target="_blank">
         <img src="../../images/guides/dashboards/sections_every_tab_dialog.png" width="540">
     </a>
@@ -308,7 +289,7 @@ section keeps the same place wherever you land.
 The bundled Iris demo's *Variety* filter section. **Position on every tab**
 appears only once **Show on every tab** is on.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/dashboards/sections_every_tab.png" target="_blank">
         <img src="../../images/guides/dashboards/sections_every_tab.png" width="600">
     </a>
@@ -507,6 +488,8 @@ main_dashboard:
     Kingdom:
       Bacteria: "#4c6ef5"
 ```
+
+<span class="ver-badge">v1.20.4+</span> A table column that these colours cover draws a coloured dot before each value. A [text tile](yaml-sync.md#text-live-values) prints the key of a column with `{{legend:column}}`, one dot and value per line, so a tile can carry several columns.
 
 Child tabs inherit the main tab's colours. A figure's own `color_discrete_map` wins. See [YAML Sync](yaml-sync.md#category-colors) for `auto` and the other keys.
 
@@ -715,7 +698,7 @@ shows `—` rather than `0`, since only a manifest records what a conditional ex
 the required and optional tiles count the collections that have data without a total to
 measure them against.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/dashboards/ingestion_live_project.png" target="_blank">
         <img src="../../images/guides/dashboards/ingestion_live_project.png" width="600">
     </a>
@@ -836,7 +819,7 @@ Dashboards inherit permissions from their project, granted to users or, since v1
 | --------------------------------- | -------------------- | -------------------- | -------------------- |
 | :material-shield-crown: **Admin** | :material-check: Yes | :material-check: Yes | :material-check: Yes |
 | :material-shield-edit: **Editor** | :material-check: Yes | :material-check: Yes | :material-close: No  |
-| :material-shield-eye: **Viewer**  | :material-check: Yes | :material-close: No  | :material-close: No  |
+| :material-eye-outline: **Viewer**  | :material-check: Yes | :material-close: No  | :material-close: No  |
 
 ### :material-link: Sharing URLs
 

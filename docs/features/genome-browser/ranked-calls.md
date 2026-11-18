@@ -8,7 +8,7 @@ glightbox: true
 # Ranked calls
 
 <figure markdown="span">
-  <video autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/ranked_rows.webp" src="../../../images/guides/genome-browser/ranked_rows.mp4"></video>
+  <video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/ranked_rows.webp" src="../../../images/guides/genome-browser/ranked_rows.mp4"></video>
 </figure>
 
 `rank_track` adds a track of the best calls, numbered in `sort_by` order and coloured by a category. Pick one, zoom on it, click it: the panel shows its fields, inheritance and each family member's genotype, and the reads sit under it.
@@ -24,6 +24,8 @@ locus_from:
   rank_track: 20                   # the 20 best calls, numbered
   rank_color_by: model_class
 ```
+
+The ranked-variant counter and **Prev**/**Next** also work for visitors of a public dashboard.
 
 Used in the nf-core/raredisease dashboard template.
 

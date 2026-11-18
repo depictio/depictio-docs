@@ -32,8 +32,8 @@ def project_shape(theme: Theme) -> Sketch:
     )
 
     # -- advanced -----------------------------------------------------------
-    s.text(360, 122, "Advanced project", size=19, weight="bold")
-    s.text(360, 146, "defined in YAML, ingested by the CLI", size=15, colour=theme.dim)
+    s.text(360, 122, "With workflows", size=19, weight="bold")
+    s.text(360, 146, "defined in YAML, or detected from a run folder", size=15, colour=theme.dim)
     s.box(Box(60, 165, 600, 470, "blue", "Project", ("projects, one document",)))
 
     s.box(
@@ -53,7 +53,7 @@ def project_shape(theme: Theme) -> Sketch:
     s.box(Box(95, 500, 530, 95, "green", "Workflow", ("a project can define several",)))
 
     # -- basic --------------------------------------------------------------
-    s.text(1000, 122, "Basic project", size=19, weight="bold")
+    s.text(1000, 122, "Tables only", size=19, weight="bold")
     s.text(1000, 146, "created in the web UI, or with the CLI", size=15, colour=theme.dim)
     s.box(Box(740, 165, 520, 470, "blue", "Project", ("projects, one document",)))
 

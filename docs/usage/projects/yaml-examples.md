@@ -16,53 +16,59 @@ This guide provides comprehensive YAML configuration examples for Depictio proje
 
 ## <span style="color: #45B8AC;">:material-rocket-launch:</span> Quick Start Examples
 
-Choose your starting point based on your project complexity:
+Choose your starting point based on your project complexity. `project_type` is optional and ignored since v1.21.0, so the examples omit it.
 
-=== "**Basic** Project (Minimal)"
+=== "Tables only (minimal)"
 
     Perfect for direct file upload and analysis:
 
     ```yaml
     name: "My Analysis Project"
-    project_type: "basic"
 
     # Files will be uploaded through the web interface
     # No additional configuration needed!
     ```
 
-=== "**Basic** Project (CLI)"
+=== "Tables only (CLI)"
 
-    For CLI-based basic projects with direct files:
+    For CLI-based projects with direct files. `depictio ingest` scans the
+    collections of a workflow, so even one table sits under a `flat` workflow:
 
     ```yaml
     name: "CSV Analysis Project"
-    project_type: "basic"
     is_public: false
 
-    data_collections:
-      - data_collection_tag: "main_data"
-        description: "Primary dataset for analysis"
-        config:
-          type: "table"
-          metatype: "metadata"
-          scan:
-            mode: "single"
-            scan_parameters:
-              filename: "/path/to/data.csv"
-          dc_specific_properties:
-            format: "csv"
-            polars_kwargs:
-              separator: ","
-              has_header: true
+    workflows:
+      - name: "tables"
+        engine:
+          name: "python"
+        data_location:
+          structure: "flat"
+          locations:
+            - "/path/to"
+        data_collections:
+          - data_collection_tag: "main_data"
+            description: "Primary dataset for analysis"
+            config:
+              type: "table"
+              metatype: "metadata"
+              scan:
+                mode: "single"
+                scan_parameters:
+                  filename: "/path/to/data.csv"
+              dc_specific_properties:
+                format: "csv"
+                polars_kwargs:
+                  separator: ","
+                  has_header: true
     ```
 
-=== "Advanced Project (Minimal)"
+=== "Project with a workflow (minimal)"
 
     For workflow-generated data with pattern matching:
 
     ```yaml
     name: "RNA-seq Analysis"
-    project_type: "advanced"
 
     workflows:
       - name: "rnaseq_pipeline"
@@ -106,18 +112,17 @@ name: string                              # Required: Human-readable project nam
                                           # Example: "Multi-omics Cancer Study"
 
 
-# Advanced projects only: Workflow definitions
-workflows: [Workflow]                     # Default: [] (empty for basic projects)
+# Workflow definitions: every data collection the CLI ingests sits in one
+workflows: [Workflow]                     # Default: [] (empty for UI-only projects)
                                           # Array of workflow configurations
                                           # See "Workflow Configuration" section
 
 # === REQUIRED FIELDS WITH DEFAULT VALUES ===
 
-# Project type determines the configuration structure
+# Legacy field, optional and ignored since v1.21.0
 project_type: "basic" | "advanced"        # Default: "basic"
-                                          # Options:
-                                          # - basic: Direct file upload/processing
-                                          # - advanced: Workflow-integrated projects
+                                          # Still accepted, but no longer decides
+                                          # what a project can do
 
 # Project visibility
 is_public: boolean                        # Default: false
@@ -136,11 +141,25 @@ data_management_platform_project_url: string | null    # Default: null
                                                         # URL to external project system
                                                         # Must start with http:// or https://
                                                         # Example: "https://labid.embl.org/projects/123"
+
+description: string | null                # Default: null. Plain text (HTML is removed)
+
+links: [DCLink]                           # Default: []. See "Cross-DC Links"
+joins: [JoinDefinition]                   # Default: []. See "Data Collection Joins"
+
+layout: "runs" | "pipeline" | "tables" | null  # Default: null (detected by the viewer)
+
+realtime:                                 # Default: null
+  enabled: boolean                        # Default: true
+  debounce_ms: int                        # Default: 1000
+  watch_data_collections: [string] | null # Default: null (all)
 ```
 
-### Project Types Deep Dive
+### Project Shapes
 
-#### Basic Projects
+Since v1.21.0 there is no project type to choose. `project_type` is still accepted in YAML and kept in the model, so older files validate, but it is optional and ignored. A project has workflows or it does not.
+
+#### Tables only
 
 Designed to be minimal and easy to set up, WebUI compatible, and suitable for small-scale analyses.
 
@@ -154,10 +173,10 @@ Designed to be minimal and easy to set up, WebUI compatible, and suitable for sm
 **Configuration:**
 
 - Minimal setup required
-- Data uploaded via web interface or defined in `data_collections`
-- No workflow integration needed (default workflow is created under the hood for system compatibility)
+- Data uploaded via the web interface, which creates a workflow under the hood
+- From the CLI, tables are declared under a `flat` workflow (see **Tables only (CLI)** above): `depictio ingest` does not scan a top-level `data_collections`
 
-#### Advanced Projects
+#### With workflows
 
 Designed for complex data processing pipelines, automated workflows, and large-scale analyses.
 
@@ -175,9 +194,9 @@ Designed for complex data processing pipelines, automated workflows, and large-s
 - Regex-based file discovery
 - Multi-run aggregation capabilities
 
-## <span style="color: #45B8AC;">:material-cog:</span> Workflow Configuration (Advanced)
+## <span style="color: #45B8AC;">:material-cog:</span> Workflow Configuration
 
-Advanced projects use workflows to describe data organization patterns. Each workflow corresponds to a computational pipeline that generates structured data.
+Projects with workflows use workflows to describe data organization patterns. Each workflow corresponds to a computational pipeline that generates structured data.
 
 ```yaml linenums="1"
 workflows:
@@ -205,10 +224,12 @@ workflows:
 
       locations: [string]                 # Required: Root directories to search
                                           # Supports environment variable expansion: {VAR_NAME}
+                                          # The CLI checks each local one exists
                                           # Examples:
                                           #   - "/absolute/path/to/data"
                                           #   - "{DATA_ROOT}/project1"
                                           #   - "{HOME}/workflows/results"
+                                          #   - "s3://my-bucket/run42/" (remote modes)
 
       runs_regex: string | null           # Required if structure="sequencing-runs"
                                           # Optional if structure="flat"
@@ -225,21 +246,24 @@ workflows:
                                           # Example: "1.0.0", "v2.3.1"
                                           # Note: version is currently saved only for the sake of documentation, no functional impact on the system, will be implemented in the future
 
+    description: string | null            # Optional: Workflow description
+
     catalog:                              # Optional: Workflow registry information
-      name: string | null                 # Options: "nf-core", "smk-wf-catalog", "workflowhub"
-      url: string | null                  # Catalog URL
+      name: string                        # Required in a catalog: "nf-core", "smk-wf-catalog", "workflowhub"
+      url: string                         # Required in a catalog: http(s):// or git:// URL
                                           # Example: "https://nf-co.re/rnaseq"
 
     repository_url: string | null         # Optional: Source code repository
                                           # Example: "https://github.com/user/workflow"
 
-    workflow_tag: string | null           # Optional: Auto-generated workflow identifier
-                                          # Format: "engine/name" or "catalog/name"
-                                          # Usually auto-populated, rarely set manually
+    workflow_tag: string | null           # Optional: Workflow identifier, used by --workflow-name
+                                          # Default from a YAML file: the workflow name
 
     config:                               # Optional: Workflow-specific configuration
       version: string | null              # Workflow configuration version
       workflow_parameters: object | null # Workflow-specific parameters
+      # engine_name, pipeline_version, nextflow_version, tools_executed:
+      # filled by ingestion from the run's provenance
 ```
 
 ### Workflow Data Location Patterns
@@ -300,6 +324,7 @@ Depictio supports environment variable expansion in file paths:
 # export BACKUP_LOCATION="/backup/data"
 
 data_location:
+  structure: "flat"
   locations:
     - "{DATA_ROOT}/{PROJECT_NAME}/results"     # Expands to: /mnt/storage/projects/cancer_study/results
     - "{BACKUP_LOCATION}/{PROJECT_NAME}"       # Expands to: /backup/data/cancer_study
@@ -326,20 +351,25 @@ data_collections:
                                   # Example: "gene_counts", "quality_metrics"
 
     config:                     # Required: Data collection configuration
-      type: string                # Required: Data collection type
+      type: string                # Required: Data collection type (case-insensitive)
                                   # Options:
                                   #  - "table": Tabular data (CSV, TSV, Excel, Parquet, Feather)
                                   #  - "MultiQC": MultiQC quality control reports
-                                  #  - "Image": Image files with metadata
+                                  #  - "Image": A table with a column of image paths
                                   #  - "geojson": GeoJSON boundary files for choropleth maps
+                                  #  - "phylogeny": Newick / Nexus trees
+                                  #  - "indexed_file": VCF, BAM, bigWig, ... read by range
+                                  #  - "genomic_tracks": Manifest of genome-browser tracks
 
-      metatype: string | null    # Required for table type
-                                  # Required: Data collection metatype
-                                  # Options:
+      source: string              # Optional: "native" (default), "transformed",
+                                  # "joined" or "aggregated"; only "native" needs scan
+
+      metatype: string | null    # Optional: free label, not checked
+                                  # Conventions:
                                   # - "metadata": Single annotation/metadata file per project
                                   # - "aggregate": Multiple files combined into unified dataset
 
-      scan:                     # Required: File discovery configuration
+      scan:                     # Required for native DCs, except MultiQC
         mode: string              # Required: Scanning strategy
                                   # Options:
                                   # - "single": Single file per project/run
@@ -381,19 +411,26 @@ data_collections:
           type_field: string
           run_field: string | null
 
-      dc_specific_properties:   # Required: Type-specific configuration
+      dc_specific_properties:   # Required for table, image, indexed_file and
+                                # genomic_tracks; defaulted for the other types
         # See "Table Configuration" section for details
+
+      transform:                # Required when source is "transformed"
+        recipe: string          # See the template pattern below and Recipes
 
     # === OPTIONAL FIELDS ===
 
     description: string | null  # Optional: Human-readable description
                                # Example: "Per-sample quality control metrics"
+
+    optional: boolean          # Default: false. In a template, drop the DC
+                               # instead of failing when its data is absent
 ```
 
 ### Specific Data Collection Types
 
 !!! note "Data Collection Types"
-    Data collections can be of different types, each with its own configuration requirements. Supported types: **Table** (structured tabular data), **MultiQC** (quality control reports), **Image** (image galleries), and **GeoJSON** (boundary files for choropleth maps).
+    Data collections can be of different types, each with its own configuration requirements. Supported types: **Table** (structured tabular data), **MultiQC** (quality control reports), **Image** (image galleries), **GeoJSON** (boundary files for choropleth maps), **Phylogeny** (trees), **Indexed file** and **Genomic tracks** (genome browser). The [reference](reference.md) lists every type's properties.
 
 #### **Table** Data Collection Configuration
 
@@ -407,11 +444,10 @@ dc_specific_properties:
                               # Values: "csv", "tsv", "xlsx", "xls", "parquet", "feather"
                               # Case-insensitive, normalized to lowercase
 
-  polars_kwargs: object       # Required: Polars DataFrame configuration
-                             # Polars-specific parameters for data reading
-                             # See "Polars Configuration" section
-
   # === OPTIONAL FIELDS ===
+
+  polars_kwargs: object       # Default: {}. Keyword arguments for the polars reader
+                             # See "Polars Configuration" section
 
   keep_columns: [string] | null    # Optional: Column filtering
                                   # If specified, only these columns are retained
@@ -438,9 +474,11 @@ config:
 
   # === AUTOMATIC HANDLING ===
   # The following are NOT required for MultiQC type:
-  # - metatype: Automatically handled
-  # - scan: Auto-detects multiqc_data/multiqc.parquet in each run
-  # - dc_specific_properties: Not needed
+  # - metatype: Optional free label
+  # - scan: Without it, ingestion looks for */multiqc_data/multiqc.parquet
+  #   (also */multiqc/multiqc_data/ and */*/multiqc_data/) under each location.
+  #   The templates declare a recursive scan on that path instead
+  # - dc_specific_properties: Filled at ingestion (samples, modules, plots)
 
   # === REQUIREMENTS ===
   # - MultiQC 1.29+ must be used to generate parquet format
@@ -457,7 +495,7 @@ config:
 
   type: "geojson"          # Required: Identifies this as a GeoJSON data collection
 
-  metatype: "GeoJSON"      # Required: Metatype identifier
+  metatype: "GeoJSON"      # Optional: free label
 
   scan:                    # Required: File discovery
     mode: "single"
@@ -465,7 +503,7 @@ config:
       filename: "path/to/boundaries.geojson"
 
   dc_specific_properties:
-    feature_id_key: "properties.NAME"  # Required: GeoJSON property path
+    feature_id_key: "properties.NAME"  # Optional (default "id"): GeoJSON property path
                                        # to match the locations_column
                                        # in choropleth map components
                                        # Common values: "id", "properties.NAME",
@@ -481,8 +519,8 @@ config:
 
 #### **Phylogeny** Data Collection Configuration
 
-Phylogeny data collections hold a Newick or Nexus tree. The file is read where it
-was found: nothing is parsed, converted or copied to S3. Tip annotations live in a
+Phylogeny data collections hold a Newick or Nexus tree. Ingestion copies the file
+as is to S3: nothing is parsed or converted. Tip annotations live in a
 **separate Table data collection** keyed by taxon name, and the phylogeny DC names
 it so every phylogenetic component inherits the same join.
 
@@ -495,7 +533,7 @@ data_collections:
 
       type: "phylogeny"        # Required: Identifies this as a tree data collection
 
-      metatype: "Aggregate"    # Required: Metatype identifier
+      metatype: "Aggregate"    # Optional: free label
 
       scan:                    # Required: File discovery
         mode: "single"
@@ -543,9 +581,9 @@ Use **links** for interactive filtering between metadata tables and MultiQC:
 ```yaml
 # At project level - enables cross-DC filtering
 links:
-  - source_dc_id: sample_metadata    # Filter from metadata table
+  - source_dc_tag: sample_metadata   # Filter from metadata table
     source_column: sample_id          # Filter by sample ID
-    target_dc_id: multiqc_data        # Update MultiQC visualizations
+    target_dc_tag: multiqc_data       # Update MultiQC visualizations
     target_type: multiqc              # Target type
     link_config:
       resolver: sample_mapping        # Maps canonical IDs to MultiQC sample variants
@@ -554,7 +592,7 @@ links:
 **MultiQC-Specific Notes:**
 
 - **Automatic Detection**: No need to specify file paths or patterns
-- **Fixed Location**: System looks for `multiqc_data/multiqc.parquet` in each run
+- **Fixed Location**: Without a `scan`, the system looks for `multiqc_data/multiqc.parquet` one or two levels below each location
 - **Format Requirement**: Requires MultiQC 1.29+ to generate `.parquet` output
 - **No Configuration Overhead**: Just specify `type: "MultiQC"` and you're done
 - **Link Column**: Use `sample_mapping` resolver in links to connect with metadata tables
@@ -582,9 +620,14 @@ Polars is Depictio's high-performance data processing engine. Configure data rea
 polars_kwargs:
   # === COMMON OPTIONS ===
 
+  # Passed as is to polars: scan_csv (csv, tsv), scan_parquet,
+  # scan_ipc (feather) or read_excel (xls, xlsx). Use that reader's
+  # argument names: an unknown key fails at ingestion.
+
   # CSV/TSV specific
   separator: string           # Column separator character
-                             # Default: "," for CSV, "\t" for TSV
+                             # Default: tab for a .tsv/.tab file (or format
+                             # tsv), else ","
                              # Example: ",", "\t", "|", ";"
 
   has_header: boolean        # First row contains column names
@@ -599,7 +642,7 @@ polars_kwargs:
   # === ADVANCED OPTIONS ===
 
   # Data types
-  column_types: object      # Explicit column type mapping
+  schema_overrides: object  # Explicit column type mapping
                            # Forces specific data types
                            # Example:
                            #   sample_id: "String"
@@ -607,13 +650,13 @@ polars_kwargs:
                            #   p_value: "Float64"
                            #   significant: "Boolean"
 
-  column_names: [string]    # Override column names
+  new_columns: [string]     # Rename the columns
                            # Useful when has_header: false
                            # Example: ["sample", "gene", "expression"]
 
   # Missing data handling
   null_values: [string]     # Values to treat as null/missing
-                           # Default: ["", "NULL", "null", "None"]
+                           # Default: none
                            # Example: ["NA", "N/A", "", "null", "-"]
 
   # Performance options
@@ -623,17 +666,16 @@ polars_kwargs:
 
   # Encoding
   encoding: string          # File encoding
-                           # Default: "utf8"
-                           # Example: "utf8", "latin1", "ascii"
+                           # Default: "utf8"; the other value is "utf8-lossy"
 
-  # Excel specific (for .xlsx, .xls files)
+  # Excel specific (read_excel, for .xlsx, .xls files)
   sheet_name: string        # Excel sheet name to read
                            # Default: first sheet
                            # Example: "Results", "Sheet1"
 
-  sheet_id: int            # Excel sheet index (0-based)
+  sheet_id: int            # Excel sheet number, 1-based
                           # Alternative to sheet_name
-                          # Example: 0 (first sheet), 1 (second sheet)
+                          # Example: 1 (first sheet), 2 (second sheet)
 ```
 
 ### File Scanning Patterns
@@ -651,6 +693,9 @@ scan:
 # Finds exactly one file:
 # project_root/multiqc_data/multiqc_general_stats.txt
 ```
+
+With several runs, each run reads its own copy of `filename`. Since **v1.21.0**,
+`scope: "project"` under `scan_parameters` reads one file for every run instead.
 
 #### Recursive Mode
 
@@ -806,19 +851,29 @@ workflows:
 
 ### Cross-DC Links (Interactive Filtering)
 
-Links enable **cross-DC filtering** at runtime—filter one data collection and automatically update related visualizations without pre-computed joins.
+Links enable **cross-DC filtering** at runtime: filter one data collection and automatically update related visualizations without pre-computed joins.
 
 ```yaml
 # Project-level links configuration
 links:
-  - source_dc_id: string      # Required: DC containing the filter
+  - source_dc_tag: string     # Required (or source_dc_id): DC containing the filter
     source_column: string     # Required: Column to filter on
-    target_dc_id: string      # Required: DC to receive filtered values
-    target_type: string       # Required: "table" or "multiqc"
-    link_config:
-      resolver: string        # Required: "direct", "sample_mapping", or "pattern"
+    target_dc_tag: string     # Required (or target_dc_id): DC to receive filtered values
+    target_type: string       # Required: "table", "multiqc", "image" or "genomic_tracks"
+    link_config:              # Optional
+      resolver: string        # Default "direct"; see the table below
       target_field: string    # Optional: Field to match in target DC
+      mappings: object        # Optional: {canonical: [variants]} for sample_mapping
+      pattern: string         # Optional: must contain {sample}, for pattern
+      columns: object         # Required by region: {chrom: ..., pos: ...}
+      case_sensitive: boolean # Default: true
+    description: string       # Optional
+    enabled: boolean          # Default: true
 ```
+
+`source_dc_id` and `target_dc_id` take a data collection id, the `id` pinned on a
+collection: a tag written there matches nothing. Name collections by tag with
+`source_dc_tag` and `target_dc_tag`.
 
 **Resolvers:**
 
@@ -827,23 +882,24 @@ links:
 | `direct` | Same value in both DCs |
 | `sample_mapping` | Canonical ID → MultiQC sample variants |
 | `pattern` | Template substitution (e.g., `{sample}.bam`) |
+| `regex` | Target values matched by a regex |
+| `wildcard` | Glob matching (e.g., `S1*` matches `S1_R1.bam`) |
+| `region` | A genomic region renamed onto the target's chromosome and position columns |
 
 **Example:**
 
 ```yaml
 name: "My Project"
-project_type: "advanced"
 
 links:
-  - source_dc_id: sample_metadata
+  - source_dc_tag: sample_metadata
     source_column: sample_id
-    target_dc_id: multiqc_fastqc
+    target_dc_tag: multiqc_fastqc
     target_type: multiqc
     link_config:
       resolver: sample_mapping
 
-workflows:
-  # ... workflow configuration ...
+# workflows: ... the workflow declaring sample_metadata and multiqc_fastqc ...
 ```
 
 For detailed documentation, see [Cross-DC Filtering](../../features/cross-dc-filtering.md).
@@ -858,40 +914,80 @@ For detailed documentation, see [Cross-DC Filtering](../../features/cross-dc-fil
 
 Joins are processed client-side when running `depictio ingest` and create a merged view that gets uploaded to the server. They only work with **Table-type** data collections.
 
+Joins are declared at project level, next to `links`:
+
 ```yaml
-# Join configuration (in data collection)
-join:
-  on_columns: [string]        # Column names for joining
-  how: string                 # "inner", "outer", "left", "right"
-  with_dc: [string]           # Target data collection tags to join with
+# Project-level joins configuration
+joins:
+  - name: string              # Required: letters, digits, _ and -
+    left_dc: string           # Required: DC tag, or "workflow.tag" across workflows
+    right_dc: string          # Required: another DC tag
+    on_columns: [string]      # Required: columns present in both
+    how: string               # Default "inner"; "left", "right", "outer"
+    workflow_name: string     # Optional: workflow unscoped tags are looked up in
+    persist: boolean          # Default: true (write the result as a Delta table)
+    description: string       # Optional
+    granularity:              # Optional: aggregate the finer table first
+      aggregate_to: string    # Required: the aggregation key column
+      numeric_default: string # Default "mean" (sum, min, max, first, last, count, median)
+      categorical_default: string  # Default "first"
+      column_overrides: [{column: string, function: string}]  # Optional
 ```
+
+The older per-collection `config.join` block (`on_columns`, `how`, `with_dc`) is
+still accepted but no longer joins anything.
 
 **Example: Joining sample metadata with expression data**
 
 ```yaml
-data_collections:
-  - data_collection_tag: "sample_metadata"
-    config:
-      type: "table"
-      metatype: "metadata"
-      # ... scan and dc_specific_properties ...
+name: "Expression with metadata"
 
-  - data_collection_tag: "expression_with_metadata"
-    config:
-      type: "table"
-      metatype: "aggregate"
-      # ... scan and dc_specific_properties ...
-    join:
-      on_columns: ["sample_id"]
-      how: "left"
-      with_dc: ["sample_metadata"]
+workflows:
+  - name: "rnaseq"
+    engine:
+      name: "nextflow"
+    data_location:
+      structure: "sequencing-runs"
+      locations:
+        - "{DATA_ROOT}/rnaseq"
+      runs_regex: "run_.*"
+    data_collections:
+      - data_collection_tag: "sample_metadata"
+        config:
+          type: "table"
+          metatype: "metadata"
+          scan:
+            mode: "single"
+            scan_parameters:
+              filename: "{DATA_ROOT}/rnaseq/samplesheet.csv"
+          dc_specific_properties:
+            format: "csv"
+
+      - data_collection_tag: "expression"
+        config:
+          type: "table"
+          metatype: "aggregate"
+          scan:
+            mode: "recursive"
+            scan_parameters:
+              regex_config:
+                pattern: "counts/.*\\.tsv"
+          dc_specific_properties:
+            format: "tsv"
+
+joins:
+  - name: "expression_with_metadata"
+    left_dc: "expression"
+    right_dc: "sample_metadata"
+    on_columns: ["sample_id"]
+    how: "left"
 ```
 
 When you run `depictio ingest`, the CLI will:
 
 1. Load both data collections locally
 2. Perform the join operation on the client
-3. Push the resulting joined table to the server
+3. Push the resulting joined table to the server, as a data collection of its own
 
 **When to use Joins vs Links:**
 
@@ -909,14 +1005,13 @@ When you run `depictio ingest`, the CLI will:
 
 ```yaml
 name: "RNA-seq Expression Analysis"
-project_type: "advanced"
 is_public: false
 
 # Cross-DC Links for interactive filtering
 links:
-  - source_dc_id: qc_summary            # Filter from QC data
+  - source_dc_tag: qc_summary           # Filter from QC data
     source_column: Sample               # Column to filter on
-    target_dc_id: salmon_gene_tpm       # Target expression data
+    target_dc_tag: salmon_gene_tpm      # Target expression data
     target_type: table                  # Target type
     link_config:
       resolver: direct                  # Same sample IDs in both DCs
@@ -994,26 +1089,25 @@ workflows:
 
 ```yaml
 name: "Strand-Seq data analysis"
-project_type: "advanced"
 data_management_platform_project_url: "https://labid.embl.org/core/projects/default/5baa8f07-bd00-46e7-b3cb-ec79d01f6f3c"
 
 # Cross-DC Links for interactive filtering
 links:
-  - source_dc_id: mosaicatcher_samples_metadata
+  - source_dc_tag: mosaicatcher_samples_metadata
     source_column: sample
-    target_dc_id: mosaicatcher_stats
+    target_dc_tag: mosaicatcher_stats
     target_type: table
     link_config:
       resolver: direct
-  - source_dc_id: mosaicatcher_samples_metadata
+  - source_dc_tag: mosaicatcher_samples_metadata
     source_column: sample
-    target_dc_id: ashleys_labels
+    target_dc_tag: ashleys_labels
     target_type: table
     link_config:
       resolver: direct
-  - source_dc_id: mosaicatcher_samples_metadata
+  - source_dc_tag: mosaicatcher_samples_metadata
     source_column: sample
-    target_dc_id: sv_calls
+    target_dc_tag: sv_calls
     target_type: table
     link_config:
       resolver: direct
@@ -1137,13 +1231,12 @@ workflows:
 
 ```yaml
 name: "MultiQC Quality Control Analysis"
-project_type: "advanced"
 
 # Cross-DC Links for interactive filtering
 links:
-  - source_dc_id: sample_metadata       # Filter from metadata table
+  - source_dc_tag: sample_metadata      # Filter from metadata table
     source_column: sample               # Column to filter on
-    target_dc_id: multiqc_data          # Target MultiQC visualizations
+    target_dc_tag: multiqc_data         # Target MultiQC visualizations
     target_type: multiqc                # Target type
     link_config:
       resolver: sample_mapping          # Maps canonical IDs to MultiQC sample variants
@@ -1154,7 +1247,7 @@ workflows:
       name: "python"
     data_location:
       structure: "sequencing-runs"
-      runs_regex: "run_*"
+      runs_regex: "run_.*"
       locations:
         - "{DATA_ROOT}/qc_results"
 
@@ -1418,7 +1511,7 @@ depictio-cli config validate-project-config --project-config-path new_config.yam
 
 ### Pattern: Template project with recipe-transformed data collections { #pattern-template-project }
 
-Templates are pre-packaged project configurations for specific bioinformatics pipelines. You don't write the YAML manually — you point the CLI at your data directory and a template ID. This pattern shows what the template YAML looks like internally and how to invoke it.
+Templates are pre-packaged project configurations for specific bioinformatics pipelines. You don't write the YAML manually: you point the CLI at your data directory and a template ID. This pattern shows what the template YAML looks like internally and how to invoke it.
 
 **1. Minimal `template:` metadata block (top of a template YAML)**
 
@@ -1432,37 +1525,39 @@ template:
       description: "Root directory containing ampliseq pipeline output data"
       required: true
   dashboards:
-    - "dashboards/full_analysis.yaml"
+    - "dashboards/base.yaml"
 ```
 
 **2. Recipe-transformed data collection (`source: "transformed"`)**
 
 ```yaml
 data_collections:
-  - data_collection_tag: "alpha_diversity"
-    description: "Per-sample alpha diversity (Faith PD)"
+  - data_collection_tag: "taxonomy_rel_abundance"
+    description: "Taxonomic relative abundance at Phylum level"
     config:
       type: "Table"
       source: "transformed"          # ← marks this DC as recipe-produced
       transform:
-        recipe: "nf-core/ampliseq/alpha_diversity.py"
-        # Optional: override a source file path
+        recipe: "nf-core/ampliseq/taxonomy_rel_abundance.py"
+        # Optional: override a source file path (path or glob_pattern)
         # source_overrides:
-        #   faith_pd:
-        #     path: "custom/path/to/faith_pd_vector/metadata.tsv"
+        #   rel_table:
+        #     path: "custom/path/to/rel-table-2.tsv"
+        # Optional (v1.21.0+): "run", "aggregate" or "pipeline"
+        # scope: "run"
       dc_specific_properties:
         format: "TSV"
         columns_description:
           "sample": "Sample identifier"
-          "habitat": "Habitat type"
-          "faith_pd": "Faith's Phylogenetic Diversity"
+          "taxonomy": "Taxonomic classification (Kingdom;Phylum)"
+          "rel_abundance": "Relative abundance (0-1)"
 ```
 
 **3. Cross-DC source via `dc_ref` (in a recipe's SOURCES)**
 
 Some recipes reference another data collection instead of a file. The `dc_ref` field names the source DC's `data_collection_tag`:
 
-```yaml
+```python
 # In the recipe Python file (e.g. taxonomy_rel_abundance.py):
 SOURCES = [
     RecipeSource(
@@ -1471,7 +1566,11 @@ SOURCES = [
         format="TSV",
         read_kwargs={"skip_rows": 1},
     ),
-    RecipeSource(ref="metadata", dc_ref="metadata"),  # ← loaded from the "metadata" DC
+    RecipeSource(
+        ref="metadata",
+        dc_ref="metadata",  # ← loaded from the "metadata" DC
+        optional=True,      # absent when no METADATA_FILE was given
+    ),
 ]
 ```
 

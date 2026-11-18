@@ -8,6 +8,146 @@ hide:
 
 # Changelog
 
+## **[v1.21.0](https://github.com/depictio/depictio/releases/tag/v1.21.0)** (upcoming)
+
+!!! success "Minor: projects start from their data, show what changed since your last visit, and move between instances"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.21.0
+ghcr.io/depictio/depictio-viewer:1.21.0
+ghcr.io/depictio/depictio-worker:1.21.0
+ghcr.io/depictio/depictio-cli:1.21.0
+```
+
+### **♻️ Migration**
+
+* **Projects**: **No more Basic or Advanced projects**. The *New project* dialog no longer asks for a type, and the project header says what it holds: tables, workflows or a template. `project_type` is still read from YAML but ignored. See [Create a project](../usage/projects/guide.md#create-a-project) ([196c0d1](https://github.com/depictio/depictio/commit/196c0d17882ad92f6718fd0aa712ecdef2c47c11), [9ad8702](https://github.com/depictio/depictio/commit/9ad87022701fde8bcd8ed6b1a68183be9e3c9a6e), [29897db](https://github.com/depictio/depictio/commit/29897dbe5222591d5f0e38a986d5d85bb38d7150)).
+* **Sign-in**: **Single sign-on moves to OpenID Connect**. Providers go in `DEPICTIO_AUTH_OIDC_PROVIDERS` and SAML is removed. `DEPICTIO_AUTH_GOOGLE_OAUTH_*` still works for this release. See [Single sign-on](../installation/sso/index.md) ([#1356](https://github.com/depictio/depictio/pull/1356)).
+
+### **✨ New Features**
+
+**_"What's new"_ and runs**
+
+* **_"What's new"_ since your last visit**: the *What's new* key in the dashboard header counts what changed since you last opened it (new rows, edited components, new comments) and lists them. A changed tile carries a dot: *Overlay* rings its new points and fades the rest, *Split* draws new and already-seen samples side by side, and *Before | Now* shows the tile as it was. *Mark as seen* resets the count, and the sidebar bell lists the dashboards and projects that changed. Off by default (`DEPICTIO_DASHBOARD_VERSIONS_CHANGES_SINCE_ENABLED`). See [_"What's new"_](../features/whats-new.md) ([#1398](https://github.com/depictio/depictio/pull/1398), [3cf34cf](https://github.com/depictio/depictio/commit/3cf34cfdb5ab3968f370725f6483938339d865aa), [3c41872](https://github.com/depictio/depictio/commit/3c41872f66614eb7b38ec7b8f7260950f8b36044), [a6a1662](https://github.com/depictio/depictio/commit/a6a1662d0af5dd528ae3b7cd11e39511fbab419c), [b3d6466](https://github.com/depictio/depictio/commit/b3d6466e0f609c74b0898d189617c62900c1c3ec), [2d68d16](https://github.com/depictio/depictio/commit/2d68d16be69d7f70330ae13b4c9b5f34b213526b)).
+* **Compare runs**: the project's *Runs* tab has one row per run, with the files, Delta commits and MultiQC reports it produced, and each scan marks its files *New*, *Changed*, *Failed* or *Unchanged*. *Compare* opens a dashboard with that run's changes marked, where MultiQC figures and General Stats split the new samples from the earlier ones. See [Runs and run comparison](../features/runs.md) ([#1182](https://github.com/depictio/depictio/pull/1182), [#1398](https://github.com/depictio/depictio/pull/1398), [e542fce](https://github.com/depictio/depictio/commit/e542fcebc88063ebfab3188898ab3a99cf99b81e), [d522fd6](https://github.com/depictio/depictio/commit/d522fd6dd29b9d3bd3de4303159f272c9ad102d7), [5bcad8d](https://github.com/depictio/depictio/commit/5bcad8d01046ea9f3900c1f50278c0c3c181ccc2), [a335e2c](https://github.com/depictio/depictio/commit/a335e2c5a11a54e038fec77f487f772f53d57055)).
+
+**Projects**
+
+* **Start a project from its data**: *New project*, then *Upload* or *Read in place* (a folder, a bucket or one file URL). Depictio detects the pipeline and offers three read levels: *Flat tables*, *Custom workflows* (the *Project Builder*, also `depictio project-builder` without a server) or *Pipeline template*. See [Create a project](../usage/projects/guide.md#create-a-project) ([#1182](https://github.com/depictio/depictio/pull/1182), [#1382](https://github.com/depictio/depictio/pull/1382), [29897db](https://github.com/depictio/depictio/commit/29897dbe5222591d5f0e38a986d5d85bb38d7150), [2c9c3fa](https://github.com/depictio/depictio/commit/2c9c3fa75da06cd7cdeffb2e83c82688bcd77c30), [a936fb2](https://github.com/depictio/depictio/commit/a936fb2e8d5b9b86905717c350c893bc08fe7255)).
+* **Add data to a project**: *Add data* on the project page adds tables from a folder or another run of the same pipeline, and a run naming samples already in the project is held back. A table can be unlocked for cell edits (*Editable*), and *Past versions* restores an earlier one as a new version. See [Add data](../usage/projects/guide.md#add-data) ([#1382](https://github.com/depictio/depictio/pull/1382), [a751538](https://github.com/depictio/depictio/commit/a751538e33b01978d341fc9285e15bbc7b63c781), [578e839](https://github.com/depictio/depictio/commit/578e8394f98080f339963ba90ee63359a917b94f), [9106d19](https://github.com/depictio/depictio/commit/9106d196fa1d226d060a3560c2a329a0787b2b0c), [c4ba034](https://github.com/depictio/depictio/commit/c4ba0348641140e1de39d4cfe9361d2e61f619c6)).
+* **Label samples from the dashboard**: the *Metadata* panel opens the samplesheet beside the charts. Add a label column, type the values, and *Compare in the charts* turns each label into a group in *Analysis* that filters and colours the linked figures. Labels can be shared on the dashboard, saved to the table or downloaded as a metadata sheet. See [Metadata panel](../features/metadata-panel.md) ([#1375](https://github.com/depictio/depictio/pull/1375), [c167677](https://github.com/depictio/depictio/commit/c16767777c9182e936846a7354936cd95cab0afc), [46f6b73](https://github.com/depictio/depictio/commit/46f6b7305196a28b03fae40e293bce91eff2d516), [9a1fb39](https://github.com/depictio/depictio/commit/9a1fb39b0d1aac69f55db06c3b30e4a9819ec209)).
+* **Send a project to another instance**: the target creates a code (*Import a project*, *From another instance*, *Create code*). The source pastes it in *Project settings*, *Send*, checks what will happen, then sends. The project arrives with its data, dashboards and images, waits for an admin if asked to, and is served read-only. *Export as ZIP* covers the offline case. See [Send to another instance](../usage/administration/migrate.md#send-to-another-instance) ([#1334](https://github.com/depictio/depictio/pull/1334), [#1361](https://github.com/depictio/depictio/pull/1361), [#1387](https://github.com/depictio/depictio/pull/1387), [174529b](https://github.com/depictio/depictio/commit/174529b42655463b2d5bb0538391a39cff32b95e), [5861bc5](https://github.com/depictio/depictio/commit/5861bc504e4f99da4e5583f7803255796f708ccf), [33830d5](https://github.com/depictio/depictio/commit/33830d57a99bde79768f4dc855141aba3dd83a6a)).
+
+### **🚀 Improvements**
+
+* **Refresh reads only what changed**: a refresh rereads new or changed files, and *Read everything again* forces a full pass. The project's *Activity* tab shows *Latest ingestion* and *History*, and a new run's rows open on top of the Data table. See [Runs and run comparison: data refresh](../features/runs.md#data-refresh) ([#1182](https://github.com/depictio/depictio/pull/1182), [1e667e0](https://github.com/depictio/depictio/commit/1e667e0903bbf4fd07e29a46ff90f01d5d3567fb), [201101f](https://github.com/depictio/depictio/commit/201101fc05dc874cbe67848a66e4333bbcf54eac), [4d85dff](https://github.com/depictio/depictio/commit/4d85dff844b1e7f5b51d1ae54f9a69ce74280baf)).
+* **Admin tables and an `/activity` page**: *Projects*, *Dashboards* and *Users* in the admin panel become tables with search, a column chooser, multi-select delete and a compact mode. `/activity` shows project members their tasks and ingestion runs without admin rights. See [Administration](../usage/administration/index.md#admin-tables) ([#1390](https://github.com/depictio/depictio/pull/1390), [23383cf](https://github.com/depictio/depictio/commit/23383cfc10181510d35848699a0c7e2072af5762), [430c9f0](https://github.com/depictio/depictio/commit/430c9f0b125b2fde967f4b15068bfcdc011e3822)).
+* **Also new**: a regex TextInput filter ([#1365](https://github.com/depictio/depictio/pull/1365), [a24785a](https://github.com/depictio/depictio/commit/a24785a369fe9152ec4de2d9781d889618de948d)), map coordinates on tables ([#1389](https://github.com/depictio/depictio/pull/1389), [86ef861](https://github.com/depictio/depictio/commit/86ef861b55a98b90d41a709b25b011963ebfcd3d)), Google Cloud Storage reads ([#1291](https://github.com/depictio/depictio/pull/1291)) and a workshop Codespace ([#1372](https://github.com/depictio/depictio/pull/1372)).
+
+### **🔒 Security**
+
+* **Figure code can be limited to admins** (`DEPICTIO_VIEWER_CODE_FIGURES_LOCKED`), and new projects are private by default ([#1374](https://github.com/depictio/depictio/pull/1374), [a895b31](https://github.com/depictio/depictio/commit/a895b31cc7ef2a91e21830769d130b4218a91170)).
+
+### **🧬 Pipeline Templates**
+
+* **nf-core/crisprseq** guide comparison and **nf-core/sarek 3.11.0** genome browser ([e06f055](https://github.com/depictio/depictio/commit/e06f055ddaea2e64821df1b261547a9828dc1168), [7d62646](https://github.com/depictio/depictio/commit/7d62646f0751e4b868124831dcafd9f49de5fc4f)).
+
+### **🐛 Bug Fixes**
+
+* **A sent project carries its images and logos**, and multi-GB bundles go through ([#1383](https://github.com/depictio/depictio/pull/1383)).
+* **Owners and P.I.s can find people to share a project with** ([#1378](https://github.com/depictio/depictio/pull/1378)).
+
+??? info "Beta releases leading up to v1.21.0"
+
+    * **[b1](https://github.com/depictio/depictio/releases/tag/v1.21.0-b1)** (Nov 5): OpenID Connect, send to another instance, Google Cloud Storage.
+    * **[b2](https://github.com/depictio/depictio/releases/tag/v1.21.0-b2)** (Nov 10): projects start from their data, ZIP export and import.
+    * **[b3](https://github.com/depictio/depictio/releases/tag/v1.21.0-b3)** (Nov 11): editable tables, Metadata panel.
+    * **[b4](https://github.com/depictio/depictio/releases/tag/v1.21.0-b4)** (Nov 11): dashboard import in public mode.
+    * **[b5](https://github.com/depictio/depictio/releases/tag/v1.21.0-b5)** (Nov 11): admin tables, map coordinates.
+    * **[b6](https://github.com/depictio/depictio/releases/tag/v1.21.0-b6)** (Nov 12): regex TextInput, crisprseq and sarek templates.
+
+---
+
+## **[v1.20.5](https://github.com/depictio/depictio/releases/tag/v1.20.5)** (November 4, 2026)
+
+!!! success "Patch: advanced viz stacked_taxonomy renamed stacked_bar, and sturdier genome views and sections"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.5
+ghcr.io/depictio/depictio-viewer:1.20.5
+ghcr.io/depictio/depictio-worker:1.20.5
+ghcr.io/depictio/depictio-cli:1.20.5
+```
+
+### **♻️ Migration**
+
+* **The advanced viz `stacked_taxonomy` is now `stacked_bar`**, and a click on a bar can filter the dashboard (`selection_enabled`). The old name is still accepted and loads the same config, so nothing has to change. See [Stacked bar](../features/advanced-visualizations.md#stacked-bar) ([#1339](https://github.com/depictio/depictio/pull/1339)).
+
+### **🐛 Bug Fixes**
+
+* **A genome view keeps its strongest rows by a data-defined cut-off**: scores in [0, 1] that are not p-values no longer lose the rows the track exists to show ([#1338](https://github.com/depictio/depictio/pull/1338)).
+* **A section keeps its highlights when its one data-bound tile is pruned**, for example when a run lacks the data that tile reads ([#1337](https://github.com/depictio/depictio/pull/1337)).
+
+### **🧬 Pipeline Templates**
+
+* **Thresholds and windows follow their tool or a cited source** across the nf-core templates ([#1340](https://github.com/depictio/depictio/pull/1340)).
+* **The ampliseq `reference_extended` dashboard is regenerated** ([#1341](https://github.com/depictio/depictio/pull/1341)).
+
+---
+
+## **[v1.20.4](https://github.com/depictio/depictio/releases/tag/v1.20.4)** (November 3, 2026)
+
+!!! success "Patch: tiles that describe themselves, colour codes in tables and text, and one error card"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.4
+ghcr.io/depictio/depictio-viewer:1.20.4
+ghcr.io/depictio/depictio-worker:1.20.4
+ghcr.io/depictio/depictio-cli:1.20.4
+```
+
+### **✨ New Features**
+
+* **A structured info popover describes a tile**: a lead, labelled blocks, notes and warnings, and a source, written as labelled paragraphs of the `description`. The (i) icon now opens it, and the component's metadata moves to a list icon, **Data source and settings**, with its code ready to copy. See [Describe a tile](../usage/guides/dashboard_usage.md#describe-a-tile) ([#1328](https://github.com/depictio/depictio/pull/1328)).
+* **Colour codes in tables and text tiles**: a table column covered by `category_colors` draws a dot before each value, and a text tile prints one colour key per column named in its `{{legend:column}}` placeholder. See [Category colours](../features/dashboards.md#category-colors) ([95d49c3](https://github.com/depictio/depictio/commit/95d49c3b7c53cec4d9236ddd17fa733cb01b107c), [c732ec7](https://github.com/depictio/depictio/commit/c732ec7f9444ff3de998ad39ef76eb26ecf2df39)).
+
+### **🚀 Improvements**
+
+* **One error card for a page that cannot load**: not found, not allowed or unreachable, with **Try again** when it can help. See [Right Panel](../features/dashboards.md#right-panel) ([#1329](https://github.com/depictio/depictio/pull/1329)).
+* **A text line citing a column its collection lacks is removed on import**, instead of printing a dash. See [YAML Sync](../features/yaml-sync.md#text-live-values) ([305ad14](https://github.com/depictio/depictio/commit/305ad1413be2142502f481206d21db8887fb0797)).
+* **The stacked bar zoom draws an axis break, and the allele grid recolours cells and groups rows**. See [Allele grid](../features/advanced-visualizations.md#allele-grid) ([95d49c3](https://github.com/depictio/depictio/commit/95d49c3b7c53cec4d9236ddd17fa733cb01b107c)).
+
+### **🧬 Pipeline Templates**
+
+* **Colour keys and chart descriptions across the Overview templates**, and a review round on hlatyping, viralmetagenome, genomeqc, epitopeprediction and stableexpression ([155bca6](https://github.com/depictio/depictio/commit/155bca6e866330658e305329a9952f66b3817b59), [0128dda](https://github.com/depictio/depictio/commit/0128ddaee4b38b051e0c8b0104817531aeb163ad)).
+
+---
+
+## **[v1.20.3](https://github.com/depictio/depictio/releases/tag/v1.20.3)** (November 3, 2026)
+
+!!! success "Patch: the genome browser on the latest atacseq, chipseq and cutandrun templates"
+
+### Docker Images
+
+```bash
+ghcr.io/depictio/depictio-api:1.20.3
+ghcr.io/depictio/depictio-viewer:1.20.3
+ghcr.io/depictio/depictio-worker:1.20.3
+ghcr.io/depictio/depictio-cli:1.20.3
+```
+
+### **🧬 Pipeline Templates**
+
+* **A genome browser on the Locus tab of the latest atacseq (2.1.2), chipseq (2.1.0) and cutandrun (3.2.2) templates**: signal, peaks and alignments, read in place with the optional `TRACKS_URI` variable. See [Templates with a genome browser](../features/genome-browser/index.md#templates-with-a-genome-browser) ([#1324](https://github.com/depictio/depictio/pull/1324)).
+
+---
+
 ## **[v1.20.2](https://github.com/depictio/depictio/releases/tag/v1.20.2)** (November 2, 2026)
 
 !!! success "Patch: the genome browser's ranked-variant counter on public dashboards"
@@ -42,7 +182,7 @@ ghcr.io/depictio/depictio-cli:1.20.1
 
 ### **🐛 Bug Fixes**
 
-* **Genome views keep rows on contigs the assembly spells differently** (`21` and `chr21`): the Overview "Ranked variants along the genome" tile of raredisease showed "No rows" ([#1322](https://github.com/depictio/depictio/pull/1322)).
+* **Genome views keep rows on contigs the assembly spells differently** (`21` and `chr21`): a genome view read the contig under the assembly's spelling before dropping its rows, instead of showing "No rows" ([#1322](https://github.com/depictio/depictio/pull/1322)).
 
 ---
 
@@ -217,7 +357,7 @@ ghcr.io/depictio/depictio-cli:1.19.0
 
 ### **🐛 Bug Fixes**
 
-* **SAML sign-in reads the identity provider's response**. See [Single sign-on (SAML)](../installation/sso.md) ([#1247](https://github.com/depictio/depictio/pull/1247)).
+* **SAML sign-in reads the identity provider's response**. See [Single sign-on (SAML)](../installation/sso/index.md) ([#1247](https://github.com/depictio/depictio/pull/1247)).
 * **The API image builds again** ([#1244](https://github.com/depictio/depictio/pull/1244)).
 * **Dashboards with advanced visualizations export again** ([#1239](https://github.com/depictio/depictio/pull/1239)).
 
@@ -233,7 +373,7 @@ No images were published for v1.18.1: the API image failed to build ([#1244](htt
 
 ### **🐛 Bug Fixes**
 
-* **SAML loads in the API image**, where every SAML route answered 500 in 1.18.0. See [Single sign-on (SAML)](../installation/sso.md) ([#1243](https://github.com/depictio/depictio/pull/1243)).
+* **SAML loads in the API image**, where every SAML route answered 500 in 1.18.0. See [Single sign-on (SAML)](../installation/sso/index.md) ([#1243](https://github.com/depictio/depictio/pull/1243)).
 * **File-backed genome tracks render with sign-in on**. See [Genome view](../features/advanced-visualizations.md#genome-view) ([#1242](https://github.com/depictio/depictio/pull/1242)).
 
 ---
@@ -258,9 +398,9 @@ ghcr.io/depictio/depictio-cli:1.18.0
 
 ### **✨ New Features**
 
-* **SAML 2.0 sign-in**, off until `DEPICTIO_AUTH_SAML_ENABLED` is set. Use v1.19.0 or later. See [Single sign-on (SAML)](../installation/sso.md) ([#968](https://github.com/depictio/depictio/pull/968)).
+* **SAML 2.0 sign-in**, off until `DEPICTIO_AUTH_SAML_ENABLED` is set. Use v1.19.0 or later. See [Single sign-on (SAML)](../installation/sso/index.md) ([#968](https://github.com/depictio/depictio/pull/968)).
 * **User groups**: share a project with a whole lab, and let group admins manage their members. See [Groups](../usage/administration/groups.md) ([#972](https://github.com/depictio/depictio/pull/972)).
-* **Groups from the identity provider** with `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS`. See [Group and profile sync](../installation/sso.md#group-and-profile-sync) ([#972](https://github.com/depictio/depictio/pull/972)).
+* **Groups from the identity provider** with `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS`. See [Group and profile sync](../installation/sso/groups-and-access.md#group-and-profile-sync) ([#972](https://github.com/depictio/depictio/pull/972)).
 * **Remembered filters**: a dashboard reopens on the filters you left. See [Remembered filters](../usage/guides/dashboard_usage.md#remembered-filters) ([#967](https://github.com/depictio/depictio/pull/967)).
 * **Filter links**: the address bar carries the active filters. See [Filter links](../usage/guides/dashboard_usage.md#filter-links) ([#967](https://github.com/depictio/depictio/pull/967)).
 
@@ -272,7 +412,7 @@ ghcr.io/depictio/depictio-cli:1.18.0
 ### **🔒 Security**
 
 * **One permission check for every resource**. See [Group-Based Access](../features/security.md#group-based-access) ([#972](https://github.com/depictio/depictio/pull/972)).
-* **SAML sign-in ends on a single-use ticket**. See [SAML sign-in](../features/security.md#saml-sign-in) ([#968](https://github.com/depictio/depictio/pull/968)).
+* **SAML sign-in ends on a single-use ticket**. See [SAML sign-in](../features/security.md#oidc-sign-in) ([#968](https://github.com/depictio/depictio/pull/968)).
 * **A phylogeny tree is read only from allowed locations**. See [Folders on the server's disk](../features/security.md#folders-on-the-servers-disk) ([#1237](https://github.com/depictio/depictio/pull/1237)).
 
 ### **🐛 Bug Fixes**

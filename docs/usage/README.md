@@ -1,181 +1,93 @@
 ---
 title: "Usage"
 icon: material/chart-bar
-description: "Learn how to use Depictio to create interactive dashboards and visualize your data."
+description: "Use Depictio: getting started, guides, projects, the CLI and administration."
 ---
 
 # Usage
 
-This section provides step-by-step guidance on how to use Depictio — from first login to advanced CLI workflows.
+How to use Depictio, from your first login to projects, the command line and running a deployment.
 
----
-
-## :material-rocket-launch: Getting Started
-
-New to Depictio? Start here.
+## :material-rocket-launch: Start here
 
 <div class="grid cards" markdown>
 
--   :material-play-circle:{ .lg .middle } **Get Started**
+-   :material-play-circle:{ .lg .middle .dp-purple } **Getting started**
 
     ---
 
-    First login, project creation, and your first dashboard in minutes
+    First login, a first project and a first dashboard.
 
-    [:octicons-arrow-right-24: Getting Started Guide](get_started.md)
+    [:octicons-arrow-right-24: Getting started](get_started.md)
+
+-   :material-view-dashboard-edit:{ .lg .middle .dp-violet } **Dashboard creation**
+
+    ---
+
+    Add a component step by step: type, data, then its settings.
+
+    [:octicons-arrow-right-24: Dashboard creation](guides/dashboard_creation.md)
+
+-   :material-gesture-tap:{ .lg .middle .dp-green } **Using a dashboard**
+
+    ---
+
+    Filter, read a tile and share a view, as a viewer or an editor.
+
+    [:octicons-arrow-right-24: Dashboard usage](guides/dashboard_usage.md)
 
 </div>
 
----
-
-## :material-book-open-variant: Guides
-
-Hands-on guides for common tasks in the web interface.
-
-| Page | Description |
-|------|-------------|
-| [Web UI](guides/web_ui.md) | Navigate and use the Depictio web interface |
-| [Dashboard Creation](guides/dashboard_creation.md) | Create and configure interactive dashboards |
-| [Using the Dashboard](guides/dashboard_usage.md) | Explore data through filters and selections |
+## :material-view-grid-outline: In this section
 
 <div class="grid cards" markdown>
 
--   :material-monitor-dashboard:{ .lg .middle } **Web UI**
+-   :material-book-open-variant:{ .lg .middle .dp-orange } **Guides**
 
     ---
 
-    Navigate the Depictio interface
+    The web interface, step by step: search, the dashboard Guide, live refresh.
 
-    [:octicons-arrow-right-24: Web UI Guide](guides/web_ui.md)
+    [:octicons-arrow-right-24: Guides](guides/index.md)
 
--   :material-view-dashboard-edit:{ .lg .middle } **Dashboard Creation**
-
-    ---
-
-    Build and configure interactive dashboards
-
-    [:octicons-arrow-right-24: Dashboard Creation](guides/dashboard_creation.md)
-
--   :material-gesture-tap:{ .lg .middle } **Using the Dashboard**
+-   :material-folder-multiple:{ .lg .middle .dp-blue } **Projects**
 
     ---
 
-    Explore your data with filters and selections
+    Start a project from its data, and configure it in YAML.
 
-    [:octicons-arrow-right-24: Dashboard Usage](guides/dashboard_usage.md)
+    [:octicons-arrow-right-24: Projects](projects/index.md)
+
+-   :material-console:{ .lg .middle .dp-teal } **CLI**
+
+    ---
+
+    Ingest results, move dashboards as YAML and automate with Nextflow.
+
+    [:octicons-arrow-right-24: CLI](../depictio-cli/index.md)
+
+-   :material-shield-account:{ .lg .middle .dp-red } **Administration**
+
+    ---
+
+    Migration, backups, monitoring, branding and groups for admins.
+
+    [:octicons-arrow-right-24: Administration](administration/index.md)
+
+-   :material-account-lock:{ .lg .middle .dp-violet } **Authentication modes**
+
+    ---
+
+    Auth, single-user, public or demo: what each allows, and how to set it.
+
+    [:octicons-arrow-right-24: Authentication modes](guides/authentication-modes.md)
+
+-   :material-earth:{ .lg .middle .dp-pink } **Public mode (legacy)**
+
+    ---
+
+    The former unauthenticated mode, now called public mode.
+
+    [:octicons-arrow-right-24: Unauthenticated mode](guides/unauthenticated_mode.md)
 
 </div>
-
----
-
-## :material-folder-multiple: Projects
-
-Everything you need to configure and manage Depictio projects.
-
-| Page | Description |
-|------|-------------|
-| [Guide](projects/guide.md) | Project types (Basic, Advanced, Template) and lifecycle |
-| [YAML Examples](projects/yaml-examples.md) | Configuration patterns with annotated examples |
-| [Full Reference](projects/reference.md) | Complete YAML field reference |
-
-<div class="grid cards" markdown>
-
--   :material-book-outline:{ .lg .middle } **Projects Guide**
-
-    ---
-
-    Understand project types and the full project lifecycle
-
-    [:octicons-arrow-right-24: Projects Guide](projects/guide.md)
-
--   :material-code-braces:{ .lg .middle } **YAML Examples**
-
-    ---
-
-    Annotated configuration patterns for every use case
-
-    [:octicons-arrow-right-24: YAML Examples](projects/yaml-examples.md)
-
--   :material-file-document-outline:{ .lg .middle } **Full Reference**
-
-    ---
-
-    Complete reference for every YAML configuration field
-
-    [:octicons-arrow-right-24: Reference](projects/reference.md)
-
-</div>
-
----
-
-## :material-console: CLI
-
-Command-line tools for data ingestion, recipes, and templates.
-
-| Page | Description |
-|------|-------------|
-| [Usage](../depictio-cli/usage.md) | All CLI commands with options and examples |
-| [Minimal YAML Config](../depictio-cli/minimal_config.md) | Minimal project YAML to get started |
-| [Recipes](projects/recipes.md) | Data transformation recipes for bioinformatics pipelines |
-| [Templates](projects/templates.md) | One-command project setup for nf-core pipelines |
-
-<div class="grid cards" markdown>
-
--   :material-terminal:{ .lg .middle } **CLI Usage**
-
-    ---
-
-    Full reference for every `depictio` command
-
-    [:octicons-arrow-right-24: CLI Reference](../depictio-cli/usage.md)
-
--   :material-chef-hat:{ .lg .middle } **Recipes**
-
-    ---
-
-    Transform raw pipeline output into dashboard-ready tables
-
-    [:octicons-arrow-right-24: Recipes Guide](projects/recipes.md)
-
--   :material-layers:{ .lg .middle } **Templates**
-
-    ---
-
-    Set up a complete nf-core project with a single command
-
-    [:octicons-arrow-right-24: Templates Guide](projects/templates.md)
-
-</div>
-
----
-
-## :material-shield-account: Administration
-
-Operational tasks for managing Depictio deployments.
-
-| Page | Description |
-|------|-------------|
-| [Project Migration](administration/migrate.md) | Move projects between Depictio instances |
-
-<div class="grid cards" markdown>
-
--   :material-transfer:{ .lg .middle } **Project Migration**
-
-    ---
-
-    Non-destructively migrate projects between Depictio instances
-
-    [:octicons-arrow-right-24: Migration Guide](administration/migrate.md)
-
-</div>
-
----
-
-## :material-toggle-switch: Special Modes
-
-Alternative authentication and access configurations.
-
-| Page | Description |
-|------|-------------|
-| [Authentication Modes](guides/authentication-modes.md) | Configure authentication for your deployment |
-| [Unauthenticated Mode](guides/unauthenticated_mode.md) | Quick access without login (legacy) |

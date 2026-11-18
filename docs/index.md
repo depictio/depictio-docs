@@ -249,7 +249,7 @@ hide:
           <span class="cshow-exgroup"><b>Genome</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="4">Coverage + annotation</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="5">Copy number</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="6">Chord</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="7">Ideogram</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="8">Sashimi</button></span>
           <span class="cshow-exgroup"><b>Protein</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="9">Lollipop</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="10">Fusion structure</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="11">HMM logo</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="12">Alignment</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="13">3D structure</button></span>
           <span class="cshow-exgroup"><b>Statistics</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="14">Volcano</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="15">Manhattan</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="16">Ranked</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="17">Dot plot</button></span>
-          <span class="cshow-exgroup"><b>Hierarchy &amp; flow</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="18">Sunburst</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="19">Sankey</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="20">Stacked taxonomy</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="21">Rarefaction</button></span>
+          <span class="cshow-exgroup"><b>Hierarchy &amp; flow</b><button class="cshow-ex" type="button" aria-pressed="false" data-ex="18">Sunburst</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="19">Sankey</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="20">Stacked bar</button><button class="cshow-ex" type="button" aria-pressed="false" data-ex="21">Rarefaction</button></span>
         </div>
         <div class="cshow-stage">
           <figure class="cshow-shot" data-ex="0" data-live-src="images/landing/live/viz_heatmap">
@@ -494,7 +494,7 @@ hide:
             <a class="glightbox cshow-dark" href="images/landing/live/poster/image_gallery_dark.webp" data-type="image" data-gallery="cshow-image-dark" data-title="Cell and nucleus segmentation per well, nf-core/cellpainting (JUMP cpg0016)" aria-label="Cell and nucleus segmentation per well, nf-core/cellpainting (JUMP cpg0016), open full size"><img src="images/landing/live/poster/image_gallery_dark.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"></a>
           </figure>
         </div>
-        <ul class="cshow-points"><li>Image galleries served from S3 or MinIO storage</li><li>Filtered by the dashboard&#x27;s interactive components</li><li>Click a thumbnail for the full-size image</li></ul>
+        <ul class="cshow-points"><li>Image galleries served from S3-compatible storage</li><li>Filtered by the dashboard&#x27;s interactive components</li><li>Click a thumbnail for the full-size image</li></ul>
         <a class="cshow-docs" href="features/components/#image-components">Image docs &rarr;</a>
       </div>
     </div>
@@ -602,7 +602,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the project page">
-          <img src="images/landing/project_light.webp" alt="A project page showing its type, the template it was built from, its workflow and its data collections" loading="lazy">
+          <img class="only-light" src="images/landing/project_light.webp" alt="A project page: its pipeline, runs and data collections, its dashboards, and the Data, Runs and Activity sections" loading="lazy">
+          <img class="only-dark" src="images/landing/project_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -619,16 +620,20 @@ hide:
 
     <article class="feature-row">
       <div class="feature-row-visual">
-        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the Create a Data Collection dialog">
-          <img src="images/landing/upload_light.webp" alt="The Create a Data Collection dialog, with a drop zone for a table file and a tab for MultiQC reports" loading="lazy">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: how Depictio reads a folder">
+          <img class="only-light" src="images/guides/project-creation/read_levels_light.webp" alt="The New project dialog asking how to read a folder: flat tables, custom workflows or a pipeline template, with the detected nf-core pipeline" loading="lazy">
+          <img class="only-dark" src="images/guides/project-creation/read_levels_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
       <div class="feature-row-text">
-        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"/></svg><span>Upload</span></span>
-        <h3>Or just drop the file in</h3>
-        <p>No pipeline to point at yet? Drop a CSV, TSV, Parquet or Feather file straight into a project from the browser, or a MultiQC report, and Depictio scans it and aggregates it into a Delta table for you. The collection is ready to build on without touching the CLI, and you can link two of them on a shared column from the same screen, so a filter on one reaches every component built on the other.</p>
-        <a class="feature-link" href="usage/projects/guide/">Start a project &rarr;</a>
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z"/></svg><span>New project</span></span>
+        <h3>Start from the data</h3>
+        <p>Upload a table, or point Depictio at a folder, a bucket or one file URL and read it in place. It detects the pipeline and offers how to read the folder: flat tables, your own collections with the Project Builder, or a pipeline template. Another run or more tables join the same project later through <strong>Add data</strong>.</p>
+        <span class="feature-links">
+          <a class="feature-link" href="usage/projects/guide/#create-a-project">Create a project &rarr;</a>
+          <a class="feature-link" href="usage/projects/guide/#project-builder">Project Builder &rarr;</a>
+        </span>
       </div>
     </article>
 
@@ -670,7 +675,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a dashboard in edit mode">
-          <img src="images/landing/build_light.webp" alt="A card held mid-drag, over the dashed outline of the slot it is about to land in" loading="lazy">
+          <img class="only-light" src="images/landing/build_light.webp" alt="The nf-core/ampliseq Alpha Diversity tab in edit mode, the Observed ASVs card pulled by its corner over the dashed outline of its new size" loading="lazy">
+          <img class="only-dark" src="images/landing/build_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -685,7 +691,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the component design step">
-          <img src="images/landing/design_light.webp" alt="The Figure Component Design step, with a box plot preview beside its parameter groups" loading="lazy">
+          <img class="only-light" src="images/landing/design_light.webp" alt="The Figure Component Design step, with a stacked bar preview of phylum abundance per sample beside its parameter groups" loading="lazy">
+          <img class="only-dark" src="images/landing/design_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -700,7 +707,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the catalog browser">
-          <img src="images/landing/catalog_light.webp" alt="The catalog browser, listing the tools recognised in the project and previewing a clustered heatmap" loading="lazy">
+          <img class="only-light" src="images/landing/catalog_light.webp" alt="The catalog browser, listing the tools recognised in the project and previewing a clustered heatmap" loading="lazy">
+          <img class="only-dark" src="images/landing/catalog_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -743,7 +751,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: sections across tabs">
-          <img src="images/landing/organise_light.webp" alt="A dashboard split into named sections across tabs" loading="lazy">
+          <img class="only-light" src="images/landing/organise_light.webp" alt="A dashboard tab split into named sections, with a row of summary cards on top" loading="lazy">
+          <img class="only-dark" src="images/landing/organise_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -768,6 +777,24 @@ hide:
         <h3>Go back to any version, data included</h3>
         <p>Every change to a dashboard is kept as a version: bookmark one, share it as a read-only preview link, restore it, or bring back a single component. A version also records which commit of each table it drew from, so a past dashboard is shown with the data it showed at the time, and the editor can draw today's layout from earlier data.</p>
         <a class="feature-link" href="features/versioning/">Dashboard and data versions &rarr;</a>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: the Metadata panel">
+          <img class="only-light" src="images/guides/metadata-panel/metadata_panel_labels_light.webp" alt="The Metadata panel on a dashboard, with a label column typed next to the samplesheet" loading="lazy">
+          <img class="only-dark" src="images/guides/metadata-panel/metadata_panel_labels_dark.webp" alt="" loading="lazy">
+          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
+        </button>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5,7A1.5,1.5 0 0,1 4,5.5A1.5,1.5 0 0,1 5.5,4A1.5,1.5 0 0,1 7,5.5A1.5,1.5 0 0,1 5.5,7M21.41,11.58L12.41,2.58C12.05,2.22 11.55,2 11,2H4C2.89,2 2,2.89 2,4V11C2,11.55 2.22,12.05 2.59,12.41L11.58,21.41C11.95,21.77 12.45,22 13,22C13.55,22 14.05,21.77 14.41,21.41L21.41,14.41C21.78,14.05 22,13.55 22,13C22,12.44 21.77,11.94 21.41,11.58Z"/></svg><span>Metadata</span></span>
+        <h3>Label samples where you look at them</h3>
+        <p>Open the <strong>Metadata</strong> panel on a dashboard and type labels next to the samplesheet. Each label becomes a group that filters and colours the linked charts, and you can save it back to the table or export it as a sheet.</p>
+        <span class="feature-links">
+          <a class="feature-link" href="features/metadata-panel/">Metadata panel &rarr;</a>
+        </span>
       </div>
     </article>
 
@@ -797,7 +824,7 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a clade selected on a phylogenetic tree">
-          <img class="only-light" src="images/landing/explore_light.webp" alt="A clade selected on a phylogenetic tree, its summary panel open and the dashboard filtered to the 250 tips it holds" loading="lazy">
+          <img class="only-light" src="images/landing/explore_light.webp" alt="A clade selected on a phylogenetic tree, its summary panel open and the dashboard filtered to the 127 tips it holds" loading="lazy">
           <img class="only-dark" src="images/landing/explore_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
@@ -813,7 +840,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a MultiQC tab in a dashboard">
-          <img src="images/landing/multiqc_light.webp" alt="A MultiQC tab in a dashboard, with four FastQC module plots each placed as its own card" loading="lazy">
+          <img class="only-light" src="images/landing/multiqc_light.webp" alt="A MultiQC tab in a dashboard, with the general statistics table, cutadapt and FastQC module plots each placed as its own card" loading="lazy">
+          <img class="only-dark" src="images/landing/multiqc_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -828,14 +856,15 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a dashboard compared by selection group">
-          <img src="images/landing/group_light.webp" alt="The same dashboard split into panels, one per selection group" loading="lazy">
+          <img class="only-light" src="images/landing/group_light.webp" alt="Samples labelled by habitat: every card compares the four habitats beside All, and the rarefaction curves are coloured the same way" loading="lazy">
+          <img class="only-dark" src="images/landing/group_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
       <div class="feature-row-text">
         <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"/></svg><span>Group</span></span>
         <h3>Slice it, then compare</h3>
-        <p>Lasso points on a plot, pick rows in a table, or select a region on the map, then save what you picked as a named group. Every component on the dashboard then colours by that grouping at once, or splits into one panel per group, so treated and control sit side by side instead of in two browser tabs. Groups survive a reload and travel with the dashboard, so the comparison is something you share rather than something you rebuild.</p>
+        <p>Lasso points on a plot, pick rows in a table, select a region on the map, or label samples in the <strong>Metadata</strong> panel, and each set becomes a named group. Every figure then colours by the groups at once, or splits into one panel per group, and every card compares them side by side, so treated and control sit together instead of in two browser tabs. A label can be shared on the dashboard, so others see the same comparison.</p>
         <a class="feature-link" href="features/interactive-selection-filtering/#selection-groups">Selection groups &rarr;</a>
       </div>
     </article>
@@ -843,7 +872,8 @@ hide:
     <article class="feature-row">
       <div class="feature-row-visual">
         <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: a floating map panel">
-          <img src="images/landing/map_light.webp" alt="The sampling-sites map floating over the dashboard, its points coloured by habitat" loading="lazy">
+          <img class="only-light" src="images/landing/map_light.webp" alt="The Sampling Sites map, expanded over the dashboard, its points coloured by habitat" loading="lazy">
+          <img class="only-dark" src="images/landing/map_dark.webp" alt="" loading="lazy">
           <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
         </button>
       </div>
@@ -852,6 +882,41 @@ hide:
         <h3>Where the samples came from</h3>
         <p>Any collection carrying coordinates becomes a map: points, choropleths from your own GeoJSON, or a panel that follows you across every tab. Dock it in the filter rail or float it over the grid, and lasso a region to filter every other component down to the samples inside it, exactly like a dropdown would. Geography stops being a column in a table and becomes a way to ask questions of the run.</p>
         <a class="feature-link" href="usage/guides/dashboard_usage/#the-map-panel-v140">The map panel &rarr;</a>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <div class="feature-frame feature-frame--video">
+          <video data-autoplay muted loop playsinline preload="none" poster="images/guides/whats-new/whats-new-overlay-split.webp" src="images/guides/whats-new/whats-new-overlay-split.mp4" aria-label="What's new on a dashboard: new points ringed in Overlay, then split from what was seen before"></video>
+        </div>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5,8H12V13L16.28,15.54L17,14.33L13.5,12.25V8M13,3A9,9 0 0,0 4,12H1L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3"/></svg><span>What's new</span></span>
+        <h3><em>"What's new"</em> since your last visit</h3>
+        <p>A dashboard remembers what you last saw. <strong>Overlay</strong> rings the new samples on every chart and fades the rest, <strong>Split</strong> sets them beside what you had seen, and <strong>Before | Now</strong> shows one tile as it was. A bell lists what changed while you were away.</p>
+        <span class="feature-links">
+          <a class="feature-link" href="features/whats-new/"><em>"What's new"</em> &rarr;</a>
+        </span>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <button type="button" class="feature-frame feature-frame--contain" aria-label="Enlarge the screenshot: a MultiQC figure split on the new samples">
+          <img class="only-light" src="images/guides/multiqc/split_multiqc_light.webp" alt="A MultiQC Sequence Counts figure split into the new runs and the samples seen before" loading="lazy">
+          <img class="only-dark" src="images/guides/multiqc/split_multiqc_dark.webp" alt="" loading="lazy">
+          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
+        </button>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19,3H14V5H19V18L14,12V21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10,18H5L10,12M10,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H10V23H12V1H10V3Z"/></svg><span>Runs</span></span>
+        <h3>Compare runs, MultiQC included</h3>
+        <p>The <strong>Runs</strong> tab says what each run produced and what each scan changed. <strong>Compare</strong> opens a dashboard on the new samples, MultiQC figures and General Stats split on them, and a run naming samples already in the project is held back.</p>
+        <span class="feature-links">
+          <a class="feature-link" href="features/runs/">Runs and run comparison &rarr;</a>
+          <a class="feature-link" href="features/multiqc/">MultiQC &rarr;</a>
+        </span>
       </div>
     </article>
 
@@ -906,6 +971,24 @@ hide:
         <h3>Add your tool without writing YAML</h3>
         <p>And the shelf is yours to stock. Drop one output file, bind its columns in Depictio's own component builder, and Tool Studio writes the catalog entry and opens the pull request for you, so the next person picks what you designed.</p>
         <a class="feature-link" href="https://depictio.github.io/depictio-tool-studio/" target="_blank" rel="noopener">Open Tool Studio &rarr;</a>
+      </div>
+    </article>
+
+    <article class="feature-row">
+      <div class="feature-row-visual">
+        <button type="button" class="feature-frame" aria-label="Enlarge the screenshot: sending a project to another instance">
+          <img class="only-light" src="images/guides/migration/send_checked_light.webp" alt="The Send to another instance dialog, the destination https://depictio.lab-b.org checked and ready to send" loading="lazy">
+          <img class="only-dark" src="images/guides/migration/send_checked_dark.webp" alt="" loading="lazy">
+          <span class="feature-zoom" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z"/></svg></span>
+        </button>
+      </div>
+      <div class="feature-row-text">
+        <span class="feature-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/></svg><span>Migration</span></span>
+        <h3>Send a project to another instance</h3>
+        <p>Ask the other instance for an invite code, paste it in the project settings and <strong>Send</strong>. The project lands there with its data, dashboards and images, is imported right away under that code and is served read-only. A ZIP export covers the offline case.</p>
+        <span class="feature-links">
+          <a class="feature-link" href="usage/administration/migrate/#send-to-another-instance">Move a project &rarr;</a>
+        </span>
       </div>
     </article>
 
@@ -1014,6 +1097,22 @@ hide:
         <h3>Codespaces</h3>
         <p>The Python package, in a cloud workspace</p>
         <span class="card-badge codespaces">No install</span>
+      </div>
+      <div class="card-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/>
+        </svg>
+      </div>
+    </a>
+
+    <a href="https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/workshop/devcontainer.json&amp;quickstart=1" class="installation-card codespaces" target="_blank" rel="noopener">
+      <div class="card-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      </div>
+      <div class="card-content">
+        <h3>Workshop</h3>
+        <p>A Codespace with an nf-core/ampliseq run ingested, to follow the tutorials</p>
+        <span class="card-badge codespaces">Hands-on</span>
       </div>
       <div class="card-arrow">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -1160,9 +1259,9 @@ hide:
         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
         <span>MongoDB</span>
       </a>
-      <a href="https://min.io/" target="_blank" rel="noopener" class="tech-badge minio">
-        <img src="https://cdn.prod.website-files.com/681c8426519d8db8f867c1e8/682dcb06620717ccd769b572_MINIO_Bird.png" alt="MinIO">
-        <span>MinIO</span>
+      <a href="https://github.com/seaweedfs/seaweedfs" target="_blank" rel="noopener" class="tech-badge minio">
+        <img src="https://raw.githubusercontent.com/seaweedfs/seaweedfs/master/note/seaweedfs.png" alt="SeaweedFS">
+        <span>SeaweedFS</span>
       </a>
       <a href="https://pola.rs/" target="_blank" rel="noopener" class="tech-badge polars">
         <img src="https://raw.githubusercontent.com/pola-rs/polars-static/master/logos/polars-logo-dark.svg" alt="Polars">
@@ -3527,6 +3626,80 @@ hide:
 
   [data-md-color-scheme="slate"] .feature-frame img.only-light {
     display: none;
+  }
+
+  /* A wide figure shown whole, centred in the frame, instead of cropped to fill it */
+  .feature-frame--contain img {
+    object-fit: contain;
+    object-position: center;
+    padding: 4%;
+  }
+
+  .feature-frame--video {
+    cursor: default;
+  }
+
+  .feature-frame video {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  /* Animated media say so before they play: a ring in the brand purple and a
+     "Video" pill on frames that play in place, a play button on posters that
+     open a video in the lightbox. */
+  .feature-frame--video,
+  .md-typeset .cshow-shot a[data-type="video"] img {
+    box-shadow: 0 0 0 2px rgba(124, 77, 255, 0.55), 0 18px 40px -14px rgba(124, 77, 255, 0.35);
+  }
+
+  .feature-frame--video::after,
+  .md-typeset .cshow-shot[data-video].is-live::after {
+    content: "Video";
+    position: absolute;
+    left: 0.7rem;
+    bottom: 0.7rem;
+    z-index: 2;
+    padding: 0.28rem 0.65rem 0.28rem 1.65rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(15, 17, 20, 0.62) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M8 5v14l11-7z'/%3E%3C/svg%3E") no-repeat 0.55rem center / 0.85rem;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    pointer-events: none;
+  }
+
+  .md-typeset .cshow-shot[data-video].is-live::after {
+    left: 1.3rem;
+    bottom: 1.3rem;
+  }
+
+  .md-typeset .cshow-shot a[data-type="video"]::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4rem;
+    height: 4rem;
+    margin: -2rem 0 0 -2rem;
+    border-radius: 50%;
+    background: rgba(124, 77, 255, 0.88) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M8 5v14l11-7z'/%3E%3C/svg%3E") no-repeat 56% center / 1.9rem;
+    box-shadow: 0 0 0 0.45rem rgba(124, 77, 255, 0.22), 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.25s ease;
+    pointer-events: none;
+  }
+
+  .md-typeset .cshow-shot a[data-type="video"]:hover::after,
+  .md-typeset .cshow-shot a[data-type="video"]:focus-visible::after {
+    transform: scale(1.08);
   }
 
   /* Magnifier badge, revealed on hover */

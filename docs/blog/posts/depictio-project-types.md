@@ -16,6 +16,9 @@ tags:
 
 # 📊 Depictio Project Types: Choose Your Data Strategy
 
+!!! note "Project types were removed in v1.21.0"
+    This post describes the Basic and Advanced choice. Since v1.21.0 the UI no longer offers it: a project is created from its data. See the [Projects guide](../../usage/projects/guide.md).
+
 **From simple CSV files to complex bioinformatics pipelines - discover which project type fits your needs.**
 
 <!-- more -->

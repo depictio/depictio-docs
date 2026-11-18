@@ -3,6 +3,11 @@ site_name: Depictio Documentation
 site_url: https://depictio.github.io/depictio-docs/
 site_description: "Documentation for Depictio"
 
+# Hand-written notes the CLI reference includes with pymdownx.snippets
+# (scripts/cli-reference/render.py): not pages of their own.
+exclude_docs: |
+  /depictio-cli/_notes/
+
 # Repository Information
 repo_url: https://github.com/depictio/depictio
 repo_name: depictio/depictio
@@ -70,6 +75,8 @@ extra_css:
   - stylesheets/blog.css
   - stylesheets/neoteroi-mkdocs-v1.1.3.css
   - stylesheets/asciinema.css
+  - stylesheets/cards.css
+  - stylesheets/cli.css
   # - stylesheets/css-v1.0.4.css
   - https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
   - https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css
@@ -88,6 +95,7 @@ extra_javascript:
   - javascripts/template-catalog.js
   - javascripts/asciinema.js
   - javascripts/theme-video.js
+  - javascripts/lazy-video.js
 
 # Markdown Extensions
 markdown_extensions:
@@ -116,6 +124,9 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          - overrides/.icons
   - pymdownx.snippets:
       base_path:
         - docs
@@ -147,6 +158,57 @@ hooks:
 # Plugins
 plugins:
   - search
+  # llms.txt (an index of the pages) and llms-full.txt (every page as clean
+  # Markdown) at the site root, for AI agents and LLM tools; see llmstxt.org.
+  - llmstxt:
+      # mike serves every version under its own folder; agents read the latest.
+      base_url: https://depictio.github.io/depictio-docs/latest/
+      full_output: llms-full.txt
+      markdown_description: >
+        Depictio turns bioinformatics pipeline results into interactive, shareable
+        dashboards: a FastAPI backend, a React viewer, MongoDB, S3 storage and a
+        Python CLI that ingests results. Every CLI command and option is also
+        available as JSON at depictio-cli/cli-reference.json.
+      sections:
+        Start:
+          - index.md: What depictio is, with the main features
+          - usage/get_started.md: First steps, from install to a first dashboard
+          - tutorials/index.md: Tutorials
+        Installation:
+          - installation/README.md
+          - installation/docker.md
+          - installation/kubernetes.md
+          - installation/local.md
+          - installation/cli.md
+          - installation/configuration.md
+          - installation/env-reference.md
+          - installation/sso/*.md
+          - installation/upgrade/*.md
+        Using depictio:
+          - usage/README.md
+          - usage/guides/*.md
+          - usage/administration/*.md
+        Projects:
+          - usage/projects/*.md
+        CLI:
+          - depictio-cli/index.md
+          - depictio-cli/tasks.md: One command per task
+          - depictio-cli/usage.md: Every command and option, generated from the CLI
+          - depictio-cli/nextflow-trigger.md
+          - depictio-cli/minimal_config.md
+        Features:
+          - features/*.md
+        API:
+          - api/*.md
+        # The per-pipeline template pages (140) and the changelog would make
+        # llms-full.txt several MB; the catalog page lists every template.
+        Templates:
+          - pipeline-templates/README.md: Every pipeline template, with links to each one
+        Developer:
+          - developer/*.md
+        Optional:
+          - FAQ/*.md
+          - roadmap/README.md
   # Click a screenshot to open it full size. manual: true keeps this opt-in, so
   # a page only gets lightboxes when its front matter says `glightbox: true`
   # (or an image carries `.on-glb`); every other page renders as before. Images
@@ -245,7 +307,14 @@ nav:
       - CLI:
           - installation/cli.md
       - Configuration: installation/configuration.md
-      - Single sign-on (SAML): installation/sso.md
+      - Single sign-on:
+          - OpenID Connect:
+              - installation/sso/index.md
+              - Configuration: installation/sso/configuration.md
+              - Providers: installation/sso/providers.md
+              - Groups and access: installation/sso/groups-and-access.md
+              - From Google OAuth: installation/sso/migration.md
+              - Troubleshooting: installation/sso/troubleshooting.md
       - Environment Reference: installation/env-reference.md
 
   - Usage:
@@ -256,7 +325,7 @@ nav:
           - WebUI: usage/guides/web_ui.md
           - Dashboard creation: usage/guides/dashboard_creation.md
           - Picking from the catalog: usage/guides/catalog-picker.md
-          - Using the dashboard: usage/guides/dashboard_usage.md
+          - Using a dashboard: usage/guides/dashboard_usage.md
           - The dashboard Guide: usage/guides/dashboard-guide.md
           - Spotlight search: usage/guides/spotlight-search.md
           - Real-time events: usage/guides/realtime-events.md
@@ -271,9 +340,10 @@ nav:
           - Remote data and manifests: usage/projects/remote-data.md
       - CLI:
           - depictio-cli/index.md
-          - Usage: depictio-cli/usage.md
+          - Common tasks: depictio-cli/tasks.md
+          - Command reference: depictio-cli/usage.md
           - Nextflow trigger: depictio-cli/nextflow-trigger.md
-          - Minimal YAML config: depictio-cli/minimal_config.md
+          - Minimal project YAML: depictio-cli/minimal_config.md
       - Administration:
           - usage/administration/index.md
           - Project Migration: usage/administration/migrate.md
@@ -287,13 +357,25 @@ nav:
   - Tutorials: tutorials/index.md
   - Features:
       - Overview: features/README.md
-      - Dashboard & Components:
-          - Dashboards: features/dashboards.md
-          - Components: features/components.md
-          - Advanced Visualizations: features/advanced-visualizations.md
+      - Dashboards:
+          - Layout, tabs and sharing: features/dashboards.md
+          - What's new: features/whats-new.md
+          - Comments and annotations: features/comments-annotations.md
+          - Versions and history: features/versioning.md
+          - Dashboards as YAML: features/yaml-sync.md
+      - Components:
+          - Component types: features/components.md
+          - Advanced visualizations: features/advanced-visualizations.md
+          - Export and embedding: features/component-export.md
+      - Data and filtering:
+          - Selection filtering: features/interactive-selection-filtering.md
+          - Cross-DC filtering: features/cross-dc-filtering.md
+          - Filter expressions: features/filter-expressions.md
+          - Metadata panel: features/metadata-panel.md
+          - Runs and run comparison: features/runs.md
+      - Data Types:
+          - MultiQC: features/multiqc.md
           - Proteins: features/proteins.md
-          - Interactive Selection Filtering: features/interactive-selection-filtering.md
-          - Comments and Annotations: features/comments-annotations.md
           - Genome browser:
               - features/genome-browser/index.md
               - Table to browser: features/genome-browser/table-to-browser.md
@@ -306,24 +388,12 @@ nav:
               - UCSC tracks: features/genome-browser/ucsc-tracks.md
               - Variant colours: features/genome-browser/variant-colours.md
               - Raw JBrowse configuration: features/genome-browser/raw-jbrowse.md
-          - Dashboard and Data Versions: features/versioning.md
-          - Component Export and Embedding: features/component-export.md
-      - Data Integration:
-          - Cross-DC Filtering: features/cross-dc-filtering.md
-          - Filter Expressions: features/filter-expressions.md
-          - YAML Dashboard Sync: features/yaml-sync.md
       - System Design:
           - Architecture: features/architecture.md
           - Performance & Scaling: features/performance.md
           - Data Model: features/data-model.md
           - Security: features/security.md
           - Telemetry: features/telemetry.md
-  - API:
-      - Overview: api/README.md
-      # - Endpoints: api/endpoints.md
-      - API Reference: api/reference.md
-      # - Integration: api/api_docs_integration.md
-      - FastAPI Docs: api/fastapi_docs.md
   - Templates:
       - pipeline-templates/README.md
       - nf-core:
@@ -377,6 +447,12 @@ nav:
       - Contributing a Tool: developer/contributing-a-tool.md
       - Tool Studio: developer/tool-studio.md
       - Contributing Templates: developer/contributing-templates.md
+      - API:
+          - Overview: api/README.md
+          # - Endpoints: api/endpoints.md
+          - API Reference: api/reference.md
+          # - Integration: api/api_docs_integration.md
+          - FastAPI Docs: api/fastapi_docs.md
   - Roadmap: roadmap/README.md
   - Changelog: changelog/README.md
   - Blog:

@@ -8,7 +8,7 @@ glightbox: true
 # Sashimi
 
 <figure markdown="span">
-  <video autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/sashimi_junctions.webp" src="../../../images/guides/genome-browser/sashimi_junctions.mp4"></video>
+  <video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/sashimi_junctions.webp" src="../../../images/guides/genome-browser/sashimi_junctions.mp4"></video>
 </figure>
 
 Splice junctions are drawn as arcs over the coverage of RNA alignments. Pick a locus in the landscape and the reads follow; the browser zooms with the other genome tiles.

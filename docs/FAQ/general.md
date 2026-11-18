@@ -51,7 +51,7 @@ Creating dashboards in Depictio is straightforward. Please refer to our [Dashboa
 
 ### What data formats does Depictio support?
 
-Depictio currently supports all tabular formats (CSV, TSV, XLSX, Parquet, etc.) compatible with [Polars](https://pola.rs/). As of v0.5.0, [MultiQC](https://seqera.io/multiqc/) reports are fully supported with dedicated visualization components. See our [Roadmap](../roadmap/README.md) for planned support of additional data formats.
+Depictio currently supports all tabular formats (CSV, TSV, XLSX, Parquet, etc.) compatible with [Polars](https://pola.rs/). [MultiQC](https://seqera.io/multiqc/) reports (`multiqc.parquet`, MultiQC 1.29 or later) have their own component, and the reports of several runs can be compared: see [MultiQC](../features/multiqc.md). See our [Roadmap](../roadmap/README.md) for planned support of additional data formats.
 
 ### Can I share my dashboards with others?
 

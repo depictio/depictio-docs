@@ -6,19 +6,16 @@ description: "Link data collections for interactive filtering across dashboards.
 
 # :material-link-variant: Cross-DC Filtering
 
-Filter data in one collection and automatically update related visualizations—no pre-computed joins needed.
+Filter data in one collection and automatically update related visualizations, with no pre-computed join.
 
 ## :material-information-outline: Overview
 
-**Links** connect Data Collections for interactive filtering at runtime. When you filter a metadata table, linked MultiQC plots and other visualizations update automatically.
+**Links** connect Data Collections for interactive filtering at runtime. A filter on the
+link's source keeps some rows; the link's column carries their values, its resolver turns
+them into what the target calls them, and every component on the target narrows to those.
 
-```text
-┌─────────────────┐         ┌─────────────────┐
-│  Metadata Table │  link   │  MultiQC Plots  │
-│                 │────────▶│                 │
-│  [filter here]  │         │  [auto-updates] │
-└─────────────────┘         └─────────────────┘
-```
+[![A habitat filter on the ampliseq metadata keeps three samples; a sample_mapping link expands them to their MultiQC names and a direct link passes the same ids to taxonomy_rel_abundance. Links work from source to target only, chain up to three links, and a value that matches nothing empties the tile](../images/guides/cross-dc-links/cross-dc-flow_light.png#only-light)](../images/guides/cross-dc-links/cross-dc-flow_light.png){target=_blank}
+[![A habitat filter on the ampliseq metadata keeps three samples; a sample_mapping link expands them to their MultiQC names and a direct link passes the same ids to taxonomy_rel_abundance. Links work from source to target only, chain up to three links, and a value that matches nothing empties the tile](../images/guides/cross-dc-links/cross-dc-flow_dark.png#only-dark)](../images/guides/cross-dc-links/cross-dc-flow_dark.png){target=_blank}
 
 ## :material-cog-sync: How It Works
 
@@ -140,7 +137,6 @@ same way.
 
 ```yaml
 name: "RNA-seq QC Analysis"
-project_type: "advanced"
 
 # Define links for cross-DC filtering
 links:
@@ -195,8 +191,8 @@ Links can be defined in YAML (above) **or** managed interactively from the web v
 | :material-magnify: **Inspect** <small>(v1.7.0+)</small> | Link row → *Inspect mapping* | Read-only; shows what each source value actually resolves to |
 
 <figure markdown="span">
-  ![Cross-DC link Create modal — source/target DCs picked, Sample mapping resolver, mapping preview](../images/react/link_create_modal.png)
-  <figcaption><em>Create cross-DC link</em> modal — source DC <code>sample_metadata</code>, target DC <code>multiqc_reports</code> (detected as <em>multiqc</em>), <em>Sample mapping</em> resolver, with the auto-loaded MultiQC sample mappings previewed.</figcaption>
+  ![Cross-DC link Create modal: source and target DCs picked, Sample mapping resolver, mapping preview](../images/react/link_create_modal.png)
+  <figcaption><em>Create cross-DC link</em> modal: source DC <code>sample_metadata</code>, target DC <code>multiqc_reports</code> (detected as <em>multiqc</em>), <em>Sample mapping</em> resolver, with the auto-loaded MultiQC sample mappings previewed.</figcaption>
 </figure>
 
 ### :material-magnify: Inspecting what a link resolves to <small>(v1.7.0+)</small> { #mapping-inspector }

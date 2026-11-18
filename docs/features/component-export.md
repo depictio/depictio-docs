@@ -115,7 +115,7 @@ the tab that owns it.
 
 - **JSON** needs a figure the server can build in Python. For advanced visualizations
   that is the complex heatmap, UpSet plot and Sankey, and the volcano (with its MA and QQ
-  views), embedding, Manhattan, stacked taxonomy, differential abundance bar plot,
+  views), embedding, Manhattan, stacked bar, differential abundance bar plot,
   sunburst, the dot plot's enrichment view and the four benchmarking kinds. The other
   kinds answer `501`, with the URL of their HTML page in `html_url`.
 - **HTML** runs the viewer's renderer, so every component it draws in the browser renders

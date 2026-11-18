@@ -79,7 +79,6 @@ template:
 
 # ── Standard project config with {DATA_ROOT} placeholders ─────────
 name: "My Pipeline Analysis"
-project_type: "advanced"
 is_public: true
 workflows:
   - name: "my-pipeline"
@@ -208,7 +207,6 @@ template:
     - "dashboards/main.yaml"
 
 name: "My Manifest Analysis"
-project_type: "basic"
 workflows:
   - name: "manifest"
     engine: { name: "python" }
