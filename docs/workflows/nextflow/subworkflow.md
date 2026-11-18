@@ -8,7 +8,7 @@ description: "Publish an nf-core run to Depictio from inside the pipeline, with 
 `depictio/publish` is a piece of Nextflow code that a **pipeline developer** adds to an nf-core pipeline. With it, the pipeline itself turns each run into Depictio dashboards, as its last step, with no Depictio server involved. It is not a CLI command and not something you click in the app.
 
 <figure markdown="span">
-  [![A pipeline's outputs go through one DEPICTIO_PUBLISH call into one task in the depictio-allinone image, which leaves a self-contained artifact in outdir/depictio that docker or apptainer reopens](../images/guides/nextflow-publish/publish-flow.png)](../images/guides/nextflow-publish/publish-flow.png){target=_blank}
+  [![A pipeline's outputs go through one DEPICTIO_PUBLISH call into one task in the depictio-allinone image, which leaves a self-contained artifact in outdir/depictio that docker or apptainer reopens](../../images/guides/nextflow-publish/publish-flow.png)](../../images/guides/nextflow-publish/publish-flow.png){target=_blank}
 </figure>
 
 ## What it is

@@ -11,8 +11,8 @@ A `workflow.onComplete` handler, shipped with the CLI, runs `depictio ingest` on
     The trigger needs nothing from the pipeline. To ship Depictio with an nf-core pipeline instead, as one task that leaves a dashboard anyone can reopen, use the [Nextflow subworkflow](subworkflow.md) <small>(v1.22.0+)</small>.
 
 <figure markdown="span">
-  [![A pipeline finishes, an onComplete handler runs depictio-cli on the output directory, and Depictio ends up with a project and a dashboard](../images/guides/nextflow-trigger/trigger-flow_light.png#only-light)](../images/guides/nextflow-trigger/trigger-flow_light.png){target=_blank}
-  [![A pipeline finishes, an onComplete handler runs depictio-cli on the output directory, and Depictio ends up with a project and a dashboard](../images/guides/nextflow-trigger/trigger-flow_dark.png#only-dark)](../images/guides/nextflow-trigger/trigger-flow_dark.png){target=_blank}
+  [![A pipeline finishes, an onComplete handler runs depictio-cli on the output directory, and Depictio ends up with a project and a dashboard](../../images/guides/nextflow-trigger/trigger-flow_light.png#only-light)](../../images/guides/nextflow-trigger/trigger-flow_light.png){target=_blank}
+  [![A pipeline finishes, an onComplete handler runs depictio-cli on the output directory, and Depictio ends up with a project and a dashboard](../../images/guides/nextflow-trigger/trigger-flow_dark.png#only-dark)](../../images/guides/nextflow-trigger/trigger-flow_dark.png){target=_blank}
 </figure>
 
 ## Set it up once
