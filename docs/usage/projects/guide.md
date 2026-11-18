@@ -83,17 +83,21 @@ A YAML file describes the project and `depictio ingest` creates it.
 
     ```yaml
     name: "My Project"
-    data_collections:
-      - data_collection_tag: "my_data"
-        config:
-          type: "Table"
-          metatype: "Metadata"
-          scan:
-            mode: "single"
-            scan_parameters:
-              filename: "/path/to/data.csv"
-          dc_specific_properties:
-            format: "CSV"
+    workflows:              # ingest scans the collections of a workflow
+      - name: "tables"
+        engine: { name: "python" }
+        data_location: { structure: "flat", locations: ["/path/to"] }
+        data_collections:
+          - data_collection_tag: "my_data"
+            config:
+              type: "Table"
+              metatype: "Metadata"
+              scan:
+                mode: "single"
+                scan_parameters:
+                  filename: "/path/to/data.csv"
+              dc_specific_properties:
+                format: "CSV"
     ```
 
     ```bash
@@ -102,28 +106,29 @@ A YAML file describes the project and `depictio ingest` creates it.
 
 === "Runs of a pipeline"
 
-    Collections sit under a workflow, read from each run folder under `parent_runs_location`:
+    Collections sit under a workflow, read from each run folder that `runs_regex` matches under `data_location.locations`:
 
     ```yaml
     name: "RNA-seq Expression Study"
     workflows:
       - name: "rnaseq_pipeline"
         engine: { name: "nextflow", version: "24.10.3" }
-        config:
-          parent_runs_location: ["{DATA_LOCATION}/rnaseq-results"]
+        data_location:
+          structure: "sequencing-runs"
+          locations: ["{DATA_LOCATION}/rnaseq-results"]
           runs_regex: ".*"
-          data_collections:
-            - data_collection_tag: "sample_stats"
-              config:
-                type: "Table"
-                metatype: "Aggregate"
-                scan:
-                  mode: "recursive"
-                  scan_parameters:
-                    regex_config: { pattern: "stats/.*_stats.tsv" }
-                dc_specific_properties:
-                  format: "TSV"
-                  polars_kwargs: { separator: "\t" }
+        data_collections:
+          - data_collection_tag: "sample_stats"
+            config:
+              type: "Table"
+              metatype: "Aggregate"
+              scan:
+                mode: "recursive"
+                scan_parameters:
+                  regex_config: { pattern: "stats/.*_stats.tsv" }
+              dc_specific_properties:
+                format: "TSV"
+                polars_kwargs: { separator: "\t" }
     ```
 
     Annotated versions, links and every scan mode: [YAML examples](yaml-examples.md) and the [reference](reference.md).
@@ -233,11 +238,11 @@ Most collections are tables. A few types carry extra configuration at the collec
 
 ### :material-map-marker-multiple: Map-capable tables { #example-map-capable-table-dcs }
 
-A table whose columns look like a latitude and longitude shows **Map coordinates…**: confirm or change the columns. Every Map figure on it then inherits them. In YAML, set `DCTableCoordinatesConfig` on the collection (see [YAML examples](yaml-examples.md)); at upload, `POST /create_from_upload` takes `latColumn` and `lonColumn`. A figure's own `lat_column` and `lon_column` still win.
+A table whose columns look like a latitude and longitude shows **Map coordinates…**: confirm or change the columns. Every Map figure on it then inherits them. In YAML, set `lat_column` and `lon_column` (both, and different) in the collection's `dc_specific_properties`, `crs` defaulting to `EPSG:4326` (see the [reference](reference.md)); at upload, `POST /create_from_upload` takes `latColumn` and `lonColumn`. A figure's own `lat_column` and `lon_column` still win.
 
 ### :material-family-tree: Phylogeny and its metadata table { #example-phylogeny-dcs-and-their-metadata-table }
 
-The tree file is read where it was found, never converted. Its tip annotations come from a separate table keyed by taxon name; leave the three `metadata_*` keys out and the tree renders unannotated.
+Ingestion copies the tree file as is to S3, never converted. Its tip annotations come from a separate table keyed by taxon name; leave the three `metadata_*` keys out and the tree renders unannotated.
 
 ??? example "YAML"
 
