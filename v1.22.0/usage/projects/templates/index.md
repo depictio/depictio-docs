@@ -1,0 +1,387 @@
+# Template System Reference
+
+This page documents the **template YAML format** and resolution mechanics. For browsing available templates and quick start guides, see the [Template Catalog](https://depictio.github.io/depictio-docs/latest/pipeline-templates/index.md).
+
+______________________________________________________________________
+
+## What is a Template?
+
+A template is a `template.yaml` file that ships inside Depictio under `depictio/projects/<pipeline>/<version>/`. It extends a standard project YAML with:
+
+- A **`template:`** metadata block — variable declarations, conditionals, dashboard references
+- **`{VAR_NAME}` placeholders** throughout the project config — resolved at runtime
+- References to **bundled dashboard YAML** files — imported automatically
+- References to **recipes** for transformed data collections
+
+______________________________________________________________________
+
+## Template Variables
+
+Every template declares its own variables. Variable names are **template-specific** — each pipeline decides what it needs.
+
+`DATA_ROOT` is the usual root variable: the results directory given to `depictio ingest` (formerly `--data-root`), a local folder or an `s3://` prefix. A manifest-driven template declares `MANIFEST_URL` instead, set with `--manifest`. All others are passed via `--var KEY=VALUE`. `--bind TAG=LOCATION` can stand in for either root variable by pointing each data collection at its own location; see [Instantiating with `--manifest` or `--bind`](#instantiating-with-manifest-or-bind).
+
+**Auto-detected variables:** When a metadata file is provided, the system reads its headers and auto-populates:
+
+- `GROUP_COL` — first non-ID annotation column (overridable)
+- `GROUP_COL_DISPLAY` — title-cased version for chart labels
+- `ANNOTATION_COLS` — comma-separated list of all annotation columns
+
+**Variables set from the run's params** (v1.22.0+): a variable with a [`from_params`](#from-params) rule is set from the run's `pipeline_info/params_<timestamp>.json`, so a `--skip_multiqc` run needs no `--var SKIP_MULTIQC=true`.
+
+### Samplesheets in YAML or JSON (v1.22.0+)
+
+A samplesheet can be a `.yaml`, `.yml` or `.json` list of records, one per row, read exactly as the same CSV: every value as text, then typed like a CSV column. It is accepted wherever a CSV/TSV sheet is: `--var SAMPLESHEET_FILE=` (local, `http(s)://` or `s3://`), auto-detection under `input/` (a CSV/TSV sheet wins when both exist) and `depictio manifest from-table`. Nested values are refused.
+
+______________________________________________________________________
+
+## Template YAML Structure
+
+```
+template:
+  template_id: "org/pipeline/version"
+  description: "Human-readable description"
+  version: "1.0.0"
+
+  variables:
+    - name: "DATA_ROOT"
+      description: "Pipeline output root directory"
+      required: true
+    - name: "OPTIONAL_VAR"
+      description: "An optional variable"
+      required: false
+    - name: "GENOME"
+      description: "Assembly the run was aligned to"
+      required: false
+      default: "hg38"     # v1.13.0+: used when the run does not set it
+    - name: "SKIP_MULTIQC"
+      description: "Set when the run used --skip_multiqc"
+      from_params: {param: skip_multiqc}   # v1.22.0+: set from the run's params
+
+  dashboards:
+    - "dashboards/base.yaml"
+
+  conditional:
+    - if_var_absent: "OPTIONAL_VAR"
+      remove_dc_tags: ["optional_dc"]
+      dashboards: ["dashboards/base.yaml"]
+    - if_var_present: "OPTIONAL_VAR"
+      dashboards: ["dashboards/base.yaml", "dashboards/extended.yaml"]
+```
+
+Below the `template:` block is a standard project configuration with `{VAR_NAME}` placeholders.
+
+### Variable defaults (v1.13.0+)
+
+A variable can declare a `default`, the value used when the run leaves it unset. A value passed with `--var`, read from the run's `params.json` or detected from the metadata file always wins over it. A defaulted variable fills `{NAME}` in `template.yaml` and in the dashboard YAMLs and satisfies `required`, but it does not count as provided: an `if_var_present` conditional does not fire on a default. A default may contain `{DATA_ROOT}`, as in `default: "{DATA_ROOT}/input/samplesheet.csv"`. The nf-core templates use defaults for `GENOME` (`hg38`), the axis of their genome tracks, for `GROUP_COL` where the samplesheet has a usual grouping column, and for cut-offs such as `SPLICING_FDR` in nf-core/rnasplice.
+
+### Rules from the run's params (v1.22.0+)
+
+`from_params` sets a variable to `"true"` when its rule holds on the run's newest `pipeline_info/params_<timestamp>.json`. `nf-params.json` is never read, and without a params file no rule fires.
+
+| Rule                                          | Holds when the param is                                   |
+| --------------------------------------------- | --------------------------------------------------------- |
+| `{param: p}`                                  | on: `true`, a non-empty string or list, a non-zero number |
+| `{param: p, is: false}`                       | off: `false`, `"null"`, empty or absent                   |
+| `{param: p, equals: v}` / `not_equals: v`     | `v`, any case (`not_equals` also holds when absent)       |
+| `{param: p, contains: v}` / `not_contains: v` | a list or comma-separated string holding `v`              |
+| `{any: [...]}` / `{all: [...]}`               | one / every nested rule                                   |
+
+An explicit `--var` always wins, and `--var X=false` (or `0`, `null`, empty) unsets it. A `from_params` variable cannot be `required: true`, and an unknown key (`from_param:`, `equal:`) fails at load.
+
+______________________________________________________________________
+
+## Conditionals
+
+Conditionals adapt the project based on which optional variables the user provides. Each rule can:
+
+- **Remove data collections** (`remove_dc_tags`) — and automatically prune any links referencing them
+- **Override the dashboard list** (`dashboards`) — select different dashboard variants
+
+Rules fire on `if_var_absent` (variable not provided) or `if_var_present` (variable provided). A variable set by a [`from_params`](#from-params) rule counts as provided.
+
+______________________________________________________________________
+
+## Check a template (v1.22.0+)
+
+`depictio template check` lists each variable and what sets it (a rule, auto-detection or `--var`). With `--fetch-schema` (or `--schema`) it checks every rule against the release's `nextflow_schema.json` and exits 1 when a rule reads a missing param; with `--run` (or `--params`) it shows which rules hold and which conditionals fire; `--against <release>` reports what the next release breaks or flips. See [`template check`](https://depictio.github.io/depictio-docs/latest/depictio-cli/usage/#template-check).
+
+```
+depictio template check nf-core/rnaseq/3.28.0 --fetch-schema --run results/
+```
+
+______________________________________________________________________
+
+## Source Overrides
+
+When a recipe's source paths depend on a template variable, use `source_overrides`:
+
+```
+transform:
+  recipe: "org/pipeline/my_recipe.py"
+  source_overrides:
+    input_file:
+      path: "results/Category-{GROUP_COL}-level-2/data.csv"
+```
+
+The recipe Python code stays generic — path resolution happens via variable substitution in the YAML.
+
+When the variable changes what the recipe computes rather than where it reads (a grouping column, an identifier column, a cutoff), pass it under `transform.params` instead. Unset variables are dropped before the call, so the recipe falls back to its own default. See [Passing template parameters to a recipe](https://depictio.github.io/depictio-docs/latest/usage/projects/recipes/#params).
+
+______________________________________________________________________
+
+## CLI Flags
+
+| Flag                  | Type            | Required               | Description                                                                                                                                                                                                                                                    |
+| --------------------- | --------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--template`          | `string`        | [one of](#pipeline-id) | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, to resolve the newest shipped version (v1.5.2+). On the CLI, also a path to an [exported bundle](#running-an-exported-bundle) (v1.16.0+) |
+| `DATA_DIR` (argument) | `path`          | one of the three       | The results directory, a local folder or, from v1.16.0, an `s3://` prefix, substituted for `{DATA_ROOT}`. Formerly `--data-root`                                                                                                                               |
+| `--manifest`          | `url` or `path` | one of the three       | Data manifest substituted for `{MANIFEST_URL}`. Not with `DATA_DIR` (v1.16.0+)                                                                                                                                                                                 |
+| `--bind`              | `TAG=LOCATION`  | one of the three       | Point one data collection at a location; the scan mode is inferred from its shape. Repeatable (v1.16.0+)                                                                                                                                                       |
+| `--var`               | `KEY=VALUE`     | depends on template    | Pass template-specific variables; repeatable                                                                                                                                                                                                                   |
+| `--dashboard`         | `path`          | no                     | Override default dashboard(s); repeatable                                                                                                                                                                                                                      |
+| `--skip dashboards`   | `flag`          | no                     | Skip automatic dashboard import. Formerly `--skip-dashboard-import`                                                                                                                                                                                            |
+| `--project`           | `string`        | no                     | Custom project name. Formerly `--project-name`                                                                                                                                                                                                                 |
+
+```
+depictio ingest /path/to/results --template nf-core/ampliseq/latest
+```
+
+Here an nf-core/rnaseq run is ingested with its template named, as the [Template Catalog](https://depictio.github.io/depictio-docs/latest/pipeline-templates/index.md) lists it, and its samplesheet passed as a variable:
+
+### Which template a run uses
+
+`depictio ingest` takes the project from the first of these that applies:
+
+- `--template nf-core/ampliseq/2.16.0`, for a pipeline Depictio ships a template for, or `--project-config-path my_project.yaml`, for a pipeline of your own;
+- `--pipeline-id nf-core/ampliseq/2.16.0`, which the [Nextflow trigger](https://depictio.github.io/depictio-docs/latest/workflows/nextflow/trigger/index.md) passes for you since **v1.10.0**, read from the `manifest` block of its `nextflow.config`. Its version must match a shipped template, or the run stops with an error;
+- the results directory itself, local or an `s3://` prefix: the run information an nf-core pipeline writes under `pipeline_info/` names the pipeline and its version, and the matching template is used. When no shipped version matches, the closest version that is not newer is used, with a warning;
+- since **v1.16.0**, a template composed from what the [tools catalog](https://depictio.github.io/depictio-docs/latest/catalog/index.md) recognises in a local results directory, when no bundled template fits it. `--compose` composes even when one does. See [Composed dashboards](https://depictio.github.io/depictio-docs/latest/usage/projects/composed-dashboards/index.md).
+
+The web UI's **From a run folder** tab detects the template the same way and shows the comparison before anything is created; see [From a run folder](https://depictio.github.io/depictio-docs/latest/usage/projects/remote-data/#from-a-run-folder).
+
+When none applies, as for an `s3://` prefix no template reads, the command stops and asks for `--template` or `--project-config-path`.
+
+### Instantiating with `--manifest` or `--bind` (v1.16.0+)
+
+`DATA_DIR`, `--manifest` and `--bind` all answer the same question, where the data is, and a template run needs at least one of them:
+
+```
+# A manifest-driven template: no results directory at all
+depictio ingest --template generic/manifest-tables/1 \
+  --manifest https://data.example.org/run42/manifest.json
+
+# Any template, each data collection pointed at its own location
+depictio ingest --template my-lab/rnaseq-qc/1 \
+  --bind metadata=/data/run42/metadata.tsv \
+  --bind samples=s3://my-bucket/run42/*.samples.csv
+```
+
+`--manifest` takes a URL or a local file path and becomes the `MANIFEST_URL` variable. `--bind` is applied after resolution, so it wins over whatever `{DATA_ROOT}` or `{MANIFEST_URL}` resolved to for that collection, and a required variable that no collection uses any more is not asked for. A `--bind` naming a tag the template does not declare is an error, listing the tags that exist. The location shapes and the mode each one implies are on [Remote data and manifests](https://depictio.github.io/depictio-docs/latest/usage/projects/remote-data/#bind-a-data-collection-to-a-location).
+
+### Running an exported bundle (v1.16.0+)
+
+On the CLI, `--template` also accepts a path: a directory holding a `template.yaml` (or `project.yaml`), or a YAML file. That is what makes an [exported bundle](#export-a-project-as-a-template) usable by whoever receives it, without copying it into an installation first:
+
+```
+depictio ingest --template ./my-lab/rnaseq-qc/1 \
+  --bind samples=s3://their-bucket/run7/*.samples.csv
+```
+
+An existing path wins over an installed template of the same name. The server never accepts the path form: it resolves ids on behalf of remote callers, and ids are confined to the templates directory in both contexts.
+
+______________________________________________________________________
+
+## Resolution Workflow
+
+When a template is used, `depictio ingest` inserts **Step 0: Template resolution** before the standard pipeline:
+
+| Step  | Name                | Description                                                                                                                                                                         |
+| ----- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **0** | Template resolution | Load YAML, substitute variables, auto-detect metadata columns, apply conditionals, then [materialise recipe seeds](#recipe-seeds)                                                   |
+| 1     | Server check        | Check that the server answers                                                                                                                                                       |
+| 2     | S3 check            | Check the S3 storage configuration                                                                                                                                                  |
+| 3     | Config validation   | Pydantic validation of the resolved project config                                                                                                                                  |
+| 4     | Project sync        | Create or update project on server                                                                                                                                                  |
+| 5     | File scan           | Discover data collection files                                                                                                                                                      |
+| 6     | Data process        | Execute recipes, write to Delta Lake                                                                                                                                                |
+| 7     | Join computation    | Compute cross-DC joins                                                                                                                                                              |
+| **8** | Dashboard import    | Import the bundled dashboard YAML the project lacks (with variable substitution). On a refresh, the dashboards it has are kept as edited in the viewer, unless `--reset-dashboards` |
+
+Dashboard YAML files also undergo variable substitution (e.g. `{GROUP_COL}` in filter columns, chart titles).
+
+### Recipe seeds (v1.6.0+)
+
+A reference template ships each recipe's *output* as a committed `{DATA_ROOT}/{dc_tag}.tsv`, so the bundled projects can be explored without the pipeline run behind them. Since **v1.6.0** `--template` reads those seeds, the way first-boot seeding always did: where a seed exists for a `source: transformed` data collection, the recipe is replaced by a plain scan of that file. The collection keeps `source: transformed`, so the viewer still shows its lineage.
+
+A data collection with no seed is left alone and its recipe runs as before. Seed coverage is uneven: `nf-core/viralrecon/3.0.0` ships one for all ten of its recipe collections, `nf-core/ampliseq/2.16.0` for sixteen of nineteen.
+
+This runs *after* conditionals, so a collection a conditional gated out stays gated out even with a seed sitting beside it.
+
+A seed is matched by name, not assumed
+
+Only a `source: transformed` collection is redirected. A `{dc_tag}.tsv` next to a `source: native` collection of the same tag is that collection's own input, and is scanned normally.
+
+______________________________________________________________________
+
+## Template Origin
+
+Once a project is created from a template, the UI shows a template badge on dashboard cards and in the project data manager. This provenance is stored in the `template_origin` field:
+
+- `template_id` — e.g. `"nf-core/ampliseq/2.16.0"`
+- `template_version` — schema version
+- `data_root` — the resolved path
+- `variables` — all resolved variable values
+- `applied_at` — timestamp
+- `config_snapshot` — frozen copy of the resolved config
+- `run_provenance`: the pipeline's own run parameters, see below (v1.8.3+)
+- `unrecognised_files`: for a [composed](https://depictio.github.io/depictio-docs/latest/usage/projects/composed-dashboards/index.md) template, the tabular files of the run the catalog did not recognise and that were left out, each with what it would show; the project page lists them (v1.16.0+)
+
+______________________________________________________________________
+
+## Run provenance (v1.8.3+)
+
+`template_origin` records how *Depictio* was invoked. **Run provenance** records how the *pipeline* was, by reading the run's own parameter, version and recap files and storing them as ordered entries on `template_origin.run_provenance`.
+
+Three different things are called provenance
+
+This section is about **pipeline run parameters**. The [ingestion run](https://depictio.github.io/depictio-docs/latest/usage/administration/monitoring/#ingestion) provenance is about how the CLI was invoked (host, CLI version, command line), and [Template Origin](#template-origin) above is about which template produced the project.
+
+A template declares the recipe under `template.provenance`:
+
+```
+template:
+  provenance:
+    sources:
+      - name: "params"
+        glob: "pipeline_info/params*.json"
+        format: "json"
+        pick: "latest"
+        exclude_keys:
+          - "*_ref_databases*"     # bulky reference-DB catalogs
+      - name: "software_versions"
+        glob: "pipeline_info/*software*versions.yml"
+        format: "yaml"
+        group: "Software versions"
+    groups:
+      - group: "Cutadapt (primer trimming)"
+        key_patterns: ["FW_primer", "RV_primer", "cutadapt_*", "skip_cutadapt"]
+      - group: "DADA2 (denoising & filtering)"
+        key_patterns: ["trunclenf", "trunclenr", "trunc_qmin", "max_ee", "dada_*"]
+    highlight:
+      - "FW_primer"
+      - "RV_primer"
+      - "diversity_rarefaction_depth"
+```
+
+### `sources`
+
+One entry per file, or file family, to read.
+
+| Field          | Default  | Description                                                                                                                                                          |
+| -------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`         | required | Label shown next to each entry                                                                                                                                       |
+| `glob`         | required | Glob relative to `DATA_ROOT`, so one spec fits every run                                                                                                             |
+| `format`       | `auto`   | `json`, `yaml`, `tsv` (two-column key/value) or `auto`, by suffix                                                                                                    |
+| `pick`         | `latest` | When the glob matches several files: `latest` (last in sorted order, which is chronological for nf-core timestamps), `first`, or `all` (merged in order, later wins) |
+| `exclude_keys` | `[]`     | fnmatch globs of keys to drop                                                                                                                                        |
+| `group`        | unset    | Put every key of this source in one group, bypassing the group rules                                                                                                 |
+
+Nested files are flattened to dotted keys.
+
+### `groups`
+
+Each rule assigns keys matching any of its `key_patterns` (fnmatch globs against the flattened key) to a named group, in declaration order, first match winning.
+
+### `highlight`
+
+Keys surfaced inline in the dashboard's Settings. The full listing always stays in the ingestion report.
+
+Complete by construction
+
+`exclude_keys` is the only way a key is omitted. Everything else is kept, and keys no group rule matches land in a catch-all **Other** group rather than being dropped.
+
+A template with no `provenance:` block gets a default spec: the latest `pipeline_info/params*.json`, everything in one *Parameters* group.
+
+### Files with no template
+
+`--provenance-file` takes an arbitrary recap file, JSON, YAML or two-column TSV, and lists its entries under a **User provided** group. The flag is repeatable.
+
+```
+depictio ingest /path/to/results --provenance-file run_summary.yaml --provenance-file thresholds.tsv
+```
+
+### Where it surfaces
+
+- **Ingestion report**: a *Run provenance* card, one accordion per group, with per-row copy, full-text search across keys and values, and the source files listed. See [Ingestion Report & Health](https://depictio.github.io/depictio-docs/latest/features/dashboards/#ingestion-report-health).
+- **Dashboard settings**: a *Run parameters* row showing the highlighted keys inline, linking to the full report. See [Using the dashboard](https://depictio.github.io/depictio-docs/latest/usage/guides/dashboard_usage/#dashboard-settings-drawer).
+
+The bundled `nf-core/ampliseq` template ships a spec covering Cutadapt, DADA2, taxonomy, QIIME2 filtering, diversity and rarefaction, differential abundance, skipped steps and software versions.
+
+______________________________________________________________________
+
+## Cross-DC Links
+
+Templates define links between data collections using **tags** (not IDs):
+
+```
+links:
+  - source_dc_tag: "metadata"
+    source_column: "ID"
+    target_dc_tag: "alpha_diversity"
+    target_type: "table"
+    link_config:
+      resolver: "direct"
+      target_field: "sample"
+```
+
+Tags are resolved to MongoDB ObjectIds after the project is synced to the server. Links referencing removed DCs (via conditionals) are auto-pruned.
+
+______________________________________________________________________
+
+## Export a project as a template (v1.16.0+)
+
+The inverse of instantiation: freeze a live project and its dashboards into a template bundle. Build one good project interactively, export it, and the next run of the same pipeline is one command.
+
+```
+depictio template export <project_id> \
+  --template-id my-lab/rnaseq-qc/1 \
+  -o depictio/projects
+```
+
+The bundle is unpacked into `<output-dir>/<template-id>/`. `--server`, `--version`, `--description` and `--data-dir` are optional; see the [CLI reference](https://depictio.github.io/depictio-docs/latest/depictio-cli/usage/#template-commands).
+
+On the project page, **Project settings**, then **Export**: a **Template ID**, a **Version**, a **Description (optional)** and a **Data root (optional)**, left empty for the default below. **Export** downloads the bundle as a zip named after the template ID, `/` becoming `_`. Owners, editors and administrators can export; on a public instance, administrators only.
+
+`POST /projects/{project_id}/export_template` with `{"template_id", "version", "description", "data_root"}` returns the zip.
+
+### What the bundle contains
+
+| Path                | Content                                                                                                                     |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `template.yaml`     | A synthesised `template:` block (id, description, version, variables, dashboard list) followed by the project configuration |
+| `dashboards/*.yaml` | One file per main dashboard tab, child tabs included, referencing data collections by tag                                   |
+
+Runtime state is stripped: ids, permissions, file hashes, runs, registration and modification timestamps, `template_origin`, `yaml_config_path`, the generated `workflow_tag`, and the per-collection size metadata that ingestion keeps on each data collection. Per-project storage credentials are never exported.
+
+Data bindings are re-parameterised. Stored manifest URLs become `{MANIFEST_URL}`, declared as a required variable. A data root, a local path or an `s3://` prefix, becomes `{DATA_ROOT}` when `--data-dir` is given, or when the project itself came from a template that recorded one. Only locations below the data root are rewritten: a URL or an `s3://` location elsewhere is kept as it is. A template binds one manifest, so distinct stored manifest URLs all collapse onto the same placeholder; only the server log notes it.
+
+### Round-trip guarantee
+
+Before the bundle is returned it is checked against the same models instantiation uses: the `template:` block must validate as template metadata, and the configuration with placeholders substituted must validate as a project. If either fails the request is rejected with a 422 and nothing is emitted, so an exported bundle always re-instantiates through the resolver.
+
+A project read from an `s3://` folder
+
+The check gives `{DATA_ROOT}` a local test path, which an `s3_prefix` or `url` collection does not accept. With an `s3://` data root, the default for a project made from a run folder on S3, the export therefore stops with *Exported config does not round-trip through Project validation*. From the CLI, `--data-dir ""` exports without a data root and keeps the `s3://` locations as they are. In the web form, an empty **Data root** means the default.
+
+Unpacked in the server's `depictio/projects/` folder, which an installed package keeps as `depictio/cli/projects/`, the bundle is found by the resolver and offered in the picker. Anywhere else, run it by path with `--template ./folder`.
+
+______________________________________________________________________
+
+## Additional Resources
+
+- **[Template Catalog](https://depictio.github.io/depictio-docs/latest/pipeline-templates/index.md)**: browse and use available templates
+- **[Remote data and manifests](https://depictio.github.io/depictio-docs/latest/usage/projects/remote-data/index.md)**: run folders on S3, URL, prefix and manifest scan modes, `--bind`, creating a project in the web UI, sharing a project
+- **[Recipes](https://depictio.github.io/depictio-docs/latest/usage/projects/recipes/index.md)**: how to write and test data transformation recipes
+- **[Contributing Templates](https://depictio.github.io/depictio-docs/latest/developer/contributing-templates/index.md)**: add a new template
+- **[CLI Usage](https://depictio.github.io/depictio-docs/latest/depictio-cli/usage/#ingest-command)**: full `depictio ingest` reference

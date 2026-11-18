@@ -1,0 +1,210 @@
+# Contributing a Tool
+
+This guide explains how to add a bioinformatics **tool** to the [Tools Catalog](https://depictio.github.io/depictio-docs/latest/catalog/index.md). A tool entry tells Depictio how to recognise a pipeline's output files and turn them into ready-made dashboard renders — so users get visualizations automatically, with no manual wiring.
+
+Adding a tool is a **single-folder pull request** under `depictio/catalog/<tool>/` — no Depictio internals to learn, and no Python unless an output needs reshaping. Everything is validated in CI by `depictio dev catalog validate`.
+
+## Two ways in (v1.9.0+)
+
+- **In the browser**
+
+  ______________________________________________________________________
+
+  [**Tool Studio**](https://depictio.github.io/depictio-docs/latest/developer/tool-studio/index.md) does all of the below without YAML: drop one output file, bind its columns in depictio's own component builder, and the app opens the pull request for you.
+
+  Use it when your output file is already a table with a header row.
+
+- **By hand**
+
+  ______________________________________________________________________
+
+  Write the three files yourself, following this page. You need this when the output has to be reshaped first, so the entry carries a [recipe](#step-3-recipe-only-if-the-file-needs-reshaping).
+
+  About half the committed catalog outputs are in this case.
+
+Both routes produce the same folder and pass the same CI check, so switching between them costs nothing.
+
+## The files
+
+A tool is one folder: `module.yaml` identifies it, and the rest repeat per output file.
+
+| File            | One per           | Purpose                                                                                    |
+| --------------- | ----------------- | ------------------------------------------------------------------------------------------ |
+| `module.yaml`   | tool              | Tool **identity**: `id`, `name`, `description`, `homepage`, `biotools_url`, `nf_core_url`. |
+| `<output>.yaml` | output            | **`find`** the file, optional **`recipe`**, and the **`renders_as`** it offers.            |
+| `<output>.tsv`  | output            | **Fixture** — a small sample, so CI previews & checks every render.                        |
+| `<output>.py`   | output · optional | **Recipe** — only when the raw file needs reshaping.                                       |
+
+The `.tsv` fixture and `.py` recipe are **not alternatives** — they do different jobs and a tool often ships both (the `ivar` example below has both). The recipe is the only optional piece: skip it when the raw file is already tidy.
+
+A real single-output tool (`depictio/catalog/ivar/`):
+
+```
+ivar/
+├── module.yaml          # id, name, description, homepage, biotools_url, nf_core_url
+├── variants_long.yaml   # find + recipe + renders_as
+├── variants_long.py     # recipe: reshape variants_long_table.csv
+└── variants_long.tsv    # fixture
+```
+
+## Step 1 — `module.yaml` (identity)
+
+`module.yaml` declares the identity the tool's catalog card shows. Nothing reads the nf-core `meta.yml` at runtime: the catalog takes these fields from `module.yaml` alone, so copy them from `meta.yml` when you write the file.
+
+```
+id: ivar
+name: iVar
+nf_core_url: https://github.com/nf-core/modules/tree/master/modules/nf-core/ivar/variants
+biotools_url: https://bio.tools/andersen-lab_ivar # from nf-core meta.yml identifier
+description: >-
+  Functions for viral amplicon sequencing: primer trimming, variant calling
+  and consensus building.
+homepage: https://github.com/andersen-lab/ivar
+stage: variants # where its outputs sit in a pipeline (v1.16.0+)
+```
+
+| Field          | Required                      | Where to take it from                                                                                                                                                                                                                                                                                                                                                                                                         |
+| -------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`, `name`   | yes                           | The folder name and the display label.                                                                                                                                                                                                                                                                                                                                                                                        |
+| `description`  | yes                           | One or two sentences, usually the tool's `description` in `meta.yml`.                                                                                                                                                                                                                                                                                                                                                         |
+| `homepage`     | yes                           | `homepage` in `meta.yml`; when it is empty, `tool_dev_url`, then `documentation`.                                                                                                                                                                                                                                                                                                                                             |
+| `biotools_url` | yes, may be `null`            | `https://bio.tools/<id>` from the `biotools:` identifier. Write `biotools_url: null` when bio.tools has no entry, so the gap is explicit rather than forgotten.                                                                                                                                                                                                                                                               |
+| `nf_core_url`  | when an nf-core module exists | The module the outputs come from. CI checks it against the vendored nf-core index.                                                                                                                                                                                                                                                                                                                                            |
+| `edam_topics`  | no                            | Full EDAM URLs.                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `stage`        | no                            | Where the tool's outputs sit in a pipeline: `qc`, `alignment`, `quantification`, `peaks`, `variants`, `fusions`, `taxonomy`, `annotation`, `immune`, `differential`, `benchmarking` or `other` (the default). A [composed dashboard](https://depictio.github.io/depictio-docs/latest/usage/projects/composed-dashboards/index.md) opens one tab per stage present, in this order. Every bundled tool declares one (v1.16.0+). |
+
+`depictio dev catalog validate` rejects a module with no `description` or `homepage`, and the catalog tests reject one that leaves `biotools_url` out.
+
+For a tool with no single nf-core module (e.g. QIIME 2), declare the same identity here and set `nf_core_url` per output instead.
+
+## Step 2 — `<output>.yaml` (one per output file)
+
+```
+id: ivar_variants_long                          # globally-unique; used as `use: ivar/variants_long`
+mode: variants
+description: Per-sample annotated variant calls (long table).
+find: { filename: "variants_long_table.csv" }   # recognise the raw file
+recipe: ivar/variants_long.py                   # optional — owns the output columns
+fixture: variants_long.tsv                      # co-located bindable sample
+renders_as:
+  - { id: manhattan, component: advanced_viz, kind: manhattan, roles: {chr: CHROM, pos: POS, score: AF} }
+  - { component: figure, visu_type: histogram, dict_kwargs: {x: AF, color: EFFECT} }
+  - { component: card, column: AF, aggregation: average }
+  - { component: table }
+```
+
+**`find`** — recognise the file by name or path:
+
+```
+find: { filename: "variants_long_table.csv" }          # glob on the basename
+find: { path_glob: "**/mosdepth/genome/*.coverage.tsv" } # glob on the path (supports **)
+```
+
+**`renders_as`** — each entry binds the output's columns to a dashboard component (see the YAML above for full examples). Besides `component`, each takes:
+
+| Component       | Keys                                             |
+| --------------- | ------------------------------------------------ |
+| `advanced_viz`  | `kind` + `roles`                                 |
+| `figure` (UI)   | `visu_type` + `dict_kwargs`                      |
+| `figure` (code) | `code` (Python that sets `fig` from `df` + `px`) |
+| `card`          | `column` + `aggregation`                         |
+| `table`         | —                                                |
+| `multiqc`       | `section`                                        |
+
+Give an `advanced_viz` render an optional `id:` to address it from a dashboard as `use: <tool>/<id>` — e.g. the `id: manhattan` in the YAML above is referenced as `use: ivar/manhattan`.
+
+> **Schema-ownership rule:** if you set `recipe`, the recipe owns the columns — do **not** also declare `columns`. If the raw file is already tidy and bindable, skip the recipe and declare `columns: {NAME: Dtype, …}` (polars dtypes) instead. Validation rejects setting both.
+
+### Composition hints (v1.16.0+)
+
+When `depictio ingest` [composes a dashboard](https://depictio.github.io/depictio-docs/latest/usage/projects/composed-dashboards/index.md) from the catalog, three optional fields decide where an output's renders go:
+
+| Field            | On              | Effect                                                                                                                                                                                                                                                               |
+| ---------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `stage`          | the output      | Overrides the tool's `stage` for this output, e.g. a MultiQC section carrying STAR's numbers is `alignment`, not MultiQC's `qc`                                                                                                                                      |
+| `headline: true` | a `card` render | One of the run's key metrics: the card also goes to the composed Overview and, when its table has a sample column, its value per sample to the general statistics table, the way MultiQC's General Statistics picks a few columns per tool. Mark one or two per tool |
+| `priority`       | any render      | An integer ≥ 0: lower comes first within its output. Renders without one keep their declared order, after those with one                                                                                                                                             |
+
+```
+renders_as:
+  - { component: card, column: frip_score, aggregation: average, secondary_layout: gauge, coverage_max: 1.0, headline: true }
+```
+
+There is no separate threshold for the Overview: a headline card keeps its own `threshold_value`, `threshold_direction` and `threshold_warn` there.
+
+## Step 3 — Recipe (only if the file needs reshaping)
+
+A recipe is a small polars module co-located as `<output>.py`. It declares its inputs, its output schema, and a `transform`:
+
+```
+"""Reshape variants_long_table.csv into tidy, bindable columns."""
+
+import polars as pl
+from depictio.models.models.transforms import RecipeSource
+
+# INPUT SCHEMA: the columns each source must contain, checked before transform().
+SOURCES: list[RecipeSource] = [
+    RecipeSource(
+        ref="variants_raw",
+        glob_pattern="variants/*/variants_long_table.csv",
+        format="CSV",
+        input_schema={
+            "sample": pl.Utf8, "CHROM": pl.Utf8, "POS": pl.Int64,
+            "AF": pl.Float64, "GENE": pl.Utf8, "EFFECT": pl.Utf8,
+        },
+    ),
+]
+
+# OUTPUT SCHEMA: the columns transform() returns, checked after it.
+OUTPUT_SCHEMA: dict[str, type[pl.DataType]] = {
+    "sample": pl.Utf8, "CHROM": pl.Utf8, "POS": pl.Int64,
+    "AF": pl.Float64, "GENE": pl.Utf8, "EFFECT": pl.Utf8,
+}
+
+def transform(sources: dict[str, pl.DataFrame]) -> pl.DataFrame:
+    df = sources["variants_raw"]
+    return df.select(OUTPUT_SCHEMA.keys())   # exactly the OUTPUT_SCHEMA columns
+```
+
+`OUTPUT_SCHEMA` is what the catalog grounds every render binding against. This is the same recipe contract used by [templates](https://depictio.github.io/depictio-docs/latest/developer/contributing-templates/index.md). To see a recipe's output columns while writing `roles`: `depictio dev catalog columns ivar/variants_long.py`.
+
+## Step 4 — Fixture
+
+Save a small, real sample of the output as `<output>.tsv` (`.csv` / `.parquet` also work), co-located in the folder. It must contain every column your `renders_as` binds to — CI reads its real columns to validate (and preview) each render.
+
+## Step 5 — Validate, preview, and open a PR
+
+```
+# Validate just your tool (load → find → recipe → render bindings)
+depictio dev catalog validate --path depictio/catalog/<tool>
+
+# Live-preview an output rendered on its fixture
+depictio catalog preview <tool>_<output>
+
+# Helpful while authoring
+depictio catalog list                 # every tool + output + render targets
+depictio catalog info <tool>          # one tool in detail
+depictio dev catalog match /path/run  # which outputs are recognised in a run
+```
+
+Tip — add this header to each catalog YAML for live validation and autocomplete in your editor:
+
+```
+# yaml-language-server: $schema=https://raw.githubusercontent.com/depictio/depictio/main/depictio/catalog/catalog.schema.json
+```
+
+Before submitting, check:
+
+- `module.yaml` has `id`, `name`, `description`, `homepage`, `biotools_url` (or an explicit `null`), and (where applicable) `nf_core_url`.
+- Each `<output>.yaml` has a unique `id`, a `find`, and at least one `renders_as`.
+- On outputs that bind columns, set `recipe` **or** `columns` (declare one) — never both.
+- A fixture is committed for every output that binds columns, covering all bound columns.
+- `depictio dev catalog validate --path depictio/catalog/<tool>` passes green.
+
+In the PR, link the tool's nf-core module / homepage and note the pipeline whose output you tested against.
+
+## Reference
+
+- In-repo: `depictio/catalog/README.md` (overview) and `depictio/catalog/SCHEMA.md` (full field reference).
+- The component config reference: [Dashboard Components](https://depictio.github.io/depictio-docs/latest/features/components/index.md).
+- Questions: [GitHub Discussions](https://github.com/depictio/depictio/discussions) — tag your PR `catalog`.

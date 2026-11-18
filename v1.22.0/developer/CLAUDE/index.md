@@ -1,0 +1,10 @@
+# Recent Activity
+
+### Jun 4, 2026
+
+| ID     | Time    | T   | Title                                                                                           | Read |
+| ------ | ------- | --- | ----------------------------------------------------------------------------------------------- | ---- |
+| #16240 | 8:54 AM | ✅  | v1.0.0 changelog finalized with v0.13.8-v0.13.12 patch series and v0.14.0→v1.0.0 migration      | ~595 |
+| #16223 | 8:17 AM | ✅  | Comprehensive documentation update committed: v1.0.0 timeline correction and Dash removal sweep | ~560 |
+| #16221 | 8:16 AM | ✅  | Documentation sweep: removing Dash references and updating React graduation timeline            | ~412 |
+|        |         |     |                                                                                                 |      |
