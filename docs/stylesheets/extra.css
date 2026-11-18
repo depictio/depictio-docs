@@ -335,9 +335,11 @@ h1 {
         height: calc(100vh - var(--dp-header-h, 2.4rem)) !important;
     }
 
+    /* Minus the sidebar's own 1.2rem top and bottom padding, or the last
+       entries sit below the viewport and cannot be scrolled to. */
     .md-sidebar__scrollwrap {
-        height: calc(100vh - var(--dp-header-h, 2.4rem)) !important;
-        max-height: calc(100vh - var(--dp-header-h, 2.4rem)) !important;
+        height: calc(100vh - var(--dp-header-h, 2.4rem) - 2.4rem) !important;
+        max-height: calc(100vh - var(--dp-header-h, 2.4rem) - 2.4rem) !important;
     }
 }
 
