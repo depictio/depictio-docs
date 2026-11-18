@@ -52,8 +52,8 @@ Open the label column's menu and click **Compare in the charts**, or click the c
 
 Groups from labels carry a tag icon in **Analysis**. Rename or delete them from Metadata, not there.
 
-[![A figure coloured by the review label groups](../images/guides/metadata-panel/figure_coloured_by_label_light.webp#only-light)](../images/guides/metadata-panel/figure_coloured_by_label_light.webp){target=_blank}
-[![A figure coloured by the review label groups](../images/guides/metadata-panel/figure_coloured_by_label_dark.webp#only-dark)](../images/guides/metadata-panel/figure_coloured_by_label_dark.webp){target=_blank}
+[![The Alpha Diversity cards with each review group's value, and the rarefaction curves coloured by fail, pass and recheck](../images/guides/metadata-panel/labels_on_dashboard_light.webp#only-light)](../images/guides/metadata-panel/labels_on_dashboard_light.webp){target=_blank}
+[![The Alpha Diversity cards with each review group's value, and the rarefaction curves coloured by fail, pass and recheck](../images/guides/metadata-panel/labels_on_dashboard_dark.webp#only-dark)](../images/guides/metadata-panel/labels_on_dashboard_dark.webp){target=_blank}
 
 ## 4. Keep, share or write the labels
 
