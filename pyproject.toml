@@ -18,7 +18,7 @@ dependencies = [
     "mkdocs-glightbox>=0.5.2",
     "mkdocs-llmstxt>=0.5.1",
 ]
-version = "1.21.0-b6"
+version = "1.21.0"
 name = "depictio-docs"
 
 # Only needed to regenerate the figures in dev/diagrams/. The PNGs are

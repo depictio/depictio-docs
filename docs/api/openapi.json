@@ -2,11 +2,441 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.21.0-b6",
-    "x-generated-at": "2026-11-12T12:21:59Z",
-    "x-depictio-version": "v1.21.0-b6"
+    "version": "1.21.0",
+    "x-generated-at": "2026-11-16T16:45:13Z",
+    "x-depictio-version": "v1.21.0"
   },
   "paths": {
+    "/depictio/api/v1/projects/builder/capabilities": {
+      "get": {
+        "tags": [
+          "Project Builder"
+        ],
+        "summary": "Get Capabilities",
+        "description": "The collection kinds and options this Depictio offers, and the instance\nsettings they depend on.",
+        "operationId": "get_capabilities_depictio_api_v1_projects_builder_capabilities_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/builder/tree": {
+      "post": {
+        "tags": [
+          "Project Builder"
+        ],
+        "summary": "Post Tree",
+        "description": "One folder level of the data root, folders first; hidden entries left out.",
+        "operationId": "post_tree_depictio_api_v1_projects_builder_tree_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TreeBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/builder/suggest": {
+      "post": {
+        "tags": [
+          "Project Builder"
+        ],
+        "summary": "Post Suggest",
+        "description": "A first guess (tag, type, scan rule, format, catalog tools) for a picked file.",
+        "operationId": "post_suggest_depictio_api_v1_projects_builder_suggest_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SuggestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/builder/runs_regex": {
+      "post": {
+        "tags": [
+          "Project Builder"
+        ],
+        "summary": "Post Runs Regex",
+        "description": "A runs regex guessed from the data root's first-level folders.",
+        "operationId": "post_runs_regex_depictio_api_v1_projects_builder_runs_regex_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunsRegexBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/builder/runs_overview": {
+      "post": {
+        "tags": [
+          "Project Builder"
+        ],
+        "summary": "Post Runs Overview",
+        "description": "The runs a regex takes in, the layout their files share, and the runs that differ.",
+        "operationId": "post_runs_overview_depictio_api_v1_projects_builder_runs_overview_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunsOverviewBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/builder/match": {
+      "post": {
+        "tags": [
+          "Project Builder"
+        ],
+        "summary": "Post Match",
+        "description": "The files a data collection would ingest, by the scan's own rule, and\nwhether their schemas agree.",
+        "operationId": "post_match_depictio_api_v1_projects_builder_match_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/builder/tracks_manifest": {
+      "post": {
+        "tags": [
+          "Project Builder"
+        ],
+        "summary": "Post Tracks Manifest",
+        "description": "A genome-browser track manifest for picked track files, uris relative to the root.",
+        "operationId": "post_tracks_manifest_depictio_api_v1_projects_builder_tracks_manifest_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TracksManifestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/builder/template": {
+      "post": {
+        "tags": [
+          "Project Builder"
+        ],
+        "summary": "Post Template",
+        "description": "The ad-hoc template a draft becomes, validated; nothing is read or stored.",
+        "operationId": "post_template_depictio_api_v1_projects_builder_template_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TemplateBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/builder/from_template": {
+      "post": {
+        "tags": [
+          "Project Builder"
+        ],
+        "summary": "Post From Template",
+        "description": "A shipped template as the builder shows it, read-only, to be edited as a\nlist of changes (see :mod:`overlay`).\n\nOnly templates shipped with Depictio are read, by id; nothing else on disk is.",
+        "operationId": "post_from_template_depictio_api_v1_projects_builder_from_template_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FromTemplateBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/projects/builder/metadata": {
+      "post": {
+        "tags": [
+          "Project Builder"
+        ],
+        "summary": "Post Metadata",
+        "description": "Workflow metadata from a GitHub repository (RO-Crate, nextflow.config, API).",
+        "operationId": "post_metadata_depictio_api_v1_projects_builder_metadata_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MetadataBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/projects/get/all": {
       "get": {
         "tags": [
@@ -272,6 +702,64 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProjectRuns"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/project-runs/{project_id}/files": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get Project Run Files",
+        "description": "The files of one run of the project, each with the scans that brought,\nchanged or failed it (``added_in``, ``changed_in``, ``failed_in``, indexes\ninto ``scans``). Read-only; read when the run is unfolded in the runs view.",
+        "operationId": "get_project_run_files_depictio_api_v1_projects_project_runs__project_id__files_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "run_tag",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Tag"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunFiles"
                 }
               }
             }
@@ -562,7 +1050,7 @@
           "Projects"
         ],
         "summary": "Refresh Manifest",
-        "description": "Re-scan and re-ingest a project's data collections in place.\n\nCovers every data collection the server can read again: any remote\nsource (manifest, url, s3_prefix), and, under ``depictio local`` only, a\nlocal one below a root of the local-data policy (for a loopback caller\nwho is an admin, as every local read). Overwrite-with-report semantics: File records sync to\nthe source's current files (``sync_files`` beats the identity-hash skip)\nand each Delta table is rebuilt from the resulting file set. A manifest\nDC whose manifest no longer lists its type is reported failed and left\nuntouched. ``dry_run=true`` reports what would refresh (per-DC entry\ncounts for manifest DCs) without touching any data.",
+        "description": "Re-scan and re-ingest a project's data collections in place.\n\nCovers every data collection the server can read again: any remote\nsource (manifest, url, s3_prefix), and, under ``depictio local`` only, a\nlocal one below a root of the local-data policy (for a loopback caller\nwho is an admin, as every local read). Only what moved is read again: new\nand changed files, and the collections they belong to; a collection none of\nwhose files moved since its last successful refresh is left as it is.\n``full=true`` reads everything again. A manifest or URL collection is always\nread again (its hash names the source, not its bytes). A manifest\nDC whose manifest no longer lists its type is reported failed and left\nuntouched. ``dry_run=true`` reports what would refresh (per-DC entry\ncounts for manifest DCs) without touching any data.",
         "operationId": "refresh_manifest_depictio_api_v1_projects_refresh_manifest_post",
         "requestBody": {
           "content": {
@@ -2106,7 +2594,7 @@
           "Projects"
         ],
         "summary": "Attach Run",
-        "description": "Attach another run folder of the same pipeline to this project.\n\n``dry_run`` (the default) reports what the folder holds and writes nothing.\nA real call records the folder on the project and starts its ingestion;\npoll ``run_id`` via ``GET /projects/refresh_manifest/{run_id}``. Errors\nanswer ``{detail, code}``: ``not_a_pipeline_project``, ``other_pipeline``,\n``cannot_attach`` (422), ``already_attached`` (409), a published project 409.",
+        "description": "Attach another run folder of the same pipeline to this project.\n\n``dry_run`` (the default) reports what the folder holds and writes nothing.\nA real call records the folder on the project and starts its ingestion;\npoll ``run_id`` via ``GET /projects/refresh_manifest/{run_id}``. Errors\nanswer ``{detail, code}``: ``not_a_pipeline_project``, ``other_pipeline``,\n``cannot_attach``, ``runs_share_samples`` (422), ``already_attached`` (409), a\npublished project 409.",
         "operationId": "attach_run_depictio_api_v1_projects__project_id__attach_run_post",
         "security": [
           {
@@ -11920,7 +12408,7 @@
           "Dashboards"
         ],
         "summary": "Render Figure Endpoint",
-        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when the render is\nactually heavy — code mode, or a source frame at/above\n`offload_size_threshold_bytes` — or unconditionally if\n`offload_rendering` is forced on (see `should_offload_render`). Cheap\ninteractive figures build inline to skip the broker round-trip. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\", \"full_load\": bool,\n     \"groups\": [{name, column_name, values, color}], \"color_by_group\": bool,\n     \"color_by_column\": {\"column_name\": str, \"color_map\": {value: \"#rrggbb\"}},\n     \"grouping_display\": \"color\" | \"facet\",\n     \"include_other\": bool,\n     \"style\": {\"figure_style\": \"default\" | \"minimal\",\n               \"header_title\": bool, \"hide_legend\": bool}}\n\n``full_load`` (default False) bypasses the point-plot row cap so the client\ncan explicitly render every point on demand (slow on large datasets).\n\n``style`` (optional) overrides the figure's own look: a highlight drawing\nthis figure on another tab sends its own style and header. Without it the\nfigure's ``figure_style`` applies, else its grid section's (see\n``figure_style_payload``).\n\n``groups`` + ``color_by_group`` (optional) ask for the figure to be colored\nby the caller's selection groups (issue #89); ``color_by_column`` asks for\nthe dashboard-global color-by-a-real-column override instead (groups win\nwhen both are present). All sanitized here at the trust boundary, applied\nin ``build_figure_preview``.\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}\n\n``metadata.group_status`` (present whenever ``color_by_group`` was asked\nfor) is one entry per submitted group saying whether it reached this\nfigure's data collection — directly, through a declared project link, or\nnot at all, with the reason. See ``resolve_group_defs_for_dc``.",
+        "description": "Render a Plotly figure component as JSON for the React viewer.\n\nMirrors what `_process_single_figure` does in the Dash callback at\n``depictio.dash.modules.figure_component.callbacks.core.py:676`` — loads\nthe data collection, applies filters, calls `_create_figure_from_data`\n(UI mode) or `_process_code_mode_figure` (code mode), and returns the\nPlotly figure dict ready for ``react-plotly.js``.\n\nHeavy work (delta load + Plotly build) runs on Celery when the render is\nactually heavy — code mode, or a source frame at/above\n`offload_size_threshold_bytes` — or unconditionally if\n`offload_rendering` is forced on (see `should_offload_render`). Cheap\ninteractive figures build inline to skip the broker round-trip. Reuses the\n`build_figure_preview` task — preview and render share the exact same\ncode path on the worker.\n\nRequest body:\n    {\"filters\": [...], \"theme\": \"light\" | \"dark\", \"full_load\": bool,\n     \"groups\": [{name, column_name, values, color}], \"color_by_group\": bool,\n     \"color_by_column\": {\"column_name\": str, \"color_map\": {value: \"#rrggbb\"}},\n     \"grouping_display\": \"color\" | \"facet\",\n     \"group_keep_color\": bool,  # facet by group, keep the figure's colours\n     \"group_overall\": bool,  # with it, an \"All\" panel of every row first\n     \"include_other\": bool,\n     \"style\": {\"figure_style\": \"default\" | \"minimal\",\n               \"header_title\": bool, \"hide_legend\": bool}}\n\n``full_load`` (default False) bypasses the point-plot row cap so the client\ncan explicitly render every point on demand (slow on large datasets).\n\n``style`` (optional) overrides the figure's own look: a highlight drawing\nthis figure on another tab sends its own style and header. Without it the\nfigure's ``figure_style`` applies, else its grid section's (see\n``figure_style_payload``).\n\n``groups`` + ``color_by_group`` (optional) ask for the figure to be colored\nby the caller's selection groups (issue #89); ``color_by_column`` asks for\nthe dashboard-global color-by-a-real-column override instead (groups win\nwhen both are present). All sanitized here at the trust boundary, applied\nin ``build_figure_preview``.\n\nResponse:\n    {\"figure\": <plotly fig dict>, \"metadata\": {visu_type, ...}}\n\n``metadata.group_status`` (present whenever ``color_by_group`` was asked\nfor) is one entry per submitted group saying whether it reached this\nfigure's data collection — directly, through a declared project link, or\nnot at all, with the reason. See ``resolve_group_defs_for_dc``.",
         "operationId": "render_figure_endpoint_depictio_api_v1_dashboards_render_figure__dashboard_id___component_id__post",
         "security": [
           {
@@ -13481,7 +13969,7 @@
           "Dashboards"
         ],
         "summary": "Resolve Groups Endpoint",
-        "description": "Selection groups translated onto one data collection, for a client-side recolour.\n\nFigures, cards and tables get their groups translated server side as part\nof their render. An advanced viz recolours its points in the browser by\nmatching the group's values against its own point keys, so a group captured\non another collection (guide sequences, on a tab whose points are\nlibraries) matched nothing and the tile read \"not grouped\". This runs the\nsame translation (``_resolve_group_defs``, through the project's declared\nlinks) and hands the rewritten groups back.\n\nRequest body:\n    {\"dc_id\": str, \"groups\": [{\"name\", \"column_name\", \"values\", \"color\",\n                                \"dc_id\"}, ...]}\n\nResponse:\n    {\"groups\": [<group rewritten to dc_id's column and values>, ...],\n     \"status\": [<one verdict per input group, see resolve_group_defs_for_dc>]}\n\nA group that cannot reach ``dc_id`` is absent from ``groups`` and says why\nin ``status``. Viewer permission on the dashboard; ``dc_id`` must belong to\nits project.",
+        "description": "Selection groups translated onto one data collection, for a client-side recolour.\n\nFigures, cards and tables get their groups translated server side as part\nof their render. An advanced viz recolours its points in the browser by\nmatching the group's values against its own point keys, so a group captured\non another collection (guide sequences, on a tab whose points are\nlibraries) matched nothing and the tile read \"not grouped\". This runs the\nsame translation (``_resolve_group_defs``, through the project's declared\nlinks) and hands the rewritten groups back.\n\nRequest body:\n    {\"dc_id\": str, \"groups\": [{\"name\", \"column_name\", \"values\", \"color\",\n                                \"dc_id\"}, ...]}\n\nResponse:\n    {\"groups\": [<group rewritten to dc_id's column and values>, ...],\n     \"status\": [<one verdict per input group, see resolve_group_defs_for_dc>]}\n\nA group that cannot reach ``dc_id`` is absent from ``groups`` and says why\nin ``status``. Viewer permission on the dashboard; ``dc_id`` must belong to\nits project.\n\nWith ``\"component_id\"``, groups of runs (on ``depictio_run_id``, the\nOverlay of \"What's new\") are rewritten to the ids the component matches\nits marks by: its id role (``sample_id_col``, ``feature_id_col``, ...),\nthe ids whose rows came from those runs. A component whose ids each carry\nrows of several runs gets none of them back (``runs_ambiguous``).",
         "operationId": "resolve_groups_endpoint_depictio_api_v1_dashboards_resolve_groups__dashboard_id__post",
         "security": [
           {
@@ -13540,7 +14028,7 @@
           "Dashboards"
         ],
         "summary": "Data Version Status Endpoint",
-        "description": "What each data collection of a tab family shows under a time-travel request.\n\nA banner saying \"every value is from v3\" was wrong for anything v3 could\nnot pin: a collection added since, one kept live, MultiQC reports. The\nclient asks this once per selection and badges what still shows live data.\n\nRequest body: ``{\"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null}}``,\nboth optional, resolved exactly as a render resolves them (same 400s).\n\nResponse:\n    {\"collections\": [{\"dc_id\", \"workflow_tag\", \"data_collection_tag\",\n                      \"dc_type\", \"status\": \"pinned\" | \"live\" | \"not_versioned\",\n                      \"delta_version\": int | null, \"reason\": str | null}]}\n\nOne entry per collection the family's live components read, then per\ncollection the version stamped that none of them reads any more. See\n``data_versions.collection_statuses`` for the statuses and reasons.",
+        "description": "What each data collection of a tab family shows under a time-travel request.\n\nA banner saying \"every value is from v3\" was wrong for anything v3 could\nnot pin: a collection added since, one kept live, MultiQC reports. The\nclient asks this once per selection and badges what still shows live data.\n\nRequest body: ``{\"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null},\n\"report_sets\": {\"<dc_id>\": [report_id, ...] | null}}``, all optional, resolved\nexactly as a render resolves them (same 400s).\n\nResponse:\n    {\"collections\": [{\"dc_id\", \"workflow_tag\", \"data_collection_tag\",\n                      \"dc_type\", \"status\": \"pinned\" | \"live\" | \"not_versioned\",\n                      \"delta_version\": int | null, \"reason\": str | null}]}\nA pinned MultiQC collection also carries ``\"report_count\"``.\n\nOne entry per collection the family's live components read, then per\ncollection the version stamped that none of them reads any more. See\n``data_versions.collection_statuses`` for the statuses and reasons.",
         "operationId": "data_version_status_endpoint_depictio_api_v1_dashboards_data_version_status__dashboard_id__post",
         "security": [
           {
@@ -13735,6 +14223,630 @@
         "responses": {
           "204": {
             "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/changes/dashboard/{dashboard_id}": {
+      "post": {
+        "tags": [
+          "Changes"
+        ],
+        "summary": "Dashboard Changes Endpoint",
+        "description": "The changes since the caller's mark (or since ``since`` / ``before_run``).",
+        "operationId": "dashboard_changes_endpoint_depictio_api_v1_changes_dashboard__dashboard_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ChangesRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Dashboard Changes Endpoint Depictio Api V1 Changes Dashboard  Dashboard Id  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/changes/dashboard/{dashboard_id}/visit": {
+      "put": {
+        "tags": [
+          "Changes"
+        ],
+        "summary": "Record Dashboard Visit",
+        "description": "Record a viewer open. The first one, or any in ``previous_visit`` mode, moves the mark.",
+        "operationId": "record_dashboard_visit_depictio_api_v1_changes_dashboard__dashboard_id__visit_put",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Record Dashboard Visit Depictio Api V1 Changes Dashboard  Dashboard Id  Visit Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/changes/dashboard/{dashboard_id}/seen": {
+      "put": {
+        "tags": [
+          "Changes"
+        ],
+        "summary": "Mark Dashboard Seen",
+        "description": "Mark everything as seen (moves the mark to now), or only some components.",
+        "operationId": "mark_dashboard_seen_depictio_api_v1_changes_dashboard__dashboard_id__seen_put",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/SeenRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Mark Dashboard Seen Depictio Api V1 Changes Dashboard  Dashboard Id  Seen Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/changes/project/{project_id}": {
+      "post": {
+        "tags": [
+          "Changes"
+        ],
+        "summary": "Project Changes Endpoint",
+        "operationId": "project_changes_endpoint_depictio_api_v1_changes_project__project_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ChangesRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Project Changes Endpoint Depictio Api V1 Changes Project  Project Id  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/changes/project/{project_id}/visit": {
+      "put": {
+        "tags": [
+          "Changes"
+        ],
+        "summary": "Record Project Visit",
+        "operationId": "record_project_visit_depictio_api_v1_changes_project__project_id__visit_put",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Record Project Visit Depictio Api V1 Changes Project  Project Id  Visit Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/changes/project/{project_id}/seen": {
+      "put": {
+        "tags": [
+          "Changes"
+        ],
+        "summary": "Mark Project Seen",
+        "operationId": "mark_project_seen_depictio_api_v1_changes_project__project_id__seen_put",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Mark Project Seen Depictio Api V1 Changes Project  Project Id  Seen Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/changes/project/{project_id}/timeline": {
+      "get": {
+        "tags": [
+          "Changes"
+        ],
+        "summary": "Project Timeline",
+        "description": "One time-ordered list of what happened in a project, newest first.",
+        "operationId": "project_timeline_depictio_api_v1_changes_project__project_id__timeline_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Before"
+            }
+          },
+          {
+            "name": "types",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Comma-separated: ingestion,version,comment",
+              "title": "Types"
+            },
+            "description": "Comma-separated: ingestion,version,comment"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Project Timeline Depictio Api V1 Changes Project  Project Id  Timeline Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/changes/prefs": {
+      "get": {
+        "tags": [
+          "Changes"
+        ],
+        "summary": "Get Prefs",
+        "operationId": "get_prefs_depictio_api_v1_changes_prefs_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Prefs Depictio Api V1 Changes Prefs Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Changes"
+        ],
+        "summary": "Put Prefs",
+        "operationId": "put_prefs_depictio_api_v1_changes_prefs_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrefsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Put Prefs Depictio Api V1 Changes Prefs Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/changes/inbox": {
+      "get": {
+        "tags": [
+          "Changes"
+        ],
+        "summary": "Inbox",
+        "description": "Per marked dashboard or project, a short summary of what is new. Signed-in readers only.\n\n``followed_project_ids`` are the projects of every mark, news or not: the\nbell listens for their ingestions, so the first one after a visit that\nleft nothing new still raises a notification.",
+        "operationId": "inbox_depictio_api_v1_changes_inbox_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Inbox Depictio Api V1 Changes Inbox Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/changes/component_diff/{dashboard_id}/{component_id}": {
+      "post": {
+        "tags": [
+          "Changes"
+        ],
+        "summary": "Component Diff",
+        "description": "Which points, bars or samples of one component changed since the baseline.\n\nThe live definition is used for both sides so the comparison is about the\ndata; ``definition_changed`` says when the reader saw another definition\n(the side-by-side view shows that one).",
+        "operationId": "component_diff_depictio_api_v1_changes_component_diff__dashboard_id___component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ComponentDiffRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Component Diff Depictio Api V1 Changes Component Diff  Dashboard Id   Component Id  Post"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -19506,6 +20618,43 @@
         "title": "AggregationFunction",
         "description": "Supported aggregation functions for granularity mismatches."
       },
+      "AggregationInput": {
+        "properties": {
+          "dc_id": {
+            "type": "string",
+            "title": "Dc Id"
+          },
+          "dc_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dc Tag"
+          },
+          "delta_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delta Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dc_id"
+        ],
+        "title": "AggregationInput",
+        "description": "A collection a derived table was computed from, at the version read."
+      },
       "Anchor": {
         "properties": {
           "dashboard_id": {
@@ -20065,6 +21214,13 @@
             },
             "type": "array",
             "title": "Data Collections"
+          },
+          "shared_samples": {
+            "items": {
+              "$ref": "#/components/schemas/SharedRunSamples"
+            },
+            "type": "array",
+            "title": "Shared Samples"
           },
           "run_id": {
             "anyOf": [
@@ -20736,6 +21892,60 @@
           "message"
         ],
         "title": "BackupValidateResponse"
+      },
+      "BioimageProps": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "bioimage",
+            "title": "Kind",
+            "default": "bioimage"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "ome-zarr",
+              "ome-tiff",
+              "spatialdata"
+            ],
+            "title": "Format",
+            "default": "ome-zarr"
+          },
+          "ngff_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "0.4",
+                  "0.5"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ngff Version"
+          },
+          "upload": {
+            "type": "boolean",
+            "title": "Upload",
+            "default": true
+          },
+          "image_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Path"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "BioimageProps"
       },
       "Body_append_multiqc_reports_depictio_api_v1_multiqc_reports_data_collection__data_collection_id__append_post": {
         "properties": {
@@ -21742,6 +22952,30 @@
         "title": "CLIValidationResponse",
         "description": "Response model for CLI config validation.\n\nArgs:\n    success: Whether the validation was successful.\n    message: A human-readable message about the validation result.\n    is_admin: Whether the user is an admin.\n    user_id: The user's ID if validation was successful.\n    email: The user's email if validation was successful."
       },
+      "CatalogRef": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "nf-core",
+              "workflowhub",
+              "smk-wf-catalog"
+            ],
+            "title": "Name"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "url"
+        ],
+        "title": "CatalogRef"
+      },
       "CellEdit": {
         "properties": {
           "row": {
@@ -21789,6 +23023,62 @@
           "edits"
         ],
         "title": "CellEditsRequest"
+      },
+      "ChangesRequest": {
+        "properties": {
+          "baseline": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReaderBaseline"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "dismissed": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/DismissedComponent"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dismissed"
+          },
+          "since": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Since"
+          },
+          "before_run": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Before Run"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ChangesRequest",
+        "description": "Body of ``POST /dashboards/changes/{id}`` and ``POST /projects/changes/{id}``.\n\nA signed-in reader sends nothing: the server holds the mark. An anonymous\nreader sends the baseline it keeps in browser storage. ``since`` and\n``before_run`` ask for the changes after a moment or after one ingestion,\nread-only, and never move a mark."
       },
       "CheckBody": {
         "properties": {
@@ -22238,6 +23528,71 @@
         ],
         "title": "CommentUpdate"
       },
+      "ComponentDiffRequest": {
+        "properties": {
+          "baseline": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReaderBaseline"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "dismissed": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/DismissedComponent"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dismissed"
+          },
+          "since": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Since"
+          },
+          "before_run": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Before Run"
+          },
+          "filters": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Filters",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ComponentDiffRequest",
+        "description": "The change-set body, plus the filters the figure is drawn with."
+      },
       "CoordinatesRequest": {
         "properties": {
           "lat_column": {
@@ -22372,7 +23727,7 @@
         "type": "object",
         "title": "CreateVersionRequest"
       },
-      "CustomAssembly": {
+      "CustomAssembly-Output": {
         "properties": {
           "name": {
             "type": "string",
@@ -22656,7 +24011,7 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/CustomAssembly"
+                "$ref": "#/components/schemas/CustomAssembly-Output"
               }
             ],
             "title": "Assembly",
@@ -23333,7 +24688,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -23882,7 +25237,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -23945,7 +25300,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -24142,6 +25497,255 @@
         "title": "DataOrigin",
         "description": "Where a data collection's data came from, recorded by the route that created it."
       },
+      "DcDraft": {
+        "properties": {
+          "tag": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Tag"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "table",
+              "multiqc",
+              "image",
+              "indexed_file",
+              "geojson",
+              "phylogeny",
+              "genomic_tracks",
+              "bioimage"
+            ],
+            "title": "Type"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "single",
+              "recursive"
+            ],
+            "title": "Mode"
+          },
+          "path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          },
+          "regex": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Regex"
+          },
+          "glob": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Glob"
+          },
+          "max_depth": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Depth"
+          },
+          "ignore": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Ignore"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
+          },
+          "metatype": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "Metadata",
+                  "Aggregate"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metatype"
+          },
+          "wildcards": {
+            "items": {
+              "$ref": "#/components/schemas/WildcardDraft"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Wildcards"
+          },
+          "props": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TableProps"
+              },
+              {
+                "$ref": "#/components/schemas/MultiQCProps"
+              },
+              {
+                "$ref": "#/components/schemas/ImageProps"
+              },
+              {
+                "$ref": "#/components/schemas/IndexedFileProps"
+              },
+              {
+                "$ref": "#/components/schemas/GeoJSONProps"
+              },
+              {
+                "$ref": "#/components/schemas/PhylogenyProps"
+              },
+              {
+                "$ref": "#/components/schemas/GenomicTracksProps"
+              },
+              {
+                "$ref": "#/components/schemas/BioimageProps"
+              }
+            ],
+            "title": "Props",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "bioimage": "#/components/schemas/BioimageProps",
+                "genomic_tracks": "#/components/schemas/GenomicTracksProps",
+                "geojson": "#/components/schemas/GeoJSONProps",
+                "image": "#/components/schemas/ImageProps",
+                "indexed_file": "#/components/schemas/IndexedFileProps",
+                "multiqc": "#/components/schemas/MultiQCProps",
+                "phylogeny": "#/components/schemas/PhylogenyProps",
+                "table": "#/components/schemas/TableProps"
+              }
+            }
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tag",
+          "type",
+          "mode",
+          "props"
+        ],
+        "title": "DcDraft",
+        "description": "One data collection as the builder edits it."
+      },
+      "DcSeenState": {
+        "properties": {
+          "dc_type": {
+            "type": "string",
+            "title": "Dc Type",
+            "default": ""
+          },
+          "delta_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delta Version"
+          },
+          "aggregation_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Aggregation Version"
+          },
+          "row_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Row Count"
+          },
+          "multiqc_reports": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Multiqc Reports"
+          },
+          "samples": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 5000,
+            "title": "Samples"
+          },
+          "samples_complete": {
+            "type": "boolean",
+            "title": "Samples Complete",
+            "default": true
+          },
+          "run_tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "title": "Run Tags"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "DcSeenState",
+        "description": "What one data collection was at when the reader saw it."
+      },
       "DeleteFilesBatchRequest": {
         "properties": {
           "file_ids": {
@@ -24255,6 +25859,36 @@
         "type": "object",
         "title": "DetectedTemplate",
         "description": "What the run folder said about the run that produced it.\n\nThe other fields are None when the folder did not say. ``template_id`` is\nnullable to match the viewer's type, but a report always names one: a\nfolder no installed template fits is a 422 ``template_not_detected``.\n``GET /projects/folder_inspect`` answers in the same shape, and there it\ncan be None.\n\n``match`` says how the template was chosen: ``exact`` when its version is\nthe run's, ``closest`` when it is another version of the same pipeline,\n``none`` when no installed template fits the run."
+      },
+      "DismissedComponent": {
+        "properties": {
+          "fingerprint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fingerprint"
+          },
+          "data_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Token"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "DismissedComponent",
+        "description": "A component the reader marked as seen on its own.\n\nIt stays unmarked while both its definition and its collection's data are\nstill what they were when dismissed."
       },
       "EditLockRequest": {
         "properties": {
@@ -24449,7 +26083,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -24911,6 +26545,13 @@
                 "type": "null"
               }
             ]
+          },
+          "child_runs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Child Runs"
           }
         },
         "type": "object",
@@ -24920,7 +26561,7 @@
           "name"
         ],
         "title": "FolderInspection",
-        "description": "What one folder holds, direct children only, and the run in it.\n\n``detected`` is None when detection was not asked for, or when no engine\nrecognised the folder. ``run_info`` is set whenever ``detected`` is, even\nwhen no installed template fits the run."
+        "description": "What one folder holds, direct children only, and the run in it.\n\n``detected`` is None when detection was not asked for, or when no engine\nrecognised the folder. ``run_info`` is set whenever ``detected`` is, even\nwhen no installed template fits the run. For a folder of runs\n(``child_runs``, two or more), they describe its first run."
       },
       "FolderNames": {
         "properties": {
@@ -25616,6 +27257,27 @@
             "type": "array",
             "title": "Detected Runs"
           },
+          "runs": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runs"
+          },
+          "shared_samples": {
+            "items": {
+              "$ref": "#/components/schemas/SharedRunSamples"
+            },
+            "type": "array",
+            "title": "Shared Samples"
+          },
           "resolved_variables": {
             "additionalProperties": {
               "type": "string"
@@ -25767,6 +27429,42 @@
               }
             ],
             "title": "Description"
+          },
+          "template": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template"
+          },
+          "edits": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TemplateEdits"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "runs": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runs"
           }
         },
         "type": "object",
@@ -25775,6 +27473,196 @@
         ],
         "title": "FromRunRequest",
         "description": "Body of POST /projects/from_run."
+      },
+      "FromTemplateBody": {
+        "properties": {
+          "template_id": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Template Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "template_id"
+        ],
+        "title": "FromTemplateBody",
+        "description": "A template shipped with Depictio (``nf-core/viralrecon/3.0.0``, ``.../latest``)."
+      },
+      "GenomicTracksProps": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "genomic_tracks",
+            "title": "Kind",
+            "default": "genomic_tracks"
+          },
+          "format": {
+            "type": "string",
+            "title": "Format",
+            "default": "tsv"
+          },
+          "separator": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Separator"
+          },
+          "uri_column": {
+            "type": "string",
+            "title": "Uri Column",
+            "default": "uri"
+          },
+          "sample_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Column"
+          },
+          "format_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Format Column"
+          },
+          "index_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index Column"
+          },
+          "name_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name Column"
+          },
+          "color_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color Column"
+          },
+          "category_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Column"
+          },
+          "order_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order Column"
+          },
+          "track_id_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Track Id Column"
+          },
+          "default_format": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default Format"
+          },
+          "assembly": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/depictio__project_builder__assemble__CustomAssembly"
+              }
+            ],
+            "title": "Assembly",
+            "default": "hg38"
+          },
+          "tracks_base_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tracks Base Path"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GenomicTracksProps",
+        "description": "A manifest of genome-browser tracks: the table (format, separator) and\nwhich of its columns says what."
+      },
+      "GeoJSONProps": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "geojson",
+            "title": "Kind",
+            "default": "geojson"
+          },
+          "feature_id_key": {
+            "type": "string",
+            "title": "Feature Id Key",
+            "default": "id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GeoJSONProps"
       },
       "GeoNote": {
         "properties": {
@@ -25853,7 +27741,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -26159,6 +28047,116 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
+      "ImageProps": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "image",
+            "title": "Kind",
+            "default": "image"
+          },
+          "format": {
+            "type": "string",
+            "title": "Format",
+            "default": "csv"
+          },
+          "separator": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Separator"
+          },
+          "image_column": {
+            "type": "string",
+            "title": "Image Column"
+          },
+          "local_images_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Local Images Path"
+          },
+          "s3_base_folder": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "S3 Base Folder"
+          },
+          "reader": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReaderOptions"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "columns_description": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Columns Description"
+          },
+          "thumbnail_size": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1000.0,
+                "minimum": 50.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumbnail Size"
+          },
+          "supported_formats": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supported Formats"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "image_column"
+        ],
+        "title": "ImageProps"
+      },
       "ImportHop": {
         "properties": {
           "source_instance": {
@@ -26252,6 +28250,79 @@
         "type": "object",
         "title": "ImportHop",
         "description": "One import of this project into an instance.\n\nA project that travelled A -> B -> C carries two hops, oldest first. No\nrequester email: the project document is readable on public projects; the\nrequest that brought it here keeps that."
+      },
+      "IndexedFileProps": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "indexed_file",
+            "title": "Kind",
+            "default": "indexed_file"
+          },
+          "format": {
+            "type": "string",
+            "title": "Format",
+            "default": "vcf"
+          },
+          "index_suffix": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index Suffix"
+          },
+          "sample_regex": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Regex"
+          },
+          "sample_col": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Col"
+          },
+          "assembly": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assembly"
+          },
+          "max_file_size_mb": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max File Size Mb"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "IndexedFileProps"
       },
       "IngestManifestRequest": {
         "properties": {
@@ -27194,6 +29265,14 @@
               }
             ],
             "title": "Trigger Reason"
+          },
+          "run_tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "title": "Run Tags"
           }
         },
         "type": "object",
@@ -27245,6 +29324,18 @@
             ],
             "title": "Scans",
             "description": "A refresh scan leader's scan outcomes, by data collection id: None for a scan that succeeded, else its failure message"
+          },
+          "inputs_signature": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inputs Signature",
+            "description": "A refreshed data collection's files and configuration as it was ingested: the next refresh leaves the collection alone when they are the same"
           },
           "started_at": {
             "anyOf": [
@@ -27985,6 +30076,85 @@
         ],
         "title": "LinkCreateRequest",
         "description": "Request to create a new DC link.\n\nExample:\n    LinkCreateRequest(\n        source_dc_id=\"metadata_dc_id\",\n        source_column=\"sample_id\",\n        target_dc_id=\"multiqc_dc_id\",\n        target_type=\"multiqc\",\n        link_config=LinkConfig(resolver=\"sample_mapping\"),\n        description=\"Link metadata to MultiQC\"\n    )"
+      },
+      "LinkDraft": {
+        "properties": {
+          "source_tag": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Source Tag"
+          },
+          "source_column": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Source Column"
+          },
+          "target_tag": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Target Tag"
+          },
+          "resolver": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "direct",
+                  "sample_mapping",
+                  "pattern",
+                  "regex",
+                  "wildcard"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolver"
+          },
+          "target_field": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Field"
+          },
+          "pattern": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pattern"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_tag",
+          "source_column",
+          "target_tag"
+        ],
+        "title": "LinkDraft",
+        "description": "A cross-collection filter: values of ``source_column`` select rows of the target.\n\nThe target's link type comes from its collection's type, so it is never\nasked for; ``target_field`` and the resolver default from it too."
       },
       "LinkMappingPreviewResponse": {
         "properties": {
@@ -28739,6 +30909,39 @@
         "title": "MarkedPoints",
         "description": "Points, bars or table rows to circle or outline.\n\nRows are identified by the component's selection column when it has one\n(``column`` + ``ids``), which survives re-sorting and re-ingest. Charts\nwithout one (bars, histograms) fall back to plain coordinates.\n``region`` keeps the area the selection gesture covered, drawn as a\nshaded background behind the points.\n\n``geo`` marks points on a map: coordinates and region vertices are then\nlongitude (``x``) and latitude (``y``)."
       },
+      "MatchBody": {
+        "properties": {
+          "root": {
+            "$ref": "#/components/schemas/RootSpec"
+          },
+          "workflow": {
+            "$ref": "#/components/schemas/WorkflowShape"
+          },
+          "collection": {
+            "$ref": "#/components/schemas/DcDraft"
+          }
+        },
+        "type": "object",
+        "required": [
+          "root",
+          "collection"
+        ],
+        "title": "MatchBody"
+      },
+      "MetadataBody": {
+        "properties": {
+          "repo_url": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Repo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "repo_url"
+        ],
+        "title": "MetadataBody"
+      },
       "MigrateExportRequest": {
         "properties": {
           "project_id": {
@@ -28950,13 +31153,26 @@
         "title": "MultiQCMetadata",
         "description": "Metadata extracted from MultiQC parquet files."
       },
+      "MultiQCProps": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "multiqc",
+            "title": "Kind",
+            "default": "multiqc"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "MultiQCProps"
+      },
       "MultiQCReport": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -29052,6 +31268,53 @@
             ],
             "title": "Report Name",
             "description": "Name/identifier for this MultiQC report"
+          },
+          "source_file_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source File Hash",
+            "description": "The registered file's hash when this report was read: a later ingestion whose file has the same hash keeps the report without parsing it again"
+          },
+          "last_change": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MultiQCReportChange"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Samples and modules the last overwrite of this report added or removed"
+          },
+          "run_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Tag",
+            "description": "Run (run folder) this report belongs to. None on reports ingested before this was recorded; see run_tag_from_path for the path-based fallback."
+          },
+          "ingestion_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ingestion Run Id",
+            "description": "Ingestion run (ledger entry) that stored or last updated this report"
           }
         },
         "additionalProperties": false,
@@ -29063,6 +31326,42 @@
         ],
         "title": "MultiQCReport",
         "description": "MongoDB document representing a MultiQC report.\n\nThis model stores:\n- Extracted metadata (samples, modules, plots)\n- S3 storage location of the parquet file\n- Reference to the parent data collection\n- Processing information and timestamps"
+      },
+      "MultiQCReportChange": {
+        "properties": {
+          "samples_added": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Samples Added"
+          },
+          "samples_removed": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Samples Removed"
+          },
+          "modules_added": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Modules Added"
+          },
+          "modules_removed": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Modules Removed"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "MultiQCReportChange",
+        "description": "What a report's last overwrite changed: samples and modules in or out.\n\nSamples are compared by their canonical ids when both sides have them,\nsince MultiQC names one sample many ways (read 1, read 2, adapters)."
       },
       "MultiQCReportResponse": {
         "properties": {
@@ -29250,6 +31549,70 @@
         },
         "type": "object",
         "title": "Permission"
+      },
+      "PhylogenyProps": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "phylogeny",
+            "title": "Kind",
+            "default": "phylogeny"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "newick",
+              "nexus"
+            ],
+            "title": "Format",
+            "default": "newick"
+          },
+          "ladderize": {
+            "type": "boolean",
+            "title": "Ladderize",
+            "default": true
+          },
+          "metadata_dc_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metadata Dc Tag"
+          },
+          "metadata_taxon_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metadata Taxon Column"
+          },
+          "tip_label_strategy": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "taxon",
+                  "first_token"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tip Label Strategy"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "PhylogenyProps"
       },
       "PinVersionRequest": {
         "properties": {
@@ -29464,6 +31827,24 @@
         "title": "PreflightRequest",
         "description": "A registered target (``target_id``) or a destination URL + invite code."
       },
+      "PrefsRequest": {
+        "properties": {
+          "mark_mode": {
+            "type": "string",
+            "enum": [
+              "sticky",
+              "previous_visit"
+            ],
+            "title": "Mark Mode"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "mark_mode"
+        ],
+        "title": "PrefsRequest"
+      },
       "ProbeBody": {
         "properties": {
           "bucket": {
@@ -29488,7 +31869,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -29689,6 +32070,69 @@
         ],
         "title": "Project"
       },
+      "ProjectDraft": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "is_public": {
+            "type": "boolean",
+            "title": "Is Public",
+            "default": false
+          },
+          "realtime": {
+            "type": "boolean",
+            "title": "Realtime",
+            "default": false
+          },
+          "data_management_platform_project_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Management Platform Project Url"
+          },
+          "workflows": {
+            "items": {
+              "$ref": "#/components/schemas/WorkflowDraft"
+            },
+            "type": "array",
+            "title": "Workflows"
+          },
+          "links": {
+            "items": {
+              "$ref": "#/components/schemas/LinkDraft"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Links"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "ProjectDraft"
+      },
       "ProjectLockRequest": {
         "properties": {
           "reason": {
@@ -29844,6 +32288,14 @@
             },
             "type": "array",
             "title": "Scans"
+          },
+          "dc_outputs": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Dc Outputs",
+            "default": {}
           }
         },
         "type": "object",
@@ -30377,6 +32829,179 @@
         "pattern": "^[0-9a-f]{24}$",
         "example": "5eb7cf5a86d9755df3a6c593"
       },
+      "ReaderBaseline": {
+        "properties": {
+          "seen_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Seen At"
+          },
+          "version_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version Id"
+          },
+          "version_seq": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version Seq"
+          },
+          "version_content_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version Content Hash"
+          },
+          "dc_states": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DcSeenState"
+            },
+            "type": "object",
+            "title": "Dc States"
+          },
+          "comment_cursor_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment Cursor At"
+          },
+          "ingestion_cursor_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ingestion Cursor At"
+          },
+          "workflow_runs": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Workflow Runs"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "seen_at"
+        ],
+        "title": "ReaderBaseline",
+        "description": "The state a reader acknowledged. Also what an anonymous reader stores locally."
+      },
+      "ReaderOptions": {
+        "properties": {
+          "has_header": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Has Header"
+          },
+          "skip_rows": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skip Rows"
+          },
+          "comment_prefix": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 5,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment Prefix"
+          },
+          "null_values": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Null Values"
+          },
+          "quote_char": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quote Char"
+          },
+          "decimal_comma": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decimal Comma"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ReaderOptions",
+        "description": "How a csv/tsv file is read (polars ``scan_csv`` options), beyond its separator."
+      },
       "RealtimeConfig": {
         "properties": {
           "enabled": {
@@ -30507,6 +33132,11 @@
           "async_run": {
             "type": "boolean",
             "title": "Async Run",
+            "default": false
+          },
+          "full": {
+            "type": "boolean",
+            "title": "Full",
             "default": false
           }
         },
@@ -30768,6 +33398,211 @@
         ],
         "title": "Review"
       },
+      "RootSpec": {
+        "properties": {
+          "data_root": {
+            "type": "string",
+            "title": "Data Root"
+          },
+          "storage": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Storage"
+          },
+          "refresh": {
+            "type": "boolean",
+            "title": "Refresh",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "data_root"
+        ],
+        "title": "RootSpec",
+        "description": "The data root a request reads: a local folder or an ``s3://`` prefix, and\na private bucket's settings (the run-folder dialog's ``RunStorageIn`` shape)."
+      },
+      "RunFile": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "dc_id": {
+            "type": "string",
+            "title": "Dc Id"
+          },
+          "dc_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dc Tag"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "modified": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Modified"
+          },
+          "registered": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Registered"
+          },
+          "added_in": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Added In"
+          },
+          "changed_in": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Changed In",
+            "default": []
+          },
+          "failed_in": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Failed In",
+            "default": []
+          },
+          "changes": {
+            "items": {
+              "$ref": "#/components/schemas/RunFileChange"
+            },
+            "type": "array",
+            "title": "Changes",
+            "default": []
+          },
+          "report_change": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunReportChange"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "dc_id",
+          "dc_tag",
+          "filename",
+          "location"
+        ],
+        "title": "RunFile"
+      },
+      "RunFileChange": {
+        "properties": {
+          "scan": {
+            "type": "integer",
+            "title": "Scan"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "modified": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Modified"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scan"
+        ],
+        "title": "RunFileChange",
+        "description": "What one scan found changed in a file: [before, after] of each."
+      },
       "RunFilePreview": {
         "properties": {
           "location": {
@@ -30864,6 +33699,20 @@
               }
             ],
             "title": "Reason"
+          },
+          "dtypes": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dtypes"
           }
         },
         "type": "object",
@@ -30901,6 +33750,11 @@
             "minimum": 1.0,
             "title": "Max Rows",
             "default": 20
+          },
+          "infer_types": {
+            "type": "boolean",
+            "title": "Infer Types",
+            "default": false
           }
         },
         "type": "object",
@@ -30910,6 +33764,40 @@
         ],
         "title": "RunFilePreviewRequest",
         "description": "Body of POST /projects/run_file_preview.\n\n``data_root`` and ``storage`` as ``POST /projects/from_run`` takes them;\n``location`` a file below ``data_root``, a real path or an ``s3://`` URL."
+      },
+      "RunFiles": {
+        "properties": {
+          "run_tag": {
+            "type": "string",
+            "title": "Run Tag"
+          },
+          "scans": {
+            "items": {
+              "$ref": "#/components/schemas/RunScanFiles"
+            },
+            "type": "array",
+            "title": "Scans"
+          },
+          "files": {
+            "items": {
+              "$ref": "#/components/schemas/RunFile"
+            },
+            "type": "array",
+            "title": "Files"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_tag",
+          "scans",
+          "files"
+        ],
+        "title": "RunFiles"
       },
       "RunInfoSummary": {
         "properties": {
@@ -31098,6 +33986,45 @@
         "title": "RunInputFile",
         "description": "One file of the run the template reads through a variable, such as its samplesheet.\n\n``name`` is the variable (``SAMPLESHEET_FILE``), ``description`` and\n``required`` as the template declares it. ``location`` is where it\nresolved to, a real path or an ``s3://`` URL, None when it is not set.\n``found`` says whether the data root holds it, None when that cannot be\ntold: a location outside the root, or one a partial listing does not name.\n``used_by`` are the data collections that read it or that a conditional on\nit switches (see ``templates.variable_users``)."
       },
+      "RunReportChange": {
+        "properties": {
+          "samples_added": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Samples Added",
+            "default": []
+          },
+          "samples_removed": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Samples Removed",
+            "default": []
+          },
+          "modules_added": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Modules Added",
+            "default": []
+          },
+          "modules_removed": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Modules Removed",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "RunReportChange",
+        "description": "The samples and modules a MultiQC report's last overwrite added or removed."
+      },
       "RunReportFile": {
         "properties": {
           "kind": {
@@ -31184,6 +34111,41 @@
           "files_failed"
         ],
         "title": "RunScan"
+      },
+      "RunScanFiles": {
+        "properties": {
+          "scan_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scan Time"
+          },
+          "new": {
+            "type": "integer",
+            "title": "New"
+          },
+          "changed": {
+            "type": "integer",
+            "title": "Changed"
+          },
+          "failed": {
+            "type": "integer",
+            "title": "Failed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scan_time",
+          "new",
+          "changed",
+          "failed"
+        ],
+        "title": "RunScanFiles"
       },
       "RunStorageIn": {
         "properties": {
@@ -31304,6 +34266,42 @@
         ],
         "title": "RunTaskSummary",
         "description": "How the tasks of the run ended, counted from its execution trace.\n\n``trace`` is the trace read, a real path or an ``s3://`` URL. A task is\none line of the pipeline (the trace's ``name``, else its ``hash``) and is\ncounted once, by the status of its last attempt: ``completed``, ``cached``\n(reused from an earlier launch by ``-resume``), ``failed`` (``FAILED`` or\n``ABORTED``) or ``other``. ``retried`` counts the tasks that failed and\nthen succeeded, already counted as completed or cached. ``partial``: the\ntrace was larger than the server reads, so the counts cover its start only."
+      },
+      "RunsOverviewBody": {
+        "properties": {
+          "root": {
+            "$ref": "#/components/schemas/RootSpec"
+          },
+          "runs_regex": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runs Regex"
+          }
+        },
+        "type": "object",
+        "required": [
+          "root"
+        ],
+        "title": "RunsOverviewBody"
+      },
+      "RunsRegexBody": {
+        "properties": {
+          "root": {
+            "$ref": "#/components/schemas/RootSpec"
+          }
+        },
+        "type": "object",
+        "required": [
+          "root"
+        ],
+        "title": "RunsRegexBody"
       },
       "S3DepictioCLIConfig": {
         "properties": {
@@ -31503,6 +34501,38 @@
         ],
         "title": "Scan"
       },
+      "ScanEdit": {
+        "properties": {
+          "path": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          },
+          "regex": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Regex"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ScanEdit",
+        "description": "A new location for a collection read from files: one of the two."
+      },
       "ScanManifest": {
         "properties": {
           "manifest_url": {
@@ -31640,6 +34670,35 @@
           "filename": {
             "type": "string",
             "title": "Filename"
+          },
+          "run_files": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Files"
+          },
+          "scope": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "run",
+                  "project"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope"
           }
         },
         "additionalProperties": false,
@@ -31664,6 +34723,29 @@
         "title": "ScanURL",
         "description": "Remote single-file acquisition: the DC's data lives at an absolute\ns3:// or https:// URL instead of a scanned local path. Validation is\nsyntactic only: reachability/SSRF checks happen at the API fetch gateway."
       },
+      "SeenRequest": {
+        "properties": {
+          "component_keys": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Component Keys"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "SeenRequest",
+        "description": "Mark everything (no keys) or some components as seen."
+      },
       "SharedLabelsPayload": {
         "properties": {
           "columns": {
@@ -31678,6 +34760,73 @@
         "type": "object",
         "title": "SharedLabelsPayload",
         "description": "Body of ``PUT /dashboards/annotations/{dashboard_id}/shared``: the label\ncolumns every reader of the dashboard sees, read-only. Same caps as a\nreader's own labels."
+      },
+      "SharedRunSamples": {
+        "properties": {
+          "data_collection_tag": {
+            "type": "string",
+            "title": "Data Collection Tag"
+          },
+          "runs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Runs"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "samples": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Samples"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data_collection_tag",
+          "runs",
+          "count",
+          "samples"
+        ],
+        "title": "SharedRunSamples",
+        "description": "Samples one MultiQC collection finds in more than one run.\n\nThe one ingestion merges the runs' reports: a sample named in two of them\nbecomes one, its values mixed. An upload of several reports refuses that\n(``validate_multiqc_reports_uniform``), and so does a creation from several\nruns (``runs_share_samples``); the preview names them first."
+      },
+      "SourceEdit": {
+        "properties": {
+          "path": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          },
+          "glob_pattern": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Glob Pattern"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "SourceEdit",
+        "description": "A recipe input read from another file (``path``) or files (``glob_pattern``)."
       },
       "SourceOverride": {
         "properties": {
@@ -31708,6 +34857,59 @@
         "type": "object",
         "title": "SourceOverride",
         "description": "Override a recipe source binding in project.yaml.\n\nRepoints a recipe source at a different file without editing the recipe — used\nby route conditionals (e.g. nanopore) to point the same recipe at a divergent\nsub-workflow's output layout. Set ``path`` for single-file sources or\n``glob_pattern`` for multi-file (glob) sources; exactly one is required."
+      },
+      "SpatialDataTableSource": {
+        "properties": {
+          "table": {
+            "type": "string",
+            "title": "Table",
+            "default": "tables/table"
+          },
+          "image": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image"
+          },
+          "coordinates": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "obsm",
+              "region"
+            ],
+            "title": "Coordinates",
+            "default": "auto"
+          },
+          "genes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "title": "Genes"
+          },
+          "layer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Layer"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "SpatialDataTableSource",
+        "description": "What a table collection reads from a SpatialData store (``format: spatialdata``)."
       },
       "Staleness": {
         "properties": {
@@ -31805,6 +35007,52 @@
         "title": "StructureResolveRequest",
         "description": "Body of ``POST /advanced_viz/structure/resolve`` (at least one identifier)."
       },
+      "SuggestBody": {
+        "properties": {
+          "root": {
+            "$ref": "#/components/schemas/RootSpec"
+          },
+          "path": {
+            "type": "string",
+            "title": "Path"
+          },
+          "examples": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Examples"
+          },
+          "structure": {
+            "type": "string",
+            "enum": [
+              "flat",
+              "sequencing-runs"
+            ],
+            "title": "Structure",
+            "default": "flat"
+          },
+          "runs_regex": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runs Regex"
+          }
+        },
+        "type": "object",
+        "required": [
+          "root",
+          "path"
+        ],
+        "title": "SuggestBody"
+      },
       "TableJoinConfig": {
         "properties": {
           "on_columns": {
@@ -31835,6 +35083,102 @@
         ],
         "title": "TableJoinConfig"
       },
+      "TableProps": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "table",
+            "title": "Kind",
+            "default": "table"
+          },
+          "format": {
+            "type": "string",
+            "title": "Format",
+            "default": "csv"
+          },
+          "separator": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Separator"
+          },
+          "columns_description": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Columns Description"
+          },
+          "reader": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReaderOptions"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lat_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat Column"
+          },
+          "lon_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lon Column"
+          },
+          "crs": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Crs"
+          },
+          "spatialdata": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SpatialDataTableSource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "TableProps"
+      },
       "TargetCreate": {
         "properties": {
           "name": {
@@ -31864,6 +35208,83 @@
         ],
         "title": "TargetCreate"
       },
+      "TemplateBase": {
+        "properties": {
+          "template_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Template Id"
+          },
+          "remove": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "title": "Remove"
+          },
+          "scans": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ScanEdit"
+            },
+            "type": "object",
+            "title": "Scans"
+          },
+          "sources": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/SourceEdit"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Sources"
+          },
+          "workflows": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/WorkflowEdit"
+            },
+            "type": "object",
+            "maxProperties": 50,
+            "title": "Workflows"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "template_id"
+        ],
+        "title": "TemplateBase",
+        "description": "The shipped template a builder draft is an edit of, and the edits the\npage holds (``POST /builder/template``); the draft's own collections are\nthe additions."
+      },
+      "TemplateBody": {
+        "properties": {
+          "draft": {
+            "$ref": "#/components/schemas/ProjectDraft"
+          },
+          "remote": {
+            "type": "boolean",
+            "title": "Remote",
+            "default": false
+          },
+          "base": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TemplateBase"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "draft"
+        ],
+        "title": "TemplateBody"
+      },
       "TemplateCatalog": {
         "properties": {
           "templates": {
@@ -31876,6 +35297,59 @@
         },
         "type": "object",
         "title": "TemplateCatalog"
+      },
+      "TemplateEdits": {
+        "properties": {
+          "remove": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "title": "Remove"
+          },
+          "scans": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ScanEdit"
+            },
+            "type": "object",
+            "title": "Scans"
+          },
+          "sources": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/SourceEdit"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Sources"
+          },
+          "workflows": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/WorkflowEdit"
+            },
+            "type": "object",
+            "maxProperties": 50,
+            "title": "Workflows"
+          },
+          "additions": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Additions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "TemplateEdits",
+        "description": "What the reader changed of a shipped template (see the module docstring)."
       },
       "TemplateInfo": {
         "properties": {
@@ -31998,6 +35472,21 @@
             "title": "Data Root",
             "description": "The actual DATA_DIR value provided by the user. None for manifest-driven instantiations, where MANIFEST_URL in `variables` plays the equivalent provenance role."
           },
+          "runs": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runs",
+            "description": "Set when the project was made from a folder of several runs: `data_root` is that folder and this lists the names of its sub-folders read as runs, in order. None for a project made from one run folder."
+          },
           "applied_at": {
             "type": "string",
             "title": "Applied At",
@@ -32010,6 +35499,24 @@
             "type": "object",
             "title": "Variables",
             "description": "Resolved template variables (DATA_ROOT, SAMPLESHEET_FILE, GROUP_COL, etc.)"
+          },
+          "run_variables": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Variables",
+            "description": "The resolved variables of each run location, when a project's runs were resolved with different values. `variables` stays the first location's."
           },
           "config_snapshot": {
             "additionalProperties": true,
@@ -32421,7 +35928,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -32527,7 +36034,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -32760,11 +36267,45 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6af5af622c027a7a9a5a22e2"
+            "default": "6afb33121460b19ba4c9514b"
           }
         },
         "type": "object",
         "title": "TokenData"
+      },
+      "TracksManifestBody": {
+        "properties": {
+          "root": {
+            "$ref": "#/components/schemas/RootSpec"
+          },
+          "files": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 2000,
+            "minItems": 1,
+            "title": "Files"
+          },
+          "sample_regex": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Regex"
+          }
+        },
+        "type": "object",
+        "required": [
+          "root",
+          "files"
+        ],
+        "title": "TracksManifestBody"
       },
       "TransformConfig": {
         "properties": {
@@ -32804,6 +36345,39 @@
               }
             ],
             "title": "Params"
+          },
+          "run_params": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Params"
+          },
+          "scope": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "run",
+                  "aggregate",
+                  "pipeline"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope"
           }
         },
         "additionalProperties": false,
@@ -32813,6 +36387,23 @@
         ],
         "title": "TransformConfig",
         "description": "Config for a transformed data collection in project.yaml."
+      },
+      "TreeBody": {
+        "properties": {
+          "root": {
+            "$ref": "#/components/schemas/RootSpec"
+          },
+          "path": {
+            "type": "string",
+            "title": "Path",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "root"
+        ],
+        "title": "TreeBody"
       },
       "URLPreviewRequest": {
         "properties": {
@@ -33002,6 +36593,17 @@
             ],
             "title": "Files Added"
           },
+          "content_digest": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content Digest"
+          },
           "run_tags": {
             "items": {
               "type": "string"
@@ -33031,6 +36633,38 @@
               }
             ],
             "title": "Trigger"
+          },
+          "run_scope": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "run",
+                  "aggregate",
+                  "pipeline"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Scope"
+          },
+          "computed_from_runs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Computed From Runs",
+            "default": []
+          },
+          "inputs": {
+            "items": {
+              "$ref": "#/components/schemas/AggregationInput"
+            },
+            "type": "array",
+            "title": "Inputs",
+            "default": []
           },
           "async_mode": {
             "type": "boolean",
@@ -33094,7 +36728,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -33262,7 +36896,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -33344,7 +36978,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -33430,7 +37064,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -33668,6 +37302,30 @@
         "title": "ViewState",
         "description": "What the author saw: the filters applied and the selection made.\n\nKept as the viewer's own payloads (the same shapes as the ``#filters=``\nshare link) rather than re-modelled here, so the viewer can restore them\nwithout a translation layer that would drift."
       },
+      "WildcardDraft": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "regex": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Regex"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "regex"
+        ],
+        "title": "WildcardDraft",
+        "description": "A ``{name}`` of a recursive scan's regex: what it matches, and the column it becomes."
+      },
       "WildcardRegexBase": {
         "properties": {
           "name": {
@@ -33693,7 +37351,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -33868,7 +37526,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -33985,7 +37643,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -34059,6 +37717,177 @@
         ],
         "title": "WorkflowDataLocation"
       },
+      "WorkflowDraft": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "engine": {
+            "type": "string",
+            "title": "Engine",
+            "default": "python"
+          },
+          "engine_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine Version"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "repository_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Repository Url"
+          },
+          "catalog": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CatalogRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "structure": {
+            "type": "string",
+            "enum": [
+              "flat",
+              "sequencing-runs"
+            ],
+            "title": "Structure",
+            "default": "flat"
+          },
+          "runs_regex": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runs Regex"
+          },
+          "data_collections": {
+            "items": {
+              "$ref": "#/components/schemas/DcDraft"
+            },
+            "type": "array",
+            "title": "Data Collections"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "WorkflowDraft"
+      },
+      "WorkflowEdit": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "catalog_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Catalog Name"
+          },
+          "catalog_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Catalog Url"
+          },
+          "repository_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Repository Url"
+          },
+          "engine_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "WorkflowEdit",
+        "description": "What may change of a template's workflow: None leaves a field as\nshipped; an empty ``repository_url``, ``catalog_name`` or ``catalog_url``\ndrops it.\n\nA new ``name`` is the workflow's name in the project; the template's\ndashboards, which name it, are imported with it (``renamed_workflows``).\nA new ``version`` is recorded as the run's; recipes made for one version\nof the pipeline are looked for under it, then among the shared ones."
+      },
       "WorkflowEngine": {
         "properties": {
           "name": {
@@ -34090,7 +37919,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6af5af622c027a7a9a5a22e1"
+            "default": "6afb33111460b19ba4c9514a"
           },
           "description": {
             "anyOf": [
@@ -34242,6 +38071,24 @@
               }
             ],
             "title": "Dc Stats"
+          },
+          "file_changes": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "items": {},
+                    "type": "array"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Changes"
           }
         },
         "type": "object",
@@ -34250,6 +38097,32 @@
           "files_id"
         ],
         "title": "WorkflowRunScan"
+      },
+      "WorkflowShape": {
+        "properties": {
+          "structure": {
+            "type": "string",
+            "enum": [
+              "flat",
+              "sequencing-runs"
+            ],
+            "title": "Structure",
+            "default": "flat"
+          },
+          "runs_regex": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runs Regex"
+          }
+        },
+        "type": "object",
+        "title": "WorkflowShape"
       },
       "XRange": {
         "properties": {
@@ -34365,6 +38238,216 @@
         ],
         "title": "_ProvisionUserRequest",
         "description": "Body for POST /auth/provision_user."
+      },
+      "depictio__models__models__data_collections_types__genomic_tracks__CustomAssembly": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Assembly name used by JBrowse (e.g. 'MN908947.3')"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name",
+            "description": "Human-readable name"
+          },
+          "aliases": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Aliases",
+            "description": "Other names of the assembly (e.g. ['hg38'])"
+          },
+          "fasta_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fasta Uri",
+            "description": "FASTA (plain or bgzipped)"
+          },
+          "fai_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fai Uri",
+            "description": "FASTA .fai index"
+          },
+          "gzi_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gzi Uri",
+            "description": "bgzip .gzi index"
+          },
+          "twobit_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Twobit Uri",
+            "description": "UCSC .2bit sequence"
+          },
+          "chrom_sizes_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chrom Sizes Uri",
+            "description": "chrom.sizes (2bit only)"
+          },
+          "refname_aliases_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refname Aliases Uri",
+            "description": "Tab-separated refName alias file (e.g. chr1 ↔ 1)"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "CustomAssembly",
+        "description": "A reference assembly that is not one of the built-in presets.\n\nGive either an indexed FASTA (``fasta_uri`` + ``fai_uri``, plus ``gzi_uri``\nwhen bgzipped) or a UCSC ``twobit_uri``. URIs follow the same rules as\ntrack URIs (relative, ``s3://`` or ``https://``)."
+      },
+      "depictio__project_builder__assemble__CustomAssembly": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "aliases": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Aliases"
+          },
+          "twobit_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Twobit Uri"
+          },
+          "chrom_sizes_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chrom Sizes Uri"
+          },
+          "fasta_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fasta Uri"
+          },
+          "fai_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fai Uri"
+          },
+          "gzi_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gzi Uri"
+          },
+          "refname_aliases_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refname Aliases Uri"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "CustomAssembly",
+        "description": "A reference genome that is not a built-in preset. Each ``*_uri`` is a\nroot-relative path, or an ``https://``/``s3://`` URL read in place."
       }
     },
     "securitySchemes": {
