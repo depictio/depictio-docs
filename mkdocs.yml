@@ -296,9 +296,10 @@ extra:
   # live on DocBot dev (November 2026). The widget only works once DocBot adds
   # https://depictio.github.io to its CORS allow-list; before that it opens but
   # cannot load or answer. Switch the backend to production (www.ebi.ac.uk) once
-  # DocBot deploys depictio there. DEPICTIO_DOCS_DOCBOT=false turns it off.
+  # DocBot deploys depictio there. Off until the CORS entry is in; then set the
+  # default below to true. DEPICTIO_DOCS_DOCBOT=1 turns it on to test locally.
   docbot:
-    enabled: !ENV [DEPICTIO_DOCS_DOCBOT, true]
+    enabled: !ENV [DEPICTIO_DOCS_DOCBOT, false]
     team: depictio
     # Production: https://www.ebi.ac.uk/docbot/api
     backend: https://wwwdev.ebi.ac.uk/docbot/api

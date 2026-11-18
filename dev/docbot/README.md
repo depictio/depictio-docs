@@ -72,7 +72,7 @@ selector locked. Its settings are under `extra.docbot` in `mkdocs.yml`:
 
 | Key | Value |
 |-----|-------|
-| `enabled` | `!ENV [DEPICTIO_DOCS_DOCBOT, true]`: on; `DEPICTIO_DOCS_DOCBOT=false` turns it off |
+| `enabled` | `!ENV [DEPICTIO_DOCS_DOCBOT, false]`: off until DocBot allows the origin; then set the default to `true` |
 | `team` | `depictio`, the ID DocBot assigned (live on DocBot dev since November 2026) |
 | `backend` | Development, `https://wwwdev.ebi.ac.uk/docbot/api`, until DocBot deploys depictio to production (`https://www.ebi.ac.uk/docbot/api`) |
 | `sdk` | Where the widget's script and stylesheet are served from |
