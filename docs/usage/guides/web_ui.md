@@ -175,11 +175,11 @@ until the next one. See [Release check](#release-check).
 3. The dashboard will be duplicated and added to the section with the suffix **"(copy)"**.
 
 !!! note
-    [![The Visibility column of the Dashboards page, with Public and Private chips](../../images/guides/web-ui/visibility_chips_light.webp#only-light){ width="118" }](../../images/guides/web-ui/visibility_chips_light.webp){target=_blank}
-    [![The Visibility column of the Dashboards page, with Public and Private chips](../../images/guides/web-ui/visibility_chips_dark.webp#only-dark){ width="118" }](../../images/guides/web-ui/visibility_chips_dark.webp){target=_blank}
+    [![The Dashboards page as a table: the dashboards of the public Soil microbiome 16S project marked Public, those of the Sequencing QC study marked Private](../../images/guides/web-ui/visibility_chips_light.webp#only-light){ width="800" }](../../images/guides/web-ui/visibility_chips_light.webp){target=_blank}
+    [![The Dashboards page as a table: the dashboards of the public Soil microbiome 16S project marked Public, those of the Sequencing QC study marked Private](../../images/guides/web-ui/visibility_chips_dark.webp#only-dark){ width="800" }](../../images/guides/web-ui/visibility_chips_dark.webp){target=_blank}
 
-    The **Visibility** column of the **Dashboards** page says whether a dashboard is **Public** or **Private**. Public dashboards are open to all users; private ones only to the user who created them.
-    Only the user who created a private dashboard can edit, or delete it.
+    The **Visibility** column of the **Dashboards** page says whether a dashboard is **Public** or **Private**. A dashboard takes the visibility of its project: a public one opens for every user, a private one only for the users the project is shared with.
+    Public means read-only for everyone else. Editing a dashboard needs the editor role on its project and deleting it the owner role. Admins can do both, and so can the owner of the dashboard itself, such as a copy they made.
 
 #### <span style="color: #45B8AC;">:material-link-variant:</span> Share a filtered listing <small>(v1.10.1+)</small> { #share-a-filtered-listing }
 
