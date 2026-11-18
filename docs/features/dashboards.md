@@ -842,7 +842,7 @@ Dashboards inherit permissions from their project, granted to users or, since v1
 | --------------------------------- | -------------------- | -------------------- | -------------------- |
 | :material-shield-crown: **Admin** | :material-check: Yes | :material-check: Yes | :material-check: Yes |
 | :material-shield-edit: **Editor** | :material-check: Yes | :material-check: Yes | :material-close: No  |
-| :material-shield-eye: **Viewer**  | :material-check: Yes | :material-close: No  | :material-close: No  |
+| :material-eye-outline: **Viewer**  | :material-check: Yes | :material-close: No  | :material-close: No  |
 
 ### :material-link: Sharing URLs
 

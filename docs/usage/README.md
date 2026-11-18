@@ -121,7 +121,7 @@ Command-line tools for data ingestion, recipes, and templates.
 
 <div class="grid cards" markdown>
 
--   :material-terminal:{ .lg .middle .dp-teal } **CLI Usage**
+-   :material-console:{ .lg .middle .dp-teal } **CLI Usage**
 
     ---
 

@@ -55,7 +55,7 @@ MongoDB serves as the primary database, storing:
 
 - :material-account-multiple: User accounts and authentication information
 - :material-folder-cog: Project metadata and configurations
-- :material-workflow: Workflow definitions and run information
+- :material-sitemap: Workflow definitions and run information
 - :material-view-dashboard-edit: Dashboard layouts, structure, and content
 - :material-table-of-contents: Data collection metadata
 
