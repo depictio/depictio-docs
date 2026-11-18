@@ -151,5 +151,6 @@ A small sample of that file, right beside its YAML, so `depictio catalog validat
     [depictio.github.io/depictio-catalog]({{ catalog_site.base }}), built from
     the depictio source of each release: this page shows the catalog of
     Depictio {{ catalog_site.version }}. It opens on the list of tools and
-    downloads an output's previews only when you open it. Releases older than
-    the ten most recent show the current catalog instead, under `latest`.
+    downloads an output's previews only when you open it. The catalog site
+    keeps the ten most recent releases: for an older one, and for a beta,
+    this page shows the current catalog instead, under `latest`.

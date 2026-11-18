@@ -11,7 +11,9 @@ deploy-catalog.yaml in depictio/depictio), one directory per release plus
 docs/catalog/index.md carries placeholders instead of a URL:
 
 - {{ catalog_site.base }}     the site root, ending in "/"
-- {{ catalog_site.version }}  "v" + the version in pyproject.toml, e.g. v1.22.0
+- {{ catalog_site.version }}  the version this build documents, e.g. v1.22.0:
+                              DEPICTIO_DOCS_VERSION (what deploy-docs.yaml hands
+                              mike), else "v" + the version in pyproject.toml
 
 docs/javascripts/catalog-site.js then picks that version's directory when the
 site still has it (versions.json), and ``latest/`` otherwise: a release older
@@ -39,10 +41,12 @@ _PLACEHOLDER = re.compile(r"\{\{\s*catalog_site\.([a-z_]+)\s*\}\}")
 
 
 def _values(config) -> dict[str, str]:
-    pyproject = Path(config["config_file_path"]).parent / "pyproject.toml"
-    version = tomllib.loads(pyproject.read_text())["project"]["version"]
+    version = os.environ.get("DEPICTIO_DOCS_VERSION", "").strip()
+    if not version:
+        pyproject = Path(config["config_file_path"]).parent / "pyproject.toml"
+        version = "v" + tomllib.loads(pyproject.read_text())["project"]["version"]
     base = os.environ.get("DEPICTIO_CATALOG_SITE", DEFAULT_BASE).rstrip("/") + "/"
-    return {"base": base, "version": f"v{version}"}
+    return {"base": base, "version": version}
 
 
 def on_page_markdown(markdown: str, page, config, files, **kwargs) -> str:

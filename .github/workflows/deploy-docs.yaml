@@ -63,6 +63,9 @@ jobs:
           # Keeps the bulky image subtrees out of the per-version build; they
           # are published once by the next step. See hooks/shared_images.py.
           DEPICTIO_DOCS_SHARED_IMAGES: '1'
+          # The catalog page embeds the catalog of the version deployed here,
+          # which a manual run can set apart from pyproject.toml.
+          DEPICTIO_DOCS_VERSION: ${{ steps.version.outputs.version }}
         run: |
           VERSION="${{ steps.version.outputs.version }}"
           ALIAS="${{ steps.version.outputs.alias }}"
