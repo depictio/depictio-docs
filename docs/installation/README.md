@@ -6,15 +6,17 @@ description: "Get started with Depictio by choosing the installation method that
 
 # Installation
 
+Run a Depictio server, then install the CLI to load your data into it.
+
 ## :material-rocket-launch: Quickstart
 
 No git clone, no configuration file.
 
-```bash title="1 — Download"
+```bash title="1. Download"
 curl -LO https://raw.githubusercontent.com/depictio/depictio/stable/docker-compose.yaml
 ```
 
-```bash title="2 — Start"
+```bash title="2. Start"
 docker compose up -d
 ```
 
@@ -22,7 +24,7 @@ docker compose up -d
 
     | | Service | URL | Notes |
     |-|---------|-----|-------|
-    | :material-view-dashboard: | **Depictio** | [localhost:5080](http://localhost:5080) | Single-user mode — no login required |
+    | :material-view-dashboard: | **Depictio** | [localhost:5080](http://localhost:5080) | Single-user mode, no login required |
     | :material-api: | **API docs** | [localhost:8058/docs](http://localhost:8058/docs) | Interactive OpenAPI interface |
 
 <div class="grid cards" markdown>
@@ -31,86 +33,104 @@ docker compose up -d
 
     ---
 
-    Copy `.env.example` to `.env` to change the S3 password or switch to multi-user mode.
+    Copy `.env.example` to `.env` to change the S3 password.
 
-    [:octicons-arrow-right-24: Advanced configuration](docker/#advanced-configuration)
-
--   :material-account-group:{ .lg .middle .dp-violet } **Multi-user or public mode?**
-
-    ---
-
-    Set `DEPICTIO_AUTH_SINGLE_USER_MODE=false` in `.env` to enable accounts and login.
-
-    [:octicons-arrow-right-24: Authentication modes](../usage/guides/authentication-modes.md)
-
-</div>
-
----
-
-## Server Deployment
-
-Three ways to run the same Depictio server, which differ in how its services run.
-
-<div class="grid cards" markdown>
-
--   :simple-kubernetes:{ .lg .middle .dp-blue } **Kubernetes** · Helm chart
-
-    ---
-
-    Deploy Depictio on a Kubernetes cluster with the official Helm chart.
-
-    Ideal for production environments and scalable deployments.
-
-    [:octicons-arrow-right-24: Installation guide](kubernetes/)
-
--   :simple-docker:{ .lg .middle .dp-teal } **Docker Compose** · containers
-
-    ---
-
-    The recommended way to run Depictio. One compose file starts every service in containers, object storage included. Upgrading from before v1.12.0? Copy the former MinIO store's data first: [Upgrading to v1.12.0](upgrade/v1.12.0-seaweedfs.md).
-
-    Ideal for development, testing, and small-scale deployments.
-
-    [:octicons-arrow-right-24: Installation guide](docker/)
-
--   :simple-python:{ .lg .middle .dp-yellow } **Python package** · pip / uv, no containers
-
-    ---
-
-    Install `depictio[local]` with uv or pip: `depictio local up` then runs every service as a local process on your machine.
-
-    Ideal for reviewing a template on your own results, on a laptop.
-
-    [:octicons-arrow-right-24: Installation guide](local/)
-
-</div>
-
-## CLI & Configuration
-
-<div class="grid cards" markdown>
-
--   :material-console-line:{ .lg .middle .dp-teal } **Depictio CLI**
-
-    ---
-
-    Command-line tool for data ingestion, project management, and interacting with the Depictio API.
-
-    [:octicons-arrow-right-24: CLI guide](cli/)
-
--   :material-cog-outline:{ .lg .middle .dp-blue } **Configuration**
-
-    ---
-
-    Configure authentication, S3 storage, backups, and advanced features via environment variables.
-
-    [:octicons-arrow-right-24: Configuration guide](configuration/)
+    [:octicons-arrow-right-24: Advanced configuration](docker.md#advanced-configuration)
 
 -   :material-cloud-braces:{ .lg .middle .dp-purple } **Try in GitHub Codespaces**
 
     ---
 
-    The [Python package](local.md) in a cloud workspace, with the Iris and Penguins examples. A GitHub account is enough.
+    The Python package in a cloud workspace, with two example projects.
 
     [:octicons-arrow-right-24: Open in Codespaces](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&quickstart=1)
 
 </div>
+
+## :material-server: Run the server
+
+The same server, three ways to run its services.
+
+<div class="grid cards" markdown>
+
+-   :simple-docker:{ .lg .middle .dp-teal } **Docker Compose**
+
+    ---
+
+    Recommended. One compose file starts every service, storage included.
+
+    [:octicons-arrow-right-24: Docker Compose](docker.md)
+
+-   :simple-kubernetes:{ .lg .middle .dp-blue } **Kubernetes**
+
+    ---
+
+    The official Helm chart, for production and scalable deployments.
+
+    [:octicons-arrow-right-24: Kubernetes](kubernetes.md)
+
+-   :simple-python:{ .lg .middle .dp-yellow } **Python package**
+
+    ---
+
+    `depictio local up` runs every service as a process, no containers.
+
+    [:octicons-arrow-right-24: Python package](local.md)
+
+</div>
+
+## :material-cog-outline: Configure and connect
+
+<div class="grid cards" markdown>
+
+-   :material-console-line:{ .lg .middle .dp-teal } **CLI**
+
+    ---
+
+    Install the `depictio` command and point it at your server.
+
+    [:octicons-arrow-right-24: CLI installation](cli.md)
+
+-   :material-cog:{ .lg .middle .dp-blue } **Configuration**
+
+    ---
+
+    What to set for a first deployment, then each setting by topic.
+
+    [:octicons-arrow-right-24: Configuration](configuration.md)
+
+-   :material-format-list-bulleted:{ .lg .middle .dp-violet } **Environment reference**
+
+    ---
+
+    Every environment variable Depictio reads, with its default.
+
+    [:octicons-arrow-right-24: Environment reference](env-reference.md)
+
+-   :material-account-group:{ .lg .middle .dp-purple } **Authentication modes**
+
+    ---
+
+    Turn on accounts and login, or open dashboards to the public.
+
+    [:octicons-arrow-right-24: Authentication modes](../usage/guides/authentication-modes.md)
+
+-   :material-shield-key-outline:{ .lg .middle .dp-green } **Single sign-on**
+
+    ---
+
+    Sign in through any OpenID Connect provider, and mirror its groups.
+
+    [:octicons-arrow-right-24: OpenID Connect](sso/index.md)
+
+-   :material-swap-horizontal:{ .lg .middle .dp-orange } **Upgrade to v1.12.0**
+
+    ---
+
+    Coming from before v1.12.0? Copy the MinIO store to SeaweedFS.
+
+    [:octicons-arrow-right-24: MinIO to SeaweedFS](upgrade/v1.12.0-seaweedfs.md)
+
+</div>
+
+First time? Run the quickstart, then install the [CLI](cli.md) to load your data.

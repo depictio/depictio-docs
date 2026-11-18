@@ -1,22 +1,125 @@
 ---
 title: CLI
 icon: material/console
-description: Command-line tools for data ingestion, recipes, and templates.
+description: The depictio command for ingestion, dashboard YAML, templates and a local server.
 ---
 
 # :material-console: CLI
 
-Command-line tools for data ingestion, recipes, and templates.
+The `depictio` command, from `pip install depictio`, ingests pipeline results, moves dashboards to and from YAML and runs a local server. `depictio-cli`, its former name, still works.
 
-The CLI is the `depictio` command, from `pip install depictio`. `depictio-cli`,
-its former name, still works as an alias.
+## :material-rocket-launch: Set up
 
-| Page | Description |
-|------|-------------|
-| [Installation](../installation/cli.md) | Install the CLI and tell it which server to use |
-| [Usage](usage.md) | All CLI commands with options and examples |
-| [Python package installation](../installation/local.md) | Run a Depictio server on your machine, without containers, with `depictio local up` |
-| [Nextflow trigger](nextflow-trigger.md) | Let a pipeline ingest its own results when it completes |
-| [Minimal YAML Config](minimal_config.md) | Minimal project YAML to get started |
-| [Recipes](../usage/projects/recipes.md) | Data transformation recipes for bioinformatics pipelines |
-| [Templates](../usage/projects/templates.md) | One-command project setup for nf-core pipelines |
+<div class="grid cards dp-teal" markdown>
+
+-   :material-download:{ .lg .middle } **Install the CLI**
+
+    ---
+
+    Install it, and tell it which server to use.
+
+    [:octicons-arrow-right-24: CLI installation](../installation/cli.md)
+
+-   :material-file-document-outline:{ .lg .middle } **Minimal YAML config**
+
+    ---
+
+    The smallest project file: one workflow, one table collection.
+
+    [:octicons-arrow-right-24: Minimal config](minimal_config.md)
+
+-   :material-book-open-variant:{ .lg .middle } **Command reference**
+
+    ---
+
+    Every command, with its options and examples.
+
+    [:octicons-arrow-right-24: Usage](usage.md)
+
+</div>
+
+## :material-console: Common commands
+
+<div class="grid cards" markdown>
+
+-   :material-database-import:{ .lg .middle .dp-purple } **`depictio ingest`**
+
+    ---
+
+    Ingest pipeline results into a Depictio server.
+
+    [:octicons-arrow-right-24: Ingest](usage.md#ingest-command)
+
+-   :material-eye-refresh:{ .lg .middle .dp-violet } **`depictio watch`**
+
+    ---
+
+    Run `ingest` again whenever the data changes.
+
+    [:octicons-arrow-right-24: Watch](usage.md#watch-command)
+
+-   :material-laptop:{ .lg .middle .dp-yellow } **`depictio local`**
+
+    ---
+
+    Run a complete Depictio server on this machine, without Docker.
+
+    [:octicons-arrow-right-24: Python package](../installation/local.md)
+
+-   :material-file-code:{ .lg .middle .dp-blue } **`depictio dashboard`**
+
+    ---
+
+    Validate, import and export dashboard YAML files.
+
+    [:octicons-arrow-right-24: Dashboard commands](usage.md#dashboard-commands)
+
+-   :material-layers-outline:{ .lg .middle .dp-orange } **`depictio template`**
+
+    ---
+
+    Export a project as a template, or compose one from results.
+
+    [:octicons-arrow-right-24: Template commands](usage.md#template-commands)
+
+-   :material-backup-restore:{ .lg .middle .dp-red } **`backup` and `migrate`**
+
+    ---
+
+    Back up the server database, or move projects between instances.
+
+    [:octicons-arrow-right-24: Backup commands](usage.md#backup-commands)
+
+</div>
+
+## :material-cog-sync: Automate
+
+<div class="grid cards" markdown>
+
+-   :simple-nextflow:{ .lg .middle .dp-green } **Nextflow trigger**
+
+    ---
+
+    Let a pipeline ingest its own results when it completes.
+
+    [:octicons-arrow-right-24: Nextflow trigger](nextflow-trigger.md)
+
+-   :material-chef-hat:{ .lg .middle .dp-pink } **Recipes**
+
+    ---
+
+    Python transforms that turn pipeline outputs into tables.
+
+    [:octicons-arrow-right-24: Recipes](../usage/projects/recipes.md)
+
+-   :material-package-variant-closed:{ .lg .middle .dp-orange } **Templates**
+
+    ---
+
+    A supported pipeline's project and dashboards in one command.
+
+    [:octicons-arrow-right-24: Templates](../usage/projects/templates.md)
+
+</div>
+
+New to the CLI? Install it, then run `depictio` with no command for a quick start.

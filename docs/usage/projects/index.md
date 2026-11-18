@@ -52,7 +52,7 @@ A project holds your data collections, the dashboards built on them, and who may
 
     ---
 
-    A project exported from Depictio, or sent from another instance, with its data and dashboards.
+    An exported or sent project, with its data and dashboards.
 
     **Choose this when** the project already exists somewhere else.
 

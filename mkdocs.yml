@@ -336,12 +336,6 @@ nav:
           - Data Model: features/data-model.md
           - Security: features/security.md
           - Telemetry: features/telemetry.md
-  - API:
-      - Overview: api/README.md
-      # - Endpoints: api/endpoints.md
-      - API Reference: api/reference.md
-      # - Integration: api/api_docs_integration.md
-      - FastAPI Docs: api/fastapi_docs.md
   - Templates:
       - pipeline-templates/README.md
       - nf-core:
@@ -395,6 +389,12 @@ nav:
       - Contributing a Tool: developer/contributing-a-tool.md
       - Tool Studio: developer/tool-studio.md
       - Contributing Templates: developer/contributing-templates.md
+      - API:
+          - Overview: api/README.md
+          # - Endpoints: api/endpoints.md
+          - API Reference: api/reference.md
+          # - Integration: api/api_docs_integration.md
+          - FastAPI Docs: api/fastapi_docs.md
   - Roadmap: roadmap/README.md
   - Changelog: changelog/README.md
   - Blog:

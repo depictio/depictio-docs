@@ -1,76 +1,72 @@
 ---
 title: "More"
 icon: material/dots-horizontal
-description: "Additional information and resources for the Depictio project."
+description: "FAQ, funding, the brand palette and logo, contact and acknowledgements."
 ---
 
-# Additional Resources
+# More
 
-This section provides supplementary information and resources related to the Depictio project.
+Answers, the project behind Depictio, and how to reach the people who make it.
 
-## In This Section
+<div class="grid cards" markdown>
 
-- [FAQ](../FAQ/README.md) - Common questions about installing, using and extending Depictio
-- [Funding](funding.md) - Information about how the Depictio project is funded
-- [Color Palette](palette.md) - Official color palette and design guidelines
-- [Animated Logo](../animated-logo.md) - The Depictio rose, the logo animated as a polar-area chart
+-   :material-help-circle:{ .lg .middle .dp-blue } **FAQ**
 
-## Community
+    ---
 
-Depictio is an open-source project with an active community. Connect with us through:
+    Common questions about installing, using and extending Depictio.
 
-- **GitHub**: [github.com/depictio/depictio](https://github.com/depictio/depictio)
+    [:octicons-arrow-right-24: FAQ](../FAQ/README.md)
 
-## License
+-   :material-hand-coin-outline:{ .lg .middle .dp-yellow } **Funding**
 
-Depictio is open-source software released under the [MIT License](https://github.com/depictio/depictio/blob/main/LICENSE).
+    ---
+
+    The academic and public funding that keeps Depictio free.
+
+    [:octicons-arrow-right-24: Funding](funding.md)
+
+-   :material-palette:{ .lg .middle .dp-pink } **Color palette**
+
+    ---
+
+    The brand colours, and how to use them.
+
+    [:octicons-arrow-right-24: Color palette](palette.md)
+
+-   :material-chart-donut-variant:{ .lg .middle .dp-purple } **Animated logo**
+
+    ---
+
+    The Depictio rose, the logo animated as a polar-area chart.
+
+    [:octicons-arrow-right-24: Animated logo](../animated-logo.md)
+
+-   :simple-github:{ .lg .middle .dp-violet } **GitHub**
+
+    ---
+
+    The source code, bug reports and feature requests.
+
+    [:octicons-arrow-right-24: GitHub issues](https://github.com/depictio/depictio/issues)
+
+-   :material-email-outline:{ .lg .middle .dp-teal } **Contact**
+
+    ---
+
+    General inquiries about the project, by email.
+
+    [:octicons-arrow-right-24: thomas.weber@embl.de](mailto:thomas.weber@embl.de)
+
+</div>
 
 ## Acknowledgements
 
-We thank all contributors and the following projects that make Depictio possible:
+Depictio is open-source software under the [MIT License](https://github.com/depictio/depictio/blob/main/LICENSE). We thank all contributors, and the projects it builds on:
 
-### Core Framework
-
-- [FastAPI](https://fastapi.tiangolo.com/) — Backend API framework
-- [React](https://react.dev/) + [Vite](https://vite.dev/) — Frontend viewer
-- [Mantine](https://mantine.dev/) — UI component library
-- [Plotly.js](https://plotly.com/javascript/) — Interactive charts
-- [Pydantic](https://docs.pydantic.dev/) — Data validation
-
-### Data & Storage
-
-- [Polars](https://pola.rs/) — Fast DataFrame library
-- [Delta Lake](https://delta.io/) — Data versioning and time travel
-- [MongoDB](https://www.mongodb.com/) — Document database
-- [Beanie](https://beanie-odm.dev/) — Async MongoDB ODM
-- [MinIO](https://min.io/) — S3-compatible object storage
-
-### Infrastructure
-
-- [Docker](https://www.docker.com/) — Containerization
-- [Kubernetes](https://kubernetes.io/) — Container orchestration
-- [Celery](https://docs.celeryq.dev/) — Distributed task queue
-- [Redis](https://redis.io/) — In-memory data store
-
-### Integrations
-
-- [MultiQC](https://multiqc.info/) — Bioinformatics QC reports
-- [nf-core](https://nf-co.re/) — Nextflow workflow community
-- [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/) — Lab information system (EMBL)
-
-### Developer Tools
-
-- [Typer](https://typer.tiangolo.com/) — CLI framework
-- [Playwright](https://playwright.dev/) — Browser automation
-- [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) — Documentation
-- [Ruff](https://docs.astral.sh/ruff/) — Python linter and formatter
-- [uv](https://docs.astral.sh/uv/) — Fast Python package manager
-
-### Standards
-
-- [FAIR Principles](https://www.go-fair.org/fair-principles/) — Findable, Accessible, Interoperable, Reusable
-
-## Contact
-
-- **General Inquiries**: [thomas.weber@embl.de](mailto:thomas.weber@embl.de)
-- **Technical Support**: [GitHub Issues](https://github.com/depictio/depictio/issues)
+- **Core**: [FastAPI](https://fastapi.tiangolo.com/), [React](https://react.dev/), [Vite](https://vite.dev/), [Mantine](https://mantine.dev/), [Plotly.js](https://plotly.com/javascript/), [Pydantic](https://docs.pydantic.dev/)
+- **Data and storage**: [Polars](https://pola.rs/), [Delta Lake](https://delta.io/), [MongoDB](https://www.mongodb.com/), [Beanie](https://beanie-odm.dev/), [SeaweedFS](https://github.com/seaweedfs/seaweedfs)
+- **Infrastructure**: [Docker](https://www.docker.com/), [Kubernetes](https://kubernetes.io/), [Celery](https://docs.celeryq.dev/), [Redis](https://redis.io/)
+- **Integrations**: [MultiQC](https://multiqc.info/), [nf-core](https://nf-co.re/), [JBrowse 2](https://jbrowse.org/jb2/), [LabID](https://grp-gbcs.embl-community.io/labid-user-docs/)
+- **Developer tools**: [Typer](https://typer.tiangolo.com/), [Playwright](https://playwright.dev/), [MkDocs Material](https://squidfunk.github.io/mkdocs-material/), [Ruff](https://docs.astral.sh/ruff/), [uv](https://docs.astral.sh/uv/)
+- **Standards**: the [FAIR Principles](https://www.go-fair.org/fair-principles/)
