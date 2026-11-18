@@ -283,9 +283,10 @@ nav:
           - Remote data and manifests: usage/projects/remote-data.md
       - CLI:
           - depictio-cli/index.md
-          - Usage: depictio-cli/usage.md
+          - Common tasks: depictio-cli/tasks.md
+          - Command reference: depictio-cli/usage.md
           - Nextflow trigger: depictio-cli/nextflow-trigger.md
-          - Minimal YAML config: depictio-cli/minimal_config.md
+          - Minimal project YAML: depictio-cli/minimal_config.md
       - Administration:
           - usage/administration/index.md
           - Project Migration: usage/administration/migrate.md

@@ -1,1669 +1,370 @@
-# Depictio CLI Usage
+---
+title: Command reference
+description: Every depictio command and option, from its --help.
+---
 
-<!-- prettier-ignore -->
-!!! note "Note about the CLI"
-    `depictio` is the command line interface of Depictio. It ingests pipeline results into a Depictio server, from the project configuration to the dashboards, and manages projects, dashboards and backups on that server. `depictio-cli` is the same command under its former name, kept for existing scripts.
+# :material-book-open-variant: Command reference
 
-## 📚 Table of Contents
+Every command and option of `depictio` v1.21.0; `depictio <command> -h` prints the same. For step-by-step use, see [Common tasks](tasks.md).
 
-- [Installation](#installation)
-- [Quick Reference](#quick-reference)
-- [Global Options](#global-options)
-- [Which server a command uses](#choosing-a-server)
-- [🚀 Commands](#commands)
-  - [📥 Ingest Command](#ingest-command)
-  - [👀 Watch Command](#watch-command)
-  - [💻 Local Server Commands](#local-commands)
-  - [📋 Config Commands](#config-commands)
-  - [📊 Data Commands](#data-commands)
-  - [📈 Dashboard Commands](#dashboard-commands)
-  - [📦 Template Commands](#template-commands)
-  - [🗒️ Manifest Commands](#manifest-commands)
-  - [🗂️ Catalog Commands](#catalog-commands)
-  - [💾 Backup Commands](#backup-commands)
-  - [🔄 Migrate Commands](#migrate-commands)
-  - [🧑‍🍳 Recipe Commands](#recipe-commands)
-- [🛠️ Common Use Cases](#common-use-cases)
+## Overview { #quick-reference }
 
-## Installation
+| Command | Does |
+| --- | --- |
+| [`local`](#local-commands) `up` · `open` · `status` · `down` · `wipe` · `export` | A server on this machine, without Docker |
+| [`ingest`](#ingest-command) | Results in, project and dashboards out |
+| [`watch`](#watch-command) | `ingest` again whenever files change |
+| [`project-builder`](#project-builder) | Describe a folder no template fits, in the browser |
+| [`config`](#config-commands) `show` · `check` · `sync` · `nextflow` | Setup checks, project sync, Nextflow hook |
+| [`data`](#data-commands) `scan` · `process` · `join` · `push-images` · `versions` · `vacuum` | One ingestion step at a time; Delta history |
+| [`dashboard`](#dashboard-commands) `validate` · `import` · `export` | Dashboards as YAML |
+| [`template`](#template-commands) `export` · `compose` | A template from a project or a results folder |
+| [`manifest`](#manifest-commands) `from-table` | A data manifest from a samplesheet |
+| [`catalog`](#catalog-commands) `list` · `info` · `preview` · `gallery` | The tools catalog |
+| [`backup`](#backup-commands) `create` · `list` · `validate` · `restore` | Database backups (admins) |
+| [`migrate`](#migrate-commands) | A project to another instance (admins) |
+| `commands` · `version` | Every command in one table; the version |
 
-```bash
-pip install depictio
-```
+`depictio` alone prints a quick start. `depictio-cli` is the same command.
 
-See the [installation guide](../installation/cli.md) for the other install options, such as the `[multiqc]` extra and the container image.
+## Global options { #global-options }
 
-## Quick Reference
+They go before the command: `depictio -vv ingest results/`.
 
-Running `depictio` with no command prints a quick start. `depictio --help` lists the commands grouped by purpose: **Get started**, **Projects and data**, **Administration** and **Reference**. `depictio commands` shows every command and subcommand in one table.
+| Option | Meaning |
+| --- | --- |
+| `-v`, `--verbose` | Logs: `-v` INFO, `-vv` DEBUG |
+| `--log-level LEVEL` | Logs from `DEBUG`, `INFO`, `WARNING`, `ERROR` or `CRITICAL` up |
+| `-V`, `--version` | Print the version |
+| `-h`, `--help` | Help of any command |
+| `--install-completion`, `--show-completion` | Shell completion |
 
-| Command                       | Description                                                   | Access Level   |
-| ----------------------------- | ------------------------------------------------------------- | -------------- |
-| `local up`                    | Start a complete Depictio server on this machine              | All users      |
-| `local open` / `status` / `down` / `wipe` / `export` | Manage that local server             | All users      |
-| `ingest <results dir>`        | Ingest pipeline results, from validation to dashboards        | All users      |
-| `watch <results dir>`         | Ingest pipeline results, then again whenever they change      | All users      |
-| `config show`                 | Show the CLI configuration in use                             | All users      |
-| `config check`                | Check the server and its S3 storage, or validate a project file | All users    |
-| `config sync`                 | Validate a project configuration and sync it to the server    | All users      |
-| `config nextflow`             | Print or install the Nextflow trigger                         | All users      |
-| `data scan`                   | Scan project files                                            | All users      |
-| `data process`                | Process data collections                                      | All users      |
-| `data join`                   | Run the table joins the project configuration defines         | All users      |
-| `data push-images`            | Upload a directory of images for an image data collection     | All users      |
-| `data versions`               | List the Delta commits of a data collection                   | All users      |
-| `data vacuum`                 | Remove the Delta files no retained commit needs               | All users      |
-| `dashboard validate`          | Validate a dashboard YAML file                                | All users      |
-| `dashboard import`            | Import a dashboard YAML file to the server                    | All users      |
-| `dashboard export`            | Export a dashboard to a YAML file                             | All users      |
-| `template export`             | Export a project and its dashboards as a template bundle (v1.16.0+) | All users |
-| `template compose`            | Compose a template from what the catalog recognises in a results directory (v1.16.0+) | All users |
-| `manifest from-table`         | Write a data manifest from a samplesheet or any table (v1.16.0+) | All users |
-| `catalog list` / `info` / `preview` / `gallery` | Browse the tools catalog                    | All users      |
-| `backup create`               | Create a backup                                               | **Admin only** |
-| `backup list`                 | List available backups                                        | **Admin only** |
-| `backup validate`             | Validate a backup against the models                          | **Admin only** |
-| `backup restore`              | Restore from a backup                                         | **Admin only** |
-| `migrate`                     | Migrate a project to another instance                         | **Admin only** |
-| `commands`                    | Show every command and subcommand                             | All users      |
-| `version`                     | Show the installed version                                    | All users      |
+## Which server a command uses { #choosing-a-server }
 
-??? info "Former command names, still accepted (v1.12.0+)"
+Every command that talks to a server takes `--server`: `local` for the server [`local up`](#local-commands) runs, or a CLI configuration file. Without it, the command uses, in order:
 
-    These names still work, out of the help, and print the name to use now.
+1. `$DEPICTIO_CLI_CONFIG_PATH` (a file, or `local`);
+2. `~/.depictio/CLI.yaml`, if it exists;
+3. the local server, unless `DEPICTIO_CLI_TOKEN` or `DEPICTIO_CLI_API_BASE_URL` is set.
 
-    | Former name | Now |
-    | ----------- | --- |
-    | `depictio run` | `depictio ingest` |
-    | `depictio images push` | `depictio data push-images` |
-    | `depictio local export-compose` | `depictio local export` |
-    | `--CLI-config-path` (every command) | `--server` |
-    | `-c/--config`, with `--api` (dashboard commands) | `--server` |
-    | `--target-config` (migrate) | `--to-server` |
-    | `--data-root` (ingest) | the results directory, as the argument |
-    | `--project-name` (ingest) | `--project` |
-    | `--skip-server-check`, `--skip-s3-check`, `--skip-sync`, `--skip-scan`, `--skip-process`, `--skip-join`, `--skip-dashboard-import` | `--skip STEP`, see [Skipping steps](#skipping-steps) |
-    | `-vl/--verbose-level` | `--log-level` |
+The rule never checks whether a local server runs. Each command first prints the server it reaches.
 
-## Global Options
-
-Global options go before the command: `depictio -vv ingest results/`.
-
-| Option        | Short | Type     | Default | Description                                                                 |
-| ------------- | ----- | -------- | ------- | --------------------------------------------------------------------------- |
-| `--verbose`   | `-v`  | count    |         | Show logs: `-v` for INFO, `-vv` for DEBUG                                   |
-| `--log-level` |       | `string` |         | Show logs from this level up: `DEBUG`, `INFO`, `WARNING`, `ERROR` or `CRITICAL`. No `-v` needed. Formerly `-vl/--verbose-level` |
-| `--version`   | `-V`  | `flag`   |         | Show the version and exit                                                   |
-| `--help`      | `-h`  | `flag`   |         | Show the help of any command                                                |
-
-## Which server a command uses <small>(v1.12.0+)</small> { #choosing-a-server }
-
-Every command that talks to a server takes `--server`:
-
-- `--server local` uses the server that [`depictio local up`](../installation/local.md) runs on this machine.
-- `--server <file>` uses a CLI configuration file, such as the `CLI.yaml` downloaded from the [CLI agents page](../usage/get_started.md#create-a-cli-configuration) of a Depictio instance.
-
-Without `--server`, a command uses, in this order:
-
-1. the file that `$DEPICTIO_CLI_CONFIG_PATH` names (the variable also takes `local`);
-2. else `~/.depictio/CLI.yaml`, when that file exists;
-3. else the local server.
-
-This is a fixed rule on files and variables: the CLI does not check whether a local server is running, so a command reaches the same server whether one runs or not. When `DEPICTIO_CLI_TOKEN` or `DEPICTIO_CLI_API_BASE_URL` is set, step 3 does not apply: the command is meant for a remote server, and it reports the missing `~/.depictio/CLI.yaml` instead.
-
-Each command starts by naming the server it reaches and the file it read. When it reaches a server from `~/.depictio/CLI.yaml` or `$DEPICTIO_CLI_CONFIG_PATH` while a local server is running, it says so:
-
-```text
-A local server is running too (http://127.0.0.1:8058): add --server local to use it
-```
-
-`depictio migrate` reads from `--server` and writes to `--to-server`, which takes the same values. Its default is `~/.depictio/CLI_remote.yaml`, with no fallback to the local server.
-
-The options used before `--server` still work, out of the help, and print a notice: `--CLI-config-path` on every command, `-c/--config` with `--api` on the dashboard commands, and `--target-config` on `migrate`.
-
-### Environment variables <small>(v1.10.0+)</small> { #environment-variables }
-
-These variables override parts of a CLI configuration file, so the token can stay out of the file, for example on a CI runner.
+### Environment variables { #environment-variables }
 
 | Variable | Effect |
-| -------- | ------ |
-| `DEPICTIO_CLI_CONFIG_PATH` | The configuration to use when `--server` is not given: a file, or `local` |
-| `DEPICTIO_CLI_TOKEN` | Replaces the token from the file |
-| `DEPICTIO_CLI_API_BASE_URL` | Replaces `api_base_url` from the file |
+| --- | --- |
+| `DEPICTIO_CLI_CONFIG_PATH` | Configuration used without `--server` |
+| `DEPICTIO_CLI_TOKEN` | Replaces the file's token |
+| `DEPICTIO_CLI_API_BASE_URL` | Replaces the file's `api_base_url` |
 
-`DEPICTIO_CLI_TOKEN` and `DEPICTIO_CLI_API_BASE_URL` never apply to `--server local`, whose configuration is complete as `depictio local up` wrote it. For `depictio migrate`, they apply to `--server` only, not to `--to-server`.
+The last two never apply to `--server local` or `migrate --to-server`.
 
-## 🚀 Commands
-
-### 📥 Ingest Command { #ingest-command }
+## `ingest` { #ingest-command }
 
 <span id="run-command"></span>
-
-Ingest pipeline results into a Depictio server, from validation to dashboards. Formerly `run`, which still works and says it is now `ingest`.
 
 ```bash
 depictio ingest [OPTIONS] [DATA_DIR]
 ```
 
-**Quick Start:**
+Checks the server and S3, validates the project (or resolves the template), syncs it, scans, processes the tables, runs the joins and imports the dashboards the project lacks. Without `--template` or `--project-config-path`, the template is detected from `DATA_DIR`; a local folder no template fits is [composed from the catalog](../usage/projects/composed-dashboards.md). Formerly `run`.
 
-```bash
-# The template is detected from the results directory
-depictio ingest results/
+| Option | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `DATA_DIR` | path | | Results folder, or an `s3://` prefix |
+| `--template` | text | detected | Template id (`nf-core/ampliseq/2.16.0`, `.../latest`) or folder |
+| `--project-config-path` | path | | [Project YAML](minimal_config.md) instead of a template |
+| `--project` | text | the template's | Project name, also to find it on a refresh |
+| `--update-config` | flag | off | [Refresh](#refreshing-a-project) an existing project |
+| `--attach-run` | flag | off | Add `DATA_DIR` to it as another run |
+| `--reset-dashboards` | flag | off | Re-import the template's dashboards over edited ones |
+| `--var KEY=VALUE` | text | | Template variable, repeatable |
+| `--dry-run` | flag | off | Validate, list steps and matched files; write nothing |
+| `--skip STEP` | text | | [Steps](#skipping-steps) to leave out |
+| `--result-json FILE` | path | | Write the [outcome](#result-json) as JSON |
 
-# After a new run: refresh the project, its dashboards kept as edited in the viewer
-depictio ingest results/ --update-config
-```
+??? note "Sources, dashboards and scope"
 
-The template is detected from the run's own provenance, such as the pipeline name and version a Nextflow run records. Pass `--template <id>` to choose one, or `--project-config-path <project.yaml>` for a pipeline Depictio ships no template for.
+    | Option | Type | Default | Meaning |
+    | --- | --- | --- | --- |
+    | `--manifest` | URL, path | | A [manifest](../usage/projects/remote-data.md#the-data-manifest-contract) in place of `DATA_DIR` |
+    | `--bind TAG=LOCATION` | text | | One data collection's folder, glob, file, URL or `s3://` prefix. Repeatable |
+    | `--compose` | flag | off | Compose even when a template fits |
+    | `--include-unknown` | flag | off | Composing: add files the catalog does not know |
+    | `--include GLOB` | text | | Composing: add the unknown files matching it |
+    | `--provenance-file` | path | | Extra file for the run provenance. Repeatable |
+    | `--drop-missing-runs` | flag | off | Refresh: drop attached runs missing here. Not with `--attach-run` |
+    | `--dashboard` | path | | Dashboard YAML instead of the template's. Repeatable |
+    | `--dashboard-name` | text | | Main dashboard title; renames it on a refresh |
+    | `--workflow-name` | text | | Only this workflow |
+    | `--data-collection-tag` | text | | Only this data collection |
+    | `--continue-on-error` | flag | off | Go on past a failed step; still exits 1 |
 
-Since **v1.16.0**, when no bundled template fits a local results directory, the CLI composes one from what the [tools catalog](../catalog/index.md) recognises in it, the way MultiQC builds its report: an Overview, one tab per pipeline stage and a MultiQC tab, with the files the catalog does not know listed rather than added. See [Composed dashboards](../usage/projects/composed-dashboards.md).
+??? note "Writing tables"
 
-Without a template for the run's exact release, the CLI takes the highest shipped version that is not newer than the run, or the lowest one when the run predates them all. When that template was built for another major release of the pipeline, the CLI warns: outputs move between major releases, so data collections that find no files are skipped and the tabs built on them are dropped.
+    | Option | Type | Default | Meaning |
+    | --- | --- | --- | --- |
+    | `--write-mode` | text | `overwrite` | Or `replace-runs`: rewrite only this batch's runs. See [Data versions](../features/versioning.md#how-new-data-versions-are-written) |
+    | `--incremental-write` | flag | off | With `replace-runs`, only the runs that changed |
+    | `--repartition` | flag | off | Let `replace-runs` partition an existing table |
+    | `--per-run` | flag | off | Every recipe once per run, cross-sample ones too |
+    | `--skip-unchanged` | flag | off | Leave tables whose files did not change |
+    | `--sync-changed` | flag | off | Re-upload only changed files |
 
-Here the template is detected from nf-core/taxprofiler results, previewed with `--dry-run`, then ingested into the local server:
+??? note "Automation, performance, debugging"
 
-<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-detect.cast" data-poster="npt:0:51" data-idle-time-limit="2.5"></div>
+    | Option | Type | Default | Meaning |
+    | --- | --- | --- | --- |
+    | `--pipeline-id` | text | | `<name>/<version>` picking a template; the [Nextflow trigger](nextflow-trigger.md) passes it |
+    | `--triggered-by` | text | `manual` | Shown in the [ingestion report](../features/dashboards.md#triggered-by) |
+    | `--user` | text | | Create or get this user, ingest as them, print a login link |
+    | `--provisioning-key` | text | `$DEPICTIO_AUTH_PROVISIONING_API_KEY` | Secret for `--user`, see [provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113) |
+    | `--streaming` | flag | off | Stream the Delta write. Experimental |
+    | `--async-upsert` | flag | off | Profile tables [in the background](../installation/docker.md#async-upsert) |
+    | `--concurrency` | int | `4` | Parallel HTTP requests |
+    | `--upload-chunk-size` | int | `1000` | Files per upload request |
+    | `--state-cache / --no-state-cache` | flag | on | Skip unchanged runs when rescanning |
+    | `--preview-recipes` | flag | off | Show recipe inputs and outputs |
+    | `--rich-tables` | flag | off | Detailed summary |
 
-**Pipeline Steps:**
+    Variables: `DEPICTIO_INGEST_STREAMING_WRITE` (as `--streaming`), `DEPICTIO_INGEST_DC_WORKERS` (collections in parallel, 1 to 4), `DEPICTIO_INGEST_JOB_TIMEOUT_SECONDS` (`--async-upsert` wait, 3600).
 
-1. ✅ Check that the server answers
-2. ✅ Check the S3 storage configuration
-3. ✅ Validate the project configuration, or resolve the template
-4. ✅ Sync the project configuration to the server
-5. ✅ Scan the data files
-6. ✅ Process the data collections, uploading the images of a collection that sets `local_images_path`
-7. ✅ Run the table joins the project configuration defines
-8. ✅ Import the dashboards the project lacks, from the template or from `--dashboard`
+### Skipping steps { #skipping-steps }
 
-`depictio ingest --help` shows the essential options first. The others sit in panels, which the tables below follow.
+`--skip` takes `server-check`, `s3-check`, `sync`, `scan`, `process` (images too), `join` and `dashboards`, comma-separated or repeated. An unknown name is an error.
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `DATA_DIR` | `path` | | The results directory to ingest, as the argument, or, from v1.16.0, an `s3://` prefix holding them (see [A run folder on S3](../usage/projects/remote-data.md#a-run-folder-on-s3)). Without `--template` or `--project-config-path`, the template is detected from it. Formerly `--data-root` |
-| `--server` | `string` | see [Which server a command uses](#choosing-a-server) | `local`, or a CLI configuration file. Formerly `--CLI-config-path` |
-| `--template` | `string` | detected, else composed | Template ID. Pin a version (`nf-core/ampliseq/2.16.0`), or use `nf-core/ampliseq/latest`, or just `nf-core/ampliseq`, for the newest shipped version (v1.5.2+). From v1.16.0, also the path of a template directory or YAML file, such as an [exported bundle](#template-export) or a [composed template](#template-compose). Without it, a local `DATA_DIR` that no bundled template fits is [composed from the catalog](../usage/projects/composed-dashboards.md) (v1.16.0+). Not with `--project-config-path` |
-| `--project-config-path` | `string` | | Project YAML, for a pipeline Depictio ships no template for. Not with `--template` |
-| `--update-config` | `flag` | `false` | Refresh a project that exists, see [Refreshing a project](#refreshing-a-project). `--overwrite` is the same option |
-| `--var` | `KEY=VALUE` | | Template variable, repeatable |
-| `--dry-run` | `flag` | `false` | Validate the project configuration locally and list the steps that would run, without contacting the server. From v1.13.2 it also lists how many files each data collection would match. From v1.16.0, with a template and `DATA_DIR`, it shows what each data collection finds there instead, see [Preview before ingesting](../usage/projects/remote-data.md#preview-before-ingesting) |
+### Refreshing a project { #refreshing-a-project }
 
-Since **v1.6.0**, resolving a template also picks up any [recipe seed](../usage/projects/templates.md#recipe-seeds) committed beside the data: a `source: transformed` data collection with a `{DATA_ROOT}/{dc_tag}.tsv` next to it is scanned from that file instead of re-running its recipe against raw pipeline inputs the bundled projects do not ship. See [Templates](../usage/projects/templates.md) for full documentation.
+If the project exists, `ingest` changes nothing and exits 2. Say what you meant:
 
-??? info "🗂️ Project and runs"
+| Option | What happens |
+| --- | --- |
+| `--update-config` | Configuration updated, every run rescanned, tables rebuilt, dashboards kept as edited and missing template ones added. Creates an absent project, so scripts can always pass it |
+| `--attach-run` | `DATA_DIR` added as another run, tables rebuilt, dashboards kept |
+| `--reset-dashboards` | As `--update-config`, then the template's dashboards replace the edited ones, titles kept |
 
-    | Parameter | Type | Default | Description |
-    |-----------|------|---------|-------------|
-    | `--manifest` | `url` or `path` | | A [data manifest](../usage/projects/remote-data.md#the-data-manifest-contract), as an `https://` URL or a local file, in place of `DATA_DIR`. Needs `--template`, a manifest-driven one such as `generic/manifest-tables/1`, whose `MANIFEST_URL` variable it sets. Not with `DATA_DIR` (v1.16.0+) |
-    | `--project` | `string` | the template's | Project name. Replaces the name the template gives, or the `name` in the `--project-config-path` file. `--attach-run` and `--update-config` find the project by it. Formerly `--project-name` |
-    | `--attach-run` | `flag` | `false` | Add the results directory to an existing project as **another run**, see [Refreshing a project](#refreshing-a-project) (v1.10.0+) |
-    | `--drop-missing-runs` | `flag` | `false` | On a refresh, remove the runs of a location added with `--attach-run` that is not on this machine. Without it, such a refresh stops before changing anything. Cannot be combined with `--attach-run` (v1.13.1+) |
-    | `--provenance-file` | `path` | | Extra recap file (JSON, YAML or two-column key/value TSV) listed in the project's [run provenance](../usage/projects/templates.md#run-provenance) under *User provided*. Repeatable (v1.8.3+) |
-    | `--compose` | `flag` | `false` | Compose the template from what the catalog recognises in `DATA_DIR`, even when a bundled template fits. Without it, composing is the fallback when none does. Not with `--template` or `--project-config-path`. See [Composed dashboards](../usage/projects/composed-dashboards.md) (v1.16.0+) |
-    | `--include-unknown` | `flag` | `false` | When composing, also ingest the tabular files the catalog does not recognise. See [Files the catalog does not recognise](../usage/projects/composed-dashboards.md#files-the-catalog-does-not-recognise) (v1.16.0+) |
-    | `--include` | `GLOB` | | When composing, ingest the unrecognised files matching this glob, relative to `DATA_DIR`, such as `'stats/*.tsv'`. Repeatable. See [Adding them](../usage/projects/composed-dashboards.md#adding-them) (v1.16.0+) |
-    | `--bind` | `TAG=LOCATION` | | Point one data collection at where its data is. Repeatable. The scan mode follows the location: a local folder or glob, a local file, an `https://` URL, an `s3://` prefix or glob. With `--template` it stands in for `DATA_DIR`; with `--project-config-path` the file is left untouched. See [Bind a data collection to a location](../usage/projects/remote-data.md#bind-a-data-collection-to-a-location) (v1.16.0+) |
+- Workflows and collections the project file does not name, such as ones added in the web UI, are kept.
+- Dashboards are matched by the file they came from, not their title, and gain the template tabs they lack. Subtitle, icons and tab order edited in the viewer are reset.
+- Runs of `DATA_DIR` and of attached folders are kept, others removed. An attached folder missing here stops the refresh (exit 1) unless `--drop-missing-runs`.
 
-??? info "📈 Dashboards"
+### Result file { #result-json }
 
-    | Parameter | Type | Default | Description |
-    |-----------|------|---------|-------------|
-    | `--dashboard` | `path` | | Dashboard YAML to import instead of the template's own. Repeatable. Since **v1.10.0** it also works without a template |
-    | `--dashboard-name` | `string` | | Title of the main dashboard. Without it, a new dashboard takes the title in its YAML and a refresh keeps the current one, even if renamed in the viewer. With it, a refresh renames the main dashboard and leaves its contents as they are. Tabs keep their titles |
-    | `--reset-dashboards` | `flag` | `false` | Import the template's dashboards (or `--dashboard`'s) over the ones the project has: the layout and components edited in the viewer are lost, the titles are kept. Implies `--update-config`. With `--project-config-path`, it needs `--dashboard` or `--template`, since a project file brings no dashboards of its own |
+`--result-json FILE` writes `status` (`success`, `partial` or `exists`), `project` (`name`, `id`, `url`), `dashboards` in import order with their `status` (`created`, `kept`, `replaced`), `template_id`, and `composed` (`template_dir`, `tabs`, `unrecognised`) for a composed template. A failed step writes no file.
 
-??? info "⚙️ Scope and steps"
-
-    | Parameter | Type | Default | Description |
-    |-----------|------|---------|-------------|
-    | `--workflow-name` | `string` | | Scan and process only this workflow (its tag) |
-    | `--data-collection-tag` | `string` | | Scan and process only this data collection |
-    | `--skip` | `STEP` | | Steps to skip, see [Skipping steps](#skipping-steps) |
-    | `--continue-on-error` | `flag` | `false` | Carry on when a step fails. The command still exits with code 1 at the end |
-    | `--sync-changed` | `flag` | `false` | Re-upload only the files whose size or modification time moved since the last scan. Narrower than `--update-config`, which re-uploads every file |
-    | `--write-mode` | `string` | `overwrite` | How step 6 writes a table. `overwrite` rewrites it whole. `replace-runs` partitions it by run and rewrites only the runs in this batch, leaving the others untouched. See [Data versions](../features/versioning.md#how-new-data-versions-are-written) |
-    | `--incremental-write` | `flag` | `false` | With `--write-mode replace-runs`, rewrite only the runs that changed instead of rebuilding the whole table. Falls back to a full rebuild whenever that cannot be done safely (run removed, table not partitioned by run, column type changed) |
-    | `--skip-unchanged` | `flag` | `false` | Leave a data collection's table untouched when the scan found no new, changed or removed file for it. Off by default, so that ingesting again always rebuilds a project that drifted |
-    | `--repartition` | `flag` | `false` | Let `--write-mode replace-runs` partition by run a table that is not yet. This rewrites every row, so it is never done implicitly, and never by the watcher |
-
-    Since v1.15.0 the scan honours each data collection's `max_depth` and `ignore`, and
-    prints a warning naming the collections that set them, since it may now register
-    fewer files than before. `ingest` also takes `--legacy-scan-depth`, left out of its help, to ignore
-    them for one more release. See [Limiting a recursive scan](../usage/projects/yaml-examples.md#scan-bounds).
-
-??? info "🔑 Automation"
-
-    | Parameter | Type | Default | Description |
-    |-----------|------|---------|-------------|
-    | `--pipeline-id` | `string` | | Which pipeline produced this data, as `<name>/<version>`. Resolves a bundled template when neither `--template` nor `--project-config-path` is given, and is ignored otherwise, so an explicit choice always wins. The [Nextflow trigger](nextflow-trigger.md) fills it from the pipeline's `manifest` block (v1.10.0+) |
-    | `--result-json` | `path` | | Write how the ingestion ended to this file as JSON, for scripts: its status, the project and its dashboards with their ids and links. See [Result file](#result-json) (v1.16.0+) |
-    | `--triggered-by` | `string` | `manual` | What invoked this ingestion, recorded on the project and shown as a badge in its [ingestion report](../features/dashboards.md#triggered-by) (v1.10.0+) |
-    | `--user` | `string` | | Email of a user to provision and run as. Requires `--provisioning-key` (v1.1.3+) |
-    | `--provisioning-key` | `string` | | Shared provisioning secret. Reads `DEPICTIO_AUTH_PROVISIONING_API_KEY` from the environment if the flag is omitted |
-
-    With `--user`, the CLI runs a pipeline **on behalf of a user who has no account yet**: it creates-or-gets the account, runs the whole ingestion as them, and prints a passwordless login link straight to the dashboard it imported.
-
-    ```bash
-    depictio ingest /path/to/results \
-      --template nf-core/ampliseq/latest \
-      --user alice@example.org \
-      --provisioning-key "$DEPICTIO_AUTH_PROVISIONING_API_KEY"
-    ```
-
-    The key is a **server-side secret**: the instance must be started with the
-    matching `DEPICTIO_AUTH_PROVISIONING_API_KEY`, otherwise the provisioning
-    endpoints stay disabled and the run is rejected. The CLI redacts the value
-    from its own logs. See
-    [Pipeline provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113).
-
-??? info "⚡ Performance and debugging"
-
-    | Parameter | Type | Default | Description |
-    |-----------|------|---------|-------------|
-    | `--streaming` | `flag` | `false` | Stream the Delta write instead of materialising the whole table in memory. Lowers peak RSS on large ingests. Experimental, falls back to the standard write on any failure (v1.3.0+) |
-    | `--preview-recipes` | `flag` | `false` | Show recipe input sources and transformed output before writing to Delta Lake |
-    | `--rich-tables` | `flag` | `false` | Show a detailed summary of the run |
-    | `--concurrency` | `int` | `4` | Parallel HTTP requests for file uploads and cleanup deletes |
-    | `--upload-chunk-size` | `int` | `1000` | Files per `/files/upsert_batch` request |
-    | `--state-cache` / `--no-state-cache` | `flag` | `--state-cache` | Skip the runs whose file tree is unchanged since the last successful scan, from a local cache. Only applies when rescanning |
-    | `--async-upsert` | `flag` | `false` | Ask the server to profile each written table in the background, and poll until it finishes, instead of holding one long request open. A server without offloading enabled ignores it and answers inline. See [Offloading the table profile](../installation/docker.md#async-upsert) |
-
-    | Variable | Default | Description |
-    |----------|---------|-------------|
-    | `DEPICTIO_INGEST_STREAMING_WRITE` | unset | Same as `--streaming`, as an environment toggle. |
-    | `DEPICTIO_INGEST_DC_WORKERS` | `1` | Ingest this many data collections concurrently. Clamped to 4 and to the number of data collections, so an over-large value degrades to the cap. An unparseable value logs a warning and falls back to sequential. |
-    | `DEPICTIO_INGEST_JOB_TIMEOUT_SECONDS` | `3600` | With `--async-upsert`, the longest wait for one server job, in seconds. `0` waits without limit. (v1.15.0+) |
-
-#### Skipping steps { #skipping-steps }
-
-`--skip` takes step names, comma-separated or repeated: `server-check`, `s3-check`, `sync`, `scan`, `process`, `join` and `dashboards`. An unknown name is a usage error that lists the known ones, so a typo never runs the step it meant to skip. Skipping `process` skips the image upload too, and `--skip dashboards` cannot be combined with `--reset-dashboards`.
-
-```bash
-depictio ingest results/ --skip server-check,s3-check
-```
-
-`--skip` replaces seven flags, which still work and print a notice: `--skip-server-check`, `--skip-s3-check`, `--skip-sync`, `--skip-scan`, `--skip-process`, `--skip-join` and `--skip-dashboard-import` (now `--skip dashboards`).
-
-#### Refreshing a project <small>(v1.12.0+)</small> { #refreshing-a-project }
-
-If the project already exists, `ingest` changes nothing, says how to go on, and exits with code 2. Say which one you meant:
-
-| You want | Option | What happens |
-| --- | --- | --- |
-| To refresh the project with new data | `--update-config` | The configuration is updated, every run is rescanned and the tables are rebuilt. The project's dashboards are kept as they are, edits made in the viewer included, and the template's dashboards it lacks are added |
-| One project, many runs | `--attach-run` | The results directory is added to the project as another run, and the tables are rebuilt from every run. The dashboards are kept, as with `--update-config` |
-| To start the dashboards over | `--reset-dashboards` | The template's dashboards (or `--dashboard`'s) are imported over the project's: the layout and components edited in the viewer are lost, the titles are kept. Implies `--update-config` |
-
-`--overwrite` is the same option as `--update-config`. `--rescan-folders` and `--sync-files`, which used to go with it, are part of every refresh now.
-
-A project not on the server yet is created by `--update-config`, so a script can pass it every time.
-
-**What the browser added** <small>(v1.18.0+)</small>. A refresh merges the project file into
-the stored project instead of writing it back whole: workflows and data collections the
-file does not mention are kept, so a collection added in the web UI survives. One the file
-mentions is updated from it.
-
-Here a third run is added to a project ingested from a project YAML: a dry run, then the refresh, which keeps its dashboard:
-
-<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-refresh.cast" data-poster="npt:0:48" data-idle-time-limit="2.5"></div>
-
-**Dashboards.** Dashboards are matched by their origin, the template file or the `--dashboard` file they came from, not by their title. Renaming a dashboard in the viewer no longer makes the next refresh import a second copy, and the new title is kept. The summary at the end of the run lists each dashboard as `created`, `kept` or `replaced`, with its link.
-
-A `--dashboard` file inside the template or the project file's folder is matched by its path there. One from anywhere else is matched by its absolute path (v1.13.1+, by its file name before), so moving that file makes the next refresh create a new dashboard.
-
-**Tabs** <small>(v1.13.1+)</small>. A multi-tab dashboard that a refresh keeps gains the template tabs it lacks, after its existing tabs. The summary says how many, as in `kept (2 tabs added)`. A tab deleted in the viewer comes back on the next refresh.
-
-!!! note "What a refresh does not keep yet"
-    A kept dashboard keeps its layout, components and title, but a refresh still resets the subtitle, the icons and the tab order edited in the viewer.
-
-**Run locations** <small>(v1.13.1+)</small>. `--attach-run` records its directory on the server. A refresh keeps the runs of the results directory you give, or of the locations the project file lists, plus the runs of those recorded directories. The runs of any other location are removed, with a warning for each location.
-
-So a results directory that moved replaces the old one, and a location removed from the project file is removed from the project.
-
-Attaching a directory that is already one of the project's locations records it, so a later refresh keeps it. A project ingested before attached runs were recorded has no record: a refresh removes its extra locations, unless you attach them again first. In v1.12.0, a refresh kept every location the project had.
-
-**Missing locations** <small>(v1.13.1+)</small>. If a location added with `--attach-run` is not on the machine that runs the refresh, the refresh stops with exit code 1 before it changes anything. Pass `--drop-missing-runs` to remove those runs from the project on purpose.
-
-**Flat workflows** <small>(v1.13.1+)</small>. A workflow whose `data_location.structure` is `flat` names each run after its directory. Two of its locations whose directories have the same name would be one run, so they are refused: rename one of the directories, or ingest it into another project.
-
-**Single-file collections.** A data collection with `scan.mode: single` (a samplesheet, a metadata table, a tree) keeps reading the run that created the project.
-
-#### Result file <small>(v1.16.0+)</small> { #result-json }
-
-`--result-json FILE` writes how the ingestion ended, for a script that runs `depictio ingest` and then links to what it made:
-
-```json
-{
-  "status": "success",
-  "project": {
-    "name": "results (run42)",
-    "id": "6845c5892bf43fee63e14bab",
-    "url": "https://depictio.example.org/projects/6845c5892bf43fee63e14bab"
-  },
-  "dashboards": [
-    {
-      "title": "results (run42)",
-      "id": "6845c5a12bf43fee63e14bb0",
-      "url": "https://depictio.example.org/dashboard/6845c5a12bf43fee63e14bb0",
-      "status": "created"
-    }
-  ],
-  "template_id": "composed/results",
-  "composed": {
-    "template_dir": "/home/me/.depictio/composed/results-3f2a9c41d0b7",
-    "tabs": ["Overview", "Quality control", "Taxonomy & diversity", "MultiQC"],
-    "unrecognised": 4
-  }
-}
-```
-
-| Field | Content |
-| ----- | ------- |
-| `status` | `success` when every step completed, `partial` when a step failed under `--continue-on-error`, `exists` when the project exists and neither `--update-config` nor `--attach-run` was given (the command then exits with code 2) |
-| `project` | `name`, `id` and `url`. With `exists`, also `locations`, the run directories the project already has, which tell a second ingestion of the same directory from another run that got the same project name |
-| `dashboards` | In import order, so the first is the template's main dashboard: `title`, `id`, `url`, and `status`, what the import did to it (`created`, `kept`, `replaced`, or `kept (2 tabs added)`). With `exists`, the project's dashboards, without `status` |
-| `template_id` | The template used, `null` with `--project-config-path` |
-| `composed` | Only for a [composed](../usage/projects/composed-dashboards.md) template: `template_dir`, its folder, `tabs`, and `unrecognised`, how many proposals for [files the catalog does not recognise](../usage/projects/composed-dashboards.md#files-the-catalog-does-not-recognise) were left out |
-
-A `url` is `null` when the server does not report its viewer's address, and on a dry run, which does not contact the server. A run that stops on a failed step without `--continue-on-error` writes no file. Writing the file never fails the ingestion: a path that cannot be written prints a warning.
-
-#### Exit codes
+### Exit codes { #exit-codes }
 
 | Code | Meaning |
-| ---- | ------- |
+| --- | --- |
 | `0` | Every step completed |
-| `1` | A step failed, including under `--continue-on-error`, the CLI configuration could not be used, a refresh stopped on a missing run location, or, from v1.16.0, the catalog recognises nothing in the `DATA_DIR` it was to compose from |
-| `2` | Nothing to do as asked: no template detected and none given (from v1.16.0, for an `s3://` `DATA_DIR` or none, since a local one is composed), the project already exists without `--update-config` or `--attach-run`, the project `--attach-run` names does not exist, or a usage error |
+| `1` | A step failed (even under `--continue-on-error`), unusable configuration, attached run missing, or nothing to compose |
+| `2` | Nothing done: no template found, project exists, `--attach-run` project absent, or usage error |
 
-Here the first step fails, as no server answers, and its message says how to start one:
-
-<div class="asciinema-cast" data-cast="assets/casts/depictio-ingest-error.cast" data-poster="npt:0:13" data-idle-time-limit="2.5"></div>
-
-**Examples:**
-
-=== "Template detected"
-
-    ```bash
-    # The template comes from the run's own provenance
-    depictio ingest /data/my_ampliseq_run
-    ```
-
-=== "Pinned template"
-
-    ```bash
-    # Set up a complete ampliseq project from raw pipeline output
-    depictio ingest /data/my_ampliseq_run \
-      --template nf-core/ampliseq/latest \
-      --var SAMPLESHEET_FILE=/data/samplesheet.tsv
-    ```
-
-=== "Composed"
-
-    ```bash
-    # No bundled template fits: compose the dashboard from the catalog (v1.16.0+)
-    depictio ingest /data/my_run --include-unknown --result-json result.json
-    ```
-
-=== "Run folder on S3"
-
-    ```bash
-    # The results stay in the bucket; the template is detected from them
-    depictio ingest s3://my-bucket/ampliseq/run42
-    ```
-
-=== "Manifest"
-
-    ```bash
-    # A manifest-driven template, no results directory
-    depictio ingest --template generic/manifest-tables/1 \
-      --manifest https://data.example.org/run42/manifest.json
-    ```
-
-=== "Bind"
-
-    ```bash
-    # Each data collection pointed at its own location
-    depictio ingest --template ./my-lab/rnaseq-qc/1 \
-      --bind samples=s3://my-bucket/run42/*.samples.csv \
-      --bind metadata=./metadata.tsv
-    ```
-
-=== "Project YAML"
-
-    ```bash
-    # A pipeline with no bundled template
-    depictio ingest --project-config-path ./config.yaml
-    ```
-
-=== "Local server"
-
-    ```bash
-    # The server `depictio local up` runs on this machine
-    depictio ingest /data/my_ampliseq_run --server local
-    ```
-
-=== "Dry Run"
-
-    ```bash
-    # Validate the configuration and preview the scan, without contacting the server
-    depictio ingest /data/my_ampliseq_run --dry-run
-    ```
-
-    From v1.13.2 the dry run prints a table of the files each data collection would match,
-    counted by the scanner itself. A derived collection shows `n/a (no scan)`, a remote one
-    `not counted (remote)`, and a collection that would match nothing is named in a warning.
-    From v1.16.0, with a template and `DATA_DIR`, the dry run prints what each data collection
-    finds under `DATA_DIR` instead, recipe collections included: see
-    [Preview before ingesting](../usage/projects/remote-data.md#preview-before-ingesting).
-
-=== "Debugging"
-
-    ```bash
-    # DEBUG logs, carry on past a failed step, skip the server checks
-    depictio -vv ingest --project-config-path ./config.yaml \
-      --continue-on-error \
-      --skip server-check,s3-check \
-      --rich-tables
-    ```
-
-### 👀 Watch Command { #watch-command }
-
-`depictio ingest` on a loop: ingest the results directory, then again whenever its files
-change. Each cycle writes new [data versions](../features/versioning.md#data-versions) of
-the tables it touches.
+## `watch` { #watch-command }
 
 ```bash
 depictio watch [OPTIONS] [DATA_DIR]
 ```
 
-```bash
-# Rewrite only the runs that changed, on each cycle
-depictio watch results/ --write-mode replace-runs --incremental-write
-```
+`ingest` on a loop. The first cycle refreshes as `--update-config`; later ones rewrite what moved. Cycles skip the server checks and dashboards, so `ingest` once first. Ctrl-C finishes the cycle, then exits. A lock under `~/.depictio/state/` (`DEPICTIO_CLI_STATE_DIR`) allows one watcher or ingestion per project. Watchers show in the [Watchers pane](../usage/administration/monitoring.md#watchers).
 
-The project is chosen as `ingest` chooses it, from `DATA_DIR`, `--template` or
-`--project-config-path`. The first cycle runs at once and refreshes the project as
-`ingest --update-config` does, which brings it up to date with whatever changed while
-nothing watched. The later cycles rescan and rewrite what moved. No cycle checks the
-server and S3 or imports dashboards: run `depictio ingest` once first if the project
-should have its dashboards.
+| Option | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `DATA_DIR`, `--template`, `--project-config-path`, `--project`, `--var` | | | As for `ingest` |
+| `--mode` | text | `incremental` | Or `full`: re-upload everything each cycle |
+| `--full-every` | int | | A full cycle every N |
+| `--write-mode` | text | `overwrite` | Or `replace-runs` |
+| `--incremental-write` | flag | off | With `replace-runs`, only changed runs |
+| `--backend` | text | `auto` | `native`, `polling` or `both`; `auto` polls on network filesystems |
+| `--interval` | float | `300` | Seconds between polls |
+| `--debounce` | float | `30` | Seconds of quiet before a cycle |
+| `--max-delay` | float | `300` | Ceiling on the debounce |
+| `--settle` | float | `5` | Seconds a file must stay unchanged |
+| `--drop-missing-runs` | flag | off | Drop attached runs missing here |
+| `--concurrency` | int | `4` | Parallel HTTP requests |
+| `--once` / `--max-runs N` | | | Stop after one or N cycles |
+| `--dry-run` | flag | off | Report without writing |
 
-Here a project ingested from two runs with `--write-mode replace-runs` is watched. A
-third run lands in `data/`, a cycle ingests it on its own, and Ctrl-C stops the watcher
-(the waits are shortened):
+File events need the `watch` extra; without it, it only polls. An `s3://` `DATA_DIR` is ingested once, then the watcher exits 1: refresh remote data [from the server](../usage/projects/remote-data.md#refreshing-the-data).
 
-<div class="asciinema-cast" data-cast="assets/casts/depictio-watch.cast" data-poster="npt:0:30" data-idle-time-limit="2.5"></div>
+### Running a watcher as a service { #running-a-watcher-as-a-service }
 
-<figure markdown="span">
-  [![The Version history of physical_features after the watch: V2, by Watch, replaced one run and added 123 rows and one file; V1, by Watch, rewrote both runs; V0 is the depictio ingest](../images/guides/versioning/watch_version_history_light.webp#only-light)](../images/guides/versioning/watch_version_history_light.webp){target=_blank}
-  [![The Version history of physical_features after the watch: V2, by Watch, replaced one run and added 123 rows and one file; V1, by Watch, rewrote both runs; V0 is the depictio ingest](../images/guides/versioning/watch_version_history_dark.webp#only-dark)](../images/guides/versioning/watch_version_history_dark.webp){target=_blank}
-  <figcaption><strong>Projects → the project → <code>physical_features</code> → Version history, after the watch above.</strong> V0 is the <code>depictio ingest</code>. V1 is the watcher's first cycle, which rewrites both runs. V2 is the cycle that ingested <code>run_3_gentoo</code>: <em>runs replaced</em>, 123 rows and one file added, the other runs left as they were.</figcaption>
-</figure>
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `DATA_DIR` | `path` | | Directory of the pipeline results to watch. Without `--template` or `--project-config-path`, the template is detected from it. From v1.16.0, a local directory that no bundled template fits is [composed from the catalog](../usage/projects/composed-dashboards.md) at every cycle, as `ingest` does without `--include-unknown` or `--include` |
-| `--server` | `string` | see [Which server a command uses](#choosing-a-server) | `local`, or a CLI configuration file |
-| `--template` | `string` | detected, else composed | Template to build the project from, as for `ingest`. Not with `--project-config-path` |
-| `--project-config-path` | `string` | | Project YAML, for a pipeline Depictio ships no template for. Not with `--template` |
-| `--project` | `string` | | Project name. Replaces the name the template gives, or the `name` in the project file |
-| `--var` | `KEY=VALUE` | | Template variable, repeatable |
-| `--mode` | `string` | `incremental` | `incremental` re-uploads only the files that changed. `full` re-uploads and rewrites everything on every cycle |
-| `--full-every` | `int` | | Run a full cycle every N incremental ones |
-| `--backend` | `string` | `auto` | `native` (filesystem events only, with the `watch` extra), `polling` (a periodic walk), `both`, or `auto`: `both` on local disk, `polling` on a network filesystem, where events do not see writes made from another host |
-| `--interval` | `float` | `300` | Seconds between polling walks, also the backstop for lost events |
-| `--debounce` | `float` | `30` | Seconds of quiet before a cycle starts |
-| `--max-delay` | `float` | `300` | Ceiling on the debounce, so a tree written continuously still gets ingested |
-| `--settle` | `float` | `5` | Seconds a file must keep the same size and modification time before it is ingested |
-| `--write-mode` | `string` | `overwrite` | How each cycle writes a table, as for `ingest`: `overwrite` or `replace-runs` |
-| `--incremental-write` | `flag` | `false` | With `--write-mode replace-runs`, rewrite only the runs that changed. Ignored, with a warning, with `overwrite` |
-| `--drop-missing-runs` | `flag` | `false` | Remove the runs of a location added with `ingest --attach-run` that is not on this host. Without it, such a project stops the first cycle |
-| `--concurrency` | `int` | `4` | Parallel HTTP requests during each cycle |
-| `--once` | `flag` | `false` | Run a single cycle and exit with its status |
-| `--max-runs` | `int` | | Stop after this many cycles, the first included |
-| `--dry-run` | `flag` | `false` | Report each cycle's changes without writing to the server |
-
-With `--mode incremental` and the default `--write-mode overwrite`, the watcher warns at
-start-up: a collection whose files moved still has its whole table rewritten.
-`--write-mode replace-runs --incremental-write` rewrites only the runs that changed. An
-incremental cycle leaves alone the collections whose files did not move, as long as the
-previous cycle succeeded; on the first cycle, after a failure, and on every full cycle,
-every table is rebuilt.
-
-**Filesystem events need the `watch` extra**: `pip install "depictio[watch]"`, or
-`uv tool install "depictio[local,watch]"` next to a local server. Without it the watcher
-silently polls alone, so a new file waits for the next walk, up to `--interval` (5
-minutes by default), while its *Watching … backend* banner still names `both` or
-`native`.
-
-`auto` picks polling alone as soon as one watched location is on NFS, SMB/CIFS, Lustre,
-GPFS, BeeGFS, GlusterFS, Ceph, AFS, 9p or a FUSE mount. A location of the project that
-does not exist on this machine is skipped with a warning, and the watcher stops if none is
-left.
-
-**Remote data** <small>(v1.16.0+)</small>. A watcher watches folders on its own machine.
-An `s3://` location counts as one that does not exist: with an `s3://` `DATA_DIR`, the
-first cycle ingests it as `ingest` would, then the watcher stops with *No existing data
-locations to watch in this project.* and exit code 1, unless `--once` or `--max-runs 1`
-asked for that single cycle. `watch` takes neither `--bind` nor `--manifest`. To bring
-remote data up to date, refresh it from the server, see
-[Refreshing the data](../usage/projects/remote-data.md#refreshing-the-data).
-
-**Stopping.** Ctrl-C or SIGTERM lets the cycle in progress finish, then exits, so the
-watcher is safe to run under systemd or as a container.
-
-**One per project.** A watcher holds a lock under `~/.depictio/state/`, per server and
-project, next to the scan-state cache (`DEPICTIO_CLI_STATE_DIR` moves both).
-`depictio ingest` takes the same lock before its first write, so a second watcher or
-ingestion on the same project stops at once with an error that names the lock file.
-
-**In the admin panel.** A watcher registers with the server, sends a heartbeat every
-minute, and asks every 5 seconds whether someone pressed **Run now** on its card in the
-[Watchers pane](../usage/administration/monitoring.md#watchers). It reaches out to the
-server and never the reverse, so it works from a machine the server cannot reach, such
-as an HPC login node. Its runs show **Watch**, or **UI** for one started by **Run now**,
-as their trigger. On a server with `DEPICTIO_MONITORING_ENABLED=false`, the watcher
-carries on without reporting.
-
-#### Running a watcher as a service { #running-a-watcher-as-a-service }
-
-The depictio repository ships two ways to keep a watcher running, both configured through
-environment variables:
-
-- [`deploy/depictio-watch@.service`](https://github.com/depictio/depictio/blob/main/deploy/depictio-watch@.service),
-  a systemd template unit: one instance per project, each reading
-  `/etc/depictio/<instance>.env`;
-- [`deploy/docker-compose.watcher.yaml`](https://github.com/depictio/depictio/blob/main/deploy/docker-compose.watcher.yaml),
-  a container running the `depictio-cli` image, configured by a `.env` next to it
-  (start from [`deploy/.env.example`](https://github.com/depictio/depictio/blob/main/deploy/.env.example)).
-
-=== "systemd"
-
-    ```bash
-    sudo cp deploy/depictio-watch@.service /etc/systemd/system/
-    sudo systemctl edit depictio-watch@.service    # set User=, the account it runs as
-    sudo install -d /etc/depictio
-    sudoedit /etc/depictio/myproject.env
-    sudo systemctl enable --now depictio-watch@myproject
-    journalctl -u depictio-watch@myproject -f
-    ```
-
-=== "Docker Compose"
-
-    ```bash
-    cp deploy/.env.example deploy/.env    # then fill it in
-    docker compose -f deploy/docker-compose.watcher.yaml up -d
-    docker compose -f deploy/docker-compose.watcher.yaml logs -f
-    ```
-
-    For several projects, run it once per project with its own `COMPOSE_PROJECT_NAME`
-    and `--env-file`.
-
-| Variable | systemd | Docker Compose |
-|----------|---------|----------------|
-| `DEPICTIO_CLI_CONFIG` | Required: the CLI configuration | Required |
-| `DEPICTIO_PROJECT_CONFIG` | Required: the project YAML | Required |
-| `DEPICTIO_DATA_ROOT` | | Required: the data root on the host, mounted read-only |
-| `DEPICTIO_DATA_ROOT_MOUNT` | | `/data`. Must match the paths in the project YAML |
-| `DEPICTIO_WATCH_MODE` | `incremental` | `incremental` |
-| `DEPICTIO_WATCH_WRITE_MODE` | `overwrite` | `replace-runs` |
-| `DEPICTIO_WATCH_INCREMENTAL_WRITE` | `0`. `1` adds `--incremental-write` | Not a variable: uncomment `--incremental-write` in the compose file |
-| `DEPICTIO_WATCH_BACKEND` | `auto` | `polling`, since file events do not cross a bind mount reliably |
-| `DEPICTIO_WATCH_INTERVAL` | `300` | `300` |
-| `DEPICTIO_WATCH_DEBOUNCE` | `30` | `30` |
-| `DEPICTIO_WATCH_SETTLE` | `5` | `5` |
-| `DEPICTIO_CLI_BIN` | `/usr/local/bin/depictio` | |
-| `DEPICTIO_CLI_IMAGE` | | `ghcr.io/depictio/depictio-cli:latest` |
-| `WATCHER_NAME` | | `depictio-watcher`, the container name |
-
-Both give a stopping watcher 15 minutes to finish its cycle. The unit keeps the lock and
-the scan-state cache in `/var/lib/depictio-watch`, and the compose file in a named volume,
-so a restart does not rescan everything.
-
-### 💻 Local Server Commands <small>(v1.12.0+)</small> { #local-commands }
-
-`depictio local` runs a complete Depictio server on this machine, without Docker, and manages it: `up`, `open`, `down`, `status`, `wipe` and `export`. It manages the server only: data goes in with `depictio ingest`, which reaches the local server with `--server local`, or by default when no other server is configured (see [Which server a command uses](#choosing-a-server)).
+The repository ships [`deploy/depictio-watch@.service`](https://github.com/depictio/depictio/blob/main/deploy/depictio-watch@.service), a systemd unit reading `/etc/depictio/<project>.env`, and [`deploy/docker-compose.watcher.yaml`](https://github.com/depictio/depictio/blob/main/deploy/docker-compose.watcher.yaml), configured from [`deploy/.env.example`](https://github.com/depictio/depictio/blob/main/deploy/.env.example). Both need `DEPICTIO_CLI_CONFIG` and `DEPICTIO_PROJECT_CONFIG` (Compose also `DEPICTIO_DATA_ROOT`); `DEPICTIO_WATCH_*` variables set the options.
 
 ```bash
-depictio local up
-depictio ingest results/ --server local
+sudo systemctl enable --now depictio-watch@myproject
+docker compose -f deploy/docker-compose.watcher.yaml up -d
 ```
 
-See [Python package installation](../installation/local.md) for every command and option.
+## `local` { #local-commands }
 
-### 📋 Config Commands
+A complete server on this machine, without Docker. Guide: [Python package](../installation/local.md).
 
-<!-- prettier-ignore -->
-!!! info "Command Group: `depictio config`"
-    All commands in this section are part of the `config` command family. Use them to check the CLI setup, sync project configurations, and hook Depictio into Nextflow.
+| Command | Options |
+| --- | --- |
+| `local up` | `--examples` (`iris,penguins`, `iris`, `penguins`, `none`), `--port` (the previous one, else 8058 or a free one), `--open / --no-open` (on), `--screenshots / --no-screenshots` (off), `--data-root-allow PATH` (repeatable) |
+| `local open` · `status` · `down` | Open the viewer; show what runs; stop it |
+| `local wipe` | Delete all local data. `--yes` skips the prompt |
+| `local export` | `--out` (`depictio-docker`): a Docker Compose folder with the data |
 
-#### `config show`
-
-Show the CLI configuration in use.
+## `project-builder` { #project-builder }
 
 ```bash
-depictio config show [OPTIONS]
+depictio project-builder [DIRECTORY]
 ```
 
-| Parameter        | Type     | Default | Description                                                         |
-| ---------------- | -------- | ------- | ------------------------------------------------------------------- |
-| `--server`       | `string` | see [above](#choosing-a-server) | `local`, or a CLI configuration file    |
-| `--project-name` | `string` |         | Also show this project's metadata as registered on the server       |
+Describe data collections in the browser for a folder no template fits; it writes a template bundle for `ingest --template`. Options: `--out` (`<dir>/.depictio/template`), `--host` (`127.0.0.1`), `--port` (`8129`), `--no-open`. Needs the `builder` or `local` extra. See [Project Builder](../usage/projects/guide.md#project-builder).
+
+## `config` { #config-commands }
+
+| Command | Options | Does |
+| --- | --- | --- |
+| `config show` | `--project-name` | Print the configuration in use, and that project |
+| `config check` | `--project-config-path` | Check server and S3; validate the file if given |
+| `config sync` | `--project-config-path`, `--update` | Register a project file; `--update` an existing one |
+
+### `config nextflow` { #config-nextflow }
+
+Prints the path of the Nextflow `onComplete` snippet; see [Nextflow trigger](nextflow-trigger.md). `--print` prints the snippet, `--install` / `--uninstall` turn it on or off for every pipeline here, and `--default-disabled` (with `--install`) makes it opt-in per run.
+
+## `data` { #data-commands }
+
+One ingestion step at a time, for the project file in `--project-config-path`.
+
+### `data scan`
+
+Registers the files each data collection matches.
+
+| Option | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `--workflow-name`, `--data-collection-tag` | text | | Limit the scan |
+| `--rescan-folders` | flag | off | Rescan every run |
+| `--sync-files` / `--sync-changed` | flag | off | Re-upload every / only changed file |
+| `--dry-run` | flag | off | Report without writing |
+| `--state-cache / --no-state-cache` | flag | on | Skip unchanged runs |
+| `--concurrency` | int | `4` | Parallel requests |
+| `--upload-chunk-size` | int | `1000` | Files per request |
+| `--legacy-scan-depth` | flag | off | Ignore `max_depth` and `ignore`. Deprecated |
+| `--rich-tables` | flag | off | Detailed tables |
+
+### `data process`
+
+Builds the Delta tables from scanned files. Options: `--overwrite` (an existing workflow), `--write-mode`, `--repartition`, `--async-upsert`, `--preview-recipes`, `--rich-tables`, as for [`ingest`](#ingest-command).
+
+### `data join`
+
+Runs the project file's joins; for cross-table filtering, prefer [links](../features/cross-dc-filtering.md). Options: `-j`, `--join-name`, `-p`, `--preview` (no save), `--overwrite`, `--no-auto-process`, `--rich-tables`.
+
+### `data push-images`
 
 ```bash
-depictio config show --project-name my-project
+depictio data push-images SOURCE_DIRECTORY S3_DESTINATION
 ```
 
----
+Uploads an image collection's files to its `s3_base_folder`, keeping the layout; `ingest` does it for `local_images_path`. Options: `-r / -R` recursive (on), `-e`, `--extensions .png,.jpg`, `-n`, `--dry-run`, `--overwrite`, `-c`, `--concurrency` (`8`).
 
-#### `config check`
-
-Run the preflight checks. Without `--project-config-path`, it checks that the server answers and that its S3 storage is reachable. With `--project-config-path`, it validates that project configuration, which also runs the S3 storage check it depends on.
+### `data versions` { #data-versions }
 
 ```bash
-depictio config check [OPTIONS]
+depictio data versions DATA_COLLECTION_TAG [--limit 20] [--json]
 ```
 
-| Parameter               | Type     | Default | Description                                  |
-| ----------------------- | -------- | ------- | -------------------------------------------- |
-| `--server`              | `string` | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
-| `--project-config-path` | `string` |         | Project configuration file to validate       |
+A table's Delta commits with write mode, trigger, rows, files and runs: the [Dataset history](../features/versioning.md#dataset-history) in a terminal.
+
+### `data vacuum` { #data-vacuum }
 
 ```bash
-# The server and its storage
-depictio config check
-
-# A project configuration
-depictio config check --project-config-path ./config.yaml
+depictio data vacuum DATA_COLLECTION_TAG [--retention-hours 168] [--apply]
 ```
 
----
+Deletes the Delta files no commit newer than the retention needs; without `--apply`, only reports. A [dashboard version](../features/versioning.md#data-versions) pinned to a vacuumed commit loses its data.
 
-#### `config sync`
+## `dashboard` { #dashboard-commands }
 
-Validate a project configuration and sync it to the server.
+Format and workflow: [Dashboard YAML](../features/yaml-sync.md).
+
+| Command | Options | Does |
+| --- | --- | --- |
+| `dashboard validate FILE` | `--offline` | Schema, then columns on the server if one is set |
+| `dashboard import FILE` | `-p`, `--project ID`, `--overwrite`, `--dry-run`, `--offline` | Import; `--overwrite` replaces the same title |
+| `dashboard export ID` | `-o`, `--output` (`dashboard.yaml`) | Write it to YAML |
+
+## `template` { #template-commands }
+
+### `template export` { #template-export }
 
 ```bash
-depictio config sync [OPTIONS]
+depictio template export PROJECT_ID -t my-lab/rnaseq-qc/1
 ```
 
-| Parameter               | Type      | Default | Description                                     |
-| ----------------------- | --------- | ------- | ----------------------------------------------- |
-| `--server`              | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
-| `--project-config-path` | `string`  |         | Project configuration file                      |
-| `--update`              | `boolean` | `false` | Update the project configuration on the server  |
+Writes the project and its dashboards to `<output-dir>/<template-id>/`, ready for `ingest --template`. See [Export a project as a template](../usage/projects/templates.md#export-a-project-as-a-template).
+
+| Option | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `-t`, `--template-id` | text | required | Template id |
+| `-o`, `--output-dir` | path | `.` | Where to write |
+| `--version` | text | `1.0.0` | Template version |
+| `--description` | text | | Description |
+| `--data-dir` | text | recorded root | Prefix turned into `{DATA_ROOT}`; `""` for none |
+
+### `template compose` { #template-compose }
 
 ```bash
-depictio config sync --project-config-path ./config.yaml --update
+depictio template compose DATA_ROOT [-o DIR]
 ```
 
----
+Offline: writes the template `ingest` would [compose](../usage/projects/composed-dashboards.md#template-compose) and lists what it left out. Options: `-o`, `--output` (under `~/.depictio/composed/` or `DEPICTIO_COMPOSE_HOME`), `--include-unknown`, `--include GLOB`, `--project`, `--verbose`.
 
-#### `config nextflow` <small>(v1.10.0+)</small> { #config-nextflow }
+## `manifest` { #manifest-commands }
 
-Print or install the `workflow.onComplete` snippet that lets a Nextflow pipeline
-ingest its own results when it finishes. Full guide:
-[Nextflow trigger](nextflow-trigger.md).
+### `manifest from-table` { #manifest-from-table }
 
 ```bash
-depictio config nextflow [OPTIONS]
+depictio manifest from-table TABLE --base-url s3://my-bucket/run42
 ```
 
-| Parameter     | Type   | Default | Description                                                                                  |
-| ------------- | ------ | ------- | -------------------------------------------------------------------------------------------- |
-| `--print`     | `flag` | `false` | Write the snippet's contents to stdout instead of its path                                    |
-| `--install`   | `flag` | `false` | Enable the trigger for every pipeline on this machine, once                                   |
-| `--uninstall` | `flag` | `false` | Undo `--install`, leaving any other Nextflow settings alone                                   |
-| `--default-enabled` / `--default-disabled` | `flag` | `--default-enabled` | With `--install`: whether a pipeline that sets no `--depictio_enabled` triggers Depictio, or stays opt-in |
+Turns a wide samplesheet (CSV or TSV) into a [manifest](../usage/projects/remote-data.md#the-data-manifest-contract), each file column a `type`. Options: `-o`, `--out` (`manifest.json`; another extension writes CSV), `--id-col` and `--file-cols` (detected), `--run-col`, `--base-url` (prefix for relative paths, required for local ones).
 
-With no flag it prints the path of the bundled snippet, which is what makes the
-`$(...)` form below work.
+## `catalog` { #catalog-commands }
 
-```bash
-# one pipeline, one run
-nextflow run nf-core/ampliseq -profile docker --outdir results \
-  -c $(depictio config nextflow)
-
-# every pipeline on this machine, once
-depictio config nextflow --install
-nextflow run nf-core/ampliseq -profile docker --outdir results
-```
-
-### 📊 Data Commands
-
-<!-- prettier-ignore -->
-!!! info "Command Group: `depictio data`"
-    All commands in this section are part of the `data` command family. They run one ingestion step at a time, which `depictio ingest` otherwise runs in order.
-
-#### `data scan`
-
-Scan the project's data folders for the files its data collections match, and register them on the server. The project configuration must already be synced.
-
-```bash
-depictio data scan [OPTIONS]
-```
-
-| Parameter               | Type      | Default | Description                            |
-| ----------------------- | --------- | ------- | -------------------------------------- |
-| `--server`              | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
-| `--project-config-path` | `string`  |         | Project configuration file             |
-| `--workflow-name`       | `string`  |         | Workflow to scan                       |
-| `--data-collection-tag` | `string`  |         | Data collection to scan                |
-| `--rescan-folders`      | `boolean` | `false` | Reprocess all runs for the data collection |
-| `--sync-files`          | `boolean` | `false` | Update files for the data collection   |
-| `--sync-changed`        | `boolean` | `false` | Re-upload only the files whose metadata moved since the last scan. Narrower than `--sync-files`, which re-uploads every registered file |
-| `--dry-run`             | `boolean` | `false` | Report what would be registered or removed, without writing to the server |
-| `--legacy-scan-depth`   | `boolean` | `false` | Ignore each data collection's scan `max_depth` and `ignore`, as releases before v1.15.0 did. Deprecated, and to be removed. See [Limiting a recursive scan](../usage/projects/yaml-examples.md#scan-bounds) |
-| `--state-cache` / `--no-state-cache` | `boolean` | `--state-cache` | Skip the runs whose file tree is unchanged since the last successful scan, from a local cache. Only applies when rescanning |
-| `--concurrency`         | `int`     | `4`     | Parallel HTTP requests for file uploads and cleanup deletes |
-| `--upload-chunk-size`   | `int`     | `1000`  | Files per `/files/upsert_batch` request |
-| `--rich-tables`         | `boolean` | `false` | Display rich tables in the output      |
-
-```bash
-depictio data scan --project-config-path ./config.yaml --workflow-name my-workflow
-```
-
----
-
-#### `data process`
-
-Build each data collection's Delta table from the files `depictio data scan` found.
-
-```bash
-depictio data process [OPTIONS]
-```
-
-| Parameter               | Type      | Default | Description                      |
-| ----------------------- | --------- | ------- | -------------------------------- |
-| `--server`              | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
-| `--project-config-path` | `string`  |         | Project configuration file       |
-| `--overwrite`           | `boolean` | `false` | Overwrite existing tables        |
-| `--write-mode`          | `string`  | `overwrite` | `overwrite` rewrites the whole table. `replace-runs` partitions it by run and rewrites only the runs in this batch, leaving the others untouched |
-| `--repartition`         | `boolean` | `false` | Let `--write-mode replace-runs` partition by run a table that is not yet. This rewrites every row |
-| `--async-upsert`        | `boolean` | `false` | Ask the server to profile the written table in the background and poll until it finishes. Servers without offloading enabled ignore it. See [Offloading the table profile](../installation/docker.md#async-upsert) |
-| `--rich-tables`         | `boolean` | `false` | Display rich tables in the output |
-| `--preview-recipes`     | `boolean` | `false` | Show recipe input sources and transformed output without writing to Delta Lake |
-
-```bash
-depictio data process --project-config-path ./config.yaml --overwrite
-```
-
----
-
-#### `data join`
-
-Run the table joins defined in the project configuration, on the client side, and optionally persist the results as Delta tables.
-
-<!-- prettier-ignore -->
-!!! note "Links vs Joins"
-    For interactive cross-DC filtering, use **links** (configured in YAML, resolved at runtime). Use **joins** only when you need a pre-computed combined dataset stored as a Delta table. See [Cross-DC Filtering](../features/cross-dc-filtering.md).
-
-```bash
-depictio data join [OPTIONS]
-```
-
-| Parameter               | Short | Type      | Default | Description                                     |
-| ----------------------- | ----- | --------- | ------- | ----------------------------------------------- |
-| `--server`              |       | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
-| `--project-config-path` |       | `string`  |         | Project configuration file                      |
-| `--join-name`           | `-j`  | `string`  |         | Join to process (all when not given)            |
-| `--preview`             | `-p`  | `boolean` | `false` | Preview join results without persisting         |
-| `--overwrite`           |       | `boolean` | `false` | Overwrite existing joined tables                |
-| `--no-auto-process`     |       | `boolean` | `false` | Do not process missing source data collections  |
-
-```bash
-# Preview all joins
-depictio data join --project-config-path ./config.yaml --preview
-
-# Execute a specific join
-depictio data join --project-config-path ./config.yaml --join-name my_join
-```
-
----
-
-#### `data push-images` <small>(v1.12.0+)</small>
-
-Upload a directory of images to S3 storage, for an image data collection. Formerly `images push`, which still works. `depictio ingest` does this itself for a collection that sets `local_images_path`, and checks the upload.
-
-```bash
-depictio data push-images <source_directory> <s3_destination> [OPTIONS]
-```
-
-The directory structure is kept, relative to the source directory, and images already in storage are skipped unless `--overwrite`. Upload to the collection's `s3_base_folder`: its `image_column` paths are relative to it.
-
-| Parameter          | Short | Type      | Default | Description                                    |
-| ------------------ | ----- | --------- | ------- | ---------------------------------------------- |
-| `source_directory` |       | `path`    | **required** | Directory holding the images              |
-| `s3_destination`   |       | `string`  | **required** | S3 destination, e.g. `s3://bucket/path/to/images/` |
-| `--recursive` / `--no-recursive` | `-r` / `-R` | `flag` | `--recursive` | Include subdirectories |
-| `--extensions`     | `-e`  | `string`  |         | Comma-separated extensions to upload, e.g. `.png,.jpg` |
-| `--dry-run`        | `-n`  | `flag`    | `false` | Show what would be uploaded                    |
-| `--overwrite`      |       | `flag`    | `false` | Overwrite existing files in S3                 |
-| `--concurrency`    | `-c`  | `int`     | `8`     | Number of parallel uploads                     |
-| `--server`         |       | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
-
-```bash
-depictio data push-images ./data/images s3://my-bucket/project/images/ --dry-run
-```
-
----
-
-#### `data versions` { #data-versions }
-
-List the Delta commits of a data collection, with what Depictio recorded on each. The same
-history is on the project page, see [Dataset history](../features/versioning.md#dataset-history).
-
-```bash
-depictio data versions <data_collection_tag> [OPTIONS]
-```
-
-| Parameter               | Type      | Default | Description                                  |
-| ----------------------- | --------- | ------- | -------------------------------------------- |
-| `data_collection_tag`   | `string`  | **required** | Data collection whose Delta history to list |
-| `--server`              | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
-| `--project-config-path` | `string`  |         | Project configuration file                   |
-| `--limit`               | `int`     | `20`    | Number of commits to show                    |
-| `--json`                | `boolean` | `false` | Emit machine-readable JSON                   |
-
-Each row gives the `version`, its `timestamp` and Delta `operation`, then what Depictio
-recorded: the `write_mode`, the `trigger`, `rows_added`, `files_added`, the number of
-`runs`, and the `ingestion_run` that wrote it. The command reads the table's commit log on
-S3 directly, with the storage settings of the CLI configuration.
-
-Depictio stores that record on the commit itself, under `depictio.` keys:
-`data_collection_id`, `data_collection_tag` and `write_mode` always, and when known
-`ingestion_run_id`, `project_id`, `trigger`, `cli_version`, `user_email`, `file_count`,
-`row_count`, `run_count` and `run_tags` (the first 50).
-
-```bash
-depictio data versions my_table --project-config-path ./config.yaml --limit 5
-```
-
----
-
-#### `data vacuum` { #data-vacuum }
-
-Remove the Delta files that no retained commit needs. Every ingestion leaves the previous
-commit's files behind, so a table's footprint on S3 grows until it is vacuumed, and
-nothing in Depictio vacuums on its own.
-
-```bash
-depictio data vacuum <data_collection_tag> [OPTIONS]
-```
-
-| Parameter               | Type      | Default | Description                                  |
-| ----------------------- | --------- | ------- | -------------------------------------------- |
-| `data_collection_tag`   | `string`  | **required** | Data collection whose stale Delta files to remove |
-| `--server`              | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
-| `--project-config-path` | `string`  |         | Project configuration file                   |
-| `--retention-hours`     | `int`     | `168`   | Keep the files that commits newer than this need. Going below the default breaks readers that are mid-query |
-| `--apply`               | `boolean` | `false` | Delete. Without it, the command only reports what it would remove |
-
-<!-- prettier-ignore -->
-!!! warning "Vacuumed commits can no longer be read"
-    A commit older than `--retention-hours` loses the files it needs. A
-    [dashboard version](../features/versioning.md#data-versions) pinned to it, a preview of
-    that version, and **At version** on the project page then have nothing to read.
-
-```bash
-# See what would go, then delete it
-depictio data vacuum my_table --project-config-path ./config.yaml
-depictio data vacuum my_table --project-config-path ./config.yaml --apply
-```
-
-### 📈 Dashboard Commands
-
-<!-- prettier-ignore -->
-!!! info "Command Group: `depictio dashboard`"
-    All commands in this section are part of the `dashboard` command family. Use them to manage dashboard YAML files: validate, import to server, and export from server.
-
-Manage dashboard YAML files for the [Dashboard YAML Management](../features/yaml-sync.md) feature. Each command reaches the server [`--server`](#choosing-a-server) names, or the default one. `--server` replaces the former `-c/--config` and `--api` options, which still work.
-
-| Command    | Description                  | Server Required          |
-| ---------- | ---------------------------- | ------------------------ |
-| `validate` | Validate a YAML file         | No, used when configured |
-| `import`   | Import YAML to server        | Yes (unless `--dry-run`) |
-| `export`   | Export dashboard to YAML     | Yes                      |
-
-#### `dashboard validate`
-
-Validate a dashboard YAML file in two passes: schema and domain constraints (always), then the columns and types against the server's data collections. Without `--server`, the second pass uses the default server when one is configured, reports its findings as warnings only, and is skipped when no server is configured.
-
-```bash
-depictio dashboard validate <yaml_file> [OPTIONS]
-```
-
-| Parameter           | Type      | Default      | Description                                                       |
-| ------------------- | --------- | ------------ | ----------------------------------------------------------------- |
-| `yaml_file`         | `path`    | **required** | Path to YAML dashboard file                                       |
-| `--server`          | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file: the server to check the columns against |
-| `--offline`         | `boolean` | `false`      | Skip the server schema check                                      |
-
-For detailed logs, put `-v` before the command: `depictio -v dashboard validate ...`.
-
-```bash
-# Schema + domain, then the default server if one is configured
-depictio dashboard validate my_dashboard.yaml
-
-# Full validation against the local server
-depictio dashboard validate my_dashboard.yaml --server local
-
-# Schema + domain only
-depictio dashboard validate my_dashboard.yaml --offline
-```
-
-**Example Output (Success):**
-
-<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
-<pre style="margin: 0; color: var(--md-code-fg-color);">Validating: <span style="color: #c2185b;">my_dashboard.yaml</span>
-  Pass 1: schema + domain constraints
-  <span style="color: #2e7d32;">✓ Schema + domain OK</span>
-  Pass 2: server schema validation
-  <span style="color: #2e7d32;">✓ Server schema OK</span>
-
-<span style="color: #2e7d32;">✓ Validation passed</span>
-</pre>
-</div>
-
-**Example Output (Failure, per-component error table):**
-
-<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
-<pre style="margin: 0; color: var(--md-code-fg-color);">Validating: <span style="color: #c2185b;">my_dashboard.yaml</span>
-  Pass 1: schema + domain constraints
-<span style="color: #c62828;">✗ Schema/domain validation failed</span>
-                         Validation Errors
-┏━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Component     ┃ Field     ┃ Message                                            ┃
-┡━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ pie-chart     │ -         │ Invalid visu_type 'pie' for mode='ui'.             │
-│               │           │ Valid values: scatter, line, bar, box, histogram   │
-└───────────────┴───────────┴────────────────────────────────────────────────────┘
-</pre>
-</div>
-
----
-
-#### `dashboard import`
-
-Import a dashboard YAML file to the server. The project is determined from the `--project` option, else from the YAML `project_tag` field.
-
-```bash
-depictio dashboard import <yaml_file> [OPTIONS]
-```
-
-| Parameter          | Type      | Default      | Description                                                    |
-| ------------------ | --------- | ------------ | -------------------------------------------------------------- |
-| `yaml_file`        | `path`    | **required** | Path to YAML dashboard file                                    |
-| `--server`         | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file        |
-| `--project` / `-p` | `string`  |              | Project ID (overrides `project_tag` in YAML)                   |
-| `--overwrite`      | `boolean` | `false`      | Update an existing dashboard with the same title               |
-| `--dry-run`        | `boolean` | `false`      | Validate schema + domain only, don't import (no server needed) |
-| `--offline`        | `boolean` | `false`      | Skip server schema check (column names not verified)           |
-
-```bash
-# Validate locally without server (no config needed)
-depictio dashboard import dashboard.yaml --dry-run
-
-# Import to the default server
-depictio dashboard import dashboard.yaml
-
-# Import to the server a configuration file describes
-depictio dashboard import dashboard.yaml --server ~/.depictio/admin_config.yaml
-
-# Update existing dashboard with same title
-depictio dashboard import dashboard.yaml --server local --overwrite
-
-# Override project from YAML
-depictio dashboard import dashboard.yaml --project 646b0f3c1e4a2d7f8e5b8c9a
-```
-
-**Example Output:**
-
-<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
-<pre style="margin: 0; color: var(--md-code-fg-color);"><span style="color: #0097a7;">Validating:</span> <span style="color: #c2185b;">dashboard.yaml</span>
-  Checks: schema + domain constraints
-<span style="color: #2e7d32;">✓ Validation passed</span>
-  Title: Iris Dashboard Demo
-  Components: 7
-  Project: Iris_Dataset_Project (from YAML project_tag)
-
-• Server: <span>http://127.0.0.1:8058</span> (local server, as no ~/.depictio/CLI.yaml exists; configuration ~/.depictio/local/cli/admin_config.yaml)
-
-<span style="color: #0097a7;">Validating column names against server schema...</span>
-<span style="color: #2e7d32;">✓ Server schema OK</span>
-
-<span style="color: #0097a7;">Importing dashboard (project: Iris_Dataset_Project)...</span>
-<span style="color: #2e7d32;">✓ Dashboard imported successfully!</span>
-  Dashboard ID: 6824cb3b89d2b72169309737
-  Title: Iris Dashboard Demo
-  Project ID: 650a1b2c3d4e5f6a7b8c9d0e
-
-<span style="color: #0097a7;">View at:</span> <span>http://127.0.0.1:8058/dashboard/6824cb3b89d2b72169309737</span>
-</pre>
-</div>
-
----
-
-#### `dashboard export`
-
-Export a dashboard from the server to a YAML file.
-
-```bash
-depictio dashboard export <dashboard_id> [OPTIONS]
-```
-
-| Parameter         | Type     | Default          | Description             |
-| ----------------- | -------- | ---------------- | ----------------------- |
-| `dashboard_id`    | `string` | **required**     | Dashboard ID to export  |
-| `--server`        | `string` | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
-| `--output` / `-o` | `path`   | `dashboard.yaml` | Output file path        |
-
-```bash
-# Export to default file
-depictio dashboard export 6824cb3b89d2b72169309737
-
-# Export to specific file
-depictio dashboard export 6824cb3b89d2b72169309737 --server local -o iris_dashboard.yaml
-```
-
-**Example Output:**
-
-<div class="terminal-output" style="background-color: var(--md-code-bg-color); padding: 1em; border-radius: 0.25rem; overflow-x: auto; font-size: 0.85em;">
-<pre style="margin: 0; color: var(--md-code-fg-color);">• Server: http://127.0.0.1:8058 (local server, as no ~/.depictio/CLI.yaml exists; configuration ~/.depictio/local/cli/admin_config.yaml)
-<span style="color: #0097a7;">Exporting dashboard 6824cb3b89d2b72169309737...</span>
-<span style="color: #2e7d32;">✓ Dashboard exported to:</span> <span style="color: #c2185b;">iris_dashboard.yaml</span>
-</pre>
-</div>
-
----
-
-For more information about dashboard YAML format and workflows, see [Dashboard YAML Management](../features/yaml-sync.md).
-
----
-
-### 📦 Template Commands <small>(v1.16.0+)</small> { #template-commands }
-
-<!-- prettier-ignore -->
-!!! info "Command Group: `depictio template`"
-    The inverse of `depictio ingest --template`: freeze an existing project and its dashboards into a bundle someone else can run on their own data. See [Export a project as a template](../usage/projects/templates.md#export-a-project-as-a-template). Or compose one from what the catalog recognises in a results directory.
-
-#### `template export`
-
-Export a project and its dashboards as a template bundle. The server builds
-the bundle (runtime fields stripped, data locations re-parameterised,
-dashboards exported by tag, round-trip checked); the CLI unpacks the returned
-archive into a `<template-id>/` directory. The command reaches the server
-[`--server`](#choosing-a-server) names, or the default one.
-
-```bash
-depictio template export <project_id> --template-id <id> [OPTIONS]
-```
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `project_id` | `string` | **required** | Project ID to export |
-| `--template-id` / `-t` | `string` | **required** | Template id, e.g. `my-lab/rnaseq-qc/1`; the bundle's directory layout |
-| `--server` | `string` | see [above](#choosing-a-server) | `local`, or a CLI configuration file. Replaces `-c/--config` and `--api`, which still work |
-| `--output-dir` / `-o` | `path` | `.` | Directory to unpack into; the bundle lands in `<output-dir>/<template-id>/` |
-| `--version` | `string` | `1.0.0` | Template version |
-| `--description` | `string` | | Template description |
-| `--data-dir` | `string` | | Path prefix to re-parameterise as `{DATA_ROOT}`, a local folder or an `s3://` prefix. Defaults to the data root recorded when the project itself came from a template. `--data-dir ""` exports without one, which a project read from an `s3://` folder needs, see [Round-trip guarantee](../usage/projects/templates.md#round-trip-guarantee). Formerly `--data-root` |
-
-```bash
-depictio template export 6824cb3b89d2b72169309737 \
-  --template-id my-lab/rnaseq-qc/1 \
-  --server local \
-  -o depictio/projects
-```
-
-The result is `depictio/projects/my-lab/rnaseq-qc/1/` holding `template.yaml`
-and `dashboards/*.yaml`; the command lists the files it wrote. Anyone can run
-it in place with `depictio ingest --template ./my-lab/rnaseq-qc/1`, with
-`DATA_DIR` or `--bind`. Archive members that would land outside the target
-directory are refused before anything is written. An export the server
-refuses prints its HTTP status and answer, and exits with code 1.
-
-#### `template compose` { #template-compose }
-
-Compose a template from what the tools catalog recognises in a results directory, offline: nothing is ingested and no server is contacted. It prints what was recognised, the tabs and key metrics of the dashboard, what was left out and why, and the tabular files the catalog does not know with what each could show, then writes the template. This is what `depictio ingest <dir>` does by itself when no bundled template fits. See [Composed dashboards](../usage/projects/composed-dashboards.md#template-compose).
-
-```bash
-depictio template compose DATA_ROOT [OPTIONS]
-```
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `DATA_ROOT` | `path` | **required** | Results directory to compose a dashboard for |
-| `--output` / `-o` | `path` | `~/.depictio/composed/<directory>-<hash>/` | Where to write the template, to edit it and ingest with `depictio ingest <dir> --template <out>`. The default, below `DEPICTIO_COMPOSE_HOME` when it is set, is where `depictio ingest` keeps the templates it composes |
-| `--include-unknown` | `flag` | `false` | Also include the tabular files the catalog does not recognise |
-| `--include` | `GLOB` | | Include the unrecognised files matching this glob, relative to the directory. Repeatable |
-| `--project` | `string` | `<directory> (<parent directory>)` | Name of the project to create |
-| `--verbose` | `flag` | `false` | List everything left out, with the reason, and every unrecognised file |
-
-```bash
-depictio template compose results/ -o my_template/
-depictio ingest results/ --template my_template/
-```
-
-The folder holds `template.yaml`, `dashboards/composed.yaml`, and the `general_stats.tsv` and `samples.tsv` it computed from the run. When nothing is recognised or included, no template is written and the command exits with code 1, as it does for a path that is not a directory.
-
----
-
-### 🗒️ Manifest Commands <small>(v1.16.0+)</small> { #manifest-commands }
-
-<!-- prettier-ignore -->
-!!! info "Command Group: `depictio manifest`"
-    Write data manifests, the explicit file lists behind `manifest`-mode data collections. See [Remote data and manifests](../usage/projects/remote-data.md#the-data-manifest-contract) for the contract.
-
-#### `manifest from-table`
-
-Pivot a wide sample table into a manifest. An nf-core samplesheet puts one
-*column* per file role; a manifest puts one *row* per file with the role in
-`type`, so each file column of the table becomes one manifest type, and one
-data collection.
-
-```bash
-depictio manifest from-table <table> [OPTIONS]
-```
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `table` | `path` | **required** | Wide table to pivot, CSV or TSV. A `.tsv` or `.tab` file is read as tab-separated, any other as comma-separated, unless its header holds only another separator (tab, comma, semicolon) |
-| `--out` / `-o` | `path` | `manifest.json` | Output manifest. A `.json` file gets a JSON list of entries; any other extension, a CSV with `id,type,url,run` columns |
-| `--id-col` | `string` | auto | Entity id column. Auto-detected from conventional names (`sample`, `id`, `name`, ...), else the first column |
-| `--file-cols` | `string` | auto | Columns holding file locations. Repeatable. Auto-detected as the columns whose populated values all look like files |
-| `--run-col` | `string` | | Column to use as the manifest `run` grouping |
-| `--base-url` | `string` | | Prefix joined to relative paths, e.g. `s3://my-bucket/run42`. Required when the table holds local paths: a manifest entry must be a remote URL |
-
-```bash
-depictio manifest from-table samplesheet.csv \
-  --id-col sample \
-  --base-url s3://my-bucket/run42 \
-  -o manifest.json
-```
-
-The command prints the detected id and file columns, the number of entries
-written, and the manifest types produced. A blank file cell is an absent file,
-not an error, but a blank id cell stops the command. A value that is already a
-URL is kept as written; `--base-url` is joined to every other one, so give the
-table relative paths. Local paths with no `--base-url` stop the command; if the
-files already sit under one S3 prefix,
-`depictio ingest --bind TAG=s3://bucket/prefix/*.csv` needs no manifest at all.
-
----
-
-### 🗂️ Catalog Commands
-
-<!-- prettier-ignore -->
-!!! info "Command Group: `depictio catalog`"
-    Browse the bioinformatics tool→viz catalog by rendering its components on their bundled fixture data. Handy for previewing what a tool produces before wiring it into a dashboard. For the live, hosted version see the [Depictio Tools Catalog](../catalog/index.md).
-
-`depictio catalog list` lists every tool and output with its recipe and render targets, and `depictio catalog info <tool>` shows one tool in detail.
-
-Here a profiler is looked up in the list, then shown in detail:
+`catalog list` lists tools and outputs, `catalog info TOOL_ID` details one tool, `catalog preview OUTPUT_ID` and `catalog gallery` show one output or all in the browser (`-o`, `--out FILE`, `--port`, `-t`, `--theme dark`, `--no-open`). Online: the [Tools catalog](../catalog/index.md).
 
 <div class="asciinema-cast" data-cast="assets/casts/depictio-catalog.cast" data-poster="npt:0:25" data-idle-time-limit="2.5"></div>
 
-#### `catalog preview`
+## `backup` { #backup-commands }
 
-Render a single catalog output on its fixture and serve it on a throwaway localhost server (nothing is written to disk). Pass `--out` to export a portable, self-contained HTML file instead.
+Admins only. Guide: [Backup and restore](../usage/administration/backup.md).
 
-```bash
-# Serve an ephemeral preview (Ctrl-C to stop)
-depictio catalog preview <output-id>
+| Command | Options |
+| --- | --- |
+| `backup create` | `--include-s3-data`, `--s3-backup-prefix` (`backup`), `--dry-run` |
+| `backup list` | |
+| `backup validate ID` | |
+| `backup restore ID` | `--dry-run`, `--collections a,b`, `--force` (no prompt), `--allow-unverified` (no checksum), `--skip-validation` |
 
-# Export a standalone HTML file instead of serving
-depictio catalog preview <output-id> --out preview.html
-```
-
-#### `catalog gallery`
-
-Same as `preview`, but renders the whole catalog as a browsable gallery.
+## `migrate` { #migrate-commands }
 
 ```bash
-depictio catalog gallery
+depictio migrate --project "My Project" --to-server ~/.depictio/CLI_remote.yaml --dry-run
 ```
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `--out`, `-o` | `path` | `null` | Export the self-contained HTML here instead of serving it |
-| `--port` | `int` | `0` | Port for the ephemeral server (`0` = auto) |
-| `--theme`, `-t` | `string` | `light` | Theme: `light` or `dark` |
-| `--no-open` | `flag` | `false` | Do not open a browser tab automatically |
-
----
-
-### 💾 Backup Commands
-
-<!-- prettier-ignore -->
-!!! info "Command Group: `depictio backup`"
-    All commands in this section are part of the `backup` command family. Use them to backup and restore MongoDB database and S3 data. **Admin access required.**
-
-Backup and restore system data and configurations. Each command takes [`--server`](#choosing-a-server), formerly `--CLI-config-path`.
-
-#### `backup create`
-
-Create a backup of the MongoDB database.
-
-```bash
-depictio backup create [OPTIONS]
-```
-
-| Parameter            | Type      | Default | Description                          |
-| -------------------- | --------- | ------- | ------------------------------------ |
-| `--server`           | `string`  | see [above](#choosing-a-server) | `local`, or a CLI configuration file |
-| `--dry-run`          | `boolean` | `false` | Validate without creating backup     |
-| `--include-s3-data`  | `boolean` | `false` | Include S3 deltatable data in backup |
-| `--s3-backup-prefix` | `string`  | `backup` | Prefix for S3 backup location       |
-
-```bash
-depictio backup create --include-s3-data
-```
-
----
-
-#### `backup list`
-
-List available backup files on the server.
-
-```bash
-depictio backup list [OPTIONS]
-```
-
-```bash
-depictio backup list
-```
-
----
-
-#### `backup validate`
-
-Validate a backup file against Pydantic models.
-
-```bash
-depictio backup validate <backup_id> [OPTIONS]
-```
-
-| Parameter   | Type     | Default      | Description                             |
-| ----------- | -------- | ------------ | --------------------------------------- |
-| `backup_id` | `string` | **required** | Backup ID to validate (YYYYMMDD_HHMMSS) |
-
-```bash
-depictio backup validate 20240115_143052
-```
-
----
-
-#### `backup restore`
-
-Restore data from a backup file. **Warning: destructive operation.**
-
-```bash
-depictio backup restore <backup_id> [OPTIONS]
-```
-
-| Parameter            | Type      | Default      | Description                                                    |
-| -------------------- | --------- | ------------ | -------------------------------------------------------------- |
-| `backup_id`          | `string`  | **required** | Backup ID to restore (YYYYMMDD_HHMMSS)                         |
-| `--dry-run`          | `boolean` | `false`      | Simulate restore without making changes                        |
-| `--collections`      | `string`  |              | Comma-separated list of collections                            |
-| `--force`            | `boolean` | `false`      | Skip confirmation prompt                                       |
-| `--allow-unverified` | `boolean` | `false`      | Allow restoring a legacy backup without a checksum sidecar. Checksum mismatches are never bypassable |
-| `--skip-validation`  | `boolean` | `false`      | Skip the server-side validation gate before restore            |
-
-```bash
-depictio backup restore 20240115_143052 --dry-run
-```
-
-The validation coverage audit, formerly `backup check-coverage`, is a maintainer tool: `depictio dev backup check-coverage`.
-
-### 🔄 Migrate Commands
-
-<!-- prettier-ignore -->
-!!! warning "Admin Access Required"
-    All migrate operations require administrator privileges on both the source and target instances.
-
-#### `migrate`
-
-Migrate a project from one Depictio instance to another: a non-destructive upsert that never wipes existing data on the target.
-
-```bash
-depictio migrate --project <name> [OPTIONS]
-```
-
-| Parameter     | Type     | Default                       | Description                                        |
-| ------------- | -------- | ----------------------------- | -------------------------------------------------- |
-| `--project`   | `string` | **required**                  | Project name to migrate                            |
-| `--server`    | `string` | see [above](#choosing-a-server) | Source instance: `local`, or a CLI configuration file. Formerly `--CLI-config-path` |
-| `--to-server` | `string` | `~/.depictio/CLI_remote.yaml` | Target instance, given the same way as `--server`. Formerly `--target-config` |
-| `--mode`      | `string` | `all`                         | Migration scope: `all`, `metadata`, `dashboard`, `files` |
-| `--dry-run`   | `flag`   | `False`                       | Preview changes without writing anything           |
-| `--overwrite` | `flag`   | `False`                       | Replace the project on the target if it already exists |
-
-`DEPICTIO_CLI_TOKEN` and `DEPICTIO_CLI_API_BASE_URL` apply to `--server` only.
-
-**Migration modes:**
-
-| Mode        | What is migrated                                  | When to use                                         |
-| ----------- | ------------------------------------------------- | --------------------------------------------------- |
-| `all`       | MongoDB documents + S3 files                      | First-time full migration                           |
-| `metadata`  | MongoDB documents only                            | Both instances share the same S3 storage            |
-| `dashboard` | Dashboard documents only                          | Project already exists on remote, updating layouts  |
-| `files`     | S3 files only                                     | MongoDB already migrated, syncing data files        |
-
-```bash
-# Dry-run first (recommended before any migration)
-depictio migrate \
-  --project "My Project" \
-  --server local \
-  --to-server ~/.depictio/CLI_remote.yaml \
-  --dry-run
-
-# Full migration (MongoDB + S3)
-depictio migrate \
-  --project "My Project" \
-  --server local \
-  --to-server ~/.depictio/CLI_remote.yaml
-
-# Metadata-only (shared S3)
-depictio migrate \
-  --project "My Project" \
-  --server ~/.depictio/CLI_local.yaml \
-  --to-server ~/.depictio/CLI_remote.yaml \
-  --mode metadata
-
-# Dashboard-only update
-depictio migrate \
-  --project "My Project" \
-  --server ~/.depictio/CLI_local.yaml \
-  --to-server ~/.depictio/CLI_remote.yaml \
-  --mode dashboard
-```
-
-### 🧑‍🍳 Recipe Commands
-
-<!-- prettier-ignore -->
-!!! info "Command Group: `depictio dev recipe`"
-    The recipe commands are maintainer tools, in the `dev` group that `depictio --help` leaves out. Use them to discover, inspect, and locally test data transformation recipes before running them in a project. For full recipe documentation, see [Recipes](../usage/projects/recipes.md).
-
-#### `dev recipe list`
-
-List all bundled recipes.
-
-```bash
-depictio dev recipe list
-```
-
-**Output:**
-
-```
-                 Available recipes (327)
-╭────────────────────────────────────────────────────────╮
-│ Recipe                                                 │
-├────────────────────────────────────────────────────────┤
-│ adapterremoval/settings.py                             │
-│ ampcombi/clusters.py                                   │
-│ ampcombi/embedding.py                                  │
-│ ampcombi/summary.py                                    │
-…
-```
-
----
-
-#### `dev recipe info <name>`
-
-Show recipe details: description, sources, and output schema.
-
-```bash
-depictio dev recipe info <recipe_name>
-```
-
-| Parameter | Short | Type | Default | Description |
-|-----------|-------|------|---------|-------------|
-| `recipe_name` | | `string` | **required** | Recipe name (e.g. `nf-core/ampliseq/alpha_diversity.py`) |
-| `--version` | `-v` | `string` | | Pipeline version, for a version-specific recipe. Uses the shared recipe when omitted |
-
-```bash
-depictio dev recipe info nf-core/ampliseq/alpha_diversity.py
-```
-
-**Output:**
-
-```
-Recipe: nf-core/ampliseq/alpha_diversity.py
-Description: Transform QIIME2 alpha diversity vector to per-sample Faith PD table.
-
-When ampliseq is run with --metadata, QIIME2 embeds metadata columns directly
-into the faith_pd_vector/metadata.tsv file (e.g. habitat). This recipe handles
-both cases: with and without embedded metadata columns.
-                                     Sources (1)
-╭──────────┬───────────────────────────────────────────────────────────────┬────────╮
-│ Source   │ Location                                                      │ Format │
-├──────────┼───────────────────────────────────────────────────────────────┼────────┤
-│ faith_pd │ qiime2/diversity/alpha_diversity/faith_pd_vector/metadata.tsv │ tsv    │
-╰──────────┴───────────────────────────────────────────────────────────────┴────────╯
-    Input schema:
-faith_pd (2 columns)
-╭──────────┬────────╮
-│ Column   │ Type   │
-├──────────┼────────┤
-│ id       │ String │
-│ faith_pd │ String │
-╰──────────┴────────╯
-   Output schema (2
-       columns)
-╭──────────┬─────────╮
-│ Column   │ Type    │
-├──────────┼─────────┤
-│ sample   │ String  │
-│ faith_pd │ Float64 │
-╰──────────┴─────────╯
-```
-
-Each source that declares an `input_schema` gets an `Input schema: <source> (N columns)` table before the output schema. A non-empty `OPTIONAL_OUTPUT_SCHEMA` adds an `Optional output schema (N columns)` table.
-
----
-
-#### `dev recipe run <name>`
-
-Execute a recipe against a local data directory, with its validation checkpoints.
-
-```bash
-depictio dev recipe run <recipe_name> [OPTIONS]
-```
-
-| Parameter | Short | Default | Description |
-|-----------|-------|---------|-------------|
-| `recipe_name` | | **required** | Recipe name (e.g. `nf-core/ampliseq/alpha_diversity.py`) |
-| `--data-dir` | `-d` | **required** | Root directory with workflow output files |
-| `--version` | `-v` | | Pipeline version, for a version-specific recipe |
-| `--output` | `-o` | | Save the result to a Parquet file |
-| `--head` | `-n` | `20` | Number of rows to display |
-
-```bash
-# Run with validation output
-depictio dev recipe run nf-core/ampliseq/alpha_diversity.py \
-  --data-dir /data/ampliseq_results
-
-# Save output and show first 5 rows
-depictio dev recipe run nf-core/ampliseq/alpha_diversity.py \
-  --data-dir /data/ampliseq_results \
-  --output alpha_diversity.parquet \
-  --head 5
-```
-
-## 🛠️ Common Use Cases
-
-### <span style="color: #0dc09d;">:simple-nextflow:</span> Let the pipeline run the CLI for you <small>(v1.10.0+)</small> { #nextflow-trigger }
-
-Everything below is a command someone has to remember. A Nextflow pipeline can
-run `depictio ingest` itself when it completes, on the output directory it just wrote:
-
-```bash
-depictio config nextflow --install     # once per machine
-nextflow run nf-core/ampliseq -profile docker --outdir results
-```
-
-See [Nextflow trigger](nextflow-trigger.md) for the setup, custom pipelines,
-repeated runs and running the CLI from a container.
-
-### 🚀 Quick Start
-
-=== "Local server"
-
-    ```bash
-    # 1. Start a server on this machine
-    depictio local up
-
-    # 2. Ingest your results into it
-    depictio ingest /path/to/results --server local
-    ```
-
-=== "Complete Setup"
-
-    ```bash
-    # 1. Validate your project configuration
-    depictio config check --project-config-path ./config.yaml
-
-    # 2. Run the complete workflow
-    depictio ingest --project-config-path ./config.yaml
-    ```
-
-=== "Step by Step"
-
-    ```bash
-    # 1. Check the server and its storage
-    depictio config check
-
-    # 2. Validate and sync configuration
-    depictio config check --project-config-path ./config.yaml
-    depictio config sync --project-config-path ./config.yaml
-
-    # 3. Scan and process data
-    depictio data scan --project-config-path ./config.yaml
-    depictio data process --project-config-path ./config.yaml
-    ```
-
-### 🔧 Development Workflow
-
-=== "Testing Changes"
-
-    ```bash
-    # Preview changes without execution
-    depictio ingest --project-config-path ./config.yaml --dry-run
-
-    # Test with specific workflow
-    depictio ingest --project-config-path ./config.yaml --workflow-name test-workflow
-    ```
-
-=== "Debugging"
-
-    ```bash
-    # DEBUG logs, and carry on past a failed step
-    depictio -vv ingest --project-config-path ./config.yaml --continue-on-error
-
-    # Skip problematic steps
-    depictio ingest --project-config-path ./config.yaml --skip server-check,s3-check
-    ```
-
-### 💾 Backup Operations
-
-<!-- prettier-ignore -->
-!!! warning "Admin Access Required"
-    All backup operations require administrator privileges.
-
-=== "Create Backup"
-
-    ```bash
-    # Create database backup
-    depictio backup create
-
-    # Include S3 deltatable data
-    depictio backup create --include-s3-data
-    ```
-
-=== "Restore Backup"
-
-    ```bash
-    # List available backups
-    depictio backup list
-
-    # Preview restore
-    depictio backup restore 20240115_143052 --dry-run
-
-    # Restore specific backup
-    depictio backup restore 20240115_143052 --force
-    ```
-
-### 📊 Data Management
-
-=== "Rescan Data"
-
-    ```bash
-    # Rescan all folders
-    depictio data scan --project-config-path ./config.yaml --rescan-folders
-
-    # Sync file updates
-    depictio data scan --project-config-path ./config.yaml --sync-files
-    ```
-
-=== "Process Updates"
-
-    ```bash
-    # Overwrite existing tables
-    depictio data process --project-config-path ./config.yaml --overwrite
-
-    # Refresh the whole project, its dashboards kept as edited
-    depictio ingest --project-config-path ./config.yaml --update-config
-    ```
-
-### 🔄 Project Migration
-
-<!-- prettier-ignore -->
-!!! warning "Admin Access Required"
-    Migration requires administrator privileges on both source and target instances.
-
-=== "First-time Migration"
-
-    ```bash
-    # 1. Dry-run to preview what will be migrated
-    depictio migrate \
-      --project "My Project" \
-      --server ~/.depictio/CLI_local.yaml \
-      --to-server ~/.depictio/CLI_remote.yaml \
-      --dry-run
-
-    # 2. Run full migration (MongoDB docs + S3 files)
-    depictio migrate \
-      --project "My Project" \
-      --server ~/.depictio/CLI_local.yaml \
-      --to-server ~/.depictio/CLI_remote.yaml
-    ```
-
-=== "Shared S3 Storage"
-
-    ```bash
-    # When source and target share the same S3, only migrate MongoDB docs
-    depictio migrate \
-      --project "My Project" \
-      --server ~/.depictio/CLI_local.yaml \
-      --to-server ~/.depictio/CLI_remote.yaml \
-      --mode metadata
-    ```
-
-=== "Dashboard Update"
-
-    ```bash
-    # Push updated dashboard layouts to a remote instance
-    # (project and data already exist on remote)
-    depictio migrate \
-      --project "My Project" \
-      --server ~/.depictio/CLI_local.yaml \
-      --to-server ~/.depictio/CLI_remote.yaml \
-      --mode dashboard
-    ```
-
-## 📖 Configuration References
-
-- [Minimal YAML Configuration](minimal_config.md)
-- [Full Reference Configuration](../usage/projects/reference.md)
+Copies a project from `--server` to `--to-server` (`~/.depictio/CLI_remote.yaml`), deleting nothing. Admin on both. `--mode`: `all` (default), `metadata` (shared S3), `dashboard` or `files`. `--dry-run` previews, `--overwrite` replaces the project on the target. Guide: [Project migration](../usage/administration/migrate.md).
+
+## Former names and maintainer commands { #recipe-commands }
+
+??? note "Former names, still accepted"
+
+    | Former | Now |
+    | --- | --- |
+    | `run` | `ingest` |
+    | `images push` (and `images list-bucket`) | `data push-images` |
+    | `local export-compose` | `local export` |
+    | `--CLI-config-path`; `-c/--config`, `--api` | `--server` |
+    | `--target-config` | `migrate --to-server` |
+    | `--data-root` | `ingest DATA_DIR`; `template export --data-dir` |
+    | `--project-name`, `--overwrite` (ingest) | `--project`, `--update-config` |
+    | `--skip-server-check` and other `--skip-*` | `--skip STEP` |
+    | `-vl/--verbose-level` | `--log-level` |
+
+??? note "`depictio dev`: maintainer tools"
+
+    Out of `--help`: `dev recipe list | info | run NAME -d DATA_DIR` to test a [recipe](../usage/projects/recipes.md), `dev catalog`, `dev link` and `dev backup check-coverage`.
