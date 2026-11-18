@@ -1,0 +1,136 @@
+# Depictio Documentation
+
+> Documentation for Depictio
+
+Depictio turns bioinformatics pipeline results into interactive, shareable dashboards: a FastAPI backend, a React viewer, MongoDB, S3 storage and a Python CLI that ingests results. Every CLI command and option is also available as JSON at depictio-cli/cli-reference.json.
+
+
+## Start
+
+- [Home](https://depictio.github.io/depictio-docs/latest/index.md): What depictio is, with the main features
+- [Getting Started](https://depictio.github.io/depictio-docs/latest/usage/get_started/index.md): First steps, from install to a first dashboard
+- [Tutorials](https://depictio.github.io/depictio-docs/latest/tutorials/index.md): Tutorials
+
+## Installation
+
+- [Overview](https://depictio.github.io/depictio-docs/latest/installation/index.md)
+- [Docker Compose](https://depictio.github.io/depictio-docs/latest/installation/docker/index.md)
+- [Kubernetes](https://depictio.github.io/depictio-docs/latest/installation/kubernetes/index.md)
+- [Python package](https://depictio.github.io/depictio-docs/latest/installation/local/index.md)
+- [Install and configure the CLI](https://depictio.github.io/depictio-docs/latest/installation/cli/index.md)
+- [Configuration](https://depictio.github.io/depictio-docs/latest/installation/configuration/index.md)
+- [Environment Reference](https://depictio.github.io/depictio-docs/latest/installation/env-reference/index.md)
+- [Single sign-on (OpenID Connect)](https://depictio.github.io/depictio-docs/latest/installation/sso/index.md)
+- [Configuration](https://depictio.github.io/depictio-docs/latest/installation/sso/configuration/index.md)
+- [Groups and access](https://depictio.github.io/depictio-docs/latest/installation/sso/groups-and-access/index.md)
+- [From Google OAuth](https://depictio.github.io/depictio-docs/latest/installation/sso/migration/index.md)
+- [Providers](https://depictio.github.io/depictio-docs/latest/installation/sso/providers/index.md)
+- [Troubleshooting](https://depictio.github.io/depictio-docs/latest/installation/sso/troubleshooting/index.md)
+- [v1.12.0: MinIO → SeaweedFS](https://depictio.github.io/depictio-docs/latest/installation/upgrade/v1.12.0-seaweedfs/index.md)
+
+## Using depictio
+
+- [Overview](https://depictio.github.io/depictio-docs/latest/usage/index.md)
+- [Guides](https://depictio.github.io/depictio-docs/latest/usage/guides/index.md)
+- [Authentication Modes](https://depictio.github.io/depictio-docs/latest/usage/guides/authentication-modes/index.md)
+- [Picking from the catalog](https://depictio.github.io/depictio-docs/latest/usage/guides/catalog-picker/index.md)
+- [The dashboard Guide](https://depictio.github.io/depictio-docs/latest/usage/guides/dashboard-guide/index.md)
+- [Dashboard creation](https://depictio.github.io/depictio-docs/latest/usage/guides/dashboard_creation/index.md)
+- [Using a dashboard](https://depictio.github.io/depictio-docs/latest/usage/guides/dashboard_usage/index.md)
+- [Real-time events](https://depictio.github.io/depictio-docs/latest/usage/guides/realtime-events/index.md)
+- [Spotlight search](https://depictio.github.io/depictio-docs/latest/usage/guides/spotlight-search/index.md)
+- [Unauthenticated mode (legacy)](https://depictio.github.io/depictio-docs/latest/usage/guides/unauthenticated_mode/index.md)
+- [WebUI](https://depictio.github.io/depictio-docs/latest/usage/guides/web_ui/index.md)
+- [Administration](https://depictio.github.io/depictio-docs/latest/usage/administration/index.md)
+- [Backup & Restore](https://depictio.github.io/depictio-docs/latest/usage/administration/backup/index.md)
+- [Branding](https://depictio.github.io/depictio-docs/latest/usage/administration/branding/index.md)
+- [Groups](https://depictio.github.io/depictio-docs/latest/usage/administration/groups/index.md)
+- [Project Migration](https://depictio.github.io/depictio-docs/latest/usage/administration/migrate/index.md)
+- [Monitoring (Log & Task)](https://depictio.github.io/depictio-docs/latest/usage/administration/monitoring/index.md)
+
+## Projects
+
+- [Projects](https://depictio.github.io/depictio-docs/latest/usage/projects/index.md)
+- [Composed dashboards](https://depictio.github.io/depictio-docs/latest/usage/projects/composed-dashboards/index.md)
+- [Guide](https://depictio.github.io/depictio-docs/latest/usage/projects/guide/index.md)
+- [Recipes](https://depictio.github.io/depictio-docs/latest/usage/projects/recipes/index.md)
+- [Full Reference Configuration](https://depictio.github.io/depictio-docs/latest/usage/projects/reference/index.md)
+- [Remote data and manifests](https://depictio.github.io/depictio-docs/latest/usage/projects/remote-data/index.md)
+- [Template System Reference](https://depictio.github.io/depictio-docs/latest/usage/projects/templates/index.md)
+- [YAML project configuration breakdown](https://depictio.github.io/depictio-docs/latest/usage/projects/yaml-examples/index.md)
+
+## CLI
+
+- [CLI](https://depictio.github.io/depictio-docs/latest/depictio-cli/index.md)
+- [Common tasks](https://depictio.github.io/depictio-docs/latest/depictio-cli/tasks/index.md): One command per task
+- [Command reference](https://depictio.github.io/depictio-docs/latest/depictio-cli/usage/index.md): Every command and option, generated from the CLI
+- [Nextflow trigger](https://depictio.github.io/depictio-docs/latest/depictio-cli/nextflow-trigger/index.md)
+- [Minimal project YAML](https://depictio.github.io/depictio-docs/latest/depictio-cli/minimal_config/index.md)
+
+## Features
+
+- [Overview](https://depictio.github.io/depictio-docs/latest/features/index.md)
+- [CLAUDE](https://depictio.github.io/depictio-docs/latest/features/CLAUDE/index.md)
+- [Advanced visualizations](https://depictio.github.io/depictio-docs/latest/features/advanced-visualizations/index.md)
+- [Architecture](https://depictio.github.io/depictio-docs/latest/features/architecture/index.md)
+- [Comments and annotations](https://depictio.github.io/depictio-docs/latest/features/comments-annotations/index.md)
+- [Export and embedding](https://depictio.github.io/depictio-docs/latest/features/component-export/index.md)
+- [Component types](https://depictio.github.io/depictio-docs/latest/features/components/index.md)
+- [Cross-DC filtering](https://depictio.github.io/depictio-docs/latest/features/cross-dc-filtering/index.md)
+- [Layout, tabs and sharing](https://depictio.github.io/depictio-docs/latest/features/dashboards/index.md)
+- [Data Model](https://depictio.github.io/depictio-docs/latest/features/data-model/index.md)
+- [Filter expressions](https://depictio.github.io/depictio-docs/latest/features/filter-expressions/index.md)
+- [Selection filtering](https://depictio.github.io/depictio-docs/latest/features/interactive-selection-filtering/index.md)
+- [Metadata panel](https://depictio.github.io/depictio-docs/latest/features/metadata-panel/index.md)
+- [MultiQC](https://depictio.github.io/depictio-docs/latest/features/multiqc/index.md)
+- [Performance & Scaling](https://depictio.github.io/depictio-docs/latest/features/performance/index.md)
+- [Protein tiles](https://depictio.github.io/depictio-docs/latest/features/protein-tiles/index.md)
+- [Proteins](https://depictio.github.io/depictio-docs/latest/features/proteins/index.md)
+- [Runs and run comparison](https://depictio.github.io/depictio-docs/latest/features/runs/index.md)
+- [Security](https://depictio.github.io/depictio-docs/latest/features/security/index.md)
+- [Telemetry](https://depictio.github.io/depictio-docs/latest/features/telemetry/index.md)
+- [Versions and history](https://depictio.github.io/depictio-docs/latest/features/versioning/index.md)
+- [What's new](https://depictio.github.io/depictio-docs/latest/features/whats-new/index.md)
+- [Dashboards as YAML](https://depictio.github.io/depictio-docs/latest/features/yaml-sync/index.md)
+- [Genome browser](https://depictio.github.io/depictio-docs/latest/features/genome-browser/index.md)
+- [Breakpoints](https://depictio.github.io/depictio-docs/latest/features/genome-browser/breakpoints/index.md)
+- [Browser to dashboard](https://depictio.github.io/depictio-docs/latest/features/genome-browser/browser-to-dashboard/index.md)
+- [Navigator](https://depictio.github.io/depictio-docs/latest/features/genome-browser/navigator/index.md)
+- [Ranked calls](https://depictio.github.io/depictio-docs/latest/features/genome-browser/ranked-calls/index.md)
+- [Raw JBrowse configuration](https://depictio.github.io/depictio-docs/latest/features/genome-browser/raw-jbrowse/index.md)
+- [Sashimi](https://depictio.github.io/depictio-docs/latest/features/genome-browser/sashimi/index.md)
+- [Table to browser](https://depictio.github.io/depictio-docs/latest/features/genome-browser/table-to-browser/index.md)
+- [Time course](https://depictio.github.io/depictio-docs/latest/features/genome-browser/time-course/index.md)
+- [UCSC tracks](https://depictio.github.io/depictio-docs/latest/features/genome-browser/ucsc-tracks/index.md)
+- [Variant colours](https://depictio.github.io/depictio-docs/latest/features/genome-browser/variant-colours/index.md)
+
+## API
+
+- [Overview](https://depictio.github.io/depictio-docs/latest/api/index.md)
+- [API Documentation Integration](https://depictio.github.io/depictio-docs/latest/api/api_docs_integration/index.md)
+- [API Endpoints](https://depictio.github.io/depictio-docs/latest/api/endpoints/index.md)
+- [FastAPI Docs](https://depictio.github.io/depictio-docs/latest/api/fastapi_docs/index.md)
+- [Overview](https://depictio.github.io/depictio-docs/latest/api/overview/index.md)
+- [API Reference](https://depictio.github.io/depictio-docs/latest/api/reference/index.md)
+
+## Templates
+
+- [Depictio Templates](https://depictio.github.io/depictio-docs/latest/pipeline-templates/index.md): Every pipeline template, with links to each one
+
+## Developer
+
+- [Overview](https://depictio.github.io/depictio-docs/latest/developer/index.md)
+- [CLAUDE](https://depictio.github.io/depictio-docs/latest/developer/CLAUDE/index.md)
+- [Contributing a Tool](https://depictio.github.io/depictio-docs/latest/developer/contributing-a-tool/index.md)
+- [Contributing Templates](https://depictio.github.io/depictio-docs/latest/developer/contributing-templates/index.md)
+- [Contributing](https://depictio.github.io/depictio-docs/latest/developer/contributing/index.md)
+- [Developer guide](https://depictio.github.io/depictio-docs/latest/developer/developer/index.md)
+- [Tool Studio](https://depictio.github.io/depictio-docs/latest/developer/tool-studio/index.md)
+
+## Optional
+
+- [Overview](https://depictio.github.io/depictio-docs/latest/FAQ/index.md)
+- [FAQ](https://depictio.github.io/depictio-docs/latest/FAQ/faq/index.md)
+- [General](https://depictio.github.io/depictio-docs/latest/FAQ/general/index.md)
+- [Roadmap](https://depictio.github.io/depictio-docs/latest/roadmap/index.md)
+
