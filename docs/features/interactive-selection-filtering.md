@@ -173,7 +173,7 @@ One **Analysis** popover in the dashboard header drives all of it, in three sect
 **Color by column**, **Groups**, and **Group options**. Its **Reset** restores the
 defaults while keeping your saved groups.
 
-<div style="border: 1px solid grey; width: 232px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 232px; padding: 1px;">
     <a href="../../images/guides/selection-groups/analysis_panel.png" target="_blank">
         <img src="../../images/guides/selection-groups/analysis_panel.png" width="230">
     </a>
@@ -189,7 +189,7 @@ is worth making before you make one.
 stable palette, so a category keeps its colour across figures and survives filtering.
 Each recoloured figure carries a `by <column>` badge.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/selection-groups/color_by_species.jpg" target="_blank">
         <img src="../../images/guides/selection-groups/color_by_species.jpg" width="600">
     </a>
@@ -205,7 +205,7 @@ reach says so with a **not grouped** badge whose tooltip gives the reason, and g
 reach figures on other tabs by following the dashboard's links in reverse. A lasso drawn
 on a Manhattan plot now holds in Split.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/selection-groups/split_by_species.jpg" target="_blank">
         <img src="../../images/guides/selection-groups/split_by_species.jpg" width="600">
     </a>
@@ -224,7 +224,7 @@ from the whole frame rather than from each group, so the shapes are genuinely co
 Two optional references sit alongside: **All**, the unsplit frame, and **Other**, the rows
 in no group.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/selection-groups/overview_groups_compare.jpg" target="_blank">
         <img src="../../images/guides/selection-groups/overview_groups_compare.jpg" width="600">
     </a>

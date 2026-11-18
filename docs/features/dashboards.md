@@ -130,7 +130,7 @@ did not itself select. Values that can still narrow the data carry a marker in t
 that would return nothing are dimmed, disabled and sorted last, and each control carries
 an `n/N available` badge that turns orange when nothing remains.
 
-<div style="border: 1px solid grey; width: 294px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 294px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-panel-highlighting.png" target="_blank">
         <img src="../../images/guides/funnel-filtering/funnel-panel-highlighting.png" width="292">
     </a>
@@ -143,7 +143,7 @@ The panel header carries the two funnel controls as one attached pair: the toggl
 overview beside it. The overview button stays mounted but disabled while funnelling is off,
 so switching it on does not reflow the header.
 
-<div style="border: 1px solid grey; width: 294px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 294px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-panel-header.png" target="_blank">
         <img src="../../images/guides/funnel-filtering/funnel-panel-header.png" width="292">
     </a>
@@ -165,7 +165,7 @@ searchable and capped at 200 rows. A stage that comes from a saved
 [selection group](interactive-selection-filtering.md#selection-groups) takes that
 group's colour.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-overview-modal.png" target="_blank">
         <img src="../../images/guides/funnel-filtering/funnel-overview-modal.png" width="600">
     </a>
@@ -174,7 +174,7 @@ group's colour.
 The stage order is editable, because the intermediate counts depend on the order the
 filters are applied in, and only the intermediate ones do.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/funnel-filtering/funnel-overview-reordered.png" target="_blank">
         <img src="../../images/guides/funnel-filtering/funnel-overview-reordered.png" width="600">
     </a>
@@ -252,7 +252,7 @@ reports itself, though: a folded grid section of cards shows their numbers inlin
 other section shows a component count. A folded filter section keeps the count of active
 filters inside it.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/dashboards/sections_folded.png" target="_blank">
         <img src="../../images/guides/dashboards/sections_folded.png" width="600">
     </a>
@@ -262,7 +262,7 @@ Four folded grid sections: *Cohort* and *Morphometrics* hold cards, so their
 numbers ride along on the header; *Composition* and *Raw Data* hold figures and
 a table, so they report a component count instead.
 
-<div style="border: 1px solid grey; width: 302px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 302px; padding: 1px;">
     <a href="../../images/guides/dashboards/filter_sections.png" target="_blank">
         <img src="../../images/guides/dashboards/filter_sections.png" width="300">
     </a>
@@ -301,7 +301,7 @@ like a raw-data table, which would otherwise push every tab's own introduction
 down the page. The choice applies on all tabs, the owning one included, so the
 section keeps the same place wherever you land.
 
-<div style="border: 1px solid grey; width: 542px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 542px; padding: 1px;">
     <a href="../../images/guides/dashboards/sections_every_tab_dialog.png" target="_blank">
         <img src="../../images/guides/dashboards/sections_every_tab_dialog.png" width="540">
     </a>
@@ -310,7 +310,7 @@ section keeps the same place wherever you land.
 The bundled Iris demo's *Variety* filter section. **Position on every tab**
 appears only once **Show on every tab** is on.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/dashboards/sections_every_tab.png" target="_blank">
         <img src="../../images/guides/dashboards/sections_every_tab.png" width="600">
     </a>
@@ -719,7 +719,7 @@ shows `—` rather than `0`, since only a manifest records what a conditional ex
 the required and optional tiles count the collections that have data without a total to
 measure them against.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/guides/dashboards/ingestion_live_project.png" target="_blank">
         <img src="../../images/guides/dashboards/ingestion_live_project.png" width="600">
     </a>

@@ -144,7 +144,7 @@ To create your first dashboard using the palmer penguins dataset, click on **+ N
 
 This will open the dashboard creation modal. Pick the **Palmer Penguins Species Comparison** project, give the dashboard a name, and confirm.
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
+<div style="border: 1px solid grey; max-width: 602px; padding: 1px;">
     <a href="../../images/react/new_dashboard_modal.png" target="_blank">
         <img src="../../images/react/new_dashboard_modal.png" width="600">
     </a>
