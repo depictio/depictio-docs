@@ -155,7 +155,7 @@ A YAML file describes the project and `depictio ingest` creates it.
 [![Add data refusing a run: the Samples row warning that its samples are already in the project](../../images/guides/project-creation/duplicate_samples_light.webp#only-light)](../../images/guides/project-creation/duplicate_samples_light.webp){target=_blank}
 [![Add data refusing a run: the Samples row warning that its samples are already in the project](../../images/guides/project-creation/duplicate_samples_dark.webp#only-dark)](../../images/guides/project-creation/duplicate_samples_dark.webp){target=_blank}
 
-- A run whose MultiQC reports name samples already in the project is held back: the **Samples** row lists them. Rename them, or read the run as its own project.
+- A run whose MultiQC reports name samples already in the project is held back: the **Samples** row lists them. Rename them, or read the run as its own project. When not every report could be read, the check is partial: the row shows **Needs a look** and names the reports it skipped <small>(v1.22.0+)</small>. The **Checks** of a new project made from several runs do the same.
 - Only a project made from a pipeline template takes another run, and only when its collections walk a folder. A project read from an `s3://` run folder cannot.
 - Each run is listed on the project's [Runs](../../features/runs.md) page.
 

@@ -42,7 +42,15 @@ Builds a project and its dashboards from a results folder. The template comes fr
     depictio ingest other_results/ --template ./my-lab/rnaseq-qc/1
     ```
 
-`--template` takes a bundled id (pin a version, or `latest`) or a template folder. See [Templates](../usage/projects/templates.md).
+`--template` takes a bundled id (pin a version, or `latest`) or a template folder. See [Templates](../usage/projects/templates.md). `SAMPLESHEET_FILE` takes a CSV or TSV sheet, or a YAML or JSON list of records, read exactly as the same CSV <small>(v1.22.0+)</small>.
+
+### Check a template against a run { #template-check }
+
+```bash
+depictio template check --run results/
+```
+
+Lists each template variable and what sets it: the run's params, its outputs, or `--var`; and which rules hold and which conditionals fire for this run. Offline. `--fetch-schema` checks the rules against the release's `nextflow_schema.json`, `--against 3.27.0` what the next release breaks. See [`template check`](usage.md#template-check) <small>(v1.22.0+)</small>.
 
 ### A pipeline with no template { #no-template }
 
@@ -82,7 +90,7 @@ Describe the data collections in a [project YAML](minimal_config.md), or let the
       --bind samples=s3://my-bucket/run42/*.samples.csv
     ```
 
-The data stays where it is. See [Remote data and manifests](../usage/projects/remote-data.md).
+The data stays where it is. `manifest from-table` also reads a YAML or JSON samplesheet <small>(v1.22.0+)</small>. See [Remote data and manifests](../usage/projects/remote-data.md).
 
 ## Keep it up to date
 
@@ -126,7 +134,7 @@ Ingests again whenever files change, rewriting only the runs that moved. Install
 depictio config nextflow --install
 ```
 
-Once per machine: every pipeline then ingests its `--outdir` when it completes. See [Nextflow trigger](nextflow-trigger.md).
+Once per machine: every pipeline then ingests its `--outdir` when it completes. See [Nextflow trigger](nextflow-trigger.md). To ship it inside an nf-core pipeline instead, use the [Nextflow subworkflow](nextflow-publish.md).
 
 ## Run locally
 

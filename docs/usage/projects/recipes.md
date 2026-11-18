@@ -59,6 +59,9 @@ A recipe is a plain Python module that describes how to transform one or more ra
 - **`OUTPUT_SCHEMA`**: required output columns and their Polars data types
 - **`OPTIONAL_OUTPUT_SCHEMA`** *(optional)*: columns that may or may not be present (e.g. user-defined metadata columns)
 - **`transform(sources)`**: a pure function that takes loaded DataFrames and returns the output DataFrame
+- **`transform_batches(sources)`** *(optional, v1.22.0+)*: a generator of frames that together make the table `transform()` returns, for a table too large to hold at once. Ingestion checks each batch against `OUTPUT_SCHEMA` and writes it as it comes, in one commit. Every other caller, such as a preview, still calls `transform()`, which stays required. A batch carries no `depictio_run_id`
+
+A frame may hold its text columns as Polars `Categorical` or `Enum` to save memory: they pass a `pl.Utf8` output schema and are stored as plain strings <small>(v1.22.0+)</small>.
 
 ![A recipe declares its inputs (SOURCES) and its output (OUTPUT_SCHEMA, OPTIONAL_OUTPUT_SCHEMA)](../../images/recipes/output_schema_contract.png)
 
@@ -94,6 +97,8 @@ The input check is deliberately loose on types: readers infer them from the data
 ```
 RecipeError: Recipe arriba/fusions.py: source 'fusions' lacks input column(s) ['#gene1']. Got columns: ['gene1', ...]
 ```
+
+A YAML or JSON samplesheet, read as the same CSV would be, gets the same message with "key(s)" <small>(v1.22.0+)</small>.
 
 ---
 
@@ -444,11 +449,11 @@ Use `source_overrides` to parameterize recipe source paths via template variable
           # ... one override per source ref
 ```
 
-The recipe is executed during `depictio data process` (the process step of `depictio ingest`). All 4 checkpoints run automatically. If the recipe fails, the data collection is skipped and an error is logged.
+The recipe is executed during `depictio data process` (the process step of `depictio ingest`). All five checkpoints run automatically. If the recipe fails, the data collection is skipped and an error is logged.
 
 <!-- prettier-ignore -->
 !!! tip "Using templates"
-    For nf-core/ampliseq, all six recipes are pre-configured in the bundled template. Use `depictio ingest /your/data --template nf-core/ampliseq/2.16.0 --var SAMPLESHEET_FILE=samplesheet.csv` to set up the complete project without writing any YAML. See [Templates](templates.md).
+    For nf-core/ampliseq, every recipe is pre-configured in the bundled template. Use `depictio ingest /your/data --template nf-core/ampliseq/3.1.0 --var SAMPLESHEET_FILE=samplesheet.csv` to set up the complete project without writing any YAML. See [Templates](templates.md).
 
 ### Passing template parameters to a recipe (`params`) { #params }
 
@@ -514,7 +519,7 @@ depictio/projects/
         │   ├── template.yaml
         │   └── recipes/                      ← version-specific overrides
         │       └── taxonomy_rel_abundance.py
-        └── 2.16.0/
+        └── 3.1.0/
             ├── template.yaml                 ← no overrides, inherits shared
             └── dashboards/
                 └── base.yaml                 ← single dashboard; adapts via

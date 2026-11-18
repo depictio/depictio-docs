@@ -195,6 +195,7 @@ plugins:
           - depictio-cli/tasks.md: One command per task
           - depictio-cli/usage.md: Every command and option, generated from the CLI
           - depictio-cli/nextflow-trigger.md
+          - depictio-cli/nextflow-publish.md
           - depictio-cli/minimal_config.md
         Features:
           - features/*.md
@@ -343,6 +344,7 @@ nav:
           - Common tasks: depictio-cli/tasks.md
           - Command reference: depictio-cli/usage.md
           - Nextflow trigger: depictio-cli/nextflow-trigger.md
+          - Nextflow subworkflow: depictio-cli/nextflow-publish.md
           - Minimal project YAML: depictio-cli/minimal_config.md
       - Administration:
           - usage/administration/index.md
