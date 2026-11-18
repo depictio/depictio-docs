@@ -1,359 +1,181 @@
-# <span style="color: #F68B33;">:material-view-dashboard:</span> Using the Dashboard
-
-## Dashboard Modes (v0.6.0+)
-
-Depictio dashboards operate in two distinct modes, each optimized for its specific purpose.
-
-### <span style="color: #45B8AC;">:material-eye:</span> Viewer Mode
-
-**URL Pattern:** `/dashboard/{id}`
-
-Viewer mode provides a **read-only** experience optimized for data exploration:
-
-- **No editing controls** - Clean interface focused on data
-- **Interactive filtering** - Use filter components to explore data
-- **Data updates** - Visualizations respond to filter changes in real-time
-- **Lightweight** - Read-only rendering path, with none of the editing machinery loaded
-
-!!! tip "When to Use Viewer Mode"
-    Use Viewer mode when exploring dashboards, presenting to stakeholders, or sharing dashboard links with colleagues who don't need editing access.
-
-### <span style="color: #9966CC;">:material-pencil:</span> Editor Mode
-
-**URL Pattern:** `/dashboard-edit/{id}`
-
-Editor mode enables **full dashboard customization**:
-
-- **Add components** - Create new figures, tables, cards, and filters
-- **Edit components** - Modify existing component configurations
-- **Drag and drop** - Reposition and resize components
-- **Delete components** - Remove unwanted elements
-- **Save changes** - Persist your layout and component settings
-- **Tabs management** - Create and organize dashboard tabs
-
-!!! info "Switching Between Modes"
-    Click the **Edit** button in the dashboard header to switch from Viewer to Editor mode. Click **View** to return to read-only mode.
-
+---
+title: "Using a dashboard"
+description: "What you do on a dashboard, as a viewer and as an editor: filter, read a tile, share a view, change your settings, edit, arrange and brand."
+glightbox: true
 ---
 
-## Two-Panel Layout (v0.6.0+)
+# <span style="color: #F68B33;">:material-view-dashboard:</span> Using a dashboard
 
-Dashboards use a two-panel layout to organize components:
+[![The Iris dashboard: the top bar, the tab rail, the filter panel, the Overview tab and the dock](../../images/guides/web-ui/look_paper_light.webp#only-light)](../../images/guides/web-ui/look_paper_light.webp){target=_blank}
+[![The Iris dashboard: the top bar, the tab rail, the filter panel, the Overview tab and the dock](../../images/guides/web-ui/look_paper_dark.webp#only-dark)](../../images/guides/web-ui/look_paper_dark.webp){target=_blank}
 
-| Panel | Location | Component Types |
-|-------|----------|-----------------|
-| **Left Panel** | ~20% width | Interactive filters (RangeSlider, MultiSelect, DatePicker) |
-| **Right Panel** | ~80% width | Visualizations (Figure, Table, Card, Text) |
+A dashboard opens in view mode, where you filter, read and comment. Its owner switches to edit mode to change it. Labels below are those of the default Paper look, with **Search**, **Comments**, **Analysis** and **Edit** in the dock; the Classic look has the same buttons in its header. See [Paper and Classic](web_ui.md#looks). For what each part does in depth, see [Layout, tabs and sharing](../../features/dashboards.md).
 
-Components are automatically assigned to the appropriate panel based on their type when created.
+## As a viewer
 
-### Working with the filter panel (v1.4.0+)
+### Move around { #move-around }
 
-- **Collapse it** with the control at its edge. It shrinks to a narrow rail rather than disappearing, and the rail keeps showing how many filters are active, so a filtered dashboard never looks unfiltered.
-- **Resize it** by dragging its edge. The width is remembered, and the grid re-lays out to match.
-- **Fold a section** with its header. A folded section fetches nothing until you open it, and keeps a badge with the number of active filters inside it. A folded grid section of cards shows its numbers as summary chips.
+- **Tabs** sit in the sidebar, folded to an icon rail while the filter panel is open.
+- **Search** (**⌘K** / **Ctrl+K**) finds a component on any tab. See [Spotlight search](spotlight-search.md).
+- The **Guide**, when the author turned it on, walks you through the dashboard. See [The dashboard Guide](dashboard-guide.md).
 
-Since **v1.8.3** the collapse, the width and the section folds are remembered for the whole tab family. A tab switch is a navigation to a sibling dashboard document, so before that each of the three reset on every switch: a panel collapsed on one tab reopened on the next.
-- **Read what is applied** from the summary above the controls: one aligned row per filter, each with its own control's icon and colour. Click a row's clear button to drop just that filter. The whole summary folds to a single line.
+### Filter { #working-with-the-filter-panel-v140 }
 
-Sections in the main grid work the same way, and a folded section of cards still shows its numbers in the header. See [Sections](../../features/dashboards.md#sections).
+[![The nf-core/ampliseq Alpha Diversity tab with its filter panel open: Habitat set to Soil and Sediment, the summary above it, and the cards counting the 6 samples left](../../images/guides/dashboard-usage/viewer_filters_light.webp#only-light){ width="800" }](../../images/guides/dashboard-usage/viewer_filters_light.webp){target=_blank}
+[![The nf-core/ampliseq Alpha Diversity tab with its filter panel open: Habitat set to Soil and Sediment, the summary above it, and the cards counting the 6 samples left](../../images/guides/dashboard-usage/viewer_filters_dark.webp#only-dark){ width="800" }](../../images/guides/dashboard-usage/viewer_filters_dark.webp){target=_blank}
 
-### Sections shown on every tab (v1.6.0+)
+- The **filter panel** holds the dashboard's filters in foldable sections. Collapse it to a rail that still counts the active filters, or resize it by its edge; both are remembered across tabs.
+- The summary above the controls lists each active filter, with a clear button per row. **Reset** clears every filter on this tab.
+- A section with a pin is shared by every tab and keeps its values when you switch. See [Sections on every tab](../../features/dashboards.md#persistent-sections).
+- Selecting points on a scatter plot, rows in a table or an area on a map filters the other components too. **Reset selection** on the tile clears it. See [Selection filtering](../../features/interactive-selection-filtering.md).
 
-A section whose header carries a pin belongs to the whole dashboard rather than the tab you are on. In the filter panel that means the controls are the same on every tab **and keep the values you set** when you switch, which is what a filter the whole dashboard shares should do. In the grid it means the section is there on every tab, read-only unless you are on the tab that owns it, sitting either above or below that tab's own content.
+### Use the map panel { #the-map-panel-v140 }
 
-Folding one folds it everywhere, so it stays out of your way as you move around. See [Sections on every tab](../../features/dashboards.md#persistent-sections).
+[![A map panel expanded over the dashboard, its sampling sites coloured by habitat](../../images/landing/map_light.webp#only-light){ width="800" }](../../images/landing/map_light.webp){target=_blank}
+[![A map panel expanded over the dashboard, its sampling sites coloured by habitat](../../images/landing/map_dark.webp#only-dark){ width="800" }](../../images/landing/map_dark.webp){target=_blank}
 
-### The map panel (v1.4.0+)
+A map authored as a dashboard-wide panel follows you across tabs. Its header control docks, floats or hides it. Lasso, box or click on it to filter every tab, and open the rows behind it from its header.
 
-When a dashboard has a map authored as a dashboard-wide panel, it follows you across every tab rather than living in one. Use the header control to move it between floating, docked and hidden, and the panel header's menu to edit, duplicate or delete it.
-
-- **Select on the map** by lassoing, box-selecting or clicking; every tab of the dashboard follows the selection.
-- **Open the rows behind it** from the panel header or the tile chrome. The map's own columns come first, and ticking rows selects them on the map.
-- Lasso, click and row-ticking all produce the same filter, so they replace one another instead of stacking.
-
----
-
-## Dashboard settings { #dashboard-settings-drawer }
-
-**Settings**, at the top right, opens **Dashboard settings**. Since **v1.14.0** it is a dialog with a rail of sections beside the one you are on, full screen on a phone, where the rail becomes a select. It opens on **Your view** (on **Tab defaults** in the editor), then on the section you visited last, and changes save as you make them. Its icons and switches wear the dashboard's own brand.
-
-| Section | Shown | What it holds |
-|---------|-------|---------------|
-| **About this dashboard** | Always | What the dashboard is, below |
-| **Your view** | Always | **Font size** and **Page width**, for you only, saved in this browser. See [Appearance](#appearance) |
-| **Your filters** <small>(v1.18.0+)</small> | Viewer | **Remember my filters** and the link to the filtered view. See [Remembered filters](#remembered-filters) |
-| **Tab defaults**, **Tiles**, **Filtering**, **Guide** | Edit mode | Saved with the dashboard. See [Settings for everyone](#settings-for-everyone) |
-| **Branding** | Edit mode | Logo, colours and figure palette. See [Appearance](#appearance) |
-| **History** | Edit mode | Every saved version of the dashboard, to preview, restore, bookmark or delete. See [Dashboard and data versions](../../features/versioning.md#history) |
-| **Data version** | Edit mode | Draws the editor from earlier data, for you only, until you reload. See [Data versions](../../features/versioning.md#data-versions) |
-| **Feedback** | When a [feedback link](../../installation/env-reference.md#feedback) is configured | Report a problem or suggest an improvement |
-
-**About this dashboard** gives its project, template, owner, visibility and last-modified date. Since **v1.6.0** the project name is a link to that project's page, and **View ingestion report** below it opens the [ingestion report](../../features/dashboards.md#ingestion-report-health) for any project, not just one built from a template. Since **v1.14.0** the dashboard and project IDs, each with a copy button, are folded under **Identifiers**. The same body backs the inspector's **Info** tab.
-
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/dashboard_settings.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/dashboard_settings.png" width="600">
-    </a>
-</div>
-
-Since **v1.8.3** a **Run parameters** row sits alongside it, showing the parameters the pipeline ran with. Only the keys the template highlights appear inline; **All N parameters →** opens the full grouped listing and **Ingestion report →** the report. Since **v1.14.0** a text tile can open the same listing with a [`params:` link](../../features/components.md#markdown). See [Run provenance](../projects/templates.md#run-provenance).
-
-!!! note "This replaced the Parameters panel (v1.0.0)"
-    The Dash UI put a *Parameters* panel here, with switches for edit mode and interactivity and buttons to remove every component or reset every filter. Only one of those survived the React rewrite: **Reset all**, now at the top of the filter panel. Editing is the **Edit** button, and there is no global interactivity switch.
-
-### Appearance <small>(v1.8.0+)</small> { #appearance }
-
-Since **v1.14.0** the controls of this former section sit in **Your view** (**Font size** and **Page width**, in view and edit mode), **Tiles** and **Branding**, the last two in edit mode.
-
-**Font size.** **A-** and **A+** step the content through 85%, 100%, 115% and 130%. Figures, tables and cards scale; the header, sidebar and panels keep their size. The preference is stored per browser, like the dark-mode toggle, so it follows the reader rather than the dashboard.
-
-**Page width** <small>(v1.14.0+)</small>. **Full**, **Wide** (1600px), **Comfortable** (1240px) or **Compact** (1080px): how wide the dashboard runs on a large screen, centred. Each tab remembers its own, per browser.
-
-!!! tip "Scaling one figure rather than all of them"
-    A single tile takes a `font_scale` of its own from its edit menu, between 0.7× and 2×, applied to the whole Plotly layout font. See [Components](../../features/components.md#figure-components).
-
-**Branding.** **Source**: **Inherit instance** (**Inherit main tab** on a child tab whose main tab is branded) or **Customise**. Under *Customise*, anything left empty still follows the instance branding, so an override states only what differs.
-
-| Group | What it holds |
-|-------|---------------|
-| Logo | **Instance logo**, **Upload** or **None**. Shown at the bottom of the dashboard sidebar |
-| Brand colors | Primary, Secondary, Tertiary, and **Reach**: *Primary accent* re-tints the primary only, *Full palette* carries all three into buttons, tabs, badges and section accents |
-| Status colors | Success, Warning, Danger, left alone by the reach above so pass, warn and fail keep reading as meaning |
-| Surfaces | Page background, Cards & sections, Header & sidebar and Titles, stated separately for light and for dark |
-| Typography & shape | Font stack, Heading font stack and Corner radius, with a live sample rendered beneath them |
-| Figures | **Plot template** for figures whose component picks none, and **Figure colorway**, either *From palette* (derived from the brand colours above) or *Custom* |
-
-A **Preview** at the bottom renders real components under the draft, with its own Light and Dark tabs, so both schemes can be checked without switching the app over.
-
-[![The dashboard's Appearance section](../../images/guides/branding/dashboard-appearance-branding.webp)](../../images/guides/branding/dashboard-appearance-branding.webp){target=_blank}
-
-[![Figure defaults and the live preview](../../images/guides/branding/dashboard-appearance-figures.webp)](../../images/guides/branding/dashboard-appearance-figures.webp){target=_blank}
-
-The override applies to this dashboard's page only, so it can wear its own identity inside a differently branded instance. The bundled penguins demo does exactly that:
-
-[![The penguins dashboard wearing its own brand](../../images/guides/branding/dashboard-brand-override.webp)](../../images/guides/branding/dashboard-brand-override.webp){target=_blank}
-
-!!! warning "Uploads are instance-local"
-    An uploaded logo is served from the instance that received it, so it is excluded from YAML exports. A logo that has to survive a move belongs in `logo_url` as an absolute address.
-
-Figure theming resolves in this order:
-
-```text
-component explicit  >  dashboard default  >  instance branding  >  Mantine default
-```
-
-See [Branding](../administration/branding.md) for the model behind all of this, and for the `brand_theme:` YAML equivalent.
-
-### Settings for everyone <small>(v1.14.0+)</small> { #settings-for-everyone }
-
-In edit mode, the sections after **Your view** are saved with the dashboard for every
-reader, and the **Guide** settings hold for every tab of it. Light or dark stays the sun / moon switch at
-the foot of the sidebar.
-
-| Section | What it holds |
-|---------|---------------|
-| **Tab defaults** | What this tab opens with: **Page width**, **Filter panel** open or collapsed, and **Show the tab's name**. A reader's own choice still wins. See [Tab defaults](../../features/dashboards.md#tab-defaults) |
-| **Tiles** | **Fit tiles to their content** (`autofit`) and **Advanced viz controls**: *Popover*, *Under title* or *Side rail* (`advanced_viz_controls`). See [Tile height and control placement](../../features/yaml-sync.md#tile-height) |
-| **Filtering** | **Funnel filtering by default** |
-| **Guide** | **Show the Guide** and an **Introduction** shown at the top of it. See [The dashboard Guide](dashboard-guide.md) |
-
-A child tab without a brand of its own now draws in its main tab's brand, figures and
-component builder previews included. Its Branding section offers **Inherit main tab**,
-and **Customise** starts from the main tab's brand.
-
-## Component-wise options
-
-In edit mode, hovering a component reveals three icons in its top-right corner, and resize handles on its edges and corners.
-
-[![A tile in edit mode with its Plotly modebar and tile toolbar icons](../../images/guides/dashboard-guide/tile_toolbar_icons_light.webp#only-light){ width="235" }](../../images/guides/dashboard-guide/tile_toolbar_icons_light.webp){target=_blank}
-[![A tile in edit mode with its Plotly modebar and tile toolbar icons](../../images/guides/dashboard-guide/tile_toolbar_icons_dark.webp#only-dark){ width="235" }](../../images/guides/dashboard-guide/tile_toolbar_icons_dark.webp){target=_blank}
-
-- <span style="color: #888888;"><i class="mdi mdi-dots-grid"></i> **Drag handle**</span>: grab it to move the component in the grid.
-- <span style="color: #12b886;"><i class="mdi mdi-information-outline"></i> **About this component**</span> <small>(v1.20.4+)</small>: the tile's description, in an info popover. A tile with a title shows this icon beside its title instead.
-- <span style="color: #15aabf;"><i class="mdi mdi-format-list-bulleted"></i> **Data source and settings**</span>: the component's type, data source and configuration, with its code in a block you can copy. Before v1.20.4 this was the (i) icon, **Component metadata**.
-
-    [![The Data source and settings popover: data source, tools catalog origin and the code block](../../images/guides/dashboard-guide/tile_data_source_popover_light.webp#only-light)](../../images/guides/dashboard-guide/tile_data_source_popover_light.webp){target=_blank}
-    [![The Data source and settings popover: data source, tools catalog origin and the code block](../../images/guides/dashboard-guide/tile_data_source_popover_dark.webp#only-dark)](../../images/guides/dashboard-guide/tile_data_source_popover_dark.webp){target=_blank}
-- <span style="color: #888888;"><i class="mdi mdi-dots-vertical"></i> **Menu**</span>: **Edit** reopens the builder on this component, **History** shows it across the dashboard's saved versions, to compare or restore it alone (see [Component history](../../features/versioning.md#component-history)), **Duplicate** copies it, **Move to section** hands it to another section, **Copy to tab…** <small>(v1.14.0+)</small> adds a copy to another tab (see [Copy to tab](../../features/dashboards.md#copy-to-tab)), **Highlight on…** <small>(v1.14.0+)</small> shows a figure or advanced visualization on another tab without copying it (see [Highlight Components](../../features/components.md#highlight-components)), **Delete** removes it. A figure's menu also carries its **Font size**, and a tile resized by hand that could fit its content offers **Reset to auto height**.
-
-### Describe a tile <small>(v1.20.4+)</small> { #describe-a-tile }
-
-A component's `description` feeds both the one-line subtitle under its title and the
-info popover. A paragraph that opens with one of these labels becomes a block of its own:
-
-| Label | Shown as |
-| --- | --- |
-| *(first paragraph)* | The lead |
-| `How to read:` | A labelled block |
-| `Lines and annotations:`, `Annotations:`, `Reference lines:` | A labelled block, values in bold |
-| `Note:`, `Warning:`, `Caution:` | A callout |
-| `Source:`, `Sources:` | The footer |
-
-The label needs a capital letter and a colon, at the start of a paragraph. Anything else stays prose.
+### Read a tile { #read-a-tile }
 
 [![A tile with its info popover: description, How to read, Lines and annotations, Source and Note](../../images/guides/dashboard-guide/tile_info_popover_light.webp#only-light)](../../images/guides/dashboard-guide/tile_info_popover_light.webp){target=_blank}
 [![A tile with its info popover: description, How to read, Lines and annotations, Source and Note](../../images/guides/dashboard-guide/tile_info_popover_dark.webp#only-dark)](../../images/guides/dashboard-guide/tile_info_popover_dark.webp){target=_blank}
 
+Hover a tile for its actions:
+
+- :material-information-outline: **About this component**: what it shows and how to read it, as its author wrote it. A tile with a title has it beside the title.
+- :material-format-list-bulleted: **Data source and settings**: its type, data source and configuration, with the code to copy.
+- **Toggle fullscreen**, **Download CSV** on a table, **Inspect**, and **Export / embed** to put the tile on another website (see [Export and embedding](../../features/component-export.md)).
+
+[![The Data source and settings popover: data source, tools catalog origin and the code block](../../images/guides/dashboard-guide/tile_data_source_popover_light.webp#only-light)](../../images/guides/dashboard-guide/tile_data_source_popover_light.webp){target=_blank}
+[![The Data source and settings popover: data source, tools catalog origin and the code block](../../images/guides/dashboard-guide/tile_data_source_popover_dark.webp#only-dark)](../../images/guides/dashboard-guide/tile_data_source_popover_dark.webp){target=_blank}
+
+### Wait for a large dashboard { #how-a-dashboard-loads-v130 }
+
+[![A volcano panel with the badge 9,900 / 12,011,000 pts beside its title and the Load all icon in its hover actions](../../images/react/load_all_light.webp#only-light)](../../images/react/load_all_light.webp){target=_blank}
+[![A volcano panel with the badge 9,900 / 12,011,000 pts beside its title and the Load all icon in its hover actions](../../images/react/load_all_dark.webp#only-dark)](../../images/react/load_all_dark.webp){target=_blank}
+
+Tiles load as they scroll into view, and a ring with a count such as `6/8` beside the title tracks those on screen. Large collections arrive reduced, and say so:
+
+- A figure shows a badge such as `9,900 / 12,011,000 pts`. :material-database-arrow-down: **Load all** fetches every point.
+- A table pages its rows. Past about a million rows, sorting is off.
+- An advanced visualization computed from a sample carries an orange **estimated** badge.
+
+See [Performance & Scaling](../../features/performance.md) for the thresholds.
+
+### Discuss and compare { #discuss-and-compare }
+
+| Button | What it does | More |
+|--------|--------------|------|
+| **Comments** | Threads on a tile or a tab, and annotations drawn on charts, tables and maps | [Comments and annotations](../../features/comments-annotations.md) |
+| **Analysis** | Save selections as groups, then colour or split every figure by them | [Selection groups](../../features/interactive-selection-filtering.md#selection-groups) |
+| **Metadata** | The sample table beside the dashboard, with your own label columns | [Metadata panel](../../features/metadata-panel.md) |
+
+From a project's **Runs** tab, **Compare** opens a dashboard with one run's changes marked. See [Runs and run comparison](../../features/runs.md).
+
+### Catch up on what changed { #whats-new }
+
+The **What's new** key in the header counts the changes since your last visit: new data, edited components, new comments. Its panel shows them on the figures with **Off**, **Overlay** or **Split**, and **Before | Now** draws one tile as it was and as it is. The **Notifications** bell lists every dashboard and project that changed. See [What's new](../../features/whats-new.md).
+
+### Keep your filters { #remembered-filters }
+
+[![The filter panel after a reload: the Habitat filter restored, with Copy a link with these filters on the link icon beside the count](../../images/guides/filter-persistence/restored_light.webp#only-light){ width="780" }](../../images/guides/filter-persistence/restored_light.webp){target=_blank}
+[![The filter panel after a reload: the Habitat filter restored, with Copy a link with these filters on the link icon beside the count](../../images/guides/filter-persistence/restored_dark.webp#only-dark){ width="780" }](../../images/guides/filter-persistence/restored_dark.webp){target=_blank}
+
+A dashboard reopens on the filters you left, in any browser you sign in to: panel filters, chart and map selections, table rows. **Settings → Filters → Remember my filters** turns this off for one dashboard. Anonymous visitors keep their filters in this browser only. **Reset** also clears what is remembered.
+
+### Share a filtered view { #filter-links }
+
+[![Dashboard settings, Your filters: the Remember my filters switch and Share this view, the link with its copy button](../../images/guides/filter-persistence/settings_light.webp#only-light){ width="680" }](../../images/guides/filter-persistence/settings_light.webp){target=_blank}
+[![Dashboard settings, Your filters: the Remember my filters switch and Share this view, the link with its copy button](../../images/guides/filter-persistence/settings_dark.webp#only-dark){ width="680" }](../../images/guides/filter-persistence/settings_dark.webp){target=_blank}
+
+The address bar carries the view as `#filters=…`. Copy it from there, from the link icon beside **N filters active**, or with the copy button of **Share this view** in **Settings → Filters**. Opening such a link applies its filters on top of yours.
+
+??? info "Which filters win when a dashboard opens"
+    Three sources merge, each overriding the one before: the remembered filters, the
+    selections carried across tabs, then the link. A `?version=` preview neither restores
+    nor remembers anything.
+
+    [![Every filter level converges on one list of filters, kept in the browser tab, in this browser, on the server per user, and in the #filters= link](../../images/guides/filter-persistence/schema_one_array.svg)](../../images/guides/filter-persistence/schema_one_array.svg){target=_blank}
+    [![The merge at opening: remembered, cross-tab, then link, the pruning pass, and the gates the server copy passes](../../images/guides/filter-persistence/schema_mount_merge.svg)](../../images/guides/filter-persistence/schema_mount_merge.svg){target=_blank}
+
+### Change your view and settings { #dashboard-settings-drawer }
+
+**Settings** opens **Dashboard settings**, a dialog with a rail of sections. Changes save as you make them.
+
+| Section | Shown | What it holds |
+|---------|-------|---------------|
+| **About this dashboard** | Always | Project, template, owner and visibility, the **Run parameters**, **View ingestion report** and the IDs under **Identifiers** |
+| **Your view** | Always | **Font size** (85% to 130%) and **Page width** (Full, Wide, Comfortable, Compact), for you, in this browser |
+| **Filters** | View mode | **Remember my filters** and the filter link |
+| **Tab defaults**, **Tiles**, **Filtering**, **Guide** | Edit mode | Saved with the dashboard. See [Settings for everyone](#settings-for-everyone) |
+| **Branding** | Edit mode | Logo, colours and figure palette. See [Brand the dashboard](#appearance) |
+| **History** | Edit mode | Every saved version, to preview, restore or bookmark. See [History](../../features/versioning.md#history) |
+| **Data version** | Edit mode | The dashboard drawn from earlier data, for you only, until you reload. See [Data versions](../../features/versioning.md#data-versions) |
+| **Feedback** | With a [feedback link](../../installation/env-reference.md#feedback) | Report a problem or suggest an improvement |
+
+## As an editor
+
+### Edit and save { #saving }
+
+[![Dashboard saved, the notification after Save, over the dock in edit mode](../../images/guides/dashboard-usage/save_notification_light.webp#only-light){ width="600" }](../../images/guides/dashboard-usage/save_notification_light.webp){target=_blank}
+[![Dashboard saved, the notification after Save, over the dock in edit mode](../../images/guides/dashboard-usage/save_notification_dark.webp#only-dark){ width="600" }](../../images/guides/dashboard-usage/save_notification_dark.webp){target=_blank}
+
+- **Edit** opens the editor on a dashboard you own. On someone else's, its tooltip suggests duplicating it to get your own copy.
+- **Add → Component** opens the builder and **Add → Section** adds a section. See [Dashboard creation](dashboard_creation.md).
+- Changes save on their own about half a second after you stop. **Save** writes at once and refreshes the dashboard's thumbnail.
+- Each save is a version: automatic saves fold into one per 5 minutes of editing, and **Save** always records its own. See [Versions and history](../../features/versioning.md).
+- **Exit Edit** returns to view mode.
+
+### Arrange tiles { #arrange-tiles }
+
+[![A tile in edit mode with its Plotly modebar and tile toolbar icons](../../images/guides/dashboard-guide/tile_toolbar_icons_light.webp#only-light){ width="235" }](../../images/guides/dashboard-guide/tile_toolbar_icons_light.webp){target=_blank}
+[![A tile in edit mode with its Plotly modebar and tile toolbar icons](../../images/guides/dashboard-guide/tile_toolbar_icons_dark.webp#only-dark){ width="235" }](../../images/guides/dashboard-guide/tile_toolbar_icons_dark.webp){target=_blank}
+
+Move a tile by :material-dots-grid: **Drag to move**, and resize it by its edges and corners. Its :material-dots-vertical: menu holds:
+
+| Item | What it does |
+|------|--------------|
+| **Edit** | Reopens the builder on this tile |
+| **History** | The tile across saved versions, to compare or restore it alone. See [Component history](../../features/versioning.md#component-history) |
+| **Duplicate**, **Move to section**, **Delete** | What they say |
+| **Copy to tab…** | Adds a copy to another tab. See [Copy to tab](../../features/dashboards.md#copy-to-tab) |
+| **Highlight on…** | Shows a figure on another tab without copying it. See [Highlight components](../../features/components.md#highlight-components) |
+| **Font size** | A figure's own font scale, 0.7× to 2× |
+| **Reset to auto height** | On a tile resized by hand that could fit its content |
+
+### Describe a tile { #describe-a-tile }
+
+A component's `description` fills the subtitle under its title and **About this component**. The first paragraph is the lead; a paragraph that opens with `How to read:`, `Annotations:`, `Note:`, `Warning:` or `Source:` becomes a block, a callout or the footer.
+
 ```yaml
 description: |
-  Which lineages make up the community? Each dot is one phylum, its area the mean share of reads.
+  Which lineages make up the community? Each dot is one phylum.
 
-  How to read: a large dot is a dominant phylum. Open [Phylogeny](tab:Phylogeny) for the full tree.
+  How to read: a large dot is a dominant phylum.
 
   Note: with more than 3,000 ASVs, the tree keeps the 3,000 most abundant.
 ```
 
-To find a component on any tab, press **⌘K** / **Ctrl+K** or click the magnifier in the header <small>(v1.14.0+)</small>. See [Spotlight search](spotlight-search.md).
+### Settings for everyone { #settings-for-everyone }
 
----
+[![Dashboard settings in edit mode, Tab defaults: page width, filter panel open or collapsed, Show the tab's name](../../images/guides/dashboard-usage/settings_tab_defaults_light.webp#only-light){ width="680" }](../../images/guides/dashboard-usage/settings_tab_defaults_light.webp){target=_blank}
+[![Dashboard settings in edit mode, Tab defaults: page width, filter panel open or collapsed, Show the tab's name](../../images/guides/dashboard-usage/settings_tab_defaults_dark.webp#only-dark){ width="680" }](../../images/guides/dashboard-usage/settings_tab_defaults_dark.webp){target=_blank}
 
-## Table Component Features
+In edit mode, these sections of **Settings** are saved with the dashboard for every reader:
 
-### <span style="color: #45B8AC;">:material-download:</span> Data Export (v0.6.0+)
+| Section | What it holds |
+|---------|---------------|
+| **Tab defaults** | What this tab opens with: page width, filter panel open or collapsed, **Show the tab's name**. A reader's own choice wins. See [Tab defaults](../../features/dashboards.md#tab-defaults) |
+| **Tiles** | **Fit tiles to their content**, and **Advanced viz controls** as *Popover*, *Under title* or *Side rail*. See [Tile height](../../features/yaml-sync.md#tile-height) |
+| **Filtering** | **Funnel filtering by default** |
+| **Guide** | **Show the Guide** and its **Introduction**. See [The dashboard Guide](dashboard-guide.md) |
 
-Table components include a **data export** feature that allows you to download the displayed data:
+### Brand the dashboard { #appearance }
 
-1. Click the **Export** button (download icon) in the table component header
-2. The table data will be exported as a CSV file
-3. The export respects current filters and sorting applied to the table
+[![Dashboard settings, Branding set to Customise: Logo, Brand colors with Reach, Status colors, Surfaces and Typography & shape](../../images/guides/dashboard-usage/settings_branding_light.webp#only-light){ width="680" }](../../images/guides/dashboard-usage/settings_branding_light.webp){target=_blank}
+[![Dashboard settings, Branding set to Customise: Logo, Brand colors with Reach, Status colors, Surfaces and Typography & shape](../../images/guides/dashboard-usage/settings_branding_dark.webp#only-dark){ width="680" }](../../images/guides/dashboard-usage/settings_branding_dark.webp){target=_blank}
 
-!!! note "Export Limits"
-    - Tables with < 100,000 rows: Instant export
-    - Tables with 100,000 - 1,000,000 rows: Export allowed with warning
-    - Tables with > 1,000,000 rows: Export blocked (use CLI for large exports)
+**Settings → Branding → Customise** gives this dashboard its own logo, colours, fonts and figure palette inside the instance's brand. Fields left empty follow the instance, and a child tab follows its main tab (**Inherit main tab**). A **Preview** renders real components in light and dark.
 
----
-
-## How a Dashboard Loads (v1.3.0+)
-
-A dashboard can hold dozens of panels, each needing its own request, so Depictio loads
-them as you reach them rather than all at once.
-
-### <span style="color: #45B8AC;">:material-progress-clock:</span> While the page opens
-
-- **The Depictio logo animates in the centre of the page** while the dashboard itself is
-  being fetched. No panels are known yet, so there is nothing to count.
-- **Panels load when they scroll into view.** A panel below the fold shows a shimmering
-  placeholder and costs nothing until you scroll near it, so opening a large dashboard
-  stays responsive instead of waiting on every panel first.
-- **A progress ring and a count** (for example `6/8`) sit beside the dashboard title, then
-  disappear once everything on screen is ready. Hover it for a breakdown: how many are
-  still loading, how many failed, and how many are further down the page.
-
-!!! tip "Why the count can go backwards"
-    The count covers what is **on screen**, not the whole dashboard, so it always
-    completes. Scrolling brings more panels in and the count grows to include them, so a
-    number that briefly drops is work which has just started, not a problem.
-
-### <span style="color: #9966CC;">:material-database-arrow-down:</span> Reduced views and the Load-all button
-
-Large data collections are not sent to the browser whole. Where a panel is showing a
-reduced view, it says so and offers a way out:
-
-[![A volcano panel with the badge 9,900 / 12,011,000 pts beside its title and the Load-all icon revealed in the hover action cluster](../../images/react/load_all_light.webp#only-light)](../../images/react/load_all_light.webp){target=_blank}
-
-[![A volcano panel with the badge 9,900 / 12,011,000 pts beside its title and the Load-all icon revealed in the hover action cluster](../../images/react/load_all_dark.webp#only-dark)](../../images/react/load_all_dark.webp){target=_blank}
-
-*Hover a panel to reveal its action cluster. **Load all** is the bottom icon, and the badge
-beside the title says how much of the collection you are currently seeing.*
-
-- **Figures** show a badge such as `9,900 / 12,011,000 pts`. Hover the panel and click the
-  **Load all** icon (:material-database-arrow-down:) in the action cluster to fetch every
-  point; the badge switches to `(all)` and the button toggles back to the reduced view.
-  Loading everything can be slow on a very large collection.
-- **Tables** page rows on demand. On tables past roughly a million rows, **sorting is
-  turned off**: the chevron disappears from the column headers rather than offering a
-  sort that would silently return unsorted rows.
-- **Advanced visualisations** that compute their values from the rows they receive (stacked
-  taxonomy, DA barplot, enrichment, oncoplot, …) are normally sent the whole collection. If
-  it is too large for that, they carry an orange **estimated** badge, meaning the values on
-  screen are derived from a sample rather than being exact totals. The lollipop plot shows
-  the same badge whenever its rows were sampled, since its per-gene counts are an aggregate.
-
-See [Performance & Scaling](../../features/performance.md) for the thresholds behind these
-behaviours and how to change them.
-
----
-
-## Interactivity
-
-#### Interactive Actions
-
-There are currently two types of interactive actions available in the dashboard:
-
-- Through the **interactive** components (e.g., RangeSlider, MultiSelect, etc.).
-- Through the **graph** components (only Scatter plots are handled yet).
-  - **Click mode**: When you click on a point in the scatter plot, the other components will be updated according to the data point clicked.
-  - **Selection mode**: When you select a region in the scatter plot (using the **_"Box select"_** option), the other components will be updated according to the data points in the selected region.
-
-#### Reset Filters
-
-- **Reset all filters** You can reset all filters applied to the components by clicking the **Reset all filters** button in the right sidebar. This will clear all filters applied to the components and reset them to their default state.
-- **Reset interactive component/scatter plot filter** You can reset the filters applied to the graph components by clicking the orange <span style="color: #fd7e14;"><i class="bx bx-reset"></i> Reset</span> button in the component options at the top of the box. This will clear the filters applied to the graph component and reset it to its default state.
-- **Clear one filter from the summary** (v1.4.0+) Each row of the filter panel's active-filter summary has its own clear button, so you can drop a single filter without touching the rest.
-- **Reset all** also clears the [remembered filters](#remembered-filters) of the dashboard (v1.18.0+).
-
-!!! note "Where the reset icon stays visible (v1.4.0+)"
-    On figures, tables and maps the reset icon stays pinned while a selection is active, since a selection there is easy to miss. On an interactive control it appears on hover, so that it cannot sit on top of the select's chevron or the slider track.
-
-## Remembered filters and filter links <small>(v1.18.0+)</small> { #remembered-filters }
-
-A dashboard reopens on the filters you left: at once in this browser, and in any browser
-you sign in to, from a copy kept per user on the server. Every kind of filter counts: the
-filter panel and filter bars, a box or lasso on a scatter plot, the map, table rows and
-images. Filters set on a component that no longer exists are dropped.
-
-<figure markdown="span">
-  [![Every filter level converges on one list of filters, kept in the browser tab, in this browser, on the server per user, and in the #filters= link](../../images/guides/filter-persistence/schema_one_array.svg)](../../images/guides/filter-persistence/schema_one_array.svg){target=_blank}
-  <figcaption><strong>One list of filters, four places.</strong> The browser tab, this browser, your server copy and the link each keep it for a different time.</figcaption>
-</figure>
-
-**Your filters**, in [Dashboard settings](#dashboard-settings-drawer), holds the
-**Remember my filters** switch, on by default and set per dashboard. Off, nothing is kept,
-and the choice follows you to other browsers. Anonymous visitors keep their filters in their
-own browser only, never on the server.
-
-### Filter links { #filter-links }
-
-The address bar carries the filtered view as `#filters=…`, so copying it shares the view.
-The link icon beside **N filters active** in the filter panel copies it, and **Your
-filters** shows it with a copy button. Opening a link applies its filters on top of what
-you had. The fragment is written only for a view you changed, it replaces the history entry
-rather than adding one, and a selection too large for a link leaves no fragment instead of
-a truncated one.
-
-[![The filter panel after a reload: two filters restored, with the link icon beside the count](../../images/guides/filter-persistence/restored.webp)](../../images/guides/filter-persistence/restored.webp){target=_blank}
-[![Dashboard settings, Your filters: the Remember my filters switch and the link with its copy button](../../images/guides/filter-persistence/settings.webp)](../../images/guides/filter-persistence/settings.webp){target=_blank}
-
-??? info "Which filters win when a dashboard opens"
-    Three sources merge, each overriding the one before: the remembered filters, the
-    selections carried across tabs, then the link. The server copy applies afterwards only
-    when it is the best information available. A `?version=` preview neither restores nor
-    remembers anything, and **Reset all** clears the stored copy.
-
-    [![The merge at opening: remembered, cross-tab, then link, the pruning pass, and the gates the server copy passes](../../images/guides/filter-persistence/schema_mount_merge.svg)](../../images/guides/filter-persistence/schema_mount_merge.svg){target=_blank}
-
-## Saving the Dashboard
-
-Layout and section changes persist on their own, about half a second after you stop editing. There is no unsaved state to lose if you close the tab.
-
-**Save**, in the editor toolbar, writes immediately instead of waiting for that delay, and queues a fresh thumbnail for the dashboard card. A short notification confirms it.
-
-Every save is kept as a version: the automatic ones fold into one version per 5 minutes of editing, and **Save** always records its own. **Settings → History** lists them, to preview or restore one. See [Dashboard and data versions](../../features/versioning.md).
-
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/save_notification.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/save_notification.png" width="600">
-    </a>
-</div>
-
-**Exit Edit** returns to viewer mode. The dashboard then shows up with its new thumbnail under **Recently opened** on the dashboards page.
-
-## Example Dashboard result
-
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/dashboard_creation/dashboard_example.png" target="_blank">
-        <img src="../../../images/guides/dashboard_creation/dashboard_example.png" width="600">
-    </a>
-</div>
+An uploaded logo stays on this instance and is left out of YAML exports; use `logo_url` for one that has to travel. See [Branding](../administration/branding.md).

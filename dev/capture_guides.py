@@ -472,15 +472,126 @@ shot("public-mode", "guest_account")(
 
 @shot("web-ui", "visibility_chips")
 def visibility_chips(page):
-    """The Visibility column of /dashboards: one Public, one Private chip per row."""
+    """/dashboards as a table cut to Title, Project, Owner and Visibility (the column picker is
+    kept in the browser), so the Public and Private chips sit beside the names they belong to."""
+    page.set_viewport_size({"width": 1090, "height": 700})  # a table about 800 px wide
     goto(page, "/dashboards", settle=5000)
-    head = page.get_by_role("button", name="Visibility")
-    head.evaluate("e => e.scrollIntoView({inline: 'center', block: 'nearest'})")
-    page.wait_for_timeout(1000)
-    chips = page.get_by_text(re.compile("^(Public|Private)$"))
-    top, last = head.bounding_box(), chips.last.bounding_box()
-    return {"x": top["x"] - 24, "y": top["y"] - 14, "width": top["width"] + 48,
-            "height": last["y"] + last["height"] - top["y"] + 30}
+    page.get_by_role("button", name="Table display").first.click()
+    page.wait_for_timeout(800)
+    menu = page.locator("[class*=dropdown]:visible").filter(has_text="Show all").last
+    for column in ("Category", "Created", "Modified", "Last viewed", "Tabs"):
+        menu.get_by_text(column, exact=True).first.click()
+        page.wait_for_timeout(200)
+    page.keyboard.press("Escape")
+    page.mouse.move(700, 800)
+    page.wait_for_timeout(1500)
+    return union(page, page.locator("table").first, pad=6)
+
+
+# ── using a dashboard (dashboard_usage.md): the ampliseq dashboard, viewer and editor ───────
+
+
+def habitats(page: Page, *names: str) -> None:
+    """Pick these habitats in the sample-scope Habitat filter (remembered for the user: clear after)."""
+    hab = show_filters(page)
+    for name in names:
+        hab.click()
+        page.get_by_role("option", name=name, exact=True).click()
+        page.wait_for_timeout(600)
+    page.keyboard.press("Escape")
+    page.wait_for_timeout(5000)
+
+
+def clear_filters(page: Page) -> None:
+    """Reset every filter of the tab, which also clears what the server remembers."""
+    page.keyboard.press("Escape")
+    show_filters(page)
+    page.locator("button.hy-key--danger").first.click()  # the panel's Reset
+    page.wait_for_timeout(2500)
+
+
+def settings_dialog(page: Page, section: str) -> Locator:
+    page.get_by_role("button", name="Settings").first.click()
+    page.wait_for_timeout(1500)
+    dlg = page.get_by_role("dialog").last
+    dlg.get_by_text(section, exact=True).first.click()
+    page.wait_for_timeout(1500)
+    return dlg
+
+
+def amp_edit(page: Page) -> Page:
+    """The ampliseq main tab in edit mode."""
+    dashboard(page, settle=4000, title=AMP)
+    return goto(page, page.url.replace(BASE_URL, "").replace("/dashboard/", "/dashboard-edit/"), settle=8000)
+
+
+@shot("dashboard-usage", "viewer_filters")
+def viewer_filters(page):
+    """The Alpha Diversity tab with its filter panel open, Habitat set to Soil and Sediment."""
+    amp(page, ALPHA, settle=8000)
+    habitats(page, "Soil", "Sediment")
+    page.mouse.move(1000, 600)
+    page.wait_for_timeout(2000)
+    return {"after": lambda: clear_filters(page)}
+
+
+@shot("filter-persistence", "restored")
+def filters_restored(page):
+    """The same filters after a reload, restored, the link icon hovered."""
+    amp(page, ALPHA, settle=8000)
+    habitats(page, "Soil", "Sediment")
+    page.reload()
+    page.wait_for_timeout(9000)
+    show_filters(page)
+    count = page.get_by_text(re.compile("filters? active")).first
+    link = count.locator("xpath=ancestor::button[1]/following-sibling::*[1]")  # copy the filter link
+    link.hover()
+    page.wait_for_timeout(1200)
+    ids = page.locator('input[placeholder^="Select ID"]').first.bounding_box()
+    return {"x": 10, "y": 84, "width": 780, "height": ids["y"] + ids["height"] + 40 - 84,
+            "keep_hover": link, "after": lambda: clear_filters(page)}
+
+
+@shot("filter-persistence", "settings")
+def filters_settings(page):
+    """Dashboard settings > Your filters, with the filter link of the Soil and Sediment view."""
+    amp(page, ALPHA, settle=8000)
+    habitats(page, "Soil", "Sediment")
+    dlg = settings_dialog(page, "Filters")
+    return {**dlg.bounding_box(), "after": lambda: clear_filters(page)}
+
+
+@shot("dashboard-usage", "settings_tab_defaults")
+def settings_tab_defaults(page):
+    """Edit mode, Dashboard settings > Tab defaults: what the tab opens with, for everyone."""
+    amp_edit(page)
+    return settings_dialog(page, "Tab defaults").bounding_box()
+
+
+@shot("dashboard-usage", "settings_branding")
+def settings_branding(page):
+    """Edit mode, Dashboard settings > Branding > Customise; set back to Inherit instance after."""
+    amp_edit(page)
+    dlg = settings_dialog(page, "Branding")
+    dlg.get_by_text("Customise", exact=True).first.click()
+    page.wait_for_timeout(2500)
+    return {**dlg.bounding_box(), "after": lambda: (dlg.get_by_text("Inherit instance", exact=True).first.click(),
+                                                   page.wait_for_timeout(2000))}
+
+
+@shot("dashboard-usage", "save_notification")
+def save_notification(page):
+    """Save in edit mode and its notification (on the map demo: a save records a version)."""
+    dashboard(page, settle=4000, title="Floating Map Demo")
+    goto(page, page.url.replace(BASE_URL, "").replace("/dashboard/", "/dashboard-edit/"), settle=8000)
+    page.add_style_tag(content=".mantine-Notifications-root{display:block!important}")  # goto hides them
+    page.locator("[class*=hy-dock]").get_by_role("button", name="Save").click()
+    toast = page.locator(".mantine-Notification-root").filter(has_text="Dashboard saved").first
+    toast.wait_for(timeout=10000)
+    toast.hover()  # holds it open (it closes after 2 s)
+    b = toast.bounding_box()
+    x, y = b["x"] - 420, b["y"] - 110
+    return {"x": x, "y": y, "width": 1440 - x, "height": 900 - y, "keep_hover": toast}
 
 
 # ── landing page: the ampliseq project and dashboard, 1440x900 like the 16:10 frame ──
