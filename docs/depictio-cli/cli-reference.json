@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "program": "depictio",
-  "version": "1.21.0",
+  "version": "1.22.0",
   "help_options": [
     "--help",
     "-h"
@@ -5241,6 +5241,261 @@
     },
     {
       "path": [
+        "template",
+        "check"
+      ],
+      "name": "check",
+      "group": false,
+      "help": "Check a template's variables against a pipeline's parameters.\n\nLists each variable and what sets it: a `from_params` rule on the run's\nparams, the outputs themselves (auto), or the user (`--var`). With\n`--schema`/`--fetch-schema`: every param a rule reads must exist in the\nrelease, each rule is evaluated on a default run, and the release's skip_*\nparams no rule reads are listed. With `--run`/`--params`: which rules hold for\nthat run and which conditionals fire. Offline unless --fetch-schema.\n\nExamples:\n    depictio template check nf-core/rnaseq/3.26.0 --fetch-schema\n    depictio template check --run results/ --var TRACKS_URI=s3://bucket/run\n    depictio template check ./my-template --schema ../rnaseq/nextflow_schema.json\n    depictio template check nf-core/rnaseq/3.26.0 --against 3.27.0",
+      "short_help": "Check a template's variables against a pipeline's parameters.",
+      "epilog": "",
+      "hidden": false,
+      "deprecated": false,
+      "panel": null,
+      "params": [
+        {
+          "name": "template",
+          "kind": "argument",
+          "opts": [
+            "template"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "Template id (nf-core/rnaseq/3.26.0, nf-core/rnaseq) or path. Omitted with --run: the template `depictio ingest` would pick",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null
+        },
+        {
+          "name": "run",
+          "kind": "option",
+          "opts": [
+            "--run"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "path"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "A results directory: its pipeline_info/params_<ts>.json",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "params",
+          "kind": "option",
+          "opts": [
+            "--params"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "path"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "A params JSON (nf-core's params_<ts>.json)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "var",
+          "kind": "option",
+          "opts": [
+            "--var"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": false,
+          "multiple": true,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "KEY=VALUE as given to `depictio ingest`; repeatable",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "schema",
+          "kind": "option",
+          "opts": [
+            "--schema"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "path"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "The pipeline's nextflow_schema.json (a local checkout)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "fetch_schema",
+          "kind": "option",
+          "opts": [
+            "--fetch-schema"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "boolean"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": false,
+          "metavar": null,
+          "help": "Fetch the template release's nextflow_schema.json from GitHub (nf-core only)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": true,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "all_templates",
+          "kind": "option",
+          "opts": [
+            "--all"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "boolean"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": false,
+          "metavar": null,
+          "help": "Every bundled template, one line each",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": true,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "schema_cache",
+          "kind": "option",
+          "opts": [
+            "--schema-cache"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "path"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "Keep fetched schemas here",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "against",
+          "kind": "option",
+          "opts": [
+            "--against"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "A newer release (3.27.0) or its nextflow_schema.json: which rules it breaks or flips, which skip_* flags it adds",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "verbose",
+          "kind": "option",
+          "opts": [
+            "--verbose"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "boolean"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": false,
+          "metavar": null,
+          "help": "Also list variables no conditional reads",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": true,
+          "count": false,
+          "show_default": true
+        }
+      ],
+      "alias_of": null,
+      "aliases": []
+    },
+    {
+      "path": [
         "project-builder"
       ],
       "name": "project-builder",
@@ -5418,7 +5673,7 @@
           "nargs": 1,
           "default": null,
           "metavar": null,
-          "help": "Wide table to pivot (nf-core samplesheet, CSV/TSV)",
+          "help": "Wide table to pivot (nf-core samplesheet, CSV/TSV/YAML/JSON)",
           "hidden": false,
           "deprecated": false,
           "envvar": null,
