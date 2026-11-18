@@ -129,31 +129,31 @@ user directory and know it never holds unverified addresses.
 
 <div class="grid cards" markdown>
 
--   :material-tune-variant:{ .lg .middle } **[Configuration reference](configuration.md)**
+-   :material-tune-variant:{ .lg .middle .dp-blue } **[Configuration reference](configuration.md)**
 
     ---
 
     Environment variables, provider keys, claim mapping, redirect URI, Helm values.
 
--   :material-puzzle-outline:{ .lg .middle } **[Provider recipes](providers.md)**
+-   :material-puzzle-outline:{ .lg .middle .dp-violet } **[Provider recipes](providers.md)**
 
     ---
 
     Keycloak, Google, Authentik and any other provider.
 
--   :material-account-group-outline:{ .lg .middle } **[Groups and access](groups-and-access.md)**
+-   :material-account-group-outline:{ .lg .middle .dp-green } **[Groups and access](groups-and-access.md)**
 
     ---
 
     Group and profile sync, closed registration, SSO-only mode.
 
--   :material-swap-horizontal:{ .lg .middle } **[Migration](migration.md)**
+-   :material-swap-horizontal:{ .lg .middle .dp-orange } **[Migration](migration.md)**
 
     ---
 
     From the Google OAuth sign-in.
 
--   :material-stethoscope:{ .lg .middle } **[Troubleshooting and security](troubleshooting.md)**
+-   :material-stethoscope:{ .lg .middle .dp-red } **[Troubleshooting and security](troubleshooting.md)**
 
     ---
 

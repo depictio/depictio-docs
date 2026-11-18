@@ -1,13 +1,13 @@
 ---
-title: "Dashboard Features"
+title: "Dashboard layout, tabs and sharing"
 icon: material/view-dashboard-variant
-description: "Guide to Depictio's dashboard modes, layouts, tabs, and organization features."
+description: "Dashboard modes, the filter panel and grid, sections, tabs, auto-save, the ingestion report and sharing."
 glightbox: true
 ---
 
-# :material-view-dashboard-variant: Dashboard Features
+# :material-view-dashboard-variant: Dashboard layout, tabs and sharing
 
-Depictio dashboards provide flexible, interactive data visualization with multiple modes, customizable layouts, and tabbed organization.
+A dashboard has a view mode and an edit mode, a filter panel beside a grid of sections, tabs, an ingestion report and sharing settings. For a task-by-task walk-through, see [Using a dashboard](../usage/guides/dashboard_usage.md).
 
 ---
 
@@ -223,7 +223,7 @@ Available component types include:
 | :material-format-header-1: **Text/Headers** | Headings and prose; block markdown since v1.14.0 |
 | :material-star-four-points-outline: **Highlights** | Another tab's figure, redrawn here (v1.14.0+) |
 | :material-map-marker-multiple: **Maps**     | Geospatial scatter, density and choropleth maps |
-| :material-microscope: **MultiQC**           | Quality control report visualizations          |
+| :depictio-multiqc: **MultiQC**             | Quality control report visualizations          |
 | :material-image: **Images**                 | Display grid of static images (PNG, JPEG, SVG) |
 | :material-chart-timeline: **Genome browser** | Embedded genome browser over a track manifest (v1.20.0+), see [Genome browser](genome-browser/index.md) |
 

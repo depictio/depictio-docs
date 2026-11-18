@@ -70,6 +70,7 @@ extra_css:
   - stylesheets/blog.css
   - stylesheets/neoteroi-mkdocs-v1.1.3.css
   - stylesheets/asciinema.css
+  - stylesheets/cards.css
   # - stylesheets/css-v1.0.4.css
   - https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
   - https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css
@@ -267,7 +268,7 @@ nav:
           - WebUI: usage/guides/web_ui.md
           - Dashboard creation: usage/guides/dashboard_creation.md
           - Picking from the catalog: usage/guides/catalog-picker.md
-          - Using the dashboard: usage/guides/dashboard_usage.md
+          - Using a dashboard: usage/guides/dashboard_usage.md
           - The dashboard Guide: usage/guides/dashboard-guide.md
           - Spotlight search: usage/guides/spotlight-search.md
           - Real-time events: usage/guides/realtime-events.md
@@ -298,17 +299,22 @@ nav:
   - Tutorials: tutorials/index.md
   - Features:
       - Overview: features/README.md
-      - Dashboard & Components:
-          - Dashboards: features/dashboards.md
-          - Components: features/components.md
-          - Advanced Visualizations: features/advanced-visualizations.md
+      - Dashboards:
+          - Layout, tabs and sharing: features/dashboards.md
           - What's new: features/whats-new.md
-          - Runs and run comparison: features/runs.md
+          - Comments and annotations: features/comments-annotations.md
+          - Versions and history: features/versioning.md
+          - Dashboards as YAML: features/yaml-sync.md
+      - Components:
+          - Component types: features/components.md
+          - Advanced visualizations: features/advanced-visualizations.md
+          - Export and embedding: features/component-export.md
+      - Data and filtering:
+          - Selection filtering: features/interactive-selection-filtering.md
+          - Cross-DC filtering: features/cross-dc-filtering.md
+          - Filter expressions: features/filter-expressions.md
           - Metadata panel: features/metadata-panel.md
-          - Interactive Selection Filtering: features/interactive-selection-filtering.md
-          - Comments and Annotations: features/comments-annotations.md
-          - Dashboard and Data Versions: features/versioning.md
-          - Component Export and Embedding: features/component-export.md
+          - Runs and run comparison: features/runs.md
       - Data Types:
           - MultiQC: features/multiqc.md
           - Proteins: features/proteins.md
@@ -324,10 +330,6 @@ nav:
               - UCSC tracks: features/genome-browser/ucsc-tracks.md
               - Variant colours: features/genome-browser/variant-colours.md
               - Raw JBrowse configuration: features/genome-browser/raw-jbrowse.md
-      - Data Integration:
-          - Cross-DC Filtering: features/cross-dc-filtering.md
-          - Filter Expressions: features/filter-expressions.md
-          - YAML Dashboard Sync: features/yaml-sync.md
       - System Design:
           - Architecture: features/architecture.md
           - Performance & Scaling: features/performance.md

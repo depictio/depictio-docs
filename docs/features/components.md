@@ -19,67 +19,67 @@ Depictio provides a variety of component types for building interactive dashboar
 
 <div class="grid cards" markdown>
 
--   :material-chart-scatter-plot:{ .lg .middle } **[Figure](#figure-components)**
+-   :material-chart-box:{ .lg .middle .dp-figure } **[Figure](#figure-components)**
 
     ---
 
     Charts and plots (scatter, bar, histogram, line, box, pie, and more)
 
--   :material-table:{ .lg .middle } **[Table](#table-components)**
+-   :octicons-table-24:{ .lg .middle .dp-table } **[Table](#table-components)**
 
     ---
 
     Interactive data tables with filtering and sorting
 
--   :material-card-text:{ .lg .middle } **[Card](#card-components)**
+-   :material-numeric:{ .lg .middle .dp-card } **[Card](#card-components)**
 
     ---
 
     Metric display with aggregations
 
--   :material-format-header-1:{ .lg .middle } **[Text](#text-components)**
+-   :material-text-box-edit:{ .lg .middle .dp-text } **[Text](#text-components)**
 
     ---
 
     Headings and prose, with block markdown and links to tabs since v1.14.0
 
--   :material-star-four-points-outline:{ .lg .middle } **[Highlight](#highlight-components)**
+-   :material-star-four-points-outline:{ .lg .middle .dp-highlight } **[Highlight](#highlight-components)**
 
     ---
 
     Another tab's figure, redrawn on this one (v1.14.0+)
 
--   :material-tune:{ .lg .middle } **[Interactive](#interactive-components)**
+-   :material-tune-variant:{ .lg .middle .dp-interactive } **[Interactive](#interactive-components)**
 
     ---
 
     User input components for filtering (slider, dropdown, date picker)
 
--   :material-microscope:{ .lg .middle } **[MultiQC](#multiqc-components)**
+-   :depictio-multiqc:{ .lg .middle .dp-multiqc } **[MultiQC](#multiqc-components)**
 
     ---
 
     Quality control report visualizations
 
--   :material-image-multiple:{ .lg .middle } **[Image](#image-components)**
+-   :material-image-area:{ .lg .middle .dp-image } **[Image](#image-components)**
 
     ---
 
     Image galleries with S3/MinIO storage integration
 
--   :material-map-marker-multiple:{ .lg .middle } **[Map](#map-components)**
+-   :material-map-marker-multiple:{ .lg .middle .dp-map } **[Map](#map-components)**
 
     ---
 
     Geospatial map visualization with markers
 
--   :material-chart-timeline:{ .lg .middle } **[Genome browser](#genome-browser-components)**
+-   :material-dna:{ .lg .middle .dp-genome } **[Genome browser](#genome-browser-components)**
 
     ---
 
     Embedded genome browser over a track manifest, with two-way cross-filtering (v1.20.0+)
 
--   :material-chart-multiline:{ .lg .middle } **[Advanced Visualizations](advanced-visualizations.md)**
+-   :material-chart-scatter-plot-hexbin:{ .lg .middle .dp-advanced-viz } **[Advanced Visualizations](advanced-visualizations.md)**
 
     ---
 
@@ -805,7 +805,7 @@ See [Filter Expressions](filter-expressions.md) for the complete expression refe
 
 ---
 
-## :material-microscope: MultiQC Components <small>(v0.5.0+)</small> { #multiqc-components }
+## :depictio-multiqc: MultiQC Components <small>(v0.5.0+)</small> { #multiqc-components }
 
 A MultiQC component draws one plot of a [:material-open-in-new: MultiQC](https://multiqc.info/){ target="_blank" } report, read from its `multiqc.parquet` (MultiQC 1.29 or later), not from the HTML report.
 

@@ -697,7 +697,7 @@ A template carries two version numbers. They move independently.
 
 <div class="grid cards" markdown>
 
--   :material-pipe:{ .lg .middle } **Pipeline version**
+-   :material-pipe:{ .lg .middle .dp-green } **Pipeline version**
 
     ---
 
@@ -706,7 +706,7 @@ A template carries two version numbers. They move independently.
 
     *Choose it* with `--template`, or with the **Pipeline version** picker on a template's page.
 
--   :material-layers-outline:{ .lg .middle } **Template version**
+-   :material-layers-outline:{ .lg .middle .dp-orange } **Template version**
 
     ---
 

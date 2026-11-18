@@ -1,0 +1,307 @@
+/* ==========================================================================
+   Grid cards: Material's `<div class="grid cards" markdown>` restyled in the
+   depictio palette.
+
+   Accent per card: a class on the card's icon, read with attr_list.
+       -   :material-chart-box:{ .lg .middle .dp-figure } **[Figure](#figure)**
+   Accent for a whole block: the same class on the grid itself.
+       <div class="grid cards dp-genome" markdown>
+   No class: depictio purple.
+
+   Colours are the app's: brandColors.ts and componentTypeMeta.ts
+   (packages/depictio-react-core). The roadmap's centred nav keeps its own
+   style in timeline.css.
+   ========================================================================== */
+
+:root {
+  --depictio-purple: #9966cc;
+  --depictio-violet: #7a5dc7;
+  --depictio-blue: #6495ed;
+  --depictio-teal: #45b8ac;
+  --depictio-green: #8bc34a;
+  --depictio-yellow: #f9cb40;
+  --depictio-orange: #f68b33;
+  --depictio-pink: #e6779f;
+  --depictio-red: #e53935;
+}
+
+/* Defaults sit at zero specificity so any .dp-* class wins. --card-shade is how
+   much accent stays in the light-mode ink; pale accents need less. --card-on is
+   the glyph colour on a filled icon tile. */
+:where(.md-typeset .grid.cards) {
+  --card-accent: var(--depictio-purple);
+  --card-shade: 80%;
+  --card-on: #fff;
+}
+
+/* Brand colours, then the component types they belong to in the app */
+.dp-purple, .dp-figure, .dp-highlight,
+.md-typeset .grid.cards > ul > li:has(.dp-purple, .dp-figure, .dp-highlight) {
+  --card-accent: var(--depictio-purple); --card-shade: 80%; --card-on: #fff;
+}
+.dp-violet, .dp-map,
+.md-typeset .grid.cards > ul > li:has(.dp-violet, .dp-map) {
+  --card-accent: var(--depictio-violet); --card-shade: 85%; --card-on: #fff;
+}
+.dp-blue, .dp-table,
+.md-typeset .grid.cards > ul > li:has(.dp-blue, .dp-table) {
+  --card-accent: var(--depictio-blue); --card-shade: 75%; --card-on: #fff;
+}
+.dp-teal, .dp-card,
+.md-typeset .grid.cards > ul > li:has(.dp-teal, .dp-card) {
+  --card-accent: var(--depictio-teal); --card-shade: 72%; --card-on: #fff;
+}
+.dp-green, .dp-interactive,
+.md-typeset .grid.cards > ul > li:has(.dp-green, .dp-interactive) {
+  --card-accent: var(--depictio-green); --card-shade: 62%; --card-on: #1d2b0c;
+}
+.dp-yellow, .dp-genome,
+.md-typeset .grid.cards > ul > li:has(.dp-yellow, .dp-genome) {
+  --card-accent: var(--depictio-yellow); --card-shade: 55%; --card-on: #3a2c00;
+}
+.dp-orange, .dp-multiqc,
+.md-typeset .grid.cards > ul > li:has(.dp-orange, .dp-multiqc) {
+  --card-accent: var(--depictio-orange); --card-shade: 70%; --card-on: #fff;
+}
+.dp-pink, .dp-image,
+.md-typeset .grid.cards > ul > li:has(.dp-pink, .dp-image) {
+  --card-accent: var(--depictio-pink); --card-shade: 75%; --card-on: #fff;
+}
+.dp-red,
+.md-typeset .grid.cards > ul > li:has(.dp-red) {
+  --card-accent: var(--depictio-red); --card-shade: 85%; --card-on: #fff;
+}
+/* Two app accents that predate the brand palette (componentTypeMeta.ts) */
+.dp-text,
+.md-typeset .grid.cards > ul > li:has(.dp-text) {
+  --card-accent: #e91e63; --card-shade: 85%; --card-on: #fff;
+}
+.dp-advanced-viz,
+.md-typeset .grid.cards > ul > li:has(.dp-advanced-viz) {
+  --card-accent: #d6336c; --card-shade: 85%; --card-on: #fff;
+}
+
+/* Ink: the accent darkened for light pages, lifted for slate. Declared on the
+   card and on its icon, so an icon's own class colours the icon too. */
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li,
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child > .twemoji:first-child {
+  --card-ink: color-mix(in srgb, var(--card-accent) var(--card-shade), #000);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .grid.cards:not(.roadmap-nav) > ul > li,
+[data-md-color-scheme="slate"] .md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child > .twemoji:first-child {
+  --card-ink: color-mix(in srgb, var(--card-accent) 85%, #fff);
+}
+
+/* --- Grid ---------------------------------------------------------------- */
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul {
+  gap: 0.8rem;
+}
+
+/* --- Card ---------------------------------------------------------------- */
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li {
+  --card-border: color-mix(in srgb, var(--md-default-fg-color) 11%, transparent);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.05rem 1.1rem 1rem;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  background:
+    radial-gradient(130% 90% at 0% 0%, color-mix(in srgb, var(--card-accent) 8%, transparent), transparent 55%),
+    var(--md-default-bg-color);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .grid.cards:not(.roadmap-nav) > ul > li {
+  background:
+    radial-gradient(130% 90% at 0% 0%, color-mix(in srgb, var(--card-accent) 11%, transparent), transparent 55%),
+    color-mix(in srgb, var(--md-default-fg-color) 3%, var(--md-default-bg-color));
+  box-shadow: none;
+}
+
+/* Accent line along the top edge, shown on hover */
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--card-accent), transparent 85%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+@media (hover: hover) {
+  .md-typeset .grid.cards:not(.roadmap-nav) > ul > li:hover {
+    border-color: color-mix(in srgb, var(--card-accent) 55%, transparent);
+    box-shadow:
+      0 12px 26px -14px color-mix(in srgb, var(--card-accent) 60%, transparent),
+      0 2px 6px rgb(0 0 0 / 5%);
+    transform: translateY(-2px);
+  }
+
+  .md-typeset .grid.cards:not(.roadmap-nav) > ul > li:hover::before {
+    opacity: 1;
+  }
+}
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li:has(a:focus-visible) {
+  border-color: var(--card-accent);
+  outline: 2px solid color-mix(in srgb, var(--card-accent) 45%, transparent);
+  outline-offset: 2px;
+}
+
+/* --- Icon tile ----------------------------------------------------------- */
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child > .twemoji:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0 0 0.85rem;
+  border-radius: 11px;
+  color: var(--card-ink);
+  background: color-mix(in srgb, var(--card-accent) 15%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--card-accent) 22%, transparent);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child > .twemoji:first-child svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  max-height: none;
+}
+
+@media (hover: hover) {
+  .md-typeset .grid.cards:not(.roadmap-nav) > ul > li:hover > p:first-child > .twemoji:first-child {
+    color: var(--card-on);
+    background: var(--card-accent);
+  }
+}
+
+/* --- Title row ----------------------------------------------------------- */
+
+/* The title paragraph: icon, bold title, and an optional suffix such as
+   "· Helm chart", which reads as a muted subtitle. */
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child {
+  margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child > strong,
+/* picture cards: the title is the paragraph right after the picture */
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child + p > strong:first-child {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li strong > a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+@media (hover: hover) {
+  .md-typeset .grid.cards:not(.roadmap-nav) > ul > li:hover strong > a {
+    color: var(--card-ink);
+  }
+}
+
+/* The `---` rule under the title: spacing does that job now */
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > hr {
+  display: none;
+}
+
+/* --- Body ---------------------------------------------------------------- */
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:not(:first-child) {
+  margin: 0.45rem 0 0;
+  font-size: 0.76rem;
+  line-height: 1.55;
+  color: var(--md-default-fg-color--light);
+}
+
+/* --- Link row: "[:octicons-arrow-right-24: Label](url)" ------------------- */
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:last-child:has(> a:first-child > .twemoji:first-child) {
+  margin-top: auto;
+  padding-top: 0.85rem;
+}
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:last-child > a:first-child:has(> .twemoji:first-child) {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+  transition: color 0.2s;
+}
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:last-child > a:first-child > .twemoji:first-child {
+  color: var(--card-ink);
+  transition: transform 0.2s;
+}
+
+@media (hover: hover) {
+  .md-typeset .grid.cards:not(.roadmap-nav) > ul > li:hover > p:last-child > a:first-child:has(> .twemoji:first-child) {
+    color: var(--card-ink);
+  }
+
+  .md-typeset .grid.cards:not(.roadmap-nav) > ul > li:hover > p:last-child > a:first-child > .twemoji:first-child {
+    transform: translateX(3px);
+  }
+}
+
+/* --- Whole card clickable, when it has one destination ------------------- */
+
+/* The title link, if no other paragraph carries a link */
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li:not(:has(> p:not(:first-child) a)) > p:first-child > strong > a::after,
+/* or the link row, if nothing above it does */
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li:not(:has(> p:not(:last-child) a)) > p:last-child > a:first-child:has(> .twemoji:first-child)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* --- Picture cards (genome browser recipes) ------------------------------ */
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child:has(> a > img) {
+  margin: -0.35rem -0.4rem 0.75rem;
+}
+
+.md-typeset .grid.cards:not(.roadmap-nav) > ul > li > p:first-child > a > img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: top center;
+  border: 1px solid var(--card-border);
+  border-radius: 9px;
+  transition: border-color 0.2s;
+}
+
+@media (hover: hover) {
+  .md-typeset .grid.cards:not(.roadmap-nav) > ul > li:hover > p:first-child > a > img {
+    border-color: color-mix(in srgb, var(--card-accent) 55%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .grid.cards:not(.roadmap-nav) > ul > li,
+  .md-typeset .grid.cards:not(.roadmap-nav) > ul > li * {
+    transition: none !important;
+    transform: none !important;
+  }
+}

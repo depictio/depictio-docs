@@ -27,7 +27,7 @@ docker compose up -d
 
 <div class="grid cards" markdown>
 
--   :material-pencil: **Customise credentials**
+-   :material-pencil:{ .lg .middle .dp-blue } **Customise credentials**
 
     ---
 
@@ -35,7 +35,7 @@ docker compose up -d
 
     [:octicons-arrow-right-24: Advanced configuration](docker/#advanced-configuration)
 
--   :material-account-group: **Multi-user or public mode?**
+-   :material-account-group:{ .lg .middle .dp-violet } **Multi-user or public mode?**
 
     ---
 
@@ -53,7 +53,7 @@ Three ways to run the same Depictio server, which differ in how its services run
 
 <div class="grid cards" markdown>
 
--   :simple-kubernetes:{ .lg .middle } **Kubernetes** · Helm chart
+-   :simple-kubernetes:{ .lg .middle .dp-blue } **Kubernetes** · Helm chart
 
     ---
 
@@ -63,7 +63,7 @@ Three ways to run the same Depictio server, which differ in how its services run
 
     [:octicons-arrow-right-24: Installation guide](kubernetes/)
 
--   :simple-docker:{ .lg .middle } **Docker Compose** · containers
+-   :simple-docker:{ .lg .middle .dp-teal } **Docker Compose** · containers
 
     ---
 
@@ -73,7 +73,7 @@ Three ways to run the same Depictio server, which differ in how its services run
 
     [:octicons-arrow-right-24: Installation guide](docker/)
 
--   :simple-python:{ .lg .middle } **Python package** · pip / uv, no containers
+-   :simple-python:{ .lg .middle .dp-yellow } **Python package** · pip / uv, no containers
 
     ---
 
@@ -89,7 +89,7 @@ Three ways to run the same Depictio server, which differ in how its services run
 
 <div class="grid cards" markdown>
 
--   :material-console-line:{ .lg .middle } **Depictio CLI**
+-   :material-console-line:{ .lg .middle .dp-teal } **Depictio CLI**
 
     ---
 
@@ -97,7 +97,7 @@ Three ways to run the same Depictio server, which differ in how its services run
 
     [:octicons-arrow-right-24: CLI guide](cli/)
 
--   :material-cog-outline:{ .lg .middle } **Configuration**
+-   :material-cog-outline:{ .lg .middle .dp-blue } **Configuration**
 
     ---
 
@@ -105,7 +105,7 @@ Three ways to run the same Depictio server, which differ in how its services run
 
     [:octicons-arrow-right-24: Configuration guide](configuration/)
 
--   :material-cloud-braces:{ .lg .middle } **Try in GitHub Codespaces**
+-   :material-cloud-braces:{ .lg .middle .dp-purple } **Try in GitHub Codespaces**
 
     ---
 

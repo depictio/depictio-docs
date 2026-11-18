@@ -16,7 +16,7 @@ New to Depictio? Start here.
 
 <div class="grid cards" markdown>
 
--   :material-play-circle:{ .lg .middle } **Get Started**
+-   :material-play-circle:{ .lg .middle .dp-purple } **Get Started**
 
     ---
 
@@ -40,7 +40,7 @@ Hands-on guides for common tasks in the web interface.
 
 <div class="grid cards" markdown>
 
--   :material-monitor-dashboard:{ .lg .middle } **Web UI**
+-   :material-monitor-dashboard:{ .lg .middle .dp-purple } **Web UI**
 
     ---
 
@@ -48,7 +48,7 @@ Hands-on guides for common tasks in the web interface.
 
     [:octicons-arrow-right-24: Web UI Guide](guides/web_ui.md)
 
--   :material-view-dashboard-edit:{ .lg .middle } **Dashboard Creation**
+-   :material-view-dashboard-edit:{ .lg .middle .dp-violet } **Dashboard Creation**
 
     ---
 
@@ -56,7 +56,7 @@ Hands-on guides for common tasks in the web interface.
 
     [:octicons-arrow-right-24: Dashboard Creation](guides/dashboard_creation.md)
 
--   :material-gesture-tap:{ .lg .middle } **Using the Dashboard**
+-   :material-gesture-tap:{ .lg .middle .dp-interactive } **Using the Dashboard**
 
     ---
 
@@ -80,7 +80,7 @@ Everything you need to configure and manage Depictio projects.
 
 <div class="grid cards" markdown>
 
--   :material-book-outline:{ .lg .middle } **Projects Guide**
+-   :material-book-outline:{ .lg .middle .dp-blue } **Projects Guide**
 
     ---
 
@@ -88,7 +88,7 @@ Everything you need to configure and manage Depictio projects.
 
     [:octicons-arrow-right-24: Projects Guide](projects/guide.md)
 
--   :material-code-braces:{ .lg .middle } **YAML Examples**
+-   :material-code-braces:{ .lg .middle .dp-blue } **YAML Examples**
 
     ---
 
@@ -96,7 +96,7 @@ Everything you need to configure and manage Depictio projects.
 
     [:octicons-arrow-right-24: YAML Examples](projects/yaml-examples.md)
 
--   :material-file-document-outline:{ .lg .middle } **Full Reference**
+-   :material-file-document-outline:{ .lg .middle .dp-blue } **Full Reference**
 
     ---
 
@@ -121,7 +121,7 @@ Command-line tools for data ingestion, recipes, and templates.
 
 <div class="grid cards" markdown>
 
--   :material-terminal:{ .lg .middle } **CLI Usage**
+-   :material-terminal:{ .lg .middle .dp-teal } **CLI Usage**
 
     ---
 
@@ -129,7 +129,7 @@ Command-line tools for data ingestion, recipes, and templates.
 
     [:octicons-arrow-right-24: CLI Reference](../depictio-cli/usage.md)
 
--   :material-chef-hat:{ .lg .middle } **Recipes**
+-   :material-chef-hat:{ .lg .middle .dp-teal } **Recipes**
 
     ---
 
@@ -137,7 +137,7 @@ Command-line tools for data ingestion, recipes, and templates.
 
     [:octicons-arrow-right-24: Recipes Guide](projects/recipes.md)
 
--   :material-layers:{ .lg .middle } **Templates**
+-   :material-layers:{ .lg .middle .dp-orange } **Templates**
 
     ---
 
@@ -159,7 +159,7 @@ Operational tasks for managing Depictio deployments.
 
 <div class="grid cards" markdown>
 
--   :material-transfer:{ .lg .middle } **Project Migration**
+-   :material-transfer:{ .lg .middle .dp-violet } **Project Migration**
 
     ---
 

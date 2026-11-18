@@ -138,41 +138,41 @@ Depictio is built on a state-of-the-art microservices architecture combining mod
 </div>
 
 <style>
-/* Technology-specific colors for grid cards */
+/* Technology-specific accents for grid cards (stylesheets/cards.css) */
 .grid.cards .react {
-  color: #61dafb;
+  --card-accent: #61dafb;
 }
 
 .grid.cards .fastapi {
-  color: #4db6ac;
+  --card-accent: #4db6ac;
 }
 
 .grid.cards .mongodb {
-  color: #66bb6a;
+  --card-accent: #66bb6a;
 }
 
 .grid.cards .deltalake {
-  color: #ff6b35;
+  --card-accent: #ff6b35;
 }
 
 .grid.cards .minio {
-  color: #ff8a80;
+  --card-accent: #ff8a80;
 }
 
 .grid.cards .polars {
-  color: #00a2e8;
+  --card-accent: #00a2e8;
 }
 
 .grid.cards .jwt {
-  color: #000000;
+  --card-accent: #000000;
 }
 
 [data-md-color-scheme="slate"] .grid.cards .jwt {
-  color: #ffffff;
+  --card-accent: #ffffff;
 }
 
 .grid.cards .docker {
-  color: #2496ed;
+  --card-accent: #2496ed;
 }
 </style>
 

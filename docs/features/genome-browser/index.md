@@ -40,7 +40,7 @@ Both can share one colour ramp, so a time course reads the same on the lanes and
 
 Each example opens its own page: the clip, what it shows, and the few lines of YAML behind it.
 
-<div class="grid cards" markdown>
+<div class="grid cards dp-genome" markdown>
 
 -   [![Table to browser](../../images/guides/genome-browser/table_to_browser.webp){ .off-glb }](table-to-browser.md)
 

@@ -12,110 +12,49 @@ Depictio is built to address the challenges of visualizing and analyzing large-s
 
 ---
 
-## :material-view-dashboard: Dashboard & Components
+## :material-view-dashboard: Dashboards
 
-User-facing features for building and interacting with dashboards.
+The dashboard as a whole: how it is laid out, what changed, who said what, and its history.
 
 | Page | Description |
 |------|-------------|
-| [Dashboards](dashboards.md) | Dashboard modes, layouts, tabs, and organization |
-| [Components](components.md) | Guide to available component types and configuration |
-| [Interactive Selection Filtering](interactive-selection-filtering.md) | Filter components via scatter plot and table row selections |
-| [Comments and Annotations](comments-annotations.md) | Discuss components in threads and draw ranges, lines, marked points and notes on them |
-| [Dashboard and Data Versions](versioning.md) | Preview, restore or bookmark any saved version of a dashboard, and read it against the data of the time |
-| [Component Export and Embedding](component-export.md) | Serve one component to another website, as a Plotly spec or a self-contained page |
-
-<div class="grid cards" markdown>
-
--   :material-view-dashboard:{ .lg .middle } **Dashboards**
-
-    ---
-
-    Learn about dashboard modes, tabs, and layouts
-
-    [:octicons-arrow-right-24: Dashboard Guide](dashboards.md)
-
--   :material-chart-bar:{ .lg .middle } **Components**
-
-    ---
-
-    Explore available component types (figures, tables, cards, etc.)
-
-    [:octicons-arrow-right-24: Component Reference](components.md)
-
--   :material-selection-drag:{ .lg .middle } **Interactive Selection**
-
-    ---
-
-    Filter by selecting points or rows directly on visualizations
-
-    [:octicons-arrow-right-24: Selection Filtering](interactive-selection-filtering.md)
-
--   :material-comment-text-multiple-outline:{ .lg .middle } **Comments and Annotations**
-
-    ---
-
-    Discuss components in threads and annotate charts, tables and maps
-
-    [:octicons-arrow-right-24: Comments and Annotations](comments-annotations.md)
-
--   :material-history:{ .lg .middle } **Dashboard and Data Versions**
-
-    ---
-
-    Go back to any saved version of a dashboard, and to the data it showed
-
-    [:octicons-arrow-right-24: Dashboard and Data Versions](versioning.md)
-
--   :material-code-json:{ .lg .middle } **Component Export and Embedding**
-
-    ---
-
-    Put one component of a dashboard on another website, live
-
-    [:octicons-arrow-right-24: Component Export and Embedding](component-export.md)
-
-</div>
+| [Layout, tabs and sharing](dashboards.md) | View and edit modes, the filter panel, sections, tabs, the ingestion report and sharing |
+| [What's new](whats-new.md) | What changed since your last visit: new data, edited components, new comments |
+| [Comments and annotations](comments-annotations.md) | Threads on a component or a tab, and ranges, lines, marked points and notes drawn on it |
+| [Versions and history](versioning.md) | Preview, restore or bookmark any saved version, and read it against the data of the time |
+| [Dashboards as YAML](yaml-sync.md) | Export, edit and import a dashboard as a YAML file with the CLI |
 
 ---
 
-## :material-database-sync: Data Integration
+## :material-puzzle: Components
 
-Features for connecting, filtering, and synchronizing data across collections.
+What goes on a dashboard.
 
 | Page | Description |
 |------|-------------|
-| [Cross-DC Filtering](cross-dc-filtering.md) | Link data collections for interactive filtering |
-| [Filter Expressions](filter-expressions.md) | Polars expression syntax for narrowing what a component reads |
-| [YAML Dashboard Sync](yaml-sync.md) | Bidirectional YAML sync for IaC and version control |
+| [Component types](components.md) | Figures, tables, cards, text, highlights, filters, images and maps |
+| [Advanced visualizations](advanced-visualizations.md) | Domain charts that know what their columns mean: volcano, oncoplot, genome tracks and more |
+| [Export and embedding](component-export.md) | Serve one component to another website, as a Plotly spec or a self-contained page |
 
-<div class="grid cards" markdown>
+---
 
--   :material-link-variant:{ .lg .middle } **Cross-DC Filtering**
+## :material-filter-variant: Data and filtering
 
-    ---
+How a selection on one component reaches the others, and the data behind them.
 
-    Link data collections for interactive filtering across components
+| Page | Description |
+|------|-------------|
+| [Selection filtering](interactive-selection-filtering.md) | Filter by selecting points, rows, map areas, genome regions or residues |
+| [Cross-DC filtering](cross-dc-filtering.md) | Link data collections so a filter on one reaches the others |
+| [Filter expressions](filter-expressions.md) | A Polars expression that narrows what a card or a filter reads |
+| [Metadata panel](metadata-panel.md) | Label samples beside the dashboard, then compare the groups in the charts |
+| [Runs and run comparison](runs.md) | What each pipeline run produced, and a dashboard with one run's changes marked |
 
-    [:octicons-arrow-right-24: Cross-DC Guide](cross-dc-filtering.md)
+---
 
--   :material-filter-variant:{ .lg .middle } **Filter Expressions**
+## :material-dna: Data types
 
-    ---
-
-    Narrow a component's data with a Polars expression
-
-    [:octicons-arrow-right-24: Filter Expressions](filter-expressions.md)
-
--   :material-sync:{ .lg .middle } **YAML Dashboard Sync**
-
-    ---
-
-    Version control dashboards with bidirectional YAML sync
-
-    [:octicons-arrow-right-24: YAML Sync Guide](yaml-sync.md)
-
-</div>
+Components built for one kind of data: [MultiQC](multiqc.md), [Proteins](proteins.md) and the [Genome browser](genome-browser/index.md).
 
 ---
 
@@ -132,7 +71,7 @@ Technical architecture and security features.
 
 <div class="grid cards" markdown>
 
--   :material-sitemap:{ .lg .middle } **Architecture**
+-   :material-sitemap:{ .lg .middle .dp-violet } **Architecture**
 
     ---
 
@@ -140,7 +79,7 @@ Technical architecture and security features.
 
     [:octicons-arrow-right-24: Architecture Details](architecture.md)
 
--   :material-speedometer:{ .lg .middle } **Performance & Scaling**
+-   :material-speedometer:{ .lg .middle .dp-orange } **Performance & Scaling**
 
     ---
 
@@ -148,7 +87,7 @@ Technical architecture and security features.
 
     [:octicons-arrow-right-24: Performance Details](performance.md)
 
--   :material-database-outline:{ .lg .middle } **Data Model**
+-   :material-database-outline:{ .lg .middle .dp-blue } **Data Model**
 
     ---
 
@@ -156,7 +95,7 @@ Technical architecture and security features.
 
     [:octicons-arrow-right-24: Data Model](data-model.md)
 
--   :material-shield-check:{ .lg .middle } **Security**
+-   :material-shield-check:{ .lg .middle .dp-red } **Security**
 
     ---
 

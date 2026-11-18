@@ -23,7 +23,7 @@ unless an output needs reshaping. Everything is validated in CI by
 
 <div class="grid cards" markdown>
 
--   :material-cursor-default-click:{ .lg .middle } **In the browser**
+-   :material-cursor-default-click:{ .lg .middle .dp-purple } **In the browser**
 
     ---
 
@@ -33,7 +33,7 @@ unless an output needs reshaping. Everything is validated in CI by
 
     Use it when your output file is already a table with a header row.
 
--   :material-file-code:{ .lg .middle } **By hand**
+-   :material-file-code:{ .lg .middle .dp-teal } **By hand**
 
     ---
 
