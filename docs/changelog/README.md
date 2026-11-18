@@ -8,7 +8,7 @@ hide:
 
 # Changelog
 
-??? tip "Docker images"
+??? docker "Docker images"
 
     Every release publishes four images, tagged with the version without its `v`:
 
@@ -943,11 +943,9 @@ hide:
 
 ## Older releases
 
-Releases before v1.0.0, one section per series, collapsed.
+Releases before v1.0.0, collapsed by series.
 
-## v0.13.x
-
-??? note "13 releases: v0.13.0 to v0.13.12"
+??? note "v0.13.x: v0.13.0 to v0.13.12"
 
     ### **[v0.13.12](https://github.com/depictio/depictio/releases/tag/v0.13.12)** (June 4, 2026)
 
@@ -1051,9 +1049,7 @@ Releases before v1.0.0, one section per series, collapsed.
 
     * Reset moved to the filters header (React beta); auto screenshots about 2x faster.
 
-## v0.12.x
-
-??? note "3 releases: v0.12.0 to v0.12.2"
+??? note "v0.12.x: v0.12.0 to v0.12.2"
 
     ### **[v0.12.2](https://github.com/depictio/depictio/releases/tag/v0.12.2)** (May 18, 2026)
 
@@ -1090,9 +1086,7 @@ Releases before v1.0.0, one section per series, collapsed.
 
     * Persistent MultiQC prerender store, safer append; Helm rolls pods on ConfigMap or Secret change.
 
-## v0.11.x
-
-??? note "3 releases: v0.11.0 to v0.11.2"
+??? note "v0.11.x: v0.11.0 to v0.11.2"
 
     ### **[v0.11.2](https://github.com/depictio/depictio/releases/tag/v0.11.2)** (May 7, 2026)
 
@@ -1123,9 +1117,7 @@ Releases before v1.0.0, one section per series, collapsed.
 
     * Duplicated components, heatmap nulls and dates, `/projects` 500, map filtering.
 
-## v0.10.x
-
-??? note "4 releases: v0.10.0 to v0.10.3"
+??? note "v0.10.x: v0.10.0 to v0.10.3"
 
     ### **[v0.10.3](https://github.com/depictio/depictio/releases/tag/v0.10.3)** (May 4, 2026)
 
@@ -1160,9 +1152,7 @@ Releases before v1.0.0, one section per series, collapsed.
 
     * Cross-DC link filtering, `/projects` 500, recipe path resolution, stale file cleanup.
 
-## v0.9.x
-
-??? note "1 release: v0.9.0"
+??? note "v0.9.x: v0.9.0"
 
     ### **[v0.9.0](https://github.com/depictio/depictio/releases/tag/v0.9.0)** (March 21, 2026)
 
@@ -1177,9 +1167,7 @@ Releases before v1.0.0, one section per series, collapsed.
 
     * Spurious `migrate` sub-prompt, self-migration S3 copy, export bundle dates and `project_id` mismatch.
 
-## v0.8.x
-
-??? note "3 releases: v0.8.0 to v0.8.2"
+??? note "v0.8.x: v0.8.0 to v0.8.2"
 
     ### **[v0.8.2](https://github.com/depictio/depictio/releases/tag/v0.8.2)** (March 4, 2026)
 
@@ -1219,9 +1207,7 @@ Releases before v1.0.0, one section per series, collapsed.
 
     * Cross-DC filtering for figures, MultiQC and heatmaps, map viewport and theme resets, General Statistics dark mode, screenshot timeouts (now configurable), alpha diversity error bars.
 
-## v0.7.x
-
-??? note "7 releases: v0.7.0 to v0.7.6"
+??? note "v0.7.x: v0.7.0 to v0.7.6"
 
     ### **[v0.7.6](https://github.com/depictio/depictio/releases/tag/v0.7.6)** (February 26, 2026)
 
@@ -1314,9 +1300,7 @@ Releases before v1.0.0, one section per series, collapsed.
 
     * `DEPICTIO_MONGODB_WIPE` off by default, S3 bucket and cleanup errors on startup.
 
-## v0.6.x
-
-??? note "3 releases: v0.6.0 to v0.6.2"
+??? note "v0.6.x: v0.6.0 to v0.6.2"
 
     ### **[v0.6.2](https://github.com/depictio/depictio/releases/tag/v0.6.2)** (January 29, 2026)
 
@@ -1364,9 +1348,7 @@ Releases before v1.0.0, one section per series, collapsed.
     * **Kubernetes**: `DEPICTIO_FASTAPI_PUBLIC_URL` overridable in ConfigMaps, `api_internal_key.pem` generated at startup, init containers wait for `private_key.pem`, YAML auto-export and watcher off.
     * **Dashboard**: dark-mode slider labels, single scrollbar in edit mode, Ace editor theme switching.
 
-## v0.5.x
-
-??? note "4 releases: v0.5.0 to v0.5.3"
+??? note "v0.5.x: v0.5.0 to v0.5.3"
 
     ### **[v0.5.3](https://github.com/depictio/depictio/releases/tag/v0.5.3)**
 
@@ -1401,17 +1383,13 @@ Releases before v1.0.0, one section per series, collapsed.
 
     * Inconsistent plot rendering, theme switch flicker ([02c5e7e4](https://github.com/depictio/depictio/commit/02c5e7e4)).
 
-## v0.4.x
-
-??? note "1 release: v0.4.0"
+??? note "v0.4.x: v0.4.0"
 
     ### **[v0.4.0](https://github.com/depictio/depictio/releases/tag/v0.4.0)**
 
     * **Faster dashboards** with `flask-caching` and `orjson`, dock-style animations, a live mode toggle, smoother edit mode and theme updates. ([b3bdd21f](https://github.com/depictio/depictio/commit/b3bdd21f))
 
-## v0.3.x
-
-??? note "3 releases: v0.3.0 to v0.3.2"
+??? note "v0.3.x: v0.3.0 to v0.3.2"
 
     ### **[v0.3.2](https://github.com/depictio/depictio/releases/tag/v0.3.2)**
 
@@ -1428,9 +1406,7 @@ Releases before v1.0.0, one section per series, collapsed.
     * **Also new**: CLI ASCII logo, temporary user cleanup.
     * **🐛 Bug Fixes**: user code can no longer reassign `df`, figure edit mode ([318c7ae9](https://github.com/depictio/depictio/commit/318c7ae9)).
 
-## v0.2.x
-
-??? note "2 releases: v0.2.0 to v0.2.1"
+??? note "v0.2.x: v0.2.0 to v0.2.1"
 
     ### **[v0.2.1](https://github.com/depictio/depictio/releases/tag/v0.2.1)**
 
@@ -1452,9 +1428,7 @@ Releases before v1.0.0, one section per series, collapsed.
 
     * AG Grid popups, dark-mode draggables, Google OAuth routes ([19396605](https://github.com/depictio/depictio/commit/19396605)).
 
-## v0.1.x
-
-??? note "2 releases: v0.1.0 to v0.1.1"
+??? note "v0.1.x: v0.1.0 to v0.1.1"
 
     ### **[v0.1.1](https://github.com/depictio/depictio/releases/tag/v0.1.1)**
 
@@ -1468,9 +1442,7 @@ Releases before v1.0.0, one section per series, collapsed.
     * **Unauthenticated mode**: anonymous login and upgradable temporary users. ([38ff59d7](https://github.com/depictio/depictio/commit/38ff59d7))
     * **Google OAuth sign-in** and faster cached joins. ([a07364cb](https://github.com/depictio/depictio/commit/a07364cb))
 
-## v0.0.x
-
-??? note "1 release: v0.0.6"
+??? note "v0.0.x: v0.0.6"
 
     ### **[v0.0.6](https://github.com/depictio/depictio/releases/tag/v0.0.6)**
 

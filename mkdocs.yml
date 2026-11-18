@@ -84,6 +84,7 @@ extra_css:
 
 # Extra JavaScript
 extra_javascript:
+  - javascripts/sidebar-offset.js
   - javascripts/depictio-rose.js
   - javascripts/depictio-logo.js
   - javascripts/depictio-theme-sync.js
