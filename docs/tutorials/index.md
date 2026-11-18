@@ -40,13 +40,28 @@ via [SciLifeLab Serve](https://serve.scilifelab.se/).
 
 ---
 
+## Step by step <small>(v1.21.0+)</small> { #step-by-step }
+
+Short written tutorials, with screenshots and clips, for what v1.21.0 added:
+
+| Tutorial | What you do | Reference |
+| --- | --- | --- |
+| [What's new since your last visit](whats-new.md) | Turn it on, then read what changed on a dashboard: Overlay, Split, Before / Now, the bell | [_"What's new"_](../features/whats-new.md) |
+| [Compare runs](compare-runs.md) | Attach a second run and see what it produced, file by file and figure by figure | [Runs](../features/runs.md) |
+| [Watch the data update](data-updates.md) | Refresh only what changed, read the Activity tab, find the new rows | [Data refresh](../features/runs.md#data-refresh) |
+| [Label samples from the dashboard](metadata-panel.md) | Add labels to a samplesheet, use them as groups, save or export them | [Metadata panel](../features/metadata-panel.md) |
+| [Move a project to another instance](instance-migration.md) | Receive a code on one instance, send the project from another | [Migrate](../usage/administration/migrate.md) |
+| [MultiQC: compare reports across runs](../features/multiqc.md#compare-runs) | Append runs to one MultiQC collection and split figures on the new samples | [MultiQC](../features/multiqc.md) |
+
+---
+
 ## Video walkthroughs
 
 Shorter clips, embedded alongside the documentation they belong to:
 
 | Watch | Where | What it covers |
 | --- | --- | --- |
-| :material-play-circle: [Project types](../usage/projects/guide.md) | Projects guide | Basic vs advanced projects, and which to reach for |
+| :material-play-circle: [Projects](../usage/projects/guide.md) | Projects guide | Starting a project from a source, and what a project holds |
 | :material-play-circle: [Registering data with the CLI](../usage/get_started.md#video-tutorial) | Getting Started | Running the CLI against a YAML project configuration |
 | :material-play-circle: [Building a dashboard](../usage/guides/dashboard_creation.md) | Dashboard creation | Adding components, wiring interactivity, saving |
 | :material-play-circle: [Using a dashboard](../usage/guides/dashboard_usage.md) | Using the dashboard | Filters, selections and cross-collection filtering |
@@ -59,5 +74,7 @@ Shorter clips, embedded alongside the documentation they belong to:
   projects. No account needed, and it resets periodically.
 - **[Open in Codespaces](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&quickstart=1)**
   runs the Python package in a GitHub cloud workspace, nothing to install.
+- **[Hands-on workshop](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/workshop/devcontainer.json&quickstart=1)**
+  opens a Codespace with an nf-core/ampliseq run already ingested, ready to follow these tutorials.
 - **[Getting Started](../usage/get_started.md)** covers the same ground as the webinar, in
   written form, on your own machine.
