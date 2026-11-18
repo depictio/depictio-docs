@@ -65,14 +65,17 @@ The user needs a GitHub account to submit it.
 
 ## Turning the widget on
 
+**Status (November 2026):** depictio is on DocBot dev (<https://wwwdev.ebi.ac.uk/docbot/?selected=depictio>). Still blocking: `https://depictio.github.io` is not in DocBot's CORS allow-list (`/teams` answers it without an `Access-Control-Allow-Origin` header), so the widget stays off. Meanwhile `extra.docbot.link` shows an **Ask DocBot** button (bottom right, and in the footer) that opens <https://wwwdev.ebi.ac.uk/docbot/?selected=depictio> in a new tab; the widget replaces it once `enabled` is on.
+
 The widget is already wired in `overrides/main.html`, on every page, with the team
 selector locked. Its settings are under `extra.docbot` in `mkdocs.yml`:
 
 | Key | Value |
 |-----|-------|
 | `enabled` | `!ENV [DEPICTIO_DOCS_DOCBOT, false]`: off unless the variable is set |
-| `team` | `depictio`, a placeholder: replace it with the ID DocBot assigns |
-| `backend` | Production, `https://www.ebi.ac.uk/docbot/api`. Development is `https://wwwdev.ebi.ac.uk/docbot/api` |
+| `link` | DocBot's own page for the depictio team, behind the **Ask DocBot** button shown while the widget is off |
+| `team` | `depictio`, the ID DocBot assigned (live on DocBot dev since November 2026) |
+| `backend` | Development, `https://wwwdev.ebi.ac.uk/docbot/api`, until DocBot deploys depictio to production (`https://www.ebi.ac.uk/docbot/api`) |
 | `sdk` | Where the widget's script and stylesheet are served from |
 
 To try it locally, against the development backend if production does not know the

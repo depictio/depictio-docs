@@ -1,4 +1,5 @@
 ---
+icon: material/pipe
 title: "Workflow managers"
 description: "Get pipeline results into Depictio from the workflow manager that ran them."
 ---

@@ -1,4 +1,5 @@
 ---
+icon: material/package-variant-closed
 title: "Nextflow subworkflow"
 description: "Publish an nf-core run to Depictio from inside the pipeline, with the depictio/publish subworkflow and the depictio/ingest module."
 ---

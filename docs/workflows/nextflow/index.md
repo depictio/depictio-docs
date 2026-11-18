@@ -1,4 +1,5 @@
 ---
+icon: simple/nextflow
 title: "Nextflow"
 description: "Two ways to send a Nextflow run to Depictio: the onComplete trigger, or the depictio/publish subworkflow."
 ---

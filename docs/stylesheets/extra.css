@@ -2840,3 +2840,39 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
   -webkit-mask-image: var(--md-admonition-icon--docker);
           mask-image: var(--md-admonition-icon--docker);
 }
+
+/* "Ask DocBot" button, bottom right (overrides/main.html). Opens DocBot in a
+   new tab while the embedded widget waits for DocBot's CORS allow-list. */
+.dp-docbot-fab {
+  position: fixed;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 2rem;
+  background: var(--md-typeset-a-color);
+  color: #fff !important;
+  font-size: 0.7rem;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.dp-docbot-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
+}
+.dp-docbot-fab svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: currentColor;
+}
+@media screen and (max-width: 44.984375em) {
+  .dp-docbot-fab { padding: 0.6rem; }
+  .dp-docbot-fab span { display: none; }
+}
+@media print {
+  .dp-docbot-fab { display: none; }
+}

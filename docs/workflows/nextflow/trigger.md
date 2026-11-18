@@ -1,4 +1,5 @@
 ---
+icon: material/flag-checkered
 title: "Nextflow trigger"
 description: "Let a Nextflow pipeline ingest its own results into Depictio when it completes."
 ---
