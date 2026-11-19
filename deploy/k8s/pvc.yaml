@@ -1,0 +1,13 @@
+# Holds the git-sync checkout of the gh-pages branch (about 3 GB of files).
+# On every new commit git-sync checks out a second worktree before it drops the
+# old one, so the claim needs room for two checkouts plus the object store.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: docs-site
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: basic-csi
+  resources:
+    requests:
+      storage: 20Gi

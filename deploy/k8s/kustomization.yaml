@@ -1,0 +1,27 @@
+# Serves the published docs (every mike version) from EMBL Kubernetes.
+# Apply with: kubectl --context k8s apply -k deploy/k8s
+# See deploy/k8s/README.md and depictio/depictio-docs#319.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Created by the tenant owner with the Capsule tenant datasci-depictio-docs,
+# so it is not part of these manifests.
+namespace: datasci-depictio-docs-prod
+
+labels:
+  - pairs:
+      app.kubernetes.io/name: depictio-docs
+      app.kubernetes.io/part-of: depictio
+    includeSelectors: true
+
+resources:
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+
+# The hash suffix rolls the Deployment whenever nginx.conf changes.
+configMapGenerator:
+  - name: docs-nginx
+    files:
+      - default.conf=nginx.conf

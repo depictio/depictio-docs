@@ -1,0 +1,25 @@
+# The host needs a CNAME docs.depictio.embl.org -> k8s-users.embl.org, like
+# showcases. Until it exists, test with:
+#   curl -k --resolve docs.depictio.embl.org:443:192.168.210.19 https://docs.depictio.embl.org/stable/
+#
+# TLS is left out on purpose: cert-manager cannot complete the HARICA challenge
+# before the record resolves. Once it does, add
+#   metadata.annotations: cert-manager.io/cluster-issuer: harica-issuer
+#   spec.tls: [{hosts: [docs.depictio.embl.org], secretName: docs-depictio-tls}]
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: docs
+spec:
+  ingressClassName: external-users
+  rules:
+    - host: docs.depictio.embl.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: docs
+                port:
+                  name: http
