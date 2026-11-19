@@ -920,6 +920,7 @@ render is in [Components](components.md#secondary-layout-modes).
 | `default_by` <small>(v1.19.0+)</small> | numeric column | `Select` with `always_selected` | Start on the option ranking first on this column, e.g. the family with the most members, instead of the first in the list. The list stays alphabetical, and a pinned data version skips the ranking |
 | `default_order` <small>(v1.19.0+)</small> | `desc`, `asc` | with `default_by` | `desc` (default) starts on the largest value, `asc` on the smallest |
 | `banner_facts` <small>(v1.19.1+)</small> | list | `Select` with `always_selected` | Figures shown in the tab's [scope banner](dashboards.md#scope-banner) |
+| `multiple` <small>(v1.21.0+)</small> | bool | `Select` with `always_selected` | The picker holds one or several values, never none: emptied, it falls back to the default. For a tab whose tiles compare a few units side by side, such as two guides |
 
 A default on the wrong control fails validation: `default_value` on a `RangeSlider`, a list on
 a `Slider`, or a `default_range` whose low end is above its high end.
