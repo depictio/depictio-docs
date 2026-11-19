@@ -1,0 +1,34 @@
+<!doctype html>
+<!-- Stands in for the one-page catalog gallery (~65 MB) that archived
+     documentation versions embed. The catalog is now its own site; this sends
+     those pages to the catalog of their version when the site still keeps it,
+     to latest/ otherwise. Published by deploy-docs.yaml. -->
+<meta charset="utf-8">
+<title>Depictio Tools Catalog</title>
+<noscript><meta http-equiv="refresh" content="0; url=https://depictio.github.io/depictio-catalog/latest/?theme=dark"></noscript>
+<script>
+(function () {
+  var base = 'https://depictio.github.io/depictio-catalog/';
+  var done = false;
+  var go = function (slot) {
+    if (done) return;
+    done = true;
+    location.replace(base + slot + '/?theme=dark');
+  };
+  var wanted = null;
+  try {
+    // Same origin as the docs page embedding this stub: read its version.
+    var m = parent.location.pathname.match(/\/(v\d+\.\d+\.\d+(?:-b\d+)?)\//);
+    wanted = m && m[1];
+  } catch (e) {}
+  if (!wanted || !window.fetch) return go('latest');
+  var timer = setTimeout(function () { go('latest'); }, 5000);
+  fetch(base + 'versions.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : {}; })
+    .then(function (v) {
+      go(Array.isArray(v.versions) && v.versions.indexOf(wanted) >= 0 ? wanted : 'latest');
+    })
+    .catch(function () { go('latest'); });
+})();
+</script>
+<a href="https://depictio.github.io/depictio-catalog/latest/?theme=dark">Depictio Tools Catalog</a>
