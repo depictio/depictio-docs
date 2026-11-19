@@ -153,6 +153,8 @@ While analysis mode is engaged, any component that can feed a group (a scatter f
 
 Since **v1.11.0** every advanced visualization kind has a fixed answer to a group: it splits into panels, colours a single panel, or stays whole. A figure the groups cannot reach says so with a **not grouped** badge whose tooltip gives the reason, and groups reach figures on other tabs by following the dashboard's links in reverse. A lasso drawn on a Manhattan plot now holds in Split.
 
+v1.21.0+ A group captured on one data collection (guide sequences, say) now also recolours the advanced visualizations of a tab built on another one (libraries, samples). The browser asks the server to translate the group through the dashboard's links, the same translation figures, cards and tables already got, and a group that cannot reach the tab still says why in its **not grouped** badge.
+
 Colouring by a column and comparing groups in cards are two ways of grouping the same screen, so they are mutually exclusive: pick a column and card comparison is suspended, its toggle disabled and its value kept for when you clear the column again.
 
 ### Comparing groups in the cards

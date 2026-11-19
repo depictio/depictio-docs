@@ -9331,6 +9331,12 @@ render is in <a href="../components/#secondary-layout-modes">Components</a>.</p>
 <td><code>Select</code> with <code>always_selected</code></td>
 <td>Figures shown in the tab's <a href="../dashboards/#scope-banner">scope banner</a></td>
 </tr>
+<tr>
+<td><code>multiple</code> <small>(v1.21.0+)</small></td>
+<td>bool</td>
+<td><code>Select</code> with <code>always_selected</code></td>
+<td>The picker holds one or several values, never none: emptied, it falls back to the default. For a tab whose tiles compare a few units side by side, such as two guides</td>
+</tr>
 </tbody>
 </table>
 <p>A default on the wrong control fails validation: <code>default_value</code> on a <code>RangeSlider</code>, a list on

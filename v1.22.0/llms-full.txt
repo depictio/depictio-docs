@@ -15240,6 +15240,35 @@ Filter by selecting multiple values:
 | Default     | Initially selected values         |
 | Placeholder | Hint text when empty              |
 
+### TextInput (v1.21.0+)
+
+Keeps the rows of a string column whose text matches what is typed, read as a **regular expression**: `^CCA` keeps values starting with `CCA`, `GG$` those ending with `GG`, a plain word is a substring match. Case is ignored.
+
+| Option           | Description                                                                                      |
+| ---------------- | ------------------------------------------------------------------------------------------------ |
+| `placeholder`    | Hint in the empty box, e.g. `'e.g. ^CCA\|GG$'`                                                   |
+| `case_sensitive` | `true` matches letter case exactly. Off by default                                               |
+| `match_mode`     | `regex` (default) or `contains`, which reads the text literally (`A+` finds the characters `A+`) |
+| `default_value`  | A pattern the box starts with, and returns to on **Reset all**                                   |
+
+An empty box is no filter. A pattern that does not compile, or is longer than 512 characters, is flagged under the box and filters nothing.
+
+Under the box, a line says what the pattern caught (*24 of 122 values match*), counted on the column's distinct values with the filter's own matcher, so a pattern that keeps nothing says so. **show** opens the matching values, laid out in columns, with a box to narrow them and **Copy** (the first 100 values; the filter keeps every match). The list follows what you type.
+
+The pipe is the usual regex alternation: `^CCA|GG$` keeps values that start with `CCA` or end with `GG`. In the list each top-level alternative is marked in its own colour, with a chip saying how many of the listed values it catches.
+
+The matcher is the server's regular-expression engine, so exotic syntax (lookbehind, named groups) can differ from a JavaScript console.
+
+```
+- tag: guide-pattern
+  component_type: interactive
+  workflow_tag: nf-core/crisprseq
+  data_collection_tag: guide_summary
+  interactive_component_type: TextInput
+  column_name: guide
+  placeholder: 'e.g. ^CCA|GG$'
+```
+
 ### DatePicker
 
 Filter by date range:
@@ -16842,6 +16871,8 @@ While analysis mode is engaged, any component that can feed a group (a scatter f
 **Split** draws one panel per category instead of overlaying them, capped at 12. Where the number of categories cannot be known ahead of time, both client and server fall back to an overlay rather than faceting an unbounded column.
 
 Since **v1.11.0** every advanced visualization kind has a fixed answer to a group: it splits into panels, colours a single panel, or stays whole. A figure the groups cannot reach says so with a **not grouped** badge whose tooltip gives the reason, and groups reach figures on other tabs by following the dashboard's links in reverse. A lasso drawn on a Manhattan plot now holds in Split.
+
+v1.21.0+ A group captured on one data collection (guide sequences, say) now also recolours the advanced visualizations of a tab built on another one (libraries, samples). The browser asks the server to translate the group through the dashboard's links, the same translation figures, cards and tables already got, and a group that cannot reach the tab still says why in its **not grouped** badge.
 
 Colouring by a column and comparing groups in cards are two ways of grouping the same screen, so they are mutually exclusive: pick a column and card comparison is suspended, its toggle disabled and its value kept for when you clear the column again.
 
@@ -19369,6 +19400,7 @@ If you omit `column_type`, validation against the compatibility table is skipped
 | `default_by` (v1.19.0+)       | numeric column                       | `Select` with `always_selected`                                                                     | Start on the option ranking first on this column, e.g. the family with the most members, instead of the first in the list. The list stays alphabetical, and a pinned data version skips the ranking                                                                             |
 | `default_order` (v1.19.0+)    | `desc`, `asc`                        | with `default_by`                                                                                   | `desc` (default) starts on the largest value, `asc` on the smallest                                                                                                                                                                                                             |
 | `banner_facts` (v1.19.1+)     | list                                 | `Select` with `always_selected`                                                                     | Figures shown in the tab's [scope banner](https://depictio.github.io/depictio-docs/latest/features/dashboards/#scope-banner)                                                                                                                                                    |
+| `multiple` (v1.21.0+)         | bool                                 | `Select` with `always_selected`                                                                     | The picker holds one or several values, never none: emptied, it falls back to the default. For a tab whose tiles compare a few units side by side, such as two guides                                                                                                           |
 
 A default on the wrong control fails validation: `default_value` on a `RangeSlider`, a list on a `Slider`, or a `default_range` whose low end is above its high end.
 
