@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="1.2.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/differentialabundance 2.0.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.2.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -73,7 +73,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 |---|:--:|---|
 | `DATA_ROOT` | ✓ | Root directory containing differentialabundance output (tables/, other/, pipeline_info/). |
 | `SAMPLESHEET_FILE` | — | Path to the pipeline's --input observation sheet. Auto-detected from {DATA_ROOT}/input/ (CSV or TSV) when omitted; download_test_data.sh puts the megatest's sheet there. |
-| `NO_GSEA` | — | Set (--var NO_GSEA=true) for a run that did not run GSEA (no --gsea_run, or no gene-set file). Prunes the two enrichment collections, so the Enrichment tab drops out instead of scanning for tables that were never written. |
+
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `NO_GSEA`
 
 ### :material-database-outline: Data collections
 

@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.0.0" data-template-updated="2026-10-12">
+<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/airrflow 5.1.1</span>
-<span class="gtd-badge gtd-template-ver">Template 1.0.0</span>
-<span class="gtd-badge gtd-updated">Updated 12 Oct 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -73,13 +73,10 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 |---|:--:|---|
 | `DATA_ROOT` | ✓ | Root directory containing airrflow pipeline output (multiqc/, clonal_analysis/, repertoire_comparison/, parsed_logs/) |
 | `SAMPLESHEET_FILE` | — | Path to the validated samplesheet. Defaults to {DATA_ROOT}/pipeline_info/samplesheet.valid.tsv, which every airrflow run writes. |
-| `SKIP_CLONAL_ANALYSIS` | — | Set when the run used --skip_clonal_analysis (params.json skip_clonal_analysis). Prunes every clonal_analysis/ derived DC. |
-| `SKIP_REPORT` | — | Set when the run used --skip_report (params.json skip_report). Prunes the repertoire_comparison/ and parsed_logs/ derived DCs: the pRESTO log parser runs inside the report step. |
-| `SKIP_THRESHOLD_REPORT` | — | Set when the run used --skip_report_threshold, or an explicit --clonal_threshold instead of 'auto'. Prunes the threshold summary DC. |
-| `SKIP_MULTIQC` | — | Set when the run used --skip_multiqc (params.json skip_multiqc). Prunes the MultiQC DC, which drops the MultiQC tab; the other tabs are unaffected. |
-| `ASSEMBLED_MODE` | — | Set when the run used --mode assembled (params.json mode). Prunes the pRESTO log DCs: assembled input skips read pre-processing entirely. |
 | `GROUP_COL` | — | Samplesheet column holding the condition the dashboard filters and breaks down by (default: treatment). Must exist in pipeline_info/samplesheet.valid.tsv. |
 | `GROUP_COL_DISPLAY` | — | Reader-facing label of GROUP_COL in filter titles and descriptions (default: Condition). |
+
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `SKIP_CLONAL_ANALYSIS`, `SKIP_REPORT`, `SKIP_THRESHOLD_REPORT`, `SKIP_MULTIQC`, `ASSEMBLED_MODE`
 
 ### :material-database-outline: Data collections
 

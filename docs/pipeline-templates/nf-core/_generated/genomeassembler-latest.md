@@ -60,10 +60,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.2.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="1.3.0" data-template-updated="2026-11-04">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/genomeassembler 2.0.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.2.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.3.0</span>
+<span class="gtd-badge gtd-updated">Updated 4 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -145,8 +145,8 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 
 | Recipe | Transforms | Output |
 |---|---|---|
-| [`busco/batch_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/busco/batch_summary.py) | One row per assessed assembly, from BUSCO's `batch_summary.txt`. | `assembly_id`, `input_file`, `lineage`, `complete_pct`, `single_pct`, `duplicated_pct`, `fragmented_pct`, `missing_pct`, `n_markers`, `stop_codon_pct`, `scaffold_n50`, `contig_n50`, `percent_gaps`, `n_scaffolds` |
-| [`busco/composition.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/busco/composition.py) | BUSCO scores as four classes per assembly, for a composition bar. | `assembly_id`, `lineage`, `busco_class`, `rank`, `class_order`, `percent` |
+| [`busco/batch_summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/busco/batch_summary.py) | One row per assessed assembly, from BUSCO's `batch_summary.txt`. | `assembly_id`, `input_file`, `lineage`, `busco_mode`, `complete_pct`, `single_pct`, `duplicated_pct`, `fragmented_pct`, `missing_pct`, `n_markers`, `stop_codon_pct`, `scaffold_n50`, `contig_n50`, `percent_gaps`, `n_scaffolds` |
+| [`busco/composition.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/busco/composition.py) | BUSCO scores as four classes per assembly, for a composition bar. | `assembly_id`, `lineage`, `busco_mode`, `run_id`, `busco_class`, `rank`, `class_order`, `percent` |
 | [`genomescope/summary.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/genomescope/summary.py) | One row per read set, from GenomeScope's summary table. | `read_set`, `genomescope_version`, `k`, `ploidy`, `heterozygosity_min`, `heterozygosity_max`, `haploid_length_min`, `haploid_length_max`, `repeat_length_min`, `repeat_length_max`, `unique_length_min`, `unique_length_max`, `repeat_fraction`, `model_fit_min`, `model_fit_max`, `read_error_rate_min`, `read_error_rate_max` |
 | [`jellyfish/histogram.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/jellyfish/histogram.py) | The read k-mer spectrum of each read set, from `jellyfish histo` output. | `read_set`, `multiplicity`, `kmers`, `kmer_mass`, `peak_multiplicity` |
 | [`merqury/assembly_qv.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/merqury/assembly_qv.py) | One row per assembly: Merqury's QV joined to its k-mer completeness. | `assembly_id`, `merqury_name`, `asm_only_kmers`, `total_kmers`, `qv`, `error_rate`, `solid_kmers_assembly`, `solid_kmers_reads`, `kmer_completeness` |

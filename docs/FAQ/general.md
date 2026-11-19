@@ -51,7 +51,7 @@ Creating dashboards in Depictio is straightforward. Please refer to our [Dashboa
 
 ### What data formats does Depictio support?
 
-Depictio currently supports all tabular formats (CSV, TSV, XLSX, Parquet, etc.) compatible with [Polars](https://pola.rs/). As of v0.5.0, [MultiQC](https://seqera.io/multiqc/) reports are fully supported with dedicated visualization components. See our [Roadmap](../roadmap/README.md) for planned support of additional data formats.
+Depictio currently supports all tabular formats (CSV, TSV, XLSX, Parquet, etc.) compatible with [Polars](https://pola.rs/). [MultiQC](https://seqera.io/multiqc/) reports (`multiqc.parquet`, MultiQC 1.29 or later) have their own component, and the reports of several runs can be compared: see [MultiQC](../features/multiqc.md). See our [Roadmap](../roadmap/README.md) for planned support of additional data formats.
 
 ### Can I share my dashboards with others?
 
@@ -65,7 +65,7 @@ Depictio relies on [Polars](https://pola.rs/) and [Delta lake](https://delta.io/
 
 ### Can I integrate Depictio with my existing workflows?
 
-Yes, Depictio is designed to integrate with existing bioinformatics workflows. The [Depictio CLI](../depictio-cli/usage.md), `depictio ingest`, can be used to push data from your workflows to Depictio for visualization, and a Nextflow pipeline can run it itself when it completes ([Nextflow trigger](../depictio-cli/nextflow-trigger.md)).
+Yes, Depictio is designed to integrate with existing bioinformatics workflows. The [Depictio CLI](../depictio-cli/usage.md), `depictio ingest`, can be used to push data from your workflows to Depictio for visualization, and a Nextflow pipeline can run it itself when it completes ([Nextflow trigger](../workflows/nextflow/trigger.md)).
 
 ### Is there an API for Depictio?
 

@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="2.0.0" data-template-updated="2026-11-04">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/mag 5.5.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 2.0.0</span>
+<span class="gtd-badge gtd-updated">Updated 4 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -98,8 +98,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `gtdbtk_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/gtdbtk/summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">gtdbtk/summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `gtdbtk_rank_composition` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/gtdbtk/rank_composition.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">gtdbtk/rank_composition.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `prokka_summary_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?[Pp]rokka/.*\.txt$</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `prokka_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/prokka/summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">prokka/summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `prokka_gff_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?[Pp]rokka/.*\.gff$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `prokka_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/prokka/summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">prokka/summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `prokka_gene_track` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/prokka/gene_track.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">prokka/gene_track.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 | `bin_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/mag/bin_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">mag/bin_summary.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 

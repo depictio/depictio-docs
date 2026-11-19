@@ -76,9 +76,9 @@ left panel and narrow every tab.
     column named `sample`), one column per factor, and `GROUP_COL` defaulting to
     the first factor. Without it the design table, the group filters and the
     group splits are dropped and the figures fall back to one colour. `GENOME` (default `hg38`) is the UCSC
-    assembly the novel precursors link out to. A run with `--skip_mirdeep` takes
-    `--var SKIP_MIRDEEP=true`, one with `--skip_multiqc` takes
-    `--var SKIP_MULTIQC=true`.
+    assembly the novel precursors link out to. `SKIP_MIRDEEP` and `SKIP_MULTIQC`
+    are set from `--skip_mirdeep` and `--skip_multiqc` in the run's params;
+    `--var SKIP_MULTIQC=false` overrides.
 
 === "From the pipeline itself (v1.10.0+)"
 
@@ -89,7 +89,7 @@ left panel and narrow every tab.
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    manifest. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 
@@ -227,7 +227,7 @@ every child tab.
 
     !!! tip "miRTrace comes through MultiQC"
         miRTrace's numbers are read back from the MultiQC parquet. A run with
-        `--skip_multiqc` takes `--var SKIP_MULTIQC=true`: the MultiQC tab goes,
+        `--skip_multiqc` sets `SKIP_MULTIQC` from its params: the MultiQC tab goes,
         and so do the miRTrace cards, the length, complexity and composition
         figures, and the miRNA share row on the Overview.
 
@@ -350,8 +350,8 @@ every child tab.
         | Precursor tables (collapsed) | *Novel precursors*, *Every miRDeep2 call, per library* |
 
     !!! tip "Dropped with `--skip_mirdeep`"
-        A run without miRDeep2 writes no `result_*.csv`. Pass
-        `--var SKIP_MIRDEEP=true` and the four miRDeep2 collections are pruned,
+        A run without miRDeep2 writes no `result_*.csv`. Its params set
+        `SKIP_MIRDEEP` and the four miRDeep2 collections are pruned,
         which drops this tab and the novel card, row and figure on the Overview.
 
 Tables select rows and the planes and curves select points: the library summary,

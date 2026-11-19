@@ -1,40 +1,61 @@
 ---
 title: "FAQ"
 icon: material/help-circle
-description: "Find answers to frequently asked questions about Depictio."
+description: "Frequently asked questions about Depictio, by topic."
 ---
 
 # Frequently Asked Questions
 
-<!-- This section is under construction and will be updated soon. -->
+Common questions about Depictio, by topic. No answer here? Search the docs, or open an issue on GitHub.
 
-This section addresses common questions about Depictio. If you don't find an answer to your question here, please check open an issue on GitHub.
+<div class="grid cards" markdown>
 
-## FAQ Categories
+-   :material-information-outline:{ .lg .middle .dp-purple } **General**
 
-The FAQ is organized into several categories to help you find answers quickly:
+    ---
 
-### General Questions
+    What Depictio is, who it is for, and who is behind it.
 
-Common questions about what Depictio is, who it's for, and its key features.
+    [:octicons-arrow-right-24: General](general.md#general-questions)
 
-[View General FAQ](general.md)
+-   :material-package-variant:{ .lg .middle .dp-teal } **Installation and setup**
 
-### Installation and Setup
+    ---
 
-Questions about system requirements, installation methods, and configuration.
+    System requirements, installing, and running it on your machine.
 
-[View Installation Guide](../installation/README.md)
+    [:octicons-arrow-right-24: Installation](general.md#installation-and-setup)
 
-### Usage
+-   :material-view-dashboard:{ .lg .middle .dp-blue } **Usage**
 
-Questions about creating dashboards, supported data formats, and sharing.
+    ---
 
-[View Usage Guide](../usage/README.md)
+    Creating dashboards, supported data formats and sharing.
 
-## Getting More Help
+    [:octicons-arrow-right-24: Usage](general.md#usage)
 
-If you can't find an answer to your question in the FAQ:
+-   :material-cog-outline:{ .lg .middle .dp-violet } **Technical**
 
-1. **Search the documentation**: Use the search function to find relevant information
-2. **Open an issue on GitHub**: For bugs, feature requests, or other technical issues
+    ---
+
+    Large datasets, existing workflows and the API.
+
+    [:octicons-arrow-right-24: Technical](general.md#technical-questions)
+
+-   :material-wrench-outline:{ .lg .middle .dp-orange } **Troubleshooting**
+
+    ---
+
+    Server connection problems, and how to report a bug.
+
+    [:octicons-arrow-right-24: Troubleshooting](general.md#troubleshooting)
+
+-   :simple-github:{ .lg .middle .dp-red } **Open an issue**
+
+    ---
+
+    Bugs, feature requests and questions the FAQ does not answer.
+
+    [:octicons-arrow-right-24: GitHub issues](https://github.com/depictio/depictio/issues)
+
+</div>

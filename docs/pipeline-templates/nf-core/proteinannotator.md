@@ -92,8 +92,8 @@ joining them per residue, per domain, per protein and per sample:
     |---|---|---|
     | `METADATA_FILE` | unset | design table; enables the group filters, the Samples card and the design table |
     | `GROUP_COL` | first factor column | design column the dashboard groups and filters by |
-    | `SKIP_INTERPROSCAN` | unset | set for a `--skip_interproscan` run: drops the InterProScan collections and the step that cites them |
-    | `SKIP_S4PRED` | unset | set for a `--skip_s4pred` run: drops the Secondary structure tab; the residue table keeps its sequence and domains |
+    | `SKIP_INTERPROSCAN` | from the run's params | set from a `--skip_interproscan` run: drops the InterProScan collections and the step that cites them |
+    | `SKIP_S4PRED` | from the run's params | set from a `--skip_s4pred` run: drops the Secondary structure tab; the residue table keeps its sequence and domains |
 
 === "From the pipeline itself (v1.10.0+)"
 
@@ -104,7 +104,7 @@ joining them per residue, per domain, per protein and per sample:
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    manifest. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 
@@ -327,8 +327,8 @@ depictio ingest results/ \
   --var METADATA_FILE=design.tsv
 ```
 
-For a run with `--skip_interproscan` or `--skip_s4pred`, add
-`--var SKIP_INTERPROSCAN=true` or `--var SKIP_S4PRED=true`.
+`SKIP_INTERPROSCAN` and `SKIP_S4PRED` are set from `--skip_interproscan` and
+`--skip_s4pred` in the run's params; `--var SKIP_S4PRED=false` overrides.
 
 See [nf-co.re/proteinannotator/usage](https://nf-co.re/proteinannotator/1.1.0/docs/usage)
 for full pipeline documentation.

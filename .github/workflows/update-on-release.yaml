@@ -104,6 +104,44 @@ jobs:
 
           echo "OpenAPI spec extracted successfully: $PATH_COUNT endpoints"
 
+      - name: Generate the CLI command reference
+        run: |
+          # The same image: Dockerfile.api copies depictio/ (depictio/cli included)
+          # and installs the core dependencies, typer among them, so dump.py can
+          # import the CLI and walk its commands. No server or database starts.
+          # dump.py writes to a mounted folder rather than stdout, so a log line
+          # printed while importing cannot end up in the JSON.
+          mkdir -p "$RUNNER_TEMP/cli-reference"
+          chmod 777 "$RUNNER_TEMP/cli-reference"
+          docker run --rm \
+            -e DEPICTIO_TELEMETRY_ENABLED=false \
+            -v "$PWD/scripts/cli-reference:/cli-reference:ro" \
+            -v "$RUNNER_TEMP/cli-reference:/out" \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.image_tag }} \
+            python /cli-reference/dump.py -o /out/cli-reference.json
+
+          # dump.py exits non-zero on too few commands or options; check the JSON
+          # here too, as for the OpenAPI spec, before it replaces the committed one.
+          echo "Validating CLI reference..."
+          if ! jq empty "$RUNNER_TEMP/cli-reference/cli-reference.json" 2>/dev/null; then
+            echo "Error: Invalid JSON in cli-reference.json"
+            exit 1
+          fi
+          COMMAND_COUNT=$(jq '[.commands[] | select(.hidden | not)] | length' "$RUNNER_TEMP/cli-reference/cli-reference.json")
+          OPTION_COUNT=$(jq '[.commands[] | select(.hidden | not) | .params[] | select(.kind == "option" and (.hidden | not))] | length' "$RUNNER_TEMP/cli-reference/cli-reference.json")
+          if [ "$COMMAND_COUNT" -lt 35 ] || [ "$OPTION_COUNT" -lt 120 ]; then
+            echo "Error: cli-reference.json has too few commands ($COMMAND_COUNT) or options ($OPTION_COUNT)"
+            exit 1
+          fi
+          cp "$RUNNER_TEMP/cli-reference/cli-reference.json" docs/depictio-cli/cli-reference.json
+
+          # Standard library only: renders docs/depictio-cli/usage.md from the JSON,
+          # validates it, then checks it is what the pre-commit hook expects.
+          python3 scripts/cli-reference/render.py
+          python3 scripts/cli-reference/render.py --check
+
+          echo "CLI reference generated: $COMMAND_COUNT commands, $OPTION_COUNT options"
+
       - name: Update pyproject.toml version
         run: |
           sed -i "s/^version = .*/version = \"${{ steps.version.outputs.image_tag }}\"/" pyproject.toml
@@ -123,6 +161,7 @@ jobs:
 
             ### Changes
             - Updated OpenAPI specification from released Docker image
+            - Regenerated the CLI command reference (docs/depictio-cli/usage.md) from the same image
             - Updated version in pyproject.toml
 
             ### Source
@@ -137,6 +176,8 @@ jobs:
           draft: false
           add-paths: |
             docs/api/openapi.json
+            docs/depictio-cli/cli-reference.json
+            docs/depictio-cli/usage.md
             pyproject.toml
 
       - name: Summary

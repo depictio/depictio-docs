@@ -108,7 +108,7 @@ left panel and narrow every tab through the project links, and the collapsed
     output directory when it finishes and resolves this template from its own
     manifest. Without a `METADATA_FILE` the window comparison is pruned, and the
     MultiQC tab stays empty until the report is regenerated as above. See
-    [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 

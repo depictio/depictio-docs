@@ -193,7 +193,7 @@ YAML holds are replaced, matched by title. What else happens:
 Every import, the first one included, also drops what the project's data cannot fill:
 a highlight (a figure redrawn from another tab) whose source tab or figure is gone, and
 each list item of a text tile that cites a [live value](#text-live-values) whose data
-collection is missing or empty in the project.
+collection is missing or empty, or lacks a column the value reads (v1.20.4+).
 
 ### Export
 
@@ -1057,6 +1057,7 @@ total, as a fraction. Both are for text only: a card refuses them.
     - **Names** are lower-case letters, digits and `_`, start with a letter and have at
       most 12 characters. There is no space inside the braces. Validation fails on a
       placeholder that names no declared value, and on a value the tile never prints.
+    - **`{{legend:column}}`** (v1.20.4+) as the value of a list item prints the colour key of a column the dashboard colours with [`category_colors`](dashboards.md#category-colors), a dot and the value per line. A column without pinned colours prints a dash.
     - **Placeholders fill** prose, bold text, link labels, headings, tables and the
       title. Code spans stay literal.
     - **At import**, a list item that cites a value whose data collection is missing
@@ -1166,28 +1167,10 @@ floating_initial_state: docked # compact (default), expanded, docked, hidden
 
 The CLI validates YAML files in two passes:
 
-```text
-┌──────────────────────────────────────────────────────────────┐
-│  Pass 1 — Schema + Domain  (always, no server needed)        │
-│                                                              │
-│  ✓ YAML syntax parsing                                       │
-│  ✓ Required fields (title, component required fields)        │
-│  ✓ visu_type enum (scatter, line, bar, box, histogram, ...)  │
-│  ✓ mode/code_content cross-field rule                        │
-│  ✓ selection_enabled/selection_column cross-field rule       │
-│  ✓ aggregation × column_type compatibility (if provided)     │
-│  ✓ interactive_type × column_type compatibility (if provided)│
-│  ✓ MultiQC: selected_module + selected_plot both required    │
-│  ✓ Image: image_column required                              │
-├──────────────────────────────────────────────────────────────┤
-│  Pass 2: Server Schema  (with a server, skip: --offline)     │
-│                                                              │
-│  ✓ Resolves workflow_tag + data_collection_tag → DC schema   │
-│  ✓ Checks column_name exists in delta table schema           │
-│  ✓ Infers column_type from schema → validates aggregation    │
-│    and interactive_component_type against inferred type      │
-└──────────────────────────────────────────────────────────────┘
-```
+| Pass | Runs | Checks |
+| --- | --- | --- |
+| **1. Schema and domain** | Always; no server needed. A failure stops here. | YAML syntax; required fields (`title`, each component's own); `visu_type` is a known chart type; `mode: code` has a `code_content`; `selection_enabled` has a `selection_column`; `aggregation` and `interactive_component_type` suit `column_type`, when it is given; MultiQC has both `selected_module` and `selected_plot`; an image has an `image_column` |
+| **2. Server schema** | With a server; `--offline` skips it. Without `--server`, the default server is tried and what it finds is shown as warnings. | `workflow_tag` and `data_collection_tag` resolve to a collection of the project; `column_name` is one of its columns; when `column_type` is not given, it is read from the collection and `aggregation` or `interactive_component_type` is checked against it |
 
 Error output is a clean per-component table — each invalid field gets its own row:
 

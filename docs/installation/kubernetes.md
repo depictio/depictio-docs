@@ -106,21 +106,47 @@ helm install depictio helm-charts/depictio \
 
 ### Single-user vs Multi-user mode
 
+The chart starts in multi-user mode (sign-in required), unlike the root `docker-compose.yaml`.
+
 ```yaml
 # my-values.yaml
 backend:
   env:
-    DEPICTIO_AUTH_SINGLE_USER_MODE: "true"   # default — no login required
+    # DEPICTIO_AUTH_SINGLE_USER_MODE: "true"   # no login, every visitor is the admin
     # DEPICTIO_AUTH_PUBLIC_MODE: "true"        # public read-only with sign-in
 ```
+
+### SciLifeLab Serve { #scilifelab-serve }
+
+On [SciLifeLab Serve](https://serve.scilifelab.se/), the app's permission picks the mode: a
+**private** or **project** app runs in single-user mode (Serve's own sign-in protects it, and
+every visitor reaching it is the admin), a **public** or **link only** app runs in public mode
+(anonymous, read-only). Serve passes no extra values, so no bootstrap admin is declared.
+
+Create the app **private first**, then switch it to public:
+
+1. Create the app as private (or project). The first boot seeds the instance admin.
+2. Open the app, copy the CLI configuration from your profile, and ingest your projects and
+   build the dashboards with it.
+3. Change the app's permission to public (or link only). The admin, its token and your
+   content stay in place: visitors browse read-only, and the CLI keeps ingesting with the
+   token from step 2.
+
+!!! warning "An app created public has no usable admin"
+    A public app started on an empty database seeds an admin with a random password that
+    nobody knows, so nobody can sign in to manage it. Before v1.22.1 it did not start at all
+    (every API call answered 504). Switch it back to private to work on it, then to public
+    again.
 
 ### S3 credentials
 
 ```yaml
 # my-values.yaml
 secrets:
-  s3RootUser: "myadmin"
+  s3RootUser: "myadmin"                      # generated when empty
   s3RootPassword: "mysecurepassword"
+  bootstrapAdminEmail: "admin@example.org"   # first admin, read on an empty database
+  bootstrapAdminPassword: "change-me"
 ```
 
 These keys were `secrets.minioRootUser` and `secrets.minioRootPassword` before
@@ -164,6 +190,27 @@ An external S3 is not affected by the move from MinIO to SeaweedFS, and the
     From **v1.6.0** the backend creates `DEPICTIO_S3_BUCKET` at startup when it is
     missing, then verifies it; an existing bucket is left untouched. See
     [Required S3 permissions](env-reference.md#required-s3-permissions).
+
+### Browser access to indexed files <small>(v1.22.0+)</small> { #s3-browser-access }
+
+3D structures and file-backed genome tracks are read by the browser. `s3.browserAccess` sets
+[`DEPICTIO_S3_BROWSER_ACCESS`](env-reference.md#s3-browser-access) on the backend and the worker:
+
+| Value | Mode |
+|-------|------|
+| `""` (default) | Picked by the chart: `presigned` when it routes the bundled store (`ingress.enabled` or `gateway.enabled`, with `global.domain` set), or when an external store has `DEPICTIO_S3_PUBLIC_URL` in `s3.env`; `proxy` otherwise |
+| `presigned` | Browsers read S3 directly, through presigned URLs |
+| `proxy` | The API streams the files: for an S3 store with no public route |
+
+```yaml
+# my-values.yaml
+s3:
+  browserAccess: proxy   # any other value than "", presigned or proxy fails the install
+```
+
+The automatic choice reads `s3.env`, not `backend.env`. With the URL in `backend.env`, as in
+[External S3](#external-s3) above, it picks `proxy`: set `browserAccess: presigned`, or move
+`DEPICTIO_S3_PUBLIC_URL` to `s3.env`, if browsers reach the store.
 
 ### Ingress
 
@@ -288,10 +335,11 @@ your deployment does.
     Pods created by the Percona MongoDB operator are also untouched, since the
     operator owns those pod specs.
 
-### Celery workers (background callbacks)
+### Celery workers
 
-The Celery worker is included and enabled by default (`celery.enabled: true`).
-Design mode always requires Celery. View mode behaviour is controlled separately:
+The Celery worker is enabled by default (`celery.enabled: true`): editor previews, large renders
+and thumbnails run on it. `DEPICTIO_CELERY_WORKERS` sets its processes (the chart sets `2`); each
+holds its own data, so size it with the pod's memory limit:
 
 ```yaml
 # my-values.yaml
@@ -299,7 +347,6 @@ celery:
   replicas: 1
   env:
     DEPICTIO_CELERY_WORKERS: "4"
-    DEPICTIO_CELERY_ENABLED: "true"   # async view mode (recommended for production)
 ```
 
 !!! note "No ingestion worker in the chart <small>(v1.15.0)</small>"
@@ -307,6 +354,27 @@ celery:
     [ingestion worker](docker.md#ingestion-worker) to read the `ingestion` queue. Leave
     `DEPICTIO_INGESTION_ASYNC_DELTATABLE_UPSERT` and `DEPICTIO_INGESTION_BROWSER_TRIGGER`
     off on Kubernetes: with either on, the jobs they create are never picked up.
+
+### Pod labels and internet egress <small>(v1.22.0+)</small> { #pod-labels }
+
+`backend.podLabels` and `celery.podLabels` add labels to the backend and worker pods (the pod
+template only, never the selector). Both default to the label SciLifeLab Serve reads to allow
+outbound traffic, which it denies by default:
+
+```yaml
+# values.yaml defaults
+backend:
+  podLabels:
+    networking/allow-internet-egress: "true"
+celery:
+  podLabels:
+    networking/allow-internet-egress: "true"
+```
+
+The backend dials out for the UCSC track catalogue and genome files, remote tracks, structure
+lookups, OIDC and migration targets; the worker for remote data at ingestion. The label does
+nothing on clusters without that policy. To keep a pod off the internet on Serve, set the label to
+`"false"`: an empty map in an override file does not remove it, since Helm merges maps.
 
 ### Resource limits
 

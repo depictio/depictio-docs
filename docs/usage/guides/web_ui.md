@@ -38,43 +38,28 @@ in Classic, Paper has it in the top bar or the dock.
 
 ### <span style="color: #6495ED;">:material-account-plus:</span> Registering an Account (Sign Up)
 
-1. **Navigate to the Registration page** by clicking the **Register** button on the login screen.
+[![The Sign in page: Email, Password, Sign in, and Create an account](../../images/guides/web-ui/login_light.webp#only-light){ width="466" }](../../images/guides/web-ui/login_light.webp){target=_blank}
+[![The Sign in page: Email, Password, Sign in, and Create an account](../../images/guides/web-ui/login_dark.webp#only-dark){ width="466" }](../../images/guides/web-ui/login_dark.webp){target=_blank}
 
-<div style="border: 1px solid grey; width: 602px; padding: 1px;">
-    <a href="../../../images/guides/register_login/login.png" target="_blank">
-        <img src="../../../images/guides/register_login/login.png" width="600">
-    </a>
-</div>
-
-2. **Enter your email address** in the "Email" field.
-
-3. **Create a password** and enter it in the "Password" field. You can click the eye icon to view the password as you type and **Confirm your password** by re-entering it in the "Confirm Password" field.
-
-4. Click the **Register** button to submit your registration details.
-
-5. After successful registration, you can return to the login page by clicking the **Back to Login** button.
+1. On the **Sign in** page, click **Create an account**.
+2. Enter your **Email**, a **Password**, and the same password again in **Confirm password**.
+3. Click **Create account**. **Already have an account? Sign in** goes back to the sign-in form.
 
 ### <span style="color: #45B8AC;">:material-login:</span> Logging In (Sign In)
 
-1. **Open the Depictio Login page**.
-2. **Enter your email address** in the "Email" field.
-3. **Enter your password** in the "Password" field.
-4. If you want to see the password as you type it, click the eye icon next to the password field.
-5. Once both fields are filled in, click the **Login** button.
-6. You will be redirected to the Depictio landing page (currently `/dashboards`).
+1. Open the **Sign in** page.
+2. Enter your **Email** and **Password**. The eye icon shows the password as you type.
+3. Click **Sign in**. You land on the **Dashboards** page (`/dashboards`).
 
-### <span style="color: #E53935;">:material-google:</span> Google OAuth Login
+### <span style="color: #1E88E5;">:material-shield-key-outline:</span> Single sign-on login
 
-If you have configured Google OAuth for your Depictio instance (see [Configuration](../../../installation/configuration/#google-oauth-integration)), you can log in using your Google account. If the account does not exist, it will be created automatically.
+An instance with [OpenID Connect single sign-on](../../installation/sso/index.md) shows one button
+per identity provider (for example *Sign in with Google* or the label the administrator
+set). It sends you to the provider and back. If the account does not exist, it is created
+automatically, unless registration is closed.
 
-When the server refuses the sign-in, for example because registration is closed, the
-callback page shows **Sign-in failed** and the reason, since v1.17.2.
-
-### <span style="color: #1E88E5;">:material-shield-key-outline:</span> SSO login <small>(v1.18.0+)</small>
-
-An instance with [SAML single sign-on](../../installation/sso.md) adds a button, *Sign in
-with SSO* or the label it sets, that sends you to your institution's identity provider and
-back.
+When the server refuses the sign-in, for example because registration is closed or the
+provider did not verify your email, the page shows **Sign-in failed** and the reason.
 
 ## <span style="color: #F68B33;">:material-view-dashboard:</span> Landing page / Dashboards section (/dashboards) { #dashboards-listing }
 
@@ -136,7 +121,22 @@ The left sidebar provides easy access to various sections of the application. Th
 
 The button at the top of the sidebar folds it to icons. The top bar holds the theme
 toggle and your avatar, which opens [Account settings](#account-settings) <small>(v1.17.0+)</small>.
-The compass in the header of the Dashboards and Projects pages starts the guided tour.
+The compass in the header of the Dashboards and Projects pages starts the
+[tour](#guided-tours) of the page (*Take the tour of this page*; *Take the tour* for a guest).
+
+#### <span style="color: #7A5DC7;">:material-compass-outline:</span> Guided tours <small>(v1.22.0+)</small> { #guided-tours }
+
+Tours are short cards beside the page: nothing is dimmed, the control they describe is
+ringed, and the arrow keys and **Esc** move through them. A first visit to the Dashboards
+or Projects list opens a welcome card; for a builder it offers three journeys: *Explore a
+dashboard*, *Bring in a pipeline's results* and *Build a dashboard*. Each page then has one
+short chapter (Dashboards, Projects, the editor, the component builder), offered once on
+first arrival and never started on its own; a guest gets a three-step Dashboards chapter. A dashboard has
+no chapter: its [landing card](dashboard-guide.md#landing-hint) and
+[Guide](dashboard-guide.md) do that job. Seen chapters are remembered in this browser.
+When the deployment turns tours off
+([`DEPICTIO_WALKTHROUGH_DISABLED`](../../installation/env-reference.md#global-settings)),
+the compass stays, disabled, with *Guided tours are turned off on this deployment*.
 
 #### <span style="color: #45B8AC;">:material-server-outline:</span> Server information <small>(v1.17.0+)</small> { #server-information }
 
@@ -190,13 +190,11 @@ until the next one. See [Release check](#release-check).
 3. The dashboard will be duplicated and added to the section with the suffix **"(copy)"**.
 
 !!! note
-    <div style="border: 0px solid grey; padding: 1px; text-align: center;">
-    <a href="../../../images/guides/dashboard_creation/dashboard_status.png" target="_blank">
-    <img src="../../../images/guides/dashboard_creation/dashboard_status.png" width="100">
-    </a>
-    </div>
-    Both "public" and "private" dashboards are listed in the **Dashboards** section. Public dashboards are accessible to all users, while private dashboards are only visible to the user who created them.
-    Only the user who created a private dashboard can edit, or delete it.
+    [![The Dashboards page as a table: the dashboards of the public Soil microbiome 16S project marked Public, those of the Sequencing QC study marked Private](../../images/guides/web-ui/visibility_chips_light.webp#only-light){ width="800" }](../../images/guides/web-ui/visibility_chips_light.webp){target=_blank}
+    [![The Dashboards page as a table: the dashboards of the public Soil microbiome 16S project marked Public, those of the Sequencing QC study marked Private](../../images/guides/web-ui/visibility_chips_dark.webp#only-dark){ width="800" }](../../images/guides/web-ui/visibility_chips_dark.webp){target=_blank}
+
+    The **Visibility** column of the **Dashboards** page says whether a dashboard is **Public** or **Private**. A dashboard takes the visibility of its project: a public one opens for every user, a private one only for the users the project is shared with.
+    Public means read-only for everyone else. Editing a dashboard needs the editor role on its project and deleting it the owner role. Admins can do both, and so can the owner of the dashboard itself, such as a copy they made.
 
 #### <span style="color: #45B8AC;">:material-link-variant:</span> Share a filtered listing <small>(v1.10.1+)</small> { #share-a-filtered-listing }
 
@@ -219,8 +217,8 @@ filters. The link grants no access: it only narrows what they could already open
 
     The Projects Guide covers:
 
-    - **Project Types** - Basic vs Advanced projects
-    - **Creating Projects** - Step-by-step instructions
+    - **Starting a project from a source** - Projects are created from their data
+    - **Creating Projects** - Step-by-step instructions, see [Create a project](../projects/guide.md#create-a-project)
     - **Configuration** - YAML setup and examples
     - **Data Collections** - File organization and processing
     - **Permissions** - Access control and collaboration
@@ -243,10 +241,13 @@ filters. The link grants no access: it only narrows what they could already open
 
 ### <span style="color: #45B8AC;">:material-link-variant:</span> Creating a project from a run folder or a manifest <small>(v1.16.0+)</small> { #creating-a-project-from-a-manifest }
 
-**+ New Project** offers four tabs: **Create New**, **Import**, **From
-Manifest** and **From a run folder**. The last two build a project from data
-the server reads, with no CLI involved, in three steps: **Source**, **Preview**
-(a dry run, nothing is created) and **Create**.
+**+ New Project** starts a project from a source. There is no Basic or Advanced choice
+since v1.21.0: the project is created from its data, and the pipeline is detected or
+picked as an optional correction. A folder can be read as **Flat tables**, **Custom
+workflows** (Project Builder) or **Pipeline template**. See
+[Create a project](../projects/guide.md#create-a-project). The run folder and manifest
+sources build a project from data the server reads, with no CLI involved, in three steps:
+**Source**, **Preview** (a dry run, nothing is created) and **Create**.
 
 - **From a run folder**: point at the results folder of one pipeline run, in a
   bucket or, on a `depictio local` server, on this computer. Depictio
@@ -276,13 +277,17 @@ and close:
   `/cli-agents` page leads here.
 - **Preferences**, kept in this browser: **Theme**, light or dark; [**Look**](#looks),
   Paper, Classic or the instance default; **Font size** of figures, tables and cards.
-- **Getting started**: replay the guided tour of the app or of the builder.
+- **Getting started** <small>(v1.22.0+)</small>: the [guided tours](#guided-tours).
+  **Take the tour** starts the tour of the dashboards list, **Offer every tour again**
+  resets the tours you have seen, and the switch *Offer a tour on pages I open for the first
+  time* stops or resumes the offers. All three are disabled when the deployment turns tours off.
 - **Server**: the [server information](#server-information).
 
 **Sign out** is at the foot of the page.
 
 === "Account"
 
+    <!-- TODO v1.22.0 recapture: account_settings_{light,dark}.webp, /profile with the Account section open; the Getting started subtitle now reads "Tours of the pages, offered once each" (was "Replay the guided tour of Depictio"). Optionally add a "Getting started" tab with that section open: Take the tour, Offer every tour again, and the offers switch. -->
     [![Account settings: the Account section open, with the avatar, email, role, database ID and dates, then the Password, CLI agents, Preferences, Getting started and Server sections](../../images/guides/web-ui/account_settings_light.webp#only-light)](../../images/guides/web-ui/account_settings_light.webp){target=_blank}
     [![Account settings: the Account section open, with the avatar, email, role, database ID and dates, then the Password, CLI agents, Preferences, Getting started and Server sections](../../images/guides/web-ui/account_settings_dark.webp#only-dark)](../../images/guides/web-ui/account_settings_dark.webp){target=_blank}
 
@@ -358,7 +363,7 @@ Depictio's main pages and their URLs:
 
 ### <span style="color: #45B8AC;">:material-database-cog:</span> Project detail (/projects/{id}) { #project-detail }
 
-A single project's data. Since v1.17.0 the page starts with the project's type and its
+A single project's data. Since v1.17.0 the page starts with a sentence on what the project holds and its
 workflows, as cards to pick one from, then a switch between two views:
 
 - **Data collections** — the project's workflows, a sortable, filterable table of its data collections, its cross-DC links, and the details of the selected collection. For a [composed](../projects/composed-dashboards.md) project, a **Files the catalog did not recognise** card lists the tables left out, with the command that adds each <small>(v1.16.0+)</small>.
@@ -372,8 +377,8 @@ You can reach this page directly by clicking the **project badge** shown on any
 dashboard card or in the dashboards table, or the **project name** in an open
 dashboard's Settings <small>(v1.6.0+)</small>.
 
-[![A project page: type Advanced, the penguin_species_analysis workflow selected, and the switch between Data collections and Ingestion report, on Data collections](../../images/guides/web-ui/project_detail_light.webp#only-light)](../../images/guides/web-ui/project_detail_light.webp){target=_blank}
-[![A project page: type Advanced, the penguin_species_analysis workflow selected, and the switch between Data collections and Ingestion report, on Data collections](../../images/guides/web-ui/project_detail_dark.webp#only-dark)](../../images/guides/web-ui/project_detail_dark.webp){target=_blank}
+[![A project page: the penguin_species_analysis workflow selected, and the switch between Data collections and Ingestion report, on Data collections](../../images/guides/web-ui/project_detail_light.webp#only-light)](../../images/guides/web-ui/project_detail_light.webp){target=_blank}
+[![A project page: the penguin_species_analysis workflow selected, and the switch between Data collections and Ingestion report, on Data collections](../../images/guides/web-ui/project_detail_dark.webp#only-dark)](../../images/guides/web-ui/project_detail_dark.webp){target=_blank}
 
 Data that is not on the server's own disk is handled in two places
 <small>(v1.16.0+)</small>; the mechanisms are described on

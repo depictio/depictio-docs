@@ -96,8 +96,14 @@ jobs:
       # The previews render through server-side builders (celery, multiqc,
       # plotly-complexheatmap...), which live in the `server` extra: without it,
       # their tiles show "No module named ..." instead of a figure.
+      #
+      # Python is pinned to depictio's CI version: `ubuntu-latest` now ships 3.14,
+      # for which pyarrow (pulled in by multiqc) has no wheel, so uv tried to
+      # build it from source and cmake failed ("Could not find ... Arrow").
       - name: Generate catalog gallery HTML (light + dark)
         working-directory: depictio-src
+        env:
+          UV_PYTHON: '3.12'
         run: |
           uv run --extra server python -m depictio.cli catalog gallery \
             --theme light --no-open --out "$GITHUB_WORKSPACE/docs/assets/component-catalog-light.html"

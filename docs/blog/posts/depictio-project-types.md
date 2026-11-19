@@ -16,6 +16,9 @@ tags:
 
 # 📊 Depictio Project Types: Choose Your Data Strategy
 
+!!! note "Project types were removed in v1.21.0"
+    This post describes the Basic and Advanced choice. Since v1.21.0 the UI no longer offers it: a project is created from its data. See the [Projects guide](../../usage/projects/guide.md).
+
 **From simple CSV files to complex bioinformatics pipelines - discover which project type fits your needs.**
 
 <!-- more -->
@@ -113,7 +116,7 @@ Whether you're looking for a **plotly studio like** experience for immediate ana
 
 **Through the Web Interface:**
 
-1. Visit [demo.depictio.embl.org](https://demo.depictio.embl.org)
+1. Visit [showcases.depictio.embl.org](https://showcases.depictio.embl.org)
 2. Click "Create Project" → Choose "Basic" and fill in project details
 3. Travels to your newly created project and click "Create Data Collection"
 4. Fill in details and upload your tabular file as data collection
@@ -408,7 +411,7 @@ Both project types deliver the same rich, interactive dashboard experience - the
 
 Now that you understand project types, you're ready to create your first interactive dashboard:
 
-- **🎨 [Create Your First Dashboard](./create-your-first-dashboard.md)** - Step-by-step tutorial
+- **🎨 [Create Your First Dashboard](create-your-first-dashboard.md)** - Step-by-step tutorial
 - **📊 [CLI Usage Guide](../../depictio-cli/usage.md)** - Complete command documentation
 - **🔧 [Advanced Configuration](../../usage/advanced-projects.md)** - Multi-collection joins, custom workflows
 

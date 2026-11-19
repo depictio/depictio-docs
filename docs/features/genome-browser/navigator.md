@@ -8,7 +8,7 @@ glightbox: true
 # Navigator
 
 <figure markdown="span">
-  <video autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/chipseq_peaks.webp" src="../../../images/guides/genome-browser/chipseq_peaks.mp4"></video>
+  <video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/chipseq_peaks.webp" src="../../../images/guides/genome-browser/chipseq_peaks.mp4"></video>
 </figure>
 
 A `genome_view` tile on the same tab draws the calls of every sample along the whole chromosome, with the browser's window as a band. Zoom on the calls, brush one: the browser opens on it. The browser does not filter on the region, so every track stays open.

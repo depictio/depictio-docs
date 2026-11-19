@@ -51,8 +51,9 @@ The funcscan template covers the four aggregated screening reports of a standard
     funcscan runs up to four independent screens over the same assemblies and
     nothing joins them, which is why the dashboard has one tab per screen, after
     the Data & QC tabs that cover all four. Every screen is optional: an arm that did not run leaves
-    no report, so its collections prune themselves. `--var SKIP_ARG=true` (or
-    `SKIP_AMP`, `SKIP_BGC`, `SKIP_CAZYME`) prunes an arm explicitly.
+    no report, so its collections prune themselves. `SKIP_ARG`, `SKIP_AMP`,
+    `SKIP_BGC` and `SKIP_CAZYME` are set from the run's `--run_*_screening` params;
+    `--var SKIP_ARG=false` overrides.
 
 !!! note "No MultiQC panels, only versions"
     funcscan feeds MultiQC nothing but software versions: the parquet holds one
@@ -85,7 +86,7 @@ The funcscan template covers the four aggregated screening reports of a standard
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    manifest. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 

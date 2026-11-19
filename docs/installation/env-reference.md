@@ -1,68 +1,45 @@
 ---
 title: "Environment Variables Reference"
 icon: material/cog-outline
-description: "Complete reference for all Depictio environment variables. Last synced with settings_models.py on 2026-07-27."
+description: "Every Depictio environment variable, grouped by prefix. Synced with settings_models.py at v1.21.0."
 ---
 
 # Environment Variables Reference
 
-This page contains the complete reference for all configurable environment variables in Depictio.
+Every environment variable Depictio reads, grouped by prefix. The settings models in
+[`settings_models.py`](https://github.com/depictio/depictio/blob/main/depictio/api/v1/configs/settings_models.py)
+are the source of truth; the few variables read elsewhere (start scripts, Compose) are listed with
+their section. For what to set first, see the [Configuration guide](configuration.md).
 
-!!! info "Auto-generated Documentation"
+Values are strings in the environment. A list accepts a JSON list, and a comma-separated string where
+the description says so. With Docker Compose they go in `.env`; with Helm, in `backend.env`
+(secrets under `secrets.*`).
 
-    This documentation is auto-generated from the [settings_models.py](https://github.com/depictio/depictio/blob/main/depictio/api/v1/configs/settings_models.py) source file to ensure accuracy.
+## Sections
 
-## Quick Start
-
-For most deployments, you only need to configure a few variables. See the [Quick Start Guide](docker.md) for the minimal configuration.
-
-```bash
-# Minimal required configuration
-DEPICTIO_BOOTSTRAP_ADMIN_EMAIL=admin@example.com
-DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD=changeme
-DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
-```
-
-!!! tip "Complete Environment File"
-
-    For a ready-to-use file with all variables, copy `.env.complete.example` to `.env` and uncomment the variables you need.
-
-## Variable Reference by Category
-
-### Quick Navigation
-
-- [FastAPI Backend](#fastapi-backend)
-- [React Viewer Frontend](#react-viewer-frontend)
-- [MongoDB Database](#mongodb-database)
-- [S3 Storage](#s3-storage)
-- [Remote Data Sources](#remote-data-sources)
-- [Authentication](#authentication)
-- [Bootstrap](#bootstrap)
-- [Redis Cache](#redis-cache)
-- [Celery Task Queue](#celery-task-queue)
-- [Real-time Events](#real-time-events)
-- [Performance & Timeouts](#performance-timeouts)
-- [Backup & Restore](#backup-restore)
-<!-- - [Internal Analytics](#internal-analytics) -->
-- [Google Analytics](#google-analytics)
-- [Logging](#logging)
-- [Monitoring](#monitoring)
-- [Dashboard Versions](#dashboard-versions)
-- [Comments](#comments)
-- [Structure Resolver](#structure-resolver)
-- [Ingestion](#ingestion)
-- [Jobs](#jobs)
-- [Telemetry](#telemetry)
-- [MultiQC Prerender](#multiqc-prerender)
-- [Genome Browser](#genome-browser)
-- [S3 File Cache](#s3-file-cache)
-<!-- - [Application Profiling](#application-profiling) -->
-<!-- - [Dashboard YAML Sync](#dashboard-yaml-sync) -->
-- [Global Settings](#global-settings)
-- [Branding](#branding)
-- [Release Check](#release-check)
-- [Feedback](#feedback)
-- [ServiceConfig](#serviceconfig)
+| Prefix | Section |
+|--------|---------|
+| `DEPICTIO_FASTAPI_` | [FastAPI Backend](#fastapi-backend), [Component export](#component-export) |
+| `DEPICTIO_VIEWER_` | [React Viewer Frontend](#react-viewer-frontend) |
+| `DEPICTIO_MONGODB_` | [MongoDB Database](#mongodb-database) |
+| `DEPICTIO_S3_` | [S3 Storage](#s3-storage), [S3 File Cache](#s3-file-cache) |
+| `DEPICTIO_REMOTE_`, `DEPICTIO_LOCAL_DATA_` | [Remote Data Sources](#remote-data-sources), [Local data folders](#local-data-folders) |
+| `DEPICTIO_AUTH_` | [Authentication](#authentication) |
+| `DEPICTIO_BOOTSTRAP_` | [Bootstrap](#bootstrap) |
+| `DEPICTIO_CACHE_` | [Redis Cache](#redis-cache) |
+| `DEPICTIO_CELERY_` | [Celery Task Queue](#celery-task-queue) |
+| `DEPICTIO_EVENTS_` | [Real-time Events](#real-time-events) |
+| `DEPICTIO_PERFORMANCE_` | [Performance & Timeouts](#performance-timeouts) |
+| `DEPICTIO_BACKUP_` | [Backup & Restore](#backup-restore) |
+| `DEPICTIO_MIGRATION_` | [Project Migration](#project-migration) |
+| `DEPICTIO_ANALYTICS_`, `DEPICTIO_GOOGLE_ANALYTICS_` | [Internal Analytics](#internal-analytics), [Google Analytics](#google-analytics) |
+| `DEPICTIO_LOGGING_`, `DEPICTIO_MONITORING_` | [Logging](#logging), [Monitoring](#monitoring) |
+| `DEPICTIO_DASHBOARD_VERSIONS_`, `DEPICTIO_COMMENTS_` | [Dashboard Versions](#dashboard-versions), [Comments](#comments) |
+| `DEPICTIO_INGESTION_`, `DEPICTIO_JOBS_` | [Ingestion](#ingestion), [Jobs](#jobs) |
+| `DEPICTIO_JBROWSE_`, `DEPICTIO_STRUCTURE_RESOLVER_`, `DEPICTIO_MULTIQC_` | [Genome Browser](#genome-browser), [Structure Resolver](#structure-resolver), [MultiQC Prerender](#multiqc-prerender) |
+| `DEPICTIO_TELEMETRY_`, `DEPICTIO_VERSION_CHECK_` | [Telemetry](#telemetry), [Release Check](#release-check) |
+| `DEPICTIO_BRANDING_`, `DEPICTIO_FEEDBACK_` | [Branding](#branding), [Feedback](#feedback) |
+| `DEPICTIO_` | [Global Settings](#global-settings), [Compose and image variables](#compose-and-image-variables) |
 
 ---
 
@@ -71,22 +48,24 @@ DEPICTIO_S3_ROOT_PASSWORD=$(openssl rand -base64 12)
 **Config Class:** `FastAPIConfig`
 **Environment Prefix:** `DEPICTIO_FASTAPI_`
 
-Base class for service configurations with internal/external URL handling.
+The API server. Each service section (FastAPI, Viewer, MongoDB, S3) shares the same address fields:
+`SERVICE_NAME` and `SERVICE_PORT` are the in-network address other containers use, `EXTERNAL_HOST`,
+`EXTERNAL_PORT` and `EXTERNAL_PROTOCOL` build the address browsers and the CLI use, and `PUBLIC_URL`
+overrides that address (a reverse proxy or CDN).
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_FASTAPI_SERVICE_NAME` | `depictio-backend` | - |
-| `DEPICTIO_FASTAPI_SERVICE_PORT` | `8058` | - |
-| `DEPICTIO_FASTAPI_EXTERNAL_HOST` | `localhost` | - |
-| `DEPICTIO_FASTAPI_EXTERNAL_PORT` | `8058` | - |
-| `DEPICTIO_FASTAPI_EXTERNAL_PROTOCOL` | `http` | - |
-| `DEPICTIO_FASTAPI_PUBLIC_URL` | - | - |
-| `DEPICTIO_FASTAPI_EXTERNAL_SERVICE` | `false` | - |
-| `DEPICTIO_FASTAPI_HOST` | `0.0.0.0` | - |
-| `DEPICTIO_FASTAPI_WORKERS` | `4` | - |
-| `DEPICTIO_FASTAPI_SSL` | `false` | - |
-| `DEPICTIO_FASTAPI_LOGGING_LEVEL` | `INFO` | - |
-| `DEPICTIO_FASTAPI_CORS_ALLOWED_ORIGINS` | _(empty)_ | Allowed CORS origins — comma-separated list (e.g. `https://app.example.com,https://example.com`). Empty disables credentialed cross-origin requests. Wildcard `*` is rejected when used with credentials. |
+| `DEPICTIO_FASTAPI_SERVICE_NAME` | `depictio-backend` | Host name inside the Compose network |
+| `DEPICTIO_FASTAPI_SERVICE_PORT` | `8058` | Port inside the network |
+| `DEPICTIO_FASTAPI_EXTERNAL_HOST` | `localhost` | Host name for external access |
+| `DEPICTIO_FASTAPI_EXTERNAL_PORT` | `8058` | Port for external access |
+| `DEPICTIO_FASTAPI_EXTERNAL_PROTOCOL` | `http` | `http` or `https` |
+| `DEPICTIO_FASTAPI_PUBLIC_URL` | - | Public URL of the API, overriding the three above |
+| `DEPICTIO_FASTAPI_EXTERNAL_SERVICE` | `false` | `true` when the API runs outside the Compose network |
+| `DEPICTIO_FASTAPI_HOST` | `0.0.0.0` | Bind address of Gunicorn, read by the image's start script |
+| `DEPICTIO_FASTAPI_PORT` | `8058` | Bind port, read by the start script only |
+| `DEPICTIO_FASTAPI_WORKERS` | `4` | Gunicorn worker processes |
+| `DEPICTIO_FASTAPI_CORS_ALLOWED_ORIGINS` | _(empty)_ | Allowed CORS origins, comma-separated (e.g. `https://app.example.com,https://example.com`). Empty disables credentialed cross-origin requests. Wildcard `*` is rejected when used with credentials. |
 | `DEPICTIO_FASTAPI_CORS_ALLOW_CREDENTIALS` | `true` | Whether the CORS layer attaches credentials (cookies / Authorization header). |
 
 ### Component export <small>(v1.17.0+)</small> { #component-export }
@@ -106,23 +85,21 @@ The API that serves one dashboard component to another website. See [Component e
 **Config Class:** `ViewerConfig`
 **Environment Prefix:** `DEPICTIO_VIEWER_`
 
-Base class for service configurations with internal/external URL handling.
+The React app, served by nginx. The API reads these settings and hands them to the browser at boot,
+so they are set on the **backend**, not on the viewer container.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_VIEWER_SERVICE_NAME` | `depictio-viewer` | - |
-| `DEPICTIO_VIEWER_SERVICE_PORT` | `80` | Internal bind port (nginx inside the container) |
-| `DEPICTIO_VIEWER_EXTERNAL_HOST` | `localhost` | - |
+| `DEPICTIO_VIEWER_SERVICE_NAME` | `depictio-viewer` | Host name inside the Compose network |
+| `DEPICTIO_VIEWER_SERVICE_PORT` | `80` | Port inside the network |
+| `DEPICTIO_VIEWER_EXTERNAL_HOST` | `localhost` | Host name for external access |
 | `DEPICTIO_VIEWER_EXTERNAL_PORT` | `5080` | Host-side port mapped to the viewer container |
-| `DEPICTIO_VIEWER_EXTERNAL_PROTOCOL` | `http` | - |
-| `DEPICTIO_VIEWER_PUBLIC_URL` | - | Public URL of the viewer, where magic links and the [SAML](sso.md) hand-off land |
-| `DEPICTIO_VIEWER_EXTERNAL_SERVICE` | `false` | - |
-| `DEPICTIO_VIEWER_HOST` | `0.0.0.0` | - |
-| `DEPICTIO_VIEWER_WORKERS` | `4` | Gunicorn worker processes |
-| `DEPICTIO_VIEWER_DEBUG` | `true` | Debug mode with hot reload |
-| `DEPICTIO_VIEWER_AUTO_GENERATE_FIGURES` | `false` | Automatic figure generation in UI mode |
+| `DEPICTIO_VIEWER_EXTERNAL_PROTOCOL` | `http` | `http` or `https` |
+| `DEPICTIO_VIEWER_PUBLIC_URL` | - | Public URL of the viewer, where magic links and the [OpenID Connect](sso/index.md) hand-off land |
+| `DEPICTIO_VIEWER_EXTERNAL_SERVICE` | `false` | `true` when the viewer runs outside the Compose network |
 | `DEPICTIO_VIEWER_INSPECTOR_ENABLED` | `false` | Docked component inspector, replacing the per-component popovers for advanced-visualisation controls, notes and metadata. Experimental (v1.4.0+) |
 | `DEPICTIO_VIEWER_DASHBOARDS_DEFAULT_VIEW` | `table` | View `/dashboards` opens in for someone who never picked one: `thumbnails` or `table`. A view chosen in the browser, or named by a shared link, wins (v1.11.2+; the default was `thumbnails` until v1.12.0) |
+| `DEPICTIO_VIEWER_CODE_FIGURES_LOCKED` | `false` | Refuse new figure code from non-admin users. Existing code figures still render. See [Security](../features/security.md#figure-code-lock) (v1.21.0+) |
 
 ---
 
@@ -131,19 +108,17 @@ Base class for service configurations with internal/external URL handling.
 **Config Class:** `MongoDBConfig`
 **Environment Prefix:** `DEPICTIO_MONGODB_`
 
-Base class for service configurations with internal/external URL handling.
-
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_MONGODB_SERVICE_NAME` | `mongo` | - |
-| `DEPICTIO_MONGODB_SERVICE_PORT` | `27018` | - |
-| `DEPICTIO_MONGODB_EXTERNAL_HOST` | `localhost` | - |
-| `DEPICTIO_MONGODB_EXTERNAL_PORT` | `27018` | - |
+| `DEPICTIO_MONGODB_SERVICE_NAME` | `mongo` | Host name inside the network |
+| `DEPICTIO_MONGODB_SERVICE_PORT` | `27018` | Port inside the network |
+| `DEPICTIO_MONGODB_EXTERNAL_HOST` | `localhost` | Host name for external access |
+| `DEPICTIO_MONGODB_EXTERNAL_PORT` | `27018` | Port for external access |
 | `DEPICTIO_MONGODB_EXTERNAL_PROTOCOL` | `http` | - |
-| `DEPICTIO_MONGODB_PUBLIC_URL` | - | - |
-| `DEPICTIO_MONGODB_EXTERNAL_SERVICE` | `false` | - |
-| `DEPICTIO_MONGODB_DB_NAME` | `depictioDB` | - |
-| `DEPICTIO_MONGODB_WIPE` | `false` | - |
+| `DEPICTIO_MONGODB_PUBLIC_URL` | - | Overrides the external address |
+| `DEPICTIO_MONGODB_EXTERNAL_SERVICE` | `false` | `true` for a MongoDB outside the Compose network |
+| `DEPICTIO_MONGODB_DB_NAME` | `depictioDB` | Database name |
+| `DEPICTIO_MONGODB_WIPE` | `false` | Drop the database on startup. Development only, and it also turns telemetry off |
 | `DEPICTIO_MONGODB_USERNAME` | - | Username, for operator-managed replica-set auth |
 | `DEPICTIO_MONGODB_PASSWORD` | - | Password, for operator-managed replica-set auth |
 | `DEPICTIO_MONGODB_REPLICA_SET` | - | Replica set name, e.g. `rs0` |
@@ -181,9 +156,28 @@ or any external S3 endpoint (AWS, NetApp, Ceph, MinIO, …) set with
 | `DEPICTIO_S3_PUBLIC_URL` | - | Full endpoint URL of an external S3 |
 | `DEPICTIO_S3_EXTERNAL_SERVICE` | `false` | `true` when the store is outside the Docker Compose network |
 | `DEPICTIO_S3_ROOT_USER` | `minio` | S3 access key |
-| `DEPICTIO_S3_ROOT_PASSWORD` | _(required, ≥8 chars)_ | S3 secret key. REQUIRED in server context — must not match a known-default value. |
+| `DEPICTIO_S3_ROOT_PASSWORD` | _(empty)_ | S3 secret key. Outside single-user mode the server refuses to start unless it has at least 8 characters and is not a well-known default (`minio123`, `changeme`, ...) |
 | `DEPICTIO_S3_BUCKET` | `depictio-bucket` | - |
 | `DEPICTIO_S3_VERIFY_TLS` | `true` | Verify TLS certificates when connecting to S3. Set to `false` only for local dev with self-signed certificates. |
+| `DEPICTIO_S3_BROWSER_ACCESS` <small>(v1.22.0+)</small> | `presigned` | How browsers read [indexed files](#s3-browser-access) (3D structures, GenomeSpy VCF/BAM/bigWig tracks): `presigned` or `proxy`. The Helm chart sets it, see [`s3.browserAccess`](kubernetes.md#s3-browser-access) |
+
+### Browser access to indexed files <small>(v1.22.0+)</small> { #s3-browser-access }
+
+The 3D structure viewer and GenomeSpy's file-backed tracks read their files from the
+browser, by HTTP range request.
+
+- **`presigned`** (default): the API hands out URLs signed for the S3 public endpoint
+  (`DEPICTIO_S3_PUBLIC_URL`, or the `EXTERNAL_*` host and port), and the browser reads S3
+  directly. S3 must be reachable from the reader's browser, with CORS allowing `Range`.
+- **`proxy`**: the API hands out its own URLs,
+  `GET|HEAD /depictio/api/v1/files/indexed/{dc_id}/object/{sample}/{name}`, and streams
+  each object by byte range. Each URL is signed for one object and one user and lives
+  15 minutes; the reader's access is checked again on every request. No CORS or CSP entry
+  for S3 is needed.
+
+Use `proxy` when browsers cannot reach S3: an IP-only install where S3 stays on the Compose
+network, a Serve app, a store with no public route. The symptom in `presigned` mode is a
+structure or track that fails with *Failed to fetch* while tables and figures load.
 
 ### Required S3 permissions
 
@@ -274,43 +268,39 @@ by hand. See [From a run folder](../usage/projects/remote-data.md#from-a-run-fol
 **Config Class:** `AuthConfig`
 **Environment Prefix:** `DEPICTIO_AUTH_`
 
-Authentication and authorization settings including JWT configuration, unauthenticated mode, Google OAuth and SAML single sign-on. Empty SAML values count as unset.
+Keys, sign-in modes and OpenID Connect single sign-on. The modes are compared in
+[Authentication Modes](../usage/guides/authentication-modes.md).
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_AUTH_KEYS_DIR` | `<repo>/keys` | Directory for JWT public/private key files. Also holds `secrets_key.bin`, the key that encrypts per-project storage credentials at rest; the backend and the Celery worker must mount the same directory, or secrets written by one are unreadable by the other |
-| `DEPICTIO_AUTH_KEYS_ALGORITHM` | `RS256` | JWT signing algorithm (RS256, RS512, ES256, SHA256) |
-| `DEPICTIO_AUTH_CLI_CONFIG_DIR` | `<repo>/.depictio` | Directory for CLI configuration files (admin token, etc.) |
-| `DEPICTIO_AUTH_INTERNAL_API_KEY_ENV` | _(auto-generated)_ | Internal API key for service-to-service communication |
-| `DEPICTIO_AUTH_UNAUTHENTICATED_MODE` | `false` | Enable unauthenticated mode |
-| `DEPICTIO_AUTH_SINGLE_USER_MODE` | `false` | Single-user mode for personal/self-hosted instances — grants admin privileges to the anonymous user |
-| `DEPICTIO_AUTH_PUBLIC_MODE` | `false` | Public mode for public instances — anonymous access with optional sign-in |
-| `DEPICTIO_AUTH_DEMO_MODE` | `false` | Demo mode — extends public mode with guided tour tooltips for first-time users |
+| `DEPICTIO_AUTH_KEYS_DIR` | `/app/depictio/keys` | Directory for JWT public/private key files (`depictio/keys` in the package outside the images). Also holds `secrets_key.bin`, the key that encrypts per-project storage credentials at rest; the backend and the Celery worker must mount the same directory, or secrets written by one are unreadable by the other |
+| `DEPICTIO_AUTH_KEYS_ALGORITHM` | `RS256` | JWT signing algorithm: `RS256`, `RS512`, `ES256` or `SHA256` |
+| `DEPICTIO_AUTH_CLI_CONFIG_DIR` | `/app/depictio/.depictio` | Directory for CLI configuration files (admin token, etc.) |
+| `DEPICTIO_AUTH_INTERNAL_API_KEY` | _(auto-generated)_ | Internal API key for service-to-service calls. Also accepted as `DEPICTIO_AUTH_INTERNAL_API_KEY_ENV` |
+| `DEPICTIO_AUTH_SINGLE_USER_MODE` | `false` | Single-user mode: no login, the anonymous user is an admin, and no secret is enforced at startup. **The root `docker-compose.yaml` sets it to `true` unless you set `false`**; the Helm chart leaves it `false` |
+| `DEPICTIO_AUTH_PUBLIC_MODE` | `false` | Public mode: anonymous read-only access with optional sign-in |
+| `DEPICTIO_AUTH_UNAUTHENTICATED_MODE` | `false` | Former name of `DEPICTIO_AUTH_PUBLIC_MODE`, still read as an alias |
+| `DEPICTIO_AUTH_DEMO_MODE` | `false` | Demo mode: public mode with the guest [tour](../usage/guides/web_ui.md#guided-tours) of the dashboards list, guests never offered sign-in, and no landing card introducing a dashboard |
+| `DEPICTIO_AUTH_PUBLIC_ACCESS_CODE` | - | Shared code a visitor enters before public mode hands out a temporary session. Ignored outside public and demo mode. With Helm, set `secrets.publicAccessCode`. See [Public-mode access code](../usage/guides/authentication-modes.md#public-access-code) |
 | `DEPICTIO_AUTH_ANONYMOUS_USER_EMAIL` | `anonymous@depict.io` | Default anonymous user email |
 | `DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_HOURS` | `24` | Number of hours until temporary users expire |
 | `DEPICTIO_AUTH_TEMPORARY_USER_EXPIRY_MINUTES` | `0` | Number of minutes until temporary users expire |
-| `DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED` | `false` | Enable Google OAuth authentication |
-| `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID` | - | Google OAuth client ID |
-| `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET` | - | Google OAuth client secret |
-| `DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI` | - | Google OAuth redirect URI |
+| `DEPICTIO_AUTH_OIDC_PROVIDERS` | _(empty)_ | JSON list of OpenID Connect providers (Keycloak, Google, Authentik, ...). Keys: `id`, `label`, `enabled`, `issuer`, `discovery_url`, `client_id`, `client_secret`, `scopes`, `redirect_uri`, `claims`, `sso_provider`, `assume_email_verified`, `token_endpoint_auth_method`, `authorize_params`, `fetch_userinfo`. See [Single sign-on (OpenID Connect)](sso/configuration.md#provider-keys) |
+| `DEPICTIO_AUTH_OIDC_<ID>_CLIENT_ID` | - | Client id of the provider whose `id` is `<ID>` (upper case, `-` as `_`). Overrides `client_id` in `DEPICTIO_AUTH_OIDC_PROVIDERS` |
+| `DEPICTIO_AUTH_OIDC_<ID>_CLIENT_SECRET` | - | Client secret of that provider. Overrides `client_secret`; use it from a secret store |
+| `DEPICTIO_AUTH_GOOGLE_OAUTH_ENABLED` | `false` | **Deprecated**, still works for one release: mapped to an OIDC provider with id `google`. See [From Google OAuth to OIDC](sso/migration.md#from-google-oauth-to-oidc) |
+| `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_ID` | - | **Deprecated**: use `DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_ID` |
+| `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET` | - | **Deprecated**: use `DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET` |
+| `DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI` | - | **Deprecated**: the `redirect_uri` of the `google` provider |
 | `DEPICTIO_AUTH_REGISTRATION_DISABLED` | `false` | Block self-service registration: `/register` returns 403 and the Register UI is hidden, so only pre-provisioned accounts can log in. Independent of public/single-user mode |
-| `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED` | `false` | Close email and password sign-in when Google OAuth or, since v1.19.0, SAML is on. Ignored with neither. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) |
+| `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED` | `false` | Close email and password sign-in so SSO is the only way in. Ignored unless at least one OIDC provider is enabled and configured. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) |
 | `DEPICTIO_AUTH_PROVISIONING_API_KEY` | - | Shared secret for pipeline-side user provisioning (`POST /auth/provision_user`). Scoped to provisioning only, kept separate from the internal API key. Also accepted as `DEPICTIO_AUTH_PROVISIONING_API_KEY_ENV`. **The provisioning endpoints are disabled while this is unset.** See [Pipeline provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113) |
 | `DEPICTIO_AUTH_MAGIC_LINK_EXPIRY_MINUTES` | `15` | Lifetime of a single-use magic-link login ticket |
-| `DEPICTIO_AUTH_SAML_ENABLED` | `false` | Turn on SAML 2.0 single sign-on (v1.18.0+). See [Single sign-on (SAML)](sso.md) |
-| `DEPICTIO_AUTH_SAML_IDP_ENTITY_ID` | - | The identity provider's entity ID |
-| `DEPICTIO_AUTH_SAML_IDP_SSO_URL` | - | The identity provider's SSO endpoint (HTTP-Redirect binding) |
-| `DEPICTIO_AUTH_SAML_IDP_CERT` | - | The identity provider's signing certificate, as inline PEM or a path to a PEM file |
-| `DEPICTIO_AUTH_SAML_SP_ENTITY_ID` | - | Depictio's entity ID (the Client ID) as registered with the identity provider |
-| `DEPICTIO_AUTH_SAML_SP_BASE_URL` | _(API external URL)_ | Public base URL of the API, used to build the ACS URL |
-| `DEPICTIO_AUTH_SAML_NAME_ID_FORMAT` | `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress` | Requested NameID format |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_EMAIL` | - | Attribute carrying the email. Unset, the NameID is used |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_USERNAME` | - | Attribute carrying the username (informational) |
-| `DEPICTIO_AUTH_SAML_LOGIN_LABEL` | `Sign in with SSO` | Label of the SSO button |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_GROUPS` | - | Attribute carrying the user's groups, mirrored as SSO-managed groups at each sign-in. See [Group and profile sync](sso.md#group-and-profile-sync) |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_TITLE` | - | Attribute carrying the user's title |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_DISPLAY_NAME` | - | Attribute carrying the user's display name |
-| `DEPICTIO_AUTH_SAML_ATTRIBUTE_LOGIN` | - | Attribute carrying the user's login |
+
+!!! warning "`DEPICTIO_AUTH_SAML_*` was removed"
+    SAML sign-in is gone. A server that still finds `DEPICTIO_AUTH_SAML_*` variables ignores them
+    and logs an error naming the OpenID Connect key that replaces each one. See
+    [Single sign-on (OpenID Connect)](sso/index.md).
 
 ---
 
@@ -319,12 +309,15 @@ Authentication and authorization settings including JWT configuration, unauthent
 **Config Class:** `AuthBootstrapConfig`
 **Environment Prefix:** `DEPICTIO_BOOTSTRAP_`
 
-First-boot admin seeding — replaces the legacy `initial_users.yaml`. Idempotent: the admin is only created when no admin exists in MongoDB, so operator-set passwords survive container restarts and Helm wipe-jobs.
+First-boot admin seeding. Idempotent: the admin is created only when MongoDB holds none, so a
+password changed in the UI survives restarts and Helm wipe jobs. Single-user mode seeds its own
+local admin and needs neither. With Helm, set `secrets.bootstrapAdminEmail` and
+`secrets.bootstrapAdminPassword`.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | _(required)_ | Email address for the initial admin. REQUIRED when no admin exists in MongoDB. |
-| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | _(required, ≥8 chars)_ | Password for the bootstrap admin. `changeme` is accepted for local dev. |
+| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | _(empty)_ | Email of the first admin. When MongoDB holds no admin and this or the password is unset, the server stops at startup |
+| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | _(empty)_ | Password of the first admin: at least 8 characters, and not a well-known default such as `admin` or `password`. Not needed with `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED`, where the email alone names the SSO account that owns the instance |
 | `DEPICTIO_BOOTSTRAP_SEED_TEST_USER` | `false` | Seed a non-admin test user for CI/Cypress fixtures. Leave `false` in production. |
 | `DEPICTIO_BOOTSTRAP_TEST_USER_EMAIL` | `test_user@example.com` | Email for the CI test user (only when `seed_test_user=true`). |
 | `DEPICTIO_BOOTSTRAP_TEST_USER_PASSWORD` | `test_pwd` | Password for the CI test user (only when `seed_test_user=true`). |
@@ -346,13 +339,11 @@ Redis cache configuration settings.
 | `DEPICTIO_CACHE_REDIS_DB` | `0` | Redis database number |
 | `DEPICTIO_CACHE_REDIS_SSL` | `false` | Use SSL for Redis connection |
 | `DEPICTIO_CACHE_ENABLE_REDIS_CACHE` | `true` | Enable Redis caching for DataFrames |
-| `DEPICTIO_CACHE_FALLBACK_TO_MEMORY` | `true` | Fallback to in-memory cache if Redis fails |
 | `DEPICTIO_CACHE_DEFAULT_TTL` | `3600` | Default cache TTL in seconds (1 hour) |
 | `DEPICTIO_CACHE_DATAFRAME_TTL` | `1800` | DataFrame cache TTL in seconds (30 minutes) |
 | `DEPICTIO_CACHE_MAX_DATAFRAME_SIZE_MB` | `100` | Maximum DataFrame size to cache (MB) |
 | `DEPICTIO_CACHE_REDIS_MAX_MEMORY_MB` | `1024` | **Not enforced.** Declared but never applied to the Redis server; see the note below. |
 | `DEPICTIO_CACHE_CACHE_KEY_PREFIX` | `depictio:df:` | Prefix for cache keys |
-| `DEPICTIO_CACHE_CACHE_VERSION` | `v1` | Cache version for key namespacing |
 
 !!! warning "Cap Redis on the server, not through Depictio"
     `DEPICTIO_CACHE_REDIS_MAX_MEMORY_MB` is read into settings and then never applied:
@@ -376,7 +367,9 @@ Redis cache configuration settings.
 **Config Class:** `CeleryConfig`
 **Environment Prefix:** `DEPICTIO_CELERY_`
 
-Celery task queue configuration for background processing.
+The Celery worker renders figure previews, large dashboard renders, screenshots and, with the
+[ingestion worker](docker.md#ingestion-worker), offloaded ingestion. It always runs: the dashboard
+editor needs it.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -388,21 +381,32 @@ Celery task queue configuration for background processing.
 | `DEPICTIO_CELERY_RESULT_BACKEND_PORT` | `6379` | Redis result backend port |
 | `DEPICTIO_CELERY_RESULT_BACKEND_PASSWORD` | - | Redis result backend password |
 | `DEPICTIO_CELERY_RESULT_BACKEND_DB` | `2` | Redis database for Celery results |
-| `DEPICTIO_CELERY_WORKER_CONCURRENCY` | `2` | Number of concurrent worker processes |
-| `DEPICTIO_CELERY_WORKER_POOL` | `threads` | Worker pool type (threads, processes) |
-| `DEPICTIO_CELERY_WORKER_PREFETCH_MULTIPLIER` | `1` | Worker prefetch multiplier |
-| `DEPICTIO_CELERY_WORKER_MAX_TASKS_PER_CHILD` | `50` | Max tasks per worker before restart |
-| `DEPICTIO_CELERY_TASK_SOFT_TIME_LIMIT` | `300` | Task soft time limit in seconds (5min) |
-| `DEPICTIO_CELERY_TASK_TIME_LIMIT` | `600` | Task hard time limit in seconds (10min) |
-| `DEPICTIO_CELERY_RESULT_EXPIRES` | `3600` | Task result expiration in seconds (1hr) |
-| `DEPICTIO_CELERY_DEFAULT_QUEUE` | `dashboard_tasks` | Not applied: a task with no route goes to the `celery` queue, the one the bundled worker reads |
+| `DEPICTIO_CELERY_RESULT_EXPIRES` | `3600` | Task result lifetime in seconds. Celery keeps at least 86400 whatever the value |
 | `DEPICTIO_CELERY_INGESTION_QUEUE` | `ingestion` | Queue of the offloaded ingestion tasks, read by the [ingestion worker](docker.md#ingestion-worker) (v1.15.0+) |
-| `DEPICTIO_CELERY_WORKER_SEND_TASK_EVENTS` | `true` | Enable task event monitoring |
-| `DEPICTIO_CELERY_TASK_SEND_SENT_EVENT` | `true` | Send task sent events |
 | `DEPICTIO_CELERY_OFFLOAD_PREVIEW` | `true` | Offload component-design preview endpoints (`/figure/preview`, etc.) to Celery |
 | `DEPICTIO_CELERY_OFFLOAD_RENDERING` | `false` | Force-offload *all* dashboard render endpoints (`/dashboards/render_*`) to Celery. Off by default: renders offload adaptively by size instead |
 | `DEPICTIO_CELERY_OFFLOAD_SIZE_THRESHOLD_BYTES` | `52428800` (50 MB) | Source Delta-table size at/above which a render is offloaded even when `OFFLOAD_RENDERING` is off. `0` disables size-based offload |
 | `DEPICTIO_CELERY_OFFLOAD_TIMEOUT_SECONDS` | `30.0` | Per-request Celery offload timeout in seconds before HTTP 504 |
+
+### Worker processes { #celery-worker-processes }
+
+The worker image's start script reads these, so set them on the **worker** container
+(`celery.env` with Helm). Each container is sized on its own.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_CELERY_WORKERS` | `4` | Worker processes (`--concurrency`). Each one holds its own DataFrames, so size it to the host's memory. The Helm chart sets `2` |
+| `DEPICTIO_CELERY_MAX_TASKS_PER_CHILD` | `50` | Tasks a process runs before it is replaced, which returns its memory |
+| `DEPICTIO_CELERY_PREFETCH` | `1` | Tasks a process reserves ahead |
+| `DEPICTIO_CELERY_QUEUES` | `celery` | Queues the worker reads. The ingestion worker sets `ingestion` |
+| `DEPICTIO_CELERY_NODENAME` | `celery@%h` | Node name, so health checks reach one worker |
+| `DEPICTIO_INGESTION_WORKER_CONCURRENCY` | `2` | Compose only: `DEPICTIO_CELERY_WORKERS` of the ingestion worker |
+
+`DEPICTIO_CELERY_WORKER_CONCURRENCY`, `_WORKER_POOL`, `_WORKER_PREFETCH_MULTIPLIER`,
+`_WORKER_MAX_TASKS_PER_CHILD`, `_TASK_SOFT_TIME_LIMIT`, `_TASK_TIME_LIMIT`, `_DEFAULT_QUEUE`,
+`_WORKER_SEND_TASK_EVENTS` and `_TASK_SEND_SENT_EVENT` are declared in the settings but never applied:
+the pool is Celery's default `prefork`, each task sets its own time limits, and a task with no route
+goes to the `celery` queue. `DEPICTIO_CELERY_ENABLED`, a Dash-era switch, only prints a log line.
 
 ---
 
@@ -411,7 +415,7 @@ Celery task queue configuration for background processing.
 **Config Class:** `EventsConfig`
 **Environment Prefix:** `DEPICTIO_EVENTS_`
 
-Real-time dashboard events (WebSocket live refresh). Disabled by default — set
+Real-time dashboard events (WebSocket live refresh). Disabled by default: set
 `DEPICTIO_EVENTS_ENABLED=true` to turn the system on. Uses Redis pub/sub to fan events out to
 connected viewers, so a reachable Redis instance is required when enabled. See
 [Real-time Events](../usage/guides/realtime-events.md) for the full setup.
@@ -429,9 +433,9 @@ connected viewers, so a reachable Redis instance is required when enabled. See
 | `DEPICTIO_EVENTS_DEBOUNCE_MS` | `1000` | Debounce interval in milliseconds for rapid updates |
 
 !!! note "Dev-only trigger endpoint"
-    `DEPICTIO_ENABLE_DEV_ENDPOINTS` (default `false`, prefix `DEPICTIO_`) gates the
-    admin-only `/events/test-trigger/{dc_id}` route used to broadcast a test event by hand. It is
-    **not** required for normal event-driven refresh — data ingestion drives that on its own.
+    [`DEPICTIO_ENABLE_DEV_ENDPOINTS`](#global-settings) gates the admin-only
+    `/events/test-trigger/{dc_id}` route used to broadcast a test event by hand. Normal refresh
+    does not need it: ingestion drives it.
 
 ---
 
@@ -440,34 +444,25 @@ connected viewers, so a reachable Redis instance is required when enabled. See
 **Config Class:** `PerformanceConfig`
 **Environment Prefix:** `DEPICTIO_PERFORMANCE_`
 
-Performance and timeout settings that can be tuned per environment.
+Dashboard thumbnails, service readiness and render caps. Times are in milliseconds unless the name
+ends in a unit or says otherwise.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_PERFORMANCE_HTTP_CLIENT_TIMEOUT` | `30` | - |
-| `DEPICTIO_PERFORMANCE_API_REQUEST_TIMEOUT` | `60` | - |
-| `DEPICTIO_PERFORMANCE_BROWSER_NAVIGATION_TIMEOUT` | `60000` | - |
-| `DEPICTIO_PERFORMANCE_BROWSER_PAGE_LOAD_TIMEOUT` | `90000` | - |
-| `DEPICTIO_PERFORMANCE_BROWSER_ELEMENT_TIMEOUT` | `30000` | - |
+| `DEPICTIO_PERFORMANCE_BROWSER_NAVIGATION_TIMEOUT` | `60000` | Headless browser navigation timeout |
+| `DEPICTIO_PERFORMANCE_BROWSER_PAGE_LOAD_TIMEOUT` | `90000` | Headless browser page load timeout |
 | `DEPICTIO_PERFORMANCE_SCREENSHOTS_ENABLED` | `true` | Generate dashboard thumbnails with Playwright. `depictio local up` sets it to `false` unless `--screenshots` is passed |
 | `DEPICTIO_PERFORMANCE_SCREENSHOTS_DIR` | package's `api/static/screenshots` | Where thumbnails are written and served from. At startup, thumbnails of dashboards absent from the database are deleted from it |
-| `DEPICTIO_PERFORMANCE_SCREENSHOT_NAVIGATION_TIMEOUT` | `45000` | - |
-| `DEPICTIO_PERFORMANCE_SCREENSHOT_CONTENT_WAIT` | `15000` | - |
-| `DEPICTIO_PERFORMANCE_SCREENSHOT_STABILIZATION_WAIT` | `5000` | - |
-| `DEPICTIO_PERFORMANCE_SCREENSHOT_CAPTURE_TIMEOUT` | `90000` | - |
-| `DEPICTIO_PERFORMANCE_SCREENSHOT_API_TIMEOUT` | `300` | - |
+| `DEPICTIO_PERFORMANCE_SCREENSHOT_NAVIGATION_TIMEOUT` | `60000` | Time to open the dashboard before a capture |
+| `DEPICTIO_PERFORMANCE_SCREENSHOT_CONTENT_WAIT` | `30000` | Time to wait for the components to render |
+| `DEPICTIO_PERFORMANCE_SCREENSHOT_STABILIZATION_WAIT` | `10000` | Time to let the layout settle |
+| `DEPICTIO_PERFORMANCE_SCREENSHOT_CAPTURE_TIMEOUT` | `120000` | Whole capture timeout |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_VIEWPORT_WIDTH` | `1440` | Width of the page a dashboard thumbnail is captured from, in CSS pixels (v1.11.2+) |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_VIEWPORT_HEIGHT` | `900` | Height of that page, in CSS pixels (v1.11.2+) |
 | `DEPICTIO_PERFORMANCE_SCREENSHOT_SCALE` | `2.0` | Pixel density of the capture, from `1.0` to `3.0`. Each capture also writes an `@2x` file for the hover preview (v1.11.2+) |
-| `DEPICTIO_PERFORMANCE_SERVICE_READINESS_RETRIES` | `5` | - |
-| `DEPICTIO_PERFORMANCE_SERVICE_READINESS_DELAY` | `3` | - |
-| `DEPICTIO_PERFORMANCE_SERVICE_READINESS_TIMEOUT` | `10` | - |
-| `DEPICTIO_PERFORMANCE_DNS_CACHE_TTL` | `300` | - |
-| `DEPICTIO_PERFORMANCE_CONNECTION_POOL_SIZE` | `10` | - |
-| `DEPICTIO_PERFORMANCE_MAX_KEEPALIVE_CONNECTIONS` | `5` | - |
-| `DEPICTIO_PERFORMANCE_DISABLE_LOADING_SPINNERS` | `true` | Disable all loading spinners for maximum performance |
-| `DEPICTIO_PERFORMANCE_DISABLE_ANIMATIONS` | `true` | Disable SVG and CSS animations for maximum performance |
-| `DEPICTIO_PERFORMANCE_DISABLE_THEME_ANIMATIONS` | `true` | Disable theme CSS injection and complex theme operations |
+| `DEPICTIO_PERFORMANCE_SERVICE_READINESS_RETRIES` | `5` | Attempts to reach a service before the screenshot job gives up |
+| `DEPICTIO_PERFORMANCE_SERVICE_READINESS_DELAY` | `3` | Seconds between those attempts |
+| `DEPICTIO_PERFORMANCE_SERVICE_READINESS_TIMEOUT` | `10` | Seconds per attempt |
 
 ### Render caps
 
@@ -493,14 +488,21 @@ for what each cap does to the rendered result.
 **Config Class:** `BackupConfig`
 **Environment Prefix:** `DEPICTIO_BACKUP_`
 
-Backup and restore configuration settings.
+MongoDB backups, their schedule and retention, and the copy of S3 data. See
+[Backup & Restore](../usage/administration/backup.md).
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_BACKUP_BASE_DIR` | `PydanticUndefined` | - |
-| `DEPICTIO_BACKUP_BACKUP_DIR` | `backups` | - |
-| `DEPICTIO_BACKUP_S3_BACKUP_STRATEGY` | `s3_to_s3` | Strategy for S3 data backup: 's3_to_s3', 'local', or 'both' |
-| `DEPICTIO_BACKUP_S3_LOCAL_BACKUP_DIR` | `backups/s3_data_backups` | - |
+| `DEPICTIO_BACKUP_BASE_DIR` | `/app/depictio` | Folder the two backup directories below are relative to (the `depictio` package folder outside the images) |
+| `DEPICTIO_BACKUP_BACKUP_DIR` | `backups` | MongoDB backup directory, under `BASE_DIR` |
+| `DEPICTIO_BACKUP_AUTO_BACKUP_ENABLED` | `false` | Run scheduled MongoDB backups |
+| `DEPICTIO_BACKUP_AUTO_BACKUP_INTERVAL_HOURS` | `24` | Hours between scheduled backups, at least 1 |
+| `DEPICTIO_BACKUP_AUTO_BACKUP_TIME_OF_DAY` | - | `HH:MM` in UTC that anchors the schedule, e.g. `03:00`. Unset: due whenever an interval has passed |
+| `DEPICTIO_BACKUP_BACKUP_FILE_RETENTION_DAYS` | `30` | Days every backup is kept. `0` keeps them forever |
+| `DEPICTIO_BACKUP_BACKUP_RETENTION_WEEKLY_WEEKS` | `0` | Then one backup per ISO week, for this many weeks. `0` turns the tier off |
+| `DEPICTIO_BACKUP_BACKUP_RETENTION_MONTHLY_MONTHS` | `0` | Then one backup per month, for this many months. `0` turns the tier off |
+| `DEPICTIO_BACKUP_S3_BACKUP_STRATEGY` | `s3_to_s3` | How S3 data is backed up: `s3_to_s3`, `local` or `both` |
+| `DEPICTIO_BACKUP_S3_LOCAL_BACKUP_DIR` | `backups/s3_data_backups` | Local copy of S3 data, under `BASE_DIR` |
 | `DEPICTIO_BACKUP_BACKUP_S3_ENABLED` | `false` | Enable separate backup S3 bucket |
 | `DEPICTIO_BACKUP_BACKUP_S3_BUCKET` | `depictio-backups` | Backup S3 bucket name |
 | `DEPICTIO_BACKUP_BACKUP_S3_ENDPOINT_URL` | - | Backup S3 endpoint URL |
@@ -508,28 +510,60 @@ Backup and restore configuration settings.
 | `DEPICTIO_BACKUP_BACKUP_S3_SECRET_KEY` | - | Backup S3 secret key |
 | `DEPICTIO_BACKUP_BACKUP_S3_REGION` | `us-east-1` | Backup S3 region |
 | `DEPICTIO_BACKUP_COMPRESS_LOCAL_BACKUPS` | `true` | Compress local S3 data backups |
-| `DEPICTIO_BACKUP_BACKUP_FILE_RETENTION_DAYS` | `30` | Days to retain backup files |
 | `DEPICTIO_BACKUP_MIGRATION_ALLOWED_S3_ENDPOINTS` | _(empty)_ | Comma-separated allowlist of external S3 endpoints permitted for project migration. Empty = only the deployment's own S3 store is allowed (SSRF guard). |
 
 ---
 
-<!-- ## Internal Analytics (opt-in — off by default, hidden from user-facing nav)
+## Project Migration <small>(v1.21.0+)</small> { #project-migration }
+
+**Config Class:** `MigrationConfig`
+**Environment Prefix:** `DEPICTIO_MIGRATION_`
+
+Pushing a project from one instance to another, with an admin's approval on the receiving side. Both
+directions are off until configured. Lists are JSON. With Helm, `TARGETS` and `INBOUND_SOURCES` hold
+pairing keys and do not belong in `backend.env`: pass them through a Secret. See
+[Send to another instance](../usage/administration/migrate.md#send-to-another-instance).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_MIGRATION_UI_ENABLED` | `false` | Show the migration controls (Migrate, **Admin → Migrations**, push targets, the editing lock). Off only hides them; the API follows the settings below. The Helm chart sets `true` |
+| `DEPICTIO_MIGRATION_INSTANCE_LABEL` | - | How this instance names itself in bundles |
+| `DEPICTIO_MIGRATION_TARGETS` | `[]` | Sending side: instances this one may push to, `[{"name", "url", "pairing_key"}]`. Keys are at least 32 characters. Listed targets may use `http://` and private addresses |
+| `DEPICTIO_MIGRATION_ALLOW_UI_TARGETS` | `false` | Let admins add push targets in the UI. Those go through the SSRF guard |
+| `DEPICTIO_MIGRATION_UI_TARGET_HOST_ALLOWLIST` | `[]` | Hosts a UI-added target may reach over `http://` or on a private address |
+| `DEPICTIO_MIGRATION_DESTINATION_DOMAINS` | `[]` | Sending side: domain suffixes a project owner may publish to with a URL and an invite code. `["*"]` allows any public `https://` host, the Helm default |
+| `DEPICTIO_MIGRATION_INBOUND_ENABLED` | `false` | Receiving side: accept pushes from `INBOUND_SOURCES` and from holders of a valid invite code. Off, the inbound routes answer 404. The Helm chart sets `true` |
+| `DEPICTIO_MIGRATION_INBOUND_SOURCES` | `[]` | Instances allowed to push here: `[{"name", "pairing_key", "allowed_source_buckets", "max_pending", "max_per_day", "max_bundle_bytes"}]` |
+| `DEPICTIO_MIGRATION_LOCK_IMPORTED_DEFAULT` | `true` | Approval publishes the project read-only unless the admin unticks it |
+| `DEPICTIO_MIGRATION_INVITE_TTL_DAYS` | `30` | Default lifetime of an invite code |
+| `DEPICTIO_MIGRATION_INVITE_MAX_TTL_DAYS` | `365` | Longest lifetime an admin may give one |
+| `DEPICTIO_MIGRATION_PENDING_TTL_DAYS` | `14` | Days a received push waits for a decision |
+| `DEPICTIO_MIGRATION_INTERRUPTED_AFTER_MINUTES` | `60` | At startup, a push or import idle for longer is marked failed |
+| `DEPICTIO_MIGRATION_MAX_BUNDLE_BYTES` | `10737418240` (10 GiB) | Largest bundle accepted |
+| `DEPICTIO_MIGRATION_STAGING_PREFIX` | `_migration_staging` | Bucket prefix a received bundle is staged under. One path segment |
+| `DEPICTIO_MIGRATION_SPOOL_DIR` | - | Local folder a bundle is built in. Unset: the system temporary folder |
+| `DEPICTIO_MIGRATION_HTTP_TIMEOUT_S` | `60.0` | Timeout of a call to the other instance |
+| `DEPICTIO_MIGRATION_UPLOAD_TIMEOUT_S` | `1800.0` | How long the sender waits for the answer after sending a bundle |
+
+---
+
+## Internal Analytics
 
 **Config Class:** `AnalyticsConfig`
 **Environment Prefix:** `DEPICTIO_ANALYTICS_`
 
-Configuration for analytics tracking.
+Per-user session tracking, stored in your own MongoDB and served by the admin analytics API. Off by
+default, with no page in the UI yet. Separate from [Telemetry](#telemetry).
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_ANALYTICS_ENABLED` | `false` | Enable analytics tracking |
+| `DEPICTIO_ANALYTICS_ENABLED` | `false` | Record sessions and serve the analytics endpoints |
 | `DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES` | `30` | Session timeout in minutes |
-| `DEPICTIO_ANALYTICS_CLEANUP_DAYS` | `90` | Days to retain analytics data |
-| `DEPICTIO_ANALYTICS_TRACK_ANONYMOUS_USERS` | `true` | Track anonymous user sessions |
-| `DEPICTIO_ANALYTICS_CLEANUP_ENABLED` | `true` | Enable automatic cleanup of old analytics data |
+| `DEPICTIO_ANALYTICS_CLEANUP_DAYS` | `90` | Days analytics records are kept |
+| `DEPICTIO_ANALYTICS_TRACK_ANONYMOUS_USERS` | `true` | Track anonymous sessions too |
+| `DEPICTIO_ANALYTICS_CLEANUP_ENABLED` | `true` | Delete records older than `CLEANUP_DAYS` |
 
 ---
--->
 
 ## Google Analytics
 
@@ -594,46 +628,13 @@ place from a remote host or bucket must be allow-listed here, see
 **Config Class:** `S3CacheConfig`
 **Environment Prefix:** `DEPICTIO_S3_`
 
-S3 file caching configuration for MultiQC and other S3 operations.
-
-The cache directory stores downloaded S3 files locally to avoid repeated downloads.
-Default location is ~/.depictio/s3_cache (persistent across restarts).
-
-Environment variable: DEPICTIO_S3_CACHE_DIR
-Example: export DEPICTIO_S3_CACHE_DIR=/data/depictio_s3_cache
-
-Note: The previous default /tmp/depictio_s3_cache was ephemeral and caused
-repeated downloads after system restarts.
+Local copies of S3 files (MultiQC reports and others), so they are downloaded once.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_S3_CACHE_DIR` | `~/.depictio/s3_cache` | Local directory for S3 file cache. Use DEPICTIO_S3_CACHE_DIR to override. |
+| `DEPICTIO_S3_CACHE_DIR` | `~/.depictio/s3_cache` | Local directory for the S3 file cache, kept across restarts |
 
 ---
-
-<!-- ## Application Profiling (dev / debug only — off by default, hidden from user-facing nav)
-
-**Config Class:** `ProfilingConfig`
-**Environment Prefix:** `DEPICTIO_PROFILING_`
-
-Configuration for application profiling.
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `DEPICTIO_PROFILING_ENABLED` | `false` | Enable application profiling |
-| `DEPICTIO_PROFILING_PROFILE_DIR` | `./prof_files` | Directory to save profile files |
-| `DEPICTIO_PROFILING_SORT_BY` | `cumtime,tottime` | Profile sorting criteria |
-| `DEPICTIO_PROFILING_RESTRICTIONS` | `50` | Number of top functions to show in reports |
-| `DEPICTIO_PROFILING_MEMORY_PROFILING` | `false` | Enable memory usage profiling |
-| `DEPICTIO_PROFILING_WERKZEUG_ENABLED` | `true` | Enable Werkzeug request profiling |
-| `DEPICTIO_PROFILING_WERKZEUG_STREAM` | `false` | Stream profiling output to terminal |
-| `DEPICTIO_PROFILING_WERKZEUG_SAFE_MODE` | `true` | Enable safe mode to prevent profiler conflicts |
-| `DEPICTIO_PROFILING_PROFILE_CALLBACKS` | `false` | Enable automatic callback profiling |
-| `DEPICTIO_PROFILING_PROFILE_SLOW_CALLBACKS_ONLY` | `true` | Only profile callbacks slower than threshold |
-| `DEPICTIO_PROFILING_SLOW_CALLBACK_THRESHOLD` | `0.1` | Threshold in seconds for slow callbacks |
-
----
--->
 
 <!-- ## Dashboard YAML Sync (DEPRECATED — JSON-based API has replaced it, hidden from user-facing nav)
 
@@ -711,6 +712,8 @@ The version history of every dashboard. See [Dashboard and data versions](../fea
 | `DEPICTIO_DASHBOARD_VERSIONS_RETENTION_DAYS` | `90` | Age after which versions that are not bookmarked are dropped |
 | `DEPICTIO_DASHBOARD_VERSIONS_KEEP_DAILY_FOR_DAYS` | `30` | Age after which autosaves thin to the last one of each day |
 | `DEPICTIO_DASHBOARD_VERSIONS_MAX_SNAPSHOT_BYTES` | `8388608` (8 MiB) | Largest version recorded. A larger one is skipped and logged; the save itself goes through |
+| `DEPICTIO_DASHBOARD_VERSIONS_CHANGES_SINCE_ENABLED` | `false` | Show readers what changed since their last visit. See [_"What's new"_](../features/whats-new.md) (v1.21.0+) |
+| `DEPICTIO_DASHBOARD_VERSIONS_CHANGES_SINCE_MARK_MODE` | `sticky` | Default for readers who have not chosen: `sticky` keeps the marks until the reader marks them as seen, `previous_visit` shows what changed since the visit before this one (v1.21.0+) |
 
 ---
 
@@ -823,20 +826,24 @@ memory to MiB before they can reach the payload; neither is ever sent raw.
 **Config Class:** `Settings`
 **Environment Prefix:** `DEPICTIO_`
 
-Top-level application settings including context configuration.
+Top-level settings, plus the `DEPICTIO_` variables the server reads directly.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_CONTEXT` | `server` | - |
-| `DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS` | `false` | Skip seeding the bundled reference projects (Iris, Penguins, Advanced Visualisations, nf-core/ampliseq, nf-core/viralrecon) and their dashboards on API startup. Opt-in: default preserves current behaviour. |
-| `DEPICTIO_SEED_PROJECTS` | _(empty = all)_ | Comma-separated allowlist of bundled reference datasets to seed on startup (e.g. `iris` or `iris,penguins`). Empty seeds all of them. Ignored when `DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS=true` (that takes precedence and seeds none). Used by the devcontainer/Codespaces setup to seed only `iris` for a faster boot. |
-| `DEPICTIO_WALKTHROUGH_DISABLED` | `false` | Hide the onboarding walkthrough overlay for every user. Useful for embedded iframes, staging envs used for screenshot capture, and demos with their own narration. `DEPICTIO_DEV_MODE=true` also suppresses it. |
+| `DEPICTIO_CONTEXT` | `server` | `server` for the API and workers, `client` for the CLI. Server context enforces the secrets |
+| `DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS` | `false` | Skip seeding the bundled reference projects (Iris, Penguins, Advanced Visualisations, nf-core/ampliseq, nf-core/viralrecon) and their dashboards on API startup |
+| `DEPICTIO_SEED_PROJECTS` | _(empty = all)_ | Comma-separated allowlist of bundled reference projects to seed on startup, e.g. `iris` or `iris,penguins`. Names: `iris`, `penguins`, `ampliseq`, `advanced_viz_showcase`, `viralrecon`. Ignored when `DEPICTIO_DISABLE_EXAMPLE_DASHBOARDS=true` |
+| `DEPICTIO_SEED_EXTRA_PROJECTS` | _(empty)_ | Comma-separated optional projects to seed on top of the default set: `catalog_conformance` (a CI test fixture) and `genome_tracks_examples` (the Genome Tracks Showcase, opt-in since v1.22.0 on a fresh database; an instance that already has it keeps it) |
+| `DEPICTIO_WALKTHROUGH_DISABLED` | `false` | Turn off the [guided tours](../usage/guides/web_ui.md#guided-tours) (coach cards) and, since v1.22.0, the dashboard [landing card](../usage/guides/dashboard-guide.md#landing-hint) for every user; the header compass stays, disabled. Useful for embedded iframes, screenshot staging and demos with their own narration |
+| `DEPICTIO_ENABLE_DEV_ENDPOINTS` | `false` | Expose the destructive test endpoints (`utils/drop_S3_content`, `utils/drop_all_collections`, `events/test-trigger`). Off, they answer 404 even for admins. Development only |
+| `DEPICTIO_DEV_MODE` | `false` | Development mode: the API runs under `uvicorn --reload`, the worker restarts on code changes, telemetry, the guided tours and the landing card are off, and the admin CLI config is re-exported at each start. Not a security switch |
+| `DEPICTIO_DELTA_CACHE_DIR` | `/app/cache/delta_cache` | Local cache of Delta tables read by the API |
 
 ---
 
 ## Branding
 
-**Config Class:** `BrandingSettings`
+**Config Class:** `BrandingConfig`
 **Environment Prefix:** `DEPICTIO_BRANDING_`
 
 Deployment-level defaults for the [brand theme](../usage/administration/branding.md). Every one of these is the leftmost layer: the `/admin` Branding panel and a dashboard's own override sit on top of them, and neither needs a redeploy. Leave a variable unset and the layer above, or Depictio's own look, applies.
@@ -911,22 +918,30 @@ DEPICTIO_FEEDBACK_LABEL='Send feedback'
 
 ---
 
-## ServiceConfig
+## Compose and image variables { #compose-and-image-variables }
 
-**Config Class:** `ServiceConfig`
-**Environment Prefix:** `DEPICTIO_`
-
-Base class for service configurations with internal/external URL handling.
+Read by `docker-compose.yaml` or a container, not by the settings models.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_SERVICE_NAME` | `PydanticUndefined` | - |
-| `DEPICTIO_SERVICE_PORT` | `PydanticUndefined` | - |
-| `DEPICTIO_EXTERNAL_HOST` | `localhost` | - |
-| `DEPICTIO_EXTERNAL_PORT` | `PydanticUndefined` | - |
-| `DEPICTIO_EXTERNAL_PROTOCOL` | `http` | - |
-| `DEPICTIO_PUBLIC_URL` | - | - |
-| `DEPICTIO_EXTERNAL_SERVICE` | `false` | - |
+| `DEPICTIO_VERSION` | the release the compose file pins | Image tag of the backend, viewer and worker. `next` follows `main` |
+| `DEPICTIO_CSP_S3_ORIGIN` | `DEPICTIO_S3_PUBLIC_URL` | Viewer container: S3 origin added to the CSP `connect-src`, for genome tracks read straight from the bucket |
+| `DATA_DIR` | `data` | `docker-compose.dev.yaml` only: host folder holding the MongoDB, Redis and SeaweedFS data |
+
+`DEPICTIO_CELERY_WORKERS` and the other worker variables are in [Worker processes](#celery-worker-processes),
+`DEPICTIO_FASTAPI_HOST` / `_PORT` / `_WORKERS` in [FastAPI Backend](#fastapi-backend).
+
+### Declared but not read
+
+These names exist in `settings_models.py` and change nothing. Most are left over from the Dash
+frontend; setting one has no effect.
+
+- `DEPICTIO_VIEWER_HOST`, `_WORKERS`, `_DEBUG`, `_AUTO_GENERATE_FIGURES`
+- `DEPICTIO_FASTAPI_SSL`, `DEPICTIO_FASTAPI_LOGGING_LEVEL` (the log level is `DEPICTIO_LOGGING_VERBOSITY_LEVEL`)
+- `DEPICTIO_CACHE_FALLBACK_TO_MEMORY`, `DEPICTIO_CACHE_CACHE_VERSION`
+- `DEPICTIO_PERFORMANCE_HTTP_CLIENT_TIMEOUT`, `_API_REQUEST_TIMEOUT`, `_BROWSER_ELEMENT_TIMEOUT`, `_SCREENSHOT_API_TIMEOUT`, `_DNS_CACHE_TTL`, `_CONNECTION_POOL_SIZE`, `_MAX_KEEPALIVE_CONNECTIONS`, `_DISABLE_LOADING_SPINNERS`, `_DISABLE_ANIMATIONS`, `_DISABLE_THEME_ANIMATIONS`
+- every `DEPICTIO_PROFILING_*`
+- the Celery worker fields listed under [Worker processes](#celery-worker-processes)
 
 ---
 

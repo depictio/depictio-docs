@@ -20,11 +20,12 @@ hide:
   <span class="template-status-experimental template-banner-badge" data-tooltip="Experimental: shared as-is. Feedback and PRs welcome."><i class="mdi mdi-flask-outline"></i> Experimental</span>
 </div>
 
-<div class="tpl-version-pick" data-latest="2.4.5">
+<div class="tpl-version-pick" data-latest="2.5.3">
   <span class="tpl-version-icon"><i class="mdi mdi-source-branch"></i></span>
   <span class="tpl-version-label">Pipeline version</span>
   <select id="tpl-version" class="tpl-version-select" aria-label="Pipeline version">
-    <option value="2.4.5" selected>2.4.5</option>
+    <option value="2.5.3" selected>2.5.3</option>
+    <option value="2.4.5">2.4.5</option>
   </select>
   <span class="tpl-version-badge">latest</span>
 </div>
@@ -54,7 +55,7 @@ coverage, duplication and endogenous-DNA floors: the collections they read link
 back to the library hub, so a floor narrows the hub and, through it, every tab.
 
 !!! warning "The MultiQC report must be regenerated"
-    eager 2.4.5 ships MultiQC 1.13, which writes no parquet, and Depictio reads
+    eager 2.x ships MultiQC 1.13, which writes no parquet, and Depictio reads
     only `multiqc.parquet` (MultiQC 1.31 and later). Re-run MultiQC over the
     run's own tool outputs before ingesting, or the MultiQC tab stays empty:
 
@@ -72,7 +73,9 @@ back to the library hub, so a floor narrows the hub and, through it, every tab.
     Kraken are optional collections, each bound to one table in a collapsed
     section: *Off-target screen* on Endogenous DNA, *Contamination* on
     Authentication, *Sex determination* on Coverage. A run that did not enable
-    the branch ingests without it, and the import drops its table.
+    the branch ingests without it, and the import drops its table. From 2.5.3 the
+    bcftools stats collections are optional too: genotyping is off by default,
+    and a run without it drops the Genotypes tab and its Overview step.
 
 ---
 
@@ -99,13 +102,13 @@ back to the library hub, so a floor narrows the hub and, through it, every tab.
 
     ```bash
     depictio config nextflow --install     # once per machine
-    nextflow run nf-core/eager -r 2.4.5 -profile docker --outdir results
+    nextflow run nf-core/eager -r 2.5.3 -profile docker --outdir results
     ```
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. The samplesheet copy and the MultiQC regeneration above still
-    apply. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    apply. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 
@@ -124,9 +127,15 @@ around it.
     visualizations are dropped entirely, and the remaining components are
     re-packed so there are no empty rows.
 
-<div class="tpl-version-block" data-version="2.4.5" markdown>
+<div class="tpl-version-block" data-version="2.5.3" markdown>
 
 --8<-- "pipeline-templates/nf-core/_generated/eager-latest.md"
+
+</div>
+
+<div class="tpl-version-block" data-version="2.4.5" markdown>
+
+--8<-- "pipeline-templates/nf-core/_generated/eager-2.4.5.md"
 
 </div>
 
@@ -166,7 +175,7 @@ bottom of every child tab.
 
     [![Overview dashboard](../../images/pipeline-templates/nf-core/eager/overview_dark.webp#only-dark){ loading=lazy }](../../images/pipeline-templates/nf-core/eager/overview_dark.webp){ .tpl-shot target="_blank" rel="noopener" }
 
-    A short hero links the run's provenance: eager 2.4.5 writes no `params.json`,
+    A short hero links the run's provenance: eager 2.x writes no `params.json`,
     so the dialog lists the software versions the run recorded. *About this
     dashboard* says how the two filter levels work, *The run* lists facts read
     from the run's tables (libraries and samples, the most common UDG treatment,
@@ -483,7 +492,7 @@ Depictio reads the **output** of nf-core/eager, it does not run the pipeline.
 Run the pipeline first:
 
 ```bash
-nextflow run nf-core/eager -r 2.4.5 \
+nextflow run nf-core/eager -r 2.5.3 \
   --input libraries.tsv \
   --fasta reference.fa \
   -profile docker --outdir results
@@ -498,7 +507,7 @@ python -m depictio.dev_scripts.multiqc_reprocess --src results/ --dest results/
 depictio ingest results/ --template nf-core/eager/latest
 ```
 
-See [nf-co.re/eager/usage](https://nf-co.re/eager/2.4.5/docs/usage) for full pipeline documentation.
+See [nf-co.re/eager/usage](https://nf-co.re/eager/2.5.3/docs/usage) for full pipeline documentation.
 
 ---
 
@@ -520,14 +529,14 @@ different directory layout lands in the same collections.
 │   └── filtered_stats/*_postfilterflagstat.stats
 ├── endorspy/*_endogenous_dna_mqc.json
 ├── deduplication/<library>/*_rmdup.metrics
-├── preseq/*.filtered.preseq
+├── preseq/*.{filtered,mapped}.preseq          # .mapped without --run_bam_filtering
 ├── damageprofiler/<library>_rmdup/
 │   ├── *_freq_misincorporations.txt
 │   └── *lgdistribution.txt
 ├── qualimap/<library>_rmdup_stats/
 │   ├── genome_results.txt
 │   └── raw_data_qualimapReport/*.txt          # coverage and mapping quality across the reference
-├── bcftools/stats/*.vcf.stats
+├── bcftools/stats/*.vcf.stats                 # with --run_genotyping
 └── (optional branches, anywhere under the root)
     ├── *SexDet*.tsv                           # Sex.DetERRmine
     ├── *.mtnucratio                           # MTNucRatio
@@ -543,15 +552,16 @@ different directory layout lands in the same collections.
 The template was validated on the nf-core AWS megatest of the 2.4.5 release,
 `s3://nf-core-awsmegatests/eager/results-42c9d5f8602e5e88fdcec28f194d2cd4cff61c75/`
 (every 2.5.x prefix holds `pipeline_info/` only), and the screenshots above come
-from that run. The megatest did not enable sex determination, contamination
+from that run. The 2.5.3 template is pinned to the same run and was also checked
+on the release's own `-profile test` run. The megatest did not enable sex determination, contamination
 estimation or a metagenomic screen, so the import drops those tables. Its
 samplesheet is not part of the results; the template ships a reconstructed one
 under `input/`:
 
 ```bash
 DEST=/tmp/eager_test
-bash depictio/projects/nf-core/eager/2.4.5/download_test_data.sh "$DEST"
-mkdir -p "$DEST/input" && cp depictio/projects/nf-core/eager/2.4.5/input/*.tsv "$DEST/input/"
+bash depictio/projects/nf-core/eager/2.5.3/download_test_data.sh "$DEST"
+mkdir -p "$DEST/input" && cp depictio/projects/nf-core/eager/2.5.3/input/*.tsv "$DEST/input/"
 python -m depictio.dev_scripts.multiqc_reprocess --src "$DEST" --dest "$DEST"
 depictio ingest "$DEST" --template nf-core/eager/latest
 ```

@@ -1,24 +1,25 @@
-# Minimal Reference Configuration
+---
+title: Minimal project YAML
+description: The smallest project file depictio ingest accepts.
+---
 
-!!! danger "Warning"
-    This is not recommended to copy and paste the configuration as is. The configuration is meant to be a example and should be modified to fit your specific use case.
+# Minimal project YAML
 
-This is a minimal reference configuration example file for the Depictio CLI. It includes the minimum required options and their descriptions. You can use this as a template to create your own configuration file.
+For a pipeline with no [template](../usage/projects/templates.md): one workflow, one table collected from every run.
 
 ```yaml
 name: "Example project"
-# Workflows section
 workflows:
   - name: "example_workflow"
     engine:
       name: "python"
-    config:
-      parent_runs_location:
+    data_location:
+      structure: "sequencing-runs"   # one subfolder per run; or "flat"
+      locations:
         - "/home/user/data/example_workflow"
-      runs_regex: ".*"
-    # Data collections section
+      runs_regex: ".*"               # which subfolders are runs
     data_collections:
-      - data_collection_tag: "example_data_collection"
+      - data_collection_tag: "example_table"
         config:
           type: "Table"
           metatype: "Aggregate"
@@ -26,9 +27,16 @@ workflows:
             mode: recursive
             scan_parameters:
               regex_config:
-                pattern: "*.stats.tsv"
+                pattern: ".*\\.stats\\.tsv"   # a regular expression, not a glob
           dc_specific_properties:
             format: "TSV"
             polars_kwargs:
               separator: "\t"
 ```
+
+```bash
+depictio ingest --project-config-path project.yaml --dry-run
+depictio ingest --project-config-path project.yaml
+```
+
+Every field: [Full reference](../usage/projects/reference.md). Worked examples: [YAML project configuration](../usage/projects/yaml-examples.md).

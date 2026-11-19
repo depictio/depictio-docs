@@ -96,7 +96,7 @@ funnel, the matrix, every track and the P(s) curve through the project links.
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
     manifest. The MultiQC tab stays empty until the report is regenerated as
-    above. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    above. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 

@@ -55,8 +55,8 @@ reads lanes, so it keeps its own lane, read and cycle filters instead.
     The two demultiplexers write different reports: bcl2fastq a
     `Stats/Stats.json`, BCL Convert `Reports/Demultiplex_Stats.csv`,
     `Quality_Metrics.csv` and `Top_Unknown_Barcodes.csv`. The template reads
-    bcl2fastq by default; `--var IS_BCLCONVERT=true` repoints the same four
-    collections at BCL Convert recipes that write the same columns, so every tile
+    bcl2fastq by default; a `--demultiplexer bclconvert` run sets `IS_BCLCONVERT`
+    from its params and repoints the same four collections at BCL Convert recipes that write the same columns, so every tile
     renders unchanged. BCL Convert reports no raw cluster count, so the
     pass-filter rate stays empty on that route.
 
@@ -98,7 +98,7 @@ reads lanes, so it keeps its own lane, read and cycle filters instead.
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    manifest. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ---
 
@@ -370,8 +370,8 @@ nextflow run nf-core/demultiplex -r 1.8.0 \
   --outdir results -profile docker
 ```
 
-Then point Depictio at the results, adding `--var IS_BCLCONVERT=true` for a
-`--demultiplexer bclconvert` run:
+Then point Depictio at the results. A `--demultiplexer bclconvert` run sets
+`IS_BCLCONVERT` from its params; `--var IS_BCLCONVERT=false` overrides:
 
 ```bash
 depictio ingest results/ --template nf-core/demultiplex/latest

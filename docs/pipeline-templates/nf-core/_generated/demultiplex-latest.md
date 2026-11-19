@@ -60,10 +60,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="1.2.0" data-template-updated="2026-11-15">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/demultiplex 1.8.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.2.0</span>
+<span class="gtd-badge gtd-updated">Updated 15 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -76,9 +76,8 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `METADATA_FILE` | — | Optional library metadata TSV. First column: the library name as written in the sample sheet; every other column (organism, input amount, project, ...) becomes a design column of the library hub. |
 | `METADATA_ID_COL` | — | Metadata library-name column. Auto-detected as the first metadata column; defaults to 'sample'. |
 | `GROUP_COL` | — | Metadata column the dashboards group and colour libraries by. Auto-detected as the first annotation column of METADATA_FILE; without metadata it falls back to a single group. |
-| `IS_BCLCONVERT` | — | Set (--var IS_BCLCONVERT=true) for a run demultiplexed with --demultiplexer bclconvert: the run-level collections read the BCL Convert Reports/*.csv instead of the bcl2fastq Stats.json. Matches the run's params.json demultiplexer. |
 
-**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`
+**Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `IS_BCLCONVERT`
 
 ### :material-database-outline: Data collections
 

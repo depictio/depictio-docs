@@ -53,18 +53,19 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
 .gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
 .gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="1.1.2" data-template-updated="2026-11-16">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/quantms 1.1.1</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.1.2</span>
+<span class="gtd-badge gtd-updated">Updated 16 Nov 2026</span>
 </div>
 
-### Template variables
+### :material-code-braces: Template variables
 
 Variables you provide when running the template: `DATA_ROOT` is the results directory given to `depictio ingest`, the others are set with `--var NAME=value`:
 
@@ -76,29 +77,29 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 | `GROUP_COL` | — | Hub column the dashboard groups and filters runs by. Defaults to condition, the MSstats condition of the design. |
 | `GROUP_COL_DISPLAY` | — | Reader-facing label of GROUP_COL, used in filter and card titles. |
 
-### Data collections
+### :material-database-outline: Data collections
 
 13 data collections — <span class="gtd-badge gtd-req">13 required</span> <span class="gtd-badge gtd-opt">0 optional</span> · <span class="gtd-badge gtd-direct">1 direct</span> <span class="gtd-badge gtd-derived">12 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `samples` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/samples.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_precursors` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/precursors.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_proteins` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/proteins.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_acquisition` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/acquisition.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_acquisition_profile` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/acquisition_profile.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_ms2_peak_bins` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/ms2_peak_bins.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_run_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/run_summary.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_protein_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/protein_summary.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_protein_conditions` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/protein_conditions.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_sample_embedding` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/sample_embedding.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_sample_correlation` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/sample_correlation.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_replicate_pairs` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/replicate_pairs.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `quantms_comparisons` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/quantms/comparisons.py`</code> | <span class="gtd-badge gtd-req">required</span> |
+| `samples` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/samples.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/samples.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_precursors` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/precursors.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/precursors.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_proteins` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/proteins.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/proteins.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_acquisition` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/acquisition.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/acquisition.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_acquisition_profile` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/acquisition_profile.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/acquisition_profile.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_ms2_peak_bins` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/ms2_peak_bins.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/ms2_peak_bins.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_run_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/run_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/run_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_protein_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/protein_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/protein_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_protein_conditions` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/protein_conditions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/protein_conditions.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_sample_embedding` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/sample_embedding.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/sample_embedding.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_sample_correlation` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/sample_correlation.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/sample_correlation.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_replicate_pairs` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/replicate_pairs.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/replicate_pairs.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `quantms_comparisons` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/quantms/recipes/comparisons.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/quantms/comparisons.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
 
-### Cross-DC links
+### :material-vector-link: Cross-DC links
 
 11 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
@@ -119,7 +120,7 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 <tr><td><code>quantms_comparisons</code> <span class="col">·&nbsp;protein_group</span></td><td class="arr">→</td><td><code>quantms_protein_summary</code></td><td>Carry a protein selection from the comparisons to the protein summary</td></tr>
 </tbody></table></div>
 
-### Recipes
+### :material-chef-hat: Recipes
 
 Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `OUTPUT_SCHEMA` columns.
 

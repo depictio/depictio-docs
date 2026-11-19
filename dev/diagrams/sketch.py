@@ -25,7 +25,7 @@ import math
 import random
 import re
 import tempfile
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -35,6 +35,7 @@ VIRGIL_TTF = REPO_ROOT / "docs" / "fonts" / "Virgil.ttf"
 # Virgil first, so the bundled @font-face wins over any system copy and the PNG
 # render is reproducible on a machine that has never opened Excalidraw.
 FONT = "Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive"
+SANS = "Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace"
 
 # Handwriting is unreadable for code: `--flag` becomes an em dash, `!x` reads as
@@ -123,6 +124,9 @@ class Theme:
     # asset set ships; recolouring it to match our stroke would make it a
     # generic glyph rather than a recognisable logo.
     multiqc: str = "#201637"
+    # Stroke colour per fill key, filled in by concepts.py: a box whose fill is
+    # a concept (project, collection...) is outlined in that concept's colour.
+    inks: dict[str, str] = field(default_factory=dict)
 
     def fill(self, key: str) -> str:
         """``"none"`` keeps a box transparent; anything else indexes the palette."""
@@ -205,7 +209,10 @@ class Box:
 class Sketch:
     """Accumulates SVG fragments drawn with a hand-drawn wobble."""
 
-    def __init__(self, width: float, height: float, theme: Theme = LIGHT, seed: int = 7) -> None:
+    def __init__(self, width: float, height: float, theme: Theme = LIGHT, seed: int = 7, clean: bool = False) -> None:
+        # clean: straight strokes and a sans-serif face, for figures that draw
+        # the app's own screens, where a wobble reads as a different screen.
+        self.clean = clean
         self.width = width
         self.height = height
         self.theme = theme
@@ -246,6 +253,12 @@ class Sketch:
     ) -> None:
         colour = colour or self.theme.ink
         dash = ' stroke-dasharray="9 7"' if dashed else ""
+        if self.clean:
+            self._parts.append(
+                f'<path d="M{x1:.1f},{y1:.1f} L{x2:.1f},{y2:.1f}" fill="none" stroke="{colour}" '
+                f'stroke-width="{width}" stroke-linecap="round"{dash}/>'
+            )
+            return
         for _ in range(passes):
             d = self._wobble(x1, y1, x2, y2, amount)
             self._parts.append(
@@ -257,6 +270,13 @@ class Sketch:
         # Fill first, as a plain rounded rect: a wobbling fill edge reads as a
         # smudge, while a wobbling outline on top of it reads as a pen stroke.
         fill = self.theme.fill(box.fill)
+        if self.clean:
+            dash = ' stroke-dasharray="8 6"' if dashed else ""
+            self._parts.append(
+                f'<rect x="{box.x:.1f}" y="{box.y:.1f}" width="{box.w:.1f}" height="{box.h:.1f}" rx="10" '
+                f'fill="{fill}" stroke="{colour or self.theme.ink}" stroke-width="1.6"{dash}/>'
+            )
+            return
         if fill != "none":
             self._parts.append(
                 f'<rect x="{box.x:.1f}" y="{box.y:.1f}" width="{box.w:.1f}" '
@@ -491,8 +511,9 @@ class Sketch:
         weight: str = "normal",
     ) -> None:
         colour = colour or self.theme.ink
+        face = SANS if self.clean else FONT
         self._parts.append(
-            f'<text x="{x:.1f}" y="{y:.1f}" font-family="{FONT}" font-size="{size}" '
+            f'<text x="{x:.1f}" y="{y:.1f}" font-family="{face}" font-size="{size}" '
             f'fill="{colour}" text-anchor="{anchor}" font-weight="{weight}">'
             f"{_spans(content, size)}</text>"
         )
@@ -506,6 +527,8 @@ class Sketch:
         icon: str | None = None,
         icon_colour: str | None = None,
     ) -> None:
+        colour = colour or self.theme.inks.get(box.fill)
+        icon_colour = icon_colour or self.theme.inks.get(box.fill)
         self.rect(box, colour=colour, dashed=dashed)
         if icon:
             # Pinned to the title line rather than the box centre, so a box with

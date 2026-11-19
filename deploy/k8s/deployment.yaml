@@ -1,0 +1,112 @@
+# git-sync keeps a depth-1 checkout of the public gh-pages branch on the PVC and
+# swaps the `current` symlink atomically to each new commit; nginx serves it.
+# GitHub never reaches into the cluster and no credentials are involved.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docs
+spec:
+  replicas: 1
+  # The PVC is ReadWriteOnce: never run two pods on it.
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 65533
+        # Skip the recursive chown of the 3 GB checkout on every restart.
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: git-sync
+          image: registry.k8s.io/git-sync/git-sync:v4.7.1
+          # The EMBL Capsule tenant rejects any other pull policy.
+          imagePullPolicy: Always
+          args:
+            - --repo=https://github.com/depictio/depictio-docs
+            - --ref=gh-pages
+            - --root=/git
+            - --link=current
+            - --depth=1
+            - --period=60s
+            # The first clone moves the whole site; the default is 2 minutes.
+            - --sync-timeout=30m
+            - --max-failures=10
+          env:
+            - name: HOME
+              value: /tmp
+          securityContext:
+            runAsUser: 65533
+            runAsGroup: 65533
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          volumeMounts:
+            - name: site
+              mountPath: /git
+            - name: git-sync-tmp
+              mountPath: /tmp
+
+        - name: nginx
+          image: nginxinc/nginx-unprivileged:1.31.7-alpine
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          securityContext:
+            runAsUser: 101
+            runAsGroup: 101
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          # Ready only once git-sync has produced a checkout.
+          readinessProbe:
+            httpGet:
+              path: /versions.json
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          volumeMounts:
+            - name: site
+              mountPath: /git
+              readOnly: true
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d
+              readOnly: true
+            - name: nginx-tmp
+              mountPath: /tmp
+
+      volumes:
+        - name: site
+          persistentVolumeClaim:
+            claimName: docs-site
+        - name: nginx-conf
+          configMap:
+            name: docs-nginx
+        - name: git-sync-tmp
+          emptyDir: {}
+        - name: nginx-tmp
+          emptyDir: {}

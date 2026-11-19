@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Depictio documentation has moved</title>
+  <!--
+    GitHub Pages serves this page for every path the redirect branch does not
+    hold, which is every old documentation URL. It sends the reader to the same
+    path, query and anchor on the new host, without the /depictio-docs prefix:
+    /depictio-docs/v1.19.3/usage/x/#a -> __DOCS_ORIGIN__/v1.19.3/usage/x/#a
+  -->
+  <script>
+    (function () {
+      var path = window.location.pathname.replace(/^\/depictio-docs(?=\/|$)/, "") || "/";
+      window.location.replace(
+        "__DOCS_ORIGIN__" + path + window.location.search + window.location.hash
+      );
+    })();
+  </script>
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=__DOCS_ORIGIN__/">
+  </noscript>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 4rem auto; max-width: 36rem; padding: 0 1rem; }
+  </style>
+</head>
+<body>
+  <p>The Depictio documentation has moved to <a href="__DOCS_ORIGIN__/">__DOCS_ORIGIN__</a>.</p>
+</body>
+</html>

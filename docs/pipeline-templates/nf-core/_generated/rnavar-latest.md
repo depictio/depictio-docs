@@ -54,18 +54,19 @@
 .gtd-links .col{opacity:.7;font-size:.92em;}
 .gtd-links code{background:none;padding:0;overflow-wrap:anywhere;}
 .gtd-links tbody tr:nth-child(even){background:var(--md-default-fg-color--lightest,#f6f8fa);}
+.gtd-versions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 0 .8rem;}
 .gtd-pipeline-ver{background:#eaf2ff;color:#2563c9;}
 .gtd-template-ver{background:#e6f7f5;color:#2a8c82;}
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.1.0" data-template-updated="2026-11-01">
+<div class="gtd-versions" data-template-version="1.1.2" data-template-updated="2026-11-12">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/rnavar 1.3.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.1.0</span>
-<span class="gtd-badge gtd-updated">Updated 1 Nov 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.1.2</span>
+<span class="gtd-badge gtd-updated">Updated 12 Nov 2026</span>
 </div>
 
-### Template variables
+### :material-code-braces: Template variables
 
 Variables you provide when running the template: `DATA_ROOT` is the results directory given to `depictio ingest`, the others are set with `--var NAME=value`:
 
@@ -80,44 +81,44 @@ Variables you provide when running the template: `DATA_ROOT` is the results dire
 
 **Auto-detected** (set from the run's metadata / `params.json`; the route flags drive *Conditional routes* below): `GROUP_COL_DISPLAY`, `ANNOTATION_COLS`
 
-### Data collections
+### :material-database-outline: Data collections
 
 28 data collections — <span class="gtd-badge gtd-req">13 required</span> <span class="gtd-badge gtd-opt">15 optional</span> · <span class="gtd-badge gtd-direct">11 direct</span> <span class="gtd-badge gtd-derived">17 derived</span>.
 
-**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
+**Origin** tells you whether a collection is *real pipeline data* or a reshape of it: <span class="gtd-badge gtd-direct">direct</span> = a pipeline output (scanned, or a recipe that reads raw files); <span class="gtd-badge gtd-derived">derived</span> = a recipe that reshapes one or more *direct* collections into the layout a visualization needs (no new measurement). **Reads** shows what produces it: a <span class="gtd-badge gtd-recipe">recipe</span> `.py` transform, whose name links to its source on GitHub, or a raw <span class="gtd-badge gtd-file">file</span> scanned off disk. (A `direct` collection can still have a recipe — one that merely parses/cleans the raw file; `derived` means the recipe reshapes another collection.)
 
 | Tag | Origin | Type | Reads | Status |
 |---|:--:|---|---|:--:|
-| `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`{METADATA_FILE}`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc\.parquet$`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `star_log_final` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`star/log_final.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `star_junctions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`star/junctions.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `picard_markduplicates_metrics_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`.*\.md\.metrics\.txt$`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `picard_markduplicates_metrics` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`picard/markduplicates_metrics.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `samtools_stats_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`.*\.md\.stats$`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `samtools_stats_sections` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`samtools/stats_sections.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `samtools_idxstats` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`samtools/idxstats.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `vcf_calls_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`^(?!.*_(?:snpEff\|VEP\|BCF)).*\.haplotypecaller(?:\.filtered)?\.vcf\.gz$`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `vcf_variants` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/rnavar/variants.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `vcf_callset_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`vcf/callset_summary.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `vcf_substitution_spectrum` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`vcf/substitution_spectrum.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `vcf_filter_breakdown` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`vcf/filter_breakdown.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `vcf_callset_nodesign` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`vcf/callset_summary.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `snpeff_ann_vcf_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`.*_snpEff\.ann\.vcf\.gz$`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `snpeff_ann_variants` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`snpeff/ann_variants.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `snpeff_csv_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`.*_snpEff\.csv$`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `snpeff_csv_stats` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`snpeff/csv_stats.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `snpeff_genes_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">`.*_snpEff\.genes\.txt$`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `snpeff_genes` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`snpeff/genes.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
-| `samples` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/rnavar/samples.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `variant_windows` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/rnavar/variant_windows.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `shared_variants` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/rnavar/shared_variants.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `replicate_sharing` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/rnavar/replicate_sharing.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `vcf_allele_fractions` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/rnavar/allele_fractions.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `sample_concordance` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/rnavar/sample_concordance.py`</code> | <span class="gtd-badge gtd-req">required</span> |
-| `tracks` | <span class="gtd-badge gtd-derived">derived</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <code class="gtd-path">`nf-core/rnavar/tracks.py`</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `metadata` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">{METADATA_FILE}</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `multiqc_data` | <span class="gtd-badge gtd-direct">direct</span> | <img src="https://raw.githubusercontent.com/MultiQC/logo/main/logos/multiqc_icon_color.svg" alt="MultiQC" width="14" style="vertical-align:text-bottom;"> MultiQC | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">(?:.*/)?multiqc(?:/[^/]+)?/multiqc_data/multiqc\.parquet$</code> | <span class="gtd-badge gtd-req">required</span> |
+| `star_log_final` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/star/log_final.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">star/log_final.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `star_junctions` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/star/junctions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">star/junctions.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `picard_markduplicates_metrics_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*\.md\.metrics\.txt$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `picard_markduplicates_metrics` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/picard/markduplicates_metrics.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">picard/markduplicates_metrics.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `samtools_stats_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*\.md\.stats$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `samtools_stats_sections` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/samtools/stats_sections.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">samtools/stats_sections.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `samtools_idxstats` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/samtools/idxstats.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">samtools/idxstats.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `vcf_calls_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">^(?!.*_(?:snpEff&#124;VEP&#124;BCF)).*\.haplotypecaller(?:\.filtered)?\.vcf\.gz$</code> | <span class="gtd-badge gtd-req">required</span> |
+| `vcf_variants` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnavar/recipes/variants.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnavar/variants.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `vcf_callset_summary` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/vcf/callset_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">vcf/callset_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `vcf_substitution_spectrum` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/vcf/substitution_spectrum.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">vcf/substitution_spectrum.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `vcf_filter_breakdown` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/vcf/filter_breakdown.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">vcf/filter_breakdown.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `vcf_callset_nodesign` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/vcf/callset_summary.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">vcf/callset_summary.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `snpeff_ann_vcf_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*_snpEff\.ann\.vcf\.gz$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `snpeff_ann_variants` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/snpeff/ann_variants.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">snpeff/ann_variants.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `snpeff_csv_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*_snpEff\.csv$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `snpeff_csv_stats` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/snpeff/csv_stats.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">snpeff/csv_stats.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `snpeff_genes_raw` | <span class="gtd-badge gtd-direct">direct</span> | :material-table: Table | <span class="gtd-badge gtd-file">file</span> <code class="gtd-path">.*_snpEff\.genes\.txt$</code> | <span class="gtd-badge gtd-opt">optional</span> |
+| `snpeff_genes` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/snpeff/genes.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">snpeff/genes.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
+| `samples` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnavar/recipes/samples.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnavar/samples.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `variant_windows` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnavar/recipes/variant_windows.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnavar/variant_windows.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `shared_variants` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnavar/recipes/shared_variants.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnavar/shared_variants.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `replicate_sharing` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnavar/recipes/replicate_sharing.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnavar/replicate_sharing.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `vcf_allele_fractions` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnavar/recipes/allele_fractions.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnavar/allele_fractions.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `sample_concordance` | <span class="gtd-badge gtd-derived">derived</span> | :material-table: Table | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnavar/recipes/sample_concordance.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnavar/sample_concordance.py</code></a> | <span class="gtd-badge gtd-req">required</span> |
+| `tracks` | <span class="gtd-badge gtd-derived">derived</span> | :material-file-document-outline: genomic_tracks | <span class="gtd-badge gtd-recipe">recipe</span> <a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/rnavar/recipes/tracks.py" target="_blank" rel="noopener" title="Recipe source on GitHub"><code class="gtd-path">nf-core/rnavar/tracks.py</code></a> | <span class="gtd-badge gtd-opt">optional</span> |
 
-### Conditional routes
+### :material-directions-fork: Conditional routes
 
 Rows are data collections; columns are the variables you set or `params.json` flags auto-detected from the run. Each filled cell is the effect of **setting** that variable; an **empty cell** means that variable leaves the collection unchanged. (24 collections are unaffected by any variable — present on every run.)
 
@@ -133,7 +134,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><th class="dc"><code>tracks</code></th><td></td><td class="swap" title="re-sourced when TRACKS_URI is set">⇄</td></tr>
 </tbody></table></div>
 
-### Cross-DC links
+### :material-vector-link: Cross-DC links
 
 26 links — selecting a value in the **source** collection filters the **target**. The join column is shown after the source.
 
@@ -169,7 +170,7 @@ Rows are data collections; columns are the variables you set or `params.json` fl
 <tr><td><code>samples</code> <span class="col">·&nbsp;sample</span></td><td class="arr">→</td><td><code>sample_concordance</code></td><td>Filter the genotype concordance matrix by the samples picked in the left panel</td></tr>
 </tbody></table></div>
 
-### Recipes
+### :material-chef-hat: Recipes
 
 Each recipe reshapes raw pipeline output into a tidy table. The name links to its source; *Output* lists the validated `OUTPUT_SCHEMA` columns.
 

@@ -8,7 +8,7 @@ glightbox: true
 # Breakpoints
 
 <figure markdown="span">
-  <video autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/fusion_chord.webp" src="../../../images/guides/genome-browser/fusion_chord.mp4"></video>
+  <video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/genome-browser/fusion_chord.webp" src="../../../images/guides/genome-browser/fusion_chord.mp4"></video>
 </figure>
 
 With a `mate`, the browser shows both sides of a call side by side. The breakpoint view joins them by their split reads and discordant pairs, and the circular view draws every structural variant of the tracks as a chord. In the clip, a chord tile picks the fusions and both breakpoints follow.

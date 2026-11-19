@@ -92,7 +92,7 @@ the libraries per guide:
     | `METADATA_FILE` | `{DATA_ROOT}/input/samplesheet.csv` | The samplesheet the run started with |
     | `GROUP_COL` | `protospacer` | Sheet column the dashboard groups and filters libraries by |
     | `GROUP_COL_DISPLAY` | `Protospacer` | The label of `GROUP_COL` in filter and card titles |
-    | `SKIP_CLONALITY` | unset | Set it to `true` for a run with `--skip_clonality` |
+    | `SKIP_CLONALITY` | from the run's params | Set from `--skip_clonality` in the run's params; `--var SKIP_CLONALITY=false` overrides |
 
 === "From the pipeline itself (v1.10.0+)"
 
@@ -104,7 +104,7 @@ the libraries per guide:
 
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output directory when it finishes and resolves this template from its own
-    manifest. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md). The
+    manifest. See [Nextflow trigger](../../workflows/nextflow/trigger.md). The
     trigger passes no `--var`, so put a copy of the samplesheet at
     `results/input/samplesheet.csv` before the run, and ingest by hand for a
     `--skip_clonality` run.
@@ -233,8 +233,8 @@ per-library summary are pinned, collapsed, to the bottom of every child tab.
         | Outcome tables (collapsed) | *Clonality call per library*, *Reads per outcome class* |
 
     !!! info "Without clonality"
-        A run with `--skip_clonality` needs `SKIP_CLONALITY=true`. The clonality
-        collection goes, and with it the Clonality section, its filters and its
+        A run with `--skip_clonality` sets `SKIP_CLONALITY` from its params. The
+        clonality collection goes, and with it the Clonality section, its filters and its
         table.
 
 === ":material-scale-balance:{ .mc-indigo } Guides"

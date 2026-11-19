@@ -82,16 +82,17 @@ reads to variant calls and lineage, one tab or tab group per step:
     No `depictio ingest`, and no template named: the pipeline ingests its own
     output, and the template is picked from the pipeline's own name and version.
     Write the run into a `run_*` directory and point `--depictio_data_root` at
-    its parent. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+    its parent. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 | Variable | Required | What it does |
 |---|---|---|
 | `DATA_ROOT` | yes | Parent of the `run_*` directories holding the viralrecon output (`multiqc/`, `variants/`). |
-| `IS_NANOPORE` | no | Set automatically when the run's `params.json` records `platform: nanopore`. Repoints the coverage and typing collections at the `artic_minion/` layout and drops the Illumina-only collections. |
+| `IS_NANOPORE` | no | Set automatically when the run's params record `platform: nanopore`. Repoints the coverage and typing collections at the `artic_minion/` layout and drops the Illumina-only collections. |
 
 !!! tip "Override the auto-derived value"
-    `IS_NANOPORE` is read from `pipeline_info/params*.json` and logged at
-    resolution time. Pass `--var IS_NANOPORE=true` to force the nanopore route,
+    `IS_NANOPORE` is read from `pipeline_info/params_<timestamp>.json` and logged
+    at resolution time. Pass `--var IS_NANOPORE=true` to force the nanopore route
+    (or `false` to turn it off),
     for example when a `DATA_ROOT` aggregates runs whose parameters were not
     kept. See the routes in the [Reference](#reference).
 
@@ -381,7 +382,7 @@ typing collections are read from `artic_minion/` instead.
 ```text
 <DATA_ROOT>/
 └── run_1/                                        # one viralrecon --outdir per run_* directory
-    ├── pipeline_info/params*.json                # read to set IS_NANOPORE
+    ├── pipeline_info/params_<timestamp>.json     # read to set IS_NANOPORE
     ├── multiqc/
     │   ├── multiqc_data/
     │   │   └── multiqc.parquet

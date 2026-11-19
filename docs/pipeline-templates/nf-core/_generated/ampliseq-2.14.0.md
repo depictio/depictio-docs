@@ -59,10 +59,10 @@
 .gtd-updated{background:#eef0f2;color:#5a6573;}
 </style>
 
-<div class="gtd-versions" data-template-version="1.2.0" data-template-updated="2026-10-31">
+<div class="gtd-versions" data-template-version="1.2.1" data-template-updated="2026-11-16">
 <span class="gtd-badge gtd-pipeline-ver">Pipeline nf-core/ampliseq 2.14.0</span>
-<span class="gtd-badge gtd-template-ver">Template 1.2.0</span>
-<span class="gtd-badge gtd-updated">Updated 31 Oct 2026</span>
+<span class="gtd-badge gtd-template-ver">Template 1.2.1</span>
+<span class="gtd-badge gtd-updated">Updated 16 Nov 2026</span>
 </div>
 
 ### :material-code-braces: Template variables
@@ -131,5 +131,5 @@ Each recipe reshapes raw pipeline output into a tidy table. The name links to it
 | [`nf-core/ampliseq/alpha_diversity.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/recipes/alpha_diversity.py) | Transform QIIME2 alpha diversity vector to per-sample Faith PD table. | `sample`, `faith_pd` |
 | [`nf-core/ampliseq/taxonomy_rel_abundance.py`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/2.14.0/recipes/taxonomy_rel_abundance.py) | Transform QIIME2 relative abundance table to long-format per-sample taxonomy table. | `sample`, `taxonomy`, `rel_abundance`, `habitat`, `Kingdom`, `Phylum` |
 | [`qiime2/alpha_rarefaction.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/alpha_rarefaction.py) | Transform QIIME2 alpha rarefaction wide CSV to long-format rarefaction curves. | `sample`, `depth`, `iter`, `faith_pd` |
-| [`qiime2/ancombc.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/ancombc.py) | Merge ANCOM-BC differential abundance results (5 files) into one long-format table. | `id`, `contrast`, `lfc`, `p_val`, `q_val`, `w`, `se`, `Kingdom`, `Phylum`, `neg_log10_qval`, `significant` |
+| [`qiime2/ancombc.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/ancombc.py) | Merge ANCOM-BC differential abundance results (5 slices) into one long-format table. | `id`, `contrast`, `lfc`, `p_val`, `q_val`, `w`, `se`, `Kingdom`, `Phylum`, `neg_log10_qval`, `significant`, `taxonomy` |
 | [`qiime2/taxonomy_composition.py`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/taxonomy_composition.py) | Transform QIIME2 barplot CSV (wide) to long-format taxonomy composition table. | `sample`, `taxonomy`, `count`, `Kingdom`, `Phylum` |

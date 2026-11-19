@@ -146,8 +146,14 @@ Three sections, one question each:
   key: "completed"
   sub_title: "v1.20.0 ✅"
 
+- title: "Projects from the data & what's new"
+  content: "Projects start from their data, a project builder, runs compared, what changed since your last visit, projects sent between instances"
+  icon: ":fontawesome-solid-code-compare:"
+  key: "completed"
+  sub_title: "v1.21.0 ✅"
+
 - title: "Imaging, AI & serverless"
-  content: "Bioimage collections, an AI assistant and MCP agents, a dashboard as a single file, a project builder"
+  content: "Bioimage collections, an AI assistant and MCP agents, a dashboard as a single file"
   icon: ":fontawesome-solid-hammer:"
   key: "inprogress"
   sub_title: "In progress 🚧"
@@ -168,7 +174,18 @@ One row per capability, newest first, in sections that open on click. The
 [feature docs](../features/README.md) are the reference; these tables only say *when*
 something arrived.
 
-???+ success "v1.17 to v1.20: embedding, groups and SAML, proteins, the genome browser"
+???+ success "v1.21: projects from the data, what's new, runs compared, Send / Receive"
+
+    | Capability | Since | Docs |
+    | ---------- | ----- | ---- |
+    | Changed since your last visit: What's new, Overlay and Split, Before / Now, a notifications bell | v1.21.0 | [_"What's new"_](../features/whats-new.md) |
+    | Runs compared: what each run produced and each scan changed, MultiQC split on the new samples | v1.21.0 | [Runs and run comparison](../features/runs.md) · [MultiQC](../features/multiqc.md#compare-runs) |
+    | A project starts from its data, with no Basic or Advanced choice; a Project Builder for your own collections | v1.21.0 | [Create a project](../usage/projects/guide.md#create-a-project) |
+    | Sample labels from the dashboard, saved to the table or exported as a sheet | v1.21.0 | [Metadata panel](../features/metadata-panel.md) |
+    | A project sent to another instance with an invite code, served read-only there | v1.21.0 | [Send to another instance](../usage/administration/migrate.md#send-to-another-instance) |
+    | OpenID Connect sign-in | v1.21.0 | [Single sign-on](../installation/sso/index.md) |
+
+??? success "v1.17 to v1.20: embedding, groups and SAML, proteins, the genome browser"
 
     | Capability | Since | Docs |
     | ---------- | ----- | ---- |
@@ -178,7 +195,7 @@ something arrived.
     | Scope banner on one-unit tabs, linked views, zoom synced across residue tiles | v1.19.1 | [Scope banner](../features/dashboards.md#scope-banner) · [Linked view](../features/dashboards.md#linked-view) |
     | Protein tiles linked by residue, with structures from the run, AlphaFold DB or ESMFold | v1.19.0 | [Proteins](../features/proteins.md) |
     | Add user: an administrator creates an account with an initial password | v1.19.0 | [Adding a user](../usage/guides/web_ui.md#add-a-user) |
-    | SAML 2.0 sign-in, with groups from the identity provider | v1.18.0 | [Single sign-on (SAML)](../installation/sso.md) |
+    | SAML 2.0 sign-in, with groups from the identity provider | v1.18.0 | [Single sign-on (SAML)](../installation/sso/index.md) |
     | User groups: share a project with a whole lab | v1.18.0 | [Groups](../usage/administration/groups.md) |
     | Remembered filters, and filter links that carry the active filters | v1.18.0 | [Remembered filters](../usage/guides/dashboard_usage.md#remembered-filters) |
     | Viewers may comment | v1.17.2 | [Viewers can comment](../features/comments-annotations.md#viewers-can-comment) |
@@ -212,7 +229,7 @@ something arrived.
     | SeaweedFS as the bundled S3 store, replacing MinIO | v1.12.0 | [Upgrading to v1.12.0](../installation/upgrade/v1.12.0-seaweedfs.md) |
     | An opt-in feedback link that carries the dashboard and tab | v1.11.0 | [Feedback](../installation/env-reference.md#feedback) |
     | The funnel overview follows the values of one column | v1.11.0 | [Funnel filtering](../features/dashboards.md#funnel-filtering) |
-    | Ingestion triggered by the pipeline itself, when it completes | v1.10.0 | [Nextflow trigger](../depictio-cli/nextflow-trigger.md) |
+    | Ingestion triggered by the pipeline itself, when it completes | v1.10.0 | [Nextflow trigger](../workflows/nextflow/trigger.md) |
     | A run directory identifies its own pipeline, so a template needs no flag | v1.10.0 | [Templates](../usage/projects/templates.md#pipeline-id) |
     | nf-core/variantbenchmarking template and benchmarking viz kinds | v1.10.0 | [variantbenchmarking](../pipeline-templates/nf-core/variantbenchmarking.md) |
     | Backups created, scheduled and restored from the admin panel | v1.9.0 | [Backup & Restore](../usage/administration/backup.md#from-the-admin-panel) |
