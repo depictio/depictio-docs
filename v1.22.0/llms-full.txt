@@ -1308,6 +1308,20 @@ backend:
     # DEPICTIO_AUTH_PUBLIC_MODE: "true"        # public read-only with sign-in
 ```
 
+### SciLifeLab Serve
+
+On [SciLifeLab Serve](https://serve.scilifelab.se/), the app's permission picks the mode: a **private** or **project** app runs in single-user mode (Serve's own sign-in protects it, and every visitor reaching it is the admin), a **public** or **link only** app runs in public mode (anonymous, read-only). Serve passes no extra values, so no bootstrap admin is declared.
+
+Create the app **private first**, then switch it to public:
+
+1. Create the app as private (or project). The first boot seeds the instance admin.
+1. Open the app, copy the CLI configuration from your profile, and ingest your projects and build the dashboards with it.
+1. Change the app's permission to public (or link only). The admin, its token and your content stay in place: visitors browse read-only, and the CLI keeps ingesting with the token from step 2.
+
+An app created public has no usable admin
+
+A public app started on an empty database seeds an admin with a random password that nobody knows, so nobody can sign in to manage it. Before v1.22.1 it did not start at all (every API call answered 504). Switch it back to private to work on it, then to public again.
+
 ### S3 credentials
 
 ```

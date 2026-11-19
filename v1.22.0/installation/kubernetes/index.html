@@ -975,6 +975,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#scilifelab-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SciLifeLab Serve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#s3-credentials" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7577,6 +7588,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#scilifelab-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SciLifeLab Serve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#s3-credentials" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7887,6 +7909,27 @@ expected key names.</p>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="c1"># DEPICTIO_AUTH_SINGLE_USER_MODE: "true"   # no login, every visitor is the admin</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="c1"># DEPICTIO_AUTH_PUBLIC_MODE: "true"        # public read-only with sign-in</span>
 </code></pre></div>
+<h3 id="scilifelab-serve">SciLifeLab Serve<a class="headerlink" href="#scilifelab-serve" title="Permanent link">¶</a></h3>
+<p>On <a href="https://serve.scilifelab.se/">SciLifeLab Serve</a>, the app's permission picks the mode: a
+<strong>private</strong> or <strong>project</strong> app runs in single-user mode (Serve's own sign-in protects it, and
+every visitor reaching it is the admin), a <strong>public</strong> or <strong>link only</strong> app runs in public mode
+(anonymous, read-only). Serve passes no extra values, so no bootstrap admin is declared.</p>
+<p>Create the app <strong>private first</strong>, then switch it to public:</p>
+<ol>
+<li>Create the app as private (or project). The first boot seeds the instance admin.</li>
+<li>Open the app, copy the CLI configuration from your profile, and ingest your projects and
+   build the dashboards with it.</li>
+<li>Change the app's permission to public (or link only). The admin, its token and your
+   content stay in place: visitors browse read-only, and the CLI keeps ingesting with the
+   token from step 2.</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">An app created public has no usable admin</p>
+<p>A public app started on an empty database seeds an admin with a random password that
+nobody knows, so nobody can sign in to manage it. Before v1.22.1 it did not start at all
+(every API call answered 504). Switch it back to private to work on it, then to public
+again.</p>
+</div>
 <h3 id="s3-credentials">S3 credentials<a class="headerlink" href="#s3-credentials" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># my-values.yaml</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">secrets</span><span class="p">:</span>
