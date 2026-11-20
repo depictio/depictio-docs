@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.22.0",
-    "x-generated-at": "2026-11-18T10:53:58Z",
-    "x-depictio-version": "v1.22.0"
+    "version": "1.22.1",
+    "x-generated-at": "2026-11-19T17:02:07Z",
+    "x-depictio-version": "v1.22.1"
   },
   "paths": {
     "/depictio/api/v1/projects/builder/capabilities": {
@@ -6449,13 +6449,13 @@
       }
     },
     "/depictio/api/v1/files/indexed/{data_collection_id}/object/{sample}/{name}": {
-      "get": {
+      "head": {
         "tags": [
           "Files"
         ],
         "summary": "Proxy Indexed File",
         "description": "Serve (a byte range of) one object of an indexed_file DC through the API.\n\nFor instances whose S3 browsers cannot reach (``DEPICTIO_S3_BROWSER_ACCESS=proxy``,\n#1420). The URL is signed for one object and one user (``indexed_file_url``);\na bearer token works too. The reader's access to the DC is checked on every\nrequest, as for a presigned URL, and the key is rebuilt server side and must\nbe registered for the DC.",
-        "operationId": "proxy_indexed_file_depictio_api_v1_files_indexed__data_collection_id__object__sample___name__get",
+        "operationId": "proxy_indexed_file_depictio_api_v1_files_indexed__data_collection_id__object__sample___name__head",
         "parameters": [
           {
             "name": "data_collection_id",
@@ -6506,13 +6506,13 @@
           }
         }
       },
-      "head": {
+      "get": {
         "tags": [
           "Files"
         ],
         "summary": "Proxy Indexed File",
         "description": "Serve (a byte range of) one object of an indexed_file DC through the API.\n\nFor instances whose S3 browsers cannot reach (``DEPICTIO_S3_BROWSER_ACCESS=proxy``,\n#1420). The URL is signed for one object and one user (``indexed_file_url``);\na bearer token works too. The reader's access to the DC is checked on every\nrequest, as for a presigned URL, and the key is rebuilt server side and must\nbe registered for the DC.",
-        "operationId": "proxy_indexed_file_depictio_api_v1_files_indexed__data_collection_id__object__sample___name__get",
+        "operationId": "proxy_indexed_file_depictio_api_v1_files_indexed__data_collection_id__object__sample___name__head",
         "parameters": [
           {
             "name": "data_collection_id",
@@ -7620,13 +7620,13 @@
       }
     },
     "/depictio/api/v1/jbrowse/tracks/{dc_id}/{track_key}/{role}": {
-      "get": {
+      "head": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Track File",
         "description": "Serve (a byte range of) one track's data or index file.",
-        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__get",
+        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__head",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -7682,13 +7682,13 @@
           }
         }
       },
-      "head": {
+      "get": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Track File",
         "description": "Serve (a byte range of) one track's data or index file.",
-        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__get",
+        "operationId": "proxy_track_file_depictio_api_v1_jbrowse_tracks__dc_id___track_key___role__head",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -7746,13 +7746,13 @@
       }
     },
     "/depictio/api/v1/jbrowse/assembly/{dc_id}/{role}": {
-      "get": {
+      "head": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Assembly File",
         "description": "Serve (a byte range of) a custom assembly file of a track collection.",
-        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__get",
+        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__head",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -7799,13 +7799,13 @@
           }
         }
       },
-      "head": {
+      "get": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Assembly File",
         "description": "Serve (a byte range of) a custom assembly file of a track collection.",
-        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__get",
+        "operationId": "proxy_assembly_file_depictio_api_v1_jbrowse_assembly__dc_id___role__head",
         "security": [
           {
             "OAuth2PasswordBearer": []
@@ -7928,13 +7928,13 @@
       }
     },
     "/depictio/api/v1/jbrowse/preset/{name}/{role}": {
-      "get": {
+      "head": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Preset File",
         "description": "Serve (a byte range of) a built-in assembly's public UCSC file.\n\nPublic: the files are public reference data. Only the URLs hardcoded in the\npresets can be read, so the route cannot be pointed anywhere else.",
-        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__get",
+        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__head",
         "parameters": [
           {
             "name": "name",
@@ -7976,13 +7976,13 @@
           }
         }
       },
-      "head": {
+      "get": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Preset File",
         "description": "Serve (a byte range of) a built-in assembly's public UCSC file.\n\nPublic: the files are public reference data. Only the URLs hardcoded in the\npresets can be read, so the route cannot be pointed anywhere else.",
-        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__get",
+        "operationId": "proxy_preset_file_depictio_api_v1_jbrowse_preset__name___role__head",
         "parameters": [
           {
             "name": "name",
@@ -8120,13 +8120,13 @@
       }
     },
     "/depictio/api/v1/jbrowse/ucsc/{genome}/{track}/{role}": {
-      "get": {
+      "head": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Ucsc File",
         "description": "Serve (a byte range of) a UCSC track file.\n\nPublic, like the preset files: only files listed in UCSC's own catalogue for\nthat genome, on UCSC's download server or an allow-listed host, can be read.",
-        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__get",
+        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__head",
         "parameters": [
           {
             "name": "genome",
@@ -8177,13 +8177,13 @@
           }
         }
       },
-      "head": {
+      "get": {
         "tags": [
           "JBrowse"
         ],
         "summary": "Proxy Ucsc File",
         "description": "Serve (a byte range of) a UCSC track file.\n\nPublic, like the preset files: only files listed in UCSC's own catalogue for\nthat genome, on UCSC's download server or an allow-listed host, can be read.",
-        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__get",
+        "operationId": "proxy_ucsc_file_depictio_api_v1_jbrowse_ucsc__genome___track___role__head",
         "parameters": [
           {
             "name": "genome",
@@ -24827,7 +24827,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -25376,7 +25376,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -25439,7 +25439,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -26222,7 +26222,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -27887,7 +27887,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -31318,7 +31318,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -32015,7 +32015,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -36129,7 +36129,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -36235,7 +36235,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -36468,7 +36468,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6afd83bf7921c8c9ba8cba0f"
+            "default": "6aff2b891420996280e34f65"
           }
         },
         "type": "object",
@@ -36929,7 +36929,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -37097,7 +37097,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -37179,7 +37179,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -37265,7 +37265,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -37552,7 +37552,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -37727,7 +37727,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -37844,7 +37844,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
@@ -38120,7 +38120,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6afd83bf7921c8c9ba8cba0e"
+            "default": "6aff2b891420996280e34f64"
           },
           "description": {
             "anyOf": [
