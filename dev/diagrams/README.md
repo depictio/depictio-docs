@@ -13,6 +13,7 @@ uv run python protein_tiles.py
 uv run python migration.py
 uv run python project_lifecycle.py
 uv run python security.py
+uv run python workshop.py
 ```
 
 Each script writes `<name>_light` and `<name>_dark`, as both SVG and PNG, into
@@ -38,6 +39,7 @@ status` is dirty after a regeneration, something in the figure actually changed.
 | File | What |
 | --- | --- |
 | `sketch.py` | The toolkit: jittered strokes, boxes, arrows, the light and dark palettes, and the PNG pass. |
+| `mdi_icons.py` | The icon paths the figures draw: mdi (Apache 2.0) and the formkit, bx and octicon icons (MIT) the app uses for component types. |
 | `data_model.py` | Data Model: the two project shapes, config to data, join vs link. |
 | `architecture.py` | The system architecture (Features overview and Architecture), the Celery task round trip, and live updates (Architecture and the Real-time events guide). |
 | `security.py` | Signing in and every request, how a role is resolved, and what a code figure goes through, on the Security page. |
@@ -54,6 +56,7 @@ status` is dirty after a regeneration, something in the figure actually changed.
 | `filter_expressions.py` | Where `filter_expr` narrows the rows of a card and of an interactive, on the Filter Expressions page. |
 | `selection_filtering.py` | Three tiles writing to the dashboard's filter list and every tile reading it, on the Interactive Selection Filtering page. |
 | `auth_modes.py` | What a visitor gets in each authentication mode, on the Authentication Modes page. |
+| `workshop.py` | The concept figures of the hands-on workshop, also on Cross-DC filtering and Runs. |
 
 `sketch.py` is a port of the generator in the main
 [depictio](https://github.com/depictio/depictio) repository, which produces the

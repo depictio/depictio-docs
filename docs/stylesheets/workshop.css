@@ -1,0 +1,287 @@
+/* Hands-on workshop (tutorials/workshop/): Carpentries-style boxes and page furniture.
+   Colours from the Depictio palette (more/palette.md). Every rule is scoped to a
+   ws- class or to an admonition type only these pages use. */
+
+:root {
+  --md-admonition-icon--overview: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="m7 17l3.2-6.8L17 7l-3.2 6.8zm5-5.9a.9.9 0 0 0-.9.9a.9.9 0 0 0 .9.9a.9.9 0 0 0 .9-.9a.9.9 0 0 0-.9-.9M12 2a10 10 0 0 1 10 10a10 10 0 0 1-10 10A10 10 0 0 1 2 12A10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8a8 8 0 0 0 8 8a8 8 0 0 0 8-8a8 8 0 0 0-8-8"/%3E%3C/svg%3E');
+  --md-admonition-icon--challenge: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M22 13.5c0 1.76-1.3 3.22-3 3.46V20a2 2 0 0 1-2 2h-3.8v-.3a2.7 2.7 0 0 0-2.7-2.7c-1.5 0-2.7 1.21-2.7 2.7v.3H4a2 2 0 0 1-2-2v-3.8h.3C3.79 16.2 5 15 5 13.5s-1.21-2.7-2.7-2.7H2V7a2 2 0 0 1 2-2h3.04c.24-1.7 1.7-3 3.46-3s3.22 1.3 3.46 3H17a2 2 0 0 1 2 2v3.04c1.7.24 3 1.7 3 3.46M17 15h1.5a1.5 1.5 0 0 0 1.5-1.5a1.5 1.5 0 0 0-1.5-1.5H17V7h-5V5.5A1.5 1.5 0 0 0 10.5 4A1.5 1.5 0 0 0 9 5.5V7H4v2.12c1.76.68 3 2.38 3 4.38s-1.25 3.7-3 4.38V20h2.12a4.7 4.7 0 0 1 4.38-3c2 0 3.7 1.25 4.38 3H17z"/%3E%3C/svg%3E');
+  --md-admonition-icon--solution: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10s10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4l8-8z"/%3E%3C/svg%3E');
+  --md-admonition-icon--keypoints: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M22 18v4h-4v-3h-3v-3h-3l-2.26-2.26c-.55.17-1.13.26-1.74.26a6 6 0 0 1-6-6a6 6 0 0 1 6-6a6 6 0 0 1 6 6c0 .61-.09 1.19-.26 1.74zM7 5a2 2 0 0 0-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2"/%3E%3C/svg%3E');
+  --md-admonition-icon--callout: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M20 11h3v2h-3zM1 11h3v2H1zM13 1v3h-2V1zM4.92 3.5l2.13 2.14l-1.42 1.41L3.5 4.93zm12.03 2.13l2.12-2.13l1.43 1.43l-2.13 2.12zM12 6a6 6 0 0 1 6 6c0 2.22-1.21 4.16-3 5.2V19a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6 6 0 0 1 6-6m2 15v1a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-1zm-3-3h2v-2.13c1.73-.44 3-2.01 3-3.87a4 4 0 0 0-4-4a4 4 0 0 0-4 4c0 1.86 1.27 3.43 3 3.87z"/%3E%3C/svg%3E');
+  --md-admonition-icon--further: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="m13.16 22.19l-1.66-3.84c1.6-.58 3.07-1.35 4.43-2.27l-2.78 6.11m-7.5-9.69l-3.84-1.65l6.11-2.78C7 9.43 6.23 10.91 5.65 12.5M20 4c-2.96-.22-5.2.83-7.55 3.31c-2.36 2.47-3.36 4.5-3.95 6.04l2.17 2.1c2.29-.87 4.33-2.18 6.03-3.89C20 8.27 20.17 5.4 20 4m-9 1.9c2.63-2.8 7-4.82 10.66-3.55c0 0 2.12 4.96-3.55 10.65c-2.2 2.17-4.58 3.5-6.72 4.34c-.24.09-1.15.39-2.13-.46l-2.13-2.13c-.56-.56-.74-1.38-.47-2.13C7.5 10.5 8.41 8.69 11 5.9M6.25 22H4.84l4.09-4.1c.3.21.63.36.97.45zM2 22v-1.41l4.77-4.78l1.43 1.42L3.41 22zm0-2.83v-1.42l3.65-3.65c.09.35.24.68.45.97zM16 6a2 2 0 0 1 2 2c0 1.11-.89 2-2 2a2 2 0 1 1 0-4"/%3E%3C/svg%3E');
+  --md-admonition-icon--instructor: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9zm6.82 6L12 12.72L5.18 9L12 5.28zM17 16l-5 2.72L7 16v-3.73L12 15l5-2.73z"/%3E%3C/svg%3E');
+}
+
+.md-typeset .admonition.overview, .md-typeset details.overview { border-color: rgb(100,149,237); }
+.md-typeset .overview > .admonition-title, .md-typeset .overview > summary { background-color: rgba(100,149,237,.12); }
+.md-typeset .overview > .admonition-title::before, .md-typeset .overview > summary::before { background-color: rgb(100,149,237); -webkit-mask-image: var(--md-admonition-icon--overview); mask-image: var(--md-admonition-icon--overview); }
+.md-typeset .overview > summary::after { color: rgb(100,149,237); }
+
+.md-typeset .admonition.challenge, .md-typeset details.challenge { border-color: rgb(246,139,51); }
+.md-typeset .challenge > .admonition-title, .md-typeset .challenge > summary { background-color: rgba(246,139,51,.12); }
+.md-typeset .challenge > .admonition-title::before, .md-typeset .challenge > summary::before { background-color: rgb(246,139,51); -webkit-mask-image: var(--md-admonition-icon--challenge); mask-image: var(--md-admonition-icon--challenge); }
+.md-typeset .challenge > summary::after { color: rgb(246,139,51); }
+
+.md-typeset .admonition.solution, .md-typeset details.solution { border-color: rgb(139,195,74); }
+.md-typeset .solution > .admonition-title, .md-typeset .solution > summary { background-color: rgba(139,195,74,.12); }
+.md-typeset .solution > .admonition-title::before, .md-typeset .solution > summary::before { background-color: rgb(139,195,74); -webkit-mask-image: var(--md-admonition-icon--solution); mask-image: var(--md-admonition-icon--solution); }
+.md-typeset .solution > summary::after { color: rgb(139,195,74); }
+
+.md-typeset .admonition.keypoints, .md-typeset details.keypoints { border-color: rgb(69,184,172); }
+.md-typeset .keypoints > .admonition-title, .md-typeset .keypoints > summary { background-color: rgba(69,184,172,.12); }
+.md-typeset .keypoints > .admonition-title::before, .md-typeset .keypoints > summary::before { background-color: rgb(69,184,172); -webkit-mask-image: var(--md-admonition-icon--keypoints); mask-image: var(--md-admonition-icon--keypoints); }
+.md-typeset .keypoints > summary::after { color: rgb(69,184,172); }
+
+.md-typeset .admonition.callout, .md-typeset details.callout { border-color: rgb(122,93,199); }
+.md-typeset .callout > .admonition-title, .md-typeset .callout > summary { background-color: rgba(122,93,199,.12); }
+.md-typeset .callout > .admonition-title::before, .md-typeset .callout > summary::before { background-color: rgb(122,93,199); -webkit-mask-image: var(--md-admonition-icon--callout); mask-image: var(--md-admonition-icon--callout); }
+.md-typeset .callout > summary::after { color: rgb(122,93,199); }
+
+.md-typeset .admonition.further, .md-typeset details.further { border-color: rgb(153,102,204); }
+.md-typeset .further > .admonition-title, .md-typeset .further > summary { background-color: rgba(153,102,204,.12); }
+.md-typeset .further > .admonition-title::before, .md-typeset .further > summary::before { background-color: rgb(153,102,204); -webkit-mask-image: var(--md-admonition-icon--further); mask-image: var(--md-admonition-icon--further); }
+.md-typeset .further > summary::after { color: rgb(153,102,204); }
+
+.md-typeset .admonition.instructor, .md-typeset details.instructor { border-color: rgb(230,119,159); }
+.md-typeset .instructor > .admonition-title, .md-typeset .instructor > summary { background-color: rgba(230,119,159,.12); }
+.md-typeset .instructor > .admonition-title::before, .md-typeset .instructor > summary::before { background-color: rgb(230,119,159); -webkit-mask-image: var(--md-admonition-icon--instructor); mask-image: var(--md-admonition-icon--instructor); }
+.md-typeset .instructor > summary::after { color: rgb(230,119,159); }
+
+
+/* Boxes: a little more air and a softer edge than Material's default. */
+.md-typeset :is(.overview,.challenge,.keypoints,.callout,.further,.instructor) {
+  border-radius: 10px; font-size: .74rem; box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+.md-typeset :is(.overview,.challenge,.keypoints,.callout,.further,.instructor) > .admonition-title { font-weight: 700; }
+.md-typeset details.solution { border-radius: 8px; box-shadow: none; margin-top: .9em; }
+
+/* Overview: Questions | Objectives side by side. */
+.md-typeset .admonition.overview { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.6rem; }
+.md-typeset .admonition.overview > .admonition-title { grid-column: 1 / -1; }
+.md-typeset .admonition.overview > p:nth-of-type(2) { grid-column: 1; grid-row: 2; }
+.md-typeset .admonition.overview > ul:nth-of-type(1) { grid-column: 1; grid-row: 3; }
+.md-typeset .admonition.overview > p:nth-of-type(3) { grid-column: 2; grid-row: 2; }
+.md-typeset .admonition.overview > ul:nth-of-type(2) { grid-column: 2; grid-row: 3; }
+.md-typeset .admonition.overview > p:not(.admonition-title) { margin-bottom: 0; text-transform: uppercase; letter-spacing: .06em; font-size: .62rem; color: var(--md-default-fg-color--light); }
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .admonition.overview { display: block; }
+}
+
+/* Key points: ticks instead of bullets. */
+.md-typeset .keypoints ul { list-style: none; margin-left: 0; }
+.md-typeset .keypoints ul li { position: relative; padding-left: 1.4em; margin-left: 0; }
+.md-typeset .keypoints ul li::before {
+  content: ""; position: absolute; left: 0; top: .2em; width: 1em; height: 1em; background-color: rgb(69,184,172);
+  -webkit-mask: var(--md-admonition-icon--solution) center / contain no-repeat; mask: var(--md-admonition-icon--solution) center / contain no-repeat;
+}
+
+/* Episode colours. */
+.ws-ep0 { --ws: #7A5DC7; } .ws-ep1 { --ws: #6495ED; } .ws-ep2 { --ws: #9966CC; }
+.ws-ep3 { --ws: #45B8AC; } .ws-ep4 { --ws: #F68B33; } .ws-ep5 { --ws: #E6779F; }
+
+/* Episode strip under the title: where you are in the lesson. */
+.md-typeset .ws-strip p { display: flex; flex-wrap: wrap; gap: .4rem; margin: .2rem 0 1rem; }
+.md-typeset .ws-strip a {
+  display: inline-flex; align-items: center; gap: .4em; padding: .25em .75em .25em .3em;
+  border: 1px solid var(--md-default-fg-color--lightest); border-radius: 999px;
+  font-size: .66rem; color: var(--md-default-fg-color--light); text-decoration: none; transition: border-color .2s, color .2s;
+}
+.md-typeset .ws-strip a strong {
+  display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%;
+  background: color-mix(in srgb, var(--ws) 18%, transparent); color: var(--ws); font-weight: 700;
+}
+.md-typeset .ws-strip a:hover { border-color: var(--ws); color: var(--md-default-fg-color); }
+.md-typeset .ws-strip a.ws-here { border-color: var(--ws); color: var(--md-default-fg-color); font-weight: 600; background: color-mix(in srgb, var(--ws) 8%, transparent); }
+.md-typeset .ws-strip a.ws-here strong { background: var(--ws); color: #fff; }
+
+/* Chips: role, data, what comes before. */
+.md-typeset .ws-meta p { display: flex; flex-wrap: wrap; gap: .45rem; margin: 0 0 1.2rem; }
+.md-typeset .ws-meta .ws-chip {
+  display: inline-flex; align-items: center; gap: .35em; padding: .3em .8em; border-radius: 6px;
+  font-size: .66rem; background: var(--md-code-bg-color); color: var(--md-default-fg-color--light);
+}
+.md-typeset .ws-meta .ws-chip .twemoji { color: var(--ws, var(--md-accent-fg-color)); }
+.md-typeset .ws-meta .ws-chip strong { color: var(--md-default-fg-color); font-weight: 600; }
+
+/* Screenshots and clips. */
+.md-typeset img.ws-shot, .md-typeset figure.ws-media video {
+  border-radius: 10px; border: 1px solid var(--md-default-fg-color--lightest); box-shadow: 0 6px 22px rgba(0,0,0,.08);
+}
+[data-md-color-scheme="slate"] .md-typeset img.ws-shot, [data-md-color-scheme="slate"] .md-typeset figure.ws-media video { box-shadow: 0 6px 22px rgba(0,0,0,.35); }
+.md-typeset figure.ws-media { margin: 1.2rem 0 1.6rem; }
+
+
+/* Index: lead, episode cards, dataset cards. */
+.md-typeset .ws-lead { font-size: .9rem; line-height: 1.6; color: var(--md-default-fg-color--light); max-width: 40rem; }
+.md-typeset .grid.cards.ws-episodes > ul > li, .md-typeset .grid.cards.ws-data > ul > li {
+  border-radius: 12px; border-top: 4px solid var(--ws, var(--md-default-fg-color--lightest)); transition: transform .2s, box-shadow .2s;
+}
+.md-typeset .grid.cards.ws-episodes > ul > li:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.08); }
+.md-typeset .grid.cards.ws-episodes > ul > li:nth-child(1) { --ws: #7A5DC7; }
+.md-typeset .grid.cards.ws-episodes > ul > li:nth-child(2) { --ws: #6495ED; }
+.md-typeset .grid.cards.ws-episodes > ul > li:nth-child(3) { --ws: #9966CC; }
+.md-typeset .grid.cards.ws-episodes > ul > li:nth-child(4) { --ws: #45B8AC; }
+.md-typeset .grid.cards.ws-episodes > ul > li:nth-child(5) { --ws: #F68B33; }
+.md-typeset .grid.cards.ws-episodes > ul > li:nth-child(6) { --ws: #E6779F; }
+.md-typeset .grid.cards.ws-episodes .ws-num {
+  display: inline-grid; place-items: center; width: 1.9em; height: 1.9em; margin-right: .35em; border-radius: 50%;
+  background: var(--ws); color: #fff; font-weight: 700; font-size: .8rem;
+}
+.md-typeset .grid.cards.ws-episodes .ws-role { font-size: .64rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ws); font-weight: 700; }
+.md-typeset .grid.cards.ws-data > ul > li:nth-child(1) { --ws: #F68B33; }
+.md-typeset .grid.cards.ws-data > ul > li:nth-child(2) { --ws: #45B8AC; }
+.md-typeset .grid.cards.ws-data > ul > li > p:first-child .twemoji { color: var(--ws); vertical-align: middle; margin-right: .3rem; }
+.md-typeset .grid.cards.ws-data > ul > li > p:first-child .twemoji svg { width: 1.7rem; height: 1.7rem; max-height: none; }
+.md-typeset .grid.cards.ws-data > ul > li > p:first-child { font-size: .85rem; }
+.md-typeset .grid.cards.ws-episodes > ul > li > p:first-child { font-size: .8rem; }
+
+/* ws-sections: section headings and step lists on the lesson pages, i.e. pages
+   that carry a .ws-meta block. The page takes the colour of its episode. */
+.md-content:has(.ws-meta) { --ws: #7A5DC7; }
+.md-content:has(.ws-meta.ws-ep1) { --ws: #6495ED; } .md-content:has(.ws-meta.ws-ep2) { --ws: #9966CC; }
+.md-content:has(.ws-meta.ws-ep3) { --ws: #45B8AC; } .md-content:has(.ws-meta.ws-ep4) { --ws: #F68B33; }
+.md-content:has(.ws-meta.ws-ep5) { --ws: #E6779F; }
+
+.md-content:has(.ws-meta) .md-typeset h2 {
+  display: flex; align-items: center; gap: .55em; margin-top: 2.2em; padding-bottom: .45em;
+  border-bottom: 2px solid color-mix(in srgb, var(--ws) 22%, transparent); font-weight: 500;
+}
+.md-content:has(.ws-meta) .md-typeset h2 > .twemoji {
+  flex: none; display: inline-grid; place-items: center; width: 1.75em; height: 1.75em; border-radius: 9px;
+  background: color-mix(in srgb, var(--ws) 14%, transparent); color: var(--ws);
+}
+.md-content:has(.ws-meta) .md-typeset h2 > .twemoji svg { width: 1.05em; height: 1.05em; max-height: none; }
+.md-content:has(.ws-meta) .md-typeset h2 .headerlink { margin-left: auto; }
+
+/* Numbered steps as a stepper: a filled number, a thread down to the next step. */
+.md-content:has(.ws-meta) .md-typeset > ol { list-style: none; counter-reset: ws-step; margin-left: 0; padding: .2em 0 .4em; }
+.md-content:has(.ws-meta) .md-typeset > ol > li { counter-increment: ws-step; position: relative; margin: 0; padding: 0 0 .85em 2.3rem; min-height: 1.6rem; }
+.md-content:has(.ws-meta) .md-typeset > ol > li::before {
+  content: counter(ws-step); position: absolute; left: 0; top: -.05rem; width: 1.45rem; height: 1.45rem; border-radius: 50%;
+  display: grid; place-items: center; background: var(--ws); color: #fff; font-size: .62rem; font-weight: 700;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ws) 18%, transparent);
+}
+.md-content:has(.ws-meta) .md-typeset > ol > li:not(:last-child)::after {
+  content: ""; position: absolute; left: calc(.725rem - 1px); top: 1.55rem; bottom: .15rem; width: 2px; border-radius: 1px;
+  background: color-mix(in srgb, var(--ws) 28%, transparent);
+}
+
+/* Tables on lesson pages: a tinted header in the page colour. */
+.md-content:has(.ws-meta) .md-typeset table:not([class]) { border-radius: 10px; overflow: hidden; }
+.md-content:has(.ws-meta) .md-typeset table:not([class]) th { background: color-mix(in srgb, var(--ws) 10%, transparent); }
+
+/* ws-nav: end-of-page navigation cards (replaces Material's .md-button here). */
+:root { --ws-i-help: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M19.79 15.41c.95-2.17.95-4.66 0-6.82l-2.74 1.24c.6 1.38.6 2.95.01 4.34zm-4.37-11.2a8.54 8.54 0 0 0-6.83 0l1.24 2.73c1.39-.59 2.96-.59 4.35.01zM4.21 8.58a8.56 8.56 0 0 0 0 6.84l2.74-1.25c-.6-1.38-.6-2.96 0-4.35zm4.38 11.21a8.5 8.5 0 0 0 6.83-.01l-1.24-2.73a5.5 5.5 0 0 1-4.34.01zM12 2a10 10 0 0 1 10 10a10 10 0 0 1-10 10A10 10 0 0 1 2 12A10 10 0 0 1 12 2m0 6a4 4 0 0 0-4 4a4 4 0 0 0 4 4a4 4 0 0 0 4-4a4 4 0 0 0-4-4"/%3E%3C/svg%3E'); --ws-i-next: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M4 11v2h12l-5.5 5.5l1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5L16 11z"/%3E%3C/svg%3E'); --ws-i-ref: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M5.81 2C4.83 2.09 4 3 4 4v16c0 1.05.95 2 2 2h12c1.05 0 2-.95 2-2V4a2 2 0 0 0-2-2h-6v7L9.5 7.5L7 9V2zM12 13h1a1 1 0 0 1 1 1v4h-1v-2h-1v2h-1v-4a1 1 0 0 1 1-1m0 1v1h1v-1zm3 1h3v1l-2 3h2v1h-3v-1l2-3h-2z"/%3E%3C/svg%3E'); --ws-i-inst: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9zm6.82 6L12 12.72L5.18 9L12 5.28zM17 16l-5 2.72L7 16v-3.73L12 15l5-2.73z"/%3E%3C/svg%3E'); }
+.md-typeset .ws-next { margin-top: 2.6rem; padding-top: 1.3rem; border-top: 1px solid var(--md-default-fg-color--lightest); }
+.md-typeset .ws-next p { display: grid; grid-template-columns: minmax(11rem, 1fr) minmax(0, 2fr); gap: .8rem; margin: 0; }
+.md-typeset .ws-next.ws-links p { grid-template-columns: 1fr 1fr; }
+.md-typeset .ws-next.ws-links a.ws-go { grid-column: 1 / -1; grid-row: 1; }
+.md-typeset .ws-next a {
+  position: relative; display: flex; flex-direction: column; justify-content: center; gap: .15rem; min-height: 4.2rem;
+  padding: .75rem 1rem .75rem 3.1rem; border-radius: 12px; overflow-wrap: normal; word-break: normal; hyphens: none; text-decoration: none;
+  border: 1px solid var(--md-default-fg-color--lightest); background: var(--md-default-bg-color);
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.md-typeset .ws-next a:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.08); }
+.md-typeset .ws-next a .ws-k { font-size: .6rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--md-default-fg-color--light); }
+.md-typeset .ws-next a .ws-t { font-size: .8rem; font-weight: 600; line-height: 1.3; color: var(--md-default-fg-color); }
+.md-typeset .ws-next a::before {
+  content: ""; position: absolute; left: 1rem; top: 50%; width: 1.5rem; height: 1.5rem; margin-top: -.75rem;
+  background-color: var(--md-default-fg-color--light); -webkit-mask: var(--ws-i-help) center / contain no-repeat; mask: var(--ws-i-help) center / contain no-repeat;
+}
+.md-typeset .ws-next a.ws-ref::before { -webkit-mask-image: var(--ws-i-ref); mask-image: var(--ws-i-ref); }
+.md-typeset .ws-next a.ws-inst::before { -webkit-mask-image: var(--ws-i-inst); mask-image: var(--ws-i-inst); }
+.md-typeset .ws-next a.ws-help:hover { border-color: var(--md-default-fg-color--lighter); }
+.md-typeset .ws-next a.ws-go {
+  align-items: flex-end; text-align: right; padding: .75rem 3.6rem .75rem 1.2rem;
+  border-color: color-mix(in srgb, var(--ws) 45%, transparent);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--ws) 6%, transparent), color-mix(in srgb, var(--ws) 16%, transparent));
+}
+.md-typeset .ws-next a.ws-go::before {
+  left: auto; right: 1.45rem; width: 1rem; height: 1rem; margin-top: -.5rem; z-index: 1; background-color: #fff;
+  -webkit-mask-image: var(--ws-i-next); mask-image: var(--ws-i-next); transition: transform .2s;
+}
+.md-typeset .ws-next a.ws-go:hover::before { transform: translateX(3px); }
+.md-typeset .ws-next a.ws-go .ws-k { color: var(--ws); }
+.md-typeset .ws-next a.ws-go::after {
+  content: ""; position: absolute; right: 1rem; top: 50%; width: 1.9rem; height: 1.9rem; margin-top: -.95rem; border-radius: 50%;
+  background: var(--ws); box-shadow: 0 3px 10px color-mix(in srgb, var(--ws) 40%, transparent);
+}
+.md-typeset .ws-next a.ws-go:hover { border-color: var(--ws); box-shadow: 0 10px 26px color-mix(in srgb, var(--ws) 25%, transparent); }
+.md-typeset .ws-next a.ws-go .ws-t::after { content: none; }
+.md-typeset .ws-next a.ws-go > .ws-t { padding-right: 0; }
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .ws-next p, .md-typeset .ws-next.ws-links p { grid-template-columns: 1fr; }
+}
+
+/* ---- concept diagrams (dev/diagrams/workshop.py) ---- */
+.md-typeset img.ws-diagram { border-radius: 12px; border: 1px solid var(--md-default-fg-color--lightest); }
+[data-md-color-scheme="default"] .md-typeset img.ws-diagram[src$="#only-dark"],
+[data-md-color-scheme="slate"] .md-typeset img.ws-diagram[src$="#only-light"] { display: none; }
+
+/* ---- concept icons in tables, in the app's colours (dev/diagrams/concepts.py) ---- */
+.md-typeset .ws-ic { margin-right: .3em; color: var(--md-default-fg-color--light); }
+.md-typeset .ws-ic-project, .md-typeset .ws-ic-dc { color: #12b886; }
+.md-typeset .ws-ic-dash { color: #fd7e14; }
+.md-typeset .ws-ic-link { color: #868e96; }
+.md-typeset .ws-ic-run, .md-typeset .ws-ic-version { color: #e6a700; }
+.md-typeset .ws-ic-you { color: #228be6; }
+
+/* Tutorials hub: two primary buttons side by side, each in its own colour. */
+.md-typeset .ws-next.ws-pair p { grid-template-columns: 1fr 1fr; }
+.md-typeset .grid.cards.ws-episodes .ws-num .twemoji svg { width: 1rem; height: 1rem; fill: #fff; }
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .ws-next.ws-pair p { grid-template-columns: 1fr; }
+}
+.md-typeset .grid.cards.ws-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .grid.cards.ws-three { grid-template-columns: 1fr; }
+}
+/* Course cards take the colour of their start button. */
+.md-typeset .grid.cards.ws-episodes.ws-courses > ul > li:nth-child(1) { --ws: #6495ED; }
+.md-typeset .grid.cards.ws-episodes.ws-courses > ul > li:nth-child(2) { --ws: #F68B33; }
+/* Links in a card take the card's colour. */
+.md-typeset .grid.cards.ws-episodes > ul > li a { color: var(--ws); }
+.md-typeset .grid.cards.ws-episodes > ul > li a:hover { color: color-mix(in srgb, var(--ws) 75%, var(--md-default-fg-color)); }
+.md-typeset .grid.cards.ws-episodes > ul > li a code { color: var(--ws); }
+/* nf-core logo in place of an icon: in chips and dataset cards. */
+.md-typeset img.ws-logo { display: inline-block; width: 1.1em; height: 1.1em; vertical-align: -.2em; margin: 0; }
+.md-typeset .grid.cards.ws-data > ul > li > p:first-child img.ws-logo { width: 1.7rem; height: 1.7rem; vertical-align: middle; margin-right: .3rem; }
+/* A card whose subject has its own logo: the logo on a light disc. */
+.md-typeset .grid.cards.ws-episodes .ws-num.ws-num-logo { background: var(--md-default-bg-color); box-shadow: inset 0 0 0 2px var(--ws); }
+.md-typeset .grid.cards.ws-episodes .ws-num.ws-num-logo img.ws-logo { width: 1.1rem; height: 1.1rem; vertical-align: 0; }
+/* Logos in headings and admonition titles. */
+.md-typeset h2 img.ws-logo, .md-typeset .admonition-title img.ws-logo, .md-typeset summary img.ws-logo { width: 1em; height: 1em; vertical-align: -.12em; }
+/* Single-colour logos (MultiQC): dark on light, light on dark. */
+[data-md-color-scheme="slate"] .md-typeset img.ws-logo-mono { filter: invert(1) hue-rotate(180deg); }
+
+/* Episode 1: what a Depictio dashboard adds (comparison table) */
+.md-typeset .ws-yes { color: #2F9E44; }
+.md-typeset .ws-no { color: #E03131; }
+.md-typeset .ws-part { color: var(--md-default-fg-color--light); font-size: .9em; white-space: nowrap; }
+.md-typeset .ws-compare td:nth-child(5), .md-typeset .ws-compare th:nth-child(5) { background: color-mix(in srgb, #2F9E44 7%, transparent); }
+
+/* Episode 1: why a dashboard, four cards, one colour each */
+.md-typeset .grid.cards.ws-why > ul > li { border-top: 3px solid var(--ws, #6495ED); }
+.md-typeset .grid.cards.ws-why > ul > li:nth-child(1) { --ws: #18A860; }
+.md-typeset .grid.cards.ws-why > ul > li:nth-child(2) { --ws: #6495ED; }
+.md-typeset .grid.cards.ws-why > ul > li:nth-child(3) { --ws: #9870FF; }
+.md-typeset .grid.cards.ws-why > ul > li:nth-child(4) { --ws: #F68B33; }
+.md-typeset .grid.cards.ws-why > ul > li .twemoji.lg { color: var(--ws); }
+.md-typeset .ws-src { font-size: .72rem; color: var(--md-default-fg-color--light); font-style: italic; margin-top: -.4rem; }
+
+/* Episode 1: where pipelines usually stop (neutral), then Depictio's two moments */
+.md-typeset .grid.cards.ws-stop > ul > li { background: var(--md-code-bg-color); border-color: transparent; }
+.md-typeset .grid.cards.ws-stop > ul > li .twemoji.lg { color: var(--md-default-fg-color--light); }
+.md-typeset .grid.cards.ws-why > ul > li ul { margin-left: 1em; }
+.md-typeset .grid.cards.ws-why > ul > li:nth-child(1) { --ws: #6495ED; }
+.md-typeset .grid.cards.ws-why > ul > li:nth-child(2) { --ws: #18A860; }
+/* Analysis mode wears the app's Analysis colour: grape (Mantine grape-6) */
+.md-content:has(.ws-meta) .md-typeset h2.ws-analysis { --ws: #BE4BDB; }
+.md-content:has(.ws-meta) .md-typeset h2.ws-analysis ~ ol { --ws: #BE4BDB; }
+@media screen and (min-width: 45em) { .md-typeset .grid.cards.ws-stop { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* Comparison header: an icon over each column name */
+.md-typeset .ws-compare th .twemoji, .md-typeset .ws-compare th img.ws-logo { display: inline-block; height: 1.5em; width: auto; margin-bottom: .2em; }
+.md-typeset .ws-compare th .twemoji svg { height: 1.5em; width: 1.5em; max-height: none; }
+.md-typeset .ws-compare th:nth-child(2) .twemoji { color: #868e96; } .md-typeset .ws-compare th:nth-child(3) .twemoji { color: #2F9E44; }
+.md-typeset .ws-compare th:nth-child(4) .twemoji { color: #6495ED; }

@@ -51,7 +51,6 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.indexes
-    - navigation.expand
     - navigation.top
 
     # Header
@@ -77,6 +76,7 @@ extra_css:
   - stylesheets/asciinema.css
   - stylesheets/cards.css
   - stylesheets/cli.css
+  - stylesheets/workshop.css
   # - stylesheets/css-v1.0.4.css
   - https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
   - https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css
@@ -373,13 +373,39 @@ nav:
       - Special Modes:
           - Authentication Modes: usage/guides/authentication-modes.md
           - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md
-  - Tutorials:
-      - tutorials/index.md
-      - What's new since your last visit: tutorials/whats-new.md
-      - Compare runs: tutorials/compare-runs.md
-      - Watch the data update: tutorials/data-updates.md
-      - Label samples: tutorials/metadata-panel.md
-      - Move a project to another instance: tutorials/instance-migration.md
+  - Learn:
+      - Overview: tutorials/index.md
+      - Watch: tutorials/watch.md
+      - Step by step:
+          - tutorials/step-by-step/index.md
+          - What's new since your last visit: tutorials/whats-new.md
+          - Compare runs: tutorials/compare-runs.md
+          - Watch the data update: tutorials/data-updates.md
+          - Label samples: tutorials/metadata-panel.md
+          - Move a project to another instance: tutorials/instance-migration.md
+      - Hands-on courses:
+          - tutorials/courses/index.md
+          - Depictio in the browser:
+            - tutorials/workshop/index.md
+            - 0. Setup: tutorials/workshop/get-started.md
+            - 1. Read a shared dashboard: tutorials/workshop/view.md
+            - 2. Make your own copy and edit it: tutorials/workshop/edit-your-copy.md
+            - 3. Create a project from files: tutorials/workshop/from-a-file.md
+            - 4. Create a project from an nf-core run: tutorials/workshop/from-nf-core-run.md
+            - 5. Follow a new run: tutorials/workshop/new-run-and-versions.md
+            - Reference: tutorials/workshop/reference.md
+            - Troubleshooting: tutorials/workshop/troubleshooting.md
+            - Instructor notes: tutorials/workshop/facilitators.md
+          - Depictio from the command line:
+            - tutorials/workshop-cli/index.md
+            - 0. Setup: tutorials/workshop-cli/setup.md
+            - 1. Your first project from the command line: tutorials/workshop-cli/first-project.md
+            - 2. A second table, then a new season: tutorials/workshop-cli/own-tables.md
+            - 3. A dashboard as code: tutorials/workshop-cli/dashboard-as-code.md
+            - 4. An nf-core run, with its template: tutorials/workshop-cli/nf-core-run.md
+            - Going further: tutorials/workshop-cli/going-further.md
+            - Troubleshooting: tutorials/workshop-cli/troubleshooting.md
+            - Instructor notes: tutorials/workshop-cli/facilitators.md
   - Features:
       - Overview: features/README.md
       - Dashboards:
