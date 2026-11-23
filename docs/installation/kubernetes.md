@@ -212,6 +212,90 @@ The automatic choice reads `s3.env`, not `backend.env`. With the URL in `backend
 [External S3](#external-s3) above, it picks `proxy`: set `browserAccess: presigned`, or move
 `DEPICTIO_S3_PUBLIC_URL` to `s3.env`, if browsers reach the store.
 
+### Backups <small>(v1.22.1+)</small> { #backups }
+
+A backup taken from *Administration* › *Backups* is written inside the backend
+container, and lost on its next restart, unless the chart puts a volume behind
+the backup directory. The `backups` values block does that, schedules the
+backups, and copies them off the cluster every night. All of it is off by
+default: a snapshot is the size of the whole database, so size the volume before
+the schedule starts filling it.
+
+**Volume.** `backups.persistence.enabled: true` creates the PVC
+`<release>-depictio-backups-pvc` and mounts it on the backend at
+`/app/depictio/backups`. `size` defaults to `5Gi`, `accessMode` to
+`ReadWriteMany`. The PVC carries `helm.sh/resource-policy: keep`, so it survives
+a `helm uninstall`: it holds the only copy of the backups.
+
+**Schedule.** `backups.schedule` sets the schedule's starting defaults:
+`intervalHours` and `timeOfDay` (a `HH:MM` UTC anchor, empty for a rolling
+interval), then `retentionDays`, `weeklyWeeks` and `monthlyMonths` for
+[retention](../usage/administration/backup.md#retention). A change saved in
+*Administration* › *Backups* overrides them from then on. Enabling the
+schedule without the volume fails the install.
+
+**Off-cluster copy.** `backups.offsite.enabled: true` adds a CronJob that runs
+rclone, at 04:00 UTC by default, after the backup above. It copies the backup
+files from the volume to `<bucket>/<prefix>/mongo/` and keeps them there
+`mongo.retentionDays` days, independently of the volume's retention: a backup
+pruned on the volume stays in the bucket. With `data.enabled` it also syncs the
+instance's S3 data bucket to `<prefix>/s3-data/current/`, moving every file it
+overwrites or deletes to `s3-data/archive/<date>/`, kept `data.archiveDays`
+days. The MongoDB backups hold the pointers, the data copy what they point at:
+restore both from about the same night.
+
+| Key | Default |
+|-----|---------|
+| `schedule` | `0 4 * * *` (UTC) |
+| `endpoint`, `bucket` | empty, both required |
+| `prefix` | the release name |
+| `region` | `us-east-1` |
+| `image` | `rclone/rclone:1.68.2` |
+| `mongo.retentionDays` | `365` |
+| `data.enabled` | `true` |
+| `data.sourceEndpoint` | the backend's `DEPICTIO_S3_PUBLIC_URL`; set it for a bundled store |
+| `data.archiveDays` | `90` |
+
+The destination credentials come from `existingSecret` (a Secret with the keys
+`ACCESS_KEY_ID` and `SECRET_ACCESS_KEY`), or from `secrets.backupS3AccessKey`
+and `secrets.backupS3SecretKey`, which the chart renders into the Secret
+`<release>-depictio-backup-s3`. The pod reuses the backend's pod labels and
+security contexts, pulls with `imagePullPolicy: Always` and carries a CPU
+limit (`resources`), as quota-enforced namespaces require. The copy needs the
+volume, `endpoint` and `bucket`, and one of the two credential routes: the
+install fails otherwise, saying which one is missing.
+
+```yaml
+# my-values.yaml
+backups:
+  persistence:
+    enabled: true
+    size: 50Gi
+  schedule:
+    enabled: true
+    intervalHours: 24
+    timeOfDay: "03:00"     # HH:MM UTC anchor; empty means a rolling interval
+    retentionDays: 30
+    weeklyWeeks: 4         # on top of retentionDays, one backup per ISO week...
+    monthlyMonths: 12      # ...and one per calendar month
+  offsite:
+    enabled: true
+    endpoint: https://<your-remote>
+    bucket: <your-backup-bucket>
+    mongo:
+      retentionDays: 365   # in the bucket, independent of the volume
+    data:
+      enabled: true
+      archiveDays: 90
+
+secrets:
+  backupS3AccessKey: "<access-key>"
+  backupS3SecretKey: "<secret-key>"
+```
+
+Restoring the S3 data from the bucket is a manual rclone copy back; the chart
+has no path for it.
+
 ### Ingress
 
 Depictio's Helm chart supports three ingress topologies. Pick based on
