@@ -190,6 +190,19 @@ The :material-database-cog-outline: icon of a collection (**Manage data (append 
 
 MultiQC reports must agree (same modules, plot keys and MultiQC version, no sample twice) or they are refused. A later CLI refresh keeps what was added here. Collections read from a manifest, a URL or a bucket are re-read with **Project settings**, [**Data refresh**](remote-data.md#refreshing-the-data).
 
+### Join two tables <small>(v1.23.0+)</small> { #join-two-tables }
+
+Two tables that share a column become one new table, read by any component. On the project page: **Cross-DC links**, **Add join** (owners and editors, project not read-only).
+
+1. **Name** the join: letters, digits, `_` and `-`. The new table is called `joined_<name>`.
+2. Pick the **Left table** and the **Right table**: preselected from the project's link, or else its two oldest tables.
+3. Pick the **Join column(s)** they share and a **Join type**: **Left**, **Inner**, **Outer** or **Right**.
+4. Check the preview (row and column counts, rows without a match, warnings), then **Create join**.
+
+The two tables stay as they are; the joined table carries a `joined` badge and is rebuilt whenever one of them changes. It cannot be appended to, replaced or cleared itself: change its sources instead. The join is listed under **Joins** in the same section, where it can be deleted.
+
+What a join is, and how it differs from a link: [Joining and linking](../../features/data-model.md#join-from-the-web-ui).
+
 ## Project Builder <small>(v1.21.0+)</small> { #project-builder }
 
 For a folder no shipped template fits, the Project Builder lets you define the collections yourself. It writes the same YAML as the CLI.
