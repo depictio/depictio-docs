@@ -50,7 +50,7 @@ hide:
 
 ### **✨ New Features**
 
-* **Helm backups**: the chart can mount a backups volume, run scheduled MongoDB backups, and copy backups and S3 data off the cluster every night with rclone. [Kubernetes](../installation/kubernetes.md) ([#1438](https://github.com/depictio/depictio/pull/1438))
+* **Helm backups**: the chart can mount a backups volume, run scheduled MongoDB backups, and copy backups and S3 data off the cluster every night with rclone. [Helm backups](../installation/kubernetes.md#backups) ([#1438](https://github.com/depictio/depictio/pull/1438))
 
 ### **🐛 Bug Fixes**
 
