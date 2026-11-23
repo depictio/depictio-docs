@@ -113,7 +113,7 @@ Use [**Tool Studio**](../developer/tool-studio.md). Drop the file in the browser
 <div class="module-flow__step module-flow__step--module" markdown>
 :material-cog-transfer:{ .lg } **Needs reshaping** <span class="module-flow__opt">recipe</span>
 
-The entry needs a `recipe` to tidy the file first, which the Studio cannot write. Follow the [contributing guide](../developer/contributing-a-tool.md). Half the committed outputs are in this case.
+The entry needs a `recipe` to tidy the file first. From v1.23.0, [**Tool Studio**](../developer/tool-studio.md#recipes-raw-sample-recipe-fixture) writes it and runs it on a sample in your browser; the [contributing guide](../developer/contributing-a-tool.md) covers writing it by hand. Half the committed outputs are in this case.
 </div>
 
 </div>
