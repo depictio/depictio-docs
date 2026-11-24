@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "program": "depictio",
-  "version": "1.22.2",
+  "version": "1.23.0",
   "help_options": [
     "--help",
     "-h"
@@ -4656,6 +4656,517 @@
           "default": false,
           "metavar": null,
           "help": "Skip online checks (column name validation against server DC schema)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": true,
+          "count": false,
+          "show_default": true
+        }
+      ],
+      "alias_of": null,
+      "aliases": []
+    },
+    {
+      "path": [
+        "dashboard",
+        "build-static"
+      ],
+      "name": "build-static",
+      "group": false,
+      "help": "Build a backend-less static dashboard bundle (serverless producer B).\n\nReads a DashboardDataLite spec plus local Parquet files and emits one\nself-contained HTML file — no running Depictio instance, no Mongo, no S3.\nComponents the producer cannot serve live are frozen at the default filter\nstate or omitted with a reason; use --check to see the tier table first.\n\nExample:\n    depictio dashboard build-static --spec dashboard.yaml --data ./parquet/ --out bundle.html\n    depictio dashboard build-static --spec dashboard.yaml --data ./parquet/ --check",
+      "short_help": "Build a backend-less static dashboard bundle (serverless producer B).",
+      "epilog": "",
+      "hidden": false,
+      "deprecated": false,
+      "panel": null,
+      "params": [
+        {
+          "name": "spec",
+          "kind": "option",
+          "opts": [
+            "--spec"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "path"
+          },
+          "required": true,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "Dashboard spec (DashboardDataLite YAML or JSON)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "data",
+          "kind": "option",
+          "opts": [
+            "--data"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "path"
+          },
+          "required": true,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "Data directory: {data}/{workflow_tag}/{data_collection_tag}.parquet, or an explicit tag→path map in {data}/data.yaml",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "out",
+          "kind": "option",
+          "opts": [
+            "--out",
+            "-o"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "path"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": "dashboard-static.html",
+          "metavar": null,
+          "help": "Output HTML path (single-file bundle)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "check",
+          "kind": "option",
+          "opts": [
+            "--check"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "boolean"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": false,
+          "metavar": null,
+          "help": "Preflight only: print the per-component live/frozen/omitted table, write nothing",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": true,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "mode",
+          "kind": "option",
+          "opts": [
+            "--mode"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": "single-file",
+          "metavar": null,
+          "help": "Bundle delivery mode (phase 1: single-file only)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "open_browser",
+          "kind": "option",
+          "opts": [
+            "--open"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "boolean"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": false,
+          "metavar": null,
+          "help": "Open the built bundle in a browser tab",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": true,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "python_runtime",
+          "kind": "option",
+          "opts": [
+            "--python-runtime"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": "off",
+          "metavar": null,
+          "help": "Embed the optional Python runtime (Pyodide): 'off' (default), 'auto' when a tile it can make live exists (a code figure the transpiler refused, a group comparison, a PCA/PCoA/t-SNE embedding), or 'on'. Adds ~50 MB; the files are fetched once and verified against a pin.",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        }
+      ],
+      "alias_of": null,
+      "aliases": []
+    },
+    {
+      "path": [
+        "dashboard",
+        "export-static"
+      ],
+      "name": "export-static",
+      "group": false,
+      "help": "Export a static bundle from a RUNNING instance (serverless producer A).\n\nRuns fully local against the instance's backing services — MongoDB and\nS3/MinIO must be reachable from this process (configure via the standard\nDEPICTIO_MONGODB_* / DEPICTIO_MINIO_* environment variables, exactly as the\nAPI reads them). There is intentionally no HTTP path: the export calls the\nserver render pipeline in-process (the API-endpoint flavour is producer C,\nRFC §3.3). Run it on the instance host, inside the backend container, or\nanywhere with port-forwards to Mongo + S3.\n\nComponents the static runtime can serve live (cards, filters, text) ship\ntheir data; everything else is frozen at the default filter state or\nomitted with a reason — use --check to see the tier table first.\n\nThe bundle carries the dashboard's whole TAB FAMILY (one copy of each data\ncollection, however many tabs read it), entered on the tab you named. Pass\n--single-tab for just that tab.\n\nExample:\n    depictio dashboard export-static 6824cb3b89d2b72169309737 --check\n    depictio dashboard export-static 6824cb3b89d2b72169309737 --out bundle.html\n    depictio dashboard export-static 6824cb3b89d2b72169309737 --single-tab",
+      "short_help": "Export a static bundle from a RUNNING instance (serverless producer A).",
+      "epilog": "",
+      "hidden": false,
+      "deprecated": false,
+      "panel": null,
+      "params": [
+        {
+          "name": "dashboard_id",
+          "kind": "argument",
+          "opts": [
+            "dashboard_id"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": true,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "Dashboard ID (Mongo ObjectId) to export",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null
+        },
+        {
+          "name": "out",
+          "kind": "option",
+          "opts": [
+            "--out",
+            "-o"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "path"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": "dashboard-static.html",
+          "metavar": null,
+          "help": "Output HTML path (single-file bundle)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "mode",
+          "kind": "option",
+          "opts": [
+            "--mode"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": "single-file",
+          "metavar": null,
+          "help": "Bundle delivery mode (phase 2: single-file only)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "check",
+          "kind": "option",
+          "opts": [
+            "--check"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "boolean"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": false,
+          "metavar": null,
+          "help": "Preflight only: print the per-component live/frozen/omitted table, write nothing. Reads the data collections and runs the binder, so the tiers are the real ones — a few seconds, not instant.",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": true,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "single_tab",
+          "kind": "option",
+          "opts": [
+            "--single-tab"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "boolean"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": false,
+          "metavar": null,
+          "help": "Export only this tab. Default: the whole tab family it belongs to, entered on this tab.",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": true,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "open_browser",
+          "kind": "option",
+          "opts": [
+            "--open"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "boolean"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": false,
+          "metavar": null,
+          "help": "Open the built bundle in a browser tab",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": true,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "user_email",
+          "kind": "option",
+          "opts": [
+            "--user"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "Email of the acting user (permission checks: viewer for --check, owner for the build). Defaults to the instance's admin account.",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "python_runtime",
+          "kind": "option",
+          "opts": [
+            "--python-runtime"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": "off",
+          "metavar": null,
+          "help": "Embed the optional Python runtime (Pyodide): 'off' (default), 'auto' when a tile it can make live exists — a code figure the transpiler refused, a group comparison, a PCA/PCoA/t-SNE embedding — or 'on'. Adds ~50 MB; --check prints the exact figure.",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        }
+      ],
+      "alias_of": null,
+      "aliases": []
+    },
+    {
+      "path": [
+        "dashboard",
+        "combine-report"
+      ],
+      "name": "combine-report",
+      "group": false,
+      "help": "Turn a rendered report into the combined report + dashboard file.\n\nOffline, from the file alone: a report that embeds the dashboard's runtime\nalready holds the whole interactive dashboard (one runtime serves both);\nthis turns its \"Report | Dashboard\" switch on — one filter state across\nboth views. The server's default export produces the same file directly.\n\nExample:\n    depictio dashboard combine-report penguins.html --out penguins-all.html",
+      "short_help": "Turn a rendered report into the combined report + dashboard file.",
+      "epilog": "",
+      "hidden": false,
+      "deprecated": false,
+      "panel": null,
+      "params": [
+        {
+          "name": "report",
+          "kind": "argument",
+          "opts": [
+            "report"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "file"
+          },
+          "required": true,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "A rendered report that embeds the dashboard's runtime (the server's 'Report only' download, or `quarto render` of an export made by an owner)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null
+        },
+        {
+          "name": "out",
+          "kind": "option",
+          "opts": [
+            "--out",
+            "-o"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "path"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "Output HTML path (default: <report>-report-dashboard.html)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "default_view",
+          "kind": "option",
+          "opts": [
+            "--default-view"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "choice",
+            "choices": [
+              "report",
+              "dashboard"
+            ]
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": "report",
+          "metavar": null,
+          "help": "The view the file opens on",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "open_browser",
+          "kind": "option",
+          "opts": [
+            "--open"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "boolean"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": false,
+          "metavar": null,
+          "help": "Open the combined file in a browser tab",
           "hidden": false,
           "deprecated": false,
           "envvar": null,

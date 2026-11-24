@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.22.2",
-    "x-generated-at": "2026-11-19T21:06:51Z",
-    "x-depictio-version": "v1.22.2"
+    "version": "1.23.0",
+    "x-generated-at": "2026-11-23T00:00:58Z",
+    "x-depictio-version": "v1.23.0"
   },
   "paths": {
     "/depictio/api/v1/projects/builder/capabilities": {
@@ -6113,6 +6113,217 @@
         }
       }
     },
+    "/depictio/api/v1/joins/{project_id}": {
+      "get": {
+        "tags": [
+          "Joins"
+        ],
+        "summary": "List Project Joins",
+        "description": "The project's joins, with the ids of the tables they read and write.\n\n``can_edit`` says whether the caller may add or delete one (owner or editor,\nproject not published). 404 when the caller cannot see the project.",
+        "operationId": "list_project_joins_depictio_api_v1_joins__project_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Joins"
+        ],
+        "summary": "Create Project Join",
+        "description": "Add a join to the project and write its table, a new table collection.\n\nThe sources are left as they are; the joined table is rebuilt whenever one\nof them changes through the web UI. Same rules as the preview, plus 409\n(``name_taken``) when the name or its collection tag is in use.",
+        "operationId": "create_project_join_depictio_api_v1_joins__project_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/joins/{project_id}/preview": {
+      "post": {
+        "tags": [
+          "Joins"
+        ],
+        "summary": "Preview Project Join",
+        "description": "What a join would give, written nowhere.\n\nBody: ``left_dc_id``, ``right_dc_id``, ``on_columns`` (empty: the server's\nsuggestion), ``how`` (``left`` by default), ``name``. Answers the row counts\nof both sides and of the result, the rows of each side without a partner\nand the first rows. Owners and editors (403), 409 on a published project or\na table without data, 422 (with a ``code``) for a join that cannot be made.",
+        "operationId": "preview_project_join_depictio_api_v1_joins__project_id__preview_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/joins/{project_id}/{join_name}": {
+      "delete": {
+        "tags": [
+          "Joins"
+        ],
+        "summary": "Delete Project Join",
+        "description": "Remove a join and its table; the sources stay. Owners and editors.\n\n409 on a published project, or when another join reads this one's table.",
+        "operationId": "delete_project_join_depictio_api_v1_joins__project_id___join_name__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "join_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Join Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/depictio/api/v1/files/upsert_batch": {
       "post": {
         "tags": [
@@ -6301,8 +6512,13 @@
           "Files"
         ],
         "summary": "Serve Image",
-        "description": "Serve images from S3 via streaming.\n\nNOTE: Currently PUBLIC to allow HTML <img> tags to load images. Access is\nbucket-locked to the configured S3 bucket and the key is\ntraversal-hardened, so this endpoint can only stream objects from\nDepictio's own bucket.\nTODO: Presigned, time-limited URLs remain future work for per-object\naccess control.",
+        "description": "Serve images from S3 via streaming.\n\nAccess is bucket-locked to the configured S3 bucket and the key is\ntraversal-hardened, so this endpoint can only stream objects from\nDepictio's own bucket. A caller must either present a valid short-lived\nsignature (minted by ``POST /files/serve/image/sign``, since ``<img>`` tags\ncannot send an Authorization header) or hold viewer access to a project\nwhose image data collection covers the key. Anonymous callers are served\nonly when that project is public.",
         "operationId": "serve_image_depictio_api_v1_files_serve_image_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "s3_path",
@@ -6314,6 +6530,42 @@
               "title": "S3 Path"
             },
             "description": "Full S3 path to the image (e.g., s3://bucket/path/image.png)"
+          },
+          {
+            "name": "exp",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Expiry of the URL signature (unix seconds)",
+              "title": "Exp"
+            },
+            "description": "Expiry of the URL signature (unix seconds)"
+          },
+          {
+            "name": "sig",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "HMAC over the object key and expiry",
+              "title": "Sig"
+            },
+            "description": "HMAC over the object key and expiry"
           }
         ],
         "responses": {
@@ -6336,6 +6588,51 @@
             }
           }
         }
+      }
+    },
+    "/depictio/api/v1/files/serve/image/sign": {
+      "post": {
+        "tags": [
+          "Files"
+        ],
+        "summary": "Sign Serve Images",
+        "description": "Exchange S3 image paths for short-lived signed serve/image URLs.\n\n``<img>`` tags cannot carry the caller's Authorization header, so the\nviewer swaps the paths it got from the listing endpoints for signed URLs\nhere, one request for a whole gallery. Every path is authorized like a\ndirect serve/image read; paths the caller may not read are omitted from the\nanswer, so the client falls back to its placeholder instead of a 403 per\nthumbnail.",
+        "operationId": "sign_serve_images_depictio_api_v1_files_serve_image_sign_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignServeImagesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/files/indexed/{data_collection_id}": {
@@ -7314,6 +7611,85 @@
               "type": "string",
               "format": "objectid",
               "title": "Data Collection Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/deltatables/data/{data_collection_id}": {
+      "get": {
+        "tags": [
+          "DeltaTables"
+        ],
+        "summary": "Get Data Parquet",
+        "description": "The whole table as Parquet — what a notebook reads.\n\nUnfiltered, optionally projected to ``columns`` (comma-separated), behind\nthe same permission pipeline as every other read endpoint here. The\nnotebook applies the filters itself, in code, so the reader can see them.\nRefused with 413 above ``settings.notebook_export.max_rows``: a notebook\nmust not become a way to pull an arbitrarily large table through the API.\n\n``version`` reads that Delta commit (an export taken under a dashboard\nversion's data pins). The table is scanned directly at that commit: never\nfrom a cache or the ``USE_LOCAL_FILES`` mirror, which only hold the newest\none, so a pinned read can never be answered with current data. A commit\nthe table does not have is a 404, never a silent fall back to the latest.",
+        "operationId": "get_data_parquet_depictio_api_v1_deltatables_data__data_collection_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "data_collection_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Data Collection Id"
+            }
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Columns"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Version"
             }
           }
         ],
@@ -9365,7 +9741,7 @@
           "Migrate"
         ],
         "summary": "Export Project",
-        "description": "Export a project bundle from this instance.\n\nScoped to one project: cascades through workflows → data_collections →\nfiles / deltatables / runs → dashboards.  Optionally copies S3 data to\na target S3 store (modes all / files).\n\nAccess rules:\n- Admins can export any project, in every mode.\n- In public/demo mode the anonymous and temporary visitors are non-admin,\n  so they're allowed to export too — but only projects they can actually\n  read (public projects or ones shared with them), never arbitrary private\n  projects. Uses ``get_user_or_anonymous`` so tokenless public-mode\n  visitors resolve to the anonymous user instead of 401-ing.\n- On standard (non-public) instances export stays admin-only.\n\nNon-admin callers may not supply ``target_s3_config``: that triggers the\nserver-to-server S3 copy path (an exfiltration vector gated by\n``_validate_target_s3_endpoint``), which has no place in the UI export flow\nthat bundles S3 objects straight into the ZIP.\n\nThe ZIP is written to a temporary file and streamed from there, so memory\nuse does not grow with the project's data. Data above\n``DEPICTIO_MIGRATION_MAX_BUNDLE_BYTES`` is refused with a 413.",
+        "description": "Export a project bundle from this instance.\n\nScoped to one project: cascades through workflows → data_collections →\nfiles / deltatables / runs → dashboards.  Optionally copies S3 data to\na target S3 store (modes all / files).\n\nAccess rules:\n- Admins can export any project, in every mode, with every user's emails.\n- On standard (non-public) instances export stays admin-only.\n- In public/demo mode owners and editors of the project may export it.\n  Viewers and anonymous visitors are refused with 403 (a bundle is a full\n  copy of a project's data, more than reading the dashboards grants).\n- A non-admin's export carries no other user's emails (ids are kept).\n\nNon-admin callers may not supply ``target_s3_config``: that triggers the\nserver-to-server S3 copy path (an exfiltration vector gated by\n``_validate_target_s3_endpoint``), which has no place in the UI export flow\nthat bundles S3 objects straight into the ZIP.\n\nThe ZIP is written to a temporary file and streamed from there, so memory\nuse does not grow with the project's data. Data above\n``DEPICTIO_MIGRATION_MAX_BUNDLE_BYTES`` is refused with a 413.",
         "operationId": "export_project_depictio_api_v1_migrate_export_project_post",
         "requestBody": {
           "content": {
@@ -9410,18 +9786,8 @@
           "Migrate"
         ],
         "summary": "Import Project",
-        "description": "Import a project bundle into this instance (upsert by id).\n\nThe bundle is validated first: every document must belong to the bundled\nproject, and none may collide with another project's ids here. Owner ids\nthat do not exist on this instance are remapped to the calling admin (or\nthe specified owner_user_id). ``s3://`` locations are rewritten to this\ninstance's bucket. Each dashboard family records the state the import\nreplaces, then an ``import`` version.",
+        "description": "Import a project bundle into this instance (upsert by id).\n\nThe bundle is validated first: every document must belong to the bundled\nproject, and none may collide with another project's ids here. Owner ids\nthat do not exist on this instance are remapped to the calling admin (or\nthe specified owner_user_id). ``s3://`` locations are rewritten to this\ninstance's bucket. Each dashboard family records the state the import\nreplaces, then an ``import`` version.\n\nThe body is read with a cap (``DEPICTIO_MIGRATION_MAX_IMPORT_BODY_BYTES``,\n50 MB by default): a bundle JSON the CLI sends can be large, but it is\nbounded, and anything above the cap answers 413 before it is parsed.",
         "operationId": "import_project_depictio_api_v1_migrate_import_project_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MigrateImportRequest"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -9429,16 +9795,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MigrateImportResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -12077,8 +12433,13 @@
           "Dashboards"
         ],
         "summary": "Get Dashboard Logo",
-        "description": "Serve a dashboard's stored logo.\n\nUnauthenticated, matching what `/static/dashboard_logos` served before the\nbytes moved into MongoDB: the image is one an editor deliberately put on a\ndashboard, and gating it would break the public/demo viewer.",
+        "description": "Serve a dashboard's stored logo.\n\nPreviously unauthenticated (matching `/static/dashboard_logos`): the image\nis one an editor deliberately put on a dashboard, so anyone could read it\nfor any dashboard, private ones included. Now a caller needs viewer access\nto the dashboard's project, or a valid short-lived signature (minted by\n``POST /dashboards/logo/sign``, since ``<img>`` tags cannot send an\nAuthorization header). Anonymous callers are served only when the project\nis public, which keeps the public/demo viewer working.",
         "operationId": "get_dashboard_logo_depictio_api_v1_dashboards_logo__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "dashboard_id",
@@ -12089,6 +12450,42 @@
               "format": "objectid",
               "title": "Dashboard Id"
             }
+          },
+          {
+            "name": "exp",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Expiry of the URL signature (unix seconds)",
+              "title": "Exp"
+            },
+            "description": "Expiry of the URL signature (unix seconds)"
+          },
+          {
+            "name": "sig",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "HMAC over the dashboard id and expiry",
+              "title": "Sig"
+            },
+            "description": "HMAC over the dashboard id and expiry"
           }
         ],
         "responses": {
@@ -12111,6 +12508,53 @@
             }
           }
         }
+      }
+    },
+    "/depictio/api/v1/dashboards/logo/sign": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Sign Dashboard Logos",
+        "description": "Signed logo URLs for a batch of dashboards.\n\n``<img>`` tags cannot carry the caller's Authorization header, so the\nviewer swaps the stored logo URLs for signed ones here. Each dashboard is\nauthorized like reading it (viewer on its project); denied ids are omitted.",
+        "operationId": "sign_dashboard_logos_depictio_api_v1_dashboards_logo_sign_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/dashboards/delete/{dashboard_id}": {
@@ -12481,7 +12925,7 @@
           "Dashboards"
         ],
         "summary": "Bulk Compute Cards",
-        "description": "Compute card values with interactive filters applied.\n\nCalled by the React viewer whenever the filter state changes. Dedupes\nDelta-table loads: multiple cards referencing the same (wf_id, dc_id, filter\nfingerprint) share one load. Returns a map keyed by component index.\n\nRequest body:\n    {\n        \"filters\": [\n            {\"index\": \"...\", \"value\": ..., \"column_name\": \"...\",\n             \"interactive_component_type\": \"MultiSelect\"},\n            ...\n        ],\n        \"component_ids\": [\"...\", ...],  # optional; defaults to all cards\n        \"as_of_version\": \"<version id>\",   # optional, see ``_data_pins``\n        \"data_versions\": {\"<dc_id>\": <int | null>},\n        \"definition_version\": \"<version id>\"  # optional, see below\n    }\n\n``definition_version`` computes the cards as that version defined them on\nthis tab (its cards, when ``component_ids`` is absent). A card that version\ncannot draw is reported in ``definition_errors`` rather than failing the\nrest.\n\nResponse:\n    {\n        \"values\": {\"<component_index>\": <scalar or null>, ...},\n        \"secondary_values\": {\n            \"<component_index>\": {\"<aggregation>\": <scalar or null>, ...},\n            ...\n        },\n        \"aggregations\": {\"<component_index>\": [\"<aggregation>\", ...], ...},\n        \"group_status\": {\"<component_index>\": [<group status>, ...], ...},\n        \"filter_applied\": bool,\n        \"filter_count\": int\n    }\n\n    ``secondary_values`` and ``aggregations`` are only populated for cards\n    that declare ``aggregations`` in YAML (multi-metrics card).\n\n    A text tile with live values (``values:``, or a ``{{param:KEY}}`` in its\n    title or body) is computed too, and answers under its own index with\n    one entry per value: ``values[\"<text index>\"] = {\"<name>\": <number,\n    string or null>, \"param:<KEY>\": <string or null>}``. Numbers are raw;\n    the viewer formats them.\n\n    ``definition_errors`` (only with ``definition_version``, only when some\n    card failed): ``{\"<component_index>\": {\"status\": 404 | 409, \"detail\": str}}``,\n    each such card's value being null. 409: the card read another data\n    collection in that version. 404: it did not exist in that version, or\n    it was deleted since and its collection is no longer in the project.\n\nNotes:\n    - Uses load_deltatable_lite with the same metadata format as Dash so\n      the filter semantics match the Dash viewer exactly.\n    - The Dash callback render_card_value_background in\n      card_component/callbacks/core.py remains the source of truth for the\n      edit path; this endpoint mirrors its math.",
+        "description": "Compute card values with interactive filters applied.\n\nCalled by the React viewer whenever the filter state changes. Dedupes\nDelta-table loads: multiple cards referencing the same (wf_id, dc_id, filter\nfingerprint) share one load. Returns a map keyed by component index.\n\nRequest body:\n    {\n        \"filters\": [\n            {\"index\": \"...\", \"value\": ..., \"column_name\": \"...\",\n             \"interactive_component_type\": \"MultiSelect\"},\n            ...\n        ],\n        \"component_ids\": [\"...\", ...],  # optional; defaults to all cards\n        \"as_of_version\": \"<version id>\",   # optional, see ``_data_pins``\n        \"data_versions\": {\"<dc_id>\": <int | null>},\n        \"definition_version\": \"<version id>\",  # optional, see below\n        \"include_icons\": bool           # default False; see below\n    }\n\n``definition_version`` computes the cards as that version defined them on\nthis tab (its cards, when ``component_ids`` is absent). A card that version\ncannot draw is reported in ``definition_errors`` rather than failing the\nrest.\n\nResponse:\n    {\n        \"values\": {\"<component_index>\": <scalar or null>, ...},\n        \"secondary_values\": {\n            \"<component_index>\": {\"<aggregation>\": <scalar or null>, ...},\n            ...\n        },\n        \"aggregations\": {\"<component_index>\": [\"<aggregation>\", ...], ...},\n        \"group_status\": {\"<component_index>\": [<group status>, ...], ...},\n        \"icons\": {\"<icon_id>\": \"<svg markup>\", ...},  # only with include_icons\n        \"filter_applied\": bool,\n        \"filter_count\": int\n    }\n\n    ``icons`` is only present when ``include_icons`` is set — the React\n    viewer draws icons itself and never needs this; ``depictio.notebook``\n    sets it to get an inline SVG (resolved from Iconify, cached) it can\n    bake into a self-contained notebook cell.\n\n    ``secondary_values`` and ``aggregations`` are only populated for cards\n    that declare ``aggregations`` in YAML (multi-metrics card).\n\n    A text tile with live values (``values:``, or a ``{{param:KEY}}`` in its\n    title or body) is computed too, and answers under its own index with\n    one entry per value: ``values[\"<text index>\"] = {\"<name>\": <number,\n    string or null>, \"param:<KEY>\": <string or null>}``. Numbers are raw;\n    the viewer formats them.\n\n    ``definition_errors`` (only with ``definition_version``, only when some\n    card failed): ``{\"<component_index>\": {\"status\": 404 | 409, \"detail\": str}}``,\n    each such card's value being null. 409: the card read another data\n    collection in that version. 404: it did not exist in that version, or\n    it was deleted since and its collection is no longer in the project.\n\nNotes:\n    - Uses load_deltatable_lite with the same metadata format as Dash so\n      the filter semantics match the Dash viewer exactly.\n    - The Dash callback render_card_value_background in\n      card_component/callbacks/core.py remains the source of truth for the\n      edit path; this endpoint mirrors its math.",
         "operationId": "bulk_compute_cards_depictio_api_v1_dashboards_bulk_compute_cards__dashboard_id__post",
         "security": [
           {
@@ -14197,6 +14641,470 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/component_figure/{dashboard_id}/{component_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Component Figure",
+        "description": "A component as a Plotly figure, extracted from the real renderer.",
+        "operationId": "component_figure_depictio_api_v1_dashboards_component_figure__dashboard_id___component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComponentEmbedRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComponentFigureResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/component_figure/jobs/{job_id}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Component Figure Job",
+        "operationId": "component_figure_job_depictio_api_v1_dashboards_component_figure_jobs__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComponentFigureResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/embed/{dashboard_id}/{component_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Component Embed",
+        "description": "An HTML page framing the live component with the given state.\n\nThe frame loads the viewer's ``/embed`` route with the reader's own\nsession, so it renders for anyone who can open the dashboard and shows\nthe login page to anyone who cannot.",
+        "operationId": "component_embed_depictio_api_v1_dashboards_embed__dashboard_id___component_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "component_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Component Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComponentEmbedRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/notebook_export/{dashboard_id}/preflight": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Notebook Export Preflight",
+        "description": "What the export will contain: one verdict per tile, stage counts, warnings.",
+        "operationId": "notebook_export_preflight_depictio_api_v1_dashboards_notebook_export__dashboard_id__preflight_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotebookExportRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotebookPreflight"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/notebook_export/{dashboard_id}": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Notebook Export",
+        "description": "The dashboard as a Quarto document (``.qmd``).\n\nNothing runs on the server: the document is generated text. The rendered\nreport is the one thing that does execute, and it is a separate, opt-in\nendpoint below.",
+        "operationId": "notebook_export_depictio_api_v1_dashboards_notebook_export__dashboard_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotebookExportRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/notebook_export/{dashboard_id}/render": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Notebook Export Render",
+        "description": "Start rendering the dashboard's notebook into an HTML report.\n\nA plain (threadpool) route: building the plan reads Delta tables, Mongo\nand S3, none of which may run on the event loop.",
+        "operationId": "notebook_export_render_depictio_api_v1_dashboards_notebook_export__dashboard_id__render_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotebookExportRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotebookRenderStatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/notebook_export/render/{job_id}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Notebook Export Render Status",
+        "description": "Where a render job is: queued, running, ready to download, or failed.",
+        "operationId": "notebook_export_render_status_depictio_api_v1_dashboards_notebook_export_render__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotebookRenderStatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/notebook_export/render/{job_id}/download": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Notebook Export Render Download",
+        "description": "The rendered report, as a file: the HTML report, or its PDF (``?format=pdf``).",
+        "operationId": "notebook_export_render_download_depictio_api_v1_dashboards_notebook_export_render__job_id__download_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "html",
+                "pdf"
+              ],
+              "type": "string",
+              "default": "html",
+              "title": "Format"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -16038,7 +16946,7 @@
           "Figure Builder"
         ],
         "summary": "Analyze Code",
-        "description": "Validate user-written figure code and extract UI-equivalent params.\n\nWraps ``analyze_constrained_code`` from\n``depictio.dash.modules.figure_component.code_mode``. Used by the React\nbuilder when toggling code↔UI mode so the UI tab can be re-populated.\n\nOffloaded to Celery on the same flag as `/preview`.",
+        "description": "Validate user-written figure code and extract UI-equivalent params.\n\nWraps ``analyze_constrained_code`` from\n``depictio.dash.modules.figure_component.code_mode``. Used by the React\nbuilder when toggling code↔UI mode so the UI tab can be re-populated.\n\nAnonymous visitors get no analysis (the builder is an editor flow), and the\ncode size is capped so the endpoint cannot be used to burn worker CPU on\nmegabytes of input.\n\nOffloaded to Celery on the same flag as `/preview`.",
         "operationId": "analyze_code_depictio_api_v1_figure_analyze_code_post",
         "requestBody": {
           "content": {
@@ -17529,6 +18437,441 @@
             "OAuth2PasswordBearer": []
           }
         ]
+      }
+    },
+    "/depictio/api/v1/serverless/export-static/{dashboard_id}/preflight": {
+      "get": {
+        "tags": [
+          "Serverless"
+        ],
+        "summary": "Preflight Export Static",
+        "description": "Per-component (and per-tab, per-link) tier table for a would-be static export.\n\nCovers the whole tab family the dashboard belongs to, because that is what a\nbundle carries: every tier row names its ``tab_id`` and ``tabs`` repeats the\nper-tab counts. The top-level ``counts`` stay family-wide.\n\n``python_runtime`` defaults to what a build defaults to (``off``), so the\ntiers are the ones a build with the same defaults ships. Under ``auto`` the\ntiles the optional Python runtime would serve read ``live``, and\n``python_runtime.without`` keeps what each of them ships without it.\n\nThe FIGURE tiers are the real ones, not a plan: ``export_static``'s default\npreflight runs the export's own body — it loads and prunes the data\ncollections and puts every figure through the bind-and-refill builder — and\nstops before it builds anything, so no figure row comes back\n``provisional``. That costs data reads and a server-side figure build per\nunbound figure. A full export of the reference dashboards takes 5-15 s wall\nclock, most of it in the Celery computes this skips entirely (no compute, no\nfrozen payload, no Parquet, no HTML), so expect a few seconds rather than a\nfew milliseconds.\n\nEverything that is not a figure keeps its planned tier, and the build can\nstill move one: a frozen payload that fails to compute drops to ``omitted``,\nand so does a Celery compute the build's wall-clock budget cannot cover —\nthat one by policy, not by failure, so a dashboard with many computes can\nreport ``frozen`` here and ship ``omitted``.\n\n``size_estimate`` predicts how big the bundle would be and which side of the\ntwo ceilings it lands on (``ok`` / ``over_soft_limit`` / ``would_be_refused``\n— see :func:`_size_estimate_payload`), so the size can be shown before the\nbuild is paid for. It is an advance warning rather than the build's own\ndecision: same ceilings, but applied to an estimate that runs high on\ncompressible data. Crossing the hard ceiling *while loading* is a 413 here\nexactly as it is a refusal there — the ceiling bounds this path's memory\ntoo.\n\nOnly a caller who may export (``owner`` on the project, the dispatch's own\nrule) gets that binding preflight, and at most ``PREFLIGHT_CONCURRENCY`` run\nat once per API process (429 past that). Any other *viewer* — anonymous in\npublic mode — gets the data-free plan: the same rows, figures left\n``provisional``, no ``size_estimate``, and nothing read but the documents.\n``bound`` says which one answered. Writes nothing. ``export_static`` is\nsynchronous and blocks on Mongo, S3 and plotly, so it runs in a worker\nthread rather than on the event loop.",
+        "operationId": "preflight_export_static_depictio_api_v1_serverless_export_static__dashboard_id__preflight_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "python_runtime",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "auto",
+                "on",
+                "off"
+              ],
+              "type": "string",
+              "default": "off",
+              "title": "Python Runtime"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Preflight Export Static Depictio Api V1 Serverless Export Static  Dashboard Id  Preflight Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/serverless/export-static/{dashboard_id}/can-export": {
+      "get": {
+        "tags": [
+          "Serverless"
+        ],
+        "summary": "Can Export Static",
+        "description": "Whether the dispatch below would accept this caller, for the UI's button.\n\nThe same :func:`producer_a.export_denial` the dispatch and the build ask, so\nthe button is enabled exactly when the export would be accepted (project\nowner), whoever owns the dashboard document. Reads two documents, no data.",
+        "operationId": "can_export_static_depictio_api_v1_serverless_export_static__dashboard_id__can_export_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  },
+                  "title": "Response Can Export Static Depictio Api V1 Serverless Export Static  Dashboard Id  Can Export Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/serverless/export-static/{dashboard_id}": {
+      "post": {
+        "tags": [
+          "Serverless"
+        ],
+        "summary": "Dispatch Export Static",
+        "description": "Enqueue a static-bundle build; poll ``/export-static/status/{job_id}``.\n\nOwner-gated (RFC §8 — a bundle is bulk data exfiltration). Denials return 404\nrather than 403 so the endpoint cannot be used to enumerate dashboards.",
+        "operationId": "dispatch_export_static_depictio_api_v1_serverless_export_static__dashboard_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "python_runtime",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "auto",
+                "on",
+                "off"
+              ],
+              "type": "string",
+              "default": "off",
+              "title": "Python Runtime"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Dispatch Export Static Depictio Api V1 Serverless Export Static  Dashboard Id  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/serverless/export-static/status/{job_id}": {
+      "get": {
+        "tags": [
+          "Serverless"
+        ],
+        "summary": "Poll Export Static",
+        "description": "Status of one export job — ``pending``, ``done`` (with result) or ``failed``.",
+        "operationId": "poll_export_static_depictio_api_v1_serverless_export_static_status__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Poll Export Static Depictio Api V1 Serverless Export Static Status  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/serverless/export-static/download/{job_id}": {
+      "get": {
+        "tags": [
+          "Serverless"
+        ],
+        "summary": "Download Export Static",
+        "description": "Stream the finished bundle through the API.\n\nThe proxy (rather than a redirect) is what makes downloads work on the common\ndeployment where MinIO is only reachable inside the compose network.",
+        "operationId": "download_export_static_depictio_api_v1_serverless_export_static_download__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/serverless/report-runtime": {
+      "get": {
+        "tags": [
+          "Serverless"
+        ],
+        "summary": "Get Report Runtime",
+        "description": "The static runtime, for a reader rendering an exported ``.qmd`` themselves.\n\n``{\"js\", \"css\", \"addons\": {name: markup}}``: the runtime's script and\nstylesheet (``dist-static/combined-runtime.{js,css}``) and the add-ons a\nmanifest names (``addons=3dmol``). Code, not data — but served to signed-in\ncallers only, like every other route here. 503 when this deployment has not\nbuilt it.",
+        "operationId": "get_report_runtime_depictio_api_v1_serverless_report_runtime_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "addons",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Addons"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Report Runtime Depictio Api V1 Serverless Report Runtime Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/serverless/report-manifest/{dashboard_id}": {
+      "post": {
+        "tags": [
+          "Serverless"
+        ],
+        "summary": "Post Report Manifest",
+        "description": "Start building producer A's manifest of the dashboard's family, opening on\n``request.state``; poll ``/report-manifest/job/{job_id}``.\n\nThe manifest a static export would bundle — same producer, same owner gate\n(404 on a denial, as ``/export-static``), same size ceilings (413) — with\n``initial_filters`` set to the state's filters. 409 for a state the\nin-page runtime cannot reproduce (pinned data, selection groups): the\nreport then keeps every tile's own output. As long as a static export's\nbuild (it runs the same computes), so it runs on a worker, like the build.",
+        "operationId": "post_report_manifest_depictio_api_v1_serverless_report_manifest__dashboard_id__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotebookExportRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Post Report Manifest Depictio Api V1 Serverless Report Manifest  Dashboard Id  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/serverless/report-manifest/job/{job_id}": {
+      "get": {
+        "tags": [
+          "Serverless"
+        ],
+        "summary": "Poll Report Manifest",
+        "description": "A manifest job: ``{\"status\": \"queued\"|\"running\"}`` while it builds, then\n``{\"status\": \"ready\", \"manifest\": {...}}``. A refusal is the status the\nsynchronous route would have answered (404, 409, 413). Only the caller\nwho started the job reads it.",
+        "operationId": "poll_report_manifest_depictio_api_v1_serverless_report_manifest_job__job_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/depictio/api/v1/monitoring/tasks": {
@@ -19250,7 +20593,7 @@
           "Authentication"
         ],
         "summary": "Refresh Token Browser",
-        "description": "Browser-safe refresh: uses the refresh token as the only credential.\n\nMirrors ``/auth/refresh_token`` but without the internal-api-key\nrequirement so SPAs (the React viewer) can call it directly. The refresh\ntoken itself is treated as the authenticating secret.\n\nArgs:\n    request: Dict containing 'refresh_token' key.\n\nReturns:\n    Dict with new access_token and expire_datetime.\n\nRaises:\n    HTTPException: 401 if refresh token is invalid or expired.",
+        "description": "Browser-safe refresh: uses the refresh token as the only credential.\n\nMirrors ``/auth/refresh_token`` but without the internal-api-key\nrequirement so SPAs (the React viewer) can call it directly. The refresh\ntoken itself is treated as the authenticating secret, and is rotated on\nevery successful refresh — the response carries the new pair.\n\nArgs:\n    request: Dict containing 'refresh_token' key.\n\nReturns:\n    Dict with the new access_token and refresh_token (plus their expiry\n    timestamps).\n\nRaises:\n    HTTPException: 400 if no refresh_token was sent.\n    HTTPException: 401 if refresh token is invalid, expired or reused.\n    HTTPException: 403 if the user must change their password first.",
         "operationId": "refresh_token_browser_depictio_api_v1_auth_refresh_post",
         "requestBody": {
           "content": {
@@ -19296,7 +20639,7 @@
           "Authentication"
         ],
         "summary": "Refresh Token Endpoint",
-        "description": "Refresh an access token using a valid refresh token.\n\nDeprecated: api-key-gated mirror of /auth/refresh (which clients use)\nwith no remaining callers. Scheduled for removal.\n\nArgs:\n    request: Dict containing 'refresh_token' key.\n    api_key: Internal API key for authentication.\n\nReturns:\n    Dict with new access_token and expire_datetime.\n\nRaises:\n    HTTPException: 403 if API key is invalid.\n    HTTPException: 401 if refresh token is invalid or expired.",
+        "description": "Refresh an access token using a valid refresh token.\n\nDeprecated: api-key-gated mirror of /auth/refresh (which clients use)\nwith no remaining callers. Scheduled for removal.\n\nArgs:\n    request: Dict containing 'refresh_token' key.\n    api_key: Internal API key for authentication.\n\nReturns:\n    Dict with the new access_token and refresh_token (plus their expiry\n    timestamps), exactly like /auth/refresh.\n\nRaises:\n    HTTPException: 403 if API key is invalid.\n    HTTPException: 401 if refresh token is invalid, expired or reused.",
         "operationId": "refresh_token_endpoint_depictio_api_v1_auth_refresh_token_post",
         "deprecated": true,
         "parameters": [
@@ -19348,6 +20691,35 @@
             }
           }
         }
+      }
+    },
+    "/depictio/api/v1/auth/logout": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout",
+        "description": "Revoke the caller's session server-side.\n\nDeletes the token document the bearer access token resolves to, so the\nsession's refresh token dies with it: a copy of the browser's localStorage\n(or a stolen refresh token) can no longer revive the session. Clients\ncall this best-effort while signing out and clear their local copy\nregardless of the outcome.\n\nRaises:\n    HTTPException: 401 if the bearer token does not authenticate.",
+        "operationId": "logout_depictio_api_v1_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Logout Depictio Api V1 Auth Logout Post"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
       }
     },
     "/depictio/api/v1/auth/fetch_user/from_token": {
@@ -20302,6 +21674,7 @@
           "Authentication"
         ],
         "summary": "List Tokens ",
+        "description": "List the current user's tokens. Metadata only: never token values.",
         "operationId": "list_tokens__depictio_api_v1_auth_list_tokens_get",
         "security": [
           {
@@ -20334,7 +21707,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TokenBeanie-Output"
+                    "$ref": "#/components/schemas/TokenMetadata"
                   },
                   "title": "Response List Tokens  Depictio Api V1 Auth List Tokens Get"
                 }
@@ -20786,6 +22159,349 @@
         ],
         "title": "AggregationInput",
         "description": "A collection a derived table was computed from, at the version read."
+      },
+      "AnalysisContext": {
+        "properties": {
+          "dashboard_id": {
+            "type": "string",
+            "title": "Dashboard Id"
+          },
+          "family_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family Id"
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "dark"
+            ],
+            "title": "Theme",
+            "default": "light"
+          }
+        },
+        "type": "object",
+        "required": [
+          "dashboard_id"
+        ],
+        "title": "AnalysisContext",
+        "description": "Where the state was captured."
+      },
+      "AnalysisFilter": {
+        "properties": {
+          "index": {
+            "type": "string",
+            "title": "Index"
+          },
+          "value": {
+            "title": "Value"
+          },
+          "column_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Column Name"
+          },
+          "interactive_component_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interactive Component Type"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "filter_expr": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filter Expr"
+          },
+          "metadata": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnalysisFilterMetadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "required": [
+          "index"
+        ],
+        "title": "AnalysisFilter",
+        "description": "One entry of the viewer's ``InteractiveFilter[]`` (``api.ts``).\n\nGroup projections travel here too, exactly as the render endpoints see\nthem: ``source == \"group_filter\"`` and an index prefixed with\n``__depictio_group__:``. Keeping them in the same list means the server\nnever has to re-implement the viewer's ``groupsToFilters``."
+      },
+      "AnalysisFilterMetadata": {
+        "properties": {
+          "dc_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dc Id"
+          },
+          "column_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Column Name"
+          },
+          "interactive_component_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interactive Component Type"
+          },
+          "selection_column": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selection Column"
+          },
+          "filter_expr": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filter Expr"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "title": "AnalysisFilterMetadata",
+        "description": "The ``metadata`` block the viewer attaches to a filter.\n\n``dc_id`` is what cross-DC link resolution keys on server-side: a filter\nwithout it is treated as global (applied wherever its column exists)."
+      },
+      "AnalysisGroup": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "color": {
+            "type": "string",
+            "title": "Color"
+          },
+          "dc_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dc Id"
+          },
+          "column_name": {
+            "type": "string",
+            "title": "Column Name"
+          },
+          "values": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Values"
+          },
+          "created_at": {
+            "type": "integer",
+            "title": "Created At",
+            "default": 0
+          },
+          "filter_active": {
+            "type": "boolean",
+            "title": "Filter Active",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "color",
+          "column_name"
+        ],
+        "title": "AnalysisGroup",
+        "description": "A saved selection group (``SelectionGroup`` in ``selectionGroups.ts``)."
+      },
+      "AnalysisPins": {
+        "properties": {
+          "as_of_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "As Of Version"
+          },
+          "data_versions": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0.0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Data Versions"
+          },
+          "definition_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Definition Version"
+          }
+        },
+        "type": "object",
+        "title": "AnalysisPins",
+        "description": "Which data, and which definitions, the state was looking at.\n\nThe viewer's time travel, in the wire shape every render endpoint takes\n(``dataVersionBody`` in ``dataVersions.tsx``): ``as_of_version`` reads each\ncollection at the commit a stored dashboard version stamped,\n``data_versions`` overrides one collection (a commit, or ``None`` to stay\nlive), and ``definition_version`` draws each component as that version\ndefined it. Both halves travel together: pinning only the data would draw\na past version's numbers through today's chart definitions. Empty for a\nlive view, which keeps every request byte-identical to an unpinned one."
+      },
+      "AnalysisState": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "const": 1,
+            "title": "Version",
+            "default": 1
+          },
+          "filters": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisFilter"
+            },
+            "type": "array",
+            "title": "Filters"
+          },
+          "groups": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisGroup"
+            },
+            "type": "array",
+            "title": "Groups"
+          },
+          "color_by": {
+            "$ref": "#/components/schemas/ColorBy"
+          },
+          "display_mode": {
+            "type": "string",
+            "enum": [
+              "color",
+              "facet"
+            ],
+            "title": "Display Mode",
+            "default": "color"
+          },
+          "show_other": {
+            "type": "boolean",
+            "title": "Show Other",
+            "default": true
+          },
+          "show_overall": {
+            "type": "boolean",
+            "title": "Show Overall",
+            "default": true
+          },
+          "compare_in_cards": {
+            "type": "boolean",
+            "title": "Compare In Cards",
+            "default": false
+          },
+          "funnel": {
+            "$ref": "#/components/schemas/FunnelState"
+          },
+          "split_panels": {
+            "items": {
+              "$ref": "#/components/schemas/SplitPanel"
+            },
+            "type": "array",
+            "title": "Split Panels"
+          },
+          "pins": {
+            "$ref": "#/components/schemas/AnalysisPins"
+          },
+          "context": {
+            "$ref": "#/components/schemas/AnalysisContext"
+          }
+        },
+        "type": "object",
+        "required": [
+          "context"
+        ],
+        "title": "AnalysisState",
+        "description": "Everything the viewer knows about *how* the user is looking at the data."
       },
       "Anchor": {
         "properties": {
@@ -23545,6 +25261,34 @@
         "title": "CliAgent",
         "description": "A long-running CLI process — today, a watcher — reporting that it is alive.\n\nStored in ``cli_agents`` with a TTL on ``expires_at``, so an agent that dies\ndisappears on its own rather than lingering as a phantom. A watcher that\nnobody can see is a watcher nobody can debug: this is what makes \"is it\nactually running, and against what?\" answerable."
       },
+      "ColorBy": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "none",
+              "groups",
+              "column"
+            ],
+            "title": "Kind",
+            "default": "none"
+          },
+          "column_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Column Name"
+          }
+        },
+        "type": "object",
+        "title": "ColorBy",
+        "description": "The dashboard-global \"Colour by\" override."
+      },
       "ColumnAggregation": {
         "properties": {
           "column": {
@@ -23731,6 +25475,112 @@
         "type": "object",
         "title": "ComponentDiffRequest",
         "description": "The change-set body, plus the filters the figure is drawn with."
+      },
+      "ComponentEmbedRequest": {
+        "properties": {
+          "state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnalysisState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "dark"
+            ],
+            "title": "Theme",
+            "default": "light"
+          }
+        },
+        "type": "object",
+        "title": "ComponentEmbedRequest"
+      },
+      "ComponentFigureResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "pending",
+              "unsupported",
+              "error"
+            ],
+            "title": "Status"
+          },
+          "figure": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Figure"
+          },
+          "image": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "server",
+                  "extracted",
+                  "snapshot"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "ComponentFigureResponse",
+        "description": "A component as a Plotly figure, or the job that will produce it.\n\nA renderer that is not Plotly comes back ``ready`` with ``image`` (a PNG\ndata URI of the tile, ``source=\"snapshot\"``) and no figure."
       },
       "CoordinatesRequest": {
         "properties": {
@@ -24827,7 +26677,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -25376,7 +27226,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -25439,7 +27289,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -26222,7 +28072,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -27635,6 +29485,25 @@
         "title": "FromTemplateBody",
         "description": "A template shipped with Depictio (``nf-core/viralrecon/3.0.0``, ``.../latest``)."
       },
+      "FunnelState": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          },
+          "stage_order": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Stage Order"
+          }
+        },
+        "type": "object",
+        "title": "FunnelState",
+        "description": "Funnel filtering: whether it is on, and the user's stage order.\n\n``stage_order`` lists component indexes. An empty list means \"the order\nthe filters appear in ``AnalysisState.filters``\", which is also what the\nfunnel modal shows before the user reorders anything."
+      },
       "GenomicTracksProps": {
         "properties": {
           "kind": {
@@ -27887,7 +29756,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -29903,6 +31772,12 @@
             "description": "Whether to persist the joined result as a Delta table",
             "default": true
           },
+          "match_run_ids": {
+            "type": "boolean",
+            "title": "Match Run Ids",
+            "description": "Also join on depictio_run_id when both tables carry it, so rows of one run only meet rows of the same run. Off for joins made in the web UI: a table added from a file carries a run id of its own, which matches no other table",
+            "default": true
+          },
           "workflow_name": {
             "anyOf": [
               {
@@ -30011,6 +31886,54 @@
         ],
         "title": "JoinDefinition",
         "description": "Definition of a single join operation between data collections.\n\nThis is the primary configuration for specifying how tables should be joined.\nDefined at the project level in the YAML configuration.\n\nDC References Support:\n- Simple tag: \"physical_features\" (searches within workflow_name)\n- Scoped tag: \"workflow_a.physical_features\" (explicit workflow reference)\n- Cross-workflow: Use scoped tags when joining DCs from different workflows\n\nExample YAML (same-workflow join):\n    joins:\n      - name: \"gene_expression_with_metadata\"\n        left_dc: \"gene_tpm\"\n        right_dc: \"sample_metadata\"\n        on_columns:\n          - \"sample\"\n        how: \"inner\"\n        workflow_name: \"genomics_workflow\"\n        description: \"Join gene TPM with sample metadata\"\n\nExample YAML (cross-workflow join):\n    joins:\n      - name: \"multi_workflow_analysis\"\n        left_dc: \"workflow_a.sample_metadata\"\n        right_dc: \"workflow_b.results\"\n        on_columns:\n          - \"sample_id\"\n        how: \"inner\"\n        description: \"Join sample data from workflow A with results from workflow B\""
+      },
+      "JoinRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Name",
+            "default": ""
+          },
+          "left_dc_id": {
+            "type": "string",
+            "title": "Left Dc Id"
+          },
+          "right_dc_id": {
+            "type": "string",
+            "title": "Right Dc Id"
+          },
+          "on_columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "On Columns"
+          },
+          "how": {
+            "$ref": "#/components/schemas/JoinType",
+            "default": "left"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": [
+          "left_dc_id",
+          "right_dc_id"
+        ],
+        "title": "JoinRequest",
+        "description": "A join as the web UI sends it: collections by id, the rest as in YAML."
       },
       "JoinType": {
         "type": "string",
@@ -31144,46 +33067,6 @@
         "type": "object",
         "title": "MigrateExportRequest"
       },
-      "MigrateImportRequest": {
-        "properties": {
-          "bundle": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Bundle"
-          },
-          "owner_user_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Owner User Id"
-          },
-          "dry_run": {
-            "type": "boolean",
-            "title": "Dry Run",
-            "default": false
-          },
-          "force_owner_remap": {
-            "type": "boolean",
-            "title": "Force Owner Remap",
-            "default": false
-          },
-          "overwrite": {
-            "type": "boolean",
-            "title": "Overwrite",
-            "default": false
-          }
-        },
-        "type": "object",
-        "required": [
-          "bundle"
-        ],
-        "title": "MigrateImportRequest"
-      },
       "MigrateImportResponse": {
         "properties": {
           "success": {
@@ -31318,7 +33201,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -31615,6 +33498,412 @@
         ],
         "title": "MyGroup",
         "description": "A group the caller belongs to, annotated with their role in it."
+      },
+      "NotebookExportRequest": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/AnalysisState"
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "paper",
+              "classic"
+            ],
+            "title": "Theme",
+            "default": "paper"
+          },
+          "embed_runtime": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Embed Runtime"
+          },
+          "output": {
+            "type": "string",
+            "enum": [
+              "report",
+              "combined"
+            ],
+            "title": "Output",
+            "default": "report"
+          },
+          "default_view": {
+            "type": "string",
+            "enum": [
+              "report",
+              "dashboard"
+            ],
+            "title": "Default View",
+            "default": "report"
+          },
+          "pdf": {
+            "type": "boolean",
+            "title": "Pdf",
+            "default": false
+          },
+          "pdf_style": {
+            "type": "string",
+            "enum": [
+              "colour",
+              "mono"
+            ],
+            "title": "Pdf Style",
+            "default": "colour"
+          }
+        },
+        "type": "object",
+        "required": [
+          "state"
+        ],
+        "title": "NotebookExportRequest",
+        "description": "The analysis state to export. The export is one Quarto document (``.qmd``)."
+      },
+      "NotebookPreflight": {
+        "properties": {
+          "components": {
+            "items": {
+              "$ref": "#/components/schemas/NotebookPreflightComponent"
+            },
+            "type": "array",
+            "title": "Components"
+          },
+          "dcs": {
+            "items": {
+              "$ref": "#/components/schemas/NotebookPreflightDC"
+            },
+            "type": "array",
+            "title": "Dcs"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/NotebookPreflightStage"
+            },
+            "type": "array",
+            "title": "Stages"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          },
+          "render_available": {
+            "type": "boolean",
+            "title": "Render Available",
+            "default": false
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Counts"
+          },
+          "combined_available": {
+            "type": "boolean",
+            "title": "Combined Available",
+            "default": false
+          },
+          "combined_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combined Reason"
+          }
+        },
+        "type": "object",
+        "title": "NotebookPreflight",
+        "description": "What an export will contain, before anything is generated."
+      },
+      "NotebookPreflightComponent": {
+        "properties": {
+          "index": {
+            "type": "string",
+            "title": "Index"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "component_type": {
+            "type": "string",
+            "title": "Component Type"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kind"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "code",
+              "api",
+              "omitted"
+            ],
+            "title": "Status"
+          },
+          "output": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "interactive",
+                  "static",
+                  "snapshot"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "tab": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tab"
+          },
+          "section": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section"
+          }
+        },
+        "type": "object",
+        "required": [
+          "index",
+          "component_type",
+          "status"
+        ],
+        "title": "NotebookPreflightComponent"
+      },
+      "NotebookPreflightDC": {
+        "properties": {
+          "dc_id": {
+            "type": "string",
+            "title": "Dc Id"
+          },
+          "tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tag"
+          },
+          "rows": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rows"
+          }
+        },
+        "type": "object",
+        "required": [
+          "dc_id"
+        ],
+        "title": "NotebookPreflightDC"
+      },
+      "NotebookPreflightStage": {
+        "properties": {
+          "index": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "rows_by_dc": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Rows By Dc"
+          }
+        },
+        "type": "object",
+        "title": "NotebookPreflightStage"
+      },
+      "NotebookRenderStatus": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "ready",
+              "error"
+            ],
+            "title": "Status"
+          },
+          "phase": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phase"
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "pdf_filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pdf Filename"
+          },
+          "pdf_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pdf Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "status"
+        ],
+        "title": "NotebookRenderStatus",
+        "description": "A render job: where it is, and what it left behind when it is done.\n\nThe job is the notebook being executed on a worker, which takes minutes —\nthe client starts it, then asks this until it is ``ready`` or ``error``."
       },
       "OIDCProviderPublic": {
         "properties": {
@@ -32015,7 +34304,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -34992,6 +37281,23 @@
         "title": "SharedRunSamples",
         "description": "Samples one MultiQC collection finds in more than one run.\n\nThe one ingestion merges the runs' reports: a sample named in two of them\nbecomes one, its values mixed. An upload of several reports refuses that\n(``validate_multiqc_reports_uniform``), and so does a creation from several\nruns (``runs_share_samples``); the preview names them first."
       },
+      "SignServeImagesRequest": {
+        "properties": {
+          "s3_paths": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "title": "S3 Paths"
+          }
+        },
+        "type": "object",
+        "required": [
+          "s3_paths"
+        ],
+        "title": "SignServeImagesRequest"
+      },
       "SourceEdit": {
         "properties": {
           "path": {
@@ -35106,6 +37412,38 @@
         "type": "object",
         "title": "SpatialDataTableSource",
         "description": "What a table collection reads from a SpatialData store (``format: spatialdata``)."
+      },
+      "SplitPanel": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "color": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color"
+          },
+          "constraints": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisFilter"
+            },
+            "type": "array",
+            "title": "Constraints"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "SplitPanel",
+        "description": "One cell of a split view (``PanelSpec`` in ``splitPanels.ts``).\n\n``constraints`` are ordinary filters appended to the dashboard's own for\nthat cell alone, so a panel serialises straight to a ``.filter(...)``."
       },
       "Staleness": {
         "properties": {
@@ -36129,7 +38467,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -36216,6 +38554,29 @@
             "type": "boolean",
             "title": "Logged In",
             "default": false
+          },
+          "previous_refresh_token_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Refresh Token Hash"
+          },
+          "previous_refresh_rotated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Refresh Rotated At"
           }
         },
         "additionalProperties": false,
@@ -36235,7 +38596,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -36322,6 +38683,29 @@
             "type": "boolean",
             "title": "Logged In",
             "default": false
+          },
+          "previous_refresh_token_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Refresh Token Hash"
+          },
+          "previous_refresh_rotated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Refresh Rotated At"
           }
         },
         "additionalProperties": false,
@@ -36423,6 +38807,29 @@
             "type": "boolean",
             "title": "Logged In",
             "default": false
+          },
+          "previous_refresh_token_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Refresh Token Hash"
+          },
+          "previous_refresh_rotated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Refresh Rotated At"
           }
         },
         "additionalProperties": false,
@@ -36468,11 +38875,71 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6aff64e56689baf1e4a8ff4c"
+            "default": "6b0382317c698e2819159e4c"
           }
         },
         "type": "object",
         "title": "TokenData"
+      },
+      "TokenMetadata": {
+        "properties": {
+          "_id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "bearer"
+          },
+          "token_lifetime": {
+            "type": "string",
+            "title": "Token Lifetime",
+            "default": "short-lived"
+          },
+          "expire_datetime": {
+            "type": "string",
+            "title": "Expire Datetime"
+          },
+          "refresh_expire_datetime": {
+            "type": "string",
+            "title": "Refresh Expire Datetime"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "logged_in": {
+            "type": "boolean",
+            "title": "Logged In",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "_id",
+          "expire_datetime",
+          "refresh_expire_datetime",
+          "user_id",
+          "created_at"
+        ],
+        "title": "TokenMetadata",
+        "description": "Metadata-only view of a token for GET /auth/list_tokens.\n\nSECURITY: access_token and refresh_token must never travel back in a\nlisting response. Callers (UI management page, CLI) only read id/name/\nlifetime/expiry fields. ``_id`` keeps the key both callers already read."
       },
       "TracksManifestBody": {
         "properties": {
@@ -36929,7 +39396,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -37097,7 +39564,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -37179,7 +39646,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -37251,7 +39718,6 @@
             "$ref": "#/components/schemas/TokenBase"
           }
         },
-        "additionalProperties": false,
         "type": "object",
         "required": [
           "email",
@@ -37265,7 +39731,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -37552,7 +40018,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -37727,7 +40193,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -37844,7 +40310,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
@@ -38120,7 +40586,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff64e56689baf1e4a8ff4b"
+            "default": "6b0382307c698e2819159e4b"
           },
           "description": {
             "anyOf": [
