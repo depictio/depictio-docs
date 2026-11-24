@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1380" height="230" viewBox="0 0 1380 230">
+  <rect width="1380" height="230" fill="#ffffff"/>
+  <defs><filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.12"/></filter></defs>
+  <text x="46.0" y="50.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="25" fill="#1e1e1e" text-anchor="start" font-weight="normal">Depictio's words, in the app's colours and icons</text>
+  <text x="46.0" y="76.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#5c5c5c" text-anchor="start" font-weight="normal">Projects teal and Dashboards orange, as in the sidebar; a table data collection teal; versions yellow; links have no colour</text>
+  <rect x="46.0" y="110.0" width="170.0" height="92.0" rx="12" fill="#e7f8f3" stroke="#7dd8bc" stroke-width="1.6"/>
+  <path transform="translate(115.0,127.0) scale(1.3333)" d="M11.53 2c0 2.4 1.97 4.35 4.35 4.35h1.78v1.7c0 2.4 1.94 4.34 4.34 4.35V2.84a.84.84 0 0 0-.84-.84zM6.77 6.8a4.36 4.36 0 0 0 4.34 4.34h1.8v1.72a4.36 4.36 0 0 0 4.34 4.34V7.63a.84.84 0 0 0-.83-.83zM2 11.6c0 2.4 1.95 4.34 4.35 4.34h1.78v1.72c.01 2.39 1.95 4.34 4.34 4.34v-9.57a.84.84 0 0 0-.84-.84z" fill="#12b886"/>
+  <text x="131.0" y="188.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" fill="#0e936b" text-anchor="middle" font-weight="bold">Project</text>
+  <rect x="236.0" y="110.0" width="170.0" height="92.0" rx="12" fill="#fef7e6" stroke="#fcd475" stroke-width="1.6"/>
+  <path transform="translate(305.0,127.0) scale(1.3333)" d="M22 8v5.81c-.61-.35-1.28-.59-2-.72V8H4v10h9.09c-.05.33-.09.66-.09 1s.04.67.09 1H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8a2 2 0 0 1 2 2m-5 14 5-3-5-3z" fill="#fab005"/>
+  <text x="321.0" y="188.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" fill="#9b6d03" text-anchor="middle" font-weight="bold">Run</text>
+  <rect x="426.0" y="110.0" width="170.0" height="92.0" rx="12" fill="#e7f8f3" stroke="#7dd8bc" stroke-width="1.6"/>
+  <path transform="translate(495.0,127.0) scale(1.3333)" d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z" fill="#12b886"/>
+  <text x="511.0" y="188.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" fill="#0e936b" text-anchor="middle" font-weight="bold">Data collection</text>
+  <rect x="616.0" y="110.0" width="170.0" height="92.0" rx="12" fill="#f3f4f4" stroke="#bcc1c5" stroke-width="1.6"/>
+  <path transform="translate(685.0,127.0) scale(1.3333)" d="M10.59 13.41c.41.39.41 1.03 0 1.42-.39.39-1.03.39-1.42 0a5.003 5.003 0 0 1 0-7.07l3.54-3.54a5.003 5.003 0 0 1 7.07 0 5.003 5.003 0 0 1 0 7.07l-1.49 1.49c.01-.82-.12-1.64-.4-2.42l.47-.48a2.98 2.98 0 0 0 0-4.24 2.98 2.98 0 0 0-4.24 0l-3.53 3.53a2.98 2.98 0 0 0 0 4.24m2.82-4.24c.39-.39 1.03-.39 1.42 0a5.003 5.003 0 0 1 0 7.07l-3.54 3.54a5.003 5.003 0 0 1-7.07 0 5.003 5.003 0 0 1 0-7.07l1.49-1.49c-.01.82.12 1.64.4 2.43l-.47.47a2.98 2.98 0 0 0 0 4.24 2.98 2.98 0 0 0 4.24 0l3.53-3.53a2.98 2.98 0 0 0 0-4.24.973.973 0 0 1 0-1.42" fill="#868e96"/>
+  <text x="701.0" y="188.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" fill="#6b7278" text-anchor="middle" font-weight="bold">Link</text>
+  <rect x="806.0" y="110.0" width="170.0" height="92.0" rx="12" fill="#fff2e8" stroke="#feb87e" stroke-width="1.6"/>
+  <path transform="translate(875.0,127.0) scale(1.3333)" d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z" fill="#fd7e14"/>
+  <text x="891.0" y="188.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" fill="#ca6510" text-anchor="middle" font-weight="bold">Dashboard</text>
+  <rect x="996.0" y="110.0" width="170.0" height="92.0" rx="12" fill="#fef7e6" stroke="#fcd475" stroke-width="1.6"/>
+  <path transform="translate(1065.0,127.0) scale(1.3333)" d="M13.5 8H12v5l4.28 2.54.72-1.21-3.5-2.08zM13 3a9 9 0 0 0-9 9H1l3.96 4.03L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.9 8.9 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9" fill="#fab005"/>
+  <text x="1081.0" y="188.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" fill="#9b6d03" text-anchor="middle" font-weight="bold">Version</text>
+  <rect x="1186.0" y="110.0" width="170.0" height="92.0" rx="12" fill="#e9f3fc" stroke="#85bff1" stroke-width="1.6"/>
+  <path transform="translate(1255.0,127.0) scale(1.3333)" d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4" fill="#228be6"/>
+  <text x="1271.0" y="188.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" fill="#1b6fb8" text-anchor="middle" font-weight="bold">You</text>
+</svg>
