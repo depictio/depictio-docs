@@ -194,7 +194,9 @@ MultiQC reports must agree (same modules, plot keys and MultiQC version, no samp
 
 <span class="ver-badge">v1.23.0+</span>
 
-What a join is, and how it differs from a link: [Joining and linking](../../features/data-model.md#joining-and-linking).
+!!! info ""
+
+    **Join or link?** A join merges two tables into a new one; a link merges nothing and only carries filters between collections. [Joining and linking](../../features/data-model.md#joining-and-linking)
 
 <figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/project-creation/join-create.webp" src="../../../images/guides/project-creation/join-create.mp4"></video></figure>
 
