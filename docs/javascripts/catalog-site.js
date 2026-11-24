@@ -1,68 +1,48 @@
-// Tools Catalog embed: load the catalog site of the documented version.
+// Tools Catalog links: open the catalog site of the documented version.
 //
 // The catalog is its own static site (depictio/depictio-catalog), one
-// directory per release plus latest/. The page's iframe carries the version it
-// documents (hooks/catalog_site.py); this picks that directory when the site
-// still keeps it (versions.json) and latest/ otherwise, passes the docs theme
-// as ?theme=, and follows the palette toggle.
+// directory per release plus latest/. Links carry the version the page
+// documents (hooks/catalog_site.py); this points them at that directory when
+// the site still keeps it (versions.json), at latest/ otherwise, and passes
+// the docs theme as ?theme=.
 
-const CATALOG_SITE_SELECTOR = 'iframe[data-catalog-site]';
+const CATALOG_LINK_SELECTOR = 'a[data-catalog-site]';
 
 function catalogScheme() {
   return document.body.getAttribute('data-md-color-scheme') === 'slate' ? 'dark' : 'light';
 }
 
-function catalogSlotFor(frame) {
-  const base = frame.dataset.catalogSite;
-  const wanted = frame.dataset.catalogVersion;
-  if (!frame.__catalogSlot) {
-    // A slow or failing versions.json must not leave the embed blank.
+const catalogSlots = {};
+
+function catalogSlotFor(base, wanted) {
+  const key = base + '|' + wanted;
+  if (!catalogSlots[key]) {
+    // A slow or failing versions.json must not leave a dead link.
     const signal = typeof AbortSignal !== 'undefined' && AbortSignal.timeout
       ? AbortSignal.timeout(5000) : undefined;
-    frame.__catalogSlot = fetch(base + 'versions.json', { cache: 'no-cache', signal })
+    catalogSlots[key] = fetch(base + 'versions.json', { cache: 'no-cache', signal })
       .then((r) => (r.ok ? r.json() : {}))
       .then((v) => (Array.isArray(v.versions) && v.versions.includes(wanted) ? wanted : 'latest'))
       .catch(() => 'latest');
   }
-  return frame.__catalogSlot;
+  return catalogSlots[key];
 }
 
-// Where the reader is inside the catalog (#tool=..., #output=...), so a theme
-// switch reloads the same view. Readable only from the same origin, which is
-// the case on depictio.github.io; anywhere else, the docs URL's own hash.
-function catalogHash(frame) {
-  try {
-    const inner = frame.contentWindow && frame.contentWindow.location.hash;
-    if (inner) return inner;
-  } catch (e) {
-    // cross-origin (local preview): fall through
-  }
-  return window.location.hash.match(/^#(tool|output)=/) ? window.location.hash : '';
-}
-
-function catalogSrc(frame, slot) {
-  return frame.dataset.catalogSite + slot + '/?theme=' + catalogScheme() + catalogHash(frame);
-}
-
-function loadCatalogFrame(frame) {
-  catalogSlotFor(frame).then((slot) => {
-    const src = catalogSrc(frame, slot);
-    // Only the theme or the view changes the URL: an unchanged src is left
-    // alone so instant navigation does not reload the catalog.
-    if (frame.getAttribute('src') !== src) frame.setAttribute('src', src);
-    const open = frame.closest('.catalog-embed')?.querySelector('.catalog-open-link');
-    if (open) open.setAttribute('href', src);
+function pointCatalogLink(link) {
+  const base = link.dataset.catalogSite;
+  catalogSlotFor(base, link.dataset.catalogVersion).then((slot) => {
+    link.setAttribute('href', base + slot + '/?theme=' + catalogScheme());
   });
 }
 
-function wireCatalogSite() {
-  const frames = document.querySelectorAll(CATALOG_SITE_SELECTOR);
-  if (!frames.length) return;
-  frames.forEach(loadCatalogFrame);
+function wireCatalogLinks() {
+  const links = document.querySelectorAll(CATALOG_LINK_SELECTOR);
+  if (!links.length) return;
+  links.forEach(pointCatalogLink);
   if (window.__catalogThemeObserver) return;
   // Material switches the palette by rewriting this attribute on <body>.
   window.__catalogThemeObserver = new MutationObserver(() => {
-    document.querySelectorAll(CATALOG_SITE_SELECTOR).forEach(loadCatalogFrame);
+    document.querySelectorAll(CATALOG_LINK_SELECTOR).forEach(pointCatalogLink);
   });
   window.__catalogThemeObserver.observe(document.body, {
     attributes: true,
@@ -71,7 +51,7 @@ function wireCatalogSite() {
 }
 
 if (typeof document$ !== 'undefined' && document$.subscribe) {
-  document$.subscribe(wireCatalogSite);
+  document$.subscribe(wireCatalogLinks);
 } else {
-  document.addEventListener('DOMContentLoaded', wireCatalogSite);
+  document.addEventListener('DOMContentLoaded', wireCatalogLinks);
 }

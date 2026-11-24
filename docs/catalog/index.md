@@ -40,21 +40,15 @@ A dashboard component bound to that data — figure, card, table, interactive fi
 
 </div>
 
-Browse the catalog below: filter by component type or viz kind, preview each
-render on real fixture data, and copy its **`use:`** snippet.
+The catalog is a site of its own, one per release: search a tool, filter by
+component type or viz kind, preview each render on real fixture data, and copy
+its **`use:`** snippet.
 
-<div class="catalog-embed" markdown>
-  <div class="catalog-demo-header">
-    <span class="catalog-demo-title">Depictio Tools Catalog</span>
-    <button class="catalog-fs-close" type="button" onclick="toggleCatalogFullscreen(this)" title="Exit fullscreen" aria-label="Exit fullscreen">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-    </button>
-  </div>
-  <button class="catalog-fs-btn" type="button" onclick="toggleCatalogFullscreen(this)" title="Toggle fullscreen" aria-label="Toggle fullscreen">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-  </button>
-  <iframe data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" title="Depictio Tools Catalog" width="100%" height="1100px" frameborder="0" loading="lazy"></iframe>
-  <a class="catalog-open-link" href="{{ catalog_site.base }}latest/" target="_blank" rel="noopener">Open the catalog in its own tab</a>
+[![The Tools Catalog front page: a search over tools, pipelines and outputs, and the catalog in numbers](../images/catalog/catalog_landing_light.webp#only-light)]({{ catalog_site.base }}{{ catalog_site.version }}/){ data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" target=_blank }
+[![The Tools Catalog front page: a search over tools, pipelines and outputs, and the catalog in numbers](../images/catalog/catalog_landing_dark.webp#only-dark)]({{ catalog_site.base }}{{ catalog_site.version }}/){ data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" target=_blank }
+
+<div class="catalog-cta-wrap" markdown>
+[Open the Tools Catalog :material-arrow-right:]({{ catalog_site.base }}{{ catalog_site.version }}/){ .catalog-cta data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" target=_blank }
 </div>
 
 ## :material-sitemap: How a render is defined

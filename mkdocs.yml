@@ -88,7 +88,6 @@ extra_javascript:
   - javascripts/depictio-rose.js
   - javascripts/depictio-logo.js
   - javascripts/depictio-theme-sync.js
-  - javascripts/catalog-fullscreen.js
   - javascripts/catalog-site.js
   - javascripts/template-version.js
   - javascripts/template-showcase.js
