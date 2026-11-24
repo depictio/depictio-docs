@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "program": "depictio",
-  "version": "1.22.0",
+  "version": "1.22.2",
   "help_options": [
     "--help",
     "-h"
@@ -6848,6 +6848,97 @@
           "default": false,
           "metavar": null,
           "help": "Do not open a browser tab",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": true,
+          "count": false,
+          "show_default": true
+        }
+      ],
+      "alias_of": null,
+      "aliases": []
+    },
+    {
+      "path": [
+        "catalog",
+        "export-site"
+      ],
+      "name": "export-site",
+      "group": false,
+      "help": "Export the catalog as a static site: the gallery, one output at a time.\n\nWrites the prebuilt site bundle plus data/index.json (every tool, output and\nrender, without their data) and data/outputs/<output_id>.json (each output's\nfixture and render data, fetched when it is opened). Same content as\n`catalog gallery`, which puts all of it in one page; serve the directory\nfrom any static host. The theme comes from the URL (?theme=dark).\n\nNeeds the prebuilt site bundle\n(cd depictio/viewer && pnpm run build:catalog-site).",
+      "short_help": "Export the catalog as a static site: the gallery, one output at a time.",
+      "epilog": "",
+      "hidden": false,
+      "deprecated": false,
+      "panel": null,
+      "params": [
+        {
+          "name": "out_dir",
+          "kind": "option",
+          "opts": [
+            "--out-dir",
+            "-o"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "path"
+          },
+          "required": true,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "Directory to write the site into",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "version",
+          "kind": "option",
+          "opts": [
+            "--version"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "Version recorded in the site's index (default: this depictio's)",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "strict",
+          "kind": "option",
+          "opts": [
+            "--strict"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "boolean"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": false,
+          "metavar": null,
+          "help": "Fail when an output's previews cannot be built (for CI)",
           "hidden": false,
           "deprecated": false,
           "envvar": null,
