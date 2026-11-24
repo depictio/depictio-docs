@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import concepts  # noqa: F401  (registers the concept colours)
 from sketch import Box, Sketch, Theme, write_themed
 
 OUT = Path(__file__).resolve().parents[2] / "docs" / "images" / "data-model"
@@ -34,7 +35,7 @@ def project_shape(theme: Theme) -> Sketch:
     # -- advanced -----------------------------------------------------------
     s.text(360, 122, "With workflows", size=19, weight="bold")
     s.text(360, 146, "defined in YAML, or detected from a run folder", size=15, colour=theme.dim)
-    s.box(Box(60, 165, 600, 470, "blue", "Project", ("projects, one document",)))
+    s.box(Box(60, 165, 600, 470, "project", "Project", ("projects, one document",)))
 
     s.box(
         Box(
@@ -42,23 +43,23 @@ def project_shape(theme: Theme) -> Sketch:
             260,
             530,
             200,
-            "green",
+            "grey",
             "Workflow",
             ("the pipeline that produced the data:", "nf-core/ampliseq, Snakemake, your own script"),
         )
     )
-    s.box(Box(130, 355, 225, 85, "orange", "DataCollection", ("samplesheet",)))
-    s.box(Box(370, 355, 225, 85, "orange", "DataCollection", ("mosdepth",)))
+    s.box(Box(130, 355, 225, 85, "collection", "DataCollection", ("samplesheet",)))
+    s.box(Box(370, 355, 225, 85, "collection", "DataCollection", ("mosdepth",)))
 
-    s.box(Box(95, 500, 530, 95, "green", "Workflow", ("a project can define several",)))
+    s.box(Box(95, 500, 530, 95, "grey", "Workflow", ("a project can define several",)))
 
     # -- basic --------------------------------------------------------------
     s.text(1000, 122, "Tables only", size=19, weight="bold")
     s.text(1000, 146, "created in the web UI, or with the CLI", size=15, colour=theme.dim)
-    s.box(Box(740, 165, 520, 470, "blue", "Project", ("projects, one document",)))
+    s.box(Box(740, 165, 520, 470, "project", "Project", ("projects, one document",)))
 
-    s.box(Box(775, 285, 215, 85, "orange", "DataCollection", ("samplesheet",)))
-    s.box(Box(1010, 285, 215, 85, "orange", "DataCollection", ("metadata",)))
+    s.box(Box(775, 285, 215, 85, "collection", "DataCollection", ("samplesheet",)))
+    s.box(Box(1010, 285, 215, 85, "collection", "DataCollection", ("metadata",)))
 
     s.text(1000, 445, "No workflow layer. Data collections", size=15, colour=theme.dim)
     s.text(1000, 469, "sit directly on the project, and there", size=15, colour=theme.dim)
@@ -71,15 +72,14 @@ def project_shape(theme: Theme) -> Sketch:
             730,
             520,
             180,
-            "none",
+            "dashboard",
             "Dashboard",
             ("what the user opens:", "one or more tabs of components"),
         ),
-        dashed=True,
     )
-    s.box(Box(430, 815, 140, 70, "violet", "Main tab", ()))
-    s.box(Box(590, 815, 140, 70, "violet", "Tab 2", ()))
-    s.box(Box(750, 815, 140, 70, "violet", "Tab 3", ()))
+    s.box(Box(430, 815, 140, 70, "white", "Main tab", ()), colour=theme.inks["dashboard"])
+    s.box(Box(590, 815, 140, 70, "white", "Tab 2", ()), colour=theme.inks["dashboard"])
+    s.box(Box(750, 815, 140, 70, "white", "Tab 3", ()), colour=theme.inks["dashboard"])
 
     s.arrow(510, 730, 400, 640)
     s.arrow(810, 730, 940, 640)
@@ -112,7 +112,7 @@ def files_to_data(theme: Theme) -> Sketch:
             130,
             300,
             130,
-            "green",
+            "run",
             "Run",
             ("one execution of a workflow:", "an output folder, one or", "more samples processed"),
         ),
@@ -125,7 +125,7 @@ def files_to_data(theme: Theme) -> Sketch:
             135,
             280,
             125,
-            "yellow",
+            "grey",
             "Files",
             ("everything the scan matched:", "path, size, checksum"),
         ),
@@ -140,7 +140,7 @@ def files_to_data(theme: Theme) -> Sketch:
             340,
             430,
             130,
-            "orange",
+            "collection",
             "DataCollection",
             (
                 "every file of one type, from every run,",
@@ -163,7 +163,7 @@ def files_to_data(theme: Theme) -> Sketch:
     )
     for i, (title, icon, lines) in enumerate(types):
         y = 175 + i * 108
-        s.box(Box(830, y, 370, 90, "blue", title, lines), icon=icon)
+        s.box(Box(830, y, 370, 90, "white", title, lines), colour=theme.inks["collection"], icon=icon)
         s.arrow(770, 405, 830, y + 45)
 
     for i, line in enumerate(
@@ -193,15 +193,15 @@ def join_vs_link(theme: Theme) -> Sketch:
         46,
         52,
         "Joining and linking",
-        "a join merges tables once, at ingestion. A link merges nothing and filters at render time.",
+        "a join merges two tables into a new one. A link merges nothing and filters at render time.",
     )
 
     # -- join ---------------------------------------------------------------
     s.text(350, 122, "Join", size=19, weight="bold")
-    s.text(350, 146, "run by the CLI, at ingestion. Tables only.", size=15, colour=theme.dim)
+    s.text(350, 146, "from the project page or the CLI. Tables only.", size=15, colour=theme.dim)
 
-    s.box(Box(70, 190, 250, 95, "green", "samplesheet", ("sample_id, condition",)), icon="table")
-    s.box(Box(70, 345, 250, 95, "green", "mosdepth", ("sample_id, coverage",)), icon="table")
+    s.box(Box(70, 190, 250, 95, "collection", "samplesheet", ("sample_id, condition",)), icon="table")
+    s.box(Box(70, 345, 250, 95, "collection", "mosdepth", ("sample_id, coverage",)), icon="table")
 
     s.box(
         Box(
@@ -209,9 +209,9 @@ def join_vs_link(theme: Theme) -> Sketch:
             255,
             270,
             120,
-            "blue",
+            "collection",
             "joined table",
-            ("one new data collection,", "written to S3"),
+            ("a new data collection,", "rebuilt as sources change"),
         ),
         icon="table",
     )
@@ -221,6 +221,7 @@ def join_vs_link(theme: Theme) -> Sketch:
 
     s.text(360, 500, "One data collection from here on.", size=15, colour=theme.dim)
     s.text(360, 524, "The rows are merged on disk.", size=15, colour=theme.dim)
+    s.text(360, 548, "On the project page: Cross-DC links, Add join.", size=15, colour=theme.dim)
 
     s.line(700, 120, 700, 570, colour=theme.muted, width=1.4, dashed=True)
 
@@ -228,14 +229,14 @@ def join_vs_link(theme: Theme) -> Sketch:
     s.text(1030, 122, "Link", size=19, weight="bold")
     s.text(1030, 146, "run by the dashboard, at render time. Any type.", size=15, colour=theme.dim)
 
-    s.box(Box(750, 235, 250, 95, "violet", "samplesheet", ("sample_id, condition",)), icon="table")
+    s.box(Box(750, 235, 250, 95, "collection", "samplesheet", ("sample_id, condition",)), icon="table")
 
-    s.box(Box(1060, 180, 280, 70, "pink", "mosdepth table", ()), icon="table")
-    s.box(Box(1060, 270, 280, 70, "pink", "MultiQC report", ()), icon="multiqc")
-    s.box(Box(1060, 360, 280, 70, "pink", "image gallery", ()), icon="image")
+    s.box(Box(1060, 180, 280, 70, "white", "mosdepth table", ()), colour=theme.inks["collection"], icon="table")
+    s.box(Box(1060, 270, 280, 70, "white", "MultiQC report", ()), colour=theme.inks["collection"], icon="multiqc")
+    s.box(Box(1060, 360, 280, 70, "white", "image gallery", ()), colour=theme.inks["collection"], icon="image")
     for y in (215, 305, 395):
-        s.arrow(1000, 282, 1060, y, dashed=True, colour=theme.accent)
-    s.text(1030, 460, "filters, at query time", size=14, colour=theme.accent)
+        s.arrow(1000, 282, 1060, y, dashed=True, colour=theme.inks["link"])
+    s.text(1030, 460, "filters, at query time", size=14, colour=theme.inks["link"])
 
     s.text(1030, 500, "Nothing is merged. Picking samples on the", size=15, colour=theme.dim)
     s.text(1030, 524, "left narrows everything on the right, whatever", size=15, colour=theme.dim)

@@ -23,6 +23,11 @@ from the object names alone:
 
 ---
 
+Every figure of these docs draws a concept with the same colour and picture:
+
+[![Depictio's concepts, one colour each](../images/data-model/concepts_light.png#only-light)](../images/data-model/concepts_light.png){target=_blank}
+[![Depictio's concepts, one colour each](../images/data-model/concepts_dark.png#only-dark)](../images/data-model/concepts_dark.png){target=_blank}
+
 ## The two shapes of a project
 
 [![The two shapes of a project](../images/data-model/project-shape_light.png#only-light)](../images/data-model/project-shape_light.png){target=_blank}
