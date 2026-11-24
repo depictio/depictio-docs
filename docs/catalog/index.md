@@ -40,15 +40,25 @@ A dashboard component bound to that data — figure, card, table, interactive fi
 
 </div>
 
-The catalog is a site of its own, one per release: search a tool, filter by
-component type or viz kind, preview each render on real fixture data, and copy
-its **`use:`** snippet.
+Search a tool, filter by component type or viz kind, preview each render on
+real fixture data, and copy its **`use:`** snippet. The catalog is a site of
+its own, one per release.
 
-[![The Tools Catalog front page: a search over tools, pipelines and outputs, and the catalog in numbers](../images/catalog/catalog_landing_light.webp#only-light)]({{ catalog_site.base }}{{ catalog_site.version }}/){ data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" target=_blank }
-[![The Tools Catalog front page: a search over tools, pipelines and outputs, and the catalog in numbers](../images/catalog/catalog_landing_dark.webp#only-dark)]({{ catalog_site.base }}{{ catalog_site.version }}/){ data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" target=_blank }
-
-<div class="catalog-cta-wrap" markdown>
-[Open the Tools Catalog :material-arrow-right:]({{ catalog_site.base }}{{ catalog_site.version }}/){ .catalog-cta data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" target=_blank }
+<div class="catalog-window">
+  <div class="catalog-window__bar">
+    <div class="catalog-window__title">
+      <img class="catalog-window__logo" src="../images/logo/tools_catalog_logo.png" alt="">
+      <div>
+        <div class="catalog-window__name">Tools Catalog <span class="catalog-window__ver" data-catalog-version-label>{{ catalog_site.version }}</span></div>
+        <div class="catalog-window__sub"><span class="catalog-window__live"></span>Live preview of the catalog site</div>
+      </div>
+    </div>
+    <div class="catalog-window__actions">
+      <a class="catalog-window__btn catalog-window__btn--ghost" href="../developer/tool-studio/">Add a tool</a>
+      <a class="catalog-window__btn" data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" href="{{ catalog_site.base }}{{ catalog_site.version }}/" target="_blank" rel="noopener">Open the full catalog <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm5 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7z"/></svg></a>
+    </div>
+  </div>
+  <iframe data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" title="Depictio Tools Catalog" loading="lazy"></iframe>
 </div>
 
 ## :material-sitemap: How a render is defined

@@ -938,13 +938,140 @@ h1 {
    Component Catalog page
    ========================================================================== */
 
-/* Catalog front page screenshot: framed so it reads as a picture of the
-   catalog site, not as part of this page. No `display` here: it would break
-   Material's #only-light / #only-dark hiding. */
-.md-typeset a[data-catalog-site] > img {
+/* Tools Catalog window: a header bar (name, version, actions) attached to the
+   live catalog in an iframe, framed as one card. */
+.catalog-window {
+    --catalog-violet: #7d5dec;
+    --catalog-violet-strong: #6a48e0;
+    margin: 1.2rem 0 1.6rem;
     border: 1px solid var(--md-default-fg-color--lightest);
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background: var(--md-default-bg-color);
+}
+
+[data-md-color-scheme="slate"] .catalog-window {
+    --catalog-violet: #9870ff;
+    --catalog-violet-strong: #ad8cff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.catalog-window__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem 1.2rem;
+    padding: 0.85rem 1.1rem;
+    background: var(--md-code-bg-color);
+    border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.catalog-window__title {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.md-typeset .catalog-window__logo {
+    width: 2.4rem;
+    height: 2.4rem;
+}
+
+.catalog-window__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.catalog-window__ver {
+    margin-left: 0.35rem;
+    padding: 0.05rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    vertical-align: middle;
+    color: var(--catalog-violet);
+    background: color-mix(in srgb, var(--catalog-violet) 12%, transparent);
+}
+
+.catalog-window__sub {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.7rem;
+    color: var(--md-default-fg-color--light);
+}
+
+/* Green dot that breathes: the frame below is the live site */
+.catalog-window__live {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: #2fb344;
+    box-shadow: 0 0 0 0 rgba(47, 179, 68, 0.5);
+    animation: catalog-live 2.4s ease-out infinite;
+}
+
+@keyframes catalog-live {
+    0% { box-shadow: 0 0 0 0 rgba(47, 179, 68, 0.5); }
+    70%, 100% { box-shadow: 0 0 0 0.45rem rgba(47, 179, 68, 0); }
+}
+
+.catalog-window__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.md-typeset .catalog-window__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    padding: 0.55rem 1.05rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--catalog-violet);
+    border: 1px solid var(--catalog-violet);
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--catalog-violet) 35%, transparent);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.md-typeset .catalog-window__btn:hover,
+.md-typeset .catalog-window__btn:focus-visible {
+    color: #fff;
+    background: var(--catalog-violet-strong);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--catalog-violet) 45%, transparent);
+}
+
+.md-typeset .catalog-window__btn--ghost,
+.md-typeset .catalog-window__btn--ghost:hover,
+.md-typeset .catalog-window__btn--ghost:focus-visible {
+    color: var(--catalog-violet);
+    background: var(--md-default-bg-color);
+    border-color: color-mix(in srgb, var(--catalog-violet) 45%, transparent);
+    box-shadow: none;
+}
+
+.md-typeset .catalog-window__btn--ghost:hover {
+    border-color: var(--catalog-violet);
+}
+
+.catalog-window iframe {
+    display: block;
+    width: 100%;
+    height: 85vh;
+    min-height: 720px;
+    border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .catalog-window__live { animation: none; }
+    .md-typeset .catalog-window__btn:hover { transform: none; }
 }
 
 /* Contribute CTA: a brand-purple pill that lifts on hover and nudges its arrow —
