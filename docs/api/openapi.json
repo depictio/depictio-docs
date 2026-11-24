@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.22.1",
-    "x-generated-at": "2026-11-19T17:02:07Z",
-    "x-depictio-version": "v1.22.1"
+    "version": "1.22.2",
+    "x-generated-at": "2026-11-19T21:06:51Z",
+    "x-depictio-version": "v1.22.2"
   },
   "paths": {
     "/depictio/api/v1/projects/builder/capabilities": {
@@ -16117,7 +16117,7 @@
           "Advanced Viz"
         ],
         "summary": "Fetch Advanced Viz Data",
-        "description": "Project requested columns from a DC, apply filter metadata, return rows.\n\nInput shape:\n    {\n      \"wf_id\": str,\n      \"dc_id\": str,\n      \"columns\": [str],          # column names to project\n      \"filter_metadata\": [...],  # optional global filters\n      \"limit_rows\": int | None,  # optional explicit cap (no sampling)\n      \"full_load\": bool,         # optional; bypass sampling, raise scan cap\n      \"viz_kind\": str | None,    # optional; selects the reduction policy\n      \"roles\": {role: column},   # optional; role -> bound column name\n      \"tail\": {                  # optional; the rows a tail kind must keep\n        \"column\": str, \"direction\": \"low\"|\"high\"|\"both\", \"threshold\": float\n      },\n    }\n\nOutput shape:\n    {\n      \"columns\": [str],          # echoed back for ordering\n      \"rows\": {col: [values]},   # column-oriented (post-sampling)\n      \"row_count\": int,          # returned rows (== len after sampling)\n      \"total_rows\": int,         # rows before sampling (for the badge)\n      \"sampled\": bool,           # True when the frame was downsampled\n      \"sampling\": {              # `degraded`: a kind that must not be\n        \"policy\": str,           # sampled was, so the renderer's own\n        \"exact\": bool,           # aggregates are estimates\n        \"degraded\": bool,\n      },\n      \"filter_applied\": bool,\n    }\n\nHow much of the frame a caller gets back depends on its ``viz_kind``: a\nmarker cloud can be sampled uniformly, a renderer that sums or ranks the\nrows it is handed cannot be sampled at all, and a volcano needs its tail\nkept whole. The table lives in ``models/components/advanced_viz/sampling.py``.\nA payload with no ``viz_kind`` samples uniformly, which is what every caller\ngot before that table existed.",
+        "description": "Project requested columns from a DC, apply filter metadata, return rows.\n\nInput shape:\n    {\n      \"wf_id\": str,\n      \"dc_id\": str,\n      \"columns\": [str],          # column names to project\n      \"filter_metadata\": [...],  # optional global filters\n      \"limit_rows\": int | None,  # optional explicit cap (no sampling)\n      \"full_load\": bool,         # optional; bypass sampling, raise scan cap\n      \"viz_kind\": str | None,    # optional; selects the reduction policy\n      \"roles\": {role: column},   # optional; role -> bound column name\n      \"tail\": {                  # optional; the rows a tail kind must keep\n        \"column\": str, \"direction\": \"low\"|\"high\"|\"both\", \"threshold\": float,\n        \"threshold_stat\": str,   # instead of threshold: median|mean|p75..p99\n      },\n      \"reference_stats\": {       # optional; references computed on the data\n        field: {\"column\": str, \"stat\": \"median\"|\"mean\"|\"p75\"|\"p90\"|\"p95\"|\"p99\"}\n      },\n    }\n\nOutput shape:\n    {\n      \"columns\": [str],          # echoed back for ordering\n      \"rows\": {col: [values]},   # column-oriented (post-sampling)\n      \"row_count\": int,          # returned rows (== len after sampling)\n      \"total_rows\": int,         # rows before sampling (for the badge)\n      \"sampled\": bool,           # True when the frame was downsampled\n      \"sampling\": {              # `degraded`: a kind that must not be\n        \"policy\": str,           # sampled was, so the renderer's own\n        \"exact\": bool,           # aggregates are estimates\n        \"degraded\": bool,\n      },\n      \"filter_applied\": bool,\n      \"reference_stats\": {field: float | None},  # only when requested;\n    }                            # computed on the filtered rows before sampling\n\nHow much of the frame a caller gets back depends on its ``viz_kind``: a\nmarker cloud can be sampled uniformly, a renderer that sums or ranks the\nrows it is handed cannot be sampled at all, and a volcano needs its tail\nkept whole. The table lives in ``models/components/advanced_viz/sampling.py``.\nA payload with no ``viz_kind`` samples uniformly, which is what every caller\ngot before that table existed.",
         "operationId": "fetch_advanced_viz_data_depictio_api_v1_advanced_viz_data_post",
         "requestBody": {
           "content": {
@@ -24827,7 +24827,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -25376,7 +25376,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -25439,7 +25439,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -26222,7 +26222,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -27887,7 +27887,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -31318,7 +31318,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -32015,7 +32015,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -36129,7 +36129,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -36235,7 +36235,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -36468,7 +36468,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6aff2b891420996280e34f65"
+            "default": "6aff64e56689baf1e4a8ff4c"
           }
         },
         "type": "object",
@@ -36929,7 +36929,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -37097,7 +37097,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -37179,7 +37179,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -37265,7 +37265,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -37552,7 +37552,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -37727,7 +37727,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -37844,7 +37844,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
@@ -38120,7 +38120,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6aff2b891420996280e34f64"
+            "default": "6aff64e56689baf1e4a8ff4b"
           },
           "description": {
             "anyOf": [
