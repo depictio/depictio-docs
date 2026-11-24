@@ -194,14 +194,12 @@ MultiQC reports must agree (same modules, plot keys and MultiQC version, no samp
 
 <span class="ver-badge">v1.23.0+</span>
 
+What a join is, and how it differs from a link: [Joining and linking](../../features/data-model.md#joining-and-linking).
+
 <figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/project-creation/join-create.webp" src="../../../images/guides/project-creation/join-create.mp4"></video></figure>
 
 [![Create table join: two tables joined on sample, with the preview counting the rows without a match](../../images/guides/project-creation/join_create_modal_light.webp#only-light){ width="620" }](../../images/guides/project-creation/join_create_modal_light.webp){target=_blank}
 [![Create table join: two tables joined on sample, with the preview counting the rows without a match](../../images/guides/project-creation/join_create_modal_dark.webp#only-dark){ width="620" }](../../images/guides/project-creation/join_create_modal_dark.webp){target=_blank}
-
-!!! tip "Join or link?"
-
-    A **join** merges two tables into a new one. A **link** merges nothing: it carries a filter from one collection to another on the dashboard, across types (a table, a MultiQC report, images). See [Joining and linking](../../features/data-model.md#joining-and-linking).
 
 Two tables that share a column become one new table, read by any component. On the project page: **Cross-DC links**, **Add join** (owners and editors, project not read-only).
 
