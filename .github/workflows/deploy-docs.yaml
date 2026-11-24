@@ -16,6 +16,14 @@ on:
         required: false
         default: 'beta'
 
+# One deployment at a time: every run commits to gh-pages, so parallel runs
+# race on the push and the loser fails (four merges in a row, 2026-11-24). A
+# run waits for the one in progress; a newer push replaces a run still waiting,
+# so the latest main is what lands.
+concurrency:
+  group: deploy-docs
+  cancel-in-progress: false
+
 jobs:
   deploy-mike:
     runs-on: ubuntu-latest
