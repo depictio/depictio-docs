@@ -2251,6 +2251,8 @@ html #docbot-modal.docbot-modal {
    not as part of the page. The bubble takes the page surface colour (light and
    dark); on hover the logo turns by one wedge (1/7 turn) and the bubble lifts. */
 html .vf-chatbot-fab {
+    right: 16px;
+    bottom: 16px;
     width: 68px;
     height: 60px;
     padding: 0;
@@ -2722,13 +2724,7 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__footnote p {
     color: var(--md-default-fg-color--light);
 }
 
-@media (max-width: 600px) {
-    /* The SDK window takes the whole screen here; only the launcher moves in */
-    html .vf-chatbot-fab {
-        right: 16px;
-        bottom: 16px;
-    }
-}
+
 
 /* Live showcase on template pages: the template's dashboard from
    showcases.depictio.embl.org, rendered at 60% so a full dashboard fits the
