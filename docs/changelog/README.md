@@ -25,35 +25,31 @@ hide:
 
 ## **[v1.23.0](https://github.com/depictio/depictio/releases/tag/v1.23.0)** (November 22, 2026)
 
-!!! success "Minor: table joins from the web interface, a security review, a redesigned Tool Studio, and the offline engine behind two switches"
+!!! success "Minor: table joins from the web interface, a redesigned Tool Studio and a security review"
 
 ### **♻️ Migration**
 
-* **Quick-start compose binds to 127.0.0.1**: the viewer (which also proxies the API) is published on the local machine only; set `DEPICTIO_BIND_ADDRESS=0.0.0.0` for a multi-user deployment. ([#1465](https://github.com/depictio/depictio/pull/1465))
-* **WebSockets authenticate with a first message**: `?token=` in the URL still works for this release, with a deprecation warning. ([#1465](https://github.com/depictio/depictio/pull/1465))
-* **`GET /auth/list_tokens` returns metadata only** (id, name, lifetime, expiry), never the token values. ([#1465](https://github.com/depictio/depictio/pull/1465))
-* **`DEPICTIO_NOTEBOOK_EXPORT_ENABLED` now defaults to `false`**, and the new `DEPICTIO_STATIC_EXPORT_ENABLED` (default `false`) gates the single-file dashboard export; the viewer hides an export that is off. Both are still being finalised. ([#1460](https://github.com/depictio/depictio/pull/1460))
+* **Quick-start compose binds to 127.0.0.1**: set `DEPICTIO_BIND_ADDRESS=0.0.0.0` for a multi-user deployment. ([#1465](https://github.com/depictio/depictio/pull/1465))
+* **WebSockets authenticate with a first message** (`?token=` is deprecated), and `GET /auth/list_tokens` no longer returns token values. ([#1465](https://github.com/depictio/depictio/pull/1465))
+* **Notebook export off by default**; the single-file dashboard export sits behind `DEPICTIO_STATIC_EXPORT_ENABLED`. ([#1460](https://github.com/depictio/depictio/pull/1460))
 
 ### **✨ New Features**
 
-* **Table joins from the web interface**: owners and editors create a join from the project page, next to *Add link*, with a preview of matched rows and warnings. The result is a `joined_<name>` table any component can read, rebuilt whenever a source changes. [Join two tables](../usage/projects/guide.md#join-two-tables) ([#1462](https://github.com/depictio/depictio/pull/1462))
-* **Tool Studio redesign**: all 13 figure types, several outputs per tool, recipes authored and run in the browser, validation at parity with `depictio dev catalog validate`, and previews drawn by Depictio's own figure code. [Tool Studio](../developer/tool-studio.md) ([#1441](https://github.com/depictio/depictio/pull/1441))
-* **Offline engine (behind `DEPICTIO_STATIC_EXPORT_ENABLED` and `DEPICTIO_NOTEBOOK_EXPORT_ENABLED`)**: a dashboard can be exported as one HTML file that opens without Depictio, and the Quarto report and the dashboard share one runtime, so a report can carry the live dashboard. ([#963](https://github.com/depictio/depictio/pull/963), [#1409](https://github.com/depictio/depictio/pull/1409))
-* **Tools Catalog site front page**: a landing page, a tool grid as default view, one component-type tag, and 16 tool categories on one axis. [Tools Catalog](https://depictio.github.io/depictio-catalog/latest/) ([#1461](https://github.com/depictio/depictio/pull/1461))
+* **Table joins from the web interface**: preview, then a `joined_<name>` table rebuilt when a source changes. [Join two tables](../usage/projects/guide.md#join-two-tables) ([#1462](https://github.com/depictio/depictio/pull/1462))
+* **Tool Studio redesign**: recipes run in the browser, several outputs per tool, checks at parity with the CLI. [Tool Studio](../developer/tool-studio.md) ([#1441](https://github.com/depictio/depictio/pull/1441))
+* **Offline engine** (behind both export switches): a dashboard as one HTML file, sharing its runtime with Quarto reports. ([#963](https://github.com/depictio/depictio/pull/963), [#1409](https://github.com/depictio/depictio/pull/1409))
+* **Tools Catalog front page** with a tool grid and 16 categories. [Tools Catalog](https://depictio.github.io/depictio-catalog/latest/) ([#1461](https://github.com/depictio/depictio/pull/1461))
 
 ### **🔒 Security**
 
-* **Sessions**: refresh tokens rotate on every refresh, a reused one revokes the session, and signing out deletes it on the server. [Session hardening](../features/security.md#session-hardening) ([#1465](https://github.com/depictio/depictio/pull/1465))
-* **Sign-in**: an empty password never signs in, `must_change_password` is enforced on the server, and wrong public access codes are rate-limited (10 a minute per address). [Public access code](../features/security.md#public-access-code) ([#1465](https://github.com/depictio/depictio/pull/1465))
-* **Access checks**: server-side ingestion only reads allowed local paths, advanced-viz computes check data collection access, and images and logos of private projects load through short-lived signed URLs. ([#1465](https://github.com/depictio/depictio/pull/1465))
-* **Code mode**: running code sent with a preview needs editor rights, and user code runs under a memory cap (`DEPICTIO_CODE_MODE_MAX_MEMORY_MB`, default 1024). [Code sent with a render](../features/security.md#code-sent-with-a-render) ([#1465](https://github.com/depictio/depictio/pull/1465))
-* **Secrets**: API responses never return the password hash, backup logs mask S3 keys, and outbound connections are pinned to the address the guard validated. ([#1464](https://github.com/depictio/depictio/pull/1464), [#1465](https://github.com/depictio/depictio/pull/1465))
+* **Sessions and sign-in**: rotating refresh tokens, server-side sign-out, no empty passwords, rate-limited access codes. [Security](../features/security.md#session-hardening) ([#1465](https://github.com/depictio/depictio/pull/1465))
+* **Access and secrets**: signed URLs for private images, editor rights and a memory cap for code mode, no password hash or S3 key in responses and logs. [Security](../features/security.md#code-sent-with-a-render) ([#1464](https://github.com/depictio/depictio/pull/1464), [#1465](https://github.com/depictio/depictio/pull/1465))
 
 ### **🐛 Bug Fixes**
 
-* **An older CLI reads a newer server's `CLI.yaml`**: server-only settings are left out, the CLI drops unknown keys with one warning, and `config check` warns on a version mismatch. ([#1463](https://github.com/depictio/depictio/pull/1463))
-* **Uploads no longer fail after an hour**: UI uploads, create-from-URL and folder tables used an expired login token. ([#1462](https://github.com/depictio/depictio/pull/1462))
-* **No WebSocket retries when realtime events are off**: the viewer asks once and skips the socket. ([#1465](https://github.com/depictio/depictio/pull/1465))
+* **An older CLI reads a newer server's `CLI.yaml`**, with one warning. ([#1463](https://github.com/depictio/depictio/pull/1463))
+* **Uploads no longer fail after an hour** (expired login token). ([#1462](https://github.com/depictio/depictio/pull/1462))
+* **No WebSocket retries when realtime events are off**. ([#1465](https://github.com/depictio/depictio/pull/1465))
 
 ---
 
