@@ -59,6 +59,11 @@ schedule is rolling, due whenever an interval has passed.
 **No restart needed.** A change saved here reaches every worker within 15
 minutes, and exactly one worker takes each backup.
 
+On Kubernetes, the Helm chart can set all of this from values, put a volume
+behind the backup directory, and copy the backups and the S3 data off the
+cluster every night (from v1.22.1). See
+[Backups in the Helm chart](../../installation/kubernetes.md#backups).
+
 ---
 
 ## Retention <small>(v1.9.0+)</small> { #retention }

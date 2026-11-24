@@ -13,13 +13,49 @@ hide:
     Every release publishes four images, tagged with the version without its `v`:
 
     ```bash
-    ghcr.io/depictio/depictio-api:1.22.0
-    ghcr.io/depictio/depictio-viewer:1.22.0
-    ghcr.io/depictio/depictio-worker:1.22.0
-    ghcr.io/depictio/depictio-cli:1.22.0     # from v1.10.0
+    ghcr.io/depictio/depictio-api:1.22.2
+    ghcr.io/depictio/depictio-viewer:1.22.2
+    ghcr.io/depictio/depictio-worker:1.22.2
+    ghcr.io/depictio/depictio-cli:1.22.2     # from v1.10.0
     ```
 
     Before v1.0.0, a single `ghcr.io/depictio/depictio:<version>` image shipped, with `latest`, `stable` and `edge` tags.
+
+---
+
+## **[v1.22.2](https://github.com/depictio/depictio/releases/tag/v1.22.2)** (November 19, 2026)
+
+!!! success "Patch: the Tools Catalog becomes its own site, and raw text collections keep their line order"
+
+### **✨ New Features**
+
+* **Tools Catalog site**: the catalog is published as its own static site, one directory per release plus `latest/`, and loads each output only when it is shown. A module's page lists its versions across releases, with a YAML diff and a release switcher. [Tools Catalog](https://depictio.github.io/depictio-catalog/latest/) ([#1439](https://github.com/depictio/depictio/pull/1439), [#1451](https://github.com/depictio/depictio/pull/1451), [#1455](https://github.com/depictio/depictio/pull/1455))
+* **Finer catalog versions**: an output or a render may carry the module version it last changed in, and `module.yaml` may keep a changelog. [Tools Catalog](../catalog/index.md) ([#1447](https://github.com/depictio/depictio/pull/1447))
+
+### **🚀 Improvements**
+
+* **Catalog figures audited**: every render has a title and a description, figures no longer add up rows of different metrics, and reference lines can show a statistic of the table (median, mean, quantiles). ([#1447](https://github.com/depictio/depictio/pull/1447))
+* **`depictio dev catalog validate` loads an output's recipe even when it has a fixture**, and checks the fixture holds every column the recipe produces. ([#1440](https://github.com/depictio/depictio/pull/1440))
+
+### **🐛 Bug Fixes**
+
+* **Raw text collections keep their line order**: since 1.22.0, Delta writes could store a table's rows out of order, so recipes rebuilt broken alignments and HMM models (nf-core/proteinfamilies). Writes keep the order again, and every raw scan now numbers its lines (`source_line`), so recipes read each file back in order whatever the storage does. Re-ingest a raw collection ingested with 1.22.0. ([#1448](https://github.com/depictio/depictio/pull/1448), [#1449](https://github.com/depictio/depictio/pull/1449))
+* **The Helm off-site backup CronJob passes stricter admission policies**: `backups.offsite.imagePullPolicy` defaults to `Always` and the job sets CPU and memory limits, both overridable. ([#1442](https://github.com/depictio/depictio/pull/1442))
+
+---
+
+## **[v1.22.1](https://github.com/depictio/depictio/releases/tag/v1.22.1)** (November 19, 2026)
+
+!!! success "Patch: cross-tab filters on private projects, `depictio local up` with an older pnpm, Helm backups"
+
+### **✨ New Features**
+
+* **Helm backups**: the chart can mount a backups volume, run scheduled MongoDB backups, and copy backups and S3 data off the cluster every night with rclone. [Helm backups](../installation/kubernetes.md#backups) ([#1438](https://github.com/depictio/depictio/pull/1438))
+
+### **🐛 Bug Fixes**
+
+* **Links work for non-admin owners and editors**: the links API refused every non-admin owner of a private project, so cross-tab filters failed there with a server error, and only an admin could create or edit a link. Owners, editors and group roles are now checked like everywhere else. [Cross-DC filtering](../features/cross-dc-filtering.md) ([9c6cca9](https://github.com/depictio/depictio/commit/9c6cca9ac))
+* **`depictio local up` builds the viewer with pnpm 10**, through corepack when the `pnpm` on `PATH` is older; the server no longer starts without a viewer. [Python package](../installation/local.md) ([df02ea0](https://github.com/depictio/depictio/commit/df02ea0c6))
 
 ---
 
