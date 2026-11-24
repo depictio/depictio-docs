@@ -190,7 +190,14 @@ The :material-database-cog-outline: icon of a collection (**Manage data (append 
 
 MultiQC reports must agree (same modules, plot keys and MultiQC version, no sample twice) or they are refused. A later CLI refresh keeps what was added here. Collections read from a manifest, a URL or a bucket are re-read with **Project settings**, [**Data refresh**](remote-data.md#refreshing-the-data).
 
-### Join two tables <small>(v1.23.0+)</small> { #join-two-tables }
+### Join two tables { #join-two-tables }
+
+<span class="ver-badge">v1.23.0+</span>
+
+<figure markdown="span"><video preload="none" data-autoplay controls muted loop playsinline poster="../../../images/guides/project-creation/join-create.webp" src="../../../images/guides/project-creation/join-create.mp4"></video></figure>
+
+[![Create table join: two tables joined on sample, with the preview counting the rows without a match](../../images/guides/project-creation/join_create_modal_light.webp#only-light){ width="620" }](../../images/guides/project-creation/join_create_modal_light.webp){target=_blank}
+[![Create table join: two tables joined on sample, with the preview counting the rows without a match](../../images/guides/project-creation/join_create_modal_dark.webp#only-dark){ width="620" }](../../images/guides/project-creation/join_create_modal_dark.webp){target=_blank}
 
 Two tables that share a column become one new table, read by any component. On the project page: **Cross-DC links**, **Add join** (owners and editors, project not read-only).
 
@@ -198,6 +205,9 @@ Two tables that share a column become one new table, read by any component. On t
 2. Pick the **Left table** and the **Right table**: preselected from the project's link, or else its two oldest tables.
 3. Pick the **Join column(s)** they share and a **Join type**: **Left**, **Inner**, **Outer** or **Right**.
 4. Check the preview (row and column counts, rows without a match, warnings), then **Create join**.
+
+[![Cross-DC links: the map with the joined table, and the Joins list with the join's tables, columns, type and row count](../../images/guides/project-creation/join_list_light.webp#only-light)](../../images/guides/project-creation/join_list_light.webp){target=_blank}
+[![Cross-DC links: the map with the joined table, and the Joins list with the join's tables, columns, type and row count](../../images/guides/project-creation/join_list_dark.webp#only-dark)](../../images/guides/project-creation/join_list_dark.webp){target=_blank}
 
 The two tables stay as they are; the joined table carries a `joined` badge and is rebuilt whenever one of them changes. It cannot be appended to, replaced or cleared itself: change its sources instead. The join is listed under **Joins** in the same section, where it can be deleted.
 
