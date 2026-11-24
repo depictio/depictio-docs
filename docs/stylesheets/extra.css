@@ -2516,28 +2516,50 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
 @media (min-width: 601px) {
     html #docbot-modal.docbot-modal .vf-chatbot-modal-container {
         top: auto;
-        right: 24px;
-        bottom: 24px;
+        right: 12px;
+        bottom: 12px;
         width: 400px;
-        height: min(660px, calc(100vh - 150px));
-        display: flex;
-        flex-direction: column;
+        height: min(660px, calc(100vh - 140px));
         border-radius: 16px;
     }
+}
 
-    html #docbot-modal.docbot-modal .vf-chatbot-modal-container .vf-chatbot-modal {
-        flex: 1 1 auto;
-        min-height: 0;
-        height: auto;
-    }
+/* Header, conversation, input as a column where only the conversation
+   shrinks, on desktop and in the SDK's full-screen mobile window */
+html #docbot-modal.docbot-modal .vf-chatbot-modal-container {
+    display: flex;
+    flex-direction: column;
+}
 
-    /* Only the conversation shrinks; the header keeps its height */
-    html #docbot-modal.docbot-modal .vf-chatbot-modal__header {
-        flex-shrink: 0;
-        height: auto;
-        min-height: 72px;
-        align-items: center;
-    }
+html #docbot-modal.docbot-modal .vf-chatbot-modal-container .vf-chatbot-modal {
+    flex: 1 1 auto;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+}
+
+/* The SDK caps the conversation for its own, shorter header (inline styles
+   set from JavaScript, hence !important): the message list takes whatever is
+   left instead */
+html #docbot-modal.docbot-modal .vf-chatbot-modal__messages,
+html #docbot-modal.docbot-modal .vf-chatbot-welcome {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto !important;
+    max-height: none !important;
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-modal__input-container {
+    flex-shrink: 0;
+}
+
+/* Only the conversation shrinks; the header keeps its height (desktop and
+   the SDK's full-screen mobile window) */
+html #docbot-modal.docbot-modal .vf-chatbot-modal__header {
+    flex-shrink: 0;
+    height: auto;
+    min-height: 72px;
+    align-items: center;
 }
 
 /* Message bubbles: chat-shaped, the tail corner on the speaker's side */
