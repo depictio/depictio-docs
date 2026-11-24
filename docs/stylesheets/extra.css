@@ -2219,7 +2219,9 @@ body.catalog-fs-lock .md-main {
    palette so it follows light and dark. The SDK rules are scoped to
    #docbot-modal.docbot-modal and load after this file, so ours add `html` to win. Colours that
    the SDK reads from --vf-color--* variables are remapped there; the ones it
-   hard-codes (#1a1c1a text, #3a77bc send button, #18974c button) are set below. */
+   hard-codes (#1a1c1a text, #3a77bc send button, #18974c button) are set below.
+   Chips, send button, user messages and list bullets use the Depictio violet
+   of the Tools Catalog buttons; the DocBot (EMBL-EBI) logo is kept. */
 html #docbot-modal.docbot-modal {
     --vf-color--neutral--0: var(--md-default-bg-color);
     --vf-color--neutral--200: var(--md-default-fg-color--lightest);
@@ -2228,10 +2230,21 @@ html #docbot-modal.docbot-modal {
     --vf-color--neutral--900: var(--md-default-fg-color);
     --vf-color--grey: var(--md-default-fg-color--lightest);
     --vf-color--grey--light: var(--md-default-fg-color--lightest);
-    --vf-color--blue: var(--md-accent-fg-color);
-    --vf-color__link: var(--md-accent-fg-color);
+    --docbot-brand: #7d5dec;
+    --docbot-brand-strong: #6a48e0;
+    --docbot-brand-border: rgba(125, 93, 236, 0.45);
+    --docbot-brand-tint: #faf8ff;
+    --vf-color--blue: var(--docbot-brand);
+    --vf-color__link: var(--docbot-brand);
     --vf-color__text--primary: var(--md-default-fg-color);
     font-family: var(--md-text-font-family, "Roboto"), sans-serif;
+}
+
+[data-md-color-scheme="slate"] #docbot-modal.docbot-modal {
+    --docbot-brand: #9870ff;
+    --docbot-brand-strong: #ad8cff;
+    --docbot-brand-border: rgba(152, 112, 255, 0.5);
+    --docbot-brand-tint: rgba(152, 112, 255, 0.12);
 }
 
 /* Launcher: the Depictio logo in a speech bubble, so it reads as a chat and
@@ -2381,7 +2394,63 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__input::placeholder {
 }
 
 html #docbot-modal.docbot-modal .vf-chatbot-modal__send-button {
-    background: var(--md-accent-fg-color);
+    background: var(--docbot-brand);
+    transition: background-color 0.15s ease;
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-modal__send-button:hover,
+html #docbot-modal.docbot-modal .vf-chatbot-modal__send-button:focus-visible {
+    background: var(--docbot-brand-strong);
+}
+
+/* The SDK's arrow is an <img> with its blue square baked in: hide it and draw
+   a white arrow on the violet button instead */
+html #docbot-modal.docbot-modal .vf-chatbot-modal__send-button {
+    position: relative;
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-modal__send-button img {
+    visibility: hidden;
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-modal__send-button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-modal__input:focus,
+html #docbot-modal.docbot-modal .vf-chatbot-modal__input:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--docbot-brand);
+}
+
+/* Suggested questions: violet outline chips, filled with a light tint on hover */
+html #docbot-modal.docbot-modal .vf-chatbot-action-prompt__link {
+    color: var(--docbot-brand);
+    border: 1px solid var(--docbot-brand-border);
+    border-radius: 10px;
+    background: var(--md-default-bg-color);
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+html #docbot-modal.docbot-modal .vf-chatbot-action-prompt__link:hover,
+html #docbot-modal.docbot-modal .vf-chatbot-action-prompt__link:focus-visible {
+    color: var(--docbot-brand);
+    background: var(--docbot-brand-tint);
+    border-color: var(--docbot-brand);
+}
+
+/* List bullets and numbers in answers */
+html #docbot-modal.docbot-modal .vf-chatbot-message__content li::marker {
+    color: var(--docbot-brand);
 }
 
 html #docbot-modal.docbot-modal .vf-banner__link,
@@ -2407,7 +2476,7 @@ html #docbot-modal.docbot-modal .vf-banner--alert svg {
 
 /* Messages */
 html #docbot-modal.docbot-modal .vf-chatbot-message--user .vf-chatbot-message__content {
-    background: var(--md-accent-fg-color);
+    background: var(--docbot-brand);
     color: #fff;
 }
 
