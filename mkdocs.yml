@@ -293,14 +293,14 @@ extra:
     property: G-J14FKHSHLC
 
   # DocBot (EMBL-EBI docs chatbot), the embedded widget rendered by
-  # overrides/main.html, on every page, locked to the depictio team. The team is
-  # live on DocBot dev (November 2026). The widget only works once DocBot adds
-  # https://depictio.github.io to its CORS allow-list; before that it opens but
-  # cannot load or answer. Switch the backend to production (www.ebi.ac.uk) once
-  # DocBot deploys depictio there. Off until the CORS entry is in; then set the
-  # default below to true. DEPICTIO_DOCS_DOCBOT=1 turns it on to test locally.
+  # overrides/main.html, on every page, locked to the depictio team. DocBot
+  # allows https://depictio.github.io in its CORS list (dev and production,
+  # November 2026), but the depictio team only exists on dev so far: switch the
+  # backend to production (www.ebi.ac.uk) once DocBot deploys it there. Local
+  # servers are not in the CORS list: the widget opens but cannot answer.
+  # DEPICTIO_DOCS_DOCBOT=0 turns it off.
   docbot:
-    enabled: !ENV [DEPICTIO_DOCS_DOCBOT, false]
+    enabled: !ENV [DEPICTIO_DOCS_DOCBOT, true]
     team: depictio
     # Production: https://www.ebi.ac.uk/docbot/api
     backend: https://wwwdev.ebi.ac.uk/docbot/api
