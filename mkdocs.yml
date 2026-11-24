@@ -88,7 +88,7 @@ extra_javascript:
   - javascripts/depictio-rose.js
   - javascripts/depictio-logo.js
   - javascripts/depictio-theme-sync.js
-  - javascripts/catalog-fullscreen.js
+  - javascripts/catalog-site.js
   - javascripts/template-version.js
   - javascripts/template-showcase.js
   - javascripts/nav-pinned.js
@@ -156,6 +156,7 @@ hooks:
   - hooks/nextflow_lexer.py
   - hooks/shared_images.py
   - hooks/landing_stats.py
+  - hooks/catalog_site.py
 
 # Plugins
 plugins:

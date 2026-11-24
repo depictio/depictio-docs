@@ -40,25 +40,25 @@ A dashboard component bound to that data — figure, card, table, interactive fi
 
 </div>
 
-Browse the catalog below: filter by component type or viz kind, preview each
-render on real fixture data, and copy its **`use:`** snippet.
+Search a tool, filter by component type or viz kind, preview each render on
+real fixture data, and copy its **`use:`** snippet. The catalog is a site of
+its own, one per release.
 
-<div class="catalog-embed" markdown>
-  <div class="catalog-demo-header">
-    <span class="catalog-demo-title">Depictio Tools Catalog</span>
-    <button class="catalog-fs-close" type="button" onclick="toggleCatalogFullscreen(this)" title="Exit fullscreen" aria-label="Exit fullscreen">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-    </button>
+<div class="catalog-window">
+  <div class="catalog-window__bar">
+    <div class="catalog-window__title">
+      <img class="catalog-window__logo" src="../images/logo/tools_catalog_logo.png" alt="">
+      <div>
+        <div class="catalog-window__name">Tools Catalog <span class="catalog-window__ver" data-catalog-version-label>{{ catalog_site.version }}</span></div>
+        <div class="catalog-window__sub"><span class="catalog-window__live"></span>Live preview of the catalog site</div>
+      </div>
+    </div>
+    <div class="catalog-window__actions">
+      <a class="catalog-window__btn catalog-window__btn--ghost" href="../developer/tool-studio/">Add a tool</a>
+      <a class="catalog-window__btn" data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" href="{{ catalog_site.base }}{{ catalog_site.version }}/" target="_blank" rel="noopener">Open the full catalog <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm5 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7z"/></svg></a>
+    </div>
   </div>
-  <button class="catalog-fs-btn" type="button" onclick="toggleCatalogFullscreen(this)" title="Toggle fullscreen" aria-label="Toggle fullscreen">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-  </button>
-  <div class="catalog-iframe-light">
-    <iframe src="../assets/component-catalog-light.html" title="Depictio Tools Catalog (light)" width="100%" height="1100px" frameborder="0" loading="lazy"></iframe>
-  </div>
-  <div class="catalog-iframe-dark">
-    <iframe src="../assets/component-catalog-dark.html" title="Depictio Tools Catalog (dark)" width="100%" height="1100px" frameborder="0" loading="lazy"></iframe>
-  </div>
+  <iframe data-catalog-site="{{ catalog_site.base }}" data-catalog-version="{{ catalog_site.version }}" title="Depictio Tools Catalog" loading="lazy"></iframe>
 </div>
 
 ## :material-sitemap: How a render is defined
@@ -149,14 +149,12 @@ A small sample of that file, right beside its YAML, so `depictio catalog validat
 [Open Tool Studio :material-arrow-right:](https://depictio.github.io/depictio-tool-studio/){ .catalog-cta .catalog-cta--studio target=_blank }
 </div>
 
-!!! note "The catalog always shows the latest version"
+!!! note "One catalog per release"
 
-    The gallery above is served from a single shared copy, so it shows the
-    current catalog no matter which documentation version you are reading.
-    Browsing the docs for an older release will still show today's tools and
-    renders, which may not all have existed in that release.
-
-    This is a deliberate trade-off: the gallery is ~32 MB, and publishing a
-    copy inside every released version is what pushed the documentation site
-    past the size limit its hosting allows. Serving per-version catalogs again
-    is planned.
+    The catalog is its own site,
+    [depictio.github.io/depictio-catalog]({{ catalog_site.base }}), built from
+    the depictio source of each release: this page shows the catalog of
+    Depictio {{ catalog_site.version }}. It opens on the list of tools and
+    downloads an output's previews only when you open it. The catalog site
+    keeps the ten most recent releases: for an older one, and for a beta,
+    this page shows the current catalog instead, under `latest`.
