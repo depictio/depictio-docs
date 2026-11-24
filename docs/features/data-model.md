@@ -23,6 +23,11 @@ from the object names alone:
 
 ---
 
+Every figure of these docs draws a concept with the same colour and picture:
+
+[![Depictio's concepts, one colour each](../images/data-model/concepts_light.png#only-light)](../images/data-model/concepts_light.png){target=_blank}
+[![Depictio's concepts, one colour each](../images/data-model/concepts_dark.png#only-dark)](../images/data-model/concepts_dark.png){target=_blank}
+
 ## The two shapes of a project
 
 [![The two shapes of a project](../images/data-model/project-shape_light.png#only-light)](../images/data-model/project-shape_light.png){target=_blank}
@@ -178,10 +183,12 @@ creates them.
 Two mechanisms that sound alike and behave nothing alike. The difference that matters most
 is *when* and *to what* each one applies:
 
-- A **JoinDefinition** (`Project.joins`) runs in the CLI, at ingestion. It reads two Delta
-  tables, merges them on shared columns (`left_dc`, `right_dc`, `on_columns`, `how`, plus a
-  granularity policy) and writes the result to S3 as a new data collection with
-  `source: joined`. Because it merges rows, it only works between `table` collections.
+- A **JoinDefinition** (`Project.joins`) reads two Delta tables, merges them on shared
+  columns (`left_dc`, `right_dc`, `on_columns`, `how`, plus a granularity policy) and
+  writes the result to S3 as a new data collection with `source: joined`. It is declared in
+  YAML and runs in the CLI at ingestion, or created from the project page
+  ([below](#join-from-the-web-ui)). Because it merges rows, it only works between `table`
+  collections.
 - A **DCLink** (`Project.links`) merges nothing and writes nothing. It runs in the
   dashboard, at render time, propagating *filters* from one data collection to another and
   resolving identifiers between them by one of several strategies (`direct`,
@@ -198,6 +205,38 @@ resolver strategies in depth.
 
     A `join` block on an individual data collection's config still deserialises, but it is
     superseded by project-level `joins` and is no longer read.
+
+### Creating a join in the web interface <small>(v1.23.0+)</small> { #join-from-the-web-ui }
+
+Owners and editors can create a join without any YAML, unless the project is read-only. On
+the project page, the **Cross-DC links** section has an **Add join** button next to
+**Add link**:
+
+1. **Name**: letters, digits, `_` and `-`. The joined table is called `joined_<name>`.
+2. **Left table** and **Right table**: two different tables that hold data. Both are
+   preselected from the project's link (its source on the left), or else the two oldest
+   tables.
+3. **Join column(s)**: the columns both tables share, on which rows are matched.
+4. **Join type**: **Left**, **Inner**, **Outer** or **Right**, each explained in the
+   dialog.
+
+A live preview shows the joined row and column counts, what happens to rows that find no
+match, the first rows, and warnings such as duplicate keys, or a key held as a number in
+one table and as text in the other. **Create join** writes a new table data collection
+that any component reads like any other table. A column present in both tables is kept
+from each, the right table's copy named `<column>_right`.
+
+The two source tables stay as they are. The joined table is rebuilt whenever one of them
+changes (data appended, replaced or cleared, columns added, a cell edit, a restored
+version); a source that is cleared rebuilds the join with that side empty. A rebuild that
+fails never fails the write: the join shows a **Not rebuilt** badge, and the write's
+notice names the joins that followed and those that could not.
+
+Three guards: a joined table cannot be appended to, replaced or cleared itself (change its
+sources instead), a table a join reads cannot be deleted until the join is, and deleting a
+joined table deletes its join. A join deleted and created again under the same name keeps
+the table's id, so dashboards built on it keep working. Tables whose key columns have
+different names cannot be joined from the interface yet.
 
 ---
 

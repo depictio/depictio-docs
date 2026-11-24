@@ -838,6 +838,7 @@ Top-level settings, plus the `DEPICTIO_` variables the server reads directly.
 | `DEPICTIO_ENABLE_DEV_ENDPOINTS` | `false` | Expose the destructive test endpoints (`utils/drop_S3_content`, `utils/drop_all_collections`, `events/test-trigger`). Off, they answer 404 even for admins. Development only |
 | `DEPICTIO_DEV_MODE` | `false` | Development mode: the API runs under `uvicorn --reload`, the worker restarts on code changes, telemetry, the guided tours and the landing card are off, and the admin CLI config is re-exported at each start. Not a security switch |
 | `DEPICTIO_DELTA_CACHE_DIR` | `/app/cache/delta_cache` | Local cache of Delta tables read by the API |
+| `DEPICTIO_CODE_MODE_MAX_MEMORY_MB` | `1024` | Address-space budget (MB) for user code in code-mode figures, applied in Celery prefork children where one task runs per process. See [Security](../features/security.md#code-sent-with-a-render) (v1.23.0+) |
 
 ---
 
@@ -926,6 +927,7 @@ Read by `docker-compose.yaml` or a container, not by the settings models.
 |----------|---------|-------------|
 | `DEPICTIO_VERSION` | the release the compose file pins | Image tag of the backend, viewer and worker. `next` follows `main` |
 | `DEPICTIO_CSP_S3_ORIGIN` | `DEPICTIO_S3_PUBLIC_URL` | Viewer container: S3 origin added to the CSP `connect-src`, for genome tracks read straight from the bucket |
+| `DEPICTIO_BIND_ADDRESS` | `127.0.0.1` | Address the compose files publish the viewer port on. A single-user server signs in whoever reaches it as the admin, so keep it loopback; `0.0.0.0` only for a multi-user deployment reachable from other machines (v1.23.0+) |
 | `DATA_DIR` | `data` | `docker-compose.dev.yaml` only: host folder holding the MongoDB, Redis and SeaweedFS data |
 
 `DEPICTIO_CELERY_WORKERS` and the other worker variables are in [Worker processes](#celery-worker-processes),

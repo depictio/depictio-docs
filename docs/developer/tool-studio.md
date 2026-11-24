@@ -1,258 +1,194 @@
 ---
 title: "Tool Studio"
-description: "Author a Tools Catalog entry in the browser: drop an output file, bind its columns in depictio's own component builder, and open the pull request from the app."
+description: "Author a Tools Catalog entry in the browser: drop a sample of the tool's output file (or reshape it with a recipe), bind its columns in depictio's own component builder, and open the pull request from the app."
 ---
 
 # :material-hammer-wrench: Tool Studio <small>(v1.9.0+)</small>
 
-**Depictio Tool Studio** contributes a tool to the
-[Tools Catalog](../catalog/index.md) from the browser: drop one of the tool's output files,
-bind its columns in depictio's own component builder, and the app opens the pull request
-against `depictio/depictio` for you.
-
-It runs entirely in the page, which is what makes it worth using: nothing to install, no
-server to reach, and your file is parsed locally and only leaves the browser if you choose
-to open the pull request.
+**Depictio Tool Studio** adds a tool to the [Tools Catalog](../catalog/index.md) from the
+browser: drop a sample of one of its output files (or a raw file plus a recipe), bind its
+columns in depictio's own component builder, and the app opens the pull request. Nothing to
+install: your files are read in the page and only leave it with the pull request.
 
 <div class="catalog-cta-wrap" markdown>
 [Open Tool Studio :material-arrow-right:](https://depictio.github.io/depictio-tool-studio/){ .catalog-cta .catalog-cta--studio target=_blank }
 </div>
 
-<figure markdown="span">
-  [![The Tool Studio start screen, showing the four steps and when the app applies](../images/tool-studio/00-start.webp)](../images/tool-studio/00-start.webp){target=_blank}
-  <figcaption>The start screen states what an entry is before any form field, and where the app stops.</figcaption>
-</figure>
+[![The Tool Studio start screen: the four steps, Try an example, Import an entry, and the two kinds of output file it covers](../images/tool-studio/00-start_light.webp#only-light)](../images/tool-studio/00-start_light.webp){target=_blank}
+[![The Tool Studio start screen: the four steps, Try an example, Import an entry, and the two kinds of output file it covers](../images/tool-studio/00-start_dark.webp#only-dark)](../images/tool-studio/00-start_dark.webp){target=_blank}
 
----
+An entry is a folder: `module.yaml` (which tool), one `<output>.yaml` per output file, the
+fixture each output binds against, and a recipe when the file is not already a table (half
+the committed outputs). **Try an example** loads a committed entry; **Import an entry** reads
+a zip, a tool folder or a draft JSON. The [hand-written path](contributing-a-tool.md)
+produces the same folder.
 
-## Which route
-
-A catalog entry is three files in a folder: `module.yaml` (which tool), `<output>.yaml`
-(which file, and what to render from it), and a small fixture that grounds the bindings.
-Your output file decides who writes them.
-
-<div class="module-flow module-flow--parallel" markdown>
-
-<div class="module-flow__step module-flow__step--file" markdown>
-:material-table-check:{ .lg } **Already a table** <span class="module-flow__opt">Tool Studio</span>
-
-A header row and one record per line. The Studio parses it, infers the columns, and everything downstream just works.
-</div>
-
-<div class="module-flow__step module-flow__step--module" markdown>
-:material-cog-transfer:{ .lg } **Needs reshaping** <span class="module-flow__opt">hand-authored</span>
-
-The entry needs a [`recipe`](contributing-a-tool.md) to tidy the file first. Half the committed catalog outputs are in this case, and the Studio cannot write one.
-</div>
-
-</div>
-
-The Studio says which of the two you are in on its start screen, rather than three steps
-in with a file that will not parse.
-
----
+<span class="ver-badge">v1.23.0+</span> The Studio wears depictio's own chrome, keeps an
+**Entry** panel beside every step (the files to write, the checks run so far), and covers
+[recipes](#recipes-raw-sample-recipe-fixture), several outputs and the CLI's checks.
 
 ## 1. Tool
 
-Identity on the left, the single output this entry describes on the right.
+[![The Tool step: Bracken imported from its nf-core module, identity on the left, the output on the right, the Entry panel listing the files to write](../images/tool-studio/01-tool_light.webp#only-light)](../images/tool-studio/01-tool_light.webp){target=_blank}
+[![The Tool step: Bracken imported from its nf-core module, identity on the left, the output on the right, the Entry panel listing the files to write](../images/tool-studio/01-tool_dark.webp#only-dark)](../images/tool-studio/01-tool_dark.webp){target=_blank}
 
-<figure markdown="span">
-  [![The Tool step, with tool identity on the left and the output it describes on the right](../images/tool-studio/01-tool.webp)](../images/tool-studio/01-tool.webp){target=_blank}
-  <figcaption>The <code>path_glob</code> is the load-bearing field, since it is how depictio recognises the file in a real run.</figcaption>
-</figure>
+Identity on the left, the output on the right. **Next** unlocks with six fields: tool id and
+name, description and homepage (what the catalog card shows), output slug and path glob (or
+an exact file name). The path glob is how depictio recognises the file in a run.
 
-A new tool needs six fields before **Next** unlocks: the tool id and name, the tool
-description and homepage, and the output slug and path glob. The description and the
-homepage are what the tool's catalog card shows, and `catalog validate` rejects a module
-without them, so the Studio asks for them up front rather than letting the pull request
-fail in CI.
+??? note "Import from nf-core, Snakemake or Galaxy"
+    [![The Output channel picker after importing the centrifuge nf-core module, listing its file outputs](../images/tool-studio/01d-nfcore-import_light.webp#only-light)](../images/tool-studio/01d-nfcore-import_light.webp){target=_blank}
+    [![The Output channel picker after importing the centrifuge nf-core module, listing its file outputs](../images/tool-studio/01d-nfcore-import_dark.webp#only-dark)](../images/tool-studio/01d-nfcore-import_dark.webp){target=_blank}
 
-**Tool source** imports metadata from an **nf-core module**, a **Snakemake wrapper** or a
-**Galaxy tool**. Paste the URL and press **Import**.
+    Paste a module, wrapper or tool URL and press **Import**: the app reads its metadata
+    (`meta.yml` for nf-core) in the browser and fills the identity, homepage and bio.tools
+    link. Picking an **Output channel** fills the slug, path glob and description.
 
-<figure markdown="span">
-  [![Importing cnvkit/batch from nf-core, with its six declared file outputs offered as a picker](../images/tool-studio/01d-nfcore-import.webp)](../images/tool-studio/01d-nfcore-import.webp){target=_blank}
-  <figcaption>The app reads the module's <code>meta.yml</code> straight from raw.githubusercontent.com and offers every output channel it declares.</figcaption>
-</figure>
+??? note "If the tool is already in the catalog"
+    [![QIIME 2 recognised: its committed outputs with their renders, Add a visualization here, Add a new output to this tool](../images/tool-studio/01b-recognized_light.webp#only-light)](../images/tool-studio/01b-recognized_light.webp){target=_blank}
+    [![QIIME 2 recognised: its committed outputs with their renders, Add a visualization here, Add a new output to this tool](../images/tool-studio/01b-recognized_dark.webp#only-dark)](../images/tool-studio/01b-recognized_dark.webp){target=_blank}
 
-An nf-core import also fills the tool's identity from `meta.yml`: the description, the
-homepage (falling back to `tool_dev_url`, then `documentation`, when `meta.yml` leaves
-`homepage` empty) and the bio.tools link from the `biotools:` identifier. Choosing an
-output fills the **Output slug**, the **Path glob** and the output description. Import is
-a convenience, not a requirement: typing the fields yourself produces an equally valid
-entry.
+    Recognition runs as you type (nf-core module path, then id, then name).
+    **Add a visualization here** appends to that output's `renders_as`, rebased on `main`;
+    **Add a new output to this tool** writes a fresh `<output>.yaml` and leaves
+    `module.yaml` alone. A close relative (macs3 next to macs2) is flagged too.
+    **Not this tool? Continue as a new tool** dismisses the match.
 
-Two checks run while you type, and either one may change what you do next.
+??? note "If MultiQC already parses it"
+    [![The MultiQC advisory for fastqc, with the Entry panel listing what is left to fill in](../images/tool-studio/01c-multiqc_light.webp#only-light)](../images/tool-studio/01c-multiqc_light.webp){target=_blank}
+    [![The MultiQC advisory for fastqc, with the Entry panel listing what is left to fill in](../images/tool-studio/01c-multiqc_dark.webp#only-dark)](../images/tool-studio/01c-multiqc_dark.webp){target=_blank}
 
-### If the tool is already in the catalog
+    depictio already ingests MultiQC, so an entry for one of its 181 modules is often work
+    for metrics that arrive anyway. Advisory only: an entry is still legitimate for an output
+    MultiQC skips.
 
-Recognition runs on every keystroke, against a build-time snapshot of the committed
-catalog, matching on the nf-core module path first, then the id, then the display name.
-
-<figure markdown="span">
-  [![A recognised tool, with its committed outputs and their renders listed inline](../images/tool-studio/01b-recognized.webp)](../images/tool-studio/01b-recognized.webp){target=_blank}
-  <figcaption>QIIME 2 is the widest entry in the catalog: eight outputs carrying sixteen renders.</figcaption>
-</figure>
-
-Two routes open when it matches:
-
-- **Add a visualization here** appends to that output's `renders_as`, rebased on the file
-  as it exists on `main` right now, so a render merged since the last deploy is not
-  reverted. Export becomes a single-file update.
-- **Add a new output to this tool** reuses the identity and writes a fresh `<output>.yaml`,
-  leaving `module.yaml` untouched.
-
-**Not this tool? Continue as a new tool** dismisses the match, and the dismissal sticks
-across a Back and Next round trip.
-
-### If MultiQC already parses it
-
-<figure markdown="span">
-  [![The MultiQC advisory, shown when the tool id or nf-core module path matches a MultiQC module](../images/tool-studio/01c-multiqc.webp)](../images/tool-studio/01c-multiqc.webp){target=_blank}
-  <figcaption>Advisory only. Nothing is blocked.</figcaption>
-</figure>
-
-depictio already ingests MultiQC, and the vendored index lists 181 MultiQC modules, so a
-hand-authored entry for one of them is often work for metrics that would arrive anyway.
-A bespoke entry is still a legitimate choice, for an output MultiQC skips or for more of
-the file than its general-stats row.
-
----
+??? note "Optional fields"
+    **Classification** holds the `stage` (the tab a composed dashboard puts the tool's
+    components under), EDAM topics and an entry version. **More ways to recognise the file**
+    holds alternative globs and an exact file name. **The file needs reshaping first
+    (recipe)** turns the Fixture step into the recipe pipeline.
 
 ## 2. Fixture
 
-Drop one sample of that output file.
+[![The Fixture step with Bracken's species abundance table fetched from MultiQC test-data: inferred column types and the glob it will be committed for](../images/tool-studio/02-fixture_light.webp#only-light)](../images/tool-studio/02-fixture_light.webp){target=_blank}
+[![The Fixture step with Bracken's species abundance table fetched from MultiQC test-data: inferred column types and the glob it will be committed for](../images/tool-studio/02-fixture_dark.webp#only-dark)](../images/tool-studio/02-fixture_dark.webp){target=_blank}
 
-<figure markdown="span">
-  [![The Fixture step, with inferred column badges and an ag-grid preview of the rows](../images/tool-studio/02-fixture.webp)](../images/tool-studio/02-fixture.webp){target=_blank}
-  <figcaption>Columns and dtypes are inferred from the first 500 rows. The delimiter comes from the extension for <code>.csv</code> and <code>.tsv</code>, and is sniffed otherwise.</figcaption>
-</figure>
+Drop one real sample of the output file, or fetch it from a URL (the host must allow
+cross-origin requests, as the four linked corpora do; a `github.com` blob link is rewritten
+to raw). The file is **committed with the entry**: CI checks every binding against it. A file
+that is not a table (a `.narrowPeak`, no header row) offers **Reshape it with a recipe**.
 
-The file is parsed in the page, never uploaded. It is **committed with the entry**, and it
-is what CI reads to check that every column a render binds actually exists and has a
-compatible type, so it has to be a real sample rather than a stand-in table. Fixtures are
-capped at 5 MB, with a nudge above 1 MB.
+### Recipes: raw sample, recipe, fixture
 
-### Fetching it from a URL
+<span class="ver-badge">v1.23.0+</span>
 
-If you want to describe an output you do not have on disk, paste a link instead. A
-`github.com` blob link is rewritten to `raw.githubusercontent.com`, so a URL copied
-straight out of GitHub's file view works.
+[![The recipe pipeline for macs2 peaks: four raw narrowPeak files in stage 1, the recipe with its OUTPUT_SCHEMA columns in stage 2](../images/tool-studio/02c-recipe-raw_light.webp#only-light)](../images/tool-studio/02c-recipe-raw_light.webp){target=_blank}
+[![The recipe pipeline for macs2 peaks: four raw narrowPeak files in stage 1, the recipe with its OUTPUT_SCHEMA columns in stage 2](../images/tool-studio/02c-recipe-raw_dark.webp#only-dark)](../images/tool-studio/02c-recipe-raw_dark.webp){target=_blank}
 
-<figure markdown="span">
-  [![Fetching a fixture from a URL, with the three CORS-friendly corpora linked](../images/tool-studio/02b-fetch-url.webp)](../images/tool-studio/02b-fetch-url.webp){target=_blank}
-  <figcaption>The constraint is CORS, a browser rule the app cannot work around: the host has to answer cross-origin requests.</figcaption>
-</figure>
+For an output that needs reshaping, the Fixture step is a three-stage pipeline. **① Raw
+sample**: the tool's own files, any extension; add several to test across samples. They stay
+in your browser (not exported, shared or saved).
 
-Any host that answers cross-origin requests works, including your own. Three public
-corpora are known to, and between them cover most tools: **nf-core megatests** (each
-pipeline's full-scale run, the closest thing to your own output), **MultiQC test-data** (one
-directory per tool), and **Galaxy tools-iuc** (each tool's `test-data/`). nf-core's own
-module tests are no help, since they hold checksums rather than output files.
+[![The recipe after Run in the browser, and stage 3 holding its result: 23 rows, 11 typed columns](../images/tool-studio/02d-recipe-run_light.webp#only-light)](../images/tool-studio/02d-recipe-run_light.webp){target=_blank}
+[![The recipe after Run in the browser, and stage 3 holding its result: 23 rows, 11 typed columns](../images/tool-studio/02d-recipe-run_dark.webp#only-dark)](../images/tool-studio/02d-recipe-run_dark.webp){target=_blank}
 
----
+**② Recipe**: the Python module depictio runs at ingestion (`SOURCES`, `OUTPUT_SCHEMA`,
+`transform()`), edited in the page. **Run in the browser** runs it on the raw samples with
+Python and polars (the first run downloads them). **③ Fixture**: its result, exported as the
+committed sample.
+
+[![A column added to OUTPUT_SCHEMA: its badge turns red and stage 3 says the fixture lacks it until the recipe runs again](../images/tool-studio/02e-recipe-schema_light.webp#only-light)](../images/tool-studio/02e-recipe-schema_light.webp){target=_blank}
+[![A column added to OUTPUT_SCHEMA: its badge turns red and stage 3 says the fixture lacks it until the recipe runs again](../images/tool-studio/02e-recipe-schema_dark.webp#only-dark)](../images/tool-studio/02e-recipe-schema_dark.webp){target=_blank}
+
+The fixture is checked against `OUTPUT_SCHEMA`: a declared column it lacks means the fixture
+is stale. The recipe is exported as `<tool>/<slug>.py`, referenced by `recipe:`. A recipe
+from a link or an imported entry runs only once you press **Run this code**.
+
+## Several outputs
+
+<span class="ver-badge">v1.23.0+</span>
+
+[![The macs2 entry with two outputs, peaks and broad_peaks, in the Outputs bar, and the Entry panel listing module.yaml plus a YAML, fixture and recipe for each](../images/tool-studio/07-outputs_light.webp#only-light)](../images/tool-studio/07-outputs_light.webp){target=_blank}
+[![The macs2 entry with two outputs, peaks and broad_peaks, in the Outputs bar, and the Entry panel listing module.yaml plus a YAML, fixture and recipe for each](../images/tool-studio/07-outputs_dark.webp#only-dark)](../images/tool-studio/07-outputs_dark.webp){target=_blank}
+
+**Add output** in the bar above every step adds another output of the same tool. Each keeps
+its own fixture, recipe and renders; the steps edit the highlighted one. Export writes
+`module.yaml` once, then one YAML, fixture and recipe per output.
 
 ## 3. Visualizations
 
-**Add visualization** opens depictio's component-type grid.
+[![The figure builder seeded from the Bracken fixture: Bracken's re-estimated reads against Kraken's assigned reads per species, on log axes](../images/tool-studio/04-figure-builder_light.webp#only-light)](../images/tool-studio/04-figure-builder_light.webp){target=_blank}
+[![The figure builder seeded from the Bracken fixture: Bracken's re-estimated reads against Kraken's assigned reads per species, on log axes](../images/tool-studio/04-figure-builder_dark.webp#only-dark)](../images/tool-studio/04-figure-builder_dark.webp){target=_blank}
 
-<figure markdown="span">
-  [![The component-type grid: card, figure, table, interactive, advanced viz](../images/tool-studio/03-component-types.webp)](../images/tool-studio/03-component-types.webp){target=_blank}
-  <figcaption>The same grid the dashboard editor shows.</figcaption>
-</figure>
+**Add visualization** opens the dashboard editor's component-type grid, then depictio's own
+builder seeded from your fixture: same controls, same preview, same **UI Mode** / **Code
+Mode**. Figures are drawn by depictio's figure code in your browser; in Code Mode `df` is
+pandas there and Polars on the server, so use `df.to_pandas()`.
 
-Picking one drops you into depictio's actual builder for that type, seeded from your
-fixture instead of from the API: same controls, same live preview, same **UI Mode** /
-**Code Mode** toggle. It is the dashboard editor's own interface on a narrower surface,
-covering the component types and options a catalog entry can express, not every one
-depictio offers.
+[![A render card, on its For catalog developers tab with the renders_as entry it will write](../images/tool-studio/05-render-card_light.webp#only-light)](../images/tool-studio/05-render-card_light.webp){target=_blank}
+[![A render card, on its For catalog developers tab with the renders_as entry it will write](../images/tool-studio/05-render-card_dark.webp#only-dark)](../images/tool-studio/05-render-card_dark.webp){target=_blank}
 
-<figure markdown="span">
-  [![The figure builder, seeded from the fixture, with a live preview](../images/tool-studio/04-figure-builder.webp)](../images/tool-studio/04-figure-builder.webp){target=_blank}
-  <figcaption>In Code Mode the snippet runs in your browser under Pyodide, where <code>df</code> is a pandas DataFrame. depictio runs the same snippet server-side where <code>df</code> is Polars, so <code>df.to_pandas()</code> is what makes both behave the same.</figcaption>
-</figure>
-
-Each render lands as a card that mirrors how it will appear in the Catalog, with two tabs.
-
-<figure markdown="span">
-  [![A render card, with tabs for dashboard users and for catalog developers](../images/tool-studio/05-render-card.webp)](../images/tool-studio/05-render-card.webp){target=_blank}
-  <figcaption><em>For dashboard users</em> shows the preview and the <code>use:</code> snippet; <em>For catalog developers</em> shows the render id and the exact <code>renders_as</code> entry that will be written.</figcaption>
-</figure>
-
----
+Each render becomes a card with two tabs: **For dashboard users** (preview and `use:`
+snippet) and **For catalog developers** (the exact `renders_as` entry).
 
 ## 4. Export
 
-<figure markdown="span">
-  [![The Export step, offering Download zip and Sign in with GitHub & open PR](../images/tool-studio/06-export.webp)](../images/tool-studio/06-export.webp){target=_blank}
-  <figcaption>The generated files are shown inline, one tab each, before you commit to either route.</figcaption>
-</figure>
+[![The Export step with every check passing, Download zip, Sign in with GitHub & open PR, and the generated files](../images/tool-studio/06-export_light.webp#only-light)](../images/tool-studio/06-export_light.webp){target=_blank}
+[![The Export step with every check passing, Download zip, Sign in with GitHub & open PR, and the generated files](../images/tool-studio/06-export_dark.webp#only-dark)](../images/tool-studio/06-export_dark.webp){target=_blank}
 
-Two ways out:
+- **Download zip**: the folder to commit yourself.
+- **Sign in with GitHub & open PR**: forks `depictio/depictio`, commits under
+  `depictio/catalog/<tool>/` and opens the pull request (`public_repo` scope, token kept in
+  memory). Without OAuth, **Contribute on GitHub** walks you through the zip upload.
+- **Copy a link to this draft** (`#draft=`, fixture trimmed to 200 rows) and **Download
+  draft JSON** both round-trip through **Import an entry**.
 
-- **Download zip** gives you the folder to commit yourself.
-- **Sign in with GitHub & open PR** forks `depictio/depictio`, commits the three files under
-  `depictio/catalog/<tool>/` and opens the pull request. Only the `public_repo` scope is
-  requested. Where OAuth is not configured, the button becomes **Contribute on GitHub** and
-  walks you through the zip plus GitHub's own file uploader.
+[![The checks at export: a render bound to a column the fixture lacks, with its code, the output it is on, and Fix in Visualizations](../images/tool-studio/06b-export-checks_light.webp#only-light)](../images/tool-studio/06b-export-checks_light.webp){target=_blank}
+[![The checks at export: a render bound to a column the fixture lacks, with its code, the output it is on, and Fix in Visualizations](../images/tool-studio/06b-export-checks_dark.webp#only-dark)](../images/tool-studio/06b-export-checks_dark.webp){target=_blank}
 
-<figure markdown="span">
-  [![The pull request the app opened, on GitHub](../images/tool-studio/08-github-pr.webp)](../images/tool-studio/08-github-pr.webp){target=_blank}
-  <figcaption>The body is generated by the app: a summary, a table of the three files and what each is for, and both YAMLs inline.</figcaption>
-</figure>
+<span class="ver-badge">v1.23.0+</span> The Entry panel and the Export step run the checks of
+`depictio dev catalog validate`: JSON Schemas, identity and URLs, the nf-core and EDAM
+indices, fixtures, render bindings, recipes. Each finding links to the step that fixes it.
+Errors block export unless you tick **Export anyway**; CI's `catalog` check stays the
+authoritative one.
 
-<!-- prettier-ignore -->
-!!! info "The client-side checks are feedback, not the gate"
-    `depictio dev catalog validate`, run by the `catalog` CI check on your pull
-    request, is the authoritative one. The Export panel says so too.
+[![The pull request the app opened, on GitHub: a summary, the files and the YAML inline](../images/tool-studio/08-github-pr.webp)](../images/tool-studio/08-github-pr.webp){target=_blank}
 
----
+## Driving it from a script
 
-## What it generates
+<span class="ver-badge">v1.23.0+</span>
 
-```yaml
-# module.yaml
-# yaml-language-server: $schema=../module.schema.json
-id: mytool
-name: My Tool
-description: One or two sentences on what the tool does.
-homepage: https://github.com/example/mytool
-nf_core_url: https://github.com/nf-core/modules/tree/master/modules/nf-core/mytool
-biotools_url: null  # no bio.tools entry for this tool
+`window.toolStudio` loads (`load`, `loadFiles`, `loadZip`), validates (`validateAsync`),
+exports (`exportFiles`, `exportZip`) and shares (`link`) without a click; the
+[agent guide](https://github.com/depictio/depictio/blob/main/packages/tool-studio/public/agent.md)
+documents it.
 
-# results.yaml
-# yaml-language-server: $schema=../output.schema.json
-id: mytool_results
-find: {path_glob: "**/mytool/*.csv"}
-fixture: results.csv
-renders_as:
-  - { component: figure, visu_type: histogram, dict_kwargs: {x: log2fc, color: sample} }
-  - { component: card, column: coverage, aggregation: average }
-  - { component: advanced_viz, kind: volcano, roles: {feature_id: gene, effect_size: log2fc, significance: pvalue} }
-```
+??? example "What it generates"
+    ```yaml
+    # module.yaml: id, name, description, homepage, nf_core_url, biotools_url (or null), stage
+    # results.yaml
+    id: mytool_results
+    find: {path_glob: "**/mytool/*.tsv"}
+    recipe: mytool/results.py  # only when the output needs reshaping
+    fixture: results.tsv
+    renders_as:
+      - { component: card, column: coverage, aggregation: average, headline: true }
+      - { component: advanced_viz, kind: volcano, roles: {feature_id: gene, effect_size: log2fc, significance: pvalue} }
+    ```
 
-`biotools_url` is always written: the link when the import found a `biotools:` identifier,
-an explicit `null` otherwise, which is what the catalog tests require of every
-`module.yaml`.
-
-Plus the fixture itself, byte-identical to what you dropped. `columns:` is deliberately
-omitted: the fixture is what grounds the bindings, and declaring both is rejected by the
-schema.
-
----
+    Plus the fixture (byte-identical to the dropped file or the recipe's result) and the
+    recipe module, per output.
 
 ## What it cannot do yet
 
-- **Parsing recipes.** Half the committed catalog outputs need one, and those entries stay
-  [hand-written](contributing-a-tool.md#step-3-recipe-only-if-the-file-needs-reshaping).
-- `columns:` and `find.filename` are not expressible either.
-- Code-mode figures are grounded by nothing, and Pyodide and depictio's RestrictedPython
-  disagree about what will run.
-
----
+- No preview for the five server-computed advanced-viz kinds (embedding, complex_heatmap,
+  upset_plot, coverage_track, sankey) or a phylogenetic tree (its newick is never given);
+  they still export.
+- `filter_expr` is not applied in the previews; multi-file outputs, maps and images are not
+  offered.
 
 ## See also
 
-- [Contributing a Tool](contributing-a-tool.md) for the hand-authored path and the full schema
+- [Contributing a Tool](contributing-a-tool.md) for the hand-written path and the full schema
 - [Tools Catalog](../catalog/index.md) to browse what is already covered
 - [Picking a component from the catalog](../usage/guides/catalog-picker.md) for what an entry becomes on a dashboard

@@ -31,17 +31,16 @@ unless an output needs reshaping. Everything is validated in CI by
     output file, bind its columns in depictio's own component builder, and the app
     opens the pull request for you.
 
-    Use it when your output file is already a table with a header row.
+    From v1.23.0 it also writes and runs the
+    [recipe](#step-3-recipe-only-if-the-file-needs-reshaping) for a file that has to be
+    reshaped first, and covers several outputs per tool.
 
 -   :material-file-code:{ .lg .middle .dp-teal } **By hand**
 
     ---
 
-    Write the three files yourself, following this page. You need this when the
-    output has to be reshaped first, so the entry carries a
-    [recipe](#step-3-recipe-only-if-the-file-needs-reshaping).
-
-    About half the committed catalog outputs are in this case.
+    Write the files yourself, following this page, when you prefer your editor and
+    your own test loop, or to change an entry already in the catalog.
 
 </div>
 

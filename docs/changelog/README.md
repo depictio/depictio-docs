@@ -13,13 +13,43 @@ hide:
     Every release publishes four images, tagged with the version without its `v`:
 
     ```bash
-    ghcr.io/depictio/depictio-api:1.22.2
-    ghcr.io/depictio/depictio-viewer:1.22.2
-    ghcr.io/depictio/depictio-worker:1.22.2
-    ghcr.io/depictio/depictio-cli:1.22.2     # from v1.10.0
+    ghcr.io/depictio/depictio-api:1.23.0
+    ghcr.io/depictio/depictio-viewer:1.23.0
+    ghcr.io/depictio/depictio-worker:1.23.0
+    ghcr.io/depictio/depictio-cli:1.23.0     # from v1.10.0
     ```
 
     Before v1.0.0, a single `ghcr.io/depictio/depictio:<version>` image shipped, with `latest`, `stable` and `edge` tags.
+
+---
+
+## **[v1.23.0](https://github.com/depictio/depictio/releases/tag/v1.23.0)** (November 22, 2026)
+
+!!! success "Minor: table joins from the web interface, a redesigned Tool Studio and a security review"
+
+### **♻️ Migration**
+
+* **Quick-start compose binds to 127.0.0.1**: set `DEPICTIO_BIND_ADDRESS=0.0.0.0` for a multi-user deployment. ([#1465](https://github.com/depictio/depictio/pull/1465))
+* **WebSockets authenticate with a first message** (`?token=` is deprecated), and `GET /auth/list_tokens` no longer returns token values. ([#1465](https://github.com/depictio/depictio/pull/1465))
+* **Notebook export off by default**; the single-file dashboard export sits behind `DEPICTIO_STATIC_EXPORT_ENABLED`. ([#1460](https://github.com/depictio/depictio/pull/1460))
+
+### **✨ New Features**
+
+* **Table joins from the web interface**: preview, then a `joined_<name>` table rebuilt when a source changes. [Join two tables](../usage/projects/guide.md#join-two-tables) ([#1462](https://github.com/depictio/depictio/pull/1462))
+* **Tool Studio redesign**: recipes run in the browser, several outputs per tool, checks at parity with the CLI. [Tool Studio](../developer/tool-studio.md) ([#1441](https://github.com/depictio/depictio/pull/1441))
+* **Offline engine** (behind both export switches): a dashboard as one HTML file, sharing its runtime with Quarto reports. ([#963](https://github.com/depictio/depictio/pull/963), [#1409](https://github.com/depictio/depictio/pull/1409))
+* **Tools Catalog front page** with a tool grid and 16 categories. [Tools Catalog](https://depictio.github.io/depictio-catalog/latest/) ([#1461](https://github.com/depictio/depictio/pull/1461))
+
+### **🔒 Security**
+
+* **Sessions and sign-in**: rotating refresh tokens, server-side sign-out, no empty passwords, rate-limited access codes. [Security](../features/security.md#session-hardening) ([#1465](https://github.com/depictio/depictio/pull/1465))
+* **Access and secrets**: signed URLs for private images, editor rights and a memory cap for code mode, no password hash or S3 key in responses and logs. [Security](../features/security.md#code-sent-with-a-render) ([#1464](https://github.com/depictio/depictio/pull/1464), [#1465](https://github.com/depictio/depictio/pull/1465))
+
+### **🐛 Bug Fixes**
+
+* **An older CLI reads a newer server's `CLI.yaml`**, with one warning. ([#1463](https://github.com/depictio/depictio/pull/1463))
+* **Uploads no longer fail after an hour** (expired login token). ([#1462](https://github.com/depictio/depictio/pull/1462))
+* **No WebSocket retries when realtime events are off**. ([#1465](https://github.com/depictio/depictio/pull/1465))
 
 ---
 
