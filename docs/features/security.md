@@ -266,18 +266,25 @@ it on.
   dashboard alone, and where reports render, the report + dashboard file and its PDF).
   The download route reads that file and starts no job.
 - **A visitor's own view.** A signed-in visitor (a guest account too) may also export
-  the dashboard at the filters they set. It is built like the ready copy, from the same
-  live data, never from a past version. These exports are limited per user and per
-  address, and refused when the limiter cannot count. Anonymous visitors only get the
-  ready copies.
+  the dashboard at the filters they set: the dashboard alone, the report, or the
+  combined report and dashboard file. It is built like the ready copy, from the same live data, never from
+  a past version. These exports and renders are limited per user and per address, and
+  refused when the limiter cannot count. Anonymous visitors only get the ready copies.
 - **The owner can see what leaves.** Project › Permissions shows, per dashboard, the data
   collections the file carries, their columns and row counts, and which tables ship
   whole. Once downloaded, no access control follows the file.
-- **A public file names no one and carries no author code.** It has no email address
-  and no Python runtime. Figures written in code mode keep a closed list of data
-  operations the file replays when a filter changes; their Python source is left out.
-  Rendering a report of such a dashboard on request stays with the project's owners and
-  editors, and the export window says so before anyone clicks.
+- **A public file names no one.** It has no email address. Figures written in code
+  mode keep a closed list of data operations the file replays when a filter changes,
+  and their Python source is left out. The ready copies carry no Python runtime. A
+  visitor's own export may carry it (the option is checked when some figure needs it):
+  the figures it keeps live then carry their code, which any visitor of the live
+  dashboard can already read.
+- **Reports with code figures.** The server never runs that code in a report: the
+  figures come from the same sandbox that draws them on the live dashboard. A report
+  renders for any signed-in reader when the code is the project's own, meaning every
+  owner of the dashboard is a project owner or editor. A viewer's own copy, where they
+  may have written code themselves, renders for the project's owners and editors only,
+  and the export window says so before anyone clicks.
 - **It follows the project.** A copy is rebuilt after a save or an ingestion. Making the
   project private, turning the option off, or deleting the dashboard or project deletes
   the copies.
