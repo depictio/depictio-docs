@@ -254,28 +254,36 @@ one, and a saved dashboard keeps the stable unsigned URL.
 
 ### Offline copies for visitors <small>(v1.25.0+)</small> { #public-offline-download }
 
-A project owner may let visitors of a **public** project download each dashboard as one
-offline HTML file. It is off unless the instance sets both
-`DEPICTIO_STATIC_EXPORT_ENABLED` and `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_ENABLED`, and
-the owner turns it on in Project › Permissions.
+The data of a **public** project are public already: every figure a visitor sees carries
+them. So an instance can let visitors take a project's dashboards away as offline files.
+It is off unless the instance sets both `DEPICTIO_STATIC_EXPORT_ENABLED` and
+`DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_ENABLED`. Then every public project offers its
+files, unless its owner turns that off in Project › Permissions, or the instance sets
+`DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_DEFAULT=false`. In that case, each owner turns
+it on.
 
-- **Visitors never build anything.** The server keeps a copy built under the owner's
-  rules, at the dashboard's default view. The download route reads that file and starts
-  no job, so a stranger cannot make the server compute.
-- **The owner sees what leaves first.** Before turning the option on, the owner reviews,
-  per dashboard, the data collections the file carries, their columns and row counts, and
-  which tables ship whole, then confirms. Once downloaded, no access control follows the
-  file.
-- **A public copy names no one and runs no author code.** It carries no email address,
-  no Python runtime, and figures written in code mode ship as pictures without their
-  source.
+- **Ready copies.** The server keeps a copy of each dashboard at its default view (the
+  dashboard alone, and where reports render, the report + dashboard file and its PDF).
+  The download route reads that file and starts no job.
+- **A visitor's own view.** A signed-in visitor (a guest account too) may also export
+  the dashboard at the filters they set. It is built like the ready copy, from the same
+  live data, never from a past version. These exports are limited per user and per
+  address, and refused when the limiter cannot count. Anonymous visitors only get the
+  ready copies.
+- **The owner can see what leaves.** Project › Permissions shows, per dashboard, the data
+  collections the file carries, their columns and row counts, and which tables ship
+  whole. Once downloaded, no access control follows the file.
+- **A public file names no one and carries no author code.** It has no email address
+  and no Python runtime. Figures written in code mode keep a closed list of data
+  operations the file replays when a filter changes; their Python source is left out.
+  Rendering a report of such a dashboard on request stays with the project's owners and
+  editors, and the export window says so before anyone clicks.
 - **It follows the project.** A copy is rebuilt after a save or an ingestion. Making the
   project private, turning the option off, or deleting the dashboard or project deletes
-  the copies. An imported project arrives with the option off.
+  the copies.
 - **Downloads are rate-limited per address** (10 a minute by default). When the limiter
   cannot count (Redis unreachable), downloads are refused with a 503 rather than let
-  through. Owner-started exports have their own per-user limit and a cap on the export
-  queue.
+  through. Every export also counts towards a cap on the export queue.
 
 ---
 
