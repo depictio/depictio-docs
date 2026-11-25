@@ -252,6 +252,31 @@ one, and a saved dashboard keeps the stable unsigned URL.
 - An unverified requester email no longer takes ownership of an imported project.
 - Backup files and their checksum sidecars are written owner-only (0600).
 
+### Offline copies for visitors <small>(v1.25.0+)</small> { #public-offline-download }
+
+A project owner may let visitors of a **public** project download each dashboard as one
+offline HTML file. It is off unless the instance sets both
+`DEPICTIO_STATIC_EXPORT_ENABLED` and `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_ENABLED`, and
+the owner turns it on in Project › Permissions.
+
+- **Visitors never build anything.** The server keeps a copy built under the owner's
+  rules, at the dashboard's default view. The download route reads that file and starts
+  no job, so a stranger cannot make the server compute.
+- **The owner sees what leaves first.** Before turning the option on, the owner reviews,
+  per dashboard, the data collections the file carries, their columns and row counts, and
+  which tables ship whole, then confirms. Once downloaded, no access control follows the
+  file.
+- **A public copy names no one and runs no author code.** It carries no email address,
+  no Python runtime, and figures written in code mode ship as pictures without their
+  source.
+- **It follows the project.** A copy is rebuilt after a save or an ingestion. Making the
+  project private, turning the option off, or deleting the dashboard or project deletes
+  the copies. An imported project arrives with the option off.
+- **Downloads are rate-limited per address** (10 a minute by default). When the limiter
+  cannot count (Redis unreachable), downloads are refused with a 503 rather than let
+  through. Owner-started exports have their own per-user limit and a cap on the export
+  queue.
+
 ---
 
 ## Remote Data Sources <small>(v1.16.0+)</small> { #remote-data-sources }
