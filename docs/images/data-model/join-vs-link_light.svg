@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1380" height="640" viewBox="0 0 1380 640">
   <rect width="1380" height="640" fill="#ffffff"/>
   <text x="46.0" y="52.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="25" fill="#1e1e1e" text-anchor="start" font-weight="normal">Joining and linking</text>
-  <text x="46.0" y="78.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#5c5c5c" text-anchor="start" font-weight="normal">a join merges two tables into a new one. A link merges nothing and filters at render time.</text>
+  <text x="46.0" y="78.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#5c5c5c" text-anchor="start" font-weight="normal">a join merges tables once, at ingestion. A link merges nothing and filters at render time.</text>
   <text x="350.0" y="122.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="19" fill="#1e1e1e" text-anchor="middle" font-weight="bold">Join</text>
-  <text x="350.0" y="146.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#5c5c5c" text-anchor="middle" font-weight="normal">from the project page or the CLI. Tables only.</text>
+  <text x="350.0" y="146.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#5c5c5c" text-anchor="middle" font-weight="normal">run by the CLI, at ingestion. Tables only.</text>
   <rect x="70.0" y="190.0" width="250.0" height="95.0" rx="6" fill="#e7f8f3"/>
   <path d="M70.1,189.8 C152.8,188.9 237.1,188.6 319.3,190.0" fill="none" stroke="#0e936b" stroke-width="1.7" stroke-linecap="round"/>
   <path d="M69.9,190.5 C151.9,189.8 235.3,188.7 319.4,189.6" fill="none" stroke="#0e936b" stroke-width="1.7" stroke-linecap="round"/>
@@ -54,8 +54,8 @@
   <path d="M434.1,270.7 C443.4,270.6 452.0,270.4 461.7,271.0" fill="none" stroke="#0e936b" stroke-width="1.5" stroke-linecap="round"/>
   <path d="M447.7,265.6 C448.4,273.1 447.4,279.2 447.8,286.4" fill="none" stroke="#0e936b" stroke-width="1.5" stroke-linecap="round"/>
   <text x="545.0" y="282.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="18" fill="#1e1e1e" text-anchor="middle" font-weight="bold">joined table</text>
-  <text x="545.0" y="306.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">a new data collection,</text>
-  <text x="545.0" y="327.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">rebuilt as sources change</text>
+  <text x="545.0" y="306.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">one new data collection,</text>
+  <text x="545.0" y="327.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">written to S3</text>
   <path d="M319.3,230.8 C349.7,251.6 381.3,269.0 410.1,290.4" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
   <path d="M319.1,230.9 C348.4,248.2 380.8,269.7 410.3,290.6" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
   <path d="M410.0,289.8 C407.0,286.6 404.7,282.5 403.4,278.1" fill="none" stroke="#1e1e1e" stroke-width="1.7" stroke-linecap="round"/>
@@ -67,7 +67,6 @@
   <text x="362.0" y="325.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="14" fill="#5c5c5c" text-anchor="middle" font-weight="normal">on sample_id</text>
   <text x="360.0" y="500.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#5c5c5c" text-anchor="middle" font-weight="normal">One data collection from here on.</text>
   <text x="360.0" y="524.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#5c5c5c" text-anchor="middle" font-weight="normal">The rows are merged on disk.</text>
-  <text x="360.0" y="548.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="15" fill="#5c5c5c" text-anchor="middle" font-weight="normal">On the project page: Cross-DC links, Add join.</text>
   <path d="M699.2,120.7 C698.3,271.0 699.0,418.7 700.7,570.3" fill="none" stroke="#adb5bd" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="9 7"/>
   <path d="M699.3,119.9 C699.1,269.0 699.2,419.8 699.5,570.9" fill="none" stroke="#adb5bd" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="9 7"/>
   <text x="1030.0" y="122.0" font-family="Virgil, Virgil GS, Excalifont, Comic Sans MS, Bradley Hand, cursive" font-size="19" fill="#1e1e1e" text-anchor="middle" font-weight="bold">Link</text>

@@ -1,18 +1,21 @@
 ---
-title: "5. Follow a new run"
-description: "Add the 2009 season to the two tables of your episode 3 project, let the join follow, read what changed with What's new and Before | Now, undo a double append, then see runs and Compare on a prebuilt project."
+title: "Optional B · Follow a new run"
+description: "Add the 2009 season to the two tables of your Optional A project, let the join follow, read what changed with What's new and Before | Now, undo a double append, then see runs and Compare on a prebuilt project."
 glightbox: true
 ---
 
-# 5. Follow a new run
+# Optional B · Follow a new run
 
 <div class="ws-strip" markdown>
-[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From files](from-a-file.md){ .ws-ep3 } [**4** From a run](from-nf-core-run.md){ .ws-ep4 } [**5** New run](new-run-and-versions.md){ .ws-ep5 .ws-here }
+[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 } [**+** From files](from-a-file.md){ .ws-ep4 } [**+** New run](new-run-and-versions.md){ .ws-ep5 .ws-here }
 </div>
 
 <div class="ws-meta ws-ep5" markdown>
-<span class="ws-chip" markdown="span">:material-plus-box-outline: **Creator**</span> <span class="ws-chip" markdown="span">:material-database-outline: **Palmer Penguins, the 2009 season**</span> <span class="ws-chip" markdown="span">:material-flag-outline: **After episode 3**</span>
+<span class="ws-chip" markdown="span">:material-plus-box-outline: **Creator**</span> <span class="ws-chip" markdown="span">:material-database-outline: **Palmer Penguins, the 2009 season**</span> <span class="ws-chip" markdown="span">:material-flag-outline: **After Optional A**</span>
 </div>
+
+!!! note "Optional episode"
+    This episode is not done in the live session. Do it after the workshop, on the same server while it runs. You need your Optional A project, with its two tables, the join `joined_penguins` and its dashboard, and the two 2009 files from this page.
 
 !!! overview "Overview"
     **Questions**
@@ -23,12 +26,12 @@ glightbox: true
 
     **Objectives**
 
-    - Append the 2009 season to both tables of your episode 3 project, and let the join follow.
+    - Append the 2009 season to both tables of your Optional A project, and let the join follow.
     - Read what changed with **What's new**, and compare a figure with **Before | Now**.
     - Restore a table to the version before a mistake.
     - Tell an append from a new run.
 
-A field survey does not stop after two seasons. You add the 2009 season to the two tables of the project you created in [episode 3](from-a-file.md), then ask Depictio what changed.
+A field survey does not stop after two seasons. You add the 2009 season to the two tables of the project you created in [Optional A](from-a-file.md), then ask Depictio what changed.
 
 Download the two files:
 
@@ -41,23 +44,31 @@ You append to the two tables only. `joined_penguins` is rebuilt by Depictio afte
 
 ## :material-bookmark-outline: Open your dashboard first { #first-visit }
 
-1. Open **Dashboards**, then the dashboard you made in episode 3.
+1. Open **Dashboards**, then the dashboard you made in Optional A.
 2. Look at it once. Depictio records your visit: *What's new* compares with what you saw now.
 
 ## :material-database-cog-outline: Append the 2009 season
 
 Measurements first, then the census.
 
-1. Open **Projects**, then your episode 3 project.
-2. In the Data collections table, on the row of `physical_features`, click the database icon, **Manage data (append / replace / clear)**. The dialog **Manage Data Collection** opens, on the tab **Modify data**.
+1. Open **Projects**, then your Optional A project.
+2. In the Data collections table, on the row of `physical_features`, click the icon with a database and a gear, titled **Manage data (append / replace / clear)**. The dialog **Manage Data Collection** opens, on the tab **Modify data**.
+
+    ![The Data collections table of a project, with the rows demographic_data and physical_features; at the right end of each row, three icons: a database with a gear, a pencil and a bin](../../images/tutorials/workshop/ep5_manage_row.webp){ .ws-shot }
+
+    The shot shows two rows. In your Optional A project the table also has a third row, `joined_penguins`, whose **Manage data** is disabled.
+
 3. Leave the switch **Replace existing data** off: the new rows are appended to the table.
-4. Drop `physical_features_2009.csv`, then click **Append folders**. The button reads *folders* even for one CSV file.
+4. Drop `physical_features_2009.csv`: the dialog lists it, *1 file · 4.2 KB*. Then click **Append folders**. The button reads *folders* even for one CSV file.
+
+    ![The Manage Data Collection dialog on Modify data: Replace existing data switched off, the file physical_features_2009.csv listed after the drop, and the buttons Cancel and Append folders](../../images/tutorials/workshop/ep5_manage_drop.webp){ .ws-shot }
+
 5. The same on the row of `demographic_data`, with `demographic_data_2009.csv`.
 
 Append each file **once**. A second append of the same file is accepted without a warning: see [Appended twice?](#appended-twice).
 
 !!! callout "Why the measurements first?"
-    The join is a **left** join: it keeps every penguin of the census, `demographic_data`, and adds its measurements. Append the measurements first, and they wait in `physical_features` with no census row to match: `joined_penguins` stays at 223 rows, the Gentoo figure at 80, and **What's new** shows no data change yet. Its badge may already count something else, such as the comments of episode 3. Then append the census: `joined_penguins` goes to 342 rows, every one with its measurements. The other way round, the 119 new penguins enter `joined_penguins` with empty measurements until the second append: the row counts and the filter jump before the figure does.
+    The join is a **left** join: it keeps every penguin of the census, `demographic_data`, and adds its measurements. Append the measurements first, and they wait in `physical_features` with no census row to match: `joined_penguins` stays at 223 rows, the Gentoo figure at 80, and **What's new** shows no data change yet. Its badge may already count something else, such as the comments of Optional A. Then append the census: `joined_penguins` goes to 342 rows, every one with its measurements. The other way round, the 119 new penguins enter `joined_penguins` with empty measurements until the second append: the row counts and the filter jump before the figure does.
 
 Depictio rebuilds `joined_penguins` after each append. **Manage data** is disabled on a joined table: append, replace and clear are refused there.
 
@@ -71,7 +82,7 @@ In the project, **Activity → History** lists the two appends as *Ingested · f
 
 ![What's new: Mark as seen, Off and Overlay with Split greyed out, and under DATA 1 the entry joined_penguins, Refreshed · 223 → 342 rows](../../images/tutorials/workshop/ep5_whatsnew_join.webp){ .ws-shot }
 
-!!! challenge "Challenge 5.1: what arrived?"
+!!! challenge "Challenge B.1: what arrived?"
     Which table does the **Data** part of the panel list, and with how many rows? Why not `demographic_data` and `physical_features`?
 
     ??? solution "Solution"
@@ -85,7 +96,7 @@ In the project, **Activity → History** lists the two appends as *Ingested · f
 1. In the filter, check that *Gentoo* is selected; pick it only if it is not.
 2. On the figure, click the blue dot: it marks a tile whose data changed. Its menu offers **Mark as seen**, **Compare with last visit** and **Before | Now**: click **Before | Now**. It opens the figure as you last saw it, and as it is now.
 
-!!! challenge "Challenge 5.2: how many new Gentoo?"
+!!! challenge "Challenge B.2: how many new Gentoo?"
     How many points does **Before** show, how many **Now**? Where are the new penguins listed?
 
     ??? solution "Solution"
@@ -97,7 +108,7 @@ Once you have answered, open **What's new** again and click **Mark as seen**. Do
 
 An append adds rows to a table. It does not add a **run** to the project.
 
-- The project's **Runs** tab does not change: it still holds the two runs of the uploads of episode 3.
+- The project's **Runs** tab does not change: it still holds the two runs of the uploads of Optional A.
 - **Activity → History** lists each append to `demographic_data` and `physical_features` as *Ingested · from Add data*, without the table's name; the rebuilds of the join are not listed.
 - **Compare** has nothing to show for an append.
 
@@ -132,12 +143,12 @@ More in [Runs and run comparison](../../features/runs.md) and [What's new](../wh
 !!! further "Going further: earlier data, earlier dashboard"
     Each time a table changes, Depictio keeps the version before. Each time a dashboard is saved, too.
 
-    **Challenge 5.3: back to two seasons.** On **Dashboards**, **Duplicate** a dashboard of *Penguin Field Survey* and open your copy. Click **Edit**, then the gear icon at the top right of the header (**Settings**), then **Data version**. Set **physical_features** to **v1 · 223 rows**, the version before the 2009 season (v0 holds 109 rows, v2 the 342 of all three seasons). What do the figures show? Who else sees it?
+    **Challenge B.3: back to two seasons.** On **Dashboards**, **Duplicate** a dashboard of *Penguin Field Survey* and open your copy. Click **Edit**, then the gear icon at the top right of the header (**Settings**), then **Data version**. Set **physical_features** to **v1 · 223 rows**, the version before the 2009 season (v0 holds 109 rows, v2 the 342 of all three seasons). What do the figures show? Who else sees it?
 
     ??? solution "Solution"
         The figures drawn from `physical_features` show the 223 penguins of 2007 and 2008. Only you see it, until you reload the page.
 
-    **Challenge 5.4: undo a change.** Change a figure of your copy and save. Then bring back the version before.
+    **Challenge B.4: undo a change.** Change a figure of your copy and save. Then bring back the version before.
 
     ??? solution "Solution"
         In **Edit**, **Settings → History**: click **↺** on the version before your change, then **Restore**. A restore saves the current state first: nothing is lost.
@@ -151,6 +162,6 @@ More in [Runs and run comparison](../../features/runs.md) and [What's new](../wh
     - A run is one batch of results; a project fed by a pipeline gets one run per batch, and **Compare** shows what each one changed.
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#episode-5){ .ws-help }
+[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#optional-b){ .ws-help }
 [<span class="ws-k">Next</span><span class="ws-t">Reference: the words of the lesson</span>](reference.md){ .ws-go .ws-ep0 }
 </div>

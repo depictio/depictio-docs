@@ -1,16 +1,16 @@
 ---
 title: "Depictio from the command line"
 icon: material/console
-description: "The Depictio command line: set it up, create a project from your own tables, add a new season and compare, write a dashboard as a file; an nf-core run with its template as an optional episode."
+description: "Day 2 of the workshop: set up the command line, build a project from your own tables, bring an nf-core run from the terminal, then collaborate on a dashboard and export it. Going further holds the rest."
 glightbox: true
 ---
 
-# :material-console: Depictio from the command line <small>(v1.23+)</small>
+# :material-console: Depictio from the command line <small>(v1.24+)</small>
 
-<p class="ws-lead">The second <a href="../courses/">hands-on course</a>. In <a href="../workshop/">Depictio in the browser</a> everything happens in the browser. Here the same things happen from your own computer, with the Depictio command line: a results folder on your laptop becomes a project on the server, and a dashboard becomes a file you can edit.</p>
+<p class="ws-lead">The second <a href="../courses/">hands-on course</a>. In <a href="../workshop/">Depictio in the browser</a> everything happens in the browser. Here you start from your own tables in the browser, bring an nf-core run in from your terminal with the Depictio command line, then collaborate on the dashboard and export it. Day 2 is on 16 December.</p>
 
-[![The CLI reads the folder on your laptop, writes the tables to the server's storage and records the project; the browser shows the dashboard](../../images/tutorials/workshop-cli/diagrams/cli-flow_light.png#only-light){ .ws-diagram }](../../images/tutorials/workshop-cli/diagrams/cli-flow_light.png){target=_blank}
-[![The CLI reads the folder on your laptop, writes the tables to the server's storage and records the project; the browser shows the dashboard](../../images/tutorials/workshop-cli/diagrams/cli-flow_dark.png#only-dark){ .ws-diagram }](../../images/tutorials/workshop-cli/diagrams/cli-flow_dark.png){target=_blank}
+![The CLI runs where the files are (a laptop, a server or cluster, the end of a Nextflow run, a scheduled job), reads the folder, writes the tables to the server's storage and records the project; the browser shows the dashboard](../../images/tutorials/workshop-cli/diagrams/cli-flow_light.png#only-light){ .ws-diagram }
+![The CLI runs where the files are (a laptop, a server or cluster, the end of a Nextflow run, a scheduled job), reads the folder, writes the tables to the server's storage and records the project; the browser shows the dashboard](../../images/tutorials/workshop-cli/diagrams/cli-flow_dark.png#only-dark){ .ws-diagram }
 
 <div class="ws-meta" markdown>
 <span class="ws-chip" markdown="span">:material-console: **Some terminal practice**</span> <span class="ws-chip" markdown="span">:material-laptop: **macOS or Linux**</span> <span class="ws-chip" markdown="span">:material-language-python: **Python 3.11 or later**</span>
@@ -28,37 +28,37 @@ glightbox: true
 
     How do I install the CLI and connect it to the server?
 
--   <span class="ws-num">1</span> **[Your first project from the command line](first-project.md)**
+-   <span class="ws-num">1</span> **[Your own tables, no template](project-builder.md)**
 
     ---
 
-    <span class="ws-role">Palmer Penguins · one table, one season</span>
+    <span class="ws-role">Palmer Penguins · in the browser</span>
 
-    How do I turn a table on my laptop into a project and a dashboard?
+    How do I turn my own tables into a project, when no template exists?
 
--   <span class="ws-num">2</span> **[A second table, then a new season](own-tables.md)**
-
-    ---
-
-    <span class="ws-role">Palmer Penguins · two tables, two seasons</span>
-
-    How do I add a table, link it, and bring the next batch?
-
--   <span class="ws-num">3</span> **[A dashboard as code](dashboard-as-code.md)**
+-   <span class="ws-num">2</span> **[An nf-core run from the terminal](nf-core-run.md)**
 
     ---
 
-    <span class="ws-role">A YAML file</span>
-
-    How do I write, check and share a dashboard as a file?
-
--   <span class="ws-num">4</span> **[An nf-core run, with its template](nf-core-run.md)**
-
-    ---
-
-    <span class="ws-role">Optional · nf-core/ampliseq</span>
+    <span class="ws-role">nf-core run · the command line</span>
 
     How does a pipeline Depictio knows skip the project file?
+
+-   <span class="ws-num">3</span> **[Collaborate and export](collaborate-and-export.md)**
+
+    ---
+
+    <span class="ws-role">Your copy of nf-core/ampliseq · in the browser</span>
+
+    How do I label, comment, go back to a version, and hand the dashboard over as a file?
+
+-   <span class="ws-num">+</span> **[Going further](going-further.md)**
+
+    ---
+
+    <span class="ws-role">Optional · A project file by hand, a new season, a dashboard as code</span>
+
+    What else can the command line do?
 
 </div>
 
@@ -72,15 +72,15 @@ glightbox: true
 
     The census and measurements of the browser course, split into one folder per field season.
 
-    Episodes 1, 2, 3 · [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/), CC0
+    Episode 1 and Going further · [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/), CC0
 
 -   ![nf-core](../../images/pipeline-templates/nf-core/ampliseq/nf-core.png){ .ws-logo .off-glb } **nf-core/ampliseq 2.18.0**
 
     ---
 
-    The megatest run of the browser course, as a folder you download: 12 samples from soil, sediment and water.
+    Your copy of the dashboard of the browser course: 12 samples from soil, sediment and water.
 
-    Episode 4 · [nf-core/ampliseq](https://nf-co.re/ampliseq/2.18.0)
+    Episode 3 · [nf-core/ampliseq](https://nf-co.re/ampliseq/2.18.0)
 
 </div>
 

@@ -1,191 +1,223 @@
 ---
 title: "1. Read a shared dashboard"
-description: "Read a shared nf-core/ampliseq dashboard: check the run in MultiQC, pick samples from a filter, a table, a figure or a map, then save groups, compare them and comment."
+description: "Hands-on 1: open the Guide, check the run in MultiQC, filter a dashboard on a habitat and compare two groups of samples. The rest is in Bonus blocks."
 glightbox: true
 ---
 
 # 1. Read a shared dashboard
 
 <div class="ws-strip" markdown>
-[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 .ws-here } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From files](from-a-file.md){ .ws-ep3 } [**4** From a run](from-nf-core-run.md){ .ws-ep4 } [**5** New run](new-run-and-versions.md){ .ws-ep5 }
+[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 .ws-here } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 } [**+** From files](from-a-file.md){ .ws-ep4 } [**+** New run](new-run-and-versions.md){ .ws-ep5 }
 </div>
 
 <div class="ws-meta ws-ep1" markdown>
-<span class="ws-chip" markdown="span">:material-account-eye-outline: **Reader**</span> <span class="ws-chip" markdown="span">:material-database-outline: **nf-core/ampliseq**</span> <span class="ws-chip" markdown="span">:material-flag-outline: **After episode 0**</span>
+<span class="ws-chip" markdown="span">:material-account-eye-outline: **Reader**</span> <span class="ws-chip" markdown="span">:material-database-outline: **nf-core/ampliseq**</span> <span class="ws-chip" markdown="span">:material-timer-outline: **Hands-on 1 · 10 min**</span> <span class="ws-chip" markdown="span">:material-flag-outline: **After episode 0**</span>
 </div>
 
 !!! overview "Overview"
-    **Questions**
+    **Objective**: read a dashboard someone shared with you. Check the run, narrow the dashboard to the samples you care about, and compare two groups.
 
-    - Why Depictio after a pipeline, rather than a static report or an app coded from scratch?
-    - How do I check the quality of the run before reading its results?
-    - How do I narrow a dashboard to the samples I care about?
-    - How do I compare two groups of samples?
-    - What do others see of what I do?
+    The core of this page takes about 5 minutes to read. Everything else is in the **Bonus** blocks at the end: open them when you have time, or after the workshop.
 
-    **Objectives**
+Open **nf-core/ampliseq** from **Dashboards**. You are a **reader**: you cannot change the dashboard or its data, and what you do changes only your own view.
 
-    - Find a MultiQC value with the dashboard search.
-    - Filter a dashboard, MultiQC included, and share the filtered view.
-    - Pick samples from a table, a map and a figure, and see the other data collections follow.
-    - Save two groups and compare them in the cards.
-    - Leave a comment on a figure.
+## :material-book-open-variant: Hands-on 1 · Step 1: open the Guide { #guide }
 
-Someone shared a finished dashboard with you: you are a **reader**. You cannot change the dashboard or its data. You can filter it, select samples and compare groups: that changes only your own view. Your filters and selections are kept for your account, in any browser you sign in on; your groups stay in this browser. Others see your view only if you send them its link.
+Every dashboard comes with a **Guide**: one page that explains how to move around it, filter it and read its components. We do this step together, live.
 
-![As a reader, the dashboard and its data are read only. Your view is yours: filters and selections kept for your account, groups kept in this browser, shown to others only by a view link](../../images/tutorials/workshop/diagrams/yours-and-shared_light.png#only-light){ .ws-diagram }
-![As a reader, the dashboard and its data are read only. Your view is yours: filters and selections kept for your account, groups kept in this browser, shown to others only by a view link](../../images/tutorials/workshop/diagrams/yours-and-shared_dark.png#only-dark){ .ws-diagram }
+1. In the left sidebar, under **Filters**, click **Guide**.
+2. In any part, click **Show me**, for example **Show me the filter**: it rings the control in a small working example. What you try there does not change the dashboard.
+3. Click **Back to Overview**, at the top right.
 
-<figure markdown="span" class="ws-media"><video autoplay controls muted loop playsinline poster="../../../images/tutorials/workshop/filter.webp" src="../../../images/tutorials/workshop/filter.mp4"></video></figure>
+![The part Filter the data of the Guide: its explanation, a small example with a filter and a figure, and the button Show me the filter](../../images/tutorials/workshop/ep1_guide_showme.webp){ .ws-shot }
 
-Open **nf-core/ampliseq** from **Dashboards**.
+## :material-magnify: Step 2: the quality of the run { #multiqc }
 
-## :material-transit-connection-variant: Why Depictio: the step after the pipeline { #why }
+Before reading the results, check the run. The ![MultiQC](../../images/tutorials/workshop/multiqc-icon.svg){ .ws-logo .ws-logo-mono .off-glb } MultiQC report of the pipeline is on the dashboard.
 
-A pipeline usually stops at its outputs: files opened one by one, a static HTML report, or an app coded from scratch for one dataset. Depictio is the step after: **one platform, reused and standardised across pipelines**, with the same tools while you build the dashboard and after you share it: with collaborators, with everyone, or as one HTML file that opens without a server, as a MultiQC report does.
+1. Press **Ctrl+K** (**⌘K** on a Mac), or click the magnifier :material-magnify: **Search this dashboard** in the bottom toolbar. The search covers every tile of every tab and opens the tab that holds what you pick.
+2. Type *General Stats* and open it.
+3. In the column **Trimmed bases** (cutadapt, % of base pairs trimmed): which sample was trimmed the most?
 
-![Usually, one pipeline's results end as output files, and/or a static HTML report (MultiQC, Quarto, Jupyter), or an app coded from scratch (Shiny, Streamlit, Plotly Dash). With Depictio, the results of any pipeline go through one platform (a template per pipeline version, components from the Tools catalog, editing in the interface, in code or YAML, every save a version) to a dashboard shared with collaborators or with everyone](../../images/tutorials/workshop/diagrams/why-depictio_light.png#only-light){ .ws-diagram }
-![Usually, one pipeline's results end as output files, and/or a static HTML report (MultiQC, Quarto, Jupyter), or an app coded from scratch (Shiny, Streamlit, Plotly Dash). With Depictio, the results of any pipeline go through one platform (a template per pipeline version, components from the Tools catalog, editing in the interface, in code or YAML, every save a version) to a dashboard shared with collaborators or with everyone](../../images/tutorials/workshop/diagrams/why-depictio_dark.png#only-dark){ .ws-diagram }
+![The bottom toolbar of the dashboard, with the search, comments, Analysis and Edit buttons](../../images/tutorials/workshop/anatomy.webp){ .ws-shot }
 
-You see each of them today: editing and versions in [episode 2](edit-your-copy.md), sharing in [episode 3](from-a-file.md#share-it-your-group-then-everyone), templates in [episode 4](from-nf-core-run.md). 42 nf-core pipelines have a template; the Tools catalog maps 471 outputs of 136 tools to components.
+??? solution "Answer"
+    SRR10070132: 13.9 % of its bases trimmed, against 9.3 to 11.8 % for the other samples. It is a groundwater sample.
 
-<p class="ws-src">Templates: Depictio documentation; tools and outputs: Depictio code; both November 2026.</p>
-
-??? info "Compared, as a reader: a static report, a spreadsheet, your own code"
-
-    <div class="ws-compare" markdown>
-
-    | As a reader, you can… | :material-file-document-outline:<br>Static HTML report | :material-table-large:<br>Spreadsheet | :material-code-braces:<br>Your code, an app | ![Depictio](../../images/logo/favicon_lite.png){ .ws-logo .off-glb }<br>Depictio | Try it |
-    |---|:-:|:-:|:-:|:-:|---|
-    | Filter every view at once: MultiQC, tables, figures | <span class="ws-part">Within some reports</span> | :material-close-thick:{ .ws-no } | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | [Filter](#filter) |
-    | Pick samples on a table, a figure or a map | :material-close-thick:{ .ws-no } | <span class="ws-part">Rows only</span> | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | [Four ways](#four-ways) |
-    | Send the filtered view as a link | :material-close-thick:{ .ws-no } | :material-close-thick:{ .ws-no } | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | [Challenge 1.3](#filter) |
-    | Define your own groups and compare them | :material-close-thick:{ .ws-no } | <span class="ws-part">By hand</span> | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | [Analysis mode](#groups) |
-    | Comment on a figure | :material-close-thick:{ .ws-no } | <span class="ws-part">On cells</span> | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | [Challenge 1.7](#groups) |
-    | Open it as one file, without a server | :material-check-bold:{ .ws-yes } | :material-check-bold:{ .ws-yes } | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | |
-
-    </div>
-
-## :material-magnify: First, the quality of the run { #multiqc }
-
-Before reading the results, check the run. The ![MultiQC](../../images/tutorials/workshop/multiqc-icon.svg){ .ws-logo .ws-logo-mono .off-glb } MultiQC report of the pipeline is on the dashboard. To find a plot, click **Search this dashboard**, the magnifier :material-magnify: in the bottom toolbar (**Ctrl+K**, or **⌘K** on a Mac). The search covers every tile of every tab and opens the tab that holds what you pick.
-
-!!! challenge "Challenge 1.1: the most trimmed sample"
-    Search for *General Stats* and open it. In the column **Trimmed bases** (cutadapt, % of base pairs trimmed), which sample lost the most?
-
-    ??? solution "Solution"
-        SRR10070132: 13.9 % of its bases trimmed, against 9.3 to 11.8 % for the other samples. It is a groundwater sample.
-
-## :material-filter-outline: Pick samples: four ways in { #four-ways }
-
-On this dashboard you pick samples in four ways: the **Filters** panel, rows of a table, points of a figure, markers of a map. The four used here read the sample metadata; the links carry the samples you picked to the other data collections, so every component that reads them follows.
-
-![Four ways to pick samples: the Filters panel, rows of Sample sheet, points of a scatter plot, markers of Sampling sites, all on the metadata; the links carry the 3 picked samples to the other data collections. A pinned filter reaches every tab, a selection its own tab](../../images/tutorials/workshop/diagrams/filter-flow_light.png#only-light){ .ws-diagram }
-![Four ways to pick samples: the Filters panel, rows of Sample sheet, points of a scatter plot, markers of Sampling sites, all on the metadata; the links carry the 3 picked samples to the other data collections. A pinned filter reaches every tab, a selection its own tab](../../images/tutorials/workshop/diagrams/filter-flow_dark.png#only-dark){ .ws-diagram }
-
-How links carry a filter: [Cross-DC filtering](../../features/cross-dc-filtering.md).
-
-### :material-filter-variant: From the Filters panel { #filter }
+## :material-filter-variant: Step 3: filter on a habitat { #filter }
 
 1. Open the **Community & Diversity** tab.
 2. The **Filters** panel is open on the left; if it is not, click **Filters**, near the bottom of the left sidebar. Under **Sample filters**, set **Habitat** to *Soil*.
-3. Open another tab: the filter is still set. **Sample filters** carries a pin :material-pin:: it is a pinned section, drawn on every tab, so its filters reach every tab. A section without a pin, such as **Community filters** on this tab, belongs to its tab.
+3. Read the **Phyla** card. How many phyla with the filter, and how many without?
 
-!!! challenge "Challenge 1.2: what does the filter change?"
-    With Habitat set to *Soil*, how many phyla does the **Phyla** card show? How many without the filter?
+![The Community & Diversity tab of the nf-core/ampliseq dashboard, with the Filters panel on the left](../../images/tutorials/workshop/app_community.webp){ .ws-shot }
 
-    ??? solution "Solution"
-        26 with *Soil*, 57 without. The card reads the taxonomy, another data collection than the metadata: the link carries the three soil samples to it.
+??? solution "Answer"
+    26 with *Soil*, 57 without. The card reads the taxonomy, another data collection than the metadata: the link carries the three soil samples to it.
 
-To share this view, copy its link: the link icon next to *1 filter active* in the Filters panel, or the gear icon in the header, then **Filters → Share this view**.
+## :material-chart-scatter-plot: Step 4: Analysis mode, two groups, then Compare { #groups .ws-analysis }
 
-!!! challenge "Challenge 1.3: what does the link carry?"
-    Copy the link of your filtered view. Clear the filter with the red eraser icon at the top of the Filters panel, then paste the link in a new browser tab. What is filtered?
-
-    ??? solution "Solution"
-        *Habitat: Soil* is back, and the Phyla card shows 26 again. The link carries the filters: whoever opens it sees this view, and what they change afterwards does not change yours.
-
-The MultiQC report follows the same filters: a link matches its sample names to the metadata.
-
-1. In **Habitat**, remove *Soil*, then pick *Groundwater*. Habitat takes several values: with *Soil* still in, you get six samples, not three.
-2. Open **General Stats** again, with the search. Three samples are left: SRR10070132, the most trimmed sample, beside SRR10070133 and SRR10070141.
-
-### :material-table: From a table { #select-table }
-
-1. Clear the filter. Open **Overview**, the first tab.
-2. At the bottom of Overview, expand the collapsed **Sample sheet** section. Click a row, then hold **Ctrl** (**⌘** on a Mac) and click more rows. The cards at the top follow: **Samples**, **Phyla**, **Shannon diversity**, **Reads kept (%)**. Each reads a different data collection.
-3. **Clear selection**, in the table's action row, drops the selection.
-
-!!! challenge "Challenge 1.4: the least diverse habitat"
-    Select the three *Groundwater* rows of **Sample sheet**. What does the **Shannon diversity** card show, before and after?
-
-    ??? solution "Solution"
-        About 7.7 for all twelve samples (the card shows the median), about 5.4 for SRR10070132, SRR10070133 and SRR10070141: groundwater is the least diverse habitat of the run.
-
-### :material-map-marker-multiple: From a map { #select-map }
-
-!!! note "Only if your instructor's dashboard has the Sampling sites map"
-    The dashboard built from the nf-core/ampliseq template has seven tabs: Overview, MultiQC, Alpha Diversity, Ordination & Clustering, Community & Diversity, Differential Abundance, Phylogeny. The **Sampling sites** map is only on an extended version of it. Without the map, skip to the next section, [From a figure](#select).
-
-    1. Clear the table's selection. On **Overview**, hover the **Sampling sites** map: its toolbar appears at the top right.
-    2. Pick **Lasso Select** and draw around the markers of one site. The cards and **Sample sheet** follow.
-
-    !!! challenge "Challenge 1.5: one site, two habitats"
-        Lasso the southernmost site, Pfäffingen. How many samples does the **Samples** card count, and from which habitats?
-
-        ??? solution "Solution"
-            4: two *Riverwater* (SRR10070130, SRR10070131) and two *Sediment* (SRR10070149, SRR10070150). The river water and its sediment were sampled at the same place, so their markers sit on top of each other: hovering shows only one.
-
-### :material-chart-box-outline: From a figure { #select }
-
-!!! note "Only if your instructor's dashboard has the Environment (CTD) tab"
-    The **Environment (CTD)** tab is only on the extended version of the dashboard, like the map. Without it, you select points on a figure in the [Analysis mode](#groups) section below, on the PCoA.
-
-    1. Clear any selection. Open **Environment (CTD)**.
-    2. On **Temperature × conductivity**, hover the plot, pick **Box Select** in its toolbar and draw a box around a few points. The cards and the **Shannon diversity** figure of the tab follow.
-
-    !!! challenge "Challenge 1.6: the coldest samples"
-        Box the three coldest points, near 3 °C. Which habitat are they from, and how diverse?
-
-        ??? solution "Solution"
-            *Soil*: SRR10102392, SRR10102393 and SRR10102394, between 3.1 and 3.7 °C. Their Shannon diversity, 8.6 to 8.7, sits between groundwater (about 5.4) and sediment (about 9.4).
-
-!!! callout "Links go one way"
-    A link goes from the metadata to the other data collections. A selection on a figure that reads another collection, such as the PCoA on **Ordination & Clustering**, narrows only the components that read that same collection.
-
-!!! callout "How to read a tile"
-    The **(i)** next to a tile's title says how to read it and where its data comes from.
-
-![The Community & Diversity tab of the nf-core/ampliseq dashboard](../../images/tutorials/workshop/app_community.webp){ .ws-shot }
-
-## :material-chart-scatter-plot: Analysis mode { #groups .ws-analysis }
-
-**Analysis**, in the bottom toolbar, keeps selections as named groups and compares them. Groups are kept in your browser: nobody else sees them. Unlike a selection, a group reaches every data collection, even from the PCoA: groups also follow the links backwards.
-
-<figure markdown="span" class="ws-media"><video autoplay controls muted loop playsinline poster="../../../images/tutorials/workshop/groups.webp" src="../../../images/tutorials/workshop/groups.mp4"></video></figure>
+**Analysis**, in the bottom toolbar, keeps selections as named groups and compares them. Groups are kept in your browser: nobody else sees them. First clear the Habitat filter (the red eraser icon at the top of the Filters panel).
 
 1. Open **Ordination & Clustering**, then click **Analysis** in the bottom toolbar.
 2. On the PCoA, pick **Box select** in the figure's toolbar and box the water samples: the six points on the left (hover a point to read its sample ID). Scroll down the **Analysis** panel to type the group's name, then click **Save group**.
 3. Box-select the soil and sediment samples together, and save them as a second group.
 4. Turn on **Compare groups in cards**, then open **Alpha Diversity**. Each card now shows one value per group, beside **All**.
 
-!!! challenge "Challenge 1.7: compare and comment"
-    Do your two groups differ in diversity? Click the comment icon in the corner of a figure and write your answer. Readers can comment only where the server allows it; this workshop's server does.
+![Two saved groups, Soil and Water, colour the PCoA and the distance matrix; the sediment samples stay grey as Other](../../images/tutorials/workshop/hands_groups.webp){ .ws-shot }
+
+!!! question "Check your understanding"
+    You filtered on **Habitat**, a column of the sample metadata, yet the **Phyla** card, which reads the taxonomy, changed. Why? Which of your two actions, the filter or a selection on a figure, reached the other tabs?
+
+    ??? solution "Answer"
+        The metadata is linked to the other data collections: the link carries the picked samples to every component that reads them. **Sample filters** carries a pin :material-pin:, so its filters reach every tab. A selection, such as a box on the PCoA, acts on its own tab only.
+
+!!! challenge "Challenge: compare two groups"
+    Do your two groups differ in diversity? Read the cards of **Alpha Diversity**, then say which group is the more diverse, and by how much.
 
     ??? solution "Solution"
-        The answer depends on your groups. The comment keeps the filters and the selection it was written with: whoever opens it sees what you saw.
-
-![Two saved groups compared on the Alpha Diversity tab](../../images/tutorials/workshop/hands_groups.webp){ .ws-shot }
-
-!!! further "Going further"
-    In the **Analysis** panel, **Color figures by → A column → habitat** colours every figure by a column of the sample metadata.
+        The answer depends on your groups. On **Alpha Diversity**, each card shows one value per group beside **All**: start with the Shannon diversity card. To see why, colour a figure by your groups: the **Analysis** panel does it for every figure at once.
 
 !!! keypoints "Key points"
-    - Depictio is the step after the pipeline: one platform for every pipeline, with the same tools while you build and after you share.
+    - A dashboard is made of components, grouped in sections, on tabs: filters on the left, a bottom bar for search, comments, Analysis and Edit.
     - Check the run first: the dashboard search finds a MultiQC plot on any tab.
-    - The Filters panel, a table, a figure or a map can pick samples. From the metadata, the links carry them to every data collection, MultiQC included.
-    - A filter of a pinned section reaches every tab; a selection acts on its own tab. A view link carries the filters, so it shares a view.
-    - As a reader, the dashboard and its data are read only. Filters and selections are kept for your account, groups in this browser; others see them only through a view link.
+    - A filter of a pinned section reaches every tab. From the metadata, the links carry the picked samples to every data collection, MultiQC included.
+    - **Analysis** keeps selections as groups and compares them in the cards; groups stay in your browser.
+    - As a reader, the dashboard and its data are read only. Others see your view only through a view link.
+
+??? note "Bonus · What this episode covers in full"
+    !!! overview "Overview"
+        **Questions**
+
+        - What is a dashboard made of, and where do I find how it works?
+        - Where are the dashboards and the projects I can read, and my own settings?
+        - Why Depictio after a pipeline, rather than a static report or an app coded from scratch?
+        - How do I check the quality of the run before reading its results?
+        - How do I narrow a dashboard to the samples I care about?
+        - How do I compare two groups of samples?
+        - What do others see of what I do?
+
+        **Objectives**
+
+        - Name the parts of a dashboard: tabs, filters, sections, components, bottom bar.
+        - Open the Guide of a dashboard, and use its **Show me** buttons.
+        - Find, pin and open a dashboard in **Dashboards**, in a table or as thumbnails.
+        - Read a project in **Projects**: its data collections, the links between them, its activity.
+        - Find your groups and your preferences in your profile.
+        - Find a MultiQC value with the dashboard search.
+        - Filter a dashboard, MultiQC included, and share the filtered view.
+        - Pick samples from a table, a map and a figure, and see the other data collections follow.
+        - Save two groups and compare them in the cards.
+        - Leave a comment on a figure (now on Day 2).
+
+    The timed hands-on is the four steps above. The Bonus blocks below hold the rest: why Depictio comes after a pipeline, how it compares, the anatomy of a dashboard and the Guide in detail. The pages **Dashboards**, **Projects** and your profile, and four ways to pick samples, are in the [Reference](reference.md#dashboard-tour).
+
+??? note "Bonus · Why Depictio: the step after the pipeline"
+    ### :material-transit-connection-variant: Why Depictio: the step after the pipeline { #why }
+
+    A pipeline usually stops at its outputs: files opened one by one, a static HTML report, or an app coded from scratch for one dataset. Depictio is the step after: **one platform, reused and standardised across pipelines**, with the same tools while you build the dashboard and after you share it: with collaborators, with everyone, or as one HTML file that opens without a server, as a MultiQC report does.
+
+    ![Usually, one pipeline's results end as output files, and/or a static HTML report (MultiQC, Quarto, Jupyter), or an app coded from scratch (Shiny, Streamlit, Plotly Dash). With Depictio, the results of any pipeline go through one platform (a template per pipeline version, components from the Tools catalog, editing in the interface, in code or YAML, every save a version) to a dashboard shared with collaborators or with everyone](../../images/tutorials/workshop/diagrams/why-depictio_light.png#only-light){ .ws-diagram }
+    ![Usually, one pipeline's results end as output files, and/or a static HTML report (MultiQC, Quarto, Jupyter), or an app coded from scratch (Shiny, Streamlit, Plotly Dash). With Depictio, the results of any pipeline go through one platform (a template per pipeline version, components from the Tools catalog, editing in the interface, in code or YAML, every save a version) to a dashboard shared with collaborators or with everyone](../../images/tutorials/workshop/diagrams/why-depictio_dark.png#only-dark){ .ws-diagram }
+
+    You see each of them today: editing in [episode 2](edit-your-copy.md), versions on [Day 2](../workshop-cli/collaborate-and-export.md#versions), sharing in the optional [project from files](from-a-file.md#share-it-your-group-then-everyone), templates in [episode 3](from-nf-core-run.md). 42 nf-core pipelines have a template; the Tools catalog maps 471 outputs of 136 tools to components.
+
+    <p class="ws-src">Templates: Depictio documentation; tools and outputs: Depictio code; both November 2026.</p>
+
+??? note "Bonus · How it compares with a report, a spreadsheet and your own code"
+    ### :material-scale-balance: How it compares { #how-it-compares }
+
+    An app written with Streamlit, Shiny or Dash is code: you write it, run it and maintain it. A Depictio dashboard is a description of components, which Depictio draws. Two things follow.
+
+    **Flexibility**
+
+    - You change a dashboard in the interface, or as YAML. Every save is a version you can go back to.
+    - There is no code to maintain. A filter or a selection reaches the components that read the same data, linked collections included, without callbacks to write.
+
+    **Reuse**
+
+    - One template per pipeline version builds the same dashboard for any run of that pipeline.
+    - A dashboard is copied, shared and exported.
+
+    Compared, as a reader, with a static report, a spreadsheet and your own code:
+
+    <div class="ws-compare" markdown>
+
+    | As a reader, you can… | :material-file-document-outline:<br>Static HTML report | :material-table-large:<br>Spreadsheet | :material-code-braces:<br>Your code, an app | ![Depictio](../../images/logo/favicon_lite.png){ .ws-logo .off-glb }<br>Depictio | Try it |
+    |---|:-:|:-:|:-:|:-:|---|
+    | Filter every view at once: MultiQC, tables, figures | <span class="ws-part">Within some reports</span> | :material-close-thick:{ .ws-no } | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | [Filter](#filter) |
+    | Pick samples on a table, a figure or a map | :material-close-thick:{ .ws-no } | <span class="ws-part">Rows only</span> | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | [Four ways](reference.md#four-ways) |
+    | Send the filtered view as a link | :material-close-thick:{ .ws-no } | :material-close-thick:{ .ws-no } | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | [Challenge 1.3](reference.md#filter-more) |
+    | Define your own groups and compare them | :material-close-thick:{ .ws-no } | <span class="ws-part">By hand</span> | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | [Analysis mode](#groups) |
+    | Comment on a figure | :material-close-thick:{ .ws-no } | <span class="ws-part">On cells</span> | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | [Day 2](../workshop-cli/collaborate-and-export.md#comment-and-annotate) |
+    | Open it as one file, without a server | :material-check-bold:{ .ws-yes } | :material-check-bold:{ .ws-yes } | <span class="ws-part">If you code it</span> | :material-check-bold:{ .ws-yes } | |
+
+    </div>
+
+??? note "Bonus · Anatomy of a dashboard"
+    ### :material-view-dashboard-outline: Anatomy of a dashboard { #anatomy }
+
+    A dashboard is made of components, grouped in sections, on tabs. The numbers mark each part on the **Community & Diversity** tab of the nf-core/ampliseq dashboard.
+
+    ![The Community & Diversity tab of the nf-core/ampliseq dashboard, with six numbered parts: tabs, filters, the tab's question, sections, components and the bottom bar](../../images/tutorials/workshop/anatomy.webp){ .ws-shot }
+
+    <ol class="ws-ann-legend">
+    <li><strong>Tabs</strong>: one per question, on the left.</li>
+    <li><strong>Filters</strong>: pinned sections reach every tab.</li>
+    <li><strong>The tab's question</strong>: and how to read it.</li>
+    <li><strong>Sections</strong>: group the components.</li>
+    <li><strong>Components</strong>: cards, figures, tables, MultiQC.</li>
+    <li><strong>Bottom bar</strong>: search, comments, Analysis, Edit.</li>
+    </ol>
+
+??? note "Bonus · The Guide in detail"
+    Every dashboard comes with a **Guide**: a page that explains how to move around it, filter it and read its components. Look at it before the hands-on: it answers most of the "where is…?" questions you will have.
+
+    The first time you open a dashboard, a box **About this dashboard** asks *First time on this dashboard?*. It shows the dashboard's one-line description and two buttons: **See how this dashboard works** and **Got it**.
+
+    ![The box About this dashboard: First time on this dashboard?, the dashboard's description, and the buttons See how this dashboard works and Got it](../../images/tutorials/workshop/ep1_guide_welcome.webp){ .ws-shot }
+
+    **See how this dashboard works** opens the Guide. You can open it again at any time, from **Guide** in the left sidebar, under **Filters**.
+
+    The Guide is one page, *Guide — How to move around this dashboard, filter it and read its components*. It is not a tour: there are no steps and nothing to dismiss. It is a column of parts, listed at the top: About this Guide, Tabs, Sections, Filters, Components, Analysis, Metadata, Comments, Versions, What's new and Settings. A part only appears when the dashboard has what it covers.
+
+    ![The Guide: the list of parts at the top, then the first parts, one under the other](../../images/tutorials/workshop/ep1_guide.webp){ .ws-shot }
+
+    Each part has a short explanation, a small working example built from this dashboard's own components and data, and a **Show me** button, such as **Show me the filter**, that rings the control in the example. What you try in the examples stays in the Guide: the dashboard does not change.
+
+    ![The part Filter the data of the Guide: its explanation, a small example with a filter and a figure, and the button Show me the filter](../../images/tutorials/workshop/ep1_guide_showme.webp){ .ws-shot }
+
+    **Back to Overview**, at the top right of the Guide, returns to the dashboard.
+
+    !!! challenge "Try it: the Guide"
+        Open the **nf-core/ampliseq** dashboard from **Dashboards**, then open the Guide. Go to the part **Filters**, click **Show me**, then click **Back to Overview**. Which two places open the Guide?
+
+        ??? solution "Solution"
+            The box shown the first time you open a dashboard (**See how this dashboard works**), and **Guide** in the left sidebar, under **Filters**. If you clicked **Got it** and the box is gone, the sidebar entry is still there.
+
+The tour of **Dashboards**, **Projects** and your profile, and the four ways to pick samples, are in the [Reference](reference.md#dashboard-tour).
+
+??? note "Bonus · You are a reader: what is yours, what is shared"
+    Someone shared a finished dashboard with you: you are a **reader**. You cannot change the dashboard or its data. You can filter it, select samples and compare groups: that changes only your own view. Your filters and selections are kept for your account, in any browser you sign in on; your groups stay in this browser. Others see your view only if you send them its link.
+
+    ![As a reader, the dashboard and its data are read only. Your view is yours: filters and selections kept for your account, groups kept in this browser, shown to others only by a view link](../../images/tutorials/workshop/diagrams/yours-and-shared_light.png#only-light){ .ws-diagram }
+    ![As a reader, the dashboard and its data are read only. Your view is yours: filters and selections kept for your account, groups kept in this browser, shown to others only by a view link](../../images/tutorials/workshop/diagrams/yours-and-shared_dark.png#only-dark){ .ws-diagram }
+
+    <figure markdown="span" class="ws-media"><video autoplay controls muted loop playsinline poster="../../../images/tutorials/workshop/filter.webp" src="../../../images/tutorials/workshop/filter.mp4"></video></figure>
+
+    Open **nf-core/ampliseq** from **Dashboards**.
+
+??? note "Bonus · Analysis mode: the video, and colouring by a column"
+    **Analysis**, in the bottom toolbar, keeps selections as named groups and compares them. Groups are kept in your browser: nobody else sees them. Unlike a selection, a group reaches every data collection, even from the PCoA: groups also follow the links backwards.
+
+    <figure markdown="span" class="ws-media"><video autoplay controls muted loop playsinline poster="../../../images/tutorials/workshop/groups.webp" src="../../../images/tutorials/workshop/groups.mp4"></video></figure>
+
+    !!! further "Going further"
+        In the **Analysis** panel, **Color figures by → A column → habitat** colours every figure by a column of the sample metadata.
+
+??? note "Bonus · Metadata mode and Comments"
+    Labelling samples in **Metadata** mode and leaving a **comment** on a figure are now part of Day 2: [Collaborate and export](../workshop-cli/collaborate-and-export.md).
+
 
 <div class="ws-next" markdown>
 [<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#episode-1){ .ws-help }

@@ -97,7 +97,7 @@ def menu_box(s: Sketch, x: float, y: float, w: float, h: float) -> None:
 def four_words(theme: Theme) -> Sketch:
     """Episode 0: the four words, drawn on the ampliseq project."""
     t = theme
-    s = new(t, 1440, 640, "Project, data collections, links, dashboard", "the nf-core/ampliseq run, as you meet it in episodes 1, 2 and 4")
+    s = new(t, 1440, 640, "Project, data collections, links, dashboard", "the nf-core/ampliseq run, as you meet it in episodes 1, 2 and 3")
 
     panel(s, 40, 105, 900, 500, "project", "Project · today's ampliseq run", sub="23 data collections · 19 links")
     badge(s, 40, 105, "1", "project")
@@ -478,11 +478,11 @@ def component_steps(theme: Theme) -> Sketch:
 
 
 def two_ways_in(theme: Theme) -> Sketch:
-    """Episodes 3 and 4: upload files, or read a run folder in place."""
+    """Episodes 3 and 4: read a run folder in place, or upload a run folder in place."""
     t = theme
-    s = new(t, 1440, 690, "Two ways to bring data in", "episode 4 reads a run where it is; episode 3 uploads two files")
+    s = new(t, 1440, 690, "Two ways to bring data in", "episode 3 reads a run where it is; episode 4 uploads two files")
 
-    s.text(46, 132, "Read in place · episode 4", size=17, anchor="start", weight="bold")
+    s.text(46, 132, "Read in place · episode 3", size=17, anchor="start", weight="bold")
     folder(s, 40, 150, 300, 180, "megatest", ("nf-core/ampliseq 2.18.0, on S3",))
     for k, sub in enumerate(("pipeline_info/", "input/", "qiime2/", "multiqc/")):
         icon(s, "folder-outline", 72, 228 + k * 25, 16, solid(t, "run"))
@@ -512,7 +512,7 @@ def two_ways_in(theme: Theme) -> Sketch:
 
     s.line(40, 410, 1400, 410, colour=t.muted, width=1.2, dashed=True)
 
-    s.text(46, 455, "Upload · episode 3", size=17, anchor="start", weight="bold")
+    s.text(46, 455, "Upload · episode 4", size=17, anchor="start", weight="bold")
     for k, name in enumerate(("demographic_data.csv", "physical_features.csv")):
         y = 480 + k * 72
         rrect(s, 40, y, 300, 56, fill=white(t), stroke=t.muted, r=10, width=1.2)
@@ -538,12 +538,12 @@ def two_ways_in(theme: Theme) -> Sketch:
     icon(s, "view-dashboard", 1285, 525, 30, solid(t, "dashboard"))
     s.text(1285, 570, "+ dashboard", size=14, weight="bold", colour=ink(t, "dashboard"))
     s.text(1285, 592, "you build it", size=12, colour=t.dim)
-    s.text(1210, 668, "your part, in episode 3", size=13, colour=ink(t, "you"), weight="bold")
+    s.text(1210, 668, "your part, in episode 4", size=13, colour=ink(t, "you"), weight="bold")
     return s
 
 
 def penguin_points() -> list[tuple[float, float, bool]]:
-    """bill_length_mm, flipper_length_mm and is-Gentoo for every penguin of episode 3's files."""
+    """bill_length_mm, flipper_length_mm and is-Gentoo for every penguin of episode 4's files."""
     demo = {r["individual_id"]: r["species"] for r in csv.DictReader(open(DATA / "demographic_data.csv"))}
     out = []
     for r in csv.DictReader(open(DATA / "physical_features.csv")):
@@ -555,7 +555,7 @@ def penguin_points() -> list[tuple[float, float, bool]]:
 
 
 def penguin_link(theme: Theme) -> Sketch:
-    """Episode 3: a filter on the census reaches the measurements through the link."""
+    """Episode 4: a filter on the census reaches the measurements through the link."""
     t = theme
     s = new(t, 1440, 520, "The link at work", "a filter on one table narrows a figure drawn from the other")
 

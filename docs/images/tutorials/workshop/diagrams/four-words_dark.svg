@@ -2,7 +2,7 @@
   <rect width="1440" height="640" fill="#1f2129"/>
   <defs><filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.12"/></filter></defs>
   <text x="46.0" y="50.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" fill="#e3e3e3" text-anchor="start" font-weight="bold">Project, data collections, links, dashboard</text>
-  <text x="46.0" y="76.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#9aa0ac" text-anchor="start" font-weight="normal">the nf-core/ampliseq run, as you meet it in episodes 1, 2 and 4</text>
+  <text x="46.0" y="76.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#9aa0ac" text-anchor="start" font-weight="normal">the nf-core/ampliseq run, as you meet it in episodes 1, 2 and 3</text>
   <g><rect x="40.0" y="105.0" width="900.0" height="500.0" rx="12" fill="#24272f" stroke="#177c61" stroke-width="1.6"/></g>
   <path d="M41.0,151.0 V117.0 Q41.0,106.0 52.0,106.0 H928.0 Q939.0,106.0 939.0,117.0 V151.0 Z" fill="#1c423d"/>
   <path d="M40.0,151.0 L940.0,151.0" fill="none" stroke="#177c61" stroke-width="1.2" stroke-linecap="round"/>

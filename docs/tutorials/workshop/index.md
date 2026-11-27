@@ -1,13 +1,13 @@
 ---
 title: "Depictio in the browser"
 icon: material/account-group-outline
-description: "A browser-only Depictio lesson in five episodes: read a shared dashboard, edit your own copy, create a project from files and share it, create one from an nf-core run, follow a new run."
+description: "A browser-only Depictio lesson: read a shared dashboard, edit your own copy, create a project from an nf-core run, browse the showcases; two optional episodes on files and on a new run."
 glightbox: true
 ---
 
-# :material-web: Depictio in the browser <small>(v1.22.0+)</small>
+# :material-web: Depictio in the browser <small>(v1.24+)</small>
 
-<p class="ws-lead">A <a href="../courses/">hands-on course</a> in five episodes, done in the browser on a Depictio server. Each episode is one way people use Depictio: reading a dashboard someone shared, adjusting it, bringing in your own data, following new data as it arrives.</p>
+<p class="ws-lead">A <a href="../courses/">hands-on course</a>, done in the browser on a Depictio server. Four episodes make the timed session of Day 1 (15 December): read a shared dashboard, edit your own copy, create a project from an nf-core run, and browse the showcases. Two more episodes, creating a project from files and following a new run, are optional: do them after the workshop, on the same server while it runs.</p>
 
 <figure markdown="span" class="ws-media"><video autoplay controls muted loop playsinline poster="../../images/tutorials/workshop/filter.webp" src="../../images/tutorials/workshop/filter.mp4"></video></figure>
 
@@ -43,15 +43,7 @@ glightbox: true
 
     How do I change a dashboard without changing it for others?
 
--   <span class="ws-num">3</span> **[Create a project from files](from-a-file.md)**
-
-    ---
-
-    <span class="ws-role">Creator · two CSV files</span>
-
-    How do I start from my own tables, link and join them, and share them?
-
--   <span class="ws-num">4</span> **[Create a project from an nf-core run](from-nf-core-run.md)**
+-   <span class="ws-num">3</span> **[Create a project from an nf-core run](from-nf-core-run.md)**
 
     ---
 
@@ -59,11 +51,27 @@ glightbox: true
 
     How do I turn a pipeline's results folder into a project and a dashboard?
 
--   <span class="ws-num">5</span> **[Follow a new run](new-run-and-versions.md)**
+-   <span class="ws-num">4</span> **[Showcases](showcases.md)**
 
     ---
 
-    <span class="ws-role">Creator · the 2009 season</span>
+    <span class="ws-role">Reader · 42 pipeline templates</span>
+
+    What does a dashboard look like for the pipeline I use?
+
+-   <span class="ws-num">+</span> **[Optional A · Create a project from files](from-a-file.md)**
+
+    ---
+
+    <span class="ws-role">Creator · two CSV files · optional</span>
+
+    How do I start from my own tables, join them, and share them?
+
+-   <span class="ws-num">+</span> **[Optional B · Follow a new run](new-run-and-versions.md)**
+
+    ---
+
+    <span class="ws-role">Creator · the 2009 season · optional, after the workshop</span>
 
     I added a season: what changed since I last looked, and how do I go back?
 
@@ -77,7 +85,7 @@ After the setup, the episodes take you through three roles, one after the other.
 |---|---|---|
 | :material-account-eye-outline: **Reader** | 1 | Read a shared dashboard: filter, select, comment. You change nothing |
 | :material-pencil-outline: **Designer** | 2 | Change a dashboard, in your own copy; never the data |
-| :material-plus-box-outline: **Creator** | 3, 4, 5 | Bring data in, from files or a pipeline run; share the project; add new data and follow what changed |
+| :material-plus-box-outline: **Creator** | 3, then the two optional ones | Bring data in, from a pipeline run or from files; share the project; add new data and follow what changed |
 
 ## Two datasets
 
@@ -89,15 +97,15 @@ After the setup, the episodes take you through three roles, one after the other.
 
     16S amplicon sequencing, the AWS megatest run: 12 samples from soil, sediment and water. In Depictio: 23 data collections and a dashboard of seven tabs.
 
-    Episodes 1, 2, 4 · [nf-core/ampliseq](https://nf-co.re/ampliseq/2.18.0)
+    Episodes 1, 2, 3 and 4 · [nf-core/ampliseq](https://nf-co.re/ampliseq/2.18.0)
 
 -   :material-penguin: **Palmer Penguins**
 
     ---
 
-    Penguins from three islands in Antarctica. Two tables, a census and the measurements, linked by `individual_id` and joined into a third: 223 penguins from the 2007 and 2008 seasons in episode 3, then 119 more from 2009 in episode 5, 342 in all.
+    Penguins from three islands in Antarctica. Two tables, a census and the measurements, joined on `individual_id` into a third: 223 penguins from the 2007 and 2008 seasons in the optional episode on files, then 119 more from 2009 in the optional episode on a new run, 342 in all.
 
-    Episodes 3, 5 · [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/), CC0
+    Optional episodes · [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/), CC0
 
 </div>
 
@@ -118,10 +126,13 @@ After the setup, the episodes take you through three roles, one after the other.
     ---
 
     - Reading a table and a scatter plot.
-    - Knowing roughly what a pipeline's results folder holds helps for episode 4; the lesson explains the rest.
-    - No programming. Challenge 2.2 shows a few lines of Python; it is optional.
+    - Knowing roughly what a pipeline's results folder holds helps for episode 3; the lesson explains the rest.
+    - No programming. A Bonus block of episode 2 shows a few lines of Python; it is optional.
 
 </div>
+
+!!! tip "Stuck?"
+    Ask the docs assistant first: the chat button at the bottom right of these pages. Then ask in the Zoom chat. Known problems are in [Troubleshooting](troubleshooting.md).
 
 <div class="ws-next ws-links" markdown>
 [<span class="ws-k">Reference</span><span class="ws-t">The words of the lesson</span>](reference.md){ .ws-help .ws-ref }

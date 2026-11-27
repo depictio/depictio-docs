@@ -1,4 +1,5 @@
 ---
+glightbox: true
 title: "Going further"
 description: "After the command-line course: hand your project to a colleague as a template, re-ingest a folder when it changes, trigger Depictio at the end of a Nextflow run, compose a dashboard from the tools catalog, run Depictio on your own machine."
 ---
@@ -6,14 +7,38 @@ description: "After the command-line course: hand your project to a colleague as
 # Going further
 
 <div class="ws-strip" markdown>
-[**0** Setup](setup.md){ .ws-ep0 } [**1** First project](first-project.md){ .ws-ep1 } [**2** A new season](own-tables.md){ .ws-ep2 } [**3** As code](dashboard-as-code.md){ .ws-ep3 } [**4** nf-core](nf-core-run.md){ .ws-ep4 }
+[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 } [**3** Collaborate](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 .ws-here }
 </div>
 
-Five things to try after the workshop, each from your penguins project or the nf-core run. The outputs below come from depictio 1.21.0; `watch` and the Nextflow trigger are described from their help and were not run during the workshop rehearsal.
+Three longer lessons from the first version of this course, then five things to try after the workshop. None of them is timed.
+
+<div class="grid cards" markdown>
+
+-   :material-file-code-outline: **[A project file by hand](first-project.md)**
+
+    ---
+
+    Describe one table in a short project file, check it with a dry run, and create a project and a dashboard from your laptop.
+
+-   :material-calendar-plus: **[A new season](own-tables.md)**
+
+    ---
+
+    Add a second table and its link, then bring the next field season as a new run and compare.
+
+-   :material-code-braces: **[A dashboard as code](dashboard-as-code.md)**
+
+    ---
+
+    Export a dashboard to YAML, change it, check it with `validate`, and import it back.
+
+</div>
+
+Five things to try after the workshop, each from your penguins project or the nf-core run. The outputs below come from the CLI version of the workshop; `watch` and the Nextflow trigger are described from their help and were not run during the workshop rehearsal.
 
 ## :material-share-variant-outline: Hand your project to a colleague
 
-A **template** is your project file and its dashboards, packed so that someone else can run them on their own folder. After episode 3, your project has two dashboards.
+A **template** is your project file and its dashboards, packed so that someone else can run them on their own folder. After the lessons A new season and A dashboard as code, your project has two dashboards.
 
 1. Export it. The project ID is the last part of the project's address, `…/projects/<ID>`:
 
@@ -90,7 +115,7 @@ Catalog tools (136)
  agat            agat_gene_models         …
 ```
 
-`depictio catalog info <tool>` describes one tool. `ingest --compose` builds a project and a dashboard from what the catalog recognises in a folder. On the `multiqc/` folder of the megatest:
+`depictio catalog info <tool>` describes one tool. `ingest --compose` builds a project and a dashboard from what the catalog recognises in a folder. On the `multiqc/` folder of the megatest, from `~/depictio-workshop`:
 
 ```console
 $ depictio ingest megatest/multiqc --compose --project yourname-composed --dry-run
@@ -100,14 +125,14 @@ Tabs: Overview, MultiQC
 ✓ Dry run complete (8/8 steps): the configuration is valid, and nothing was changed.
 ```
 
-Read the list of data collections in the dry run before you ingest. A composed dashboard is a starting point, to export and edit as in [episode 3](dashboard-as-code.md). See [Composed dashboards](../../usage/projects/composed-dashboards.md).
+Read the list of data collections in the dry run before you ingest. A composed dashboard is a starting point, to export and edit as in [A dashboard as code](dashboard-as-code.md). See [Composed dashboards](../../usage/projects/composed-dashboards.md).
 
 ## :material-server-outline: Depictio on your own machine
 
-`depictio local up` starts a complete server on macOS or Linux, without Docker, for your own projects. Install the `[local]` extra in the environment of the workshop, at the version of your CLI, so that there is only one `depictio` command (with pip: `pip install "depictio[local]~=1.23.0"`):
+`depictio local up` starts a complete server on macOS or Linux, without Docker, for your own projects. Install the `[local]` extra in the environment of the workshop, at the version of your CLI, so that there is only one `depictio` command (with pip: `pip install "depictio[local]==1.24.0"`):
 
 ```bash
-uv pip install "depictio[local]~=1.23.0"     # in the active depictio-env, same version as the CLI: the server, and MongoDB, Redis, SeaweedFS from conda-forge
+uv pip install "depictio[local]==1.24.0"     # in the active depictio-env, same version as the CLI: the server, and MongoDB, Redis, SeaweedFS from conda-forge
 depictio local up --examples penguins        # starts it and opens the browser
 depictio ingest --project-config-path penguins-1.yaml --project penguins --server local
 depictio local down                          # stops it; your data stays

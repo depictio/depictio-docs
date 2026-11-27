@@ -9,6 +9,8 @@ description: "Problems met in the Depictio workshop, episode by episode, with th
 <span class="ws-chip" markdown="span">:material-lifebuoy: **For learners**</span> <span class="ws-chip" markdown="span">:material-school-outline: **Instructors: see Instructor notes**</span>
 </div>
 
+Ask the docs assistant first: the chat button at the bottom right of these pages. If it does not answer, ask in the Zoom chat.
+
 ## :material-earth: Everywhere
 
 | Symptom | Cause | Fix |
@@ -46,31 +48,40 @@ description: "Problems met in the Depictio workshop, episode by episode, with th
 
 | Symptom | Cause | Fix |
 |---|---|---|
+| "A project with this name already exists" | Names are unique on a server | Another name |
+| The location is refused | Incomplete address | The full `s3://` address, without spaces |
+| 22 collections instead of 23, no Differential Abundance tab | The group column was detected as `name` instead of `habitat`, so the ANCOM-BC results are not found | **Previous**, open **More pipeline settings**, set **Group column** to `habitat`, then **Next** |
+| *phylogenetic_tree_canonical* failed, *NoSuchKey*; Phylogeny tab in error | The run location ends with `/`; the field's own placeholder ends with one | Create the project again with the location as given, with no final `/` |
+| `sampling_sites.tsv` is not listed under **Upload**, or is not a table with map coordinates | The file was not dropped before **Next**, or it was edited | Download it again from the episode page and drop it in the left half of the first step |
+| `metadata` is not in **Link your tables** | Depictio suggests at most 5 links per table | **Link it yourself**: `sampling_sites` to `metadata`, column `ID`; or **Add link** on the project page |
+| One file URL: no **Add 1 table**, *has no table extension* | The ENA address ends without `.csv` or `.tsv` | Pick **Format**: **TSV**, and give a **Name**, `ena_runs` |
+| One file URL is refused | The address starts with `http://`, which the server refuses unless its settings allow it | Use the `https://` address as given |
+| The dashboard stays empty | Many projects are being read at once | Wait; **Activity** on the project page shows progress |
+
+## :material-numeric-4-circle-outline: Episode 4 · Showcases { #episode-4 .ws-ep6 }
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| The showcases page does not load, or asks you to sign in | A stale tab, or you opened another server | Open [showcases.depictio.embl.org/dashboards](https://showcases.depictio.embl.org/dashboards){target=_blank} in a new tab: it is public, no sign-in |
+| No showcase for your pipeline | Depictio has templates for 42 nf-core pipelines, and yours may not be one | Check the [list of templates](../../pipeline-templates/nf-core/index.md); otherwise open a pipeline from the poll |
+
+## :material-alpha-a-circle-outline: Optional A · Create a project from files { #optional-a .ws-ep4 }
+
+| Symptom | Cause | Fix |
+|---|---|---|
 | No **Next** button in **New project** | The **Welcome** card, bottom right, covers it on a smaller screen | Close the Welcome card: **I'll explore on my own** |
 | *1 file: 1 table* | Only one file was dropped | **Previous**, drop both files together |
-| Fewer than *223 of 223 values found* in **Link your tables** | Another column, or the tables the other way round | `demographic_data`, column `individual_id`, to `physical_features` |
-| *Access denied to project* when the link is created | A server issue with learner accounts | Tell a helper; continue from the project *catchup-ep4-penguins*: duplicate its dashboard |
 | No **Add join** | Only the owner or an editor of a project can add a join, and the server must have the feature | Open the project you created in this episode; otherwise tell a helper |
 | No Preview, *Pick both tables to preview the joined table* | A table is missing | **Name** `penguins`, `demographic_data` left, `physical_features` right, `individual_id` |
 | No `joined_penguins` in the component's data list | The join was not created, or it has another name | The **Joins** list under **Cross-DC links**: its result table is `joined_<name>` |
 | The figure cannot be coloured by `species` | The figure reads `physical_features`, which has no `species` | A figure of `joined_penguins` |
 | **Edit** opens a title dialog | The **⋮ → Edit** menu edits the title and icon | Click the dashboard's title, then **Start editing** |
-| The filter does not change a figure of `physical_features` | No link, or the link goes the other way | **Cross-DC links** on the project page: source `demographic_data`, target `physical_features`; **Add link** if there is none |
+| The filter does not change a figure of `physical_features` | The filter and the figure read different tables, with no link between them | Build both on `joined_penguins` |
 | No **Add group**, or the switches are greyed | Only the owner of a project can share it | Open the project you created in this episode |
 | Your group is not in **Search groups** | The user groups were not created, or a typo | Tell a helper |
 | Your group does not see your dashboard | The group was added to another project | **Permissions** of the right project: **Everyone with access** must list them |
 
-## :material-numeric-4-circle-outline: Episode 4 { #episode-4 .ws-ep4 }
-
-| Symptom | Cause | Fix |
-|---|---|---|
-| "A project with this name already exists" | Names are unique on a server | Another name |
-| The location is refused | Incomplete address | The full `s3://` address, without spaces |
-| 22 collections instead of 23, no Differential Abundance tab | The group column was detected as `name` instead of `habitat`, so the ANCOM-BC results are not found | **Previous**, open **More pipeline settings**, set **Group column** to `habitat`, then **Next** |
-| *phylogenetic_tree_canonical* failed, *NoSuchKey*; Phylogeny tab in error | The run location ends with `/`; the field's own placeholder ends with one | Create the project again with the location as given, with no final `/` |
-| The dashboard stays empty | Many projects are being read at once | Wait; **Activity** on the project page shows progress |
-
-## :material-numeric-5-circle-outline: Episode 5 { #episode-5 .ws-ep5 }
+## :material-alpha-b-circle-outline: Optional B · Follow a new run { #optional-b .ws-ep5 }
 
 | Symptom | Cause | Fix |
 |---|---|---|

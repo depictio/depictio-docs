@@ -77,7 +77,7 @@
 
 /* Episode colours. */
 .ws-ep0 { --ws: #7A5DC7; } .ws-ep1 { --ws: #6495ED; } .ws-ep2 { --ws: #9966CC; }
-.ws-ep3 { --ws: #45B8AC; } .ws-ep4 { --ws: #F68B33; } .ws-ep5 { --ws: #E6779F; }
+.ws-ep3 { --ws: #45B8AC; } .ws-ep4 { --ws: #F68B33; } .ws-ep5 { --ws: #E6779F; } .ws-ep6 { --ws: #D4A017; }
 
 /* Episode strip under the title: where you are in the lesson. */
 .md-typeset .ws-strip p { display: flex; flex-wrap: wrap; gap: .4rem; margin: .2rem 0 1rem; }
@@ -140,7 +140,7 @@
 .md-content:has(.ws-meta) { --ws: #7A5DC7; }
 .md-content:has(.ws-meta.ws-ep1) { --ws: #6495ED; } .md-content:has(.ws-meta.ws-ep2) { --ws: #9966CC; }
 .md-content:has(.ws-meta.ws-ep3) { --ws: #45B8AC; } .md-content:has(.ws-meta.ws-ep4) { --ws: #F68B33; }
-.md-content:has(.ws-meta.ws-ep5) { --ws: #E6779F; }
+.md-content:has(.ws-meta.ws-ep5) { --ws: #E6779F; } .md-content:has(.ws-meta.ws-ep6) { --ws: #D4A017; }
 
 .md-content:has(.ws-meta) .md-typeset h2 {
   display: flex; align-items: center; gap: .55em; margin-top: 2.2em; padding-bottom: .45em;
@@ -285,3 +285,78 @@
 .md-typeset .ws-compare th .twemoji svg { height: 1.5em; width: 1.5em; max-height: none; }
 .md-typeset .ws-compare th:nth-child(2) .twemoji { color: #868e96; } .md-typeset .ws-compare th:nth-child(3) .twemoji { color: #2F9E44; }
 .md-typeset .ws-compare th:nth-child(4) .twemoji { color: #6495ED; }
+
+/* Terminal blocks (javascripts/ws-term.js): a ```console block drawn as a
+   terminal, the same in both schemes, output lines coloured as the CLI prints them. */
+.md-typeset .ws-term {
+  --md-code-bg-color: #1d2230; --md-code-fg-color: #e3e6ee;
+  --md-code-hl-keyword-color: #8fb4ff; --md-code-hl-string-color: #b6e3a1;
+  --md-code-hl-name-color: #e3e6ee; --md-code-hl-variable-color: #f2c38f;
+  --md-code-hl-operator-color: #c3c8d6; --md-code-hl-punctuation-color: #c3c8d6;
+  --md-code-hl-comment-color: #8a93a8; --md-code-hl-generic-color: #c3c8d6;
+  --md-code-hl-number-color: #f2c38f; --md-code-hl-constant-color: #f2c38f;
+  --md-code-hl-function-color: #8fb4ff; --md-code-hl-special-color: #f2c38f;
+}
+.md-typeset .ws-term pre > code { border-radius: 8px; padding-top: 1.6em; position: relative; }
+.md-typeset .ws-term pre > code::before {
+  content: ""; position: absolute; top: .6em; left: 1em; width: .5em; height: .5em; border-radius: 50%;
+  background: #ff6b6b; box-shadow: .8em 0 0 #f7c948, 1.6em 0 0 #5fd068; opacity: .8;
+}
+.md-typeset .ws-term .gp { color: #5fd068; font-weight: 600; user-select: none; }
+.md-typeset .ws-term .go { color: #c3c8d6; }
+.md-typeset .ws-term .go.ws-t-ok { color: #6fdc8c; }
+.md-typeset .ws-term .go.ws-t-info { color: #7cc4ff; }
+.md-typeset .ws-term .go.ws-t-warn { color: #f7c948; }
+.md-typeset .ws-term .go.ws-t-err { color: #ff7b7b; }
+.md-typeset .ws-term .go.ws-t-dim { color: #8a93a8; }
+/* Diff blocks (javascripts/ws-term.js): added and removed lines on a tinted band. */
+.md-typeset .ws-diff .gi { display: inline-block; width: 100%; background: rgba(46, 160, 67, .16); color: var(--md-code-fg-color); }
+.md-typeset .ws-diff .gd { display: inline-block; width: 100%; background: rgba(248, 81, 73, .16); color: var(--md-code-fg-color); }
+.md-typeset .ws-diff .gu { color: var(--md-default-fg-color--light); }
+.md-typeset .ws-diff .gh { color: var(--md-default-fg-color--light); font-weight: 600; }
+
+/* Annotated code (javascripts/ws-term.js), the bands of the slides: one colour per group,
+   its number on the group's first line, and the legend below in the same colours. */
+.md-typeset { --ws-g1: #6495ED; --ws-g2: #9966CC; --ws-g3: #12b886; --ws-g4: #F68B33; --ws-g5: #E6779F; --ws-g6: #1098AD; }
+.md-typeset .ws-ann .ws-ln { display: inline-block; width: 100%; position: relative; box-sizing: border-box;
+  background: color-mix(in srgb, var(--ws-g) 13%, transparent); box-shadow: inset 3px 0 0 var(--ws-g); }
+.md-typeset .ws-ann .ws-ln.ws-gh::after { content: attr(data-n); position: absolute; right: .5em; top: 50%; transform: translateY(-50%);
+  width: 1.45em; height: 1.45em; line-height: 1.45em; border-radius: 50%; text-align: center; font-size: .8em; font-weight: 700;
+  font-family: var(--md-text-font-family); color: #fff; background: var(--ws-g); user-select: none; }
+.md-typeset .ws-ann .ws-g1, .md-typeset .ws-ann-legend > li:nth-child(1), .md-typeset table.ws-ann-legend tbody tr:nth-child(1) { --ws-g: var(--ws-g1); }
+.md-typeset .ws-ann .ws-g2, .md-typeset .ws-ann-legend > li:nth-child(2), .md-typeset table.ws-ann-legend tbody tr:nth-child(2) { --ws-g: var(--ws-g2); }
+.md-typeset .ws-ann .ws-g3, .md-typeset .ws-ann-legend > li:nth-child(3), .md-typeset table.ws-ann-legend tbody tr:nth-child(3) { --ws-g: var(--ws-g3); }
+.md-typeset .ws-ann .ws-g4, .md-typeset .ws-ann-legend > li:nth-child(4), .md-typeset table.ws-ann-legend tbody tr:nth-child(4) { --ws-g: var(--ws-g4); }
+.md-typeset .ws-ann .ws-g5, .md-typeset .ws-ann-legend > li:nth-child(5), .md-typeset table.ws-ann-legend tbody tr:nth-child(5) { --ws-g: var(--ws-g5); }
+.md-typeset .ws-ann .ws-g6, .md-typeset .ws-ann-legend > li:nth-child(6), .md-typeset table.ws-ann-legend tbody tr:nth-child(6) { --ws-g: var(--ws-g6); }
+.md-typeset ol.ws-ann-legend { list-style: none; counter-reset: wsann; margin-left: 0; padding-left: 0; }
+.md-typeset ol.ws-ann-legend > li { counter-increment: wsann; position: relative; margin-left: 0; padding: .35em .6em .35em 2.4em;
+  border-left: 3px solid var(--ws-g); background: color-mix(in srgb, var(--ws-g) 7%, transparent); border-radius: 0 6px 6px 0; }
+.md-typeset ol.ws-ann-legend > li::before { content: counter(wsann); position: absolute; left: .55em; top: .45em; width: 1.45em; height: 1.45em;
+  line-height: 1.45em; border-radius: 50%; text-align: center; font-size: .8em; font-weight: 700; color: #fff; background: var(--ws-g); }
+.md-typeset table.ws-ann-legend tbody td:first-child { border-left: 3px solid var(--ws-g); }
+.md-typeset table.ws-ann-legend tbody td:first-child::before { counter-increment: wsannt; content: counter(wsannt); display: inline-block;
+  width: 1.45em; height: 1.45em; line-height: 1.45em; margin-right: .5em; border-radius: 50%; text-align: center; font-size: .8em;
+  font-weight: 700; color: #fff; background: var(--ws-g); }
+.md-typeset table.ws-ann-legend tbody { counter-reset: wsannt; }
+/* The band runs into the block's side padding, so the bar and the number sit beside the text, not on it. */
+.md-typeset .ws-ann .ws-ln { margin: 0 -1.1765em; padding: 0 1.6em 0 1.1765em; width: calc(100% + 2.353em); }
+.md-typeset .ws-ann .ws-ln.ws-gh::after { right: .2em; width: 1.3em; height: 1.3em; line-height: 1.3em; font-size: .75em; }
+.md-typeset ol.ws-ann-legend > li::before { background: var(--ws-g) !important; color: #fff !important; border-color: var(--ws-g) !important; box-shadow: none !important; }
+
+/* Embedded in the workshop deck (javascripts/workshop-embed.js): the lesson only. */
+html.ws-embed .md-header,
+html.ws-embed .md-tabs,
+html.ws-embed .md-sidebar,
+html.ws-embed .md-footer,
+html.ws-embed .md-banner,
+html.ws-embed .md-content__button,
+html.ws-embed docbot-modal,
+html.ws-embed .ws-only-hide { display: none !important; }
+html.ws-embed .md-main__inner { margin-top: 0; max-width: none; }
+html.ws-embed .md-content { max-width: none; margin: 0; }
+html.ws-embed .md-content__inner { margin: 0 1.6rem; padding-top: .8rem; }
+html.ws-embed .md-content__inner > .ws-only-hide + h2,
+html.ws-embed .md-content__inner > h2:first-child { margin-top: 0; }
+html.ws-embed .md-grid { max-width: none; }
+html.ws-embed .md-typeset [id] { scroll-margin-top: .8rem; }

@@ -7,7 +7,7 @@ glightbox: true
 # 0. Setup
 
 <div class="ws-strip" markdown>
-[**0** Setup](get-started.md){ .ws-ep0 .ws-here } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From files](from-a-file.md){ .ws-ep3 } [**4** From a run](from-nf-core-run.md){ .ws-ep4 } [**5** New run](new-run-and-versions.md){ .ws-ep5 }
+[**0** Setup](get-started.md){ .ws-ep0 .ws-here } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 } [**+** From files](from-a-file.md){ .ws-ep4 } [**+** New run](new-run-and-versions.md){ .ws-ep5 }
 </div>
 
 <div class="ws-meta ws-ep0" markdown>
@@ -35,10 +35,10 @@ Everything happens in the browser: there is nothing to install.
 3. The first sign-in opens *Choose your own password*. Set a new password: **Dashboards** opens. Until you do, Dashboards sends you back to this page.
 
 !!! callout "Short tours"
-    Depictio offers short tours the first time you open some pages, such as *First time on this dashboard?*. Click **Got it**: the episodes cover the same ground. If a **Welcome** card appears bottom right, click **I'll explore on my own**.
+    Depictio offers short tours the first time you open some pages, such as *First time on this dashboard?*. Click **Got it**: [episode 1](view.md#guide) shows the Guide it leads to, which stays in the left sidebar. If a **Welcome** card appears bottom right, click **I'll explore on my own**.
 
 !!! warning "No account, or the server does not answer?"
-    Open the [workshop Codespace](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/workshop/devcontainer.json&quickstart=1). It runs Depictio in a GitHub cloud workspace, with the nf-core/ampliseq run already ingested. Episodes 1, 2 and 4 work there.
+    Open the [workshop Codespace](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/workshop/devcontainer.json&quickstart=1). It runs Depictio in a GitHub cloud workspace, with the nf-core/ampliseq run already ingested. Episodes 1, 2 and 3 work there.
 
 ## :material-map-outline: Find your way
 

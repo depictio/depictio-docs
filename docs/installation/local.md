@@ -36,7 +36,7 @@ data.
     **View logs** on its loading page, or **Codespaces: View Creation Log** in
     the command palette, shows what it is doing.
 
-    **Hands-on workshop** <small>(v1.21.0+)</small>: [Open the workshop codespace](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/workshop/devcontainer.json&quickstart=1). It opens a single-user instance with an nf-core/ampliseq 2.18.0 run already ingested.
+    **Depictio in the browser**, the hands-on course <small>(v1.21.0+)</small>: [Open the workshop codespace](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/workshop/devcontainer.json&quickstart=1). It opens a single-user instance with an nf-core/ampliseq 2.18.0 run already ingested.
 
 **Prerequisites**: Linux, or macOS on Apple silicon (see [Platforms](#platforms)),
 with [uv](https://docs.astral.sh/uv/getting-started/installation/), or pip and

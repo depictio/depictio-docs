@@ -1,13 +1,17 @@
 ---
-title: "2. A second table, then a new season"
+glightbox: true
+title: "A new season"
 description: "Add a second table and its link to your Depictio project file, refresh the project, then add the next field season as a new run and compare what it changed."
 ---
 
-# 2. A second table, then a new season
+# A new season
 
 <div class="ws-strip" markdown>
-[**0** Setup](setup.md){ .ws-ep0 } [**1** First project](first-project.md){ .ws-ep1 } [**2** A new season](own-tables.md){ .ws-ep2 .ws-here } [**3** As code](dashboard-as-code.md){ .ws-ep3 } [**4** nf-core](nf-core-run.md){ .ws-ep4 }
+[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 } [**3** Collaborate](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 .ws-here }
 </div>
+
+!!! note "Going further"
+    Optional: not part of the timed workshop. It is one of the lessons of [Going further](going-further.md).
 
 <div class="ws-meta ws-ep2" markdown>
 <span class="ws-chip" markdown="span">:material-console: **Creator, from the terminal**</span> <span class="ws-chip" markdown="span">:material-penguin: **Palmer Penguins, two tables, two seasons**</span>
@@ -25,50 +29,60 @@ description: "Add a second table and its link to your Depictio project file, ref
     - Refresh the project with `--update-config`.
     - Add the 2008 season as a new run, and compare.
 
-You continue with the project of episode 1, in the same `penguins-workshop/` folder. `penguins.yaml` is `penguins-1.yaml` with three additions.
+You continue with the project of the lesson A project file by hand, in the same folder, `~/depictio-workshop/penguins-workshop`. `penguins.yaml` is `penguins-1.yaml` with three additions.
 
-[![penguins.yaml names the season folder with {SEASON_DIR}, two data collections and the link on individual_id; season_2007 refreshed with --update-config, then season_2008 attached with --attach-run, gives one project with two runs, and Compare on season_2008](../../images/tutorials/workshop-cli/diagrams/project-file_light.png#only-light){ .ws-diagram }](../../images/tutorials/workshop-cli/diagrams/project-file_light.png){target=_blank}
-[![penguins.yaml names the season folder with {SEASON_DIR}, two data collections and the link on individual_id; season_2007 refreshed with --update-config, then season_2008 attached with --attach-run, gives one project with two runs, and Compare on season_2008](../../images/tutorials/workshop-cli/diagrams/project-file_dark.png#only-dark){ .ws-diagram }](../../images/tutorials/workshop-cli/diagrams/project-file_dark.png){target=_blank}
+![penguins.yaml names the season folder with {SEASON_DIR}, two data collections and the link on individual_id; season_2007 refreshed with --update-config, then season_2008 attached with --attach-run, gives one project with two runs, and Compare on season_2008](../../images/tutorials/workshop-cli/diagrams/project-file_light.png#only-light){ .ws-diagram }
+![penguins.yaml names the season folder with {SEASON_DIR}, two data collections and the link on individual_id; season_2007 refreshed with --update-config, then season_2008 attached with --attach-run, gives one project with two runs, and Compare on season_2008](../../images/tutorials/workshop-cli/diagrams/project-file_dark.png#only-dark){ .ws-diagram }
 
 ## :material-file-compare: What changes in the file
 
+Compare the two files:
+
 ```bash
-diff penguins-1.yaml penguins.yaml
+diff -u penguins-1.yaml penguins.yaml
 ```
 
-The three additions, in `penguins.yaml`: the `{SEASON_DIR}` location, the `demographic_data` table and the `links` block.
-
-```yaml
-      locations:
-        - "{SEASON_DIR}"             # filled from the SEASON_DIR environment variable
-    data_collections:
-      - data_collection_tag: "physical_features"
-        # … as in episode 1
-      - data_collection_tag: "demographic_data"
-        config:
-          type: "Table"
-          metatype: "Aggregate"
-          scan:
-            mode: "recursive"
-            scan_parameters:
-              regex_config:
-                pattern: "demographic_data.csv"
-          dc_specific_properties:
-            format: "CSV"
-links:
-  - source_dc_tag: "demographic_data"     # filter on this table...
-    source_column: "individual_id"
-    target_dc_tag: "physical_features"    # ...narrows this one
-    target_type: "table"
-    link_config:
-      target_field: "individual_id"
+```diff
+--- penguins-1.yaml
++++ penguins.yaml
+@@ -6,7 +6,7 @@
+     data_location:
+       structure: "flat"                   # flat: each folder under locations is one run
+       locations:                          # relative to the folder you run depictio in
+-        - "seasons/season_2007"           #   one folder, so one run: season_2007
++        - "{SEASON_DIR}"                  #   the folder named by SEASON_DIR on the command line
+     data_collections:                     # the tables, one entry each
+       - data_collection_tag: "physical_features"  # the table's name in Depictio
+         config:
+@@ -19,3 +19,21 @@
+                 pattern: "physical_features.csv"  # the file that makes the table
+           dc_specific_properties:
+             format: "CSV"                 # how to read the file
++      - data_collection_tag: "demographic_data"   # a second table: who each bird is
++        config:
++          type: "Table"
++          metatype: "Aggregate"
++          scan:
++            mode: "recursive"
++            scan_parameters:
++              regex_config:
++                pattern: "demographic_data.csv"
++          dc_specific_properties:
++            format: "CSV"
++links:                                    # tables that filter each other
++  - source_dc_tag: "demographic_data"     # a filter on this table...
++    source_column: "individual_id"
++    target_dc_tag: "physical_features"    # ...narrows this one,
++    target_type: "table"
++    link_config:
++      target_field: "individual_id"       # matching individual_id
 ```
 
-`diff` also shows two lines where only a comment was added, on `name: "field-survey"` and `structure: "flat"`: they explain the Runs tab and the runs, and change nothing.
+Lines starting with `-` are in `penguins-1.yaml` only, lines starting with `+` in `penguins.yaml` only; the others are the same in both. Three additions:
 
 | Addition | Why |
 |---|---|
-| `{SEASON_DIR}` | One file for every season: `SEASON_DIR=seasons/season_2008` on the command line picks the folder |
+| `{SEASON_DIR}` | One file for every season: the folder is no longer written in the file, the command line gives it, as `SEASON_DIR=seasons/season_2008` |
 | `demographic_data` | Who each bird is: species, island, sex |
 | `links` | The two tables share `individual_id`: a filter on a column only `demographic_data` has, such as `sex`, can narrow `physical_features` |
 
@@ -85,7 +99,9 @@ $ SEASON_DIR=seasons/season_2007 depictio ingest --project-config-path penguins.
 ✓ Ingestion completed successfully! (7/7 steps)
 ```
 
-`SEASON_DIR=…` goes on the **same line**, before `depictio`: it fills `{SEASON_DIR}` for this command only. `--update-config` refreshes a project that exists: its tables and links follow the file, and your dashboard stays as it is.
+`SEASON_DIR=…` goes on the **same line**, before `depictio`: it fills `{SEASON_DIR}` for this command only.
+
+`--update-config` is how you change a project that exists, with no `--overwrite` and nothing to delete first: the project follows the file (two tables, one link now), every run is read again, and your dashboard stays as it is. Without it, the CLI refuses, as in challenge 1.2.
 
 !!! challenge "Challenge 2.1: what did the refresh change?"
     Open your project in the browser. How many data collections, links and runs does it have now?
@@ -109,11 +125,11 @@ $ SEASON_DIR=seasons/season_2008 depictio ingest --project-config-path penguins.
 2. Expand **season_2008** (2): its two new files, and under **Produced** what the ingestion wrote to each table: +114 rows.
 3. Click **Compare** (3).
 
-    [![The Runs tab (1), season_2008 unfolded (2) with its new files and the rows it added, and Compare (3)](../../images/tutorials/workshop-cli/ep2_runs.webp){ .ws-shot }](../../images/tutorials/workshop-cli/ep2_runs.webp){target=_blank}
+    ![The Runs tab (1), season_2008 unfolded (2) with its new files and the rows it added, and Compare (3)](../../images/tutorials/workshop-cli/ep2_runs.webp){ .ws-shot }
 
 4. Open **Changes** (the badge icon in the dashboard header). **Show on the dashboard → Split** (5) draws each figure three times: all the birds, the new season, the ones seen before.
 
-    [![The Changes panel: physical_features 109 → 223 rows (4); Split (5) draws the scatter for All, New: season_2008 and Seen before, and the card reads 223, 114 and 109](../../images/tutorials/workshop-cli/ep2_compare.webp){ .ws-shot }](../../images/tutorials/workshop-cli/ep2_compare.webp){target=_blank}
+    ![The Changes panel: physical_features 109 → 223 rows (4); Split (5) draws the scatter for All, New: season_2008 and Seen before, and the card reads 223, 114 and 109](../../images/tutorials/workshop-cli/ep2_compare.webp){ .ws-shot }
 
 !!! challenge "Challenge 2.2: what did 2008 bring?"
     In the **Changes** panel, which table changed, and how many rows did it have before and after? Switch **Show on the dashboard** to **Split**: what do the cards show?
@@ -133,6 +149,6 @@ $ SEASON_DIR=seasons/season_2008 depictio ingest --project-config-path penguins.
     - `--attach-run` adds a folder as a new run; **Runs → Compare** shows what it changed.
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#episode-2){ .ws-help }
-[<span class="ws-k">Next episode</span><span class="ws-t">3. A dashboard as code</span>](dashboard-as-code.md){ .ws-go .ws-ep3 }
+[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#new-season){ .ws-help }
+[<span class="ws-k">Next episode</span><span class="ws-t">A dashboard as code</span>](dashboard-as-code.md){ .ws-go .ws-ep3 }
 </div>
