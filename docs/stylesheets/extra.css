@@ -2505,8 +2505,11 @@ html #docbot-modal.docbot-modal .vf-chatbot-modal__header svg path {
 }
 
 /* Header, conversation, input as a column where only the conversation
-   shrinks, on desktop and in the SDK's full-screen mobile window */
-html #docbot-modal.docbot-modal .vf-chatbot-modal-container {
+   shrinks, on desktop and in the SDK's full-screen mobile window. Only while
+   the window is open (--active): the closed window must keep the SDK's
+   display: none, or its transparent box covers the page and takes every tap
+   (the whole screen on mobile). */
+html #docbot-modal.docbot-modal .vf-chatbot-modal-container--active {
     display: flex;
     flex-direction: column;
 }
