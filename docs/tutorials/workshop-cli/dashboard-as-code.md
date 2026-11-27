@@ -7,7 +7,7 @@ description: "Export a Depictio dashboard to YAML, change it, check it with vali
 # A dashboard as code
 
 <div class="ws-strip" markdown>
-[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 } [**3** Collaborate](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 .ws-here }
+[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 } [**3** Together](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 .ws-here }
 </div>
 
 !!! note "Going further"
@@ -165,6 +165,5 @@ Open the address the CLI prints: the new figure is under the first two (2).
     - `validate --server ~/.depictio/CLI.yaml` checks columns against your data before you import.
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#dashboard-as-code){ .ws-help }
 [<span class="ws-k">Back to</span><span class="ws-t">Going further</span>](going-further.md){ .ws-go .ws-ep4 }
 </div>

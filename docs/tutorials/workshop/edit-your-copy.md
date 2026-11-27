@@ -191,6 +191,5 @@ Click **Save** in the bottom toolbar. Every save is kept as a version of your da
             ![The figure with the title Differential abundance by habitat and see-through dots](../../images/tutorials/workshop/ep2_bonus_code_chal_result.webp){ .ws-shot }
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#episode-2){ .ws-help }
 [<span class="ws-k">Next episode</span><span class="ws-t">3. Create a project from an nf-core run</span>](from-nf-core-run.md){ .ws-go .ws-ep3 }
 </div>

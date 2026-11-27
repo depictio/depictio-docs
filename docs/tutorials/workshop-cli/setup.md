@@ -7,7 +7,7 @@ description: "Install the Depictio CLI, connect it to the workshop server with y
 # 0. Setup
 
 <div class="ws-strip" markdown>
-[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 } [**3** Collaborate](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 }
+[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 } [**3** Together](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 }
 </div>
 
 <div class="ws-meta ws-ep0" markdown>
@@ -141,7 +141,7 @@ The three ✓ lines say:
 2. the server **knows your account**;
 3. the storage **accepts your tables**.
 
-A line starting with ✗ names the part that fails: see [Troubleshooting](troubleshooting.md#setup).
+A line starting with ✗ names the part that fails: write it in the Zoom chat.
 
 !!! challenge "Challenge 0.1: until when?"
     Run `depictio config show`. Until when does your configuration work? Are your token and the storage password printed?
@@ -158,6 +158,5 @@ A line starting with ✗ names the part that fails: see [Troubleshooting](troubl
     The first command you run prints a short notice: the CLI sends anonymous usage data (which command ran, whether it succeeded, the operating system and the versions), never file paths, arguments, project names or credentials. To turn them off, add `export DEPICTIO_TELEMETRY_ENABLED=false` to your shell, or set `DO_NOT_TRACK=1`.
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#setup){ .ws-help }
 [<span class="ws-k">Next episode</span><span class="ws-t">1. Your own tables, no template</span>](project-builder.md){ .ws-go .ws-ep1 }
 </div>

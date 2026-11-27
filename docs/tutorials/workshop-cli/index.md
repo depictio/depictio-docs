@@ -44,7 +44,7 @@ glightbox: true
 
     How does a pipeline Depictio knows skip the project file?
 
--   <span class="ws-num">3</span> **[Collaborate and export](collaborate-and-export.md)**
+-   <span class="ws-num">3</span> **[Work on your dashboard, together](collaborate-and-export.md)**
 
     ---
 
@@ -73,7 +73,7 @@ glightbox: true
 | 10:25 | The command line: [your CLI.yaml](setup.md) | 10 | |
 | 10:35 | [2 · An nf-core run from the terminal](nf-core-run.md) | 25 | 15 min |
 | 11:00 | Break | 10 | |
-| 11:10 | [3 · Collaborate and export](collaborate-and-export.md) | 25 | 15 min |
+| 11:10 | [3 · Work on your dashboard, together](collaborate-and-export.md) | 25 | 15 min |
 | 11:35 | Wrap-up | 10 | |
 | 11:45 | Your questions | 15 | |
 
@@ -128,6 +128,5 @@ Install the command line before the day: [Setup](setup.md).
 
 <div class="ws-next ws-links" markdown>
 [<span class="ws-k">Instructors</span><span class="ws-t">Instructor notes</span>](facilitators.md){ .ws-help .ws-inst }
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md){ .ws-help }
 [<span class="ws-k">Start here</span><span class="ws-t">0. Setup</span>](setup.md){ .ws-go .ws-ep0 }
 </div>

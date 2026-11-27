@@ -7,7 +7,7 @@ description: "Turn an nf-core/viralrecon results folder into a Depictio project 
 # 2. An nf-core run from the terminal
 
 <div class="ws-strip" markdown>
-[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 .ws-here } [**3** Collaborate](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 }
+[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 .ws-here } [**3** Together](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 }
 </div>
 
 <div class="ws-meta ws-ep2" markdown>
@@ -763,5 +763,5 @@ Open the **nf-core/viralrecon** dashboard: eight tabs, from the quality of the r
     Ask the catalog about the other tools: `depictio catalog info nextclade`, `depictio catalog info mosdepth`.
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Then</span><span class="ws-t">3. Collaborate and export</span>](collaborate-and-export.md){ .ws-go .ws-ep3 }
+[<span class="ws-k">Then</span><span class="ws-t">3. Work on your dashboard, together</span>](collaborate-and-export.md){ .ws-go .ws-ep3 }
 </div>
