@@ -394,8 +394,7 @@ nav:
             - 2. Make your own copy and edit it: tutorials/workshop/edit-your-copy.md
             - 3. Create a project from an nf-core run: tutorials/workshop/from-nf-core-run.md
             - 4. Showcases: tutorials/workshop/showcases.md
-            - Optional A · Create a project from files: tutorials/workshop/from-a-file.md
-            - Optional B · Follow a new run: tutorials/workshop/new-run-and-versions.md
+            - Optional · Create a project from files: tutorials/workshop/from-a-file.md
             - Reference: tutorials/workshop/reference.md
             - Troubleshooting: tutorials/workshop/troubleshooting.md
             - Instructor notes: tutorials/workshop/facilitators.md

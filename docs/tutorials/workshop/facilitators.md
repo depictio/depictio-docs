@@ -25,7 +25,7 @@ description: "Prepare a Depictio server for the Day 1 hands-on workshop and run 
 | 11:40 | Wrap-up | 5 | What you did, 42 templates, next steps | slides |
 | 11:45 | Questions | 15 | | |
 
-Not in the timed session: sharing, the sample table and its link, the table from a URL, the Project Builder, several MultiQC reports in one collection (Bonus blocks of episode 3); creating a project from files and following a new run ([Optional A](from-a-file.md) and [Optional B](new-run-and-versions.md), for after the workshop). Metadata mode, comments, annotations, versions, exports and the command line are Day 2 ([Collaborate and export](../workshop-cli/collaborate-and-export.md)).
+Not in the timed session: sharing, the sample table and its link, the table from a URL, the Project Builder, several MultiQC reports in one collection (Bonus blocks of episode 3); creating a project from files and following a new run ([Optional](from-a-file.md) and [Optional B](new-run-and-versions.md), for after the workshop). Metadata mode, comments, annotations, versions, exports and the command line are Day 2 ([Collaborate and export](../workshop-cli/collaborate-and-export.md)).
 
 ## :material-server-outline: Server settings { #server-settings }
 

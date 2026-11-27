@@ -65,7 +65,7 @@ Ask the docs assistant first: the chat button at the bottom right of these pages
 | The showcases page does not load, or asks you to sign in | A stale tab, or you opened another server | Open [showcases.depictio.embl.org/dashboards](https://showcases.depictio.embl.org/dashboards){target=_blank} in a new tab: it is public, no sign-in |
 | No showcase for your pipeline | Depictio has templates for 42 nf-core pipelines, and yours may not be one | Check the [list of templates](../../pipeline-templates/nf-core/index.md); otherwise open a pipeline from the poll |
 
-## :material-alpha-a-circle-outline: Optional A · Create a project from files { #optional-a .ws-ep4 }
+## :material-alpha-a-circle-outline: Optional · Create a project from files { #optional-a .ws-ep4 }
 
 | Symptom | Cause | Fix |
 |---|---|---|
@@ -80,21 +80,3 @@ Ask the docs assistant first: the chat button at the bottom right of these pages
 | No **Add group**, or the switches are greyed | Only the owner of a project can share it | Open the project you created in this episode |
 | Your group is not in **Search groups** | The user groups were not created, or a typo | Tell a helper |
 | Your group does not see your dashboard | The group was added to another project | **Permissions** of the right project: **Everyone with access** must list them |
-
-## :material-alpha-b-circle-outline: Optional B · Follow a new run { #optional-b .ws-ep5 }
-
-| Symptom | Cause | Fix |
-|---|---|---|
-| Nothing in **What's new** | The dashboard was not opened before the appends, or the page was not reloaded after them | Reload. If still nothing, check the counts on the project page (each table 342 rows) and tell a helper: the server may have What's new turned off |
-| No **Append** button, only **Append folders** | The same button, for files and folders | Click **Append folders** |
-| **Manage data** greyed on `joined_penguins` | A joined table is rebuilt by Depictio; append, replace and clear are refused on it | Append to `physical_features` and `demographic_data` |
-| New penguins with empty measurements | The census was appended before the measurements | Append `physical_features_2009.csv` too: `joined_penguins` ends at 342 rows, none with empty measurements |
-| No **What's new** after the first append | Only the measurements are appended: `joined_penguins` has not changed yet | Append `demographic_data_2009.csv`, then reload |
-| **Split** greyed out | Split draws new runs, and an append makes no run | Expected; use **Overlay** and **Before \| Now** |
-| 461 rows in a table | The same file was appended twice | Unlock the table; in its **Data** panel, **Past versions**, **At version** the version with 342 rows, **Restore vN**, then **Restore**. The join follows. Reload if the header counts stay old |
-| **Before \| Now** shows *+119*, the figure 342 points | The **Species** filter was cleared: the dashboard reopened with *Gentoo* selected, and clicking *Gentoo* again clears it | Pick *Gentoo* again |
-| The blue dot is gone before **Before \| Now** | **Mark as seen** removes it | Mark as seen only after **Before \| Now** |
-| *Unlock the table to restore a past version* | The table is locked | Switch **Unlock cell edits**, then restore |
-| *Join(s) … read this table: delete them first.* | You tried to delete a table that the join reads | Do not delete it: append to it instead |
-| The **Runs** tab did not change; **Compare** shows nothing | An append is not a run | Expected; the instructor shows runs on *Penguin Field Survey* |
-| No **Data version** or **History** | Both are in edit mode only | On your copy, in **Edit** |

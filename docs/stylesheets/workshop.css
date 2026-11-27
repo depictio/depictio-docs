@@ -157,6 +157,11 @@
 .md-content:has(.ws-meta.ws-ep3) { --ws: #45B8AC; } .md-content:has(.ws-meta.ws-ep4) { --ws: #D4A017; }
 .md-content:has(.ws-meta.ws-ep5) { --ws: #E6779F; } .md-content:has(.ws-meta.ws-ep6) { --ws: #F68B33; }
 
+/* Overview and Going further boxes take the colour of the episode too. */
+.md-content:has(.ws-meta) .md-typeset :is(.admonition, details):is(.overview, .further) { border-color: var(--ws); }
+.md-content:has(.ws-meta) .md-typeset :is(.overview, .further) > :is(.admonition-title, summary) { background-color: color-mix(in srgb, var(--ws) 12%, transparent); }
+.md-content:has(.ws-meta) .md-typeset :is(.overview, .further) > :is(.admonition-title, summary)::before { background-color: var(--ws); }
+.md-content:has(.ws-meta) .md-typeset :is(.overview, .further) > summary::after { color: var(--ws); }
 /* Bonus blocks (??? note) take the colour of the episode, like the headings and steps. */
 .md-content:has(.ws-meta) .md-typeset details.note { border-color: var(--ws); }
 .md-content:has(.ws-meta) .md-typeset details.note > summary { background-color: color-mix(in srgb, var(--ws) 10%, transparent); }

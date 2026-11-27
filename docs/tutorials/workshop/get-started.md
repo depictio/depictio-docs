@@ -7,7 +7,7 @@ glightbox: true
 # 0. Setup
 
 <div class="ws-strip" markdown>
-[**0** Setup](get-started.md){ .ws-ep0 .ws-here } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 } [**+** From files](from-a-file.md){ .ws-ep4 } [**+** New run](new-run-and-versions.md){ .ws-ep5 }
+[**0** Setup](get-started.md){ .ws-ep0 .ws-here } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 } [**+** From files](from-a-file.md){ .ws-ep4 }
 </div>
 
 <div class="ws-meta ws-ep0" markdown>

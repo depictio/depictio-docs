@@ -7,7 +7,7 @@ glightbox: true
 # 4. Showcases
 
 <div class="ws-strip" markdown>
-[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 .ws-here } [**+** From files](from-a-file.md){ .ws-ep4 } [**+** New run](new-run-and-versions.md){ .ws-ep5 }
+[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 .ws-here } [**+** From files](from-a-file.md){ .ws-ep4 }
 </div>
 
 <div class="ws-meta ws-ep6" markdown>
@@ -65,5 +65,5 @@ In episode 3 you built the dashboard of one pipeline, nf-core/ampliseq, from its
 
 <div class="ws-next" markdown>
 [<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#episode-4){ .ws-help }
-[<span class="ws-k">Optional A</span><span class="ws-t">Create a project from files</span>](from-a-file.md){ .ws-go .ws-ep4 }
+[<span class="ws-k">Optional</span><span class="ws-t">Create a project from files</span>](from-a-file.md){ .ws-go .ws-ep4 }
 </div>

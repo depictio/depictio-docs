@@ -59,7 +59,7 @@ glightbox: true
 
     What does a dashboard look like for the pipeline I use?
 
--   <span class="ws-num ws-ep4">+</span> **[Optional A · Create a project from files](from-a-file.md)**
+-   <span class="ws-num ws-ep4">+</span> **[Optional · Create a project from files](from-a-file.md)**
 
     ---
 
@@ -67,13 +67,6 @@ glightbox: true
 
     How do I start from my own tables, join them, and share them?
 
--   <span class="ws-num ws-ep5">+</span> **[Optional B · Follow a new run](new-run-and-versions.md)**
-
-    ---
-
-    <span class="ws-role">Creator · the 2009 season · optional, after the workshop</span>
-
-    I added a season: what changed since I last looked, and how do I go back?
 
 </div>
 
@@ -93,7 +86,7 @@ glightbox: true
 | 11:40 | Wrap-up | 5 | |
 | 11:45 | Your questions | 15 | |
 
-The two optional episodes are for after the workshop.
+The optional episode is for after the workshop.
 
 ## Three roles
 
