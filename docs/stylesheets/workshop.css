@@ -385,3 +385,6 @@ html.ws-embed .md-content__inner > .ws-only-hide + h2,
 html.ws-embed .md-content__inner > h2:first-child { margin-top: 0; }
 html.ws-embed .md-grid { max-width: none; }
 html.ws-embed .md-typeset [id] { scroll-margin-top: .8rem; }
+
+/* Long terminal output (<div class="ws-scroll">): the whole output, scrolled inside the block. */
+.md-typeset .ws-scroll pre > code { max-height: 30rem; overflow: auto; }
