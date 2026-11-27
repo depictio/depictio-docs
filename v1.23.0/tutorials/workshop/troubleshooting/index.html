@@ -3307,8 +3307,6 @@
       
         
       
-        
-      
     
     
     
@@ -3519,35 +3517,7 @@
   <span class="md-ellipsis">
     
   
-    Optional A · Create a project from files
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../new-run-and-versions/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Optional B · Follow a new run
+    Optional · Create a project from files
   
 
     
@@ -3716,18 +3686,7 @@
   <a href="#optional-a" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Optional A · Create a project from files
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#optional-b" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Optional B · Follow a new run
+        Optional · Create a project from files
       
     </span>
   </a>
@@ -8299,18 +8258,7 @@
   <a href="#optional-a" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Optional A · Create a project from files
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#optional-b" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Optional B · Follow a new run
+        Optional · Create a project from files
       
     </span>
   </a>
@@ -8547,7 +8495,7 @@
 </tr>
 </tbody>
 </table>
-<h2 class="ws-ep4" id="optional-a"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 7h2a2 2 0 0 1 2 2v8h-2v-4h-2v4H9V9a2 2 0 0 1 2-2m0 2v2h2V9zm1 11a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2"></path></svg></span> Optional A · Create a project from files<a class="headerlink" href="#optional-a" title="Permanent link">¶</a></h2>
+<h2 class="ws-ep4" id="optional-a"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 7h2a2 2 0 0 1 2 2v8h-2v-4h-2v4H9V9a2 2 0 0 1 2-2m0 2v2h2V9zm1 11a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2"></path></svg></span> Optional · Create a project from files<a class="headerlink" href="#optional-a" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -8611,83 +8559,6 @@
 <td>Your group does not see your dashboard</td>
 <td>The group was added to another project</td>
 <td><strong>Permissions</strong> of the right project: <strong>Everyone with access</strong> must list them</td>
-</tr>
-</tbody>
-</table>
-<h2 class="ws-ep5" id="optional-b"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 10.5c0 .8-.7 1.5-1.5 1.5.8 0 1.5.7 1.5 1.5V15a2 2 0 0 1-2 2H9V7h4a2 2 0 0 1 2 2zM13 15v-2h-2v2zm0-4V9h-2v2zm-1-9a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8"></path></svg></span> Optional B · Follow a new run<a class="headerlink" href="#optional-b" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Symptom</th>
-<th>Cause</th>
-<th>Fix</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Nothing in <strong>What's new</strong></td>
-<td>The dashboard was not opened before the appends, or the page was not reloaded after them</td>
-<td>Reload. If still nothing, check the counts on the project page (each table 342 rows) and tell a helper: the server may have What's new turned off</td>
-</tr>
-<tr>
-<td>No <strong>Append</strong> button, only <strong>Append folders</strong></td>
-<td>The same button, for files and folders</td>
-<td>Click <strong>Append folders</strong></td>
-</tr>
-<tr>
-<td><strong>Manage data</strong> greyed on <code>joined_penguins</code></td>
-<td>A joined table is rebuilt by Depictio; append, replace and clear are refused on it</td>
-<td>Append to <code>physical_features</code> and <code>demographic_data</code></td>
-</tr>
-<tr>
-<td>New penguins with empty measurements</td>
-<td>The census was appended before the measurements</td>
-<td>Append <code>physical_features_2009.csv</code> too: <code>joined_penguins</code> ends at 342 rows, none with empty measurements</td>
-</tr>
-<tr>
-<td>No <strong>What's new</strong> after the first append</td>
-<td>Only the measurements are appended: <code>joined_penguins</code> has not changed yet</td>
-<td>Append <code>demographic_data_2009.csv</code>, then reload</td>
-</tr>
-<tr>
-<td><strong>Split</strong> greyed out</td>
-<td>Split draws new runs, and an append makes no run</td>
-<td>Expected; use <strong>Overlay</strong> and <strong>Before | Now</strong></td>
-</tr>
-<tr>
-<td>461 rows in a table</td>
-<td>The same file was appended twice</td>
-<td>Unlock the table; in its <strong>Data</strong> panel, <strong>Past versions</strong>, <strong>At version</strong> the version with 342 rows, <strong>Restore vN</strong>, then <strong>Restore</strong>. The join follows. Reload if the header counts stay old</td>
-</tr>
-<tr>
-<td><strong>Before | Now</strong> shows <em>+119</em>, the figure 342 points</td>
-<td>The <strong>Species</strong> filter was cleared: the dashboard reopened with <em>Gentoo</em> selected, and clicking <em>Gentoo</em> again clears it</td>
-<td>Pick <em>Gentoo</em> again</td>
-</tr>
-<tr>
-<td>The blue dot is gone before <strong>Before | Now</strong></td>
-<td><strong>Mark as seen</strong> removes it</td>
-<td>Mark as seen only after <strong>Before | Now</strong></td>
-</tr>
-<tr>
-<td><em>Unlock the table to restore a past version</em></td>
-<td>The table is locked</td>
-<td>Switch <strong>Unlock cell edits</strong>, then restore</td>
-</tr>
-<tr>
-<td><em>Join(s) … read this table: delete them first.</em></td>
-<td>You tried to delete a table that the join reads</td>
-<td>Do not delete it: append to it instead</td>
-</tr>
-<tr>
-<td>The <strong>Runs</strong> tab did not change; <strong>Compare</strong> shows nothing</td>
-<td>An append is not a run</td>
-<td>Expected; the instructor shows runs on <em>Penguin Field Survey</em></td>
-</tr>
-<tr>
-<td>No <strong>Data version</strong> or <strong>History</strong></td>
-<td>Both are in edit mode only</td>
-<td>On your copy, in <strong>Edit</strong></td>
 </tr>
 </tbody>
 </table>

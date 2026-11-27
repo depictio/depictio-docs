@@ -3305,8 +3305,6 @@
       
         
       
-        
-      
     
     
     
@@ -3517,35 +3515,7 @@
   <span class="md-ellipsis">
     
   
-    Optional A · Create a project from files
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../workshop/new-run-and-versions/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Optional B · Follow a new run
+    Optional · Create a project from files
   
 
     
@@ -8280,8 +8250,17 @@
 </div>
 <div class="admonition overview">
 <p class="admonition-title">Overview</p>
-<p><strong>Objective</strong>: turn your own tables into a project with the <strong>Project Builder</strong>, then <strong>join</strong> the two tables so one figure uses columns from both.</p>
-<p>The core of this page takes about 5 minutes to read. The rest is in the <strong>Bonus</strong> blocks at the end.</p>
+<p><strong>Questions</strong></p>
+<ul>
+<li>How do I turn my own tables into a project when no template exists?</li>
+<li>How do I plot columns from two tables in one figure?</li>
+</ul>
+<p><strong>Objectives</strong></p>
+<ul>
+<li>Define two data collections in the <strong>Project Builder</strong>, preview them, create the project.</li>
+<li>Join the two tables on <code>individual_id</code> with <strong>Add join</strong>.</li>
+<li>Make one figure from the joined table.</li>
+</ul>
 </div>
 <p>Yesterday the run had a template: Depictio knew what each file was. Most of your own data has none. The data here is the Palmer Penguins of the browser course: two field seasons, and in each season two tables, <code>physical_features.csv</code> (the measurements) and <code>demographic_data.csv</code> (who each bird is, with its <code>sex</code>). Both carry <code>individual_id</code>.</p>
 <p>The Project Builder reads a <strong>folder in a bucket</strong> (<code>s3://…</code>), not files from your laptop. The location of the penguins folder is given in the chat.</p>

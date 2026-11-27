@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Hands-on 3: create a project from an nf-core/ampliseq run on S3 in three steps (name it, point at the run, check and create), then open its dashboard. Sample table, URL, Project Builder and several MultiQC reports are Bonus.">
+        <meta name="description" content="Hands-on 3: create a project from an nf-core/ampliseq run on S3 in three steps (name it, point at the run, check and create), then open its dashboard. Two Bonus exercises (your own sample table, one table from a URL) and a Going further list follow.">
       
       
       
@@ -3307,8 +3307,6 @@
       
         
       
-        
-      
     
     
     
@@ -3552,17 +3550,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How it works
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#link-your-table" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3578,17 +3565,6 @@
     <span class="md-ellipsis">
       
         One table from a URL
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#where-data-can-come-from" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where data can come from
       
     </span>
   </a>
@@ -3651,35 +3627,7 @@
   <span class="md-ellipsis">
     
   
-    Optional A · Create a project from files
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../new-run-and-versions/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Optional B · Follow a new run
+    Optional · Create a project from files
   
 
     
@@ -8281,17 +8229,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How it works
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#link-your-table" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -8307,17 +8244,6 @@
     <span class="md-ellipsis">
       
         One table from a URL
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#where-data-can-come-from" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where data can come from
       
     </span>
   </a>
@@ -8351,18 +8277,26 @@
 
 <h1 id="3-create-a-project-from-an-nf-core-run">3. Create a project from an nf-core run<a class="headerlink" href="#3-create-a-project-from-an-nf-core-run" title="Permanent link">¶</a></h1>
 <div class="ws-strip">
-<p><a class="ws-ep0" href="../get-started/"><strong>0</strong> Setup</a> <a class="ws-ep1" href="../view/"><strong>1</strong> Read</a> <a class="ws-ep2" href="../edit-your-copy/"><strong>2</strong> Edit</a> <a class="ws-ep3 ws-here" href="./"><strong>3</strong> From a run</a> <a class="ws-ep6" href="../showcases/"><strong>4</strong> Showcases</a> <a class="ws-ep4" href="../from-a-file/"><strong>+</strong> From files</a> <a class="ws-ep5" href="../new-run-and-versions/"><strong>+</strong> New run</a></p>
+<p><a class="ws-ep0" href="../get-started/"><strong>0</strong> Setup</a> <a class="ws-ep1" href="../view/"><strong>1</strong> Read</a> <a class="ws-ep2" href="../edit-your-copy/"><strong>2</strong> Edit</a> <a class="ws-ep3 ws-here" href="./"><strong>3</strong> From a run</a> <a class="ws-ep6" href="../showcases/"><strong>4</strong> Showcases</a> <a class="ws-ep4" href="../from-a-file/"><strong>+</strong> From files</a></p>
 </div>
 <div class="ws-meta ws-ep3">
 <p><span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19V5H5v14zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-8 4h2v4h4v2h-4v4h-2v-4H7v-2h4z"></path></svg></span> <strong>Creator</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.59 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4m6 14c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.23c1.61.78 3.72 1.23 6 1.23s4.39-.45 6-1.23zm0-4.55c-1.3.95-3.58 1.55-6 1.55s-4.7-.6-6-1.55V9.64c1.47.83 3.61 1.36 6 1.36s4.53-.53 6-1.36zM12 9C8.13 9 6 7.5 6 7s2.13-2 6-2 6 1.5 6 2-2.13 2-6 2"></path></svg></span> <strong>nf-core/ampliseq run on S3</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a7 7 0 0 1-7-7 7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7m7.03-12.61 1.42-1.42c-.45-.51-.9-.97-1.41-1.41L17.62 6c-1.55-1.26-3.5-2-5.62-2a9 9 0 0 0-9 9 9 9 0 0 0 9 9c5 0 9-4.03 9-9 0-2.12-.74-4.07-1.97-5.61M11 14h2V8h-2m4-7H9v2h6z"></path></svg></span> <strong>Hands-on 3 · 10 min</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.36 6 .4 2H18v6h-3.36l-.4-2H7V6zM14 4H5v17h2v-7h5.6l.4 2h7V6h-5.6"></path></svg></span> <strong>After episode 0</strong></span></p>
 </div>
 <div class="admonition overview">
 <p class="admonition-title">Overview</p>
-<p><strong>Objective</strong>: turn the results folder of an nf-core run, left in its bucket on S3, into a project and a dashboard, without uploading anything.</p>
-<p>The core of this page takes about 5 minutes to read. The rest is in the <strong>Bonus</strong> blocks at the end.</p>
+<p><strong>Questions</strong></p>
+<ul>
+<li>How do I turn the results of an nf-core run into a dashboard?</li>
+<li>Do I have to upload the files?</li>
+</ul>
+<p><strong>Objectives</strong></p>
+<ul>
+<li>Name a project and point it at a run folder on S3.</li>
+<li>Check what the template finds, create the project and open its dashboard.</li>
+</ul>
 </div>
 <p>A <strong>run</strong> is one execution of a pipeline. Here, nf-core/ampliseq 2.18.0 ran once and wrote its results in one folder on S3: you point Depictio at that folder, and it builds the project and its dashboard from it.</p>
-<p>You rebuild the project you read in episode 1, from its run. In a Bonus at the end, you add what the pipeline does not know: where and when each sample was taken.</p>
+<p>You rebuild the project you read in episode 1, from its run. In a Bonus at the end, you can add what the pipeline does not know: where and when each sample was taken.</p>
 <p><strong>The run location</strong> is an address starting with <code>s3://</code>. Paste it as given, with no <code>/</code> added at the end:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>s3://nf-core-awsmegatests/ampliseq/results-2723d4c298d48321594920d0324697e14d73ee94
 </code></pre></div>
@@ -8427,6 +8361,10 @@
 <p>23 data collections (22 if <strong>Group column</strong> was left on <code>name</code>), the ones of the template, and 7 tabs. The links are the 19 of the template. They mostly start from the sample metadata (<code>metadata</code>), which is why one filter on Habitat reached every tab in episode 1. If you also did the Bonus with your own table, add <code>sampling_sites</code> and one link for each link you made.</p>
 </details>
 </div>
+<div class="admonition callout">
+<p class="admonition-title">Your project is private</p>
+<p>Only you can open it until you share it, under <strong>Permissions</strong> on the project page, as in the optional <a href="../from-a-file/#share-it-your-group-then-everyone">Create a project from files</a> (Optional A).</p>
+</div>
 <div class="admonition keypoints">
 <p class="admonition-title">Key points</p>
 <ul>
@@ -8436,38 +8374,6 @@
 <li>Nothing is created before you confirm.</li>
 </ul>
 </div>
-<details class="note">
-<summary>Bonus · Good to know: the screenshot, and who can open your project</summary>
-<p>The screenshot of <strong>What Depictio found</strong> was taken with <strong>Group column</strong> empty, so <strong>COLLECTIONS</strong> reads 22 found. With <code>habitat</code> you get 23.</p>
-<div class="admonition callout">
-<p class="admonition-title">Your project is private</p>
-<p>Only you can open it until you share it, under <strong>Permissions</strong> on the project page, as in the optional <a href="../from-a-file/#share-it-your-group-then-everyone">Create a project from files</a> (Optional A).</p>
-</div>
-</details>
-<details class="note">
-<summary>Bonus · How it works: template, collections, links</summary>
-<h3 id="how-it-works"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16v-3c0-1.11-.89-2-2-2h-6V8h2V2H9v6h2v3H5c-1.11 0-2 .89-2 2v3H1v6h6v-6H5v-3h6v3H9v6h6v-6h-2v-3h6v3h-2v6h6v-6zM11 4h2v2h-2zM5 20H3v-2h2zm8 0h-2v-2h2zm8 0h-2v-2h2z"></path></svg></span> How it works<a class="headerlink" href="#how-it-works" title="Permanent link">¶</a></h3>
-<ol>
-<li><strong>Depictio reads <code>pipeline_info/</code>.</strong> Every nf-core run writes its own records there. They tell Depictio which pipeline ran, in which version, and how its tasks ended.</li>
-<li><strong>It picks the template written for that version.</strong> A <strong>template</strong> is a file that describes the project for one pipeline version. Here it is the template of nf-core/ampliseq 2.18.0. The match is exact, and the checks say so.</li>
-<li><strong>The template lists what the project holds.</strong><ul>
-<li>The <strong>data collections</strong>: for each one, which files of the run it reads. Some are <strong>recipes</strong>: Depictio computes them from several files with a script shipped with the template.</li>
-<li>The <strong>links</strong> between data collections.</li>
-<li>The <strong>dashboard</strong>.</li>
-</ul>
-</li>
-<li><strong>Depictio reads the files and builds the project.</strong> Nothing is created before you confirm.</li>
-</ol>
-<p>There are two ways to bring the data in:</p>
-<ul>
-<li><strong>Read in place</strong>: the run stays in its bucket. Depictio stores the tables it builds from it, not the run itself. This is what you do for the run.</li>
-<li><strong>Upload</strong>: the files are copied into Depictio, and each becomes a data collection. This is what you do for <code>sampling_sites.tsv</code>.</li>
-</ul>
-<p>You can use both in the same step.</p>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/diagrams/two-ways-in_light.png#only-light" data-desc-position="bottom" data-gallery="light"><img alt="Read in place: Depictio reads the run folder on S3 and applies the template. Upload: the files are copied, one data collection each" class="ws-diagram" src="../../../images/tutorials/workshop/diagrams/two-ways-in_light.png#only-light"></a>
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/diagrams/two-ways-in_dark.png#only-dark" data-desc-position="bottom" data-gallery="dark"><img alt="Read in place: Depictio reads the run folder on S3 and applies the template. Upload: the files are copied, one data collection each" class="ws-diagram" src="../../../images/tutorials/workshop/diagrams/two-ways-in_dark.png#only-dark"></a></p>
-<p>How Depictio reads remote folders: <a href="../../../usage/projects/remote-data/">Remote data</a>.</p>
-</details>
 <details class="note">
 <summary>Bonus · Your own sample table, linked to the run</summary>
 <p>Add a table of your own to the project: where and when each sample was taken.</p>
@@ -8494,6 +8400,7 @@
 <details class="solution">
 <summary>Solution</summary>
 <p>24 data collections: the 23 of the template, plus <code>sampling_sites</code> (23 if <strong>Group column</strong> was left on <code>name</code>), and 25 if you also added <code>ena_runs</code> from its URL. 7 tabs. The links are the 19 of the template, plus one for each link you added. The template's links mostly start from the sample metadata (<code>metadata</code>), which is why one filter on Habitat reached every tab in episode 1.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep3_bonus_project.webp" data-desc-position="bottom"><img alt="The page of a project with the template's 23 data collections plus sampling_sites and ena_runs: 25 data collections, and its dashboard with 7 tabs" class="ws-shot" src="../../../images/tutorials/workshop/ep3_bonus_project.webp"></a></p>
 </details>
 </div>
 </details>
@@ -8526,253 +8433,20 @@
 <details class="solution">
 <summary>Solution</summary>
 <p><code>run_accession</code> in <code>ena_runs</code> holds the same values as <code>ID</code> in <code>sampling_sites</code> and <code>metadata</code>: the ENA run accessions, such as <code>SRR10070130</code>. A link needs a column with the same values on both sides, and this is the one. The link goes one way: choose which of the two should be filtered by the other. <code>ena_runs</code> has 24 rows, <code>sampling_sites</code> 12. The study has 24 runs in ENA, and this run of the pipeline used 12 of them. All 12 <code>ID</code> values are among the 24 <code>run_accession</code> values. To count the rows yourself, run <code>curl -s '&lt;the ENA address&gt;' | tail -n +2 | wc -l</code>: the header line is skipped.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep3_v124_created_links.webp" data-desc-position="bottom"><img alt="How Depictio checks a link: the values of the column ID of sampling_sites, matched to the other data collection, 12 of 12 found. The column run_accession of ena_runs would be matched the same way" class="ws-shot" src="../../../images/tutorials/workshop/ep3_v124_created_links.webp"></a></p>
 </details>
 </div>
 </details>
-<details class="note">
-<summary>Bonus · Where data can come from</summary>
-<h3 id="where-data-can-come-from"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m8.84 12-4.92 4.92L2.5 15.5 5 13H0v-2h5L2.5 8.5l1.42-1.42zM12 3C8.59 3 5.68 4.07 4.53 5.57L5 6l1.03 1.07C6 7.05 6 7 6 7c0-.5 2.13-2 6-2s6 1.5 6 2-2.13 2-6 2c-2.62 0-4.42-.69-5.32-1.28l3.12 3.12c.7.1 1.44.16 2.2.16 2.39 0 4.53-.53 6-1.36v2.81c-1.3.95-3.58 1.55-6 1.55-.96 0-1.9-.1-2.76-.27l-1.65 1.64c1.32.4 2.82.63 4.41.63 2.28 0 4.39-.45 6-1.23V17c0 .5-2.13 2-6 2s-6-1.5-6-2v-.04L5 18l-.46.43C5.69 19.93 8.6 21 12 21c4.41 0 8-1.79 8-4V7c0-2.21-3.58-4-8-4"></path></svg></span> Where data can come from<a class="headerlink" href="#where-data-can-come-from" title="Permanent link">¶</a></h3>
-<div class="admonition note">
-<p class="admonition-title">Optional</p>
-<p>This part is not part of the live session: read it if you have time, or afterwards.</p>
-</div>
-<p>You used three ways in this episode: a public S3 bucket, an uploaded file and one file by URL. Depictio reads more. The browser and the command line read the same sources: the command line is another interface, not another source (Day 2). The table groups them by where the data is.</p>
-<table>
-<thead>
-<tr>
-<th>Where the data is</th>
-<th>In the browser</th>
-<th>From the command line</th>
-<th>On the workshop server</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>S3 buckets</strong></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>A public bucket</td>
-<td><strong>Read in place</strong>, <strong>Folder or bucket</strong>: paste the <code>s3://</code> location</td>
-<td><code>depictio ingest s3://bucket/run42</code></td>
-<td>Used in this episode: the server is set to read this public bucket</td>
-</tr>
-<tr>
-<td>A private bucket, with credentials</td>
-<td><strong>Use my own credentials</strong>: access key and secret for that bucket</td>
-<td><code>depictio ingest</code>, with the S3 endpoint and keys of the CLI configuration</td>
-<td>Not used</td>
-</tr>
-<tr>
-<td>Another S3-compatible service</td>
-<td>Same, with its <strong>Endpoint</strong></td>
-<td>Same, with <code>endpoint_url</code> in the CLI configuration</td>
-<td>Not used</td>
-</tr>
-<tr>
-<td>Google Cloud Storage</td>
-<td>In progress</td>
-<td>In progress</td>
-<td>Not used</td>
-</tr>
-<tr>
-<td><strong>HTTP</strong></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>One file, by URL</td>
-<td><strong>Read in place</strong>, <strong>One file URL</strong></td>
-<td><code>--bind tag=https://host/data.csv</code></td>
-<td>Used in this episode</td>
-</tr>
-<tr>
-<td>Many files, listed in a manifest</td>
-<td><strong>From Manifest</strong></td>
-<td><code>--manifest &lt;url or path&gt;</code></td>
-<td>Not used</td>
-</tr>
-<tr>
-<td><strong>Your computer</strong></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Files or whole folders</td>
-<td><strong>Upload</strong>: drop them, up to 50 MB each</td>
-<td><code>depictio ingest &lt;folder&gt;</code></td>
-<td>Used in this episode</td>
-</tr>
-<tr>
-<td><strong>Command line and pipelines</strong></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>A results folder, the end of a Nextflow run, or a folder watched for changes</td>
-<td></td>
-<td><code>depictio ingest</code>, the Nextflow trigger, <code>depictio watch</code></td>
-<td>Day 2</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="admonition-title">A folder on the server's own disk</p>
-<p>Depictio can read a folder on the machine it runs on only when it runs on that machine: <code>depictio local</code>, Docker with the disks mounted, or the Python bundle. The workshop server cannot read a folder on its own disk. Use <strong>Upload</strong>, or a bucket.</p>
-</div>
-<p>Details of each case: <a href="../../../usage/projects/remote-data/#which-way-to-use">Remote data</a>.</p>
-</details>
-<details class="note">
-<summary>Bonus · The Project Builder, for a pipeline with no template</summary>
-<p>Day 2 does this hands-on: <a href="../../workshop-cli/project-builder/">Your own tables, no template</a>.</p>
 <div class="admonition further">
-<p class="admonition-title">A project from scratch: the Project Builder</p>
-<p>Some pipelines have no template. Then you define the data collections yourself, in the <strong>Project Builder</strong>. The instructor shows it on the shared screen. It is not a step for you.</p>
-<ol>
-<li>
-<p><strong>Choose how to read the folder.</strong> In <strong>Add data</strong>, under <strong>How should Depictio read this folder?</strong>, pick <strong>Custom workflows</strong>, then click <strong>Open the Project Builder</strong>. A custom workflow has no dashboard to start with.</p>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep3_builder_1_choice.webp" data-desc-position="bottom"><img alt="Add data with Custom workflows selected and the button Open the Project Builder" class="ws-shot" src="../../../images/tutorials/workshop/ep3_builder_1_choice.webp"></a></p>
-</li>
-<li>
-<p><strong>Source &amp; project.</strong> Give the data root: an <code>s3://</code> location, with a switch for a bucket that needs credentials. Depictio counts the folders at the top. If it recognises the pipeline, it offers <strong>Start from Ampliseq Microbial Community Analysis</strong>, to keep the template's collections, recipes and dashboards and change only what you need. <strong>Keep building from scratch</strong> ignores the template.</p>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep3_builder_2_source.webp" data-desc-position="bottom"><img alt="Project Builder, step 1: the data root, the recognised nf-core/ampliseq 2.18.0 and the two buttons" class="ws-shot" src="../../../images/tutorials/workshop/ep3_builder_2_source.webp"></a></p>
-</li>
-<li>
-<p><strong>Define a data collection.</strong> The file tree is on the left, the workflows on the right. Click a file, such as <code>input/Metadata_full.tsv</code>: its first rows and column types show. Fill in the tag, the workflow and the format, then click <strong>Add to main</strong>. Tick a file's siblings to cover every sample in one scan.</p>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep3_builder_3_collection.webp" data-desc-position="bottom"><img alt="Project Builder, step 2: the file tree, the first rows of Metadata_full.tsv and the form of a new data collection" class="ws-shot" src="../../../images/tutorials/workshop/ep3_builder_3_collection.webp"></a></p>
-</li>
-<li>
-<p><strong>Review and create.</strong> The page lists the data collections per workflow and the links. <strong>Preview the ingestion</strong> is a dry run: nothing is created. <strong>Create project</strong> is available after it. On the right, the project definition as YAML: <strong>Download YAML</strong> saves it, and <code>depictio ingest &lt;folder or s3://prefix&gt; --template &lt;this file&gt;</code> reuses it on the next runs. Dashboards are built afterwards, in the editor.</p>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep3_builder_4_review.webp" data-desc-position="bottom"><img alt="Project Builder, step 3: the data collections of the main workflow, Preview the ingestion, Create project and the YAML definition" class="ws-shot" src="../../../images/tutorials/workshop/ep3_builder_4_review.webp"></a></p>
-</li>
-</ol>
-<p>An AI assistant to draft these definitions is planned.</p>
-</div>
-</details>
-<details class="note">
-<summary>Bonus · Where your project comes from</summary>
-<div class="admonition further">
-<p class="admonition-title">Going further: where your project comes from</p>
-<p>The instructor shows where the <strong>Differential Abundance</strong> tab comes from, on the shared screen. Nothing to do on your side.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Where</th>
-<th>What it holds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Template</td>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/2.18.0/template.yaml" target="_blank"><code>nf-core/ampliseq/2.18.0/template.yaml</code></a></td>
-<td>The collection <code>ancombc_results</code>: which files of the run it reads, and the recipe that reshapes them</td>
-</tr>
-<tr>
-<td>Tools catalog</td>
-<td><a href="https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/ancombc.yaml" target="_blank"><code>catalog/qiime2/ancombc.yaml</code></a></td>
-<td>The same output, described once for every pipeline that runs ANCOM-BC: the same recipe, and what it renders as</td>
-</tr>
-<tr>
-<td>Tool Studio</td>
-<td><a href="../../../developer/tool-studio/">Tool Studio</a></td>
-<td>Where a tool is added to the catalog, in the browser</td>
-</tr>
-</tbody>
-</table>
-<p>More in <a href="../../../pipeline-templates/nf-core/ampliseq/">Pipeline templates</a> and the <a href="../../../catalog/">Tools catalog</a>. To contribute: <a href="../../../developer/contributing-templates/">a template</a>, <a href="../../../developer/contributing-a-tool/">a tool</a>.</p>
-</div>
-</details>
-<details class="note">
-<summary>Bonus · Several MultiQC reports in one collection</summary>
-<p>A <strong>MultiQC</strong> data collection can hold one report per run. When the runs are ingested together, their reports share <strong>one collection</strong>. Filters, and a link from a sample table, then work across the runs: you compare the QC of several sequencing runs in one dashboard.</p>
-<p>The example was tested in November 2026: three nf-core/seqinspector runs, <code>seqrun_1</code> to <code>seqrun_3</code>, with 4 samples each, in one folder. One project holds:</p>
+<p class="admonition-title">Going further</p>
 <ul>
-<li>a MultiQC collection, <code>multiqc_data</code>, with the three reports;</li>
-<li>a table, <code>samples</code>, from the <code>samples.csv</code> of each run: the columns <code>sample</code>, <code>condition</code>, <code>replicate</code>, <code>sequencing_run</code> and <code>lane</code>, 12 rows aggregated;</li>
-<li>a link from <code>samples</code> to <code>multiqc_data</code>: <code>sample</code> in the table matches <code>sample_name</code> in the reports (the resolver <code>sample_mapping</code>).</li>
+<li>How a template, the data collections and the links build a project, and the two ways in: <a href="../reference/#how-it-works">How it works</a>.</li>
+<li>Every place data can come from, in the browser and on the command line: <a href="../reference/#where-data-can-come-from">Where data can come from</a>.</li>
+<li>A project for a pipeline with no template (hands-on on Day 2): <a href="../reference/#project-builder">The Project Builder</a>.</li>
+<li>Where the <strong>Differential Abundance</strong> tab comes from: <a href="../reference/#where-project-comes-from">Template, catalog and Tool Studio</a>.</li>
+<li>Several MultiQC reports in one collection: <a href="../reference/#several-multiqc">Several MultiQC reports</a>.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="go">qc-runs/                                 the folder to ingest (the absolute path goes in the project file)</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="go">├── seqrun_1/                            one run: a subfolder whose name matches runs_regex</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="go">│   ├── multiqc/multiqc_data/multiqc.parquet    the run's MultiQC report</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="go">│   └── samples.csv                      4 samples of this run</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="go">├── seqrun_2/                            same layout</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="go">└── seqrun_3/                            same layout</span>
-</code></pre></div>
-<p>The project file. Replace <code>/path/to/qc-runs</code> with the absolute path of your folder:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"QC</span><span class="nv"> </span><span class="s">across</span><span class="nv"> </span><span class="s">runs"</span><span class="w">                     </span><span class="c1"># the project's name [[1]]</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">workflows</span><span class="p">:</span><span class="w">                                 </span><span class="c1"># where the data comes from [[2]]</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"seqinspector"</span><span class="w">                   </span><span class="c1"># the pipeline that made the runs [[2]]</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"1.1.2"</span><span class="w">                       </span><span class="c1"># its version [[2]]</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">engine</span><span class="p">:</span><span class="w">                                </span><span class="c1"># what ran it [[2]]</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"nextflow"</span><span class="w">                     </span><span class="c1"># [[2]]</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="nt">catalog</span><span class="p">:</span><span class="w">                               </span><span class="c1"># where the pipeline is listed [[2]]</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"nf-core"</span><span class="w">                      </span><span class="c1"># [[2]]</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">"https://nf-co.re"</span><span class="w">              </span><span class="c1"># [[2]]</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="nt">data_location</span><span class="p">:</span><span class="w">                         </span><span class="c1"># where the runs are [[3]]</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">      </span><span class="nt">structure</span><span class="p">:</span><span class="w"> </span><span class="s">"sequencing-runs"</span><span class="w">         </span><span class="c1"># one folder holds one subfolder per run [[3]]</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">      </span><span class="nt">runs_regex</span><span class="p">:</span><span class="w"> </span><span class="s">"seqrun_.*"</span><span class="w">              </span><span class="c1"># which subfolders are runs [[3]]</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">      </span><span class="nt">locations</span><span class="p">:</span><span class="w">                           </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"/path/to/qc-runs"</span><span class="w">               </span><span class="c1"># the folder that holds seqrun_1 to seqrun_3 [[3]]</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="nt">data_collections</span><span class="p">:</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"multiqc_data"</span><span class="w">  </span><span class="c1"># one collection for the reports of all runs [[4]]</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span><span class="w">                            </span><span class="c1"># [[4]]</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"MultiQC"</span><span class="w">                  </span><span class="c1"># [[4]]</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">          </span><span class="nt">scan</span><span class="p">:</span><span class="w">                            </span><span class="c1"># [[4]]</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"recursive"</span><span class="w">              </span><span class="c1"># look in each run folder and its subfolders [[4]]</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span><span class="w">               </span><span class="c1"># [[4]]</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">              </span><span class="nt">regex_config</span><span class="p">:</span><span class="w">                </span><span class="c1"># [[4]]</span>
-<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">                </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="s">"multiqc/multiqc_data/multiqc.parquet"</span><span class="w">  </span><span class="c1"># one report per run [[4]]</span>
-<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"samples"</span><span class="w">     </span><span class="c1"># the sample table [[5]]</span>
-<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span><span class="w">                            </span><span class="c1"># [[5]]</span>
-<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"Table"</span><span class="w">                    </span><span class="c1"># [[5]]</span>
-<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">          </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="s">"Aggregate"</span><span class="w">            </span><span class="c1"># the rows of every run add up in one table [[5]]</span>
-<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">          </span><span class="nt">scan</span><span class="p">:</span><span class="w">                            </span><span class="c1"># [[5]]</span>
-<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"recursive"</span><span class="w">              </span><span class="c1"># [[5]]</span>
-<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span><span class="w">               </span><span class="c1"># [[5]]</span>
-<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">              </span><span class="nt">regex_config</span><span class="p">:</span><span class="w">                </span><span class="c1"># [[5]]</span>
-<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">                </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="s">"samples.csv"</span><span class="w">     </span><span class="c1"># the file that makes the table [[5]]</span>
-<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">          </span><span class="nt">dc_specific_properties</span><span class="p">:</span><span class="w">          </span><span class="c1"># [[5]]</span>
-<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w">            </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"CSV"</span><span class="w">                  </span><span class="c1"># how to read it [[5]]</span>
-<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="nt">links</span><span class="p">:</span>
-<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source_dc_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"samples"</span><span class="w">               </span><span class="c1"># the link starts from the sample table [[6]]</span>
-<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="w">    </span><span class="nt">source_column</span><span class="p">:</span><span class="w"> </span><span class="s">"sample"</span><span class="w">                </span><span class="c1"># its column of sample names [[6]]</span>
-<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="w">    </span><span class="nt">target_dc_tag</span><span class="p">:</span><span class="w"> </span><span class="s">"multiqc_data"</span><span class="w">          </span><span class="c1"># and filters the MultiQC collection [[6]]</span>
-<a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="w">    </span><span class="nt">target_type</span><span class="p">:</span><span class="w"> </span><span class="s">"multiqc"</span><span class="w">                 </span><span class="c1"># [[6]]</span>
-<a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a><span class="w">    </span><span class="nt">link_config</span><span class="p">:</span><span class="w">                           </span><span class="c1"># [[6]]</span>
-<a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a><span class="w">      </span><span class="nt">resolver</span><span class="p">:</span><span class="w"> </span><span class="s">"sample_mapping"</span><span class="w">           </span><span class="c1"># match sample names, across the runs [[6]]</span>
-<a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a><span class="w">      </span><span class="nt">target_field</span><span class="p">:</span><span class="w"> </span><span class="s">"sample_name"</span><span class="w">          </span><span class="c1"># the sample name in the MultiQC reports [[6]]</span>
-</code></pre></div>
-<ol>
-<li><strong>The project</strong>: its name. <code>--project</code> gives it your own name on the server.</li>
-<li><strong>The workflow</strong>: the pipeline, its version and its engine, as in the other project files of Day 2.</li>
-<li><strong>Where the runs are</strong>: <code>sequencing-runs</code> means one folder with a subfolder per run, and <code>runs_regex</code> picks the subfolders that are runs.</li>
-<li><strong>The MultiQC collection</strong>: type <code>MultiQC</code>, with the pattern that finds the report in each run. All the reports go in this one collection.</li>
-<li><strong>The sample table</strong>: <code>Aggregate</code> stacks the <code>samples.csv</code> of the three runs into one table of 12 rows.</li>
-<li><strong>The link</strong>: a filter on <code>samples</code> reaches the MultiQC reports whose sample names match, in every run.</li>
-</ol>
-<p>Check it, then ingest it, from the folder that holds the file:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Dry run: reads the file and the folders, sends nothing. Read the counts.</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>qc-runs.yaml<span class="w"> </span>--project<span class="w"> </span>yourname-qc-runs<span class="w"> </span>--dry-run
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># The same command without --dry-run creates the project.</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>depictio<span class="w"> </span>ingest<span class="w"> </span>--project-config-path<span class="w"> </span>qc-runs.yaml<span class="w"> </span>--project<span class="w"> </span>yourname-qc-runs
-</code></pre></div>
-<p>The CLI says <em>Processed 3 MultiQC files and created 3 individual reports</em>: three reports, one collection. In a dashboard built on this project, a filter on the <code>condition</code> of the <code>samples</code> table keeps only the matching samples in the MultiQC plots, in every run.</p>
-<div class="admonition challenge">
-<p class="admonition-title">Challenge: one run among three</p>
-<p>In the MultiQC plots, how would you show only the samples of <code>seqrun_2</code>? Which column of which table would you filter?</p>
-<details class="solution">
-<summary>Solution</summary>
-<p>The column <code>sequencing_run</code> of the <code>samples</code> table: the link carries the filter to the reports, so only the samples of <code>seqrun_2</code> stay in the MultiQC plots.</p>
-</details>
 </div>
-</details>
 <div class="ws-next">
 <p><a class="ws-help" href="../troubleshooting/#episode-3"><span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span></a>
 <a class="ws-go ws-ep6" href="../showcases/"><span class="ws-k">Next episode</span><span class="ws-t">4. Showcases</span></a></p>

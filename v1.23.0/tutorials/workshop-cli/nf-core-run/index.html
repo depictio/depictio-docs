@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Turn an nf-core/ampliseq results folder into a Depictio project with no project file, the template detected from the run; a dry run first, then the ingestion.">
+        <meta name="description" content="Turn an nf-core/viralrecon results folder into a Depictio project with no project file: two warm-up commands, a dry run, then the ingestion, and the dashboard the template built.">
       
       
       
@@ -3305,8 +3305,6 @@
       
         
       
-        
-      
     
     
     
@@ -3517,35 +3515,7 @@
   <span class="md-ellipsis">
     
   
-    Optional A · Create a project from files
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../workshop/new-run-and-versions/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Optional B · Follow a new run
+    Optional · Create a project from files
   
 
     
@@ -3861,10 +3831,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#warm-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hands-on 2 · Step 1: two warm-up commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#get-the-run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Hands-on 2 · Step 1: get the run
+        Step 2: get the run
       
     </span>
   </a>
@@ -3875,7 +3856,7 @@
   <a href="#dry-run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: dry run, then dry run with the variable
+        Step 3: the dry run
       
     </span>
   </a>
@@ -3886,7 +3867,7 @@
   <a href="#ingest" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: ingest and open the dashboard
+        Step 4: ingest, then open the dashboard
       
     </span>
   </a>
@@ -8197,10 +8178,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#warm-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hands-on 2 · Step 1: two warm-up commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#get-the-run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Hands-on 2 · Step 1: get the run
+        Step 2: get the run
       
     </span>
   </a>
@@ -8211,7 +8203,7 @@
   <a href="#dry-run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: dry run, then dry run with the variable
+        Step 3: the dry run
       
     </span>
   </a>
@@ -8222,7 +8214,7 @@
   <a href="#ingest" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: ingest and open the dashboard
+        Step 4: ingest, then open the dashboard
       
     </span>
   </a>
@@ -8254,189 +8246,759 @@
 <p><a class="ws-ep0" href="../setup/"><strong>0</strong> Setup</a> <a class="ws-ep1" href="../project-builder/"><strong>1</strong> Your tables</a> <a class="ws-ep2 ws-here" href="./"><strong>2</strong> nf-core run</a> <a class="ws-ep3" href="../collaborate-and-export/"><strong>3</strong> Collaborate</a> <a class="ws-ep4" href="../going-further/"><strong>+</strong> Going further</a></p>
 </div>
 <div class="ws-meta ws-ep2">
-<p><span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19V7H4v12zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-7 14v-2h5v2zm-3.42-4L5.57 9H8.4l3.3 3.3c.39.39.39 1.03 0 1.42L8.42 17H5.59z"></path></svg></span> <strong>Creator, from the terminal</strong></span> <span class="ws-chip" markdown="span"><img alt="nf-core" class="ws-logo off-glb" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/nf-core.png"> <strong>nf-core/ampliseq 2.18.0</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a7 7 0 0 1-7-7 7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7m7.03-12.61 1.42-1.42c-.45-.51-.9-.97-1.41-1.41L17.62 6c-1.55-1.26-3.5-2-5.62-2a9 9 0 0 0-9 9 9 9 0 0 0 9 9c5 0 9-4.03 9-9 0-2.12-.74-4.07-1.97-5.61M11 14h2V8h-2m4-7H9v2h6z"></path></svg></span> <strong>Hands-on 2 · 15 min</strong></span></p>
+<p><span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19V7H4v12zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-7 14v-2h5v2zm-3.42-4L5.57 9H8.4l3.3 3.3c.39.39.39 1.03 0 1.42L8.42 17H5.59z"></path></svg></span> <strong>Creator, from the terminal</strong></span> <span class="ws-chip" markdown="span"><img alt="nf-core" class="ws-logo off-glb" src="https://depictio.github.io/depictio-docs/images/pipeline-templates/nf-core/ampliseq/nf-core.png"> <strong>nf-core/viralrecon 3.0.0</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a7 7 0 0 1-7-7 7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7m7.03-12.61 1.42-1.42c-.45-.51-.9-.97-1.41-1.41L17.62 6c-1.55-1.26-3.5-2-5.62-2a9 9 0 0 0-9 9 9 9 0 0 0 9 9c5 0 9-4.03 9-9 0-2.12-.74-4.07-1.97-5.61M11 14h2V8h-2m4-7H9v2h6z"></path></svg></span> <strong>Hands-on 2 · 15 min</strong></span></p>
 </div>
 <div class="admonition overview">
 <p class="admonition-title">Overview</p>
-<p><strong>Objective</strong>: send an nf-core run to Depictio from your terminal, with no project file: check what will happen with a dry run, then ingest it into a project of your own.</p>
-<p>The core of this page takes about 5 minutes to read. The rest is in the <strong>Bonus</strong> blocks at the end.</p>
+<p><strong>Questions</strong></p>
+<ul>
+<li>Do I have to write a project file for an nf-core run?</li>
+<li>How do I check what will happen before anything is sent?</li>
+</ul>
+<p><strong>Objectives</strong></p>
+<ul>
+<li>Run two small commands: check the connection, ask the catalog about a tool.</li>
+<li>Dry-run a run folder: the CLI finds the pipeline and its template.</li>
+<li>Ingest the run into a project of your own, and open its dashboard.</li>
+</ul>
 </div>
-<p>In episode 1 you described your own tables in the Project Builder. For a pipeline Depictio knows, a <strong>template</strong> writes it: the CLI recognises the pipeline and its version from the results folder, and brings the data collections, links and dashboards with it. This is the project of the browser course, episode 3, built here from the folder where the run is.</p>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/diagrams/ingest-steps_light.png#only-light" data-desc-position="bottom" data-gallery="light"><img alt="depictio ingest in four steps: it finds the pipeline, picks the template (GROUP_COL guessed as name, set to habitat with --var), writes the tables (25 data collections, 2 of them empty) and builds the dashboard; --dry-run checks the same steps and sends nothing" class="ws-diagram" src="../../../images/tutorials/workshop-cli/diagrams/ingest-steps_light.png#only-light"></a>
-<a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/diagrams/ingest-steps_dark.png#only-dark" data-desc-position="bottom" data-gallery="dark"><img alt="depictio ingest in four steps: it finds the pipeline, picks the template (GROUP_COL guessed as name, set to habitat with --var), writes the tables (25 data collections, 2 of them empty) and builds the dashboard; --dry-run checks the same steps and sends nothing" class="ws-diagram" src="../../../images/tutorials/workshop-cli/diagrams/ingest-steps_dark.png#only-dark"></a></p>
-<h2 id="get-the-run"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 18H4V8h16m0-2h-8l-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2m-6 3h2v4h3l-4 4-4-4h3Z"></path></svg></span> Hands-on 2 · Step 1: get the run<a class="headerlink" href="#get-the-run" title="Permanent link">¶</a></h2>
-<p>Download <a href="../megatest.zip"><code>megatest.zip</code></a>: your browser saves it in <code>~/Downloads</code>. Move it to the workshop folder and unzip it there:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mv<span class="w"> </span>~/Downloads/megatest.zip<span class="w"> </span>~/depictio-workshop/
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>~/depictio-workshop
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>unzip<span class="w"> </span>megatest.zip
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>ls<span class="w"> </span>megatest
+<p>In episode 1 you described your own tables in the Project Builder. For a pipeline Depictio knows, a <strong>template</strong> does it for you: the CLI recognises the pipeline and its version from the results folder, and brings the data collections and the dashboard with it. The run here is <strong>nf-core/viralrecon 3.0.0</strong>: SARS-CoV-2 genomes from amplicon reads, three samples.</p>
+<p>Every command runs in <code>~/depictio-workshop</code>, with the environment of <a href="../setup/">Setup</a> active.</p>
+<h2 id="warm-up"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3zm-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5z"></path></svg></span> Hands-on 2 · Step 1: two warm-up commands<a class="headerlink" href="#warm-up" title="Permanent link">¶</a></h2>
+<p>First, the connection: the same check as in Setup.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="gp">$ </span>depictio<span class="w"> </span>config<span class="w"> </span>check
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="go">╭─ Command Used ─╮</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="go">│ config check   │</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="go">╰────────────────╯</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="go">• Server: https://… (configuration ~/.depictio/CLI.yaml)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="go">• Checking server accessibility...</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="go">✓ Depictio CLI configuration is model-compliant.</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="go">✓ Server accessible - User: you@example.org</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="go">… Checking S3 storage configuration...</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="go">✓ S3 storage configuration is valid</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="go">input  multiqc  overall_summary.tsv  pipeline_info  qiime2</span>
+<p>Then ask the CLI what it knows about one tool of the run, <strong>Pangolin</strong>, which names the lineage of each genome:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="gp">$ </span>depictio<span class="w"> </span>catalog<span class="w"> </span>info<span class="w"> </span>pangolin
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="go">Pangolin  (pangolin)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="go">  Assigns SARS-CoV-2 genomes to global outbreak lineages.</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="go">  homepage:  https://github.com/cov-lineages/pangolin</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="go">  bio.tools: https://bio.tools/pangolin_cov-lineages</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="go">  nf-core:   https://github.com/nf-core/modules/tree/master/modules/nf-core/pangolin/run</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="go">  ── pangolin_report</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="go">     Per-sample PANGO lineage report.</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="go">     keyword: run</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="go">     find:    {'filename': '*.pangolin.csv', 'path_glob_alt': []}</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="go">     recipe:  pangolin/pangolin_lineages.py</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="go">     render:  figure</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="go">     render:  table</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="go">     render:  card</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="go">     render:  card</span>
 </code></pre></div>
-<p>This episode runs in <code>~/depictio-workshop</code>, the folder that holds <code>megatest/</code>.</p>
-<h2 id="dry-run"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-7 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M7 7h10V5h2v14H5V5h2zm.5 6.5L9 12l2 2 4.5-4.5L17 11l-6 6z"></path></svg></span> Step 2: dry run, then dry run with the variable<a class="headerlink" href="#dry-run" title="Permanent link">¶</a></h2>
-<p>You write no project file: the template of nf-core/ampliseq 2.18.0 is one, written once for every run of that version. Always pass <code>--project</code> with a name of your own, here <code>yourname-ampliseq</code>: without it, the template's default name is used, <em>Ampliseq Microbial Community Analysis</em>, which is also the name of the server's demo project.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="gp">$ </span>depictio<span class="w"> </span>ingest<span class="w"> </span>megatest/<span class="w"> </span>--project<span class="w"> </span>yourname-ampliseq<span class="w"> </span>--dry-run
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="go">…</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="go">! 21 data collection(s) will ingest, 0 empty, 4 missing sources</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="go">…</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="go">✓ Dry run complete (8/8 steps): the configuration is valid, and nothing was changed.</span>
+<p>The catalog says which file of a run Depictio looks for (<code>*.pangolin.csv</code>), the script that turns it into a table (<code>recipe</code>), and the components it can draw from it (<code>render</code>). A template is a set of such outputs, one per tool of the pipeline.</p>
+<h2 id="get-the-run"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 18H4V8h16m0-2h-8l-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2m-6 3h2v4h3l-4 4-4-4h3Z"></path></svg></span> Step 2: get the run<a class="headerlink" href="#get-the-run" title="Permanent link">¶</a></h2>
+<p>Download <a href="../viralrecon.zip"><code>viralrecon.zip</code></a> (1.3 MB): your browser saves it in <code>~/Downloads</code>. Move it to the workshop folder and unzip it there:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mv<span class="w"> </span>~/Downloads/viralrecon.zip<span class="w"> </span>~/depictio-workshop/
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>~/depictio-workshop
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>unzip<span class="w"> </span>viralrecon.zip
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>ls<span class="w"> </span>viralrecon/run_1
 </code></pre></div>
-<p>It sends nothing to the server. The full output is in the Bonus block <em>The dry run, line by line</em>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="go">multiqc  pipeline_info  variants</span>
+</code></pre></div>
+<p><code>viralrecon/</code> holds one run folder, <code>run_1/</code>: the part of the pipeline's results that the template reads.</p>
+<h2 id="dry-run"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-7 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M7 7h10V5h2v14H5V5h2zm.5 6.5L9 12l2 2 4.5-4.5L17 11l-6 6z"></path></svg></span> Step 3: the dry run<a class="headerlink" href="#dry-run" title="Permanent link">¶</a></h2>
+<p>You write no project file: the template of nf-core/viralrecon 3.0.0 is one, written once for every run of that version. Always pass <code>--project</code> with a name of your own, here <code>yourname-viralrecon</code>: without it, the template's default name is used, the same for everyone.</p>
+<p><code>--dry-run</code> checks every step and <strong>sends nothing</strong>. The full output, scroll inside the block:</p>
+<div class="ws-scroll">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp">$ </span>depictio<span class="w"> </span>ingest<span class="w"> </span>viralrecon/<span class="w"> </span>--project<span class="w"> </span>yourname-viralrecon<span class="w"> </span>--dry-run
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="go">╭─ Command Used ─╮</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="go">│ ingest         │</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="go">╰────────────────╯</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="go">• Detected nf-core/viralrecon 3.0.0 (nextflow, 22 tool(s)) [[1]]</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="go">✓ Auto-selected template: nf-core/viralrecon/3.0.0 [[1]]</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="go">• DRY RUN MODE - No actual operations will be performed</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="go">• Server: https://… (configuration ~/.depictio/CLI.yaml)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="go">╭────────────────────────────────────╮</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="go">│ Step 0: Resolving project template │</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="go">╰────────────────────────────────────╯</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="go">✓ Template 'nf-core/viralrecon/3.0.0' loaded successfully</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="go">• Template provides 1 default dashboard(s)</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="go">• Resolved template configuration:</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="go">•   Project: yourname-viralrecon</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="go">•   Template: nf-core/viralrecon/3.0.0 (template version 2.4.1)</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="go">•   Data root: /Users/you/depictio-workshop/viralrecon</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="go">•   Workflow 'viralrecon': 15 data collection(s): multiqc_data, summary_metrics, variants_long, tracks, pangolin_lineages, nextclade_results, mosdepth_amplicon_coverage, mosdepth_genome_coverage, mosdepth_amplicon_heatmap, oncoplot_canonical, complex_heatmap_canonical, coverage_track_canonical, sankey_canonical, upset_canonical, variant_feature_matrix_canonical</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="go">╭───────────────────────────────────────────╮</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="go">│ Dry run: what this data root would ingest │</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="go">╰───────────────────────────────────────────╯</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="go">• Template: nf-core/viralrecon/3.0.0</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="go">• Data root: /Users/you/depictio-workshop/viralrecon</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="go">• Project name: yourname-viralrecon</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="go">• Detected runs (1): run_1</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="go">• Dashboards: base.yaml</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="go">    Resolved template variables      [[2]]</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="go">╭───────────────────┬──────────────╮ [[2]]</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="go">│ Variable          │ Value        │ [[2]]</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="go">├───────────────────┼──────────────┤ [[2]]</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="go">│ GROUP_COL         │ __no_group__ │ [[2]]</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="go">│ GROUP_COL_DISPLAY │ Group        │ [[2]]</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="go">│ METADATA_ID_COL   │ sample       │ [[2]]</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="go">╰───────────────────┴──────────────╯ [[2]]</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="go">                  Data collections under this data root                    [[3]]</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="go">╭──────────────────────────────────┬────────┬───────────┬───────┬────────╮ [[3]]</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="go">│ Data collection                  │ Kind   │ Mode      │ Files │ Status │ [[3]]</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="go">├──────────────────────────────────┼────────┼───────────┼───────┼────────┤ [[3]]</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="go">│ multiqc_data                     │ scan   │ recursive │ 1     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="go">│ summary_metrics                  │ recipe │ -         │ 1     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="go">│ variants_long                    │ recipe │ -         │ 1     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="go">│ tracks                           │ recipe │ -         │ 2     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="go">│ pangolin_lineages                │ recipe │ -         │ 3     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="go">│ nextclade_results                │ recipe │ -         │ 3     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="go">│ mosdepth_amplicon_coverage       │ scan   │ recursive │ 1     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="go">│ mosdepth_genome_coverage         │ scan   │ recursive │ 1     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="go">│ mosdepth_amplicon_heatmap        │ scan   │ recursive │ 1     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="go">│ oncoplot_canonical               │ recipe │ -         │ 1     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="go">│ complex_heatmap_canonical        │ recipe │ -         │ 1     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a><span class="go">│ coverage_track_canonical         │ recipe │ -         │ 1     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a><span class="go">│ sankey_canonical                 │ recipe │ -         │ 2     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="go">│ upset_canonical                  │ recipe │ -         │ 2     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a><span class="go">│ variant_feature_matrix_canonical │ recipe │ -         │ 3     │ ok     │ [[3]]</span>
+<a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a><span class="go">╰──────────────────────────────────┴────────┴───────────┴───────┴────────╯ [[3]]</span>
+<a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a><span class="go">✓ 15 data collection(s) will ingest, 0 empty, 0 missing sources [[4]]</span>
+<a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a><span class="go">╭─────────────────────────────────────────╮ [[5]]</span>
+<a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a><span class="go">│ Step 1/8: Checking server accessibility │ [[5]]</span>
+<a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a><span class="go">╰─────────────────────────────────────────╯ [[5]]</span>
+<a id="__codelineno-4-59" name="__codelineno-4-59" href="#__codelineno-4-59"></a><span class="go">• Would check that this server answers [[5]]</span>
+<a id="__codelineno-4-60" name="__codelineno-4-60" href="#__codelineno-4-60"></a><span class="go">╭─────────────────────────────────────────────╮ [[5]]</span>
+<a id="__codelineno-4-61" name="__codelineno-4-61" href="#__codelineno-4-61"></a><span class="go">│ Step 2/8: Checking S3 storage configuration │ [[5]]</span>
+<a id="__codelineno-4-62" name="__codelineno-4-62" href="#__codelineno-4-62"></a><span class="go">╰─────────────────────────────────────────────╯ [[5]]</span>
+<a id="__codelineno-4-63" name="__codelineno-4-63" href="#__codelineno-4-63"></a><span class="go">• Would check the S3 storage configuration [[5]]</span>
+<a id="__codelineno-4-64" name="__codelineno-4-64" href="#__codelineno-4-64"></a><span class="go">╭────────────────────────────────────────────╮ [[5]]</span>
+<a id="__codelineno-4-65" name="__codelineno-4-65" href="#__codelineno-4-65"></a><span class="go">│ Step 3/8: Validating project configuration │ [[5]]</span>
+<a id="__codelineno-4-66" name="__codelineno-4-66" href="#__codelineno-4-66"></a><span class="go">╰────────────────────────────────────────────╯ [[5]]</span>
+<a id="__codelineno-4-67" name="__codelineno-4-67" href="#__codelineno-4-67"></a><span class="go">✓ Project configuration is valid (checked locally; a dry run does not contact the server) [[5]]</span>
+<a id="__codelineno-4-68" name="__codelineno-4-68" href="#__codelineno-4-68"></a><span class="go">╭───────────────────────────────────────────────────╮ [[5]]</span>
+<a id="__codelineno-4-69" name="__codelineno-4-69" href="#__codelineno-4-69"></a><span class="go">│ Step 4/8: Syncing project configuration to server │ [[5]]</span>
+<a id="__codelineno-4-70" name="__codelineno-4-70" href="#__codelineno-4-70"></a><span class="go">╰───────────────────────────────────────────────────╯ [[5]]</span>
+<a id="__codelineno-4-71" name="__codelineno-4-71" href="#__codelineno-4-71"></a><span class="go">• Would create project 'yourname-viralrecon' on the server [[5]]</span>
+<a id="__codelineno-4-72" name="__codelineno-4-72" href="#__codelineno-4-72"></a><span class="go">╭───────────────────────────────╮ [[5]]</span>
+<a id="__codelineno-4-73" name="__codelineno-4-73" href="#__codelineno-4-73"></a><span class="go">│ Step 5/8: Scanning data files │ [[5]]</span>
+<a id="__codelineno-4-74" name="__codelineno-4-74" href="#__codelineno-4-74"></a><span class="go">╰───────────────────────────────╯ [[5]]</span>
+<a id="__codelineno-4-75" name="__codelineno-4-75" href="#__codelineno-4-75"></a><span class="go">• Would scan the data files [[5]]</span>
+<a id="__codelineno-4-76" name="__codelineno-4-76" href="#__codelineno-4-76"></a><span class="go">╭───────────────────────────────────────╮ [[5]]</span>
+<a id="__codelineno-4-77" name="__codelineno-4-77" href="#__codelineno-4-77"></a><span class="go">│ Step 6/8: Processing data collections │ [[5]]</span>
+<a id="__codelineno-4-78" name="__codelineno-4-78" href="#__codelineno-4-78"></a><span class="go">╰───────────────────────────────────────╯ [[5]]</span>
+<a id="__codelineno-4-79" name="__codelineno-4-79" href="#__codelineno-4-79"></a><span class="go">• Would process the data collections [[5]]</span>
+<a id="__codelineno-4-80" name="__codelineno-4-80" href="#__codelineno-4-80"></a><span class="go">╭─────────────────────────────────╮ [[5]]</span>
+<a id="__codelineno-4-81" name="__codelineno-4-81" href="#__codelineno-4-81"></a><span class="go">│ Step 7/8: Executing table joins │ [[5]]</span>
+<a id="__codelineno-4-82" name="__codelineno-4-82" href="#__codelineno-4-82"></a><span class="go">╰─────────────────────────────────╯ [[5]]</span>
+<a id="__codelineno-4-83" name="__codelineno-4-83" href="#__codelineno-4-83"></a><span class="go">• No joins defined in project config [[5]]</span>
+<a id="__codelineno-4-84" name="__codelineno-4-84" href="#__codelineno-4-84"></a><span class="go">╭────────────────────────────────╮ [[5]]</span>
+<a id="__codelineno-4-85" name="__codelineno-4-85" href="#__codelineno-4-85"></a><span class="go">│ Step 8/8: Importing dashboards │ [[5]]</span>
+<a id="__codelineno-4-86" name="__codelineno-4-86" href="#__codelineno-4-86"></a><span class="go">╰────────────────────────────────╯ [[5]]</span>
+<a id="__codelineno-4-87" name="__codelineno-4-87" href="#__codelineno-4-87"></a><span class="go">• Would import 1 dashboard(s) [[5]]</span>
+<a id="__codelineno-4-88" name="__codelineno-4-88" href="#__codelineno-4-88"></a><span class="go">╭───────────────────╮ [[5]]</span>
+<a id="__codelineno-4-89" name="__codelineno-4-89" href="#__codelineno-4-89"></a><span class="go">│ Ingestion summary │ [[5]]</span>
+<a id="__codelineno-4-90" name="__codelineno-4-90" href="#__codelineno-4-90"></a><span class="go">╰───────────────────╯ [[5]]</span>
+<a id="__codelineno-4-91" name="__codelineno-4-91" href="#__codelineno-4-91"></a><span class="go">• Template used: nf-core/viralrecon/3.0.0 [[5]]</span>
+<a id="__codelineno-4-92" name="__codelineno-4-92" href="#__codelineno-4-92"></a><span class="go">✓ Dry run complete (8/8 steps): the configuration is valid, and nothing was changed. [[5]]</span>
+</code></pre></div>
+</div>
+<ol>
+<li><strong>The pipeline</strong>: the CLI read <code>pipeline_info/</code>, found nf-core/viralrecon 3.0.0, and picked the template of that version.</li>
+<li><strong>The template variables</strong>: blanks the run fills in. This run has no groups of samples to compare: <code>GROUP_COL</code> reads <code>__no_group__</code>, and there is nothing to set.</li>
+<li><strong>The data collections</strong>: one line per table of the template, with the files it found. A <code>scan</code> reads a file as it is; a <code>recipe</code> computes a table from files of the run (the <code>pangolin_lineages</code> line is the Pangolin output of step 1).</li>
+<li><strong>The verdict</strong>: 15 tables will be written, none empty, none missing.</li>
+<li><strong>The eight steps</strong> the ingestion will run, each saying what it <em>would</em> do.</li>
+</ol>
 <div class="admonition challenge">
-<p class="admonition-title">Challenge 2.1: what is missing?</p>
-<p>In the dry run's tables, find the <strong>template variables</strong> and the data collections marked <strong>missing</strong>. Which variable explains why <code>ancombc_results</code> finds no files?</p>
+<p class="admonition-title">Challenge 2.1: one line, three files</p>
+<p>In the dry run, find the table made from the Pangolin files. How many files does it read, and why that number?</p>
 <details class="solution">
 <summary>Solution</summary>
-<p><code>GROUP_COL</code> reads <code>name</code>: the CLI took the first column after the sample ID in the sample metadata (<code>input/Metadata_full.tsv</code>), here <code>name</code>, as the group to compare. <code>name</code> holds one value per sample, so each group has a single sample and nothing can be compared. The differential abundance results of this run are per <strong>habitat</strong> (<code>qiime2/ancombc/differentials/Category-habitat-…</code>), so <code>ancombc_results</code>, and <code>ma_canonical</code> which is built from it, find nothing. Set the variable yourself, in the second dry run below.</p>
+<p><code>pangolin_lineages</code>, a <code>recipe</code>, reads <strong>3</strong> files: one <code>*.pangolin.csv</code> per sample, the file <code>depictio catalog info pangolin</code> named in step 1. The recipe stacks them into one table of three rows, one lineage per sample.</p>
 </details>
 </div>
-<p>Run the dry run again with the variable:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="gp">$ </span>depictio<span class="w"> </span>ingest<span class="w"> </span>megatest/<span class="w"> </span>--project<span class="w"> </span>yourname-ampliseq<span class="w"> </span>--dry-run<span class="w"> </span>--var<span class="w"> </span><span class="nv">GROUP_COL</span><span class="o">=</span>habitat
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="go">! 23 data collection(s) will ingest, 0 empty, 2 missing sources</span>
+<h2 id="ingest"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m8.84 12-4.92 4.92L2.5 15.5 5 13H0v-2h5L2.5 8.5l1.42-1.42zM12 3C8.59 3 5.68 4.07 4.53 5.57L5 6l1.03 1.07C6 7.05 6 7 6 7c0-.5 2.13-2 6-2s6 1.5 6 2-2.13 2-6 2c-2.62 0-4.42-.69-5.32-1.28l3.12 3.12c.7.1 1.44.16 2.2.16 2.39 0 4.53-.53 6-1.36v2.81c-1.3.95-3.58 1.55-6 1.55-.96 0-1.9-.1-2.76-.27l-1.65 1.64c1.32.4 2.82.63 4.41.63 2.28 0 4.39-.45 6-1.23V17c0 .5-2.13 2-6 2s-6-1.5-6-2v-.04L5 18l-.46.43C5.69 19.93 8.6 21 12 21c4.41 0 8-1.79 8-4V7c0-2.21-3.58-4-8-4"></path></svg></span> Step 4: ingest, then open the dashboard<a class="headerlink" href="#ingest" title="Permanent link">¶</a></h2>
+<p>The same command without <code>--dry-run</code>. <code>--rich-tables</code> prints what each step does: the files scanned, a preview of each table and its statistics. It takes about 30 seconds. The full output, scroll inside the block:</p>
+<div class="ws-scroll">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp">$ </span>depictio<span class="w"> </span>ingest<span class="w"> </span>viralrecon/<span class="w"> </span>--project<span class="w"> </span>yourname-viralrecon<span class="w"> </span>--rich-tables
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="go">╭─ Command Used ─╮</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="go">│ ingest         │</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="go">╰────────────────╯</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="go">• Detected nf-core/viralrecon 3.0.0 (nextflow, 22 tool(s))</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="go">✓ Auto-selected template: nf-core/viralrecon/3.0.0</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="go">• Server: https://… (configuration ~/.depictio/CLI.yaml)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="go">╭────────────────────────────────────╮ [[1]]</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="go">│ Step 0: Resolving project template │ [[1]]</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="go">╰────────────────────────────────────╯ [[1]]</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="go">✓ Template 'nf-core/viralrecon/3.0.0' loaded successfully [[1]]</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="go">• Template provides 1 default dashboard(s) [[1]]</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="go">╭─────────────────────────────────────────╮ [[1]]</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="go">│ Step 1/8: Checking server accessibility │ [[1]]</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="go">╰─────────────────────────────────────────╯ [[1]]</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="go">• Checking server accessibility... [[1]]</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="go">✓ Depictio CLI configuration is model-compliant. [[1]]</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="go">✓ Server accessibility check passed [[1]]</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="go">╭─────────────────────────────────────────────╮ [[1]]</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="go">│ Step 2/8: Checking S3 storage configuration │ [[1]]</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="go">╰─────────────────────────────────────────────╯ [[1]]</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="go">✓ S3 storage configuration check passed [[1]]</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="go">╭────────────────────────────────────────────╮ [[1]]</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="go">│ Step 3/8: Validating project configuration │ [[1]]</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="go">╰────────────────────────────────────────────╯ [[1]]</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="go">• Checking server accessibility... [[1]]</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="go">✓ Depictio CLI configuration is model-compliant. [[1]]</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="go">✓ Project configuration validation passed [[1]]</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="go">╭───────────────────────────────────────────────────╮ [[1]]</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="go">│ Step 4/8: Syncing project configuration to server │ [[1]]</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="go">╰───────────────────────────────────────────────────╯ [[1]]</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="go">• Syncing pipeline configuration to server... [[1]]</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="go">• Project configuration not found on server, creating project... [[1]]</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="go">✓ Project created on server [[1]]</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="go">✓ Project configuration sync completed [[1]]</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a><span class="go">• Links already have DC IDs (no tag: placeholders) [[1]]</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="go">╭───────────────────────────────╮ [[2]]</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a><span class="go">│ Step 5/8: Scanning data files │ [[2]]</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a><span class="go">╰───────────────────────────────╯ [[2]]</span>
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a><span class="go">• Scanning Project: 'yourname-viralrecon' [[2]]</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a><span class="go">•  ↪ Scanning Workflow: 'viralrecon' [[2]]</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a><span class="go">•   ↪ Found 4 aggregate and 0 single data collections [[2]]</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a><span class="go">•   ↪ Scanning Data Collection: 'multiqc_data' - type multiqc - metatype Recursive [[2]]</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a><span class="go">•   ↪ Scanning Data Collection: 'mosdepth_amplicon_coverage' - type table - metatype Recursive [[2]]</span>
+<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a><span class="go">•   ↪ Scanning Data Collection: 'mosdepth_genome_coverage' - type table - metatype Recursive [[2]]</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a><span class="go">•   ↪ Scanning Data Collection: 'mosdepth_amplicon_heatmap' - type table - metatype Recursive [[2]]</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a><span class="go"> [[2]]</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a><span class="go"> [[2]]</span>
+<a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a><span class="go">                               Workflow Runs Files Scan Results Stats Summary (by Data Collection)   [[2]]</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a><span class="go">╭─────────────────┬────────────────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬ [[2]]</span>
+<a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a><span class="go">│ Run Tag         │ Data Collection    │  Total  │   New   │ Changed │ Unchan… │ Updated │ Missing │ [[2]]</span>
+<a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a><span class="go">├─────────────────┼────────────────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼ [[2]]</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a><span class="go">│ run_1           │ multiqc_data       │    1    │    1    │    0    │    0    │    0    │    0    │ [[2]]</span>
+<a id="__codelineno-5-54" name="__codelineno-5-54" href="#__codelineno-5-54"></a><span class="go">├─────────────────┼────────────────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼ [[2]]</span>
+<a id="__codelineno-5-55" name="__codelineno-5-55" href="#__codelineno-5-55"></a><span class="go">│                 │ mosdepth_amplicon… │    1    │    1    │    0    │    0    │    0    │    0    │ [[2]]</span>
+<a id="__codelineno-5-56" name="__codelineno-5-56" href="#__codelineno-5-56"></a><span class="go">├─────────────────┼────────────────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼ [[2]]</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57" href="#__codelineno-5-57"></a><span class="go">│                 │ mosdepth_genome_c… │    1    │    1    │    0    │    0    │    0    │    0    │ [[2]]</span>
+<a id="__codelineno-5-58" name="__codelineno-5-58" href="#__codelineno-5-58"></a><span class="go">├─────────────────┼────────────────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼ [[2]]</span>
+<a id="__codelineno-5-59" name="__codelineno-5-59" href="#__codelineno-5-59"></a><span class="go">│                 │ mosdepth_amplicon… │    1    │    1    │    0    │    0    │    0    │    0    │ [[2]]</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60" href="#__codelineno-5-60"></a><span class="go">├─────────────────┼────────────────────┼─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼ [[2]]</span>
+<a id="__codelineno-5-61" name="__codelineno-5-61" href="#__codelineno-5-61"></a><span class="go">│                 │ Run Total          │    4    │    4    │    0    │    0    │    0    │    0    │ [[2]]</span>
+<a id="__codelineno-5-62" name="__codelineno-5-62" href="#__codelineno-5-62"></a><span class="go">╰─────────────────┴────────────────────┴─────────┴─────────┴─────────┴─────────┴─────────┴─────────┴ [[2]]</span>
+<a id="__codelineno-5-63" name="__codelineno-5-63" href="#__codelineno-5-63"></a><span class="go">✓ Scanned 1 runs in workflow viralrecon [[2]]</span>
+<a id="__codelineno-5-64" name="__codelineno-5-64" href="#__codelineno-5-64"></a><span class="go">✓ Workflow viralrecon processed successfully [[2]]</span>
+<a id="__codelineno-5-65" name="__codelineno-5-65" href="#__codelineno-5-65"></a><span class="go">✓ Data scanning completed [[2]]</span>
+<a id="__codelineno-5-66" name="__codelineno-5-66" href="#__codelineno-5-66"></a><span class="go">╭───────────────────────────────────────╮ [[3]]</span>
+<a id="__codelineno-5-67" name="__codelineno-5-67" href="#__codelineno-5-67"></a><span class="go">│ Step 6/8: Processing data collections │ [[3]]</span>
+<a id="__codelineno-5-68" name="__codelineno-5-68" href="#__codelineno-5-68"></a><span class="go">╰───────────────────────────────────────╯ [[3]]</span>
+<a id="__codelineno-5-69" name="__codelineno-5-69" href="#__codelineno-5-69"></a><span class="go">• Processing Project: 'yourname-viralrecon' [[3]]</span>
+<a id="__codelineno-5-70" name="__codelineno-5-70" href="#__codelineno-5-70"></a><span class="go">•  ↪ Processing Workflow: 'viralrecon' [[3]]</span>
+<a id="__codelineno-5-71" name="__codelineno-5-71" href="#__codelineno-5-71"></a><span class="go">•   ↪ Processing Data Collection: multiqc_data - type multiqc [[3]]</span>
+<a id="__codelineno-5-72" name="__codelineno-5-72" href="#__codelineno-5-72"></a><span class="go">                             MultiQC Processing Summary - multiqc_data                               [[3]]</span>
+<a id="__codelineno-5-73" name="__codelineno-5-73" href="#__codelineno-5-73"></a><span class="go">╭──────────────────────┬─────────────────┬─────────────────────────────────────────────────────────╮ [[3]]</span>
+<a id="__codelineno-5-74" name="__codelineno-5-74" href="#__codelineno-5-74"></a><span class="go">│ Metric               │      Value      │ Details                                                 │ [[3]]</span>
+<a id="__codelineno-5-75" name="__codelineno-5-75" href="#__codelineno-5-75"></a><span class="go">├──────────────────────┼─────────────────┼─────────────────────────────────────────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-76" name="__codelineno-5-76" href="#__codelineno-5-76"></a><span class="go">│ Files Processed      │        1        │ 1 MultiQC parquet file                                  │ [[3]]</span>
+<a id="__codelineno-5-77" name="__codelineno-5-77" href="#__codelineno-5-77"></a><span class="go">├──────────────────────┼─────────────────┼─────────────────────────────────────────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-78" name="__codelineno-5-78" href="#__codelineno-5-78"></a><span class="go">│ Total Samples        │        7        │ Unique samples across all files                         │ [[3]]</span>
+<a id="__codelineno-5-79" name="__codelineno-5-79" href="#__codelineno-5-79"></a><span class="go">├──────────────────────┼─────────────────┼─────────────────────────────────────────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-80" name="__codelineno-5-80" href="#__codelineno-5-80"></a><span class="go">│ Total Modules        │       17        │ QC modules detected                                     │ [[3]]</span>
+<a id="__codelineno-5-81" name="__codelineno-5-81" href="#__codelineno-5-81"></a><span class="go">├──────────────────────┼─────────────────┼─────────────────────────────────────────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-82" name="__codelineno-5-82" href="#__codelineno-5-82"></a><span class="go">│ Total Plots          │       39        │ nf-core-viralrecon-methods-description: 0 plots;        │ [[3]]</span>
+<a id="__codelineno-5-83" name="__codelineno-5-83" href="#__codelineno-5-83"></a><span class="go">│                      │                 │ nextclade_clade: 1 plots; summary_variants_metrics: 1   │ [[3]]</span>
+<a id="__codelineno-5-84" name="__codelineno-5-84" href="#__codelineno-5-84"></a><span class="go">│                      │                 │ plots; fastqc: 10 plots; fastp: 5 plots; kraken: 1      │ [[3]]</span>
+<a id="__codelineno-5-85" name="__codelineno-5-85" href="#__codelineno-5-85"></a><span class="go">│                      │                 │ plots; bowtie2: 2 plots; samtools_bowtie2: 2 plots;     │ [[3]]</span>
+<a id="__codelineno-5-86" name="__codelineno-5-86" href="#__codelineno-5-86"></a><span class="go">│                      │                 │ samtools_ivar: 2 plots; samtools_markduplicates: 2      │ [[3]]</span>
+<a id="__codelineno-5-87" name="__codelineno-5-87" href="#__codelineno-5-87"></a><span class="go">│                      │                 │ plots; mosdepth: 2 plots; ivar_variants: 1 plots;       │ [[3]]</span>
+<a id="__codelineno-5-88" name="__codelineno-5-88" href="#__codelineno-5-88"></a><span class="go">│                      │                 │ pangolin: 1 plots; bcftools: 3 plots; snpeff: 4 plots;  │ [[3]]</span>
+<a id="__codelineno-5-89" name="__codelineno-5-89" href="#__codelineno-5-89"></a><span class="go">│                      │                 │ quast_variants: 2 plots; nf-core-viralrecon-summary: 0  │ [[3]]</span>
+<a id="__codelineno-5-90" name="__codelineno-5-90" href="#__codelineno-5-90"></a><span class="go">│                      │                 │ plots                                                   │ [[3]]</span>
+<a id="__codelineno-5-91" name="__codelineno-5-91" href="#__codelineno-5-91"></a><span class="go">╰──────────────────────┴─────────────────┴─────────────────────────────────────────────────────────╯ [[3]]</span>
+<a id="__codelineno-5-92" name="__codelineno-5-92" href="#__codelineno-5-92"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-93" name="__codelineno-5-93" href="#__codelineno-5-93"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-94" name="__codelineno-5-94" href="#__codelineno-5-94"></a><span class="go">•   ↪ Processing Data Collection: summary_metrics - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-95" name="__codelineno-5-95" href="#__codelineno-5-95"></a><span class="go">• Running recipe: multiqc/summary_metrics.py [[3]]</span>
+<a id="__codelineno-5-96" name="__codelineno-5-96" href="#__codelineno-5-96"></a><span class="go">• Recipe data dir: /Users/you/depictio-workshop/viralrecon [[3]]</span>
+<a id="__codelineno-5-97" name="__codelineno-5-97" href="#__codelineno-5-97"></a><span class="go">✓ Recipe 'multiqc/summary_metrics.py' produced 3 rows, written to Delta Lake [[3]]</span>
+<a id="__codelineno-5-98" name="__codelineno-5-98" href="#__codelineno-5-98"></a><span class="go">•   ↪ Processing Data Collection: variants_long - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-99" name="__codelineno-5-99" href="#__codelineno-5-99"></a><span class="go">• Running recipe: nf-core/viralrecon/variants_long.py [[3]]</span>
+<a id="__codelineno-5-100" name="__codelineno-5-100" href="#__codelineno-5-100"></a><span class="go">• Recipe data dir: /Users/you/depictio-workshop/viralrecon [[3]]</span>
+<a id="__codelineno-5-101" name="__codelineno-5-101" href="#__codelineno-5-101"></a><span class="go">✓ Recipe 'nf-core/viralrecon/variants_long.py' produced 28 rows, written to Delta Lake [[3]]</span>
+<a id="__codelineno-5-102" name="__codelineno-5-102" href="#__codelineno-5-102"></a><span class="go">•   ↪ Processing Data Collection: tracks - type genomic_tracks [[3]]</span>
+<a id="__codelineno-5-103" name="__codelineno-5-103" href="#__codelineno-5-103"></a><span class="go">• Running recipe: nf-core/viralrecon/tracks.py [[3]]</span>
+<a id="__codelineno-5-104" name="__codelineno-5-104" href="#__codelineno-5-104"></a><span class="go">• Recipe data dir: /Users/you/depictio-workshop/viralrecon [[3]]</span>
+<a id="__codelineno-5-105" name="__codelineno-5-105" href="#__codelineno-5-105"></a><span class="go">✓ Track files: 12 uploaded, 0 already present (s3://…/genomic_tracks/6b098e143a2c6f6733768742/) [[3]]</span>
+<a id="__codelineno-5-106" name="__codelineno-5-106" href="#__codelineno-5-106"></a><span class="go">✓ Recipe 'nf-core/viralrecon/tracks.py' produced 6 rows, written to Delta Lake [[3]]</span>
+<a id="__codelineno-5-107" name="__codelineno-5-107" href="#__codelineno-5-107"></a><span class="go">•   ↪ Processing Data Collection: pangolin_lineages - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-108" name="__codelineno-5-108" href="#__codelineno-5-108"></a><span class="go">• Running recipe: pangolin/pangolin_lineages.py [[3]]</span>
+<a id="__codelineno-5-109" name="__codelineno-5-109" href="#__codelineno-5-109"></a><span class="go">• Recipe data dir: /Users/you/depictio-workshop/viralrecon [[3]]</span>
+<a id="__codelineno-5-110" name="__codelineno-5-110" href="#__codelineno-5-110"></a><span class="go">✓ Recipe 'pangolin/pangolin_lineages.py' produced 3 rows, written to Delta Lake [[3]]</span>
+<a id="__codelineno-5-111" name="__codelineno-5-111" href="#__codelineno-5-111"></a><span class="go">•   ↪ Processing Data Collection: nextclade_results - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-112" name="__codelineno-5-112" href="#__codelineno-5-112"></a><span class="go">• Running recipe: nextclade/nextclade_results.py [[3]]</span>
+<a id="__codelineno-5-113" name="__codelineno-5-113" href="#__codelineno-5-113"></a><span class="go">• Recipe data dir: /Users/you/depictio-workshop/viralrecon [[3]]</span>
+<a id="__codelineno-5-114" name="__codelineno-5-114" href="#__codelineno-5-114"></a><span class="go">✓ Recipe 'nextclade/nextclade_results.py' produced 3 rows, written to Delta Lake [[3]]</span>
+<a id="__codelineno-5-115" name="__codelineno-5-115" href="#__codelineno-5-115"></a><span class="go">•   ↪ Processing Data Collection: mosdepth_amplicon_coverage - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-116" name="__codelineno-5-116" href="#__codelineno-5-116"></a><span class="go">• S3 Destination does not exist, will create it during processing [[3]]</span>
+<a id="__codelineno-5-117" name="__codelineno-5-117" href="#__codelineno-5-117"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-118" name="__codelineno-5-118" href="#__codelineno-5-118"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-119" name="__codelineno-5-119" href="#__codelineno-5-119"></a><span class="go">                    Aggregated DataFrame - {data_collection.data_collection_tag}                     [[3]]</span>
+<a id="__codelineno-5-120" name="__codelineno-5-120" href="#__codelineno-5-120"></a><span class="go">╭────────────┬─────────┬─────────┬─────────────┬──────────┬────────────┬─────────────┬─────────────╮ [[3]]</span>
+<a id="__codelineno-5-121" name="__codelineno-5-121" href="#__codelineno-5-121"></a><span class="go">│ chrom      │ start   │ end     │ region      │ coverage │ sample     │ depictio_r… │ aggregatio… │ [[3]]</span>
+<a id="__codelineno-5-122" name="__codelineno-5-122" href="#__codelineno-5-122"></a><span class="go">│ (String)   │ (Int64) │ (Int64) │ (String)    │ (Int64)  │ (String)   │ (String)    │ (String)    │ [[3]]</span>
+<a id="__codelineno-5-123" name="__codelineno-5-123" href="#__codelineno-5-123"></a><span class="go">├────────────┼─────────┼─────────┼─────────────┼──────────┼────────────┼─────────────┼─────────────┤ [[3]]</span>
+<a id="__codelineno-5-124" name="__codelineno-5-124" href="#__codelineno-5-124"></a><span class="go">│ MN908947.3 │ 30      │ 410     │ nCoV-2019_1 │ 677      │ SAMPLE2_PE │ run_1       │ 2026-11-27  │ [[3]]</span>
+<a id="__codelineno-5-125" name="__codelineno-5-125" href="#__codelineno-5-125"></a><span class="go">│            │         │         │             │          │            │             │ 15:05:18    │ [[3]]</span>
+<a id="__codelineno-5-126" name="__codelineno-5-126" href="#__codelineno-5-126"></a><span class="go">├────────────┼─────────┼─────────┼─────────────┼──────────┼────────────┼─────────────┼─────────────┤ [[3]]</span>
+<a id="__codelineno-5-127" name="__codelineno-5-127" href="#__codelineno-5-127"></a><span class="go">│ MN908947.3 │ 320     │ 726     │ nCoV-2019_2 │ 59       │ SAMPLE2_PE │ run_1       │ 2026-11-27  │ [[3]]</span>
+<a id="__codelineno-5-128" name="__codelineno-5-128" href="#__codelineno-5-128"></a><span class="go">│            │         │         │             │          │            │             │ 15:05:18    │ [[3]]</span>
+<a id="__codelineno-5-129" name="__codelineno-5-129" href="#__codelineno-5-129"></a><span class="go">├────────────┼─────────┼─────────┼─────────────┼──────────┼────────────┼─────────────┼─────────────┤ [[3]]</span>
+<a id="__codelineno-5-130" name="__codelineno-5-130" href="#__codelineno-5-130"></a><span class="go">│ MN908947.3 │ 642     │ 1028    │ nCoV-2019_3 │ 1090     │ SAMPLE2_PE │ run_1       │ 2026-11-27  │ [[3]]</span>
+<a id="__codelineno-5-131" name="__codelineno-5-131" href="#__codelineno-5-131"></a><span class="go">│            │         │         │             │          │            │             │ 15:05:18    │ [[3]]</span>
+<a id="__codelineno-5-132" name="__codelineno-5-132" href="#__codelineno-5-132"></a><span class="go">├────────────┼─────────┼─────────┼─────────────┼──────────┼────────────┼─────────────┼─────────────┤ [[3]]</span>
+<a id="__codelineno-5-133" name="__codelineno-5-133" href="#__codelineno-5-133"></a><span class="go">│ MN908947.3 │ 943     │ 1337    │ nCoV-2019_4 │ 1390     │ SAMPLE2_PE │ run_1       │ 2026-11-27  │ [[3]]</span>
+<a id="__codelineno-5-134" name="__codelineno-5-134" href="#__codelineno-5-134"></a><span class="go">│            │         │         │             │          │            │             │ 15:05:18    │ [[3]]</span>
+<a id="__codelineno-5-135" name="__codelineno-5-135" href="#__codelineno-5-135"></a><span class="go">├────────────┼─────────┼─────────┼─────────────┼──────────┼────────────┼─────────────┼─────────────┤ [[3]]</span>
+<a id="__codelineno-5-136" name="__codelineno-5-136" href="#__codelineno-5-136"></a><span class="go">│ MN908947.3 │ 1242    │ 1651    │ nCoV-2019_5 │ 173      │ SAMPLE2_PE │ run_1       │ 2026-11-27  │ [[3]]</span>
+<a id="__codelineno-5-137" name="__codelineno-5-137" href="#__codelineno-5-137"></a><span class="go">│            │         │         │             │          │            │             │ 15:05:18    │ [[3]]</span>
+<a id="__codelineno-5-138" name="__codelineno-5-138" href="#__codelineno-5-138"></a><span class="go">├────────────┼─────────┼─────────┼─────────────┼──────────┼────────────┼─────────────┼─────────────┤ [[3]]</span>
+<a id="__codelineno-5-139" name="__codelineno-5-139" href="#__codelineno-5-139"></a><span class="go">│ MN908947.3 │ 1573    │ 1964    │ nCoV-2019_6 │ 124      │ SAMPLE2_PE │ run_1       │ 2026-11-27  │ [[3]]</span>
+<a id="__codelineno-5-140" name="__codelineno-5-140" href="#__codelineno-5-140"></a><span class="go">│            │         │         │             │          │            │             │ 15:05:18    │ [[3]]</span>
+<a id="__codelineno-5-141" name="__codelineno-5-141" href="#__codelineno-5-141"></a><span class="go">├────────────┼─────────┼─────────┼─────────────┼──────────┼────────────┼─────────────┼─────────────┤ [[3]]</span>
+<a id="__codelineno-5-142" name="__codelineno-5-142" href="#__codelineno-5-142"></a><span class="go">│ MN908947.3 │ 1875    │ 2269    │ nCoV-2019_7 │ 201      │ SAMPLE2_PE │ run_1       │ 2026-11-27  │ [[3]]</span>
+<a id="__codelineno-5-143" name="__codelineno-5-143" href="#__codelineno-5-143"></a><span class="go">│            │         │         │             │          │            │             │ 15:05:18    │ [[3]]</span>
+<a id="__codelineno-5-144" name="__codelineno-5-144" href="#__codelineno-5-144"></a><span class="go">├────────────┼─────────┼─────────┼─────────────┼──────────┼────────────┼─────────────┼─────────────┤ [[3]]</span>
+<a id="__codelineno-5-145" name="__codelineno-5-145" href="#__codelineno-5-145"></a><span class="go">│ MN908947.3 │ 2181    │ 2592    │ nCoV-2019_8 │ 164      │ SAMPLE2_PE │ run_1       │ 2026-11-27  │ [[3]]</span>
+<a id="__codelineno-5-146" name="__codelineno-5-146" href="#__codelineno-5-146"></a><span class="go">│            │         │         │             │          │            │             │ 15:05:18    │ [[3]]</span>
+<a id="__codelineno-5-147" name="__codelineno-5-147" href="#__codelineno-5-147"></a><span class="go">├────────────┼─────────┼─────────┼─────────────┼──────────┼────────────┼─────────────┼─────────────┤ [[3]]</span>
+<a id="__codelineno-5-148" name="__codelineno-5-148" href="#__codelineno-5-148"></a><span class="go">│ MN908947.3 │ 2505    │ 2904    │ nCoV-2019_9 │ 112      │ SAMPLE2_PE │ run_1       │ 2026-11-27  │ [[3]]</span>
+<a id="__codelineno-5-149" name="__codelineno-5-149" href="#__codelineno-5-149"></a><span class="go">│            │         │         │             │          │            │             │ 15:05:18    │ [[3]]</span>
+<a id="__codelineno-5-150" name="__codelineno-5-150" href="#__codelineno-5-150"></a><span class="go">├────────────┼─────────┼─────────┼─────────────┼──────────┼────────────┼─────────────┼─────────────┤ [[3]]</span>
+<a id="__codelineno-5-151" name="__codelineno-5-151" href="#__codelineno-5-151"></a><span class="go">│ MN908947.3 │ 2826    │ 3210    │ nCoV-2019_… │ 47       │ SAMPLE2_PE │ run_1       │ 2026-11-27  │ [[3]]</span>
+<a id="__codelineno-5-152" name="__codelineno-5-152" href="#__codelineno-5-152"></a><span class="go">│            │         │         │             │          │            │             │ 15:05:18    │ [[3]]</span>
+<a id="__codelineno-5-153" name="__codelineno-5-153" href="#__codelineno-5-153"></a><span class="go">├────────────┼─────────┼─────────┼─────────────┼──────────┼────────────┼─────────────┼─────────────┤ [[3]]</span>
+<a id="__codelineno-5-154" name="__codelineno-5-154" href="#__codelineno-5-154"></a><span class="go">│ ...        │ ...     │ ...     │ ...         │ ...      │ ...        │ ...         │ ...         │ [[3]]</span>
+<a id="__codelineno-5-155" name="__codelineno-5-155" href="#__codelineno-5-155"></a><span class="go">╰────────────┴─────────┴─────────┴─────────────┴──────────┴────────────┴─────────────┴─────────────╯ [[3]]</span>
+<a id="__codelineno-5-156" name="__codelineno-5-156" href="#__codelineno-5-156"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-157" name="__codelineno-5-157" href="#__codelineno-5-157"></a><span class="go">Showing 10 of 294 rows [[3]]</span>
+<a id="__codelineno-5-158" name="__codelineno-5-158" href="#__codelineno-5-158"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-159" name="__codelineno-5-159" href="#__codelineno-5-159"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-160" name="__codelineno-5-160" href="#__codelineno-5-160"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-161" name="__codelineno-5-161" href="#__codelineno-5-161"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-162" name="__codelineno-5-162" href="#__codelineno-5-162"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-163" name="__codelineno-5-163" href="#__codelineno-5-163"></a><span class="go">                                       Descriptive Statistics                                        [[3]]</span>
+<a id="__codelineno-5-164" name="__codelineno-5-164" href="#__codelineno-5-164"></a><span class="go">╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮ [[3]]</span>
+<a id="__codelineno-5-165" name="__codelineno-5-165" href="#__codelineno-5-165"></a><span class="go">│ statist… │ chrom    │ start    │ end      │ region   │ coverage │ sample   │ depicti… │ aggrega… │ [[3]]</span>
+<a id="__codelineno-5-166" name="__codelineno-5-166" href="#__codelineno-5-166"></a><span class="go">├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤ [[3]]</span>
+<a id="__codelineno-5-167" name="__codelineno-5-167" href="#__codelineno-5-167"></a><span class="go">│ count    │ 294      │ 294.0000 │ 294.0000 │ 294      │ 294.0000 │ 294      │ 294      │ 294      │ [[3]]</span>
+<a id="__codelineno-5-168" name="__codelineno-5-168" href="#__codelineno-5-168"></a><span class="go">├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤ [[3]]</span>
+<a id="__codelineno-5-169" name="__codelineno-5-169" href="#__codelineno-5-169"></a><span class="go">│ null_co… │ 0        │ 0.0000   │ 0.0000   │ 0        │ 0.0000   │ 0        │ 0        │ 0        │ [[3]]</span>
+<a id="__codelineno-5-170" name="__codelineno-5-170" href="#__codelineno-5-170"></a><span class="go">├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤ [[3]]</span>
+<a id="__codelineno-5-171" name="__codelineno-5-171" href="#__codelineno-5-171"></a><span class="go">│ mean     │ null     │ 14790.1… │ 15182.9… │ null     │ 414.9660 │ null     │ null     │ null     │ [[3]]</span>
+<a id="__codelineno-5-172" name="__codelineno-5-172" href="#__codelineno-5-172"></a><span class="go">├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤ [[3]]</span>
+<a id="__codelineno-5-173" name="__codelineno-5-173" href="#__codelineno-5-173"></a><span class="go">│ std      │ null     │ 8621.37… │ 8621.14… │ null     │ 432.3225 │ null     │ null     │ null     │ [[3]]</span>
+<a id="__codelineno-5-174" name="__codelineno-5-174" href="#__codelineno-5-174"></a><span class="go">├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤ [[3]]</span>
+<a id="__codelineno-5-175" name="__codelineno-5-175" href="#__codelineno-5-175"></a><span class="go">│ min      │ MN90894… │ 30.0000  │ 410.0000 │ nCoV-20… │ 0.0000   │ SAMPLE1… │ run_1    │ 2026-11… │ [[3]]</span>
+<a id="__codelineno-5-176" name="__codelineno-5-176" href="#__codelineno-5-176"></a><span class="go">│          │          │          │          │          │          │          │          │ 15:05:18 │ [[3]]</span>
+<a id="__codelineno-5-177" name="__codelineno-5-177" href="#__codelineno-5-177"></a><span class="go">├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤ [[3]]</span>
+<a id="__codelineno-5-178" name="__codelineno-5-178" href="#__codelineno-5-178"></a><span class="go">│ 25%      │ null     │ 7305.00… │ 7694.00… │ null     │ 99.0000  │ null     │ null     │ null     │ [[3]]</span>
+<a id="__codelineno-5-179" name="__codelineno-5-179" href="#__codelineno-5-179"></a><span class="go">├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤ [[3]]</span>
+<a id="__codelineno-5-180" name="__codelineno-5-180" href="#__codelineno-5-180"></a><span class="go">│ 50%      │ null     │ 14865.0… │ 15246.0… │ null     │ 264.0000 │ null     │ null     │ null     │ [[3]]</span>
+<a id="__codelineno-5-181" name="__codelineno-5-181" href="#__codelineno-5-181"></a><span class="go">├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤ [[3]]</span>
+<a id="__codelineno-5-182" name="__codelineno-5-182" href="#__codelineno-5-182"></a><span class="go">│ 75%      │ null     │ 22262.0… │ 22650.0… │ null     │ 602.0000 │ null     │ null     │ null     │ [[3]]</span>
+<a id="__codelineno-5-183" name="__codelineno-5-183" href="#__codelineno-5-183"></a><span class="go">├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤ [[3]]</span>
+<a id="__codelineno-5-184" name="__codelineno-5-184" href="#__codelineno-5-184"></a><span class="go">│ max      │ MN90894… │ 29486.0… │ 29866.0… │ nCoV-20… │ 2280.00… │ SAMPLE3… │ run_1    │ 2026-11… │ [[3]]</span>
+<a id="__codelineno-5-185" name="__codelineno-5-185" href="#__codelineno-5-185"></a><span class="go">│          │          │          │          │          │          │          │          │ 15:05:18 │ [[3]]</span>
+<a id="__codelineno-5-186" name="__codelineno-5-186" href="#__codelineno-5-186"></a><span class="go">╰──────────┴──────────┴──────────┴──────────┴──────────┴──────────┴──────────┴──────────┴──────────╯ [[3]]</span>
+<a id="__codelineno-5-187" name="__codelineno-5-187" href="#__codelineno-5-187"></a><span class="go">                                                                                    [[3]]</span>
+<a id="__codelineno-5-188" name="__codelineno-5-188" href="#__codelineno-5-188"></a><span class="go">  Property       Value                                                              [[3]]</span>
+<a id="__codelineno-5-189" name="__codelineno-5-189" href="#__codelineno-5-189"></a><span class="go"> ─────────────────────────────────────────────────────────────────────────────────  [[3]]</span>
+<a id="__codelineno-5-190" name="__codelineno-5-190" href="#__codelineno-5-190"></a><span class="go">  Shape          294 rows × 8 columns                                               [[3]]</span>
+<a id="__codelineno-5-191" name="__codelineno-5-191" href="#__codelineno-5-191"></a><span class="go">  Memory Usage   0.02 MB                                                            [[3]]</span>
+<a id="__codelineno-5-192" name="__codelineno-5-192" href="#__codelineno-5-192"></a><span class="go">  Columns        chrom   start   end     region  coverage        sample             [[3]]</span>
+<a id="__codelineno-5-193" name="__codelineno-5-193" href="#__codelineno-5-193"></a><span class="go">                 depictio_run_id aggregation_time                                   [[3]]</span>
+<a id="__codelineno-5-194" name="__codelineno-5-194" href="#__codelineno-5-194"></a><span class="go">                                                                                    [[3]]</span>
+<a id="__codelineno-5-195" name="__codelineno-5-195" href="#__codelineno-5-195"></a><span class="go">              Column Data Types               [[3]]</span>
+<a id="__codelineno-5-196" name="__codelineno-5-196" href="#__codelineno-5-196"></a><span class="go">                                              [[3]]</span>
+<a id="__codelineno-5-197" name="__codelineno-5-197" href="#__codelineno-5-197"></a><span class="go">  Column             Data Type   Null Count   [[3]]</span>
+<a id="__codelineno-5-198" name="__codelineno-5-198" href="#__codelineno-5-198"></a><span class="go"> ───────────────────────────────────────────  [[3]]</span>
+<a id="__codelineno-5-199" name="__codelineno-5-199" href="#__codelineno-5-199"></a><span class="go">  chrom              String      0            [[3]]</span>
+<a id="__codelineno-5-200" name="__codelineno-5-200" href="#__codelineno-5-200"></a><span class="go">  start              Int64       0            [[3]]</span>
+<a id="__codelineno-5-201" name="__codelineno-5-201" href="#__codelineno-5-201"></a><span class="go">  end                Int64       0            [[3]]</span>
+<a id="__codelineno-5-202" name="__codelineno-5-202" href="#__codelineno-5-202"></a><span class="go">  region             String      0            [[3]]</span>
+<a id="__codelineno-5-203" name="__codelineno-5-203" href="#__codelineno-5-203"></a><span class="go">  coverage           Int64       0            [[3]]</span>
+<a id="__codelineno-5-204" name="__codelineno-5-204" href="#__codelineno-5-204"></a><span class="go">  sample             String      0            [[3]]</span>
+<a id="__codelineno-5-205" name="__codelineno-5-205" href="#__codelineno-5-205"></a><span class="go">  depictio_run_id    String      0            [[3]]</span>
+<a id="__codelineno-5-206" name="__codelineno-5-206" href="#__codelineno-5-206"></a><span class="go">  aggregation_time   String      0            [[3]]</span>
+<a id="__codelineno-5-207" name="__codelineno-5-207" href="#__codelineno-5-207"></a><span class="go">                                              [[3]]</span>
+<a id="__codelineno-5-208" name="__codelineno-5-208" href="#__codelineno-5-208"></a><span class="go">•   ↪ Processing Data Collection: mosdepth_genome_coverage - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-209" name="__codelineno-5-209" href="#__codelineno-5-209"></a><span class="go">• S3 Destination does not exist, will create it during processing [[3]]</span>
+<a id="__codelineno-5-210" name="__codelineno-5-210" href="#__codelineno-5-210"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-211" name="__codelineno-5-211" href="#__codelineno-5-211"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-212" name="__codelineno-5-212" href="#__codelineno-5-212"></a><span class="go">                   Aggregated DataFrame - {data_collection.data_collection_tag}                     [[3]]</span>
+<a id="__codelineno-5-213" name="__codelineno-5-213" href="#__codelineno-5-213"></a><span class="go">╭────────────┬─────────┬─────────┬───────────┬────────────┬─────────────────┬─────────────────────╮ [[3]]</span>
+<a id="__codelineno-5-214" name="__codelineno-5-214" href="#__codelineno-5-214"></a><span class="go">│ chrom      │ start   │ end     │ coverage  │ sample     │ depictio_run_id │ aggregation_time    │ [[3]]</span>
+<a id="__codelineno-5-215" name="__codelineno-5-215" href="#__codelineno-5-215"></a><span class="go">│ (String)   │ (Int64) │ (Int64) │ (Float64) │ (String)   │ (String)        │ (String)            │ [[3]]</span>
+<a id="__codelineno-5-216" name="__codelineno-5-216" href="#__codelineno-5-216"></a><span class="go">├────────────┼─────────┼─────────┼───────────┼────────────┼─────────────────┼─────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-217" name="__codelineno-5-217" href="#__codelineno-5-217"></a><span class="go">│ MN908947.3 │ 0       │ 200     │ 411.5300  │ SAMPLE2_PE │ run_1           │ 2026-11-27 15:05:19 │ [[3]]</span>
+<a id="__codelineno-5-218" name="__codelineno-5-218" href="#__codelineno-5-218"></a><span class="go">├────────────┼─────────┼─────────┼───────────┼────────────┼─────────────────┼─────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-219" name="__codelineno-5-219" href="#__codelineno-5-219"></a><span class="go">│ MN908947.3 │ 200     │ 400     │ 560.8000  │ SAMPLE2_PE │ run_1           │ 2026-11-27 15:05:19 │ [[3]]</span>
+<a id="__codelineno-5-220" name="__codelineno-5-220" href="#__codelineno-5-220"></a><span class="go">├────────────┼─────────┼─────────┼───────────┼────────────┼─────────────────┼─────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-221" name="__codelineno-5-221" href="#__codelineno-5-221"></a><span class="go">│ MN908947.3 │ 400     │ 600     │ 55.0900   │ SAMPLE2_PE │ run_1           │ 2026-11-27 15:05:19 │ [[3]]</span>
+<a id="__codelineno-5-222" name="__codelineno-5-222" href="#__codelineno-5-222"></a><span class="go">├────────────┼─────────┼─────────┼───────────┼────────────┼─────────────────┼─────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-223" name="__codelineno-5-223" href="#__codelineno-5-223"></a><span class="go">│ MN908947.3 │ 600     │ 800     │ 594.0800  │ SAMPLE2_PE │ run_1           │ 2026-11-27 15:05:19 │ [[3]]</span>
+<a id="__codelineno-5-224" name="__codelineno-5-224" href="#__codelineno-5-224"></a><span class="go">├────────────┼─────────┼─────────┼───────────┼────────────┼─────────────────┼─────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-225" name="__codelineno-5-225" href="#__codelineno-5-225"></a><span class="go">│ MN908947.3 │ 800     │ 1000    │ 1071.2700 │ SAMPLE2_PE │ run_1           │ 2026-11-27 15:05:19 │ [[3]]</span>
+<a id="__codelineno-5-226" name="__codelineno-5-226" href="#__codelineno-5-226"></a><span class="go">├────────────┼─────────┼─────────┼───────────┼────────────┼─────────────────┼─────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-227" name="__codelineno-5-227" href="#__codelineno-5-227"></a><span class="go">│ MN908947.3 │ 1000    │ 1200    │ 1314.6500 │ SAMPLE2_PE │ run_1           │ 2026-11-27 15:05:19 │ [[3]]</span>
+<a id="__codelineno-5-228" name="__codelineno-5-228" href="#__codelineno-5-228"></a><span class="go">├────────────┼─────────┼─────────┼───────────┼────────────┼─────────────────┼─────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-229" name="__codelineno-5-229" href="#__codelineno-5-229"></a><span class="go">│ MN908947.3 │ 1200    │ 1400    │ 642.6500  │ SAMPLE2_PE │ run_1           │ 2026-11-27 15:05:19 │ [[3]]</span>
+<a id="__codelineno-5-230" name="__codelineno-5-230" href="#__codelineno-5-230"></a><span class="go">├────────────┼─────────┼─────────┼───────────┼────────────┼─────────────────┼─────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-231" name="__codelineno-5-231" href="#__codelineno-5-231"></a><span class="go">│ MN908947.3 │ 1400    │ 1600    │ 151.0200  │ SAMPLE2_PE │ run_1           │ 2026-11-27 15:05:19 │ [[3]]</span>
+<a id="__codelineno-5-232" name="__codelineno-5-232" href="#__codelineno-5-232"></a><span class="go">├────────────┼─────────┼─────────┼───────────┼────────────┼─────────────────┼─────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-233" name="__codelineno-5-233" href="#__codelineno-5-233"></a><span class="go">│ MN908947.3 │ 1600    │ 1800    │ 117.4100  │ SAMPLE2_PE │ run_1           │ 2026-11-27 15:05:19 │ [[3]]</span>
+<a id="__codelineno-5-234" name="__codelineno-5-234" href="#__codelineno-5-234"></a><span class="go">├────────────┼─────────┼─────────┼───────────┼────────────┼─────────────────┼─────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-235" name="__codelineno-5-235" href="#__codelineno-5-235"></a><span class="go">│ MN908947.3 │ 1800    │ 2000    │ 138.7300  │ SAMPLE2_PE │ run_1           │ 2026-11-27 15:05:19 │ [[3]]</span>
+<a id="__codelineno-5-236" name="__codelineno-5-236" href="#__codelineno-5-236"></a><span class="go">├────────────┼─────────┼─────────┼───────────┼────────────┼─────────────────┼─────────────────────┤ [[3]]</span>
+<a id="__codelineno-5-237" name="__codelineno-5-237" href="#__codelineno-5-237"></a><span class="go">│ ...        │ ...     │ ...     │ ...       │ ...        │ ...             │ ...                 │ [[3]]</span>
+<a id="__codelineno-5-238" name="__codelineno-5-238" href="#__codelineno-5-238"></a><span class="go">╰────────────┴─────────┴─────────┴───────────┴────────────┴─────────────────┴─────────────────────╯ [[3]]</span>
+<a id="__codelineno-5-239" name="__codelineno-5-239" href="#__codelineno-5-239"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-240" name="__codelineno-5-240" href="#__codelineno-5-240"></a><span class="go">Showing 10 of 450 rows [[3]]</span>
+<a id="__codelineno-5-241" name="__codelineno-5-241" href="#__codelineno-5-241"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-242" name="__codelineno-5-242" href="#__codelineno-5-242"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-243" name="__codelineno-5-243" href="#__codelineno-5-243"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-244" name="__codelineno-5-244" href="#__codelineno-5-244"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-245" name="__codelineno-5-245" href="#__codelineno-5-245"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-246" name="__codelineno-5-246" href="#__codelineno-5-246"></a><span class="go">                                       Descriptive Statistics                                        [[3]]</span>
+<a id="__codelineno-5-247" name="__codelineno-5-247" href="#__codelineno-5-247"></a><span class="go">╭───────────┬────────────┬───────────┬────────────┬───────────┬───────────┬────────────┬───────────╮ [[3]]</span>
+<a id="__codelineno-5-248" name="__codelineno-5-248" href="#__codelineno-5-248"></a><span class="go">│ statistic │ chrom      │ start     │ end        │ coverage  │ sample    │ depictio_… │ aggregat… │ [[3]]</span>
+<a id="__codelineno-5-249" name="__codelineno-5-249" href="#__codelineno-5-249"></a><span class="go">├───────────┼────────────┼───────────┼────────────┼───────────┼───────────┼────────────┼───────────┤ [[3]]</span>
+<a id="__codelineno-5-250" name="__codelineno-5-250" href="#__codelineno-5-250"></a><span class="go">│ count     │ 450        │ 450.0000  │ 450.0000   │ 450.0000  │ 450       │ 450        │ 450       │ [[3]]</span>
+<a id="__codelineno-5-251" name="__codelineno-5-251" href="#__codelineno-5-251"></a><span class="go">├───────────┼────────────┼───────────┼────────────┼───────────┼───────────┼────────────┼───────────┤ [[3]]</span>
+<a id="__codelineno-5-252" name="__codelineno-5-252" href="#__codelineno-5-252"></a><span class="go">│ null_cou… │ 0          │ 0.0000    │ 0.0000     │ 0.0000    │ 0         │ 0          │ 0         │ [[3]]</span>
+<a id="__codelineno-5-253" name="__codelineno-5-253" href="#__codelineno-5-253"></a><span class="go">├───────────┼────────────┼───────────┼────────────┼───────────┼───────────┼────────────┼───────────┤ [[3]]</span>
+<a id="__codelineno-5-254" name="__codelineno-5-254" href="#__codelineno-5-254"></a><span class="go">│ mean      │ null       │ 14900.00… │ 15099.3533 │ 396.2881  │ null      │ null       │ null      │ [[3]]</span>
+<a id="__codelineno-5-255" name="__codelineno-5-255" href="#__codelineno-5-255"></a><span class="go">├───────────┼────────────┼───────────┼────────────┼───────────┼───────────┼────────────┼───────────┤ [[3]]</span>
+<a id="__codelineno-5-256" name="__codelineno-5-256" href="#__codelineno-5-256"></a><span class="go">│ std       │ null       │ 8669.6999 │ 8668.5896  │ 380.4254  │ null      │ null       │ null      │ [[3]]</span>
+<a id="__codelineno-5-257" name="__codelineno-5-257" href="#__codelineno-5-257"></a><span class="go">├───────────┼────────────┼───────────┼────────────┼───────────┼───────────┼────────────┼───────────┤ [[3]]</span>
+<a id="__codelineno-5-258" name="__codelineno-5-258" href="#__codelineno-5-258"></a><span class="go">│ min       │ MN908947.3 │ 0.0000    │ 200.0000   │ 0.0000    │ SAMPLE1_… │ run_1      │ 2026-11-… │ [[3]]</span>
+<a id="__codelineno-5-259" name="__codelineno-5-259" href="#__codelineno-5-259"></a><span class="go">│           │            │           │            │           │           │            │ 15:05:19  │ [[3]]</span>
+<a id="__codelineno-5-260" name="__codelineno-5-260" href="#__codelineno-5-260"></a><span class="go">├───────────┼────────────┼───────────┼────────────┼───────────┼───────────┼────────────┼───────────┤ [[3]]</span>
+<a id="__codelineno-5-261" name="__codelineno-5-261" href="#__codelineno-5-261"></a><span class="go">│ 25%       │ null       │ 7400.0000 │ 7600.0000  │ 128.4600  │ null      │ null       │ null      │ [[3]]</span>
+<a id="__codelineno-5-262" name="__codelineno-5-262" href="#__codelineno-5-262"></a><span class="go">├───────────┼────────────┼───────────┼────────────┼───────────┼───────────┼────────────┼───────────┤ [[3]]</span>
+<a id="__codelineno-5-263" name="__codelineno-5-263" href="#__codelineno-5-263"></a><span class="go">│ 50%       │ null       │ 15000.00… │ 15200.0000 │ 271.1300  │ null      │ null       │ null      │ [[3]]</span>
+<a id="__codelineno-5-264" name="__codelineno-5-264" href="#__codelineno-5-264"></a><span class="go">├───────────┼────────────┼───────────┼────────────┼───────────┼───────────┼────────────┼───────────┤ [[3]]</span>
+<a id="__codelineno-5-265" name="__codelineno-5-265" href="#__codelineno-5-265"></a><span class="go">│ 75%       │ null       │ 22400.00… │ 22600.0000 │ 542.0000  │ null      │ null       │ null      │ [[3]]</span>
+<a id="__codelineno-5-266" name="__codelineno-5-266" href="#__codelineno-5-266"></a><span class="go">├───────────┼────────────┼───────────┼────────────┼───────────┼───────────┼────────────┼───────────┤ [[3]]</span>
+<a id="__codelineno-5-267" name="__codelineno-5-267" href="#__codelineno-5-267"></a><span class="go">│ max       │ MN908947.3 │ 29800.00… │ 29903.0000 │ 2346.0500 │ SAMPLE3_… │ run_1      │ 2026-11-… │ [[3]]</span>
+<a id="__codelineno-5-268" name="__codelineno-5-268" href="#__codelineno-5-268"></a><span class="go">│           │            │           │            │           │           │            │ 15:05:19  │ [[3]]</span>
+<a id="__codelineno-5-269" name="__codelineno-5-269" href="#__codelineno-5-269"></a><span class="go">╰───────────┴────────────┴───────────┴────────────┴───────────┴───────────┴────────────┴───────────╯ [[3]]</span>
+<a id="__codelineno-5-270" name="__codelineno-5-270" href="#__codelineno-5-270"></a><span class="go">                                                                              [[3]]</span>
+<a id="__codelineno-5-271" name="__codelineno-5-271" href="#__codelineno-5-271"></a><span class="go">  Property       Value                                                        [[3]]</span>
+<a id="__codelineno-5-272" name="__codelineno-5-272" href="#__codelineno-5-272"></a><span class="go"> ───────────────────────────────────────────────────────────────────────────  [[3]]</span>
+<a id="__codelineno-5-273" name="__codelineno-5-273" href="#__codelineno-5-273"></a><span class="go">  Shape          450 rows × 7 columns                                         [[3]]</span>
+<a id="__codelineno-5-274" name="__codelineno-5-274" href="#__codelineno-5-274"></a><span class="go">  Memory Usage   0.03 MB                                                      [[3]]</span>
+<a id="__codelineno-5-275" name="__codelineno-5-275" href="#__codelineno-5-275"></a><span class="go">  Columns        chrom   start   end     coverage        sample               [[3]]</span>
+<a id="__codelineno-5-276" name="__codelineno-5-276" href="#__codelineno-5-276"></a><span class="go">                 depictio_run_id aggregation_time                             [[3]]</span>
+<a id="__codelineno-5-277" name="__codelineno-5-277" href="#__codelineno-5-277"></a><span class="go">                                                                              [[3]]</span>
+<a id="__codelineno-5-278" name="__codelineno-5-278" href="#__codelineno-5-278"></a><span class="go">              Column Data Types               [[3]]</span>
+<a id="__codelineno-5-279" name="__codelineno-5-279" href="#__codelineno-5-279"></a><span class="go">                                              [[3]]</span>
+<a id="__codelineno-5-280" name="__codelineno-5-280" href="#__codelineno-5-280"></a><span class="go">  Column             Data Type   Null Count   [[3]]</span>
+<a id="__codelineno-5-281" name="__codelineno-5-281" href="#__codelineno-5-281"></a><span class="go"> ───────────────────────────────────────────  [[3]]</span>
+<a id="__codelineno-5-282" name="__codelineno-5-282" href="#__codelineno-5-282"></a><span class="go">  chrom              String      0            [[3]]</span>
+<a id="__codelineno-5-283" name="__codelineno-5-283" href="#__codelineno-5-283"></a><span class="go">  start              Int64       0            [[3]]</span>
+<a id="__codelineno-5-284" name="__codelineno-5-284" href="#__codelineno-5-284"></a><span class="go">  end                Int64       0            [[3]]</span>
+<a id="__codelineno-5-285" name="__codelineno-5-285" href="#__codelineno-5-285"></a><span class="go">  coverage           Float64     0            [[3]]</span>
+<a id="__codelineno-5-286" name="__codelineno-5-286" href="#__codelineno-5-286"></a><span class="go">  sample             String      0            [[3]]</span>
+<a id="__codelineno-5-287" name="__codelineno-5-287" href="#__codelineno-5-287"></a><span class="go">  depictio_run_id    String      0            [[3]]</span>
+<a id="__codelineno-5-288" name="__codelineno-5-288" href="#__codelineno-5-288"></a><span class="go">  aggregation_time   String      0            [[3]]</span>
+<a id="__codelineno-5-289" name="__codelineno-5-289" href="#__codelineno-5-289"></a><span class="go">                                              [[3]]</span>
+<a id="__codelineno-5-290" name="__codelineno-5-290" href="#__codelineno-5-290"></a><span class="go">•   ↪ Processing Data Collection: mosdepth_amplicon_heatmap - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-291" name="__codelineno-5-291" href="#__codelineno-5-291"></a><span class="go">• S3 Destination does not exist, will create it during processing [[3]]</span>
+<a id="__codelineno-5-292" name="__codelineno-5-292" href="#__codelineno-5-292"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-293" name="__codelineno-5-293" href="#__codelineno-5-293"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-294" name="__codelineno-5-294" href="#__codelineno-5-294"></a><span class="go">                    Aggregated DataFrame - {data_collection.data_collection_tag}                     [[3]]</span>
+<a id="__codelineno-5-295" name="__codelineno-5-295" href="#__codelineno-5-295"></a><span class="go">╭────────┬────────┬────────┬────────┬────────┬─────────┬────────┬─────────┬────────┬─────────┬─────╮ [[3]]</span>
+<a id="__codelineno-5-296" name="__codelineno-5-296" href="#__codelineno-5-296"></a><span class="go">│ sample │ nCoV-… │ nCoV-… │ nCoV-… │ nCoV-… │ nCoV-2… │ nCoV-… │ nCoV-2… │ nCoV-… │ nCoV-2… │     │ [[3]]</span>
+<a id="__codelineno-5-297" name="__codelineno-5-297" href="#__codelineno-5-297"></a><span class="go">│ (Stri… │ (Floa… │ (Floa… │ (Floa… │ (Floa… │ (Float… │ (Floa… │ (Float… │ (Floa… │ (Float… │ ... │ [[3]]</span>
+<a id="__codelineno-5-298" name="__codelineno-5-298" href="#__codelineno-5-298"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-299" name="__codelineno-5-299" href="#__codelineno-5-299"></a><span class="go">│ SAMPL… │ 2.6684 │ 2.2765 │ 3.1495 │ 3.1193 │ 2.1903  │ 2.1492 │ 2.2355  │ 2.3483 │ 2.2625  │ ... │ [[3]]</span>
+<a id="__codelineno-5-300" name="__codelineno-5-300" href="#__codelineno-5-300"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-301" name="__codelineno-5-301" href="#__codelineno-5-301"></a><span class="go">│ SAMPL… │ 2.8149 │ 2.1399 │ 3.1329 │ 3.1483 │ 2.2672  │ 2.1959 │ 2.3617  │ 2.3464 │ 2.2304  │ ... │ [[3]]</span>
+<a id="__codelineno-5-302" name="__codelineno-5-302" href="#__codelineno-5-302"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-303" name="__codelineno-5-303" href="#__codelineno-5-303"></a><span class="go">│ SAMPL… │ 2.8312 │ 1.7782 │ 3.0378 │ 3.1433 │ 2.2405  │ 2.0969 │ 2.3054  │ 2.2175 │ 2.0531  │ ... │ [[3]]</span>
+<a id="__codelineno-5-304" name="__codelineno-5-304" href="#__codelineno-5-304"></a><span class="go">╰────────┴────────┴────────┴────────┴────────┴─────────┴────────┴─────────┴────────┴─────────┴─────╯ [[3]]</span>
+<a id="__codelineno-5-305" name="__codelineno-5-305" href="#__codelineno-5-305"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-306" name="__codelineno-5-306" href="#__codelineno-5-306"></a><span class="go">Showing 3 of 3 rows, 10 of 101 columns [[3]]</span>
+<a id="__codelineno-5-307" name="__codelineno-5-307" href="#__codelineno-5-307"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-308" name="__codelineno-5-308" href="#__codelineno-5-308"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-309" name="__codelineno-5-309" href="#__codelineno-5-309"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-310" name="__codelineno-5-310" href="#__codelineno-5-310"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-311" name="__codelineno-5-311" href="#__codelineno-5-311"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-312" name="__codelineno-5-312" href="#__codelineno-5-312"></a><span class="go">                                       Descriptive Statistics                                        [[3]]</span>
+<a id="__codelineno-5-313" name="__codelineno-5-313" href="#__codelineno-5-313"></a><span class="go">╭────────┬────────┬────────┬────────┬────────┬─────────┬────────┬─────────┬────────┬─────────┬─────╮ [[3]]</span>
+<a id="__codelineno-5-314" name="__codelineno-5-314" href="#__codelineno-5-314"></a><span class="go">│ stati… │ sample │ nCoV-… │ nCoV-… │ nCoV-… │ nCoV-2… │ nCoV-… │ nCoV-2… │ nCoV-… │ nCoV-2… │ ... │ [[3]]</span>
+<a id="__codelineno-5-315" name="__codelineno-5-315" href="#__codelineno-5-315"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-316" name="__codelineno-5-316" href="#__codelineno-5-316"></a><span class="go">│ count  │ 3      │ 3.0000 │ 3.0000 │ 3.0000 │ 3.0000  │ 3.0000 │ 3.0000  │ 3.0000 │ 3.0000  │ ... │ [[3]]</span>
+<a id="__codelineno-5-317" name="__codelineno-5-317" href="#__codelineno-5-317"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-318" name="__codelineno-5-318" href="#__codelineno-5-318"></a><span class="go">│ null_… │ 0      │ 0.0000 │ 0.0000 │ 0.0000 │ 0.0000  │ 0.0000 │ 0.0000  │ 0.0000 │ 0.0000  │ ... │ [[3]]</span>
+<a id="__codelineno-5-319" name="__codelineno-5-319" href="#__codelineno-5-319"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-320" name="__codelineno-5-320" href="#__codelineno-5-320"></a><span class="go">│ mean   │ null   │ 2.7715 │ 2.0648 │ 3.1068 │ 3.1370  │ 2.2327 │ 2.1473  │ 2.3009 │ 2.3040  │ ... │ [[3]]</span>
+<a id="__codelineno-5-321" name="__codelineno-5-321" href="#__codelineno-5-321"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-322" name="__codelineno-5-322" href="#__codelineno-5-322"></a><span class="go">│ std    │ null   │ 0.0897 │ 0.2575 │ 0.0603 │ 0.0155  │ 0.0390 │ 0.0495  │ 0.0632 │ 0.0750  │ ... │ [[3]]</span>
+<a id="__codelineno-5-323" name="__codelineno-5-323" href="#__codelineno-5-323"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-324" name="__codelineno-5-324" href="#__codelineno-5-324"></a><span class="go">│ min    │ SAMPL… │ 2.6684 │ 1.7782 │ 3.0378 │ 3.1193  │ 2.1903 │ 2.0969  │ 2.2355 │ 2.2175  │ ... │ [[3]]</span>
+<a id="__codelineno-5-325" name="__codelineno-5-325" href="#__codelineno-5-325"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-326" name="__codelineno-5-326" href="#__codelineno-5-326"></a><span class="go">│ 25%    │ null   │ 2.8149 │ 2.1399 │ 3.1329 │ 3.1433  │ 2.2405 │ 2.1492  │ 2.3054 │ 2.3464  │ ... │ [[3]]</span>
+<a id="__codelineno-5-327" name="__codelineno-5-327" href="#__codelineno-5-327"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-328" name="__codelineno-5-328" href="#__codelineno-5-328"></a><span class="go">│ 50%    │ null   │ 2.8149 │ 2.1399 │ 3.1329 │ 3.1433  │ 2.2405 │ 2.1492  │ 2.3054 │ 2.3464  │ ... │ [[3]]</span>
+<a id="__codelineno-5-329" name="__codelineno-5-329" href="#__codelineno-5-329"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-330" name="__codelineno-5-330" href="#__codelineno-5-330"></a><span class="go">│ 75%    │ null   │ 2.8312 │ 2.2765 │ 3.1495 │ 3.1483  │ 2.2672 │ 2.1959  │ 2.3617 │ 2.3483  │ ... │ [[3]]</span>
+<a id="__codelineno-5-331" name="__codelineno-5-331" href="#__codelineno-5-331"></a><span class="go">├────────┼────────┼────────┼────────┼────────┼─────────┼────────┼─────────┼────────┼─────────┼─────┤ [[3]]</span>
+<a id="__codelineno-5-332" name="__codelineno-5-332" href="#__codelineno-5-332"></a><span class="go">│ max    │ SAMPL… │ 2.8312 │ 2.2765 │ 3.1495 │ 3.1483  │ 2.2672 │ 2.1959  │ 2.3617 │ 2.3483  │ ... │ [[3]]</span>
+<a id="__codelineno-5-333" name="__codelineno-5-333" href="#__codelineno-5-333"></a><span class="go">╰────────┴────────┴────────┴────────┴────────┴─────────┴────────┴─────────┴────────┴─────────┴─────╯ [[3]]</span>
+<a id="__codelineno-5-334" name="__codelineno-5-334" href="#__codelineno-5-334"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-335" name="__codelineno-5-335" href="#__codelineno-5-335"></a><span class="go">Showing 9 of 9 rows, 10 of 102 columns [[3]]</span>
+<a id="__codelineno-5-336" name="__codelineno-5-336" href="#__codelineno-5-336"></a><span class="go"> [[3]]</span>
+<a id="__codelineno-5-337" name="__codelineno-5-337" href="#__codelineno-5-337"></a><span class="go">                                                                                                     [[3]]</span>
+<a id="__codelineno-5-338" name="__codelineno-5-338" href="#__codelineno-5-338"></a><span class="go">  Property       Value                                                                               [[3]]</span>
+<a id="__codelineno-5-339" name="__codelineno-5-339" href="#__codelineno-5-339"></a><span class="go"> ──────────────────────────────────────────────────────────────────────────────────────────────────  [[3]]</span>
+<a id="__codelineno-5-340" name="__codelineno-5-340" href="#__codelineno-5-340"></a><span class="go">  Shape          3 rows × 101 columns                                                                [[3]]</span>
+<a id="__codelineno-5-341" name="__codelineno-5-341" href="#__codelineno-5-341"></a><span class="go">  Memory Usage   0.00 MB                                                                             [[3]]</span>
+<a id="__codelineno-5-342" name="__codelineno-5-342" href="#__codelineno-5-342"></a><span class="go">  Columns        sample  nCoV-2019_1     nCoV-2019_2     nCoV-2019_3     nCoV-2019_4                 [[3]]</span>
+<a id="__codelineno-5-343" name="__codelineno-5-343" href="#__codelineno-5-343"></a><span class="go">                 nCoV-2019_5     nCoV-2019_6     nCoV-2019_7     nCoV-2019_8     nCoV-2019_9         [[3]]</span>
+<a id="__codelineno-5-344" name="__codelineno-5-344" href="#__codelineno-5-344"></a><span class="go">                 nCoV-2019_10    nCoV-2019_11    nCoV-2019_12    nCoV-2019_13    nCoV-2019_14,       [[3]]</span>
+<a id="__codelineno-5-345" name="__codelineno-5-345" href="#__codelineno-5-345"></a><span class="go">                 ... and 86 more columns                                                             [[3]]</span>
+<a id="__codelineno-5-346" name="__codelineno-5-346" href="#__codelineno-5-346"></a><span class="go">                                                                                                     [[3]]</span>
+<a id="__codelineno-5-347" name="__codelineno-5-347" href="#__codelineno-5-347"></a><span class="go">              Column Data Types               [[3]]</span>
+<a id="__codelineno-5-348" name="__codelineno-5-348" href="#__codelineno-5-348"></a><span class="go">                                              [[3]]</span>
+<a id="__codelineno-5-349" name="__codelineno-5-349" href="#__codelineno-5-349"></a><span class="go">  Column             Data Type   Null Count   [[3]]</span>
+<a id="__codelineno-5-350" name="__codelineno-5-350" href="#__codelineno-5-350"></a><span class="go"> ───────────────────────────────────────────  [[3]]</span>
+<a id="__codelineno-5-351" name="__codelineno-5-351" href="#__codelineno-5-351"></a><span class="go">  sample             String      0            [[3]]</span>
+<a id="__codelineno-5-352" name="__codelineno-5-352" href="#__codelineno-5-352"></a><span class="go">  nCoV-2019_1        Float64     0            [[3]]</span>
+<a id="__codelineno-5-353" name="__codelineno-5-353" href="#__codelineno-5-353"></a><span class="go">  nCoV-2019_2        Float64     0            [[3]]</span>
+<a id="__codelineno-5-354" name="__codelineno-5-354" href="#__codelineno-5-354"></a><span class="go">  nCoV-2019_3        Float64     0            [[3]]</span>
+<a id="__codelineno-5-355" name="__codelineno-5-355" href="#__codelineno-5-355"></a><span class="go">  nCoV-2019_4        Float64     0            [[3]]</span>
+<a id="__codelineno-5-356" name="__codelineno-5-356" href="#__codelineno-5-356"></a><span class="go">  nCoV-2019_5        Float64     0            [[3]]</span>
+<a id="__codelineno-5-357" name="__codelineno-5-357" href="#__codelineno-5-357"></a><span class="go">  nCoV-2019_6        Float64     0            [[3]]</span>
+<a id="__codelineno-5-358" name="__codelineno-5-358" href="#__codelineno-5-358"></a><span class="go">  nCoV-2019_7        Float64     0            [[3]]</span>
+<a id="__codelineno-5-359" name="__codelineno-5-359" href="#__codelineno-5-359"></a><span class="go">  nCoV-2019_8        Float64     0            [[3]]</span>
+<a id="__codelineno-5-360" name="__codelineno-5-360" href="#__codelineno-5-360"></a><span class="go">  nCoV-2019_9        Float64     0            [[3]]</span>
+<a id="__codelineno-5-361" name="__codelineno-5-361" href="#__codelineno-5-361"></a><span class="go">  nCoV-2019_10       Float64     0            [[3]]</span>
+<a id="__codelineno-5-362" name="__codelineno-5-362" href="#__codelineno-5-362"></a><span class="go">  nCoV-2019_11       Float64     0            [[3]]</span>
+<a id="__codelineno-5-363" name="__codelineno-5-363" href="#__codelineno-5-363"></a><span class="go">  nCoV-2019_12       Float64     0            [[3]]</span>
+<a id="__codelineno-5-364" name="__codelineno-5-364" href="#__codelineno-5-364"></a><span class="go">  nCoV-2019_13       Float64     0            [[3]]</span>
+<a id="__codelineno-5-365" name="__codelineno-5-365" href="#__codelineno-5-365"></a><span class="go">  nCoV-2019_14       Float64     0            [[3]]</span>
+<a id="__codelineno-5-366" name="__codelineno-5-366" href="#__codelineno-5-366"></a><span class="go">  nCoV-2019_15       Float64     0            [[3]]</span>
+<a id="__codelineno-5-367" name="__codelineno-5-367" href="#__codelineno-5-367"></a><span class="go">  nCoV-2019_16       Float64     0            [[3]]</span>
+<a id="__codelineno-5-368" name="__codelineno-5-368" href="#__codelineno-5-368"></a><span class="go">  nCoV-2019_17       Float64     0            [[3]]</span>
+<a id="__codelineno-5-369" name="__codelineno-5-369" href="#__codelineno-5-369"></a><span class="go">  nCoV-2019_18       Float64     0            [[3]]</span>
+<a id="__codelineno-5-370" name="__codelineno-5-370" href="#__codelineno-5-370"></a><span class="go">  nCoV-2019_19       Float64     0            [[3]]</span>
+<a id="__codelineno-5-371" name="__codelineno-5-371" href="#__codelineno-5-371"></a><span class="go">  nCoV-2019_20       Float64     0            [[3]]</span>
+<a id="__codelineno-5-372" name="__codelineno-5-372" href="#__codelineno-5-372"></a><span class="go">  nCoV-2019_21       Float64     0            [[3]]</span>
+<a id="__codelineno-5-373" name="__codelineno-5-373" href="#__codelineno-5-373"></a><span class="go">  nCoV-2019_22       Float64     0            [[3]]</span>
+<a id="__codelineno-5-374" name="__codelineno-5-374" href="#__codelineno-5-374"></a><span class="go">  nCoV-2019_23       Float64     0            [[3]]</span>
+<a id="__codelineno-5-375" name="__codelineno-5-375" href="#__codelineno-5-375"></a><span class="go">  nCoV-2019_24       Float64     0            [[3]]</span>
+<a id="__codelineno-5-376" name="__codelineno-5-376" href="#__codelineno-5-376"></a><span class="go">  nCoV-2019_25       Float64     0            [[3]]</span>
+<a id="__codelineno-5-377" name="__codelineno-5-377" href="#__codelineno-5-377"></a><span class="go">  nCoV-2019_26       Float64     0            [[3]]</span>
+<a id="__codelineno-5-378" name="__codelineno-5-378" href="#__codelineno-5-378"></a><span class="go">  nCoV-2019_27       Float64     0            [[3]]</span>
+<a id="__codelineno-5-379" name="__codelineno-5-379" href="#__codelineno-5-379"></a><span class="go">  nCoV-2019_28       Float64     0            [[3]]</span>
+<a id="__codelineno-5-380" name="__codelineno-5-380" href="#__codelineno-5-380"></a><span class="go">  nCoV-2019_29       Int64       0            [[3]]</span>
+<a id="__codelineno-5-381" name="__codelineno-5-381" href="#__codelineno-5-381"></a><span class="go">  nCoV-2019_30       Float64     0            [[3]]</span>
+<a id="__codelineno-5-382" name="__codelineno-5-382" href="#__codelineno-5-382"></a><span class="go">  nCoV-2019_31       Float64     0            [[3]]</span>
+<a id="__codelineno-5-383" name="__codelineno-5-383" href="#__codelineno-5-383"></a><span class="go">  nCoV-2019_32       Float64     0            [[3]]</span>
+<a id="__codelineno-5-384" name="__codelineno-5-384" href="#__codelineno-5-384"></a><span class="go">  nCoV-2019_33       Float64     0            [[3]]</span>
+<a id="__codelineno-5-385" name="__codelineno-5-385" href="#__codelineno-5-385"></a><span class="go">  nCoV-2019_34       Float64     0            [[3]]</span>
+<a id="__codelineno-5-386" name="__codelineno-5-386" href="#__codelineno-5-386"></a><span class="go">  nCoV-2019_35       Float64     0            [[3]]</span>
+<a id="__codelineno-5-387" name="__codelineno-5-387" href="#__codelineno-5-387"></a><span class="go">  nCoV-2019_36       Float64     0            [[3]]</span>
+<a id="__codelineno-5-388" name="__codelineno-5-388" href="#__codelineno-5-388"></a><span class="go">  nCoV-2019_37       Float64     0            [[3]]</span>
+<a id="__codelineno-5-389" name="__codelineno-5-389" href="#__codelineno-5-389"></a><span class="go">  nCoV-2019_38       Float64     0            [[3]]</span>
+<a id="__codelineno-5-390" name="__codelineno-5-390" href="#__codelineno-5-390"></a><span class="go">  nCoV-2019_39       Float64     0            [[3]]</span>
+<a id="__codelineno-5-391" name="__codelineno-5-391" href="#__codelineno-5-391"></a><span class="go">  nCoV-2019_40       Float64     0            [[3]]</span>
+<a id="__codelineno-5-392" name="__codelineno-5-392" href="#__codelineno-5-392"></a><span class="go">  nCoV-2019_41       Float64     0            [[3]]</span>
+<a id="__codelineno-5-393" name="__codelineno-5-393" href="#__codelineno-5-393"></a><span class="go">  nCoV-2019_42       Float64     0            [[3]]</span>
+<a id="__codelineno-5-394" name="__codelineno-5-394" href="#__codelineno-5-394"></a><span class="go">  nCoV-2019_43       Float64     0            [[3]]</span>
+<a id="__codelineno-5-395" name="__codelineno-5-395" href="#__codelineno-5-395"></a><span class="go">  nCoV-2019_44       Float64     0            [[3]]</span>
+<a id="__codelineno-5-396" name="__codelineno-5-396" href="#__codelineno-5-396"></a><span class="go">  nCoV-2019_45       Float64     0            [[3]]</span>
+<a id="__codelineno-5-397" name="__codelineno-5-397" href="#__codelineno-5-397"></a><span class="go">  nCoV-2019_46       Float64     0            [[3]]</span>
+<a id="__codelineno-5-398" name="__codelineno-5-398" href="#__codelineno-5-398"></a><span class="go">  nCoV-2019_47       Float64     0            [[3]]</span>
+<a id="__codelineno-5-399" name="__codelineno-5-399" href="#__codelineno-5-399"></a><span class="go">  nCoV-2019_48       Float64     0            [[3]]</span>
+<a id="__codelineno-5-400" name="__codelineno-5-400" href="#__codelineno-5-400"></a><span class="go">  nCoV-2019_49       Float64     0            [[3]]</span>
+<a id="__codelineno-5-401" name="__codelineno-5-401" href="#__codelineno-5-401"></a><span class="go">  nCoV-2019_50       Float64     0            [[3]]</span>
+<a id="__codelineno-5-402" name="__codelineno-5-402" href="#__codelineno-5-402"></a><span class="go">  nCoV-2019_51       Float64     0            [[3]]</span>
+<a id="__codelineno-5-403" name="__codelineno-5-403" href="#__codelineno-5-403"></a><span class="go">  nCoV-2019_52       Float64     0            [[3]]</span>
+<a id="__codelineno-5-404" name="__codelineno-5-404" href="#__codelineno-5-404"></a><span class="go">  nCoV-2019_53       Float64     0            [[3]]</span>
+<a id="__codelineno-5-405" name="__codelineno-5-405" href="#__codelineno-5-405"></a><span class="go">  nCoV-2019_54       Float64     0            [[3]]</span>
+<a id="__codelineno-5-406" name="__codelineno-5-406" href="#__codelineno-5-406"></a><span class="go">  nCoV-2019_55       Float64     0            [[3]]</span>
+<a id="__codelineno-5-407" name="__codelineno-5-407" href="#__codelineno-5-407"></a><span class="go">  nCoV-2019_56       Float64     0            [[3]]</span>
+<a id="__codelineno-5-408" name="__codelineno-5-408" href="#__codelineno-5-408"></a><span class="go">  nCoV-2019_57       Float64     0            [[3]]</span>
+<a id="__codelineno-5-409" name="__codelineno-5-409" href="#__codelineno-5-409"></a><span class="go">  nCoV-2019_58       Float64     0            [[3]]</span>
+<a id="__codelineno-5-410" name="__codelineno-5-410" href="#__codelineno-5-410"></a><span class="go">  nCoV-2019_59       Float64     0            [[3]]</span>
+<a id="__codelineno-5-411" name="__codelineno-5-411" href="#__codelineno-5-411"></a><span class="go">  nCoV-2019_60       Float64     0            [[3]]</span>
+<a id="__codelineno-5-412" name="__codelineno-5-412" href="#__codelineno-5-412"></a><span class="go">  nCoV-2019_61       Float64     0            [[3]]</span>
+<a id="__codelineno-5-413" name="__codelineno-5-413" href="#__codelineno-5-413"></a><span class="go">  nCoV-2019_62       Float64     0            [[3]]</span>
+<a id="__codelineno-5-414" name="__codelineno-5-414" href="#__codelineno-5-414"></a><span class="go">  nCoV-2019_63       Float64     0            [[3]]</span>
+<a id="__codelineno-5-415" name="__codelineno-5-415" href="#__codelineno-5-415"></a><span class="go">  nCoV-2019_64       Float64     0            [[3]]</span>
+<a id="__codelineno-5-416" name="__codelineno-5-416" href="#__codelineno-5-416"></a><span class="go">  nCoV-2019_65       Float64     0            [[3]]</span>
+<a id="__codelineno-5-417" name="__codelineno-5-417" href="#__codelineno-5-417"></a><span class="go">  nCoV-2019_66       Float64     0            [[3]]</span>
+<a id="__codelineno-5-418" name="__codelineno-5-418" href="#__codelineno-5-418"></a><span class="go">  nCoV-2019_67       Float64     0            [[3]]</span>
+<a id="__codelineno-5-419" name="__codelineno-5-419" href="#__codelineno-5-419"></a><span class="go">  nCoV-2019_68       Float64     0            [[3]]</span>
+<a id="__codelineno-5-420" name="__codelineno-5-420" href="#__codelineno-5-420"></a><span class="go">  nCoV-2019_69       Float64     0            [[3]]</span>
+<a id="__codelineno-5-421" name="__codelineno-5-421" href="#__codelineno-5-421"></a><span class="go">  nCoV-2019_70       Float64     0            [[3]]</span>
+<a id="__codelineno-5-422" name="__codelineno-5-422" href="#__codelineno-5-422"></a><span class="go">  nCoV-2019_71       Float64     0            [[3]]</span>
+<a id="__codelineno-5-423" name="__codelineno-5-423" href="#__codelineno-5-423"></a><span class="go">  nCoV-2019_72       Float64     0            [[3]]</span>
+<a id="__codelineno-5-424" name="__codelineno-5-424" href="#__codelineno-5-424"></a><span class="go">  nCoV-2019_73       Float64     0            [[3]]</span>
+<a id="__codelineno-5-425" name="__codelineno-5-425" href="#__codelineno-5-425"></a><span class="go">  nCoV-2019_74       Float64     0            [[3]]</span>
+<a id="__codelineno-5-426" name="__codelineno-5-426" href="#__codelineno-5-426"></a><span class="go">  nCoV-2019_75       Float64     0            [[3]]</span>
+<a id="__codelineno-5-427" name="__codelineno-5-427" href="#__codelineno-5-427"></a><span class="go">  nCoV-2019_76       Float64     0            [[3]]</span>
+<a id="__codelineno-5-428" name="__codelineno-5-428" href="#__codelineno-5-428"></a><span class="go">  nCoV-2019_77       Float64     0            [[3]]</span>
+<a id="__codelineno-5-429" name="__codelineno-5-429" href="#__codelineno-5-429"></a><span class="go">  nCoV-2019_78       Float64     0            [[3]]</span>
+<a id="__codelineno-5-430" name="__codelineno-5-430" href="#__codelineno-5-430"></a><span class="go">  nCoV-2019_79       Float64     0            [[3]]</span>
+<a id="__codelineno-5-431" name="__codelineno-5-431" href="#__codelineno-5-431"></a><span class="go">  nCoV-2019_80       Float64     0            [[3]]</span>
+<a id="__codelineno-5-432" name="__codelineno-5-432" href="#__codelineno-5-432"></a><span class="go">  nCoV-2019_81       Float64     0            [[3]]</span>
+<a id="__codelineno-5-433" name="__codelineno-5-433" href="#__codelineno-5-433"></a><span class="go">  nCoV-2019_82       Float64     0            [[3]]</span>
+<a id="__codelineno-5-434" name="__codelineno-5-434" href="#__codelineno-5-434"></a><span class="go">  nCoV-2019_83       Float64     0            [[3]]</span>
+<a id="__codelineno-5-435" name="__codelineno-5-435" href="#__codelineno-5-435"></a><span class="go">  nCoV-2019_84       Float64     0            [[3]]</span>
+<a id="__codelineno-5-436" name="__codelineno-5-436" href="#__codelineno-5-436"></a><span class="go">  nCoV-2019_85       Float64     0            [[3]]</span>
+<a id="__codelineno-5-437" name="__codelineno-5-437" href="#__codelineno-5-437"></a><span class="go">  nCoV-2019_86       Float64     0            [[3]]</span>
+<a id="__codelineno-5-438" name="__codelineno-5-438" href="#__codelineno-5-438"></a><span class="go">  nCoV-2019_87       Float64     0            [[3]]</span>
+<a id="__codelineno-5-439" name="__codelineno-5-439" href="#__codelineno-5-439"></a><span class="go">  nCoV-2019_88       Float64     0            [[3]]</span>
+<a id="__codelineno-5-440" name="__codelineno-5-440" href="#__codelineno-5-440"></a><span class="go">  nCoV-2019_89       Float64     0            [[3]]</span>
+<a id="__codelineno-5-441" name="__codelineno-5-441" href="#__codelineno-5-441"></a><span class="go">  nCoV-2019_90       Float64     0            [[3]]</span>
+<a id="__codelineno-5-442" name="__codelineno-5-442" href="#__codelineno-5-442"></a><span class="go">  nCoV-2019_91       Float64     0            [[3]]</span>
+<a id="__codelineno-5-443" name="__codelineno-5-443" href="#__codelineno-5-443"></a><span class="go">  nCoV-2019_92       Float64     0            [[3]]</span>
+<a id="__codelineno-5-444" name="__codelineno-5-444" href="#__codelineno-5-444"></a><span class="go">  nCoV-2019_93       Float64     0            [[3]]</span>
+<a id="__codelineno-5-445" name="__codelineno-5-445" href="#__codelineno-5-445"></a><span class="go">  nCoV-2019_94       Float64     0            [[3]]</span>
+<a id="__codelineno-5-446" name="__codelineno-5-446" href="#__codelineno-5-446"></a><span class="go">  nCoV-2019_95       Float64     0            [[3]]</span>
+<a id="__codelineno-5-447" name="__codelineno-5-447" href="#__codelineno-5-447"></a><span class="go">  nCoV-2019_96       Float64     0            [[3]]</span>
+<a id="__codelineno-5-448" name="__codelineno-5-448" href="#__codelineno-5-448"></a><span class="go">  nCoV-2019_97       Float64     0            [[3]]</span>
+<a id="__codelineno-5-449" name="__codelineno-5-449" href="#__codelineno-5-449"></a><span class="go">  nCoV-2019_98       Float64     0            [[3]]</span>
+<a id="__codelineno-5-450" name="__codelineno-5-450" href="#__codelineno-5-450"></a><span class="go">  depictio_run_id    String      0            [[3]]</span>
+<a id="__codelineno-5-451" name="__codelineno-5-451" href="#__codelineno-5-451"></a><span class="go">  aggregation_time   String      0            [[3]]</span>
+<a id="__codelineno-5-452" name="__codelineno-5-452" href="#__codelineno-5-452"></a><span class="go">                                              [[3]]</span>
+<a id="__codelineno-5-453" name="__codelineno-5-453" href="#__codelineno-5-453"></a><span class="go">•   ↪ Processing Data Collection: oncoplot_canonical - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-454" name="__codelineno-5-454" href="#__codelineno-5-454"></a><span class="go">• Running recipe: nf-core/viralrecon/oncoplot_canonical.py [[3]]</span>
+<a id="__codelineno-5-455" name="__codelineno-5-455" href="#__codelineno-5-455"></a><span class="go">• Recipe data dir: /Users/you/depictio-workshop/viralrecon [[3]]</span>
+<a id="__codelineno-5-456" name="__codelineno-5-456" href="#__codelineno-5-456"></a><span class="go">✓ Recipe 'nf-core/viralrecon/oncoplot_canonical.py' produced 28 rows, written to Delta Lake [[3]]</span>
+<a id="__codelineno-5-457" name="__codelineno-5-457" href="#__codelineno-5-457"></a><span class="go">•   ↪ Processing Data Collection: complex_heatmap_canonical - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-458" name="__codelineno-5-458" href="#__codelineno-5-458"></a><span class="go">• Running recipe: mosdepth/complex_heatmap_canonical.py [[3]]</span>
+<a id="__codelineno-5-459" name="__codelineno-5-459" href="#__codelineno-5-459"></a><span class="go">• Recipe data dir: /Users/you/depictio-workshop/viralrecon [[3]]</span>
+<a id="__codelineno-5-460" name="__codelineno-5-460" href="#__codelineno-5-460"></a><span class="go">✓ Recipe 'mosdepth/complex_heatmap_canonical.py' produced 3 rows, written to Delta Lake [[3]]</span>
+<a id="__codelineno-5-461" name="__codelineno-5-461" href="#__codelineno-5-461"></a><span class="go">•   ↪ Processing Data Collection: coverage_track_canonical - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-462" name="__codelineno-5-462" href="#__codelineno-5-462"></a><span class="go">• Running recipe: mosdepth/coverage_track_canonical.py [[3]]</span>
+<a id="__codelineno-5-463" name="__codelineno-5-463" href="#__codelineno-5-463"></a><span class="go">• Recipe data dir: /Users/you/depictio-workshop/viralrecon [[3]]</span>
+<a id="__codelineno-5-464" name="__codelineno-5-464" href="#__codelineno-5-464"></a><span class="go">✓ Recipe 'mosdepth/coverage_track_canonical.py' produced 450 rows, written to Delta Lake [[3]]</span>
+<a id="__codelineno-5-465" name="__codelineno-5-465" href="#__codelineno-5-465"></a><span class="go">•   ↪ Processing Data Collection: sankey_canonical - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-466" name="__codelineno-5-466" href="#__codelineno-5-466"></a><span class="go">• Running recipe: nf-core/viralrecon/sankey_canonical.py [[3]]</span>
+<a id="__codelineno-5-467" name="__codelineno-5-467" href="#__codelineno-5-467"></a><span class="go">• Recipe data dir: /Users/you/depictio-workshop/viralrecon [[3]]</span>
+<a id="__codelineno-5-468" name="__codelineno-5-468" href="#__codelineno-5-468"></a><span class="go">✓ Recipe 'nf-core/viralrecon/sankey_canonical.py' produced 3 rows, written to Delta Lake [[3]]</span>
+<a id="__codelineno-5-469" name="__codelineno-5-469" href="#__codelineno-5-469"></a><span class="go">•   ↪ Processing Data Collection: upset_canonical - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-470" name="__codelineno-5-470" href="#__codelineno-5-470"></a><span class="go">• Running recipe: nf-core/viralrecon/upset_canonical.py [[3]]</span>
+<a id="__codelineno-5-471" name="__codelineno-5-471" href="#__codelineno-5-471"></a><span class="go">• Recipe data dir: /Users/you/depictio-workshop/viralrecon [[3]]</span>
+<a id="__codelineno-5-472" name="__codelineno-5-472" href="#__codelineno-5-472"></a><span class="go">✓ Recipe 'nf-core/viralrecon/upset_canonical.py' produced 14 rows, written to Delta Lake [[3]]</span>
+<a id="__codelineno-5-473" name="__codelineno-5-473" href="#__codelineno-5-473"></a><span class="go">•   ↪ Processing Data Collection: variant_feature_matrix_canonical - type table - metatype Aggregated [[3]]</span>
+<a id="__codelineno-5-474" name="__codelineno-5-474" href="#__codelineno-5-474"></a><span class="go">• Running recipe: nf-core/viralrecon/variant_feature_matrix_canonical.py [[3]]</span>
+<a id="__codelineno-5-475" name="__codelineno-5-475" href="#__codelineno-5-475"></a><span class="go">• Recipe data dir: /Users/you/depictio-workshop/viralrecon [[3]]</span>
+<a id="__codelineno-5-476" name="__codelineno-5-476" href="#__codelineno-5-476"></a><span class="go">✓ Recipe 'nf-core/viralrecon/variant_feature_matrix_canonical.py' produced 3 rows, written to Delta Lake [[3]]</span>
+<a id="__codelineno-5-477" name="__codelineno-5-477" href="#__codelineno-5-477"></a><span class="go">✓ Data collection 'multiqc_data' processed successfully. Processed 1 MultiQC files and created 1 individual reports [[3]]</span>
+<a id="__codelineno-5-478" name="__codelineno-5-478" href="#__codelineno-5-478"></a><span class="go">✓ Data collection 'summary_metrics' processed successfully. Recipe 'multiqc/summary_metrics.py' result written to s3://…. [[3]]</span>
+<a id="__codelineno-5-479" name="__codelineno-5-479" href="#__codelineno-5-479"></a><span class="go">✓ Data collection 'variants_long' processed successfully. Recipe 'nf-core/viralrecon/variants_long.py' result written to s3://…. [[3]]</span>
+<a id="__codelineno-5-480" name="__codelineno-5-480" href="#__codelineno-5-480"></a><span class="go">✓ Data collection 'tracks' processed successfully. Recipe 'nf-core/viralrecon/tracks.py' result written to s3://…. [[3]]</span>
+<a id="__codelineno-5-481" name="__codelineno-5-481" href="#__codelineno-5-481"></a><span class="go">✓ Data collection 'pangolin_lineages' processed successfully. Recipe 'pangolin/pangolin_lineages.py' result written to s3://…. [[3]]</span>
+<a id="__codelineno-5-482" name="__codelineno-5-482" href="#__codelineno-5-482"></a><span class="go">✓ Data collection 'nextclade_results' processed successfully. Recipe 'nextclade/nextclade_results.py' result written to s3://…. [[3]]</span>
+<a id="__codelineno-5-483" name="__codelineno-5-483" href="#__codelineno-5-483"></a><span class="go">✓ Data collection 'mosdepth_amplicon_coverage' processed successfully. Aggregated data written to s3://…. [[3]]</span>
+<a id="__codelineno-5-484" name="__codelineno-5-484" href="#__codelineno-5-484"></a><span class="go">✓ Data collection 'mosdepth_genome_coverage' processed successfully. Aggregated data written to s3://…. [[3]]</span>
+<a id="__codelineno-5-485" name="__codelineno-5-485" href="#__codelineno-5-485"></a><span class="go">✓ Data collection 'mosdepth_amplicon_heatmap' processed successfully. Aggregated data written to s3://…. [[3]]</span>
+<a id="__codelineno-5-486" name="__codelineno-5-486" href="#__codelineno-5-486"></a><span class="go">✓ Data collection 'oncoplot_canonical' processed successfully. Recipe 'nf-core/viralrecon/oncoplot_canonical.py' result written to s3://…. [[3]]</span>
+<a id="__codelineno-5-487" name="__codelineno-5-487" href="#__codelineno-5-487"></a><span class="go">✓ Data collection 'complex_heatmap_canonical' processed successfully. Recipe 'mosdepth/complex_heatmap_canonical.py' result written to s3://…. [[3]]</span>
+<a id="__codelineno-5-488" name="__codelineno-5-488" href="#__codelineno-5-488"></a><span class="go">✓ Data collection 'coverage_track_canonical' processed successfully. Recipe 'mosdepth/coverage_track_canonical.py' result written to s3://…. [[3]]</span>
+<a id="__codelineno-5-489" name="__codelineno-5-489" href="#__codelineno-5-489"></a><span class="go">✓ Data collection 'sankey_canonical' processed successfully. Recipe 'nf-core/viralrecon/sankey_canonical.py' result written to s3://…. [[3]]</span>
+<a id="__codelineno-5-490" name="__codelineno-5-490" href="#__codelineno-5-490"></a><span class="go">✓ Data collection 'upset_canonical' processed successfully. Recipe 'nf-core/viralrecon/upset_canonical.py' result written to s3://…. [[3]]</span>
+<a id="__codelineno-5-491" name="__codelineno-5-491" href="#__codelineno-5-491"></a><span class="go">✓ Data collection 'variant_feature_matrix_canonical' processed successfully. Recipe 'nf-core/viralrecon/variant_feature_matrix_canonical.py' result written to s3://…. [[3]]</span>
+<a id="__codelineno-5-492" name="__codelineno-5-492" href="#__codelineno-5-492"></a><span class="go">✓ Workflow viralrecon processing completed [[3]]</span>
+<a id="__codelineno-5-493" name="__codelineno-5-493" href="#__codelineno-5-493"></a><span class="go">✓ Processing completed! Total data collections processed: 15 [[3]]</span>
+<a id="__codelineno-5-494" name="__codelineno-5-494" href="#__codelineno-5-494"></a><span class="go">✓ Data processing completed [[3]]</span>
+<a id="__codelineno-5-495" name="__codelineno-5-495" href="#__codelineno-5-495"></a><span class="go">╭─────────────────────────────────╮ [[4]]</span>
+<a id="__codelineno-5-496" name="__codelineno-5-496" href="#__codelineno-5-496"></a><span class="go">│ Step 7/8: Executing table joins │ [[4]]</span>
+<a id="__codelineno-5-497" name="__codelineno-5-497" href="#__codelineno-5-497"></a><span class="go">╰─────────────────────────────────╯ [[4]]</span>
+<a id="__codelineno-5-498" name="__codelineno-5-498" href="#__codelineno-5-498"></a><span class="go">• No joins defined in project config [[4]]</span>
+<a id="__codelineno-5-499" name="__codelineno-5-499" href="#__codelineno-5-499"></a><span class="go">╭────────────────────────────────╮ [[4]]</span>
+<a id="__codelineno-5-500" name="__codelineno-5-500" href="#__codelineno-5-500"></a><span class="go">│ Step 8/8: Importing dashboards │ [[4]]</span>
+<a id="__codelineno-5-501" name="__codelineno-5-501" href="#__codelineno-5-501"></a><span class="go">╰────────────────────────────────╯ [[4]]</span>
+<a id="__codelineno-5-502" name="__codelineno-5-502" href="#__codelineno-5-502"></a><span class="go">✓ Dashboard created: nf-core/viralrecon [[4]]</span>
+<a id="__codelineno-5-503" name="__codelineno-5-503" href="#__codelineno-5-503"></a><span class="go">•   View at: https://…/dashboard/… [[4]]</span>
+<a id="__codelineno-5-504" name="__codelineno-5-504" href="#__codelineno-5-504"></a><span class="go">✓ Dashboard import completed [[4]]</span>
+<a id="__codelineno-5-505" name="__codelineno-5-505" href="#__codelineno-5-505"></a><span class="go">╭───────────────────╮ [[4]]</span>
+<a id="__codelineno-5-506" name="__codelineno-5-506" href="#__codelineno-5-506"></a><span class="go">│ Ingestion summary │ [[4]]</span>
+<a id="__codelineno-5-507" name="__codelineno-5-507" href="#__codelineno-5-507"></a><span class="go">╰───────────────────╯ [[4]]</span>
+<a id="__codelineno-5-508" name="__codelineno-5-508" href="#__codelineno-5-508"></a><span class="go">• Project: https://…/projects/… [[4]]</span>
+<a id="__codelineno-5-509" name="__codelineno-5-509" href="#__codelineno-5-509"></a><span class="go">• Dashboard 'nf-core/viralrecon' created: https://…/dashboard/… [[4]]</span>
+<a id="__codelineno-5-510" name="__codelineno-5-510" href="#__codelineno-5-510"></a><span class="go">• Template used: nf-core/viralrecon/3.0.0 [[4]]</span>
+<a id="__codelineno-5-511" name="__codelineno-5-511" href="#__codelineno-5-511"></a><span class="go">✓ Ingestion completed successfully! (8/8 steps) [[4]]</span>
 </code></pre></div>
-<p>The two left are the SIDLE collections, for multi-region runs: this run has none, and they are optional.</p>
-<h2 id="ingest"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m8.84 12-4.92 4.92L2.5 15.5 5 13H0v-2h5L2.5 8.5l1.42-1.42zM12 3C8.59 3 5.68 4.07 4.53 5.57L5 6l1.03 1.07C6 7.05 6 7 6 7c0-.5 2.13-2 6-2s6 1.5 6 2-2.13 2-6 2c-2.62 0-4.42-.69-5.32-1.28l3.12 3.12c.7.1 1.44.16 2.2.16 2.39 0 4.53-.53 6-1.36v2.81c-1.3.95-3.58 1.55-6 1.55-.96 0-1.9-.1-2.76-.27l-1.65 1.64c1.32.4 2.82.63 4.41.63 2.28 0 4.39-.45 6-1.23V17c0 .5-2.13 2-6 2s-6-1.5-6-2v-.04L5 18l-.46.43C5.69 19.93 8.6 21 12 21c4.41 0 8-1.79 8-4V7c0-2.21-3.58-4-8-4"></path></svg></span> Step 3: ingest and open the dashboard<a class="headerlink" href="#ingest" title="Permanent link">¶</a></h2>
-<p>The same command without <code>--dry-run</code>, with <code>--var GROUP_COL=habitat</code> from challenge 2.1: the differential abundance of this run compares habitats.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp">$ </span>depictio<span class="w"> </span>ingest<span class="w"> </span>megatest/<span class="w"> </span>--var<span class="w"> </span><span class="nv">GROUP_COL</span><span class="o">=</span>habitat<span class="w"> </span>--project<span class="w"> </span>yourname-ampliseq
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="go">…</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="go">✓ Data collection 'taxonomy_composition' processed successfully. Recipe 'qiime2/taxonomy_composition.py' result written to s3://…</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="go">…</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="go">✓ Processing completed! Total data collections processed: 23 (2 optional skipped: sidle_reconstructed, sidle_reconstruction_qc)</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="go">…</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="go">• Project: https://…/projects/…</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="go">• Dashboard 'nf-core/ampliseq' created: https://…/dashboard/…</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="go">! Skipped 2 optional data collection(s), their inputs are absent from this run: sidle_reconstructed, sidle_reconstruction_qc</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="go">✓ Ingestion completed successfully! (8/8 steps)</span>
-</code></pre></div>
-<p>Each ✓ line is one table written to the server's storage; a recipe line names the script that computed it. Then the template's dashboard is created, and the CLI prints the addresses. Open the <strong>Project</strong> link:</p>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/ep4_project.webp" data-desc-position="bottom"><img alt="Your project: the pipeline and its version (1), 25 data collections (2), and the dashboard the template built (3)" class="ws-shot" src="../../../images/tutorials/workshop-cli/ep4_project.webp"></a></p>
-<p>From the project, open the <strong>nf-core/ampliseq</strong> dashboard (3).</p>
-<div class="admonition warning">
-<p class="admonition-title">Without <code>--var GROUP_COL=habitat</code></p>
-<p>The ingestion stops at <code>ma_canonical</code> with <em>Data processing failed</em>: always pass the variable for this run.</p>
 </div>
+<ol>
+<li><strong>Check and create</strong>: the template, the server, the storage, then the project is created on the server.</li>
+<li><strong>Scan</strong>: the files of <code>run_1</code> that the template reads as they are, counted per table.</li>
+<li><strong>Process</strong>: each table is computed and written to the server's storage. <code>--rich-tables</code> shows the MultiQC summary, then a preview and the statistics of each table.</li>
+<li><strong>The dashboard</strong>: the template's dashboard is created, and the CLI prints the addresses of the project and the dashboard.</li>
+</ol>
+<p>Open the <strong>Project</strong> link: the pipeline and its version, the run <code>run_1</code>, the 15 data collections, and the dashboard.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/ep2vr_project.jpg" data-desc-position="bottom"><img alt="Your project: nf-core/viralrecon 3.0.0, the run run_1, 15 data collections, and the nf-core/viralrecon dashboard" class="ws-shot" src="../../../images/tutorials/workshop-cli/ep2vr_project.jpg"></a></p>
+<p>Open the <strong>nf-core/viralrecon</strong> dashboard: eight tabs, from the quality of the run to the lineage of each sample. You work on it in episode 3.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/ep2vr_overview.jpg" data-desc-position="bottom"><img alt="The nf-core/viralrecon dashboard: the Overview tab, with the run, the six steps of the pipeline and the key figures" class="ws-shot" src="../../../images/tutorials/workshop-cli/ep2vr_overview.jpg"></a></p>
 <div class="admonition question">
 <p class="admonition-title">Check your understanding</p>
-<p>You run the same command twice, with and without <code>--dry-run</code>. What does the dry run change on the server? And why do you pass <code>--project</code> and <code>--var GROUP_COL=habitat</code>?</p>
+<p>You ran the same command twice, with and without <code>--dry-run</code>. What did the first one change on the server, and what did the second one create?</p>
 <details class="solution">
 <summary>Answer</summary>
-<p>Nothing: the dry run checks the same steps and sends nothing. <code>--project</code> names your project; without it, the template's default name is used, <em>Ampliseq Microbial Community Analysis</em>, which is also the name of the server's demo project. <code>--var GROUP_COL=habitat</code> sets the variable the CLI guessed wrong (<code>name</code>): without it, the ingestion stops at <code>ma_canonical</code>.</p>
+<p>The dry run changed nothing: it checks the same steps and sends nothing. The ingestion created the project <code>yourname-viralrecon</code>, wrote its 15 tables to the server's storage, and created its dashboard. Your files stay in <code>~/depictio-workshop/viralrecon</code>.</p>
 </details>
 </div>
 <div class="admonition keypoints">
 <p class="admonition-title">Key points</p>
 <ul>
-<li><code>depictio ingest &lt;folder&gt;</code> detects the pipeline and its version, and picks the template.</li>
+<li><code>depictio ingest &lt;folder&gt;</code> detects the pipeline and its version, and picks the template: no project file to write.</li>
 <li><code>--dry-run</code> shows what each data collection finds, without sending anything: read it first.</li>
-<li><code>--var</code> sets a template variable the CLI guessed wrong; <code>--project</code> names the project: always pass it.</li>
+<li><code>--project</code> names the project: always pass it. <code>--rich-tables</code> shows what each step does.</li>
 </ul>
 </div>
 <details class="note">
-<summary>Bonus · The run: an nf-core megatest</summary>
-<p>nf-core tests each release of a pipeline on a full-size dataset, on cloud computers, and publishes the results on the pipeline's website (the <strong>Results</strong> tab of <a href="https://nf-co.re/ampliseq/2.18.0">nf-co.re/ampliseq/2.18.0</a>). These runs are called <strong>megatests</strong>: real, public runs of a known version. The ampliseq 2.18.0 megatest sequenced 16S amplicons of 12 samples from soil, sediment and water. The browser course, episode 3, read the same run from its public storage.</p>
-<p>The full results are much larger: 13 folders, 3,557 files, 487 MB, with the trimming, denoising, FastQC, PICRUSt and placement outputs. The Depictio template reads only five parts of them, and <code>megatest.zip</code> (1.4 MB, 37 files) holds just those: <code>pipeline_info/</code>, <code>input/</code>, <code>multiqc/</code>, <code>overall_summary.tsv</code> and <code>qiime2/</code>. Nothing the template reads is left out, so you get the same tables as in the browser course.</p>
-<p>This is the run you unzipped in step 1. What each part of it holds, and what Depictio makes of it:</p>
+<summary>Bonus · What is in the run</summary>
+<p>The zip holds the part of a viralrecon run that the template reads, from a run of the pipeline's <code>test</code> profile: three SARS-CoV-2 samples, two paired-end and one single-end.</p>
 <table>
 <thead>
 <tr>
-<th>In <code>megatest/</code></th>
+<th>In <code>viralrecon/run_1/</code></th>
 <th>What the pipeline wrote</th>
-<th>What Depictio reads in it</th>
+<th>What Depictio makes of it</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>pipeline_info/</code></td>
-<td>the run's parameters (<code>params.json</code>) and the versions of its tools (<code>software_versions.yml</code>)</td>
-<td>which pipeline and which version this is; which options the run used</td>
-</tr>
-<tr>
-<td><code>input/</code></td>
-<td>the sample sheet and the sample metadata, <code>Metadata_full.tsv</code></td>
-<td>the <code>samplesheet</code> and <code>metadata</code> tables, and the columns to group samples by</td>
+<td>the run's parameters and the versions of its tools</td>
+<td>which pipeline and which version this is</td>
 </tr>
 <tr>
 <td><code>multiqc/</code></td>
-<td>the data of the MultiQC report: read quality, adapter trimming</td>
-<td>the <code>multiqc_data</code> table</td>
+<td>the MultiQC data and the summary of the variant calls</td>
+<td>the MultiQC tab, the run summary table</td>
 </tr>
 <tr>
-<td><code>overall_summary.tsv</code></td>
-<td>how many reads each sample keeps at each step</td>
-<td>the <code>read_tracking</code> table</td>
+<td><code>variants/bowtie2/</code></td>
+<td>the aligned reads (BAM, 12 % of the reads to keep the zip small) and the depth along the genome (mosdepth)</td>
+<td>the coverage tables, and the reads in the genome browser</td>
 </tr>
 <tr>
-<td><code>qiime2/</code></td>
-<td>taxonomy, diversity, differential abundance, the phylogenetic tree</td>
-<td>most of the other tables</td>
+<td><code>variants/ivar/</code></td>
+<td>the variants (VCF), their long table, the consensus genomes with their Pangolin lineage and Nextclade clade</td>
+<td>the variant tables, the lineage and clade tables, the variants in the genome browser</td>
 </tr>
 </tbody>
 </table>
-</details>
-<details class="note">
-<summary>Bonus · The dry run, line by line</summary>
-<p>The full output of the first dry run, shortened: … marks the lines left out.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp">$ </span>depictio<span class="w"> </span>ingest<span class="w"> </span>megatest/<span class="w"> </span>--project<span class="w"> </span>yourname-ampliseq<span class="w"> </span>--dry-run
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="go">• Detected nf-core/ampliseq 2.18.0 (nextflow, 20 tool(s)) [[1]]</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="go">✓ Auto-selected template: nf-core/ampliseq/2.18.0 [[1]]</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="go">…</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="go">                          Resolved template variables</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="go">╭───────────────────┬──────────────────────────────────────────────────────────╮</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="go">│ Variable          │ Value                                                    │ [[2]]</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="go">├───────────────────┼──────────────────────────────────────────────────────────┤</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="go">│ ANNOTATION_COLS   │ name,habitat,Riv_vs_Gro,Sed_vs_Soil                      │ [[2]]</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="go">│ GROUP_COL         │ name                                                     │ [[2]]</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="go">│ GROUP_COL_DISPLAY │ Name                                                     │ [[2]]</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="go">│ METADATA_ID_COL   │ ID                                                       │ [[2]]</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="go">╰───────────────────┴──────────────────────────────────────────────────────────╯</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="go">…</span>
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="go">                     Data collections under this data root</span>
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="go">╭──────────────────────────────────────┬────────┬───────────┬───────┬─────────╮</span>
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="go">│ Data collection                      │ Kind   │ Mode      │ Files │ Status  │ [[3]]</span>
-<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="go">├──────────────────────────────────────┼────────┼───────────┼───────┼─────────┤</span>
-<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="go">│ multiqc_data                         │ scan   │ recursive │ 1     │ ok      │ [[3]]</span>
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="go">│ samplesheet                          │ scan   │ single    │ 1     │ ok      │ [[3]]</span>
-<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="go">│ metadata                             │ scan   │ single    │ 1     │ ok      │ [[3]]</span>
-<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="go">│ …                                    │        │           │       │         │ [[3]]</span>
-<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="go">│ taxonomy_composition                 │ recipe │ -         │ 1     │ ok      │ [[3]]</span>
-<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="go">│ ancombc_results                      │ recipe │ -         │ 0     │ missing │ [[3]]</span>
-<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="go">│ ma_canonical                         │ recipe │ -         │ 1     │ missing │ [[3]]</span>
-<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="go">│ sidle_reconstructed                  │ recipe │ -         │ 0     │ missing │ [[3]]</span>
-<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="go">│ sidle_reconstruction_qc              │ recipe │ -         │ 0     │ missing │ [[3]]</span>
-<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="go">╰──────────────────────────────────────┴────────┴───────────┴───────┴─────────╯</span>
-<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="go">! Sources not found under this data root: [[4]]</span>
-<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="go">! ancombc_results: qiime2/ancombc/differentials/Category-name-level-3/lfc_slice*.csv, qiime2/ancombc/differentials/Cat… [[4]]</span>
-<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="go">! ma_canonical: collection 'ancombc_results' [[4]]</span>
-<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="go">! sidle_reconstructed: sidle/reconstructed/reconstructed_merged.tsv [[4]]</span>
-<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="go">! sidle_reconstruction_qc: sidle/DB/3_reconstructed/reconstruction_summary/metadata.tsv [[4]]</span>
-<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="go">! 21 data collection(s) will ingest, 0 empty, 4 missing sources [[4]]</span>
-<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="go">…</span>
-<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a><span class="go">✓ Dry run complete (8/8 steps): the configuration is valid, and nothing was changed.</span>
-</code></pre></div>
-<p>Read it from the top:</p>
-<ol>
-<li><strong>Detected nf-core/ampliseq 2.18.0</strong>: the CLI read <code>pipeline_info/</code> and picked the template of that pipeline and version.</li>
-<li><strong>Resolved template variables</strong>: the template has blanks the run fills in. <code>GROUP_COL</code> is the column of the sample metadata used to compare groups of samples; the CLI guessed <code>name</code>, the name of each sample: a group of one sample each, wrong for this run.</li>
-<li><strong>Data collections under this data root</strong>: one line per table of the template, with the number of files it found. A <code>scan</code> table is a file read as it is; a <code>recipe</code> table is computed from one or more files of the run by a script that ships with the template (<code>taxonomy_composition</code> is built from the taxonomy tables in <code>qiime2/</code>).</li>
-<li><strong>4 missing sources</strong>: four tables found no file. The <code>!</code> lines say which file each one looked for. Two of them, <code>sidle_reconstructed</code> and <code>sidle_reconstruction_qc</code>, are optional: SIDLE rebuilds one profile from several amplified regions, and this run has a single region, so there is nothing to find and the ingest skips them with a message. Why the other two, <code>ancombc_results</code> and <code>ma_canonical</code>, find nothing is challenge 2.1.</li>
-</ol>
-</details>
-<details class="note">
-<summary>Bonus · Challenge 2.2: the same project as in the browser?</summary>
-<p>Open your project in the browser, <strong>Projects → yourname-ampliseq</strong>. How many data collections and links does it have? How many tabs has its dashboard? Compare with episode 3 of the browser course.</p>
-<details class="solution">
-<summary>Solution</summary>
-<p>25 data collections and 21 links; the dashboard has 7 tabs: Overview, MultiQC, Alpha Diversity, Ordination &amp; Clustering, Community &amp; Diversity, Differential Abundance, Phylogeny. The browser course counted 23 and 19 from the template, before the tables you added there: the CLI keeps the two optional SIDLE collections, empty, and the two links that reach them. The run is named <code>megatest</code>, after the folder.</p>
-</details>
-</details>
-<details class="note">
-<summary>Bonus · More options of <code>depictio ingest</code></summary>
-<p><code>depictio ingest --help</code> lists the other options: <code>--template</code> to force a template, <code>--update-config</code> to refresh a project after you change something.</p>
+<p>Ask the catalog about the other tools: <code>depictio catalog info nextclade</code>, <code>depictio catalog info mosdepth</code>.</p>
 </details>
 <div class="ws-next">
-<p><a class="ws-help" href="../troubleshooting/#episode-2"><span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span></a>
-<a class="ws-go ws-ep3" href="../collaborate-and-export/"><span class="ws-k">Then</span><span class="ws-t">Collaborate and export</span></a></p>
+<p><a class="ws-go ws-ep3" href="../collaborate-and-export/"><span class="ws-k">Then</span><span class="ws-t">3. Collaborate and export</span></a></p>
 </div>
 
 
