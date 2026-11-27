@@ -15,9 +15,18 @@ glightbox: true
 </div>
 
 !!! overview "Overview"
-    **Objective**: read a dashboard someone shared with you. Check the run, narrow the dashboard to the samples you care about, and compare two groups.
+    **Questions**
 
-    The core of this page takes about 5 minutes to read. Everything else is in the **Bonus** blocks at the end: open them when you have time, or after the workshop.
+    - How do I check the quality of a run before reading its results?
+    - How do I narrow a dashboard to the samples I care about?
+    - How do I compare two groups of samples?
+
+    **Objectives**
+
+    - Open the Guide of a dashboard and use its **Show me** buttons.
+    - Find a MultiQC value with the dashboard search.
+    - Filter the dashboard on a habitat.
+    - Save two groups in **Analysis** mode and compare them.
 
 Open **nf-core/ampliseq** from **Dashboards**. You are a **reader**: you cannot change the dashboard or its data, and what you do changes only your own view.
 

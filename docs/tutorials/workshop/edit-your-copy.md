@@ -15,9 +15,16 @@ glightbox: true
 </div>
 
 !!! overview "Overview"
-    **Objective**: change a dashboard that someone shared with you, in your own copy: duplicate it, add a figure and save.
+    **Questions**
 
-    The core of this page takes about 5 minutes to read. The rest is in the **Bonus** blocks at the end.
+    - Can I change a dashboard someone shared with me?
+    - How do I add a figure, and keep it?
+
+    **Objectives**
+
+    - Duplicate a dashboard into a copy of your own.
+    - Open your copy in **Edit** mode and add a figure.
+    - Save it.
 
 The shared dashboard almost suits you. You cannot change it, since others use it as it is. You make a **copy**: the copy belongs to you, and you are its **owner**. As a **designer**, you change the dashboard, never the data.
 

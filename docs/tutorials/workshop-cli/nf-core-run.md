@@ -15,9 +15,16 @@ description: "Turn an nf-core/ampliseq results folder into a Depictio project wi
 </div>
 
 !!! overview "Overview"
-    **Objective**: send an nf-core run to Depictio from your terminal, with no project file: check what will happen with a dry run, then ingest it into a project of your own.
+    **Questions**
 
-    The core of this page takes about 5 minutes to read. The rest is in the **Bonus** blocks at the end.
+    - Do I have to write a project file for an nf-core run?
+    - How do I check what will happen before anything is sent?
+
+    **Objectives**
+
+    - Dry-run a run folder: the CLI finds the pipeline and its template.
+    - Ingest the run into a project of your own.
+    - Open the dashboard the template built.
 
 In episode 1 you described your own tables in the Project Builder. For a pipeline Depictio knows, a **template** writes it: the CLI recognises the pipeline and its version from the results folder, and brings the data collections, links and dashboards with it. This is the project of the browser course, episode 3, built here from the folder where the run is.
 

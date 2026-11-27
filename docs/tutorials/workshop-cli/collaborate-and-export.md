@@ -15,9 +15,18 @@ description: "Hands-on 3: on your copy of the nf-core/ampliseq dashboard, label 
 </div>
 
 !!! overview "Overview"
-    **Objective**: work with others on a dashboard, then hand it over as one file. Label samples, comment and annotate a figure, compare a component with an earlier version, and export the dashboard so that it opens without a server.
+    **Questions**
 
-    The core of this page takes about 5 minutes to read. The rest is in the **Bonus** blocks at the end.
+    - How do I label samples my own way, without changing the data?
+    - How do I discuss a figure with others?
+    - How do I hand a dashboard to someone who has no server?
+
+    **Objectives**
+
+    - Label samples in **Metadata** mode.
+    - Comment on a figure and annotate it.
+    - Compare a component with an earlier version.
+    - Export the dashboard as one HTML file.
 
 Work on your own copy of the nf-core/ampliseq dashboard from Day 1 (episode 2). If you have none, duplicate **nf-core/ampliseq** from the **Dashboards** page (**⋮**, then **Duplicate**) and rename the copy with your first name. The four steps can be done in any order.
 

@@ -15,7 +15,14 @@ glightbox: true
 </div>
 
 !!! overview "Overview"
-    **Objective**: find the dashboard of the nf-core pipeline you use, and read it as you read ampliseq in episode 1.
+    **Questions**
+
+    - Is there a dashboard for the pipeline I use?
+
+    **Objectives**
+
+    - Find the showcase dashboard of your nf-core pipeline.
+    - Read it as you read ampliseq in episode 1.
 
 In episode 3 you built the dashboard of one pipeline, nf-core/ampliseq, from its template. Depictio has a template for **42 nf-core pipelines**, and the **showcases** server shows what each one gives you: a dashboard per pipeline template, built on a test run. The instructor gives a short tour first, then you look for your own pipeline.
 

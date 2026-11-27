@@ -15,9 +15,16 @@ description: "Hands-on 1: create a project from your own tables with the Project
 </div>
 
 !!! overview "Overview"
-    **Objective**: turn your own tables into a project with the **Project Builder**, then **join** the two tables so one figure uses columns from both.
+    **Questions**
 
-    The core of this page takes about 5 minutes to read. The rest is in the **Bonus** blocks at the end.
+    - How do I turn my own tables into a project when no template exists?
+    - How do I plot columns from two tables in one figure?
+
+    **Objectives**
+
+    - Define two data collections in the **Project Builder**, preview them, create the project.
+    - Join the two tables on `individual_id` with **Add join**.
+    - Make one figure from the joined table.
 
 Yesterday the run had a template: Depictio knew what each file was. Most of your own data has none. The data here is the Palmer Penguins of the browser course: two field seasons, and in each season two tables, `physical_features.csv` (the measurements) and `demographic_data.csv` (who each bird is, with its `sex`). Both carry `individual_id`.
 

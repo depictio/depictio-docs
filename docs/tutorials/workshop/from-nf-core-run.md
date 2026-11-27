@@ -15,9 +15,15 @@ glightbox: true
 </div>
 
 !!! overview "Overview"
-    **Objective**: turn the results folder of an nf-core run, left in its bucket on S3, into a project and a dashboard, without uploading anything.
+    **Questions**
 
-    The core of this page takes about 5 minutes to read. The rest is in the **Bonus** blocks at the end.
+    - How do I turn the results of an nf-core run into a dashboard?
+    - Do I have to upload the files?
+
+    **Objectives**
+
+    - Name a project and point it at a run folder on S3.
+    - Check what the template finds, create the project and open its dashboard.
 
 A **run** is one execution of a pipeline. Here, nf-core/ampliseq 2.18.0 ran once and wrote its results in one folder on S3: you point Depictio at that folder, and it builds the project and its dashboard from it.
 

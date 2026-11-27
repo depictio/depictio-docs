@@ -117,6 +117,13 @@
   border-radius: 12px; border-top: 4px solid var(--ws, var(--md-default-fg-color--lightest)); transition: transform .2s, box-shadow .2s;
 }
 .md-typeset .grid.cards.ws-episodes > ul > li:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.08); }
+/* The generic card hover (cards.css) recolours the border and draws a top line in
+   --card-accent: give it the episode's colour, keep the top edge solid, no second line. */
+.md-typeset .grid.cards.ws-episodes > ul > li, .md-typeset .grid.cards.ws-data > ul > li { --card-accent: var(--ws); --card-ink: var(--ws); }
+.md-typeset .grid.cards.ws-episodes > ul > li::before, .md-typeset .grid.cards.ws-data > ul > li::before { display: none; }
+@media (hover: hover) {
+  .md-typeset .grid.cards.ws-episodes > ul > li:hover, .md-typeset .grid.cards.ws-data > ul > li:hover { border-top-color: var(--ws); }
+}
 .md-typeset .grid.cards.ws-episodes > ul > li:nth-child(1) { --ws: #7A5DC7; }
 .md-typeset .grid.cards.ws-episodes > ul > li:nth-child(2) { --ws: #6495ED; }
 .md-typeset .grid.cards.ws-episodes > ul > li:nth-child(3) { --ws: #9966CC; }
