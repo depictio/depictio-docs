@@ -101,7 +101,7 @@ nextflow run nf-core/ampliseq -r 2.18.0 -profile test,docker --outdir results \
 | `--depictio_enabled true/false` | Turns it on or off for one run |
 | `--depictio_project`, `--depictio_attach`, `--depictio_update` | The same as `--project`, `--attach-run`, `--update-config` |
 
-The CLI reads its server from `~/.depictio/CLI.yaml`, as in the workshop. See [Nextflow trigger](../../depictio-cli/nextflow-trigger.md).
+The CLI reads its server from `~/.depictio/CLI.yaml`, as in the workshop. See [Nextflow trigger](../../workflows/nextflow/trigger.md).
 
 ## :material-hammer-wrench: No template for your pipeline
 
