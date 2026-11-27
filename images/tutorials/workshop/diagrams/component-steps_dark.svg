@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="540" viewBox="0 0 1440 540">
+  <rect width="1440" height="540" fill="#1f2129"/>
+  <defs><filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.12"/></filter></defs>
+  <text x="46.0" y="50.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" fill="#e3e3e3" text-anchor="start" font-weight="bold">Every component in three steps</text>
+  <text x="46.0" y="76.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#9aa0ac" text-anchor="start" font-weight="normal">the builder's own steps: Component type, Data source, Design; then Create component</text>
+  <g><rect x="40.0" y="105.0" width="430.0" height="390.0" rx="12" fill="#24272f" stroke="#585e6b" stroke-width="1.3"/></g>
+  <path d="M41.0,139.0 V117.0 Q41.0,106.0 52.0,106.0 H458.0 Q469.0,106.0 469.0,117.0 V139.0 Z" fill="#282b33"/>
+  <path d="M40.0,139.0 L470.0,139.0" fill="none" stroke="#585e6b" stroke-width="1" stroke-linecap="round"/>
+  <circle cx="58.0" cy="122.0" r="5" fill="#ff6b6b"/>
+  <circle cx="74.0" cy="122.0" r="5" fill="#fcc419"/>
+  <circle cx="90.0" cy="122.0" r="5" fill="#51cf66"/>
+  <circle cx="40.0" cy="105.0" r="14" fill="#3d99e9"/>
+  <text x="40.0" y="110.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2129" text-anchor="middle" font-weight="bold">1</text>
+  <text x="58.0" y="160.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="start" font-weight="normal">nf-core/ampliseq (copy)  ›  New component</text>
+  <circle cx="100" cy="192" r="13" fill="#3d99e9" stroke="#3d99e9" stroke-width="1.6"/>
+  <text x="100.0" y="197.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#1f2129" text-anchor="middle" font-weight="bold">1</text>
+  <text x="100.0" y="225.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#53a5ec" text-anchor="middle" font-weight="bold">Component type</text>
+  <path d="M118.0,192.0 L237.0,192.0" fill="none" stroke="#585e6b" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="255" cy="192" r="13" fill="#24272f" stroke="#585e6b" stroke-width="1.6"/>
+  <text x="255.0" y="197.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#9aa0ac" text-anchor="middle" font-weight="bold">2</text>
+  <text x="255.0" y="225.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="middle" font-weight="normal">Data source</text>
+  <path d="M273.0,192.0 L392.0,192.0" fill="none" stroke="#585e6b" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="410" cy="192" r="13" fill="#24272f" stroke="#585e6b" stroke-width="1.6"/>
+  <text x="410.0" y="197.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#9aa0ac" text-anchor="middle" font-weight="bold">3</text>
+  <text x="410.0" y="225.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="middle" font-weight="normal">Design</text>
+  <path d="M41.0,240.0 L469.0,240.0" fill="none" stroke="#282b33" stroke-width="1.2" stroke-linecap="round"/>
+  <g><rect x="505.0" y="105.0" width="430.0" height="390.0" rx="12" fill="#24272f" stroke="#585e6b" stroke-width="1.3"/></g>
+  <path d="M506.0,139.0 V117.0 Q506.0,106.0 517.0,106.0 H923.0 Q934.0,106.0 934.0,117.0 V139.0 Z" fill="#282b33"/>
+  <path d="M505.0,139.0 L935.0,139.0" fill="none" stroke="#585e6b" stroke-width="1" stroke-linecap="round"/>
+  <circle cx="523.0" cy="122.0" r="5" fill="#ff6b6b"/>
+  <circle cx="539.0" cy="122.0" r="5" fill="#fcc419"/>
+  <circle cx="555.0" cy="122.0" r="5" fill="#51cf66"/>
+  <circle cx="505.0" cy="105.0" r="14" fill="#3d99e9"/>
+  <text x="505.0" y="110.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2129" text-anchor="middle" font-weight="bold">2</text>
+  <text x="523.0" y="160.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="start" font-weight="normal">nf-core/ampliseq (copy)  ›  New component</text>
+  <circle cx="565" cy="192" r="13" fill="#3d99e9" stroke="#3d99e9" stroke-width="1.6"/>
+  <path transform="translate(557.0,184.0) scale(0.6667)" d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59z" fill="#1f2129"/>
+  <text x="565.0" y="225.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="middle" font-weight="normal">Component type</text>
+  <path d="M583.0,192.0 L702.0,192.0" fill="none" stroke="#3d99e9" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="720" cy="192" r="13" fill="#3d99e9" stroke="#3d99e9" stroke-width="1.6"/>
+  <text x="720.0" y="197.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#1f2129" text-anchor="middle" font-weight="bold">2</text>
+  <text x="720.0" y="225.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#53a5ec" text-anchor="middle" font-weight="bold">Data source</text>
+  <path d="M738.0,192.0 L857.0,192.0" fill="none" stroke="#585e6b" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="875" cy="192" r="13" fill="#24272f" stroke="#585e6b" stroke-width="1.6"/>
+  <text x="875.0" y="197.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#9aa0ac" text-anchor="middle" font-weight="bold">3</text>
+  <text x="875.0" y="225.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="middle" font-weight="normal">Design</text>
+  <path d="M506.0,240.0 L934.0,240.0" fill="none" stroke="#282b33" stroke-width="1.2" stroke-linecap="round"/>
+  <g><rect x="970.0" y="105.0" width="430.0" height="390.0" rx="12" fill="#24272f" stroke="#585e6b" stroke-width="1.3"/></g>
+  <path d="M971.0,139.0 V117.0 Q971.0,106.0 982.0,106.0 H1388.0 Q1399.0,106.0 1399.0,117.0 V139.0 Z" fill="#282b33"/>
+  <path d="M970.0,139.0 L1400.0,139.0" fill="none" stroke="#585e6b" stroke-width="1" stroke-linecap="round"/>
+  <circle cx="988.0" cy="122.0" r="5" fill="#ff6b6b"/>
+  <circle cx="1004.0" cy="122.0" r="5" fill="#fcc419"/>
+  <circle cx="1020.0" cy="122.0" r="5" fill="#51cf66"/>
+  <circle cx="970.0" cy="105.0" r="14" fill="#3d99e9"/>
+  <text x="970.0" y="110.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#1f2129" text-anchor="middle" font-weight="bold">3</text>
+  <text x="988.0" y="160.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="start" font-weight="normal">nf-core/ampliseq (copy)  ›  New component</text>
+  <circle cx="1030" cy="192" r="13" fill="#3d99e9" stroke="#3d99e9" stroke-width="1.6"/>
+  <path transform="translate(1022.0,184.0) scale(0.6667)" d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59z" fill="#1f2129"/>
+  <text x="1030.0" y="225.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="middle" font-weight="normal">Component type</text>
+  <path d="M1048.0,192.0 L1167.0,192.0" fill="none" stroke="#3d99e9" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="1185" cy="192" r="13" fill="#3d99e9" stroke="#3d99e9" stroke-width="1.6"/>
+  <path transform="translate(1177.0,184.0) scale(0.6667)" d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59z" fill="#1f2129"/>
+  <text x="1185.0" y="225.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="middle" font-weight="normal">Data source</text>
+  <path d="M1203.0,192.0 L1322.0,192.0" fill="none" stroke="#3d99e9" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="1340" cy="192" r="13" fill="#3d99e9" stroke="#3d99e9" stroke-width="1.6"/>
+  <text x="1340.0" y="197.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#1f2129" text-anchor="middle" font-weight="bold">3</text>
+  <text x="1340.0" y="225.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#53a5ec" text-anchor="middle" font-weight="bold">Design</text>
+  <path d="M971.0,240.0 L1399.0,240.0" fill="none" stroke="#282b33" stroke-width="1.2" stroke-linecap="round"/>
+  <rect x="62.0" y="254.0" width="122.0" height="76.0" rx="10" fill="#24272f" stroke="#4dabf7" stroke-width="2.4"/>
+  <rect x="106.0" y="265.0" width="34.0" height="34.0" rx="9.520000000000001" fill="#9966CC" stroke="none" stroke-width="0"/>
+  <path transform="translate(112.8,271.8) scale(0.8500)" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z" fill="#ffffff"/>
+  <text x="123.0" y="318.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="middle" font-weight="bold">Figure</text>
+  <rect x="194.0" y="254.0" width="122.0" height="76.0" rx="10" fill="#24272f" stroke="#585e6b" stroke-width="1.1"/>
+  <rect x="238.0" y="265.0" width="34.0" height="34.0" rx="9.520000000000001" fill="#45B8AC" stroke="none" stroke-width="0"/>
+  <path transform="translate(245.4,271.8) scale(1.2750)" d="M13.5 16h-12C.67 16 0 15.33 0 14.5v-13C0 .67.67 0 1.5 0h12c.83 0 1.5.67 1.5 1.5v13c0 .83-.67 1.5-1.5 1.5M1.5 1c-.28 0-.5.22-.5.5v13c0 .28.22.5.5.5h12c.28 0 .5-.22.5-.5v-13c0-.28-.22-.5-.5-.5zM7.41 12C9.07 12 10 10.8 10 9.46S8.93 7.1 7.61 7.06v-.07L9.7 5V4H5.25v1H8.5v.12L6.5 7v.88l.89-.03c.96 0 1.69.65 1.69 1.64s-.68 1.66-1.67 1.66c-.91 0-1.54-.63-1.57-1.45H5c0 1.02.81 2.3 2.41 2.3" fill="#ffffff"/>
+  <text x="255.0" y="318.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="middle" font-weight="bold">Card</text>
+  <rect x="326.0" y="254.0" width="122.0" height="76.0" rx="10" fill="#24272f" stroke="#585e6b" stroke-width="1.1"/>
+  <rect x="370.0" y="265.0" width="34.0" height="34.0" rx="9.520000000000001" fill="#8BC34A" stroke="none" stroke-width="0"/>
+  <path transform="translate(376.8,271.8) scale(0.8500)" d="M7.5 14.5c-1.58 0-2.903 1.06-3.337 2.5H2v2h2.163c.434 1.44 1.757 2.5 3.337 2.5s2.903-1.06 3.337-2.5H22v-2H10.837c-.434-1.44-1.757-2.5-3.337-2.5m0 5c-.827 0-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5S9 17.173 9 18s-.673 1.5-1.5 1.5m9-11c-1.58 0-2.903 1.06-3.337 2.5H2v2h11.163c.434 1.44 1.757 2.5 3.337 2.5s2.903-1.06 3.337-2.5H22v-2h-2.163c-.434-1.44-1.757-2.5-3.337-2.5m0 5c-.827 0-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5s1.5.673 1.5 1.5s-.673 1.5-1.5 1.5M12.837 5C12.403 3.56 11.08 2.5 9.5 2.5S6.597 3.56 6.163 5H2v2h4.163C6.597 8.44 7.92 9.5 9.5 9.5s2.903-1.06 3.337-2.5h9.288V5zM9.5 7.5C8.673 7.5 8 6.827 8 6s.673-1.5 1.5-1.5S11 5.173 11 6s-.673 1.5-1.5 1.5" fill="#ffffff"/>
+  <text x="387.0" y="318.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="middle" font-weight="bold">Interactive</text>
+  <rect x="62.0" y="340.0" width="122.0" height="76.0" rx="10" fill="#24272f" stroke="#585e6b" stroke-width="1.1"/>
+  <rect x="106.0" y="351.0" width="34.0" height="34.0" rx="9.520000000000001" fill="#6495ED" stroke="none" stroke-width="0"/>
+  <path transform="translate(112.8,357.8) scale(0.8500)" d="M2 3.75C2 2.784 2.784 2 3.75 2h16.5c.966 0 1.75.784 1.75 1.75v16.5A1.75 1.75 0 0 1 20.25 22H3.75A1.75 1.75 0 0 1 2 20.25ZM9 9v11.5h11.25a.25.25 0 0 0 .25-.25V9Zm11.5-1.5V3.75a.25.25 0 0 0-.25-.25H9v4ZM3.5 9v11.25c0 .138.112.25.25.25H7.5V9Zm4-1.5v-4H3.75a.25.25 0 0 0-.25.25V7.5Z" fill="#ffffff"/>
+  <text x="123.0" y="404.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="middle" font-weight="bold">Table</text>
+  <rect x="194.0" y="340.0" width="122.0" height="76.0" rx="10" fill="#24272f" stroke="#585e6b" stroke-width="1.1"/>
+  <g transform="translate(239.7,352.7) scale(0.12191)" fill="#ffffff"><path d="M46.6601 120.546C49.2801 81.0979 80.9701 49.4901 120.46 47.0102V0.943359C55.5001 3.50318 3.28008 55.6197 0.580078 120.546H46.6601Z"/><path d="M120.19 204.85C80.7401 202.23 49.1301 170.543 46.6501 131.055H0.580078C3.14008 196.011 55.2601 248.227 120.19 250.927V204.85Z"/><path d="M130.969 47.0202C170.419 49.6401 202.029 81.3279 204.509 120.816H250.579C248.019 55.8596 195.899 3.64318 130.969 0.943359V47.0202Z"/><path d="M250.579 204.85C211.129 202.23 179.519 170.543 177.039 131.055H130.969C133.529 196.011 185.649 248.227 250.579 250.927V204.85Z"/></g>
+  <text x="255.0" y="404.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="middle" font-weight="bold">MultiQC</text>
+  <rect x="326.0" y="340.0" width="122.0" height="76.0" rx="10" fill="#24272f" stroke="#585e6b" stroke-width="1.1"/>
+  <rect x="370.0" y="351.0" width="34.0" height="34.0" rx="9.520000000000001" fill="#E6779F" stroke="none" stroke-width="0"/>
+  <path transform="translate(376.8,357.8) scale(0.8500)" d="M20 5a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.11.89-2 2-2zM5 16h14l-4.5-6l-3.5 4.5l-2.5-3z" fill="#ffffff"/>
+  <text x="387.0" y="404.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="middle" font-weight="bold">Image</text>
+  <rect x="330.0" y="444.0" width="120.0" height="34.0" rx="8" fill="#959ca3" stroke="none" stroke-width="0"/>
+  <text x="390.0" y="466.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#1f2129" text-anchor="middle" font-weight="bold">Next Step</text>
+  <text x="527.0" y="269.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="start" font-weight="normal">Selected component</text>
+  <rect x="659.0" y="252.0" width="92.0" height="26.0" rx="13" fill="#9966CC" stroke="none" stroke-width="0"/>
+  <path transform="translate(669.5,257.5) scale(0.6250)" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z" fill="#ffffff"/>
+  <text x="717.0" y="270.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">Figure</text>
+  <text x="527.0" y="302.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="start" font-weight="bold">Data Collection</text>
+  <rect x="527.0" y="312.0" width="386.0" height="116.0" rx="8" fill="#24272f" stroke="#585e6b" stroke-width="1.1"/>
+  <path transform="translate(543.0,326.0) scale(0.6667)" d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z" fill="#2ec195"/>
+  <text x="567.0" y="339.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="start" font-weight="normal"><tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.4">alpha_rarefaction</tspan></text>
+  <rect x="533.0" y="353.0" width="374.0" height="32.0" rx="6" fill="#203853" stroke="none" stroke-width="0"/>
+  <path transform="translate(543.0,361.0) scale(0.6667)" d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z" fill="#2ec195"/>
+  <text x="567.0" y="374.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#53a5ec" text-anchor="start" font-weight="normal"><tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.4">ancombc_results</tspan></text>
+  <path transform="translate(543.0,396.0) scale(0.6667)" d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z" fill="#2ec195"/>
+  <text x="567.0" y="409.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="start" font-weight="normal"><tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.4">metadata</tspan></text>
+  <rect x="795.0" y="444.0" width="120.0" height="34.0" rx="8" fill="#959ca3" stroke="none" stroke-width="0"/>
+  <text x="855.0" y="466.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#1f2129" text-anchor="middle" font-weight="bold">Next Step</text>
+  <rect x="790.0" y="439.0" width="130.0" height="44.0" rx="12" fill="none" stroke="#3d99e9" stroke-width="2.5"/>
+  <text x="992.0" y="269.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="start" font-weight="normal">Selected component</text>
+  <rect x="1124.0" y="252.0" width="92.0" height="26.0" rx="13" fill="#9966CC" stroke="none" stroke-width="0"/>
+  <path transform="translate(1134.5,257.5) scale(0.6250)" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z" fill="#ffffff"/>
+  <text x="1182.0" y="270.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">Figure</text>
+  <text x="992.0" y="304.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="start" font-weight="bold">X axis</text>
+  <rect x="992.0" y="310.0" width="180.0" height="26.0" rx="6" fill="#24272f" stroke="#585e6b" stroke-width="1.1"/>
+  <text x="1002.0" y="328.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="start" font-weight="normal"><tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.4">lfc</tspan></text>
+  <text x="992.0" y="352.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="start" font-weight="bold">Y axis</text>
+  <rect x="992.0" y="358.0" width="180.0" height="26.0" rx="6" fill="#24272f" stroke="#585e6b" stroke-width="1.1"/>
+  <text x="1002.0" y="376.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="start" font-weight="normal"><tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.4">neg_log10_qval</tspan></text>
+  <text x="992.0" y="400.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="start" font-weight="bold">Color by</text>
+  <rect x="992.0" y="406.0" width="180.0" height="26.0" rx="6" fill="#24272f" stroke="#585e6b" stroke-width="1.1"/>
+  <text x="1002.0" y="424.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#e3e3e3" text-anchor="start" font-weight="normal"><tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.4">contrast</tspan></text>
+  <rect x="1190.0" y="290.0" width="190.0" height="140.0" rx="8" fill="#24272f" stroke="#585e6b" stroke-width="1.1"/>
+  <circle cx="1205.0" cy="313.0" r="3.6" fill="#228be6"/>
+  <circle cx="1211.2" cy="324.5" r="3.6" fill="#12b886"/>
+  <circle cx="1217.3" cy="334.8" r="3.6" fill="#fd7e14"/>
+  <circle cx="1223.5" cy="355.9" r="3.6" fill="#228be6"/>
+  <circle cx="1229.6" cy="363.7" r="3.6" fill="#12b886"/>
+  <circle cx="1235.8" cy="370.2" r="3.6" fill="#fd7e14"/>
+  <circle cx="1241.9" cy="387.6" r="3.6" fill="#228be6"/>
+  <circle cx="1248.1" cy="391.6" r="3.6" fill="#12b886"/>
+  <circle cx="1254.2" cy="394.5" r="3.6" fill="#fd7e14"/>
+  <circle cx="1260.4" cy="408.1" r="3.6" fill="#228be6"/>
+  <circle cx="1266.5" cy="408.4" r="3.6" fill="#12b886"/>
+  <circle cx="1272.7" cy="407.5" r="3.6" fill="#fd7e14"/>
+  <circle cx="1278.8" cy="417.4" r="3.6" fill="#228be6"/>
+  <circle cx="1285.0" cy="414.0" r="3.6" fill="#12b886"/>
+  <circle cx="1291.2" cy="409.4" r="3.6" fill="#fd7e14"/>
+  <circle cx="1297.3" cy="415.5" r="3.6" fill="#228be6"/>
+  <circle cx="1303.5" cy="408.4" r="3.6" fill="#12b886"/>
+  <circle cx="1309.6" cy="400.1" r="3.6" fill="#fd7e14"/>
+  <circle cx="1315.8" cy="402.5" r="3.6" fill="#228be6"/>
+  <circle cx="1321.9" cy="391.6" r="3.6" fill="#12b886"/>
+  <circle cx="1328.1" cy="379.6" r="3.6" fill="#fd7e14"/>
+  <circle cx="1334.2" cy="378.2" r="3.6" fill="#228be6"/>
+  <circle cx="1340.4" cy="363.7" r="3.6" fill="#12b886"/>
+  <circle cx="1346.5" cy="347.9" r="3.6" fill="#fd7e14"/>
+  <circle cx="1352.7" cy="342.8" r="3.6" fill="#228be6"/>
+  <circle cx="1358.8" cy="324.5" r="3.6" fill="#12b886"/>
+  <circle cx="1365.0" cy="305.0" r="3.6" fill="#fd7e14"/>
+  <rect x="1185.0" y="444.0" width="196.0" height="34.0" rx="8" fill="#57c86b" stroke="none" stroke-width="0"/>
+  <path transform="translate(1196.0,452.0) scale(0.7500)" d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59z" fill="#1f2129"/>
+  <text x="1300.0" y="466.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#1f2129" text-anchor="middle" font-weight="bold">Create component</text>
+  <rect x="1180.0" y="439.0" width="206.0" height="44.0" rx="12" fill="none" stroke="#3d99e9" stroke-width="2.5"/>
+  <path d="M472.0,300.0 L501.0,300.0" fill="none" stroke="#585e6b" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M501.0,300.0 L488.6,293.4" fill="none" stroke="#585e6b" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M501.0,300.0 L488.6,306.6" fill="none" stroke="#585e6b" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M937.0,300.0 L966.0,300.0" fill="none" stroke="#585e6b" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M966.0,300.0 L953.6,293.4" fill="none" stroke="#585e6b" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M966.0,300.0 L953.6,306.6" fill="none" stroke="#585e6b" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="1185.0" y="525.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">the component lands on the tab you are on</text>
+</svg>
