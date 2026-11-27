@@ -10,7 +10,7 @@
         <link rel="canonical" href="https://depictio.github.io/depictio-docs/v1.23.0/tutorials/workshop-cli/facilitators/">
       
       
-        <link rel="prev" href="../troubleshooting/">
+        <link rel="prev" href="../dashboard-as-code/">
       
       
         <link rel="next" href="../../../features/">
@@ -3303,8 +3303,6 @@
       
         
       
-        
-      
     
     
     
@@ -3564,34 +3562,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workshop/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workshop/facilitators/" class="md-nav__link">
         
   
@@ -3634,8 +3604,6 @@
       
         
           
-        
-      
         
       
         
@@ -3804,7 +3772,7 @@
   <span class="md-ellipsis">
     
   
-    3. Collaborate and export
+    3. Work on your dashboard, together
   
 
     
@@ -3995,34 +3963,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -8343,7 +8283,7 @@
 <tr>
 <td>10:35</td>
 <td>Episode 2: an nf-core run from the terminal, <strong>Hands-on 2</strong> (15 min)</td>
-<td><code>depictio ingest</code> on a run, with its template</td>
+<td><code>depictio catalog info</code>, then <code>depictio ingest</code> on a viralrecon run, dry run first</td>
 <td><a href="../nf-core-run/">2. An nf-core run from the terminal</a></td>
 </tr>
 <tr>
@@ -8354,9 +8294,9 @@
 </tr>
 <tr>
 <td>11:10</td>
-<td>Episode 3: collaborate and export (browser), <strong>Hands-on 3</strong> (15 min)</td>
-<td>On the learner's copy of the ampliseq dashboard: label in Metadata mode, comment and annotate, a component's History, export <strong>Dashboard only</strong> and open it offline</td>
-<td><a href="../collaborate-and-export/">3. Collaborate and export</a></td>
+<td>Episode 3: work on your dashboard, together (browser), <strong>Hands-on 3</strong> (15 min)</td>
+<td>On the learner's own nf-core/viralrecon dashboard from episode 2: a sample sheet and a label column in Metadata mode, comment and annotate, edit and compare versions, share the project, export <strong>Dashboard only</strong></td>
+<td><a href="../collaborate-and-export/">3. Work on your dashboard, together</a></td>
 </tr>
 <tr>
 <td>11:35</td>
@@ -8413,12 +8353,12 @@
 <p>Tell learners at the start that the server and everything on it are deleted after the session.</p>
 <div class="admonition danger">
 <p class="admonition-title">Version pins</p>
-<p>The pins read <code>==1.24.0</code>, the exact version of the server: learners check that <code>depictio --version</code> prints it. If the server is upgraded, even to a patch release, change every pin and that line of setup.md. A 1.21 CLI cannot read the <code>CLI.yaml</code> of a 1.22.0 to 1.22.2 server: every command after <code>depictio --version</code> fails with <em>s3_storage.browser_access: Extra inputs are not permitted</em>. Later servers leave that setting out of the file, and later CLIs skip keys they do not know with a warning, but the same version on both sides is the only setup the lesson was rehearsed with. The pins are in <a href="../setup/">Setup</a> (the uv and pip install lines, and the expected <code>depictio --version</code>), in <a href="../going-further/">Going further</a> (the <code>[local]</code> install, with uv and pip), and in this lesson's <a href="../troubleshooting/">Troubleshooting</a> (the MultiQC row).</p>
+<p>The pins read <code>==1.24.0</code>, the exact version of the server: learners check that <code>depictio --version</code> prints it. If the server is upgraded, even to a patch release, change every pin and that line of setup.md. A 1.21 CLI cannot read the <code>CLI.yaml</code> of a 1.22.0 to 1.22.2 server: every command after <code>depictio --version</code> fails with <em>s3_storage.browser_access: Extra inputs are not permitted</em>. Later servers leave that setting out of the file, and later CLIs skip keys they do not know with a warning, but the same version on both sides is the only setup the lesson was rehearsed with. The pins are in <a href="../setup/">Setup</a> (the uv and pip install lines, and the expected <code>depictio --version</code>), in <a href="../going-further/">Going further</a> (the <code>[local]</code> install, with uv and pip), and in this lesson's Troubleshooting (the MultiQC row).</p>
 </div>
 <h2 id="penguins-bucket"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 20c0-.55-.45-1-1-1h-1v-2h6c1.11 0 2-.89 2-2V7a2 2 0 0 0-2-2h-6l-2-2H5c-1.1 0-2 .9-2 2v10a2 2 0 0 0 2 2h6v2h-1c-.55 0-1 .45-1 1H2v2h7c0 .55.45 1 1 1h4c.55 0 1-.45 1-1h7v-2zM5 15V7h14v8z"></path></svg></span> The penguins folder for the Project Builder<a class="headerlink" href="#penguins-bucket" title="Permanent link">¶</a></h2>
 <p>Episode 1 reads a <strong>folder in a bucket</strong>, not files from a laptop. Before the day, upload the two season folders of <a href="../penguins-workshop.zip"><code>penguins-workshop.zip</code></a> (<code>seasons/season_2007/</code> and <code>seasons/season_2008/</code>, two CSV files each) to a bucket the server can reach, as <code>s3://&lt;workshop-bucket&gt;/penguins/</code>, and announce the location in the chat. If the bucket is private, give the endpoint, the access key and the secret too: the form asks for them and <strong>Test connection</strong> checks them. Replace the screenshot of step 1 on the episode page (it shows a local test endpoint) once the location is decided.</p>
 <p>The learner page says the location is in the chat: paste it there at the start of the hands-on. Tested on 1.24.0: the builder ingests both collections in about 4 s; <strong>Add join</strong> previews <em>223 rows → joined: 223 rows · 12 columns</em> and creates <code>joined_physical_features_demographic_data</code> in a few seconds. On 1.24.0 the builder's review step still says joins go through the YAML and <strong>Download YAML</strong> gives a template (<code>template:</code> block, <code>{DATA_ROOT}</code>): both are fixed in 1.24.1 (<a href="https://github.com/depictio/depictio/pull/1493">PR #1493</a>). If the server is still on 1.24.0, tell the room to use <strong>Add join</strong> on the project page.</p>
-<p>For episode 3, every learner needs a dashboard of their own to work on: their copy of <strong>nf-core/ampliseq</strong> from Day 1, or a duplicate made on the spot. The exports (<code>DEPICTIO_STATIC_EXPORT_ENABLED=true</code>) and viewers' comments (<code>DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT=true</code>) must be on, as on Day 1's server.</p>
+<p>For episode 3, every learner works on the <strong>nf-core/viralrecon</strong> project they ingested in episode 2: they own it. A learner whose ingestion failed duplicates the instructor's viralrecon dashboard instead. The exports (<code>DEPICTIO_STATIC_EXPORT_ENABLED=true</code>) and viewers' comments (<code>DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT=true</code>) must be on, as on Day 1's server.</p>
 <h2 id="files-learners-download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 5v6h1.17L12 13.17 9.83 11H11V5zm2-2H9v6H5l7 7 7-7h-4zm4 15H5v2h14z"></path></svg></span> Files learners download<a class="headerlink" href="#files-learners-download" title="Permanent link">¶</a></h2>
 <p>All are linked from the episode pages:</p>
 <table>
@@ -8435,7 +8375,11 @@
 </tr>
 <tr>
 <td>2</td>
-<td><a href="../megatest.zip"><code>megatest.zip</code></a>, 1.4 MB: the nf-core/ampliseq 2.18.0 megatest outputs (<code>input/</code>, <code>multiqc/</code>, <code>pipeline_info/</code>, <code>qiime2/</code>, <code>overall_summary.tsv</code>)</td>
+<td><a href="../viralrecon.zip"><code>viralrecon.zip</code></a>, 1.3 MB: the part of an nf-core/viralrecon 3.0.0 run (test profile, 3 samples) that the template reads, in <code>viralrecon/run_1/</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="../samplesheet.csv"><code>samplesheet.csv</code></a>: the sample sheet learners upload and link to label samples in Metadata mode</td>
 </tr>
 </tbody>
 </table>

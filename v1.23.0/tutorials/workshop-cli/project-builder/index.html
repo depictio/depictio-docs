@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Hands-on 1: create a project from your own tables with the Project Builder, in the browser, then join the two tables and draw one figure from both.">
+        <meta name="description" content="Hands-on 1: build a project and a dashboard from scratch in the browser. Three field seasons are three runs; join the two tables and draw a figure, a card, a table and a filter from both.">
       
       
       
@@ -3303,8 +3303,6 @@
       
         
       
-        
-      
     
     
     
@@ -3564,34 +3562,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workshop/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workshop/facilitators/" class="md-nav__link">
         
   
@@ -3634,8 +3604,6 @@
       
         
           
-        
-      
         
       
         
@@ -3814,10 +3782,21 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: tell Depictio that each folder is a run
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#collections" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: two collections, then create
+        Step 3: two collections, then create
       
     </span>
   </a>
@@ -3828,7 +3807,7 @@
   <a href="#join" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: join the two tables
+        Step 4: join the two tables
       
     </span>
   </a>
@@ -3839,7 +3818,7 @@
   <a href="#figure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: one figure from both tables
+        Step 5: a dashboard with four components
       
     </span>
   </a>
@@ -3897,7 +3876,7 @@
   <span class="md-ellipsis">
     
   
-    3. Collaborate and export
+    3. Work on your dashboard, together
   
 
     
@@ -4088,34 +4067,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -8189,10 +8140,21 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: tell Depictio that each folder is a run
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#collections" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: two collections, then create
+        Step 3: two collections, then create
       
     </span>
   </a>
@@ -8203,7 +8165,7 @@
   <a href="#join" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: join the two tables
+        Step 4: join the two tables
       
     </span>
   </a>
@@ -8214,7 +8176,7 @@
   <a href="#figure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: one figure from both tables
+        Step 5: a dashboard with four components
       
     </span>
   </a>
@@ -8243,146 +8205,182 @@
 
 <h1 id="1-your-own-tables-no-template">1. Your own tables, no template<a class="headerlink" href="#1-your-own-tables-no-template" title="Permanent link">¶</a></h1>
 <div class="ws-strip">
-<p><a class="ws-ep0" href="../setup/"><strong>0</strong> Setup</a> <a class="ws-ep1 ws-here" href="./"><strong>1</strong> Your tables</a> <a class="ws-ep2" href="../nf-core-run/"><strong>2</strong> nf-core run</a> <a class="ws-ep3" href="../collaborate-and-export/"><strong>3</strong> Collaborate</a> <a class="ws-ep4" href="../going-further/"><strong>+</strong> Going further</a></p>
+<p><a class="ws-ep0" href="../setup/"><strong>0</strong> Setup</a> <a class="ws-ep1 ws-here" href="./"><strong>1</strong> Your tables</a> <a class="ws-ep2" href="../nf-core-run/"><strong>2</strong> nf-core run</a> <a class="ws-ep3" href="../collaborate-and-export/"><strong>3</strong> Together</a> <a class="ws-ep4" href="../going-further/"><strong>+</strong> Going further</a></p>
 </div>
 <div class="ws-meta ws-ep1">
-<p><span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19V5H5v14zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-8 4h2v4h4v2h-4v4h-2v-4H7v-2h4z"></path></svg></span> <strong>Creator</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2s.06-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.92 7.92 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8 8 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.7 15.7 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2"></path></svg></span> <strong>In the browser</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 16c0 1.72-.63 3.3-1.66 4.5.41.39.66.91.66 1.5H6c0-.59.25-1.11.66-1.5A6.9 6.9 0 0 1 5 16H3c0-1.25.57-2.36 1.46-3.09l.01-.02A6 6 0 0 0 7 8V7a5 5 0 0 1 5-5 5 5 0 0 1 5 5v1c0 2 1 3.81 2.53 4.89l.01.02c.89.73 1.46 1.84 1.46 3.09zm-3 0a4 4 0 0 0-4-4 4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4m-6-7 2 1.5L14 9l-2-1.5zm0-4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4 0a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1"></path></svg></span> <strong>Palmer Penguins, two seasons</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a7 7 0 0 1-7-7 7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7m7.03-12.61 1.42-1.42c-.45-.51-.9-.97-1.41-1.41L17.62 6c-1.55-1.26-3.5-2-5.62-2a9 9 0 0 0-9 9 9 9 0 0 0 9 9c5 0 9-4.03 9-9 0-2.12-.74-4.07-1.97-5.61M11 14h2V8h-2m4-7H9v2h6z"></path></svg></span> <strong>Hands-on 1 · 10 min</strong></span></p>
+<p><span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19V5H5v14zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-8 4h2v4h4v2h-4v4h-2v-4H7v-2h4z"></path></svg></span> <strong>Creator</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2s.06-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.92 7.92 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8 8 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.7 15.7 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2"></path></svg></span> <strong>In the browser</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 16c0 1.72-.63 3.3-1.66 4.5.41.39.66.91.66 1.5H6c0-.59.25-1.11.66-1.5A6.9 6.9 0 0 1 5 16H3c0-1.25.57-2.36 1.46-3.09l.01-.02A6 6 0 0 0 7 8V7a5 5 0 0 1 5-5 5 5 0 0 1 5 5v1c0 2 1 3.81 2.53 4.89l.01.02c.89.73 1.46 1.84 1.46 3.09zm-3 0a4 4 0 0 0-4-4 4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4m-6-7 2 1.5L14 9l-2-1.5zm0-4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m4 0a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1"></path></svg></span> <strong>Palmer Penguins, three seasons</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a7 7 0 0 1-7-7 7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7m7.03-12.61 1.42-1.42c-.45-.51-.9-.97-1.41-1.41L17.62 6c-1.55-1.26-3.5-2-5.62-2a9 9 0 0 0-9 9 9 9 0 0 0 9 9c5 0 9-4.03 9-9 0-2.12-.74-4.07-1.97-5.61M11 14h2V8h-2m4-7H9v2h6z"></path></svg></span> <strong>Hands-on 1 · 10 min</strong></span></p>
 </div>
 <div class="admonition overview">
 <p class="admonition-title">Overview</p>
 <p><strong>Questions</strong></p>
 <ul>
-<li>How do I turn my own tables into a project when no template exists?</li>
-<li>How do I plot columns from two tables in one figure?</li>
+<li>How do I build a project and a dashboard from scratch, when no template exists for my data?</li>
+<li>How do I tell Depictio that each folder is one run?</li>
+<li>How do I use columns from two tables in one dashboard?</li>
 </ul>
 <p><strong>Objectives</strong></p>
 <ul>
-<li>Define two data collections in the <strong>Project Builder</strong>, preview them, create the project.</li>
+<li>Define two data collections over three run folders in the <strong>Project Builder</strong>, preview them, create the project.</li>
 <li>Join the two tables on <code>individual_id</code> with <strong>Add join</strong>.</li>
-<li>Make one figure from the joined table.</li>
+<li>Build a dashboard of four components: a card, a figure, a table and a filter.</li>
 </ul>
 </div>
-<p>Yesterday the run had a template: Depictio knew what each file was. Most of your own data has none. The data here is the Palmer Penguins of the browser course: two field seasons, and in each season two tables, <code>physical_features.csv</code> (the measurements) and <code>demographic_data.csv</code> (who each bird is, with its <code>sex</code>). Both carry <code>individual_id</code>.</p>
-<p>The Project Builder reads a <strong>folder in a bucket</strong> (<code>s3://…</code>), not files from your laptop. The location of the penguins folder is given in the chat.</p>
+<p>Before you use the command line, you build a project and a dashboard <strong>from scratch</strong>, with no template: the way you would start for a workflow that Depictio does not know yet.</p>
+<p>The data is the Palmer Penguins of the browser course. Each field season is <strong>one run folder</strong>, just as a pipeline writes one folder per run: <code>season_2007</code>, <code>season_2008</code> and <code>season_2009</code>. In each run there are two tables: <code>physical_features.csv</code> (the measurements) and <code>demographic_data.csv</code> (who each bird is, with its <code>sex</code>). Both carry <code>individual_id</code>. Together: 342 penguins.</p>
+<p>The Project Builder reads a <strong>folder in a bucket</strong> (<code>s3://…</code>), not files from your laptop. The location of the penguins folder is given in the chat; below it is written <code>s3://&lt;workshop-bucket&gt;/penguins</code>.</p>
 <h2 id="source"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 12c2.5 0 4.5 2 4.5 4.5 0 .88-.25 1.71-.69 2.4l3.08 3.1L22 23.39l-3.12-3.07c-.69.43-1.51.68-2.38.68-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5m0 2a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5M19 8H3v10h7.17c.17.72.46 1.39.83 2H3a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8a2 2 0 0 1 2 2v3.81c-.58-.55-1.25-1-2-1.31z"></path></svg></span> Hands-on 1 · Step 1: the source and the project<a class="headerlink" href="#source" title="Permanent link">¶</a></h2>
 <ol>
 <li>Open <strong>Projects</strong>, <strong>New project</strong>, <strong>Add data</strong>, pick <strong>2 Custom workflows</strong>, then <strong>Open the Project Builder</strong> (or open <code>/projects/build</code> on the server).</li>
-<li>Under <strong>Data root</strong>, paste the <code>s3://</code> location from the chat. If the switch <strong>This bucket needs credentials</strong> turns on, fill in the <strong>Endpoint</strong>, <strong>Access key</strong> and <strong>Secret</strong> from the chat and click <strong>Test connection</strong>. Depictio lists the folder: <em>2 folders, 0 files at the top</em>.</li>
+<li>Under <strong>Data root</strong>, paste <code>s3://&lt;workshop-bucket&gt;/penguins</code>. If the switch <strong>This bucket needs credentials</strong> turns on, fill in the <strong>Endpoint</strong>, <strong>Access key</strong> and <strong>Secret</strong> from the chat and click <strong>Test connection</strong>. It reads <em>Connected</em>, then Depictio lists the folder: <em>3 folders, 0 files at the top</em>. The three folders are the three runs.</li>
 <li>Under <strong>Project</strong>, give a <strong>Project name</strong> of <strong>your own</strong> (it must be unique on the server), leave <strong>Public project</strong> off, and click <strong>Next</strong>.</li>
 </ol>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb_penguins_1_source.jpg" data-desc-position="bottom"><img alt="Project Builder, step 1: the data root and its credentials with Test connection, Connected, the folder found (2 folders, 0 files at the top), then the project name" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb_penguins_1_source.jpg"></a></p>
-<!-- TODO: retake this screenshot with the workshop bucket once its location is decided. -->
-
-<h2 id="collections"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.3 17.89c1.32-2.1.7-4.89-1.41-6.21a4.52 4.52 0 0 0-6.21 1.41C10.36 15.2 11 18 13.09 19.3c1.47.92 3.33.92 4.8 0L21 22.39 22.39 21zm-2-.62c-.98.98-2.56.97-3.54 0-.97-.98-.97-2.56.01-3.54.97-.97 2.55-.97 3.53 0 .96.99.95 2.57-.03 3.54zM19 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5.81a6.3 6.3 0 0 1-1.31-2H5v-4h4.18c.16-.71.43-1.39.82-2H5V8h6v2.81a6.3 6.3 0 0 1 2-1.31V8h6v2a6.499 6.499 0 0 1 2 2V6a2 2 0 0 0-2-2"></path></svg></span> Step 2: two collections, then create<a class="headerlink" href="#collections" title="Permanent link">¶</a></h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb3_1_source.jpg" data-desc-position="bottom"><img alt="Project Builder, step 1: the data root and its credentials with Test connection, Connected, the folder found (3 folders, 0 files at the top), then the project name" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb3_1_source.jpg"></a></p>
+<h2 id="runs"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h6l2 2zM2 6v14h18v2H2a2 2 0 0 1-2-2V6zm4 0v10h16V6z"></path></svg></span> Step 2: tell Depictio that each folder is a run<a class="headerlink" href="#runs" title="Permanent link">¶</a></h2>
+<p>You are now on <strong>1. Describe the workflows</strong>. A workflow is the process behind the files; here, one called <code>main</code>.</p>
 <ol>
-<li>In the file tree, click <code>season_2007/physical_features.csv</code> (a preview shows its columns), then tick <code>season_2008/physical_features.csv</code>. The collection becomes a <strong>scan</strong> over both seasons: <em>MATCHES 2 FILES</em>.</li>
-<li>Change the tag to <code>physical_features</code>, keep the type <strong>Table</strong>, and click <strong>Add to main</strong>. Do the same for <code>demographic_data.csv</code>, with the tag <code>demographic_data</code>. Click <strong>Review &amp; create</strong>.</li>
-<li>The review reads <em>1 workflow · 2 data collections</em>. Click <strong>Preview the ingestion</strong> (a dry run: each collection is <em>Found</em>, 2 files), then <strong>Create project</strong>.</li>
-<li>The dialog <strong>Project created</strong> reads <em>Ingestion completed</em>; click <strong>Open the project</strong>. The project page lists 2 data collections.</li>
+<li>Keep the <strong>Name</strong> <code>main</code> and the <strong>Engine</strong> <code>Python</code>.</li>
+<li>Under <strong>How the folders are laid out</strong>, open <strong>Structure</strong> and pick <strong>Sequencing runs</strong>. <em>Flat</em> would treat all files as one run; <em>Sequencing runs</em> says that each folder under the data root is a run.</li>
+<li><strong>Runs regex</strong> fills in by itself: <code>^season_\d{4}$</code>, <em>3 of 3 are runs</em>. The panel <strong>3 runs taken in</strong> reads <em>Same layout in every run</em>, and lists <code>demographic_data.csv</code> and <code>physical_features.csv</code> as <em>in every run</em>.</li>
 </ol>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb_penguins_2_pick.jpg" data-desc-position="bottom"><img alt="Project Builder, step 2: the file tree with the two physical_features.csv files ticked, the preview of season_2007/physical_features.csv with its column types, and the form of the new data collection" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb_penguins_2_pick.jpg"></a></p>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb_penguins_3_review_nolink.jpg" data-desc-position="bottom"><img alt="Project Builder, review: the workflow main with physical_features and demographic_data, each a scan over 2 files, Preview the ingestion and Create project, and the project definition as YAML" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb_penguins_3_review_nolink.jpg"></a></p>
-<h2 id="join"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 5a7 7 0 0 0-7 7 7 7 0 0 0 7 7c1.04 0 2.06-.24 3-.68.94.44 1.96.68 3 .68a7 7 0 0 0 7-7 7 7 0 0 0-7-7c-1.04 0-2.06.24-3 .68-.94-.44-1.96-.68-3-.68m0 2c.34 0 .67.03 1 .1-1.28 1.31-2 3.07-2 4.9s.72 3.59 2 4.89c-.33.07-.66.11-1 .11a5 5 0 0 1-5-5 5 5 0 0 1 5-5m6 0a5 5 0 0 1 5 5 5 5 0 0 1-5 5c-.34 0-.67-.03-1-.1 1.28-1.31 2-3.07 2-4.9s-.72-3.59-2-4.89c.33-.07.66-.11 1-.11"></path></svg></span> Step 3: join the two tables<a class="headerlink" href="#join" title="Permanent link">¶</a></h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb3_2_runs.jpg" data-desc-position="bottom"><img alt="Project Builder, describe the workflow: Structure set to Sequencing runs, the runs regex, and the panel 3 runs taken in with the two files found in every run" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb3_2_runs.jpg"></a></p>
+<h2 id="collections"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.3 17.89c1.32-2.1.7-4.89-1.41-6.21a4.52 4.52 0 0 0-6.21 1.41C10.36 15.2 11 18 13.09 19.3c1.47.92 3.33.92 4.8 0L21 22.39 22.39 21zm-2-.62c-.98.98-2.56.97-3.54 0-.97-.98-.97-2.56.01-3.54.97-.97 2.55-.97 3.53 0 .96.99.95 2.57-.03 3.54zM19 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5.81a6.3 6.3 0 0 1-1.31-2H5v-4h4.18c.16-.71.43-1.39.82-2H5V8h6v2.81a6.3 6.3 0 0 1 2-1.31V8h6v2a6.499 6.499 0 0 1 2 2V6a2 2 0 0 0-2-2"></path></svg></span> Step 3: two collections, then create<a class="headerlink" href="#collections" title="Permanent link">¶</a></h2>
 <ol>
-<li>On the project page, in <strong>Cross-DC links</strong>, click <strong>Add join</strong>. The dialog <strong>Create table join</strong> is filled in: <strong>Left table</strong> <code>physical_features</code>, <strong>Right table</strong> <code>demographic_data</code>, <strong>Join column(s)</strong> <code>individual_id</code>, <strong>Join type</strong> <strong>Left</strong>.</li>
-<li>Read the <strong>Preview</strong> before you create anything: <em>physical_features: 223 rows · demographic_data: 223 rows → joined: 223 rows · 12 columns</em>. A yellow note says that <code>species</code>, <code>island</code> and <code>year</code> are in both tables: the copies from <code>demographic_data</code> are kept as <code>species_right</code>, <code>island_right</code> and <code>year_right</code>.</li>
-<li>Click <strong>Create join</strong>. A third collection appears: <code>joined_physical_features_demographic_data</code>, and the <strong>Joins</strong> table shows its 223 rows.</li>
+<li>Open <strong>2. Pick files</strong>. In the file tree, open <code>season_2007</code> and click <code>physical_features.csv</code>: a preview shows its columns and types. The same file in <code>season_2008</code> and <code>season_2009</code> lights up: one <strong>scan</strong> will cover the three runs.</li>
+<li>Keep the tag <code>physical_features</code> and the type <strong>Table</strong>, and click <strong>Add to main</strong>. Click <code>demographic_data.csv</code>, keep the tag <code>demographic_data</code>, and <strong>Add to main</strong> again. Click <strong>Review &amp; create</strong>.</li>
+<li>The review reads <em>1 workflow · 2 data collections</em>, each a <strong>scan</strong> of <em>3 files</em>. On the right, <strong>PROJECT DEFINITION</strong> shows the <strong>Project file</strong> that the builder has written (see the first Bonus).</li>
+<li>Click <strong>Preview the ingestion</strong>: a dry run, nothing is created. It reads <em>2 collections ready</em>, with <em>3 files</em> found for each. Then click <strong>Create project</strong>.</li>
+<li>The dialog <strong>Project created</strong> reads <em>Ingestion completed in 0:12: 2 ingested</em>. Click <strong>Open the project</strong>: the project page shows <strong>RUNS 3</strong> and 2 data collections.</li>
 </ol>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb_penguins_5_join.jpg" data-desc-position="bottom"><img alt="The Create table join dialog: physical_features joined with demographic_data on individual_id, a left join, the preview 223 rows on each side and 223 joined, the note about species, island and year, and the first rows" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb_penguins_5_join.jpg"></a></p>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb_penguins_6_joined.jpg" data-desc-position="bottom"><img alt="The project page after the join: three data collections, and in Cross-DC links the join physical_features ⋈ demographic_data on individual_id, left, 223 rows" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb_penguins_6_joined.jpg"></a></p>
-<h2 id="figure"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> Step 4: one figure from both tables<a class="headerlink" href="#figure" title="Permanent link">¶</a></h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb3_3_pick.jpg" data-desc-position="bottom"><img alt="Project Builder, pick files: the three runs in the file tree, physical_features.csv ticked in season_2007 and matched in the two other seasons, and the preview of its columns" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb3_3_pick.jpg"></a></p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb3_4_review.jpg" data-desc-position="bottom"><img alt="Project Builder, review: the workflow main with physical_features and demographic_data, each a scan of 3 files, the result of Preview the ingestion (2 collections ready, 3 files each) and the Project file on the right" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb3_4_review.jpg"></a></p>
+<h2 id="join"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 5a7 7 0 0 0-7 7 7 7 0 0 0 7 7c1.04 0 2.06-.24 3-.68.94.44 1.96.68 3 .68a7 7 0 0 0 7-7 7 7 0 0 0-7-7c-1.04 0-2.06.24-3 .68-.94-.44-1.96-.68-3-.68m0 2c.34 0 .67.03 1 .1-1.28 1.31-2 3.07-2 4.9s.72 3.59 2 4.89c-.33.07-.66.11-1 .11a5 5 0 0 1-5-5 5 5 0 0 1 5-5m6 0a5 5 0 0 1 5 5 5 5 0 0 1-5 5c-.34 0-.67-.03-1-.1 1.28-1.31 2-3.07 2-4.9s-.72-3.59-2-4.89c.33-.07.66-.11 1-.11"></path></svg></span> Step 4: join the two tables<a class="headerlink" href="#join" title="Permanent link">¶</a></h2>
+<p>Joins are usually written in the project file, and the command line makes them when it ingests. But, as in a database, you can also join two tables <strong>on the project page</strong>: the result is a <strong>new table</strong>, a view that is rebuilt whenever one of its two tables changes. The measurements are in one table and the <code>sex</code> in the other, so you need it.</p>
 <ol>
-<li>Click <strong>Create a dashboard</strong> at the top of the project page. <strong>New Dashboard</strong> opens with the project already chosen: give a title and click <strong>Create Dashboard</strong>.</li>
-<li>Click <strong>Start editing</strong>, <strong>Add component</strong>, <strong>Manual</strong>, <strong>Figure</strong>. Under <strong>Data Source</strong>, open the list and pick <code>joined_physical_features_demographic_data</code>, then <strong>Next Step</strong>.</li>
-<li>Set <strong>X</strong> to <code>bill_length_mm</code>, <strong>Y</strong> to <code>flipper_length_mm</code> and <strong>Color by</strong> to <code>sex</code>. Click <strong>Create component</strong>, then <strong>Save</strong>.</li>
+<li>On the project page, in <strong>Cross-DC links</strong>, click <strong>Add join</strong>. In <strong>Create table join</strong>, the <strong>Left table</strong> is <code>physical_features</code> and the <strong>Right table</strong> is <code>demographic_data</code>. Set <strong>Join column(s)</strong> to <code>individual_id</code>.</li>
+<li>Set <strong>Join type</strong> to <strong>Inner</strong>: <em>Keep only the rows found in both tables</em>.</li>
+<li>Read the <strong>Preview</strong> before you create anything: <em>physical_features: 342 rows · demographic_data: 342 rows → joined: 342 rows · 12 columns</em>. A yellow note says that <code>species</code>, <code>island</code> and <code>year</code> are in both tables: the copies from <code>demographic_data</code> are kept as <code>species_right</code>, <code>island_right</code> and <code>year_right</code>.</li>
+<li>Click <strong>Create join</strong>. The <strong>Joins</strong> table lists it (<strong>inner</strong>, 342 rows) and the project has a third collection: <code>joined_physical_features_demographic_data</code>.</li>
 </ol>
-<p>The measurements come from <code>physical_features</code>, <code>sex</code> from <code>demographic_data</code>: without the join, one figure could not use both.</p>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb_penguins_7_figure.jpg" data-desc-position="bottom"><img alt="A dashboard with one scatter on the joined table: bill length against flipper length, coloured by sex" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb_penguins_7_figure.jpg"></a></p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb3_5_join.jpg" data-desc-position="bottom"><img alt="The Create table join dialog: physical_features joined with demographic_data on individual_id, an inner join, the preview 342 rows on each side and 342 joined, the note about species, island and year, and the first rows" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb3_5_join.jpg"></a></p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb3_6_joined.jpg" data-desc-position="bottom"><img alt="The project page after the join: in Cross-DC links, physical_features, demographic_data and the joined table, and in Joins the line physical_features ⋈ demographic_data on individual_id, inner, 342 rows" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb3_6_joined.jpg"></a></p>
+<p><strong>Inner or left?</strong> Here they give the same 342 rows (all four join types give 342), because every bird is in both tables. They differ only when a bird is missing from the right table: a <strong>left</strong> join keeps it, with empty demographic values; an <strong>inner</strong> join drops it. Inner is the simplest choice for this exercise.</p>
+<h2 id="figure"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 5v2h-4V5zM9 5v6H5V5zm10 8v6h-4v-6zM9 17v2H5v-2zM21 3h-8v6h8zM11 3H3v10h8zm10 8h-8v10h8zm-10 4H3v6h8z"></path></svg></span> Step 5: a dashboard with four components<a class="headerlink" href="#figure" title="Permanent link">¶</a></h2>
+<ol>
+<li>Click <strong>Create a dashboard</strong> at the top of the project page. <strong>New Dashboard</strong> opens with the project already chosen: type a title (for example <code>Penguins study</code>) and click <strong>Create Dashboard</strong>. You stay on the <strong>Dashboards</strong> list: click your new dashboard to open it.</li>
+<li>
+<p>Click <strong>Start editing</strong>, then the <strong>+</strong> button. Pick <strong>Component</strong>, then <strong>Manual</strong>. For each component below, click its type tile, open the list under <strong>Data Source</strong>, pick <code>joined_physical_features_demographic_data</code>, click <strong>Next Step</strong>, set the options, then click <strong>Create component</strong>. Add the four, then click <strong>Save</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Card</strong></td>
+<td><strong>Card title</strong> <code>Penguins</code>; <strong>Select your column</strong> <code>individual_id</code>. Leave the aggregation as it is: it fills in <strong>Count</strong>.</td>
+</tr>
+<tr>
+<td><strong>Figure</strong></td>
+<td><strong>Visualization type</strong> <strong>Scatter Plot</strong>; <strong>X axis</strong> <code>flipper_length_mm</code>; <strong>Y axis</strong> <code>body_mass_g</code>; <strong>Color by</strong> <code>sex</code>.</td>
+</tr>
+<tr>
+<td><strong>Table</strong></td>
+<td>Nothing to set.</td>
+</tr>
+<tr>
+<td><strong>Interactive</strong></td>
+<td><strong>Select your column</strong> <code>species</code>.</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>In the left panel <strong>Filters</strong>, <strong>Select on species</strong> now filters the three other components.</p>
+</li>
+</ol>
+<p>The figure uses <code>flipper_length_mm</code> and <code>body_mass_g</code> from <code>physical_features</code> and <code>sex</code> from <code>demographic_data</code>: without the join, one figure could not use both. The card reads <strong>342</strong>; the table reads <em>1 to 100 of 342</em> (4 pages).</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb3_7_dashboard.jpg" data-desc-position="bottom"><img alt="The finished dashboard Penguins study: the card Penguins with 342, the scatter of flipper length against body mass coloured by sex, the table of 342 rows, and the filter Select on species on the left" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb3_7_dashboard.jpg"></a></p>
 <div class="admonition question">
 <p class="admonition-title">Check your understanding</p>
-<p>The join is a <strong>Left</strong> join and gives 223 rows. What would an <strong>Inner</strong> join give here, and when would the two differ? Where does the column <code>species_right</code> come from?</p>
+<p>The join is an <strong>Inner</strong> join and gives 342 rows. What would a <strong>Left</strong> join give here, and when would the two differ? Where does the column <code>species_right</code> come from?</p>
 <details class="solution">
 <summary>Answer</summary>
-<p>Also 223 rows: every bird of <code>physical_features</code> has a row in <code>demographic_data</code>. They differ when a bird is missing from the right table: a left join keeps it with empty demographic values, an inner join drops it. <code>species_right</code> is the copy of <code>species</code> from <code>demographic_data</code>, renamed because <code>physical_features</code> has a <code>species</code> column too.</p>
+<p>Also 342 rows: every bird of <code>physical_features</code> has a row in <code>demographic_data</code>. They differ when a bird is missing from the right table: a left join keeps it with empty demographic values, an inner join drops it. <code>species_right</code> is the copy of <code>species</code> from <code>demographic_data</code>, renamed because <code>physical_features</code> has a <code>species</code> column too.</p>
 </details>
 </div>
 <div class="admonition challenge">
-<p class="admonition-title">Challenge: who is heavier?</p>
-<p>Add a second <strong>Figure</strong> on the joined table: <code>flipper_length_mm</code> on x, <code>body_mass_g</code> on y, coloured by <code>sex</code>. Within one species, which sex is heavier? Which of the two tables could not have drawn this figure on its own?</p>
+<p class="admonition-title">Challenge: the Chinstrap penguins</p>
+<p>In the <strong>Filters</strong> panel, open <strong>Select on species</strong> and pick <strong>Chinstrap</strong>. How many Chinstrap penguins are there? On which island? Then pick <strong>Gentoo</strong> instead: how many?</p>
 <details class="solution">
 <summary>Solution</summary>
-<p>Within each species, males are heavier than females: their points sit higher. Neither table alone: <code>body_mass_g</code> is in <code>physical_features</code> and <code>sex</code> in <code>demographic_data</code>.</p>
+<p>68 Chinstrap penguins (the card reads <strong>68</strong>, the table <em>1 to 68 of 68</em>), all on <strong>Dream</strong>. Gentoo: 123. One filter changes the card, the figure and the table at once, because they all read the same joined table.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb3_8_chinstrap.jpg" data-desc-position="bottom"><img alt="The dashboard with the filter Select on species set to Chinstrap: the card reads 68, the scatter and the table show only Chinstrap penguins, all on Dream" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb3_8_chinstrap.jpg"></a></p>
 </details>
 </div>
 <div class="admonition keypoints">
 <p class="admonition-title">Key points</p>
 <ul>
 <li>The Project Builder reads a folder in a bucket and lets you say what each file is, without a template.</li>
-<li>Ticking the same file in each season makes a <strong>scan</strong>: one collection over every season.</li>
-<li><strong>Preview the ingestion</strong> is a dry run; <strong>Create project</strong> only works after it.</li>
-<li>A <strong>join</strong>, added on the project page, puts two tables side by side on a shared column; its preview counts the rows before anything is created.</li>
+<li><strong>Sequencing runs</strong> tells it that each folder is a run, as a pipeline would write one folder per run.</li>
+<li>One <strong>scan</strong> over the runs makes one collection with the rows of every run.</li>
+<li><strong>Preview the ingestion</strong> is a dry run: nothing is created until <strong>Create project</strong>.</li>
+<li>A <strong>join</strong> on the project page makes a new table from two tables on a shared column; its preview counts the rows before anything is created.</li>
+<li>A dashboard component reads one collection: the joined table lets a figure use columns from both tables.</li>
 </ul>
 </div>
 <details class="note">
-<summary>Bonus · The data, file by file</summary>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="go">penguins/</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="go">├── season_2007/</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="go">│   ├── demographic_data.csv     who each bird is: individual_id, species, island, year, sex</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="go">│   └── physical_features.csv    its measurements: individual_id, species, island, year and 4 measures (109 rows in 2007)</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="go">└── season_2008/</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="go">    ├── demographic_data.csv     the same two files, for 2008</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="go">    └── physical_features.csv</span>
+<summary>Bonus · Read the project file the builder wrote</summary>
+<p>In the review step of Step 3, <strong>PROJECT DEFINITION</strong> shows the <strong>Project file</strong>: your project, written for you (<strong>Download YAML</strong> saves it). Here it is for the three seasons:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;your-project-name&gt;</span><span class="w">                       </span><span class="c1"># [[1]]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">is_public</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">                                </span><span class="c1"># [[1]]</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nt">workflows</span><span class="p">:</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">engine</span><span class="p">:</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="nt">data_location</span><span class="p">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">      </span><span class="nt">structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sequencing-runs</span><span class="w">                </span><span class="c1"># [[2]]</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">      </span><span class="nt">locations</span><span class="p">:</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://&lt;workshop-bucket&gt;/penguins</span><span class="w">       </span><span class="c1"># [[2]]</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span><span class="nt">runs_regex</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^season_\d{4}$</span><span class="w">                </span><span class="c1"># [[2]]</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="nt">data_collections</span><span class="p">:</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">physical_features</span><span class="w">  </span><span class="c1"># [[3]]</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Table</span><span class="w">                           </span><span class="c1"># [[3]]</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">          </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Aggregate</span><span class="w">                   </span><span class="c1"># [[3]]</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">          </span><span class="nt">scan</span><span class="p">:</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3_prefix</span><span class="w">                     </span><span class="c1"># [[3]]</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">              </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://&lt;workshop-bucket&gt;/penguins/</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">              </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^(?:[^/]+/)*physical_features\.csv$</span><span class="w">   </span><span class="c1"># [[3]]</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">              </span><span class="nt">pattern_syntax</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">regex</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">          </span><span class="nt">dc_specific_properties</span><span class="p">:</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">            </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">csv</span>
 </code></pre></div>
-</details>
-<details class="note">
-<summary>Bonus · A link instead of a join</summary>
-<p>A <strong>link</strong> does not build a new table: it lets a filter on one collection narrow another on a dashboard. In the review step of the Project Builder, under <strong>Links</strong>, <strong>Add link</strong>: <strong>From collection</strong> <code>physical_features</code>, <strong>Filters collection</strong> <code>demographic_data</code>, <strong>Resolver</strong> <em>Direct: the same values</em>, <strong>Column</strong> and <strong>Target column</strong> <code>individual_id</code>. The link goes one way: a filter on the <strong>From</strong> collection narrows the <strong>Filters</strong> collection. Links can also be added later on the project page, next to <strong>Add join</strong>.</p>
-</details>
-<details class="note">
-<summary>Bonus · The YAML the Project Builder writes, block by block</summary>
-<p><strong>Download YAML</strong> saves the file shown under <strong>PROJECT DEFINITION</strong>: the <strong>Project file</strong>, your project with its real location. It starts with a comment that says how to use it:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Defined with the Depictio Project Builder.</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># This project, on the folder it was built from. Edit it, then:</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#   depictio ingest --project-config-path &lt;this file&gt;</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;your-project-name&gt;</span><span class="w">                   </span><span class="c1"># [[1]]</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nt">is_public</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">                            </span><span class="c1"># [[1]]</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nt">workflows</span><span class="p">:</span><span class="w">                                  </span><span class="c1"># [[2]]</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span><span class="w">                              </span><span class="c1"># [[2]]</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="nt">engine</span><span class="p">:</span><span class="w">                                 </span><span class="c1"># [[2]]</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span><span class="w">                          </span><span class="c1"># [[2]]</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="nt">data_location</span><span class="p">:</span><span class="w">                          </span><span class="c1"># [[2]]</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">      </span><span class="nt">structure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flat</span><span class="w">                       </span><span class="c1"># [[2]]</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">      </span><span class="nt">locations</span><span class="p">:</span><span class="w">                            </span><span class="c1"># [[2]]</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://&lt;workshop-bucket&gt;/penguins</span><span class="w">   </span><span class="c1"># [[2]]</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="nt">data_collections</span><span class="p">:</span><span class="w">                       </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">data_collection_tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">physical_features</span><span class="w">   </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">        </span><span class="nt">config</span><span class="p">:</span><span class="w">                             </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Table</span><span class="w">                       </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">          </span><span class="nt">metatype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Aggregate</span><span class="w">               </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">          </span><span class="nt">scan</span><span class="p">:</span><span class="w">                             </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">            </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3_prefix</span><span class="w">                 </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">            </span><span class="nt">scan_parameters</span><span class="p">:</span><span class="w">                </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">              </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://&lt;workshop-bucket&gt;/penguins/</span><span class="w">   </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">              </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^physical_features\.csv$</span><span class="w">         </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">              </span><span class="nt">pattern_syntax</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">regex</span><span class="w">         </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">          </span><span class="nt">dc_specific_properties</span><span class="p">:</span><span class="w">           </span><span class="c1"># [[3]]</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">            </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">csv</span><span class="w">                     </span><span class="c1"># [[3]]</span>
-</code></pre></div>
+<p><strong>Exercise.</strong> (a) Which lines make the three season folders three runs? (b) How does a collection find its file in every run? (c) In the review, click <strong>Template (any folder)</strong>: which lines change?</p>
+<details class="solution">
+<summary>Solution</summary>
 <ol>
-<li><strong>The project</strong>: its name and visibility. <code>is_public: false</code> is the switch you left off.</li>
-<li><strong>The workflow <code>main</code></strong>: engine <code>python</code>, structure <code>flat</code> (the location is read as one run) and the location you pasted in step 1.</li>
-<li><strong>A data collection</strong>: its tag, its type <code>Table</code>, <code>Aggregate</code> (the rows of every season add up in one table) and a scan of the bucket prefix (<code>s3_prefix</code>) with a regular expression that finds the file in each season folder. The file holds one such block for <code>physical_features</code> and one for <code>demographic_data</code>, then any link you added.</li>
+<li><strong>The project</strong> (band 1): its name and the visibility you left off.</li>
+<li>(a) <strong>The runs</strong> (band 2): <code>structure: sequencing-runs</code> and <code>runs_regex: ^season_\d{4}$</code> are what you set in Step 2; the location is the data root of Step 1.</li>
+<li>(b) <strong>A collection</strong> (band 3): its tag, <code>Table</code>, <code>Aggregate</code> (the rows of every run add up in one table), and a scan of the bucket prefix. The regular expression <code>^(?:[^/]+/)*physical_features\.csv$</code> accepts the file at any depth, so it matches <code>season_2007/physical_features.csv</code> and the same file in the two other seasons. The file holds one such block for <code>demographic_data</code> too.</li>
 </ol>
-<p>To ingest it yourself, <code>depictio ingest --project-config-path &lt;file&gt;</code>, the command line must be able to read the bucket: the instructor tells you whether it is open to everyone or which credentials to add to your configuration.</p>
-<p>The switch <strong>Template (any folder)</strong> shows the same project as a template: a <code>template:</code> block on top and <code>{DATA_ROOT}</code> in place of the location, to read another folder with the same layout (<code>depictio ingest &lt;folder&gt; --template &lt;file&gt;</code>). The same fields appear in the project files you write by hand: see Going further, <a href="../first-project/">A project file by hand</a>.</p>
+<p>(c) The <strong>Template (any folder)</strong> switch shows the same project as a template: a <code>template:</code> block on top with a <code>DATA_ROOT</code> variable, <code>'{DATA_ROOT}'</code> in place of the location, and <code>mode: recursive</code> with no prefix. Run it on any folder with the same layout: <code>depictio ingest &lt;folder&gt; --template &lt;file&gt;</code>.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb3_9_template.jpg" data-desc-position="bottom"><img alt="The review with the switch on Template (any folder): the template block with the DATA_ROOT variable, the location written {DATA_ROOT}, and the recursive scan" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb3_9_template.jpg"></a></p>
+</details>
 </details>
 <details class="note">
-<summary>Bonus · What the Project Builder leaves for later</summary>
-<p>The Project Builder defines collections and links. <strong>Joins</strong> are added afterwards on the project page (step 3), <strong>recipes</strong> in the project YAML with <code>depictio ingest</code>. A pipeline with a template skips all this: that is the next episode.</p>
+<summary>Bonus · A second figure: compare the islands</summary>
+<p>On the same dashboard, click the pencil, then add a <strong>Figure</strong> on <code>joined_physical_features_demographic_data</code>. Choose <strong>Box Plot</strong>, <strong>X axis</strong> <code>island</code>, <strong>Y axis</strong> <code>body_mass_g</code>, <strong>Color by</strong> <code>species</code>. Which species live on which island? Which species is the heaviest?</p>
+<details class="solution">
+<summary>Solution</summary>
+<p><strong>Biscoe</strong> has Adelie and Gentoo, <strong>Dream</strong> has Adelie and Chinstrap, <strong>Torgersen</strong> has only Adelie. Gentoo is the heaviest: its median is about 5000 g, against about 3700 g for the other two. The figure is only a preview in the editor here: <strong>Create component</strong> and <strong>Save</strong> keep it on your dashboard.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/pb3_10_islands.jpg" data-desc-position="bottom"><img alt="The Figure editor with a box plot of body_mass_g by island, coloured by species: Gentoo on Biscoe, Chinstrap on Dream, Adelie on the three islands" class="ws-shot" src="../../../images/tutorials/workshop-cli/pb3_10_islands.jpg"></a></p>
+</details>
 </details>
 <div class="ws-next">
-<p><a class="ws-help" href="../troubleshooting/#project-builder"><span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span></a>
-<a class="ws-go ws-ep2" href="../nf-core-run/"><span class="ws-k">Next episode</span><span class="ws-t">2. An nf-core run from the terminal</span></a></p>
+<p><a class="ws-go ws-ep2" href="../nf-core-run/"><span class="ws-k">Next episode</span><span class="ws-t">2. An nf-core run from the terminal</span></a></p>
 </div>
 
 

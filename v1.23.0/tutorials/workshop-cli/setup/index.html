@@ -3303,8 +3303,6 @@
       
         
       
-        
-      
     
     
     
@@ -3564,34 +3562,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workshop/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../workshop/facilitators/" class="md-nav__link">
         
   
@@ -3634,8 +3604,6 @@
       
         
           
-        
-      
         
       
         
@@ -3886,7 +3854,7 @@
   <span class="md-ellipsis">
     
   
-    3. Collaborate and export
+    3. Work on your dashboard, together
   
 
     
@@ -4077,34 +4045,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -8221,7 +8161,7 @@
 
 <h1 id="0-setup">0. Setup<a class="headerlink" href="#0-setup" title="Permanent link">¶</a></h1>
 <div class="ws-strip">
-<p><a class="ws-ep0" href="./"><strong>0</strong> Setup</a> <a class="ws-ep1" href="../project-builder/"><strong>1</strong> Your tables</a> <a class="ws-ep2" href="../nf-core-run/"><strong>2</strong> nf-core run</a> <a class="ws-ep3" href="../collaborate-and-export/"><strong>3</strong> Collaborate</a> <a class="ws-ep4" href="../going-further/"><strong>+</strong> Going further</a></p>
+<p><a class="ws-ep0" href="./"><strong>0</strong> Setup</a> <a class="ws-ep1" href="../project-builder/"><strong>1</strong> Your tables</a> <a class="ws-ep2" href="../nf-core-run/"><strong>2</strong> nf-core run</a> <a class="ws-ep3" href="../collaborate-and-export/"><strong>3</strong> Together</a> <a class="ws-ep4" href="../going-further/"><strong>+</strong> Going further</a></p>
 </div>
 <div class="ws-meta ws-ep0">
 <p><span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5a3.5 3.5 0 0 0-3.5 3.5A3.5 3.5 0 0 0 12 12a3.5 3.5 0 0 0 3.5-3.5A3.5 3.5 0 0 0 12 5m0 2a1.5 1.5 0 0 1 1.5 1.5A1.5 1.5 0 0 1 12 10a1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 12 7M5.5 8A2.5 2.5 0 0 0 3 10.5c0 .94.53 1.75 1.29 2.18.36.2.77.32 1.21.32s.85-.12 1.21-.32c.37-.21.68-.51.91-.87A5.42 5.42 0 0 1 6.5 8.5v-.28c-.3-.14-.64-.22-1-.22m13 0c-.36 0-.7.08-1 .22v.28c0 1.2-.39 2.36-1.12 3.31.12.19.25.34.4.49a2.482 2.482 0 0 0 1.72.7c.44 0 .85-.12 1.21-.32.76-.43 1.29-1.24 1.29-2.18A2.5 2.5 0 0 0 18.5 8M12 14c-2.34 0-7 1.17-7 3.5V19h14v-1.5c0-2.33-4.66-3.5-7-3.5m-7.29.55C2.78 14.78 0 15.76 0 17.5V19h3v-1.93c0-1.01.69-1.85 1.71-2.52m14.58 0c1.02.67 1.71 1.51 1.71 2.52V19h3v-1.5c0-1.74-2.78-2.72-4.71-2.95M12 16c1.53 0 3.24.5 4.23 1H7.77c.99-.5 2.7-1 4.23-1"></path></svg></span> <strong>Everyone</strong></span> <span class="ws-chip" markdown="span"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2v6l4 4-4 4v6h12v-6l-4-4 4-4V2zm10 14.5V20H8v-3.5l4-4zm-4-5-4-4V4h8v3.5z"></path></svg></span> <strong>Before the session</strong></span></p>
@@ -8339,7 +8279,7 @@
 <li>the server <strong>knows your account</strong>;</li>
 <li>the storage <strong>accepts your tables</strong>.</li>
 </ol>
-<p>A line starting with ✗ names the part that fails: see <a href="../troubleshooting/#setup">Troubleshooting</a>.</p>
+<p>A line starting with ✗ names the part that fails: write it in the Zoom chat.</p>
 <div class="admonition challenge">
 <p class="admonition-title">Challenge 0.1: until when?</p>
 <p>Run <code>depictio config show</code>. Until when does your configuration work? Are your token and the storage password printed?</p>
@@ -8361,8 +8301,7 @@
 <p>The first command you run prints a short notice: the CLI sends anonymous usage data (which command ran, whether it succeeded, the operating system and the versions), never file paths, arguments, project names or credentials. To turn them off, add <code>export DEPICTIO_TELEMETRY_ENABLED=false</code> to your shell, or set <code>DO_NOT_TRACK=1</code>.</p>
 </details>
 <div class="ws-next">
-<p><a class="ws-help" href="../troubleshooting/#setup"><span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span></a>
-<a class="ws-go ws-ep1" href="../project-builder/"><span class="ws-k">Next episode</span><span class="ws-t">1. Your own tables, no template</span></a></p>
+<p><a class="ws-go ws-ep1" href="../project-builder/"><span class="ws-k">Next episode</span><span class="ws-t">1. Your own tables, no template</span></a></p>
 </div>
 
 
