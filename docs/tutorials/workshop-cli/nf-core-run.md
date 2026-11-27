@@ -193,7 +193,7 @@ $ depictio ingest viralrecon/ --project yourname-viralrecon --dry-run
 </div>
 
 1. **The pipeline**: the CLI read `pipeline_info/`, found nf-core/viralrecon 3.0.0, and picked the template of that version.
-2. **The template variables**: blanks the run fills in. This run has no groups of samples to compare, so `GROUP_COL` stays empty; nothing to set.
+2. **The template variables**: blanks the run fills in. This run has no groups of samples to compare: `GROUP_COL` reads `__no_group__`, and there is nothing to set.
 3. **The data collections**: one line per table of the template, with the files it found. A `scan` reads a file as it is; a `recipe` computes a table from files of the run (the `pangolin_lineages` line is the Pangolin output of step 1).
 4. **The verdict**: 15 tables will be written, none empty, none missing.
 5. **The eight steps** the ingestion will run, each saying what it *would* do.
