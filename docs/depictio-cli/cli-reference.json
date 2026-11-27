@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "program": "depictio",
-  "version": "1.23.0",
+  "version": "1.24.2",
   "help_options": [
     "--help",
     "-h"
@@ -2899,6 +2899,120 @@
           "envvar": null,
           "panel": null,
           "is_flag": true,
+          "count": false,
+          "show_default": true
+        }
+      ],
+      "alias_of": null,
+      "aliases": []
+    },
+    {
+      "path": [
+        "config",
+        "set-admin-credentials"
+      ],
+      "name": "set-admin-credentials",
+      "group": false,
+      "help": "Choose the email and password of a single-user server's admin.\n\nA single-user server signs everyone in as its admin, whose password nobody\nknows at first. These are the credentials its sign-in form accepts if the\nserver is switched to public mode. The password is asked for, never passed\non the command line.",
+      "short_help": "Choose the email and password of a single-user server's admin.",
+      "epilog": "",
+      "hidden": false,
+      "deprecated": false,
+      "panel": null,
+      "params": [
+        {
+          "name": "email",
+          "kind": "option",
+          "opts": [
+            "--email"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": true,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "The admin's email address.",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "ask_current",
+          "kind": "option",
+          "opts": [
+            "--ask-current"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "boolean"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": false,
+          "metavar": null,
+          "help": "Ask for the current password: needed once the credentials were set before.",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": true,
+          "count": false,
+          "show_default": true
+        },
+        {
+          "name": "server",
+          "kind": "option",
+          "opts": [
+            "--server"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "Server to use: 'local' for the one `depictio local up` runs, or a CLI configuration file. Default: $DEPICTIO_CLI_CONFIG_PATH, else ~/.depictio/CLI.yaml, else the local server. Formerly `--CLI-config-path`.",
+          "hidden": false,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
+          "count": false,
+          "show_default": false
+        },
+        {
+          "name": "CLI_config_path",
+          "kind": "option",
+          "opts": [
+            "--CLI-config-path"
+          ],
+          "secondary_opts": [],
+          "type": {
+            "name": "str"
+          },
+          "required": false,
+          "multiple": false,
+          "nargs": 1,
+          "default": null,
+          "metavar": null,
+          "help": "",
+          "hidden": true,
+          "deprecated": false,
+          "envvar": null,
+          "panel": null,
+          "is_flag": false,
           "count": false,
           "show_default": true
         }
