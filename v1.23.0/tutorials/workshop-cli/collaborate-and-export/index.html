@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Hands-on 3: on your own nf-core/viralrecon dashboard, label the samples, comment and annotate a figure, save a version and compare it with the previous one, share the project, and export the dashboard as one HTML file that opens without a server.">
+        <meta name="description" content="Hands-on 3: on your own nf-core/viralrecon dashboard, comment and annotate a figure, save a version and compare it with the previous one, share the project, and export the dashboard as one HTML file that opens without a server.">
       
       
       
@@ -3827,21 +3827,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#label" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hands-on 3 · Step 1: group the samples in Metadata mode
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#comment-and-annotate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: comment and annotate
+        Hands-on 3 · Step 1: comment and annotate
       
     </span>
   </a>
@@ -3852,7 +3841,7 @@
   <a href="#versions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: edit a component, save, compare
+        Step 2: edit a component, save, compare
       
     </span>
   </a>
@@ -3863,7 +3852,7 @@
   <a href="#share" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: share the project
+        Step 3: share the project
       
     </span>
   </a>
@@ -3874,7 +3863,7 @@
   <a href="#export" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 5: export it for offline use
+        Step 4: export it for offline use
       
     </span>
   </a>
@@ -8129,21 +8118,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#label" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hands-on 3 · Step 1: group the samples in Metadata mode
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#comment-and-annotate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: comment and annotate
+        Hands-on 3 · Step 1: comment and annotate
       
     </span>
   </a>
@@ -8154,7 +8132,7 @@
   <a href="#versions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: edit a component, save, compare
+        Step 2: edit a component, save, compare
       
     </span>
   </a>
@@ -8165,7 +8143,7 @@
   <a href="#share" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: share the project
+        Step 3: share the project
       
     </span>
   </a>
@@ -8176,7 +8154,7 @@
   <a href="#export" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 5: export it for offline use
+        Step 4: export it for offline use
       
     </span>
   </a>
@@ -8214,44 +8192,19 @@
 <p class="admonition-title">Overview</p>
 <p><strong>Questions</strong></p>
 <ul>
-<li>How do I group samples my own way, without changing the data?</li>
 <li>How do I talk about a figure with a colleague?</li>
 <li>How do I keep a safe copy of my work, share it, or send it to someone with no server?</li>
 </ul>
 <p><strong>Objectives</strong></p>
 <ul>
-<li>Add a label column in <strong>Metadata</strong> mode and colour the figures by it.</li>
 <li>Comment on a figure and annotate it.</li>
 <li>Save a version, then compare a component with the previous one.</li>
 <li>Share the project with a colleague.</li>
 <li>Export the dashboard as one HTML file.</li>
 </ul>
 </div>
-<p>You own the <strong>nf-core/viralrecon</strong> dashboard that episode 2 created: you can edit it, share it and export it. Work through the five steps in order. Open your project from the <strong>Projects</strong> page, and the dashboard from the project.</p>
-<h2 id="label"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m21.41 11.58-9-9A2 2 0 0 0 11 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 .59 1.42l9 9A2 2 0 0 0 13 22a2 2 0 0 0 1.41-.59l7-7A2 2 0 0 0 22 13a2 2 0 0 0-.59-1.42M13 20l-9-9V4h7l9 9M6.5 5A1.5 1.5 0 1 1 5 6.5 1.5 1.5 0 0 1 6.5 5"></path></svg></span> Hands-on 3 · Step 1: group the samples in Metadata mode<a class="headerlink" href="#label" title="Permanent link">¶</a></h2>
-<p>You have three samples: <code>SAMPLE1_PE</code>, <code>SAMPLE2_PE</code> and <code>SAMPLE3_SE</code>. Say they were sequenced in two runs: the first two in <code>run1</code>, the third in <code>run2</code>. The data does not say so. You add it as a column of your own, and each label becomes a group.</p>
-<p>The <strong>Metadata</strong> panel needs a small table of samples, linked to the run's tables. The run has none, so you add one first, on the project page.</p>
-<ol>
-<li>Download <a href="../samplesheet.csv"><code>samplesheet.csv</code></a>. It has one row per sample, and a <code>layout</code> column.</li>
-<li>Open your project. Click <strong>Add data</strong> and drop the file on <strong>Drop files or folders here</strong>. Click <strong>Add 1 table</strong>.</li>
-<li>Still on the project page, scroll down to <strong>Cross-DC links</strong> and click <strong>Add link</strong>. Fill in: <strong>Source data collection</strong> <code>samplesheet · table</code>, <strong>Source column</strong> <code>sample</code>, <strong>Target data collection</strong> <code>summary_metrics · table</code>. Click <strong>Create link</strong>.</li>
-</ol>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/ep3vr_1_link.jpg" data-desc-position="bottom"><img alt="The Create Cross-DC Link dialog, filled in: samplesheet · table, column sample, target summary_metrics · table" class="ws-shot" src="../../../images/tutorials/workshop-cli/ep3vr_1_link.jpg"></a></p>
-<p>Now open the dashboard.</p>
-<ol>
-<li>Click <strong>Metadata</strong> in the dock, at the bottom. The panel opens on the right, with the <code>samplesheet</code> table.</li>
-<li>Click the green <strong>+</strong> next to <strong>Columns</strong>, name the column <code>batch</code>, and click <strong>Add</strong>. Double-click a cell of the new column, type a label, press Enter. Do the three rows: <code>run1</code>, <code>run1</code>, <code>run2</code>.</li>
-<li>Look at the header of the <code>batch</code> column: the chart icon turns the labels into groups. When it is on, <strong>Analysis</strong> shows <strong>2 groups</strong>. If not, press the icon.</li>
-</ol>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/ep3vr_1_metadata.jpg" data-desc-position="bottom"><img alt="The Metadata panel: the samplesheet table with the batch column holding run1, run1 and run2" class="ws-shot" src="../../../images/tutorials/workshop-cli/ep3vr_1_metadata.jpg"></a></p>
-<ol>
-<li>Open <strong>Analysis</strong> in the dock. Under <strong>Color figures by</strong>, click <strong>A column</strong>, open <strong>Pick a column…</strong> and pick <code>batch</code>. The panel switches to <strong>My groups</strong>, with <code>batch</code> as the label column.</li>
-<li>Open the <strong>Coverage &amp; Depth</strong> tab. The lanes of <strong>Depth along the genome</strong> are now coloured by <code>run1</code> and <code>run2</code>.</li>
-</ol>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/ep3vr_1_analysis.jpg" data-desc-position="bottom"><img alt="Analysis with batch as the label column and the groups run1 and run2; the Coverage &amp; Depth tab coloured by them" class="ws-shot" src="../../../images/tutorials/workshop-cli/ep3vr_1_analysis.jpg"></a></p>
-<p>Only some figures take the groups: on this dashboard, the two depth plots of <strong>Coverage &amp; Depth</strong>. On <strong>Sample QC</strong> and <strong>Overview</strong> the panel says that none of the components can receive them.</p>
-<p>The real tables do not change. Your labels live on your account, so you find them again from any computer, and a colleague does not see them.</p>
-<h2 id="comment-and-annotate"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 22a1 1 0 0 1-1-1v-3H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6.1l-3.7 3.71c-.2.19-.45.29-.7.29zm1-6v3.08L13.08 16H20V4H4v12zM6 7h12v2H6zm0 4h9v2H6z"></path></svg></span> Step 2: comment and annotate<a class="headerlink" href="#comment-and-annotate" title="Permanent link">¶</a></h2>
+<p>You own the <strong>nf-core/viralrecon</strong> dashboard that episode 2 created: you can edit it, share it and export it. Work through the four steps in order. Open your project from the <strong>Projects</strong> page, and the dashboard from the project.</p>
+<h2 id="comment-and-annotate"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 22a1 1 0 0 1-1-1v-3H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6.1l-3.7 3.71c-.2.19-.45.29-.7.29zm1-6v3.08L13.08 16H20V4H4v12zM6 7h12v2H6zm0 4h9v2H6z"></path></svg></span> Hands-on 3 · Step 1: comment and annotate<a class="headerlink" href="#comment-and-annotate" title="Permanent link">¶</a></h2>
 <p>Open the <strong>Sample QC</strong> tab and find <strong>Genome covered per sample, at 1x and at 10x</strong>, a bar chart.</p>
 <ol>
 <li><strong>Comment.</strong> Hover the figure and click the comments icon in its action bar. Type your remark, for example <code>SAMPLE2_PE covers only 90 % of the genome at 10x. Keep it, or sequence it again?</code>, and click <strong>Post</strong>.</li>
@@ -8259,7 +8212,7 @@
 </ol>
 <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/ep3vr_2_comment.jpg" data-desc-position="bottom"><img alt="The bar chart with its note on SAMPLE2_PE, and the Comments panel with the comment" class="ws-shot" src="../../../images/tutorials/workshop-cli/ep3vr_2_comment.jpg"></a></p>
 <p>Use a bar chart for the note. On a figure with a log axis, the note is saved but not drawn.</p>
-<h2 id="versions"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 8H12v5l4.28 2.54.72-1.21-3.5-2.08zM13 3a9 9 0 0 0-9 9H1l3.96 4.03L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.9 8.9 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9"></path></svg></span> Step 3: edit a component, save, compare<a class="headerlink" href="#versions" title="Permanent link">¶</a></h2>
+<h2 id="versions"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 8H12v5l4.28 2.54.72-1.21-3.5-2.08zM13 3a9 9 0 0 0-9 9H1l3.96 4.03L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.9 8.9 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9"></path></svg></span> Step 2: edit a component, save, compare<a class="headerlink" href="#versions" title="Permanent link">¶</a></h2>
 <p>You cannot break anything for good: every save records a version, and each component keeps its own history.</p>
 <ol>
 <li>Click <strong>Edit</strong> in the dock. If a <strong>Not now</strong> button appears, click it.</li>
@@ -8269,7 +8222,7 @@
 </ol>
 <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/ep3vr_3_history.jpg" data-desc-position="bottom"><img alt="Component history in Compare mode: the version saved before on the left, the current component on the right" class="ws-shot" src="../../../images/tutorials/workshop-cli/ep3vr_3_history.jpg"></a></p>
 <p><strong>Restore this component</strong> brings the old one back. The rest of the dashboard stays as it is.</p>
-<h2 id="share"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.07 10.41a5 5 0 0 0 0-5.82A3.4 3.4 0 0 1 15 4a3.5 3.5 0 0 1 0 7 3.4 3.4 0 0 1-1.93-.59M5.5 7.5A3.5 3.5 0 1 1 9 11a3.5 3.5 0 0 1-3.5-3.5m2 0A1.5 1.5 0 1 0 9 6a1.5 1.5 0 0 0-1.5 1.5M16 17v2H2v-2s0-4 7-4 7 4 7 4m-2 0c-.14-.78-1.33-2-5-2s-4.93 1.31-5 2m11.95-4A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4Z"></path></svg></span> Step 4: share the project<a class="headerlink" href="#share" title="Permanent link">¶</a></h2>
+<h2 id="share"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.07 10.41a5 5 0 0 0 0-5.82A3.4 3.4 0 0 1 15 4a3.5 3.5 0 0 1 0 7 3.4 3.4 0 0 1-1.93-.59M5.5 7.5A3.5 3.5 0 1 1 9 11a3.5 3.5 0 0 1-3.5-3.5m2 0A1.5 1.5 0 1 0 9 6a1.5 1.5 0 0 0-1.5 1.5M16 17v2H2v-2s0-4 7-4 7 4 7 4m-2 0c-.14-.78-1.33-2-5-2s-4.93 1.31-5 2m11.95-4A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4Z"></path></svg></span> Step 3: share the project<a class="headerlink" href="#share" title="Permanent link">¶</a></h2>
 <p>A dashboard belongs to a project, and the project decides who sees it.</p>
 <ol>
 <li>Go back to your project and click <strong>Permissions</strong>.</li>
@@ -8278,7 +8231,7 @@
 </ol>
 <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/ep3vr_4_share.jpg" data-desc-position="bottom"><img alt="The Permissions page of the project: the Private switch, two members with their roles, the Groups list, and Everyone with access" class="ws-shot" src="../../../images/tutorials/workshop-cli/ep3vr_4_share.jpg"></a></p>
 <p>Leave the <strong>Public</strong> switch as it is.</p>
-<h2 id="export"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8zm4 18H6V4h7v5h5zm-2-9v7.1L13.9 16l-2.8 2.8L8.3 16l2.8-2.8L8.9 11z"></path></svg></span> Step 5: export it for offline use<a class="headerlink" href="#export" title="Permanent link">¶</a></h2>
+<h2 id="export"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8zm4 18H6V4h7v5h5zm-2-9v7.1L13.9 16l-2.8 2.8L8.3 16l2.8-2.8L8.9 11z"></path></svg></span> Step 4: export it for offline use<a class="headerlink" href="#export" title="Permanent link">¶</a></h2>
 <p>A dashboard does not have to stay on the server.</p>
 <ol>
 <li>Click the gear in the header (<strong>Settings</strong>), then <strong>Export</strong>. Under <strong>Dashboard only (serverless)</strong>, click <strong>Export dashboard…</strong>. Every export uses the filters you have right now.</li>
@@ -8297,10 +8250,10 @@
 </div>
 <div class="admonition question">
 <p class="admonition-title">Check your understanding</p>
-<p>A colleague opens the same dashboard, after you labelled the samples in step 1. Do they see the groups <code>run1</code> and <code>run2</code>? Where do your labels live?</p>
+<p>You added the person next to you as a <strong>Viewer</strong> in step 3. Can they read your comment? Can they change the title you edited in step 2?</p>
 <details class="solution">
 <summary>Answer</summary>
-<p>No. The labels are yours: they are kept on your account, not in the project, and the tables are not changed. The groups, the colours and the comparison in the cards are a temporary view too: they stay in your browser.</p>
+<p>They can read the comment, and answer it: this server lets readers comment. They cannot change the title: a viewer can only look, editing needs the <strong>Editor</strong> role. Your note from step 1 shows to them only once <strong>Visible to viewers</strong> is on.</p>
 </details>
 </div>
 <div class="admonition challenge">
@@ -8315,7 +8268,6 @@
 <div class="admonition keypoints">
 <p class="admonition-title">Key points</p>
 <ul>
-<li><strong>Metadata</strong> mode adds your own label column beside the samples, without changing the table. Each label is a group that can colour the figures that carry the sample.</li>
 <li>A comment and a note stay on the figure they were written on.</li>
 <li>Every save is a version. The history of a component compares it with an earlier one, and restores just that component.</li>
 <li><strong>Permissions</strong> lists who sees the project, and with which role: owner, editor or viewer.</li>
@@ -8323,12 +8275,19 @@
 </ul>
 </div>
 <details class="note">
-<summary>Bonus · Compare the groups in the cards</summary>
-<p>Open the <strong>Sample QC</strong> tab and <strong>Analysis</strong>. With <code>batch</code> as your label column, switch on <strong>Compare groups in cards</strong>. Each card now shows its number for all the samples and for each group. Read the <strong>Median depth</strong> card: which run has the deeper samples, and by how much?</p>
-<details class="solution">
-<summary>Solution</summary>
-<p><code>run2</code>, by 50. The card shows <strong>286</strong> for all three samples, <strong>236</strong> for <code>run1</code> (two samples) and <strong>286</strong> for <code>run2</code> (one sample).</p>
-</details>
+<summary>Bonus · Label samples in Metadata mode, on your ampliseq copy</summary>
+<p>nf-core/ampliseq publishes its sample metadata in <code>input/</code>, so your project has a sample table you can label; viralrecon publishes none. Here you label four samples, then colour the ampliseq figures by your labels.</p>
+<ol>
+<li>On your <strong>nf-core/ampliseq (copy)</strong> dashboard, click <strong>Metadata</strong> in the dock at the bottom. A panel opens on the right. It shows the table <strong>metadata</strong>, with <strong>key: ID</strong>: one row per sample.</li>
+<li>Next to <strong>Columns</strong>, click the green <strong>+</strong>. Type <code>my_group</code> and click <strong>Add</strong>. A new teal column appears.</li>
+<li>Double-click the <code>my_group</code> cell of a row, type a label, and press Enter. Do it for four samples: <code>water</code> for <code>SRR10070130</code> (Riverwater) and <code>SRR10070132</code> (Groundwater), <code>solid</code> for <code>SRR10070149</code> (Sediment) and <code>SRR10102392</code> (Soil).</li>
+<li>In the header of <code>my_group</code>, click the chart icon. The <strong>Analysis</strong> button in the dock now shows <strong>2</strong> (your two groups, <code>solid</code> and <code>water</code>).</li>
+<li>Click <strong>Analysis</strong>. Under <strong>Color figures by</strong>, click <strong>A column</strong>, then <strong>Pick a column…</strong>, and choose <code>my_group</code> (it is at the end of the list). The panel switches to <strong>My groups</strong>. On the Overview tab it says that no component can receive the groups: that is expected.</li>
+<li>In the icon bar on the left, click the scatter-plot icon, the fourth from the top. This is the <strong>Ordination &amp; Clustering</strong> tab. In <strong>Sample ordination (PCoA, Bray-Curtis)</strong> the legend now reads <strong>solid</strong>, <strong>water</strong>, <strong>Other</strong>: the grey <strong>Other</strong> is every sample you did not label. The heatmap beside it shows the same groups.</li>
+</ol>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/ep3_bonus_metadata.jpg" data-desc-position="bottom"><img alt="The Metadata panel of the ampliseq copy: the table metadata, key ID, and the new my_group column with water on two rows and solid on two rows" class="ws-shot" src="../../../images/tutorials/workshop-cli/ep3_bonus_metadata.jpg"></a></p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop-cli/ep3_bonus_metadata_ordination.jpg" data-desc-position="bottom"><img alt="The Ordination and Clustering tab after the colouring: the PCoA legend shows solid, water and Other, and the Bray-Curtis heatmap has a Group legend with solid and water" class="ws-shot" src="../../../images/tutorials/workshop-cli/ep3_bonus_metadata_ordination.jpg"></a></p>
+<p>The labels stay on your dashboard. The colouring is a temporary view: the Analysis panel says it stays in this browser and nobody else sees it. The <strong>Alpha Diversity</strong> tab also takes the groups (in <strong>Rarefaction curves</strong>); the taxon bar charts of <strong>Community &amp; Diversity</strong> do not.</p>
 </details>
 <details class="note">
 <summary>Bonus · Fix your comment</summary>
