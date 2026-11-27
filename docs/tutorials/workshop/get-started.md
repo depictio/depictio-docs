@@ -69,6 +69,5 @@ More words in the [Reference](reference.md); the full picture in [Data model](..
     - A dashboard is made of components that read the data collections.
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md){ .ws-help }
 [<span class="ws-k">Next episode</span><span class="ws-t">1. Read a shared dashboard</span>](view.md){ .ws-go .ws-ep1 }
 </div>

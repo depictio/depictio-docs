@@ -128,6 +128,5 @@ So far, only you see this project. Sharing is set per **project**: whoever you s
     - Sharing is set per project: a user group added as **Viewer** sees all its dashboards; **Public** opens it to every signed-in account.
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#optional-a){ .ws-help }
 [<span class="ws-k">Back to</span><span class="ws-t">Depictio in the browser</span>](index.md){ .ws-go .ws-ep4 }
 </div>

@@ -139,7 +139,7 @@ Someone shared a finished dashboard with you: you are a **reader**. You cannot c
 In the **Analysis** panel, **Color figures by → A column** picks a column, such as `habitat`: it recolours every figure whose data carries that column. **My groups** colours the figures by the groups you saved.
 
 !!! note "Metadata mode and comments"
-    Labelling samples in **Metadata** mode and leaving a **comment** on a figure are part of Day 2: [Collaborate and export](../workshop-cli/collaborate-and-export.md).
+    Labelling samples in **Metadata** mode and leaving a **comment** on a figure are part of Day 2: [Work on your dashboard, together](../workshop-cli/collaborate-and-export.md).
 
 ## Dashboard tour { #dashboard-tour }
 

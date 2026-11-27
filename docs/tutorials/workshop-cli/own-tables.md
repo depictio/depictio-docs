@@ -7,7 +7,7 @@ description: "Add a second table and its link to your Depictio project file, ref
 # A new season
 
 <div class="ws-strip" markdown>
-[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 } [**3** Collaborate](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 .ws-here }
+[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 } [**3** Together](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 .ws-here }
 </div>
 
 !!! note "Going further"
@@ -149,6 +149,5 @@ $ SEASON_DIR=seasons/season_2008 depictio ingest --project-config-path penguins.
     - `--attach-run` adds a folder as a new run; **Runs → Compare** shows what it changed.
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#new-season){ .ws-help }
 [<span class="ws-k">Next episode</span><span class="ws-t">A dashboard as code</span>](dashboard-as-code.md){ .ws-go .ws-ep3 }
 </div>

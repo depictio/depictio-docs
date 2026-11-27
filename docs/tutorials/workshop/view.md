@@ -124,9 +124,8 @@ Before reading the results, check the run. The ![MultiQC](../../images/tutorials
     - The Guide in detail, with a challenge: [The Guide](reference.md#guide-detail).
     - What is yours and what is shared when you are a reader: [You are a reader](reference.md#reader).
     - The pages **Dashboards**, **Projects** and your profile, and four ways to pick samples: [Dashboard tour](reference.md#dashboard-tour).
-    - Metadata mode and comments on a figure are part of Day 2: [Collaborate and export](../workshop-cli/collaborate-and-export.md).
+    - Metadata mode and comments on a figure are part of Day 2: [Work on your dashboard, together](../workshop-cli/collaborate-and-export.md).
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#episode-1){ .ws-help }
 [<span class="ws-k">Next episode</span><span class="ws-t">2. Make your own copy and edit it</span>](edit-your-copy.md){ .ws-go .ws-ep2 }
 </div>

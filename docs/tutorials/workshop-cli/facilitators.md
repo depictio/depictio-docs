@@ -17,9 +17,9 @@ description: "Prepare a throwaway Depictio server for Day 2 of the hands-on work
 | 10:00 | Welcome | 5 min | [0. Setup](setup.md) |
 | 10:05 | Episode 1: your own tables, the Project Builder (browser), **Hands-on 1** (10 min) | Source and project, two collections that scan both seasons, preview, create; on the project page **Add join** on `individual_id`; a figure on the joined table | [1. Your own tables, no template](project-builder.md) |
 | 10:25 | The command line (10 min) | `CLI.yaml`, `depictio config check`, `depictio ingest` | [0. Setup](setup.md) |
-| 10:35 | Episode 2: an nf-core run from the terminal, **Hands-on 2** (15 min) | `depictio ingest` on a run, with its template | [2. An nf-core run from the terminal](nf-core-run.md) |
+| 10:35 | Episode 2: an nf-core run from the terminal, **Hands-on 2** (15 min) | `depictio catalog info`, then `depictio ingest` on a viralrecon run, dry run first | [2. An nf-core run from the terminal](nf-core-run.md) |
 | 11:00 | Break | 10 min | |
-| 11:10 | Episode 3: collaborate and export (browser), **Hands-on 3** (15 min) | On the learner's copy of the ampliseq dashboard: label in Metadata mode, comment and annotate, a component's History, export **Dashboard only** and open it offline | [3. Collaborate and export](collaborate-and-export.md) |
+| 11:10 | Episode 3: work on your dashboard, together (browser), **Hands-on 3** (15 min) | On the learner's own nf-core/viralrecon dashboard from episode 2: a sample sheet and a label column in Metadata mode, comment and annotate, edit and compare versions, share the project, export **Dashboard only** | [3. Work on your dashboard, together](collaborate-and-export.md) |
 | 11:35 | Wrap-up | The Nextflow end-of-run demo | [Going further](going-further.md) |
 | 11:45 | Questions | 15 min | |
 
@@ -43,7 +43,7 @@ Run Day 2 on a server set up for it, and delete it afterwards:
 Tell learners at the start that the server and everything on it are deleted after the session.
 
 !!! danger "Version pins"
-    The pins read `==1.24.0`, the exact version of the server: learners check that `depictio --version` prints it. If the server is upgraded, even to a patch release, change every pin and that line of setup.md. A 1.21 CLI cannot read the `CLI.yaml` of a 1.22.0 to 1.22.2 server: every command after `depictio --version` fails with *s3_storage.browser_access: Extra inputs are not permitted*. Later servers leave that setting out of the file, and later CLIs skip keys they do not know with a warning, but the same version on both sides is the only setup the lesson was rehearsed with. The pins are in [Setup](setup.md) (the uv and pip install lines, and the expected `depictio --version`), in [Going further](going-further.md) (the `[local]` install, with uv and pip), and in this lesson's [Troubleshooting](troubleshooting.md) (the MultiQC row).
+    The pins read `==1.24.0`, the exact version of the server: learners check that `depictio --version` prints it. If the server is upgraded, even to a patch release, change every pin and that line of setup.md. A 1.21 CLI cannot read the `CLI.yaml` of a 1.22.0 to 1.22.2 server: every command after `depictio --version` fails with *s3_storage.browser_access: Extra inputs are not permitted*. Later servers leave that setting out of the file, and later CLIs skip keys they do not know with a warning, but the same version on both sides is the only setup the lesson was rehearsed with. The pins are in [Setup](setup.md) (the uv and pip install lines, and the expected `depictio --version`), in [Going further](going-further.md) (the `[local]` install, with uv and pip), and in this lesson's Troubleshooting (the MultiQC row).
 
 ## :material-folder-network-outline: The penguins folder for the Project Builder { #penguins-bucket }
 
@@ -51,7 +51,7 @@ Episode 1 reads a **folder in a bucket**, not files from a laptop. Before the da
 
 The learner page says the location is in the chat: paste it there at the start of the hands-on. Tested on 1.24.0: the builder ingests both collections in about 4 s; **Add join** previews *223 rows → joined: 223 rows · 12 columns* and creates `joined_physical_features_demographic_data` in a few seconds. On 1.24.0 the builder's review step still says joins go through the YAML and **Download YAML** gives a template (`template:` block, `{DATA_ROOT}`): both are fixed in 1.24.1 ([PR #1493](https://github.com/depictio/depictio/pull/1493)). If the server is still on 1.24.0, tell the room to use **Add join** on the project page.
 
-For episode 3, every learner needs a dashboard of their own to work on: their copy of **nf-core/ampliseq** from Day 1, or a duplicate made on the spot. The exports (`DEPICTIO_STATIC_EXPORT_ENABLED=true`) and viewers' comments (`DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT=true`) must be on, as on Day 1's server.
+For episode 3, every learner works on the **nf-core/viralrecon** project they ingested in episode 2: they own it. A learner whose ingestion failed duplicates the instructor's viralrecon dashboard instead. The exports (`DEPICTIO_STATIC_EXPORT_ENABLED=true`) and viewers' comments (`DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT=true`) must be on, as on Day 1's server.
 
 ## :material-download-outline: Files learners download
 
@@ -60,7 +60,8 @@ All are linked from the episode pages:
 | Episode | File |
 |---|---|
 | Going further, and episode 1 as a local copy | [`penguins-workshop.zip`](penguins-workshop.zip), 6 KB: `penguins-1.yaml` (a project file by hand), `penguins.yaml` (a new season), `starter.yaml`, `seasons/season_2007/`, `seasons/season_2008/` |
-| 2 | [`megatest.zip`](megatest.zip), 1.4 MB: the nf-core/ampliseq 2.18.0 megatest outputs (`input/`, `multiqc/`, `pipeline_info/`, `qiime2/`, `overall_summary.tsv`) |
+| 2 | [`viralrecon.zip`](viralrecon.zip), 1.3 MB: the part of an nf-core/viralrecon 3.0.0 run (test profile, 3 samples) that the template reads, in `viralrecon/run_1/` |
+| 3 | [`samplesheet.csv`](samplesheet.csv): the sample sheet learners upload and link to label samples in Metadata mode |
 
 ## :material-alert-outline: Known behaviours
 

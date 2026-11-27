@@ -162,6 +162,5 @@ The first step of the dialog, **Your data**, has two halves: **Upload** on the l
     - Several MultiQC reports in one collection: [Several MultiQC reports](reference.md#several-multiqc).
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#episode-3){ .ws-help }
 [<span class="ws-k">Next episode</span><span class="ws-t">4. Showcases</span>](showcases.md){ .ws-go .ws-ep6 }
 </div>

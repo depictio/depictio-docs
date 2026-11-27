@@ -143,7 +143,7 @@ After the setup, the episodes take you through three roles, one after the other.
 </div>
 
 !!! tip "Stuck?"
-    Ask the docs assistant first: the chat button at the bottom right of these pages. Then ask in the Zoom chat. Known problems are in [Troubleshooting](troubleshooting.md).
+    Ask the docs assistant first: the chat button at the bottom right of these pages. Then ask in the Zoom chat.
 
 <div class="ws-next ws-links" markdown>
 [<span class="ws-k">Reference</span><span class="ws-t">The words of the lesson</span>](reference.md){ .ws-help .ws-ref }

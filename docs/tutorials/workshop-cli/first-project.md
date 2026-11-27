@@ -7,7 +7,7 @@ description: "Describe one table in a short project file, check it with a dry ru
 # A project file by hand
 
 <div class="ws-strip" markdown>
-[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 } [**3** Collaborate](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 .ws-here }
+[**0** Setup](setup.md){ .ws-ep0 } [**1** Your tables](project-builder.md){ .ws-ep1 } [**2** nf-core run](nf-core-run.md){ .ws-ep2 } [**3** Together](collaborate-and-export.md){ .ws-ep3 } [**+** Going further](going-further.md){ .ws-ep4 .ws-here }
 </div>
 
 !!! note "Going further"
@@ -163,6 +163,5 @@ Then open the dashboard (3):
     - `depictio ingest` creates the project once: `--project` gives it your own name, `--dashboard` adds a dashboard from a YAML file. Running it again is refused.
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#project-file){ .ws-help }
 [<span class="ws-k">Next episode</span><span class="ws-t">A new season</span>](own-tables.md){ .ws-go .ws-ep2 }
 </div>

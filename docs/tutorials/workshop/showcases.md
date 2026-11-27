@@ -87,6 +87,5 @@ In episode 3 you built the dashboard of one pipeline, nf-core/ampliseq, from its
         ![The PCA of viralrecon in 3D: three samples on the axes PC1, PC2 and PC3, with the View control set to 3D](../../images/tutorials/workshop/showcases_pca3d.jpg){ .ws-shot }
 
 <div class="ws-next" markdown>
-[<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#episode-4){ .ws-help }
 [<span class="ws-k">Optional</span><span class="ws-t">Create a project from files</span>](from-a-file.md){ .ws-go .ws-ep4 }
 </div>
