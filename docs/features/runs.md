@@ -17,6 +17,11 @@ A project made from a pipeline can hold several runs of it. The project's **Runs
 | Owner or editor role | Attaching a run, refreshing data |
 | `DEPICTIO_DASHBOARD_VERSIONS_CHANGES_SINCE_ENABLED=true` | **Compare**, the dot on new runs, the marked new rows, the dashboard history in **Activity**. See [_"What's new"_](whats-new.md#turn-it-on) |
 
+Runs and versions on the *Penguins Versioned Demo* project, one run per field season:
+
+[![Each season is a run; each change of a table is a version](../images/tutorials/workshop/diagrams/runs-and-versions_light.png#only-light){ .ws-diagram }](../images/tutorials/workshop/diagrams/runs-and-versions_light.png){target=_blank}
+[![Each season is a run; each change of a table is a version](../images/tutorials/workshop/diagrams/runs-and-versions_dark.png#only-dark){ .ws-diagram }](../images/tutorials/workshop/diagrams/runs-and-versions_dark.png){target=_blank}
+
 ## Attach a run
 
 On the project page, **Add data** on the folder of another run of the same pipeline reads **Add run**: Depictio recognises it as a run. See [Remote data and manifests](../usage/projects/remote-data.md).

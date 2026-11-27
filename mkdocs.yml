@@ -51,7 +51,6 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.indexes
-    - navigation.expand
     - navigation.top
 
     # Header
@@ -77,6 +76,7 @@ extra_css:
   - stylesheets/asciinema.css
   - stylesheets/cards.css
   - stylesheets/cli.css
+  - stylesheets/workshop.css
   # - stylesheets/css-v1.0.4.css
   - https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
   - https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css
@@ -91,12 +91,14 @@ extra_javascript:
   - javascripts/catalog-site.js
   - javascripts/template-version.js
   - javascripts/template-showcase.js
+  - javascripts/workshop-embed.js
   - javascripts/nav-pinned.js
   - javascripts/doc-sections.js
   - javascripts/template-catalog.js
   - javascripts/asciinema.js
   - javascripts/theme-video.js
   - javascripts/lazy-video.js
+  - javascripts/ws-term.js
 
 # Markdown Extensions
 markdown_extensions:
@@ -373,13 +375,43 @@ nav:
       - Special Modes:
           - Authentication Modes: usage/guides/authentication-modes.md
           - Unauthenticated mode (legacy): usage/guides/unauthenticated_mode.md
-  - Tutorials:
-      - tutorials/index.md
-      - What's new since your last visit: tutorials/whats-new.md
-      - Compare runs: tutorials/compare-runs.md
-      - Watch the data update: tutorials/data-updates.md
-      - Label samples: tutorials/metadata-panel.md
-      - Move a project to another instance: tutorials/instance-migration.md
+  - Learn:
+      - Overview: tutorials/index.md
+      - Watch: tutorials/watch.md
+      - Step by step:
+          - tutorials/step-by-step/index.md
+          - What's new since your last visit: tutorials/whats-new.md
+          - Compare runs: tutorials/compare-runs.md
+          - Watch the data update: tutorials/data-updates.md
+          - Label samples: tutorials/metadata-panel.md
+          - Move a project to another instance: tutorials/instance-migration.md
+      - Hands-on courses:
+          - tutorials/courses/index.md
+          - Depictio in the browser:
+            - tutorials/workshop/index.md
+            - 0. Setup: tutorials/workshop/get-started.md
+            - 1. Read a shared dashboard: tutorials/workshop/view.md
+            - 2. Make your own copy and edit it: tutorials/workshop/edit-your-copy.md
+            - 3. Create a project from an nf-core run: tutorials/workshop/from-nf-core-run.md
+            - 4. Showcases: tutorials/workshop/showcases.md
+            - Optional A · Create a project from files: tutorials/workshop/from-a-file.md
+            - Optional B · Follow a new run: tutorials/workshop/new-run-and-versions.md
+            - Reference: tutorials/workshop/reference.md
+            - Troubleshooting: tutorials/workshop/troubleshooting.md
+            - Instructor notes: tutorials/workshop/facilitators.md
+          - Depictio from the command line:
+            - tutorials/workshop-cli/index.md
+            - 0. Setup: tutorials/workshop-cli/setup.md
+            - 1. Your own tables, no template: tutorials/workshop-cli/project-builder.md
+            - 2. An nf-core run from the terminal: tutorials/workshop-cli/nf-core-run.md
+            - 3. Collaborate and export: tutorials/workshop-cli/collaborate-and-export.md
+            - Going further:
+              - tutorials/workshop-cli/going-further.md
+              - A project file by hand: tutorials/workshop-cli/first-project.md
+              - A new season: tutorials/workshop-cli/own-tables.md
+              - A dashboard as code: tutorials/workshop-cli/dashboard-as-code.md
+            - Troubleshooting: tutorials/workshop-cli/troubleshooting.md
+            - Instructor notes: tutorials/workshop-cli/facilitators.md
   - Features:
       - Overview: features/README.md
       - Dashboards:

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="600" viewBox="0 0 1440 600">
+  <rect width="1440" height="600" fill="#ffffff"/>
+  <defs><filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.12"/></filter></defs>
+  <text x="46.0" y="50.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" fill="#1e1e1e" text-anchor="start" font-weight="bold">As a reader, what you can change</text>
+  <text x="46.0" y="76.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#5c5c5c" text-anchor="start" font-weight="normal">on a dashboard shared with you</text>
+  <g filter="url(#sh)"><rect x="40.0" y="110.0" width="520.0" height="330.0" rx="12" fill="#ffffff" stroke="#feb87e" stroke-width="1.6"/></g>
+  <path d="M41.0,156.0 V122.0 Q41.0,111.0 52.0,111.0 H548.0 Q559.0,111.0 559.0,122.0 V156.0 Z" fill="#fff2e8"/>
+  <path d="M40.0,156.0 L560.0,156.0" fill="none" stroke="#feb87e" stroke-width="1.2" stroke-linecap="round"/>
+  <path transform="translate(57.0,122.0) scale(0.9167)" d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z" fill="#fd7e14"/>
+  <text x="88.0" y="139.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#ca6510" text-anchor="start" font-weight="bold">nf-core/ampliseq</text>
+  <text x="86.6" y="179.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#5c5c5c" text-anchor="middle" font-weight="normal">Overview</text>
+  <text x="204.7" y="179.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#ca6510" text-anchor="middle" font-weight="bold">Community &amp; Diversity</text>
+  <path d="M127.2,189.0 L282.1,189.0" fill="none" stroke="#fd7e14" stroke-width="3" stroke-linecap="round"/>
+  <text x="298.6" y="179.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#5c5c5c" text-anchor="middle" font-weight="normal">…</text>
+  <path d="M41.0,190.0 L559.0,190.0" fill="none" stroke="#f1f3f5" stroke-width="1.4" stroke-linecap="round"/>
+  <rect x="54.0" y="202.0" width="206.6" height="85.1" rx="8" fill="#ffffff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="66.0" y="222.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#5c5c5c" text-anchor="start" font-weight="normal">Phyla</text>
+  <text x="66.0" y="275.1" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" fill="#1e1e1e" text-anchor="start" font-weight="bold">57</text>
+  <rect x="54.0" y="295.1" width="206.6" height="130.9" rx="8" fill="#ffffff" stroke="#adb5bd" stroke-width="1"/>
+  <rect x="77.0" y="354.9" width="23.0" height="62.1" rx="2" fill="#228be6" stroke="none" stroke-width="0"/>
+  <rect x="122.9" y="321.1" width="23.0" height="95.9" rx="2" fill="#12b886" stroke="none" stroke-width="0"/>
+  <rect x="168.8" y="371.8" width="23.0" height="45.2" rx="2" fill="#fd7e14" stroke="none" stroke-width="0"/>
+  <rect x="214.7" y="338.0" width="23.0" height="79.0" rx="2" fill="#be4bdb" stroke="none" stroke-width="0"/>
+  <rect x="268.6" y="202.0" width="277.4" height="224.0" rx="8" fill="#ffffff" stroke="#adb5bd" stroke-width="1"/>
+  <circle cx="324.1" cy="358.8" r="4.5" fill="#228be6" fill-opacity="1"/>
+  <circle cx="351.8" cy="325.2" r="4.5" fill="#12b886" fill-opacity="1"/>
+  <circle cx="385.1" cy="340.9" r="4.5" fill="#fd7e14" fill-opacity="1"/>
+  <circle cx="407.3" cy="291.6" r="4.5" fill="#228be6" fill-opacity="1"/>
+  <circle cx="440.6" cy="309.5" r="4.5" fill="#12b886" fill-opacity="1"/>
+  <circle cx="462.8" cy="269.2" r="4.5" fill="#fd7e14" fill-opacity="1"/>
+  <circle cx="490.5" cy="282.6" r="4.5" fill="#228be6" fill-opacity="1"/>
+  <circle cx="365.7" cy="381.2" r="4.5" fill="#12b886" fill-opacity="1"/>
+  <circle cx="476.7" cy="336.4" r="4.5" fill="#fd7e14" fill-opacity="1"/>
+  <circle cx="429.5" cy="363.3" r="4.5" fill="#228be6" fill-opacity="1"/>
+  <circle cx="338.0" cy="296.1" r="4.5" fill="#12b886" fill-opacity="1"/>
+  <rect x="440.0" y="118.0" width="108.0" height="30.0" rx="15" fill="#f3f4f4" stroke="#bcc1c5" stroke-width="1.3"/>
+  <path transform="translate(450.0,125.0) scale(0.6667)" d="M12 9a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m0-4.5c5 0 9.27 3.11 11 7.5c-1.73 4.39-6 7.5-11 7.5S2.73 16.39 1 12c1.73-4.39 6-7.5 11-7.5M3.18 12a9.821 9.821 0 0 0 17.64 0a9.821 9.821 0 0 0-17.64 0" fill="#6b7278"/>
+  <text x="508.0" y="138.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#6b7278" text-anchor="middle" font-weight="normal">Reader</text>
+  <rect x="610.0" y="110.0" width="790.0" height="96.0" rx="12" fill="#ffffff" stroke="#adb5bd" stroke-width="1.1"/>
+  <rect x="632.0" y="132.0" width="52.0" height="52.0" rx="10" fill="#fff2e8" stroke="#feb87e" stroke-width="1.3"/>
+  <path transform="translate(644.0,144.0) scale(1.1667)" d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z" fill="#fd7e14"/>
+  <text x="706.0" y="146.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" fill="#ca6510" text-anchor="start" font-weight="bold">Dashboard</text>
+  <text x="706.0" y="169.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#1e1e1e" text-anchor="start" font-weight="normal">its figures, tables, tabs and layout</text>
+  <text x="706.0" y="190.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#5c5c5c" text-anchor="start" font-weight="normal">To change it, make your own copy: episode 2</text>
+  <rect x="1250.0" y="141.0" width="130.0" height="34.0" rx="17" fill="#feeeee" stroke="#fa5252" stroke-width="1.4"/>
+  <path transform="translate(1263.5,149.5) scale(0.7083)" d="M12 17a2 2 0 0 1-2-2c0-1.11.89-2 2-2a2 2 0 0 1 2 2 2 2 0 0 1-2 2m6 3V10H6v10zm0-12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10c0-1.11.89-2 2-2h1V6a5 5 0 0 1 5-5 5 5 0 0 1 5 5v2zm-6-5a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3" fill="#fa5252"/>
+  <text x="1329.0" y="163.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#c84242" text-anchor="middle" font-weight="bold">Read only</text>
+  <rect x="610.0" y="220.0" width="790.0" height="96.0" rx="12" fill="#ffffff" stroke="#adb5bd" stroke-width="1.1"/>
+  <rect x="632.0" y="242.0" width="52.0" height="52.0" rx="10" fill="#e7f8f3" stroke="#7dd8bc" stroke-width="1.3"/>
+  <path transform="translate(644.0,254.0) scale(1.1667)" d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z" fill="#12b886"/>
+  <text x="706.0" y="256.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" fill="#0e936b" text-anchor="start" font-weight="bold">Data</text>
+  <text x="706.0" y="279.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#1e1e1e" text-anchor="start" font-weight="normal">the project's data collections</text>
+  <text x="706.0" y="300.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#5c5c5c" text-anchor="start" font-weight="normal">Changed by the project's owners and editors</text>
+  <rect x="1250.0" y="251.0" width="130.0" height="34.0" rx="17" fill="#feeeee" stroke="#fa5252" stroke-width="1.4"/>
+  <path transform="translate(1263.5,259.5) scale(0.7083)" d="M12 17a2 2 0 0 1-2-2c0-1.11.89-2 2-2a2 2 0 0 1 2 2 2 2 0 0 1-2 2m6 3V10H6v10zm0-12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10c0-1.11.89-2 2-2h1V6a5 5 0 0 1 5-5 5 5 0 0 1 5 5v2zm-6-5a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3" fill="#fa5252"/>
+  <text x="1329.0" y="273.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#c84242" text-anchor="middle" font-weight="bold">Read only</text>
+  <rect x="610.0" y="330.0" width="790.0" height="240.0" rx="12" fill="#ffffff" stroke="#40c057" stroke-width="1.4"/>
+  <rect x="632.0" y="352.0" width="52.0" height="52.0" rx="10" fill="#e9f3fc" stroke="#85bff1" stroke-width="1.3"/>
+  <path transform="translate(644.0,364.0) scale(1.1667)" d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4" fill="#228be6"/>
+  <text x="706.0" y="372.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" fill="#1b6fb8" text-anchor="start" font-weight="bold">Your view</text>
+  <text x="706.0" y="394.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#1e1e1e" text-anchor="start" font-weight="normal">changes nothing for anyone else</text>
+  <rect x="1190.0" y="361.0" width="190.0" height="34.0" rx="17" fill="#ecf9ee" stroke="#40c057" stroke-width="1.4"/>
+  <path transform="translate(1203.5,369.5) scale(0.7083)" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z" fill="#40c057"/>
+  <text x="1299.0" y="383.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#339a46" text-anchor="middle" font-weight="bold">You can change it</text>
+  <path transform="translate(708.0,424.0) scale(0.8333)" d="M6 13h12v-2H6M3 6v2h18V6M10 18h4v-2h-4z" fill="#228be6"/>
+  <text x="740.0" y="430.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#1e1e1e" text-anchor="start" font-weight="bold">Filters, and selections on a figure</text>
+  <text x="740.0" y="449.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#5c5c5c" text-anchor="start" font-weight="normal">kept for your account, in any browser (Settings › Remember my filters, on by default)</text>
+  <path transform="translate(708.0,470.0) scale(0.8333)" d="M13.07 10.41a5 5 0 0 0 0-5.82A3.4 3.4 0 0 1 15 4a3.5 3.5 0 0 1 0 7a3.4 3.4 0 0 1-1.93-.59M5.5 7.5A3.5 3.5 0 1 1 9 11a3.5 3.5 0 0 1-3.5-3.5m2 0A1.5 1.5 0 1 0 9 6a1.5 1.5 0 0 0-1.5 1.5M16 17v2H2v-2s0-4 7-4s7 4 7 4m-2 0c-.14-.78-1.33-2-5-2s-4.93 1.31-5 2m11.95-4A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4Z" fill="#228be6"/>
+  <text x="740.0" y="476.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#1e1e1e" text-anchor="start" font-weight="bold">Groups, in Analysis</text>
+  <text x="740.0" y="495.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#5c5c5c" text-anchor="start" font-weight="normal">kept in this browser only</text>
+  <path transform="translate(708.0,516.0) scale(0.8333)" d="M10.59 13.41c.41.39.41 1.03 0 1.42-.39.39-1.03.39-1.42 0a5.003 5.003 0 0 1 0-7.07l3.54-3.54a5.003 5.003 0 0 1 7.07 0 5.003 5.003 0 0 1 0 7.07l-1.49 1.49c.01-.82-.12-1.64-.4-2.42l.47-.48a2.98 2.98 0 0 0 0-4.24 2.98 2.98 0 0 0-4.24 0l-3.53 3.53a2.98 2.98 0 0 0 0 4.24m2.82-4.24c.39-.39 1.03-.39 1.42 0a5.003 5.003 0 0 1 0 7.07l-3.54 3.54a5.003 5.003 0 0 1-7.07 0 5.003 5.003 0 0 1 0-7.07l1.49-1.49c-.01.82.12 1.64.4 2.43l-.47.47a2.98 2.98 0 0 0 0 4.24 2.98 2.98 0 0 0 4.24 0l3.53-3.53a2.98 2.98 0 0 0 0-4.24.973.973 0 0 1 0-1.42" fill="#228be6"/>
+  <text x="740.0" y="522.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#1e1e1e" text-anchor="start" font-weight="bold">Shown to someone else only by a view link</text>
+  <text x="740.0" y="541.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#5c5c5c" text-anchor="start" font-weight="normal">Settings › Share this view: whoever opens it gets your filters</text>
+</svg>

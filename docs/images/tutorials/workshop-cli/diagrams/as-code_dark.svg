@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="520" viewBox="0 0 1440 520">
+  <rect width="1440" height="520" fill="#1f2129"/>
+  <defs><filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.12"/></filter></defs>
+  <text x="46.0" y="50.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" fill="#e3e3e3" text-anchor="start" font-weight="bold">A dashboard as a file</text>
+  <text x="46.0" y="76.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#9aa0ac" text-anchor="start" font-weight="normal">export it, change it in a text editor, check it, send it back</text>
+  <g><rect x="40.0" y="130.0" width="250.0" height="250.0" rx="12" fill="#24272f" stroke="#a4591c" stroke-width="1.6"/></g>
+  <path d="M41.0,176.0 V142.0 Q41.0,131.0 52.0,131.0 H278.0 Q289.0,131.0 289.0,142.0 V176.0 Z" fill="#503524"/>
+  <path d="M40.0,176.0 L290.0,176.0" fill="none" stroke="#a4591c" stroke-width="1.2" stroke-linecap="round"/>
+  <path transform="translate(57.0,142.0) scale(0.9167)" d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z" fill="#fd8d30"/>
+  <text x="88.0" y="159.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#fd9a48" text-anchor="start" font-weight="bold">Penguin field survey</text>
+  <text x="86.6" y="199.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#fd9a48" text-anchor="middle" font-weight="bold">Overview</text>
+  <path d="M54.0,209.0 L119.2,209.0" fill="none" stroke="#fd8d30" stroke-width="3" stroke-linecap="round"/>
+  <path d="M41.0,210.0 L289.0,210.0" fill="none" stroke="#282b33" stroke-width="1.4" stroke-linecap="round"/>
+  <rect x="54.0" y="222.0" width="93.2" height="54.7" rx="8" fill="#24272f" stroke="#585e6b" stroke-width="1"/>
+  <text x="66.0" y="242.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="start" font-weight="normal">Birds measured</text>
+  <text x="66.0" y="264.7" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" fill="#e3e3e3" text-anchor="start" font-weight="bold">223</text>
+  <rect x="54.0" y="284.7" width="93.2" height="81.3" rx="8" fill="#24272f" stroke="#585e6b" stroke-width="1"/>
+  <rect x="64.4" y="322.2" width="10.4" height="34.8" rx="2" fill="#3d99e9" stroke="none" stroke-width="0"/>
+  <rect x="85.1" y="303.2" width="10.4" height="53.8" rx="2" fill="#2ec195" stroke="none" stroke-width="0"/>
+  <rect x="105.8" y="331.7" width="10.4" height="25.3" rx="2" fill="#fd8d30" stroke="none" stroke-width="0"/>
+  <rect x="126.5" y="312.7" width="10.4" height="44.3" rx="2" fill="#c661df" stroke="none" stroke-width="0"/>
+  <rect x="155.2" y="222.0" width="120.8" height="144.0" rx="8" fill="#24272f" stroke="#585e6b" stroke-width="1"/>
+  <circle cx="179.4" cy="322.8" r="4.5" fill="#3d99e9" fill-opacity="1"/>
+  <circle cx="191.5" cy="301.2" r="4.5" fill="#2ec195" fill-opacity="1"/>
+  <circle cx="206.0" cy="311.3" r="4.5" fill="#fd8d30" fill-opacity="1"/>
+  <circle cx="215.6" cy="279.6" r="4.5" fill="#3d99e9" fill-opacity="1"/>
+  <circle cx="230.1" cy="291.1" r="4.5" fill="#2ec195" fill-opacity="1"/>
+  <circle cx="239.8" cy="265.2" r="4.5" fill="#fd8d30" fill-opacity="1"/>
+  <circle cx="251.8" cy="273.8" r="4.5" fill="#3d99e9" fill-opacity="1"/>
+  <circle cx="197.5" cy="337.2" r="4.5" fill="#2ec195" fill-opacity="1"/>
+  <circle cx="245.8" cy="308.4" r="4.5" fill="#fd8d30" fill-opacity="1"/>
+  <circle cx="225.3" cy="325.7" r="4.5" fill="#3d99e9" fill-opacity="1"/>
+  <circle cx="185.4" cy="282.5" r="4.5" fill="#2ec195" fill-opacity="1"/>
+  <path d="M296.0,255.0 L350.0,255.0" fill="none" stroke="#3d99e9" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M350.0,255.0 L337.6,248.4" fill="none" stroke="#3d99e9" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M350.0,255.0 L337.6,261.6" fill="none" stroke="#3d99e9" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="323.0" y="243.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#53a5ec" text-anchor="middle" font-weight="bold"><tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12.3">export</tspan></text>
+  <g><rect x="356.0" y="110.0" width="450.0" height="280.6" rx="12" fill="#24272f" stroke="#5d626a" stroke-width="1.6"/></g>
+  <path d="M357.0,156.0 V122.0 Q357.0,111.0 368.0,111.0 H794.0 Q805.0,111.0 805.0,122.0 V156.0 Z" fill="#363941"/>
+  <path d="M356.0,156.0 L806.0,156.0" fill="none" stroke="#5d626a" stroke-width="1.2" stroke-linecap="round"/>
+  <path transform="translate(373.0,122.0) scale(0.9167)" d="M14 2H6a2 2 0 0 0-2 2v16c0 1.11.89 2 2 2h12c1.11 0 2-.89 2-2V8zm4 18H6V4h7v5h5zm-8.46-4.35l2.09 2.09L10.35 19L7 15.65l3.35-3.35l1.28 1.26zm7.46 0L13.65 19l-1.27-1.26l2.09-2.09l-2.09-2.09l1.27-1.26z" fill="#959ca3"/>
+  <text x="404.0" y="139.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#a1a7ad" text-anchor="start" font-weight="bold">dashboard.yaml</text>
+  <rect x="364.0" y="167.0" width="434.0" height="21.6" rx="5" fill="#203853" stroke="#21619a" stroke-width="1"/>
+  <text x="374.0" y="182.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13.5" fill="#53a5ec" xml:space="preserve">title: Penguins, two seasons</text>
+  <text x="374.0" y="206.2" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13.5" fill="#e3e3e3" xml:space="preserve">project_tag: yourname-penguins</text>
+  <text x="374.0" y="229.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13.5" fill="#e3e3e3" xml:space="preserve">components:</text>
+  <text x="374.0" y="253.4" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13.5" fill="#e3e3e3" xml:space="preserve">-   component_type: card  …</text>
+  <text x="374.0" y="277.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13.5" fill="#e3e3e3" xml:space="preserve">-   component_type: figure</text>
+  <text x="374.0" y="300.7" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13.5" fill="#e3e3e3" xml:space="preserve">    figure_params: {x: flipper_length_mm, …}</text>
+  <rect x="364.0" y="308.8" width="434.0" height="21.6" rx="5" fill="#264433" stroke="#338045" stroke-width="1"/>
+  <text x="374.0" y="324.3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13.5" fill="#6ace7c" xml:space="preserve">-   component_type: figure</text>
+  <rect x="364.0" y="332.4" width="434.0" height="21.6" rx="5" fill="#264433" stroke="#338045" stroke-width="1"/>
+  <text x="374.0" y="347.9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13.5" fill="#6ace7c" xml:space="preserve">    title: Bill length vs flipper length</text>
+  <rect x="364.0" y="356.0" width="434.0" height="21.6" rx="5" fill="#264433" stroke="#338045" stroke-width="1"/>
+  <text x="374.0" y="371.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13.5" fill="#6ace7c" xml:space="preserve">    figure_params: {x: bill_length_mm, …}</text>
+  <text x="374.0" y="416.6" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#9aa0ac" text-anchor="start" font-weight="normal">blue: changed · green: added</text>
+  <path d="M810.0,255.0 L844.0,255.0" fill="none" stroke="#3d99e9" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M844.0,255.0 L831.6,248.4" fill="none" stroke="#3d99e9" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M844.0,255.0 L831.6,261.6" fill="none" stroke="#3d99e9" stroke-width="1.7" stroke-linecap="round"/>
+  <g><rect x="850.0" y="150.0" width="230.0" height="210.0" rx="12" fill="#24272f" stroke="#5d626a" stroke-width="1.6"/></g>
+  <path d="M851.0,196.0 V162.0 Q851.0,151.0 862.0,151.0 H1068.0 Q1079.0,151.0 1079.0,162.0 V196.0 Z" fill="#363941"/>
+  <path d="M850.0,196.0 L1080.0,196.0" fill="none" stroke="#5d626a" stroke-width="1.2" stroke-linecap="round"/>
+  <path transform="translate(867.0,162.0) scale(0.9167)" d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-7 0a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1M7 7h10V5h2v14H5V5h2zm.5 6.5L9 12l2 2l4.5-4.5L17 11l-6 6z" fill="#959ca3"/>
+  <text x="898.0" y="179.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#a1a7ad" text-anchor="start" font-weight="bold">validate</text>
+  <path transform="translate(869.0,205.0) scale(0.7500)" d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59z" fill="#57c86b"/>
+  <text x="896.0" y="219.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#e3e3e3" text-anchor="start" font-weight="normal">Schema + domain OK</text>
+  <path transform="translate(869.0,235.0) scale(0.7500)" d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59z" fill="#57c86b"/>
+  <text x="896.0" y="249.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#e3e3e3" text-anchor="start" font-weight="normal">Server schema OK</text>
+  <path transform="translate(869.0,265.0) scale(0.7500)" d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59z" fill="#57c86b"/>
+  <text x="896.0" y="279.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#e3e3e3" text-anchor="start" font-weight="normal">Validation passed</text>
+  <text x="868.0" y="322.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#9aa0ac" text-anchor="start" font-weight="normal">with <tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.4">--server</tspan>: the columns</text>
+  <text x="868.0" y="341.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#9aa0ac" text-anchor="start" font-weight="normal">of cards and filters too</text>
+  <path d="M1084.0,255.0 L1134.0,255.0" fill="none" stroke="#3d99e9" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1134.0,255.0 L1121.6,248.4" fill="none" stroke="#3d99e9" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M1134.0,255.0 L1121.6,261.6" fill="none" stroke="#3d99e9" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="1109.0" y="243.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#53a5ec" text-anchor="middle" font-weight="bold"><tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12.3">import</tspan></text>
+  <g><rect x="1140.0" y="130.0" width="270.0" height="250.0" rx="12" fill="#24272f" stroke="#a4591c" stroke-width="1.6"/></g>
+  <path d="M1141.0,176.0 V142.0 Q1141.0,131.0 1152.0,131.0 H1398.0 Q1409.0,131.0 1409.0,142.0 V176.0 Z" fill="#503524"/>
+  <path d="M1140.0,176.0 L1410.0,176.0" fill="none" stroke="#a4591c" stroke-width="1.2" stroke-linecap="round"/>
+  <path transform="translate(1157.0,142.0) scale(0.9167)" d="M13 3v6h8V3m-8 18h8V11h-8M3 21h8v-6H3m0-2h8V3H3z" fill="#fd8d30"/>
+  <text x="1188.0" y="159.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#fd9a48" text-anchor="start" font-weight="bold">Penguins, two seasons</text>
+  <text x="1186.6" y="199.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#fd9a48" text-anchor="middle" font-weight="bold">Overview</text>
+  <path d="M1154.0,209.0 L1219.2,209.0" fill="none" stroke="#fd8d30" stroke-width="3" stroke-linecap="round"/>
+  <path d="M1141.0,210.0 L1409.0,210.0" fill="none" stroke="#282b33" stroke-width="1.4" stroke-linecap="round"/>
+  <rect x="1154.0" y="222.0" width="101.6" height="54.7" rx="8" fill="#24272f" stroke="#585e6b" stroke-width="1"/>
+  <text x="1166.0" y="242.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" fill="#9aa0ac" text-anchor="start" font-weight="normal">Birds measured</text>
+  <text x="1166.0" y="264.7" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" fill="#e3e3e3" text-anchor="start" font-weight="bold">223</text>
+  <rect x="1154.0" y="284.7" width="101.6" height="81.3" rx="8" fill="#24272f" stroke="#585e6b" stroke-width="1"/>
+  <rect x="1165.3" y="322.2" width="11.3" height="34.8" rx="2" fill="#3d99e9" stroke="none" stroke-width="0"/>
+  <rect x="1187.9" y="303.2" width="11.3" height="53.8" rx="2" fill="#2ec195" stroke="none" stroke-width="0"/>
+  <rect x="1210.5" y="331.7" width="11.3" height="25.3" rx="2" fill="#fd8d30" stroke="none" stroke-width="0"/>
+  <rect x="1233.1" y="312.7" width="11.3" height="44.3" rx="2" fill="#c661df" stroke="none" stroke-width="0"/>
+  <rect x="1263.6" y="222.0" width="132.4" height="144.0" rx="8" fill="#24272f" stroke="#585e6b" stroke-width="1"/>
+  <circle cx="1290.1" cy="322.8" r="4.5" fill="#3d99e9" fill-opacity="1"/>
+  <circle cx="1303.3" cy="301.2" r="4.5" fill="#2ec195" fill-opacity="1"/>
+  <circle cx="1319.2" cy="311.3" r="4.5" fill="#fd8d30" fill-opacity="1"/>
+  <circle cx="1329.8" cy="279.6" r="4.5" fill="#3d99e9" fill-opacity="1"/>
+  <circle cx="1345.7" cy="291.1" r="4.5" fill="#2ec195" fill-opacity="1"/>
+  <circle cx="1356.3" cy="265.2" r="4.5" fill="#fd8d30" fill-opacity="1"/>
+  <circle cx="1369.5" cy="273.8" r="4.5" fill="#3d99e9" fill-opacity="1"/>
+  <circle cx="1310.0" cy="337.2" r="4.5" fill="#2ec195" fill-opacity="1"/>
+  <circle cx="1362.9" cy="308.4" r="4.5" fill="#fd8d30" fill-opacity="1"/>
+  <circle cx="1340.4" cy="325.7" r="4.5" fill="#3d99e9" fill-opacity="1"/>
+  <circle cx="1296.7" cy="282.5" r="4.5" fill="#2ec195" fill-opacity="1"/>
+  <text x="1275.0" y="410.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#6ace7c" text-anchor="middle" font-weight="bold">new title: a new dashboard</text>
+  <text x="1275.0" y="431.0" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#9aa0ac" text-anchor="middle" font-weight="normal">same title: add <tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12.3">--overwrite</tspan></text>
+</svg>

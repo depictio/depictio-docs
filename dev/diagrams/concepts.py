@@ -320,11 +320,15 @@ def bubble(s: Sketch, x: float, y: float, w: float, h: float, lines: tuple[str, 
         s.text(x + 40, y + 29 + i * 22, l, size=14, anchor="start", colour=t.ink if i == 0 else t.dim)
 
 
-def folder(s: Sketch, x: float, y: float, w: float, h: float, title: str, lines: tuple[str, ...] = (), key: str = "run") -> None:
-    """A run folder: a card with the run icon, in the run colour."""
+def folder(s: Sketch, x: float, y: float, w: float, h: float, title: str, lines: tuple[str, ...] = (), key: str = "run", logo: str = "") -> None:
+    """A run folder: a card with the run icon, in the run colour. ``logo``, a
+    base64 SVG, replaces the icon with the pipeline's own mark (nf-core)."""
     t = s.theme
     rrect(s, x, y, w, h, fill=t.fill(key), stroke=edge(t, key), r=10, width=1.6)
-    icon(s, "folder-play-outline", x + 26, y + 27, 22, solid(t, key))
+    if logo:
+        raw(s, f'<image href="data:image/svg+xml;base64,{logo}" x="{x + 16:.1f}" y="{y + 12:.1f}" width="20" height="31" preserveAspectRatio="xMidYMid meet"/>')
+    else:
+        icon(s, "folder-play-outline", x + 26, y + 27, 22, solid(t, key))
     s.text(x + 46, y + 33, title, size=16, anchor="start", weight="bold", colour=ink(t, key))
     for i, l in enumerate(lines):
         s.text(x + 46, y + 56 + i * 20, l, size=13, anchor="start", colour=t.dim)
