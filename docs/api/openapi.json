@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.23.0",
-    "x-generated-at": "2026-11-23T00:00:58Z",
-    "x-depictio-version": "v1.23.0"
+    "version": "1.24.3",
+    "x-generated-at": "2026-11-27T18:56:21Z",
+    "x-depictio-version": "v1.24.3"
   },
   "paths": {
     "/depictio/api/v1/projects/builder/capabilities": {
@@ -2524,6 +2524,62 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/projects/{project_id}/public_offline_download": {
+      "put": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Set Public Offline Download",
+        "description": "Let visitors of a public project download its dashboards' offline copy (#1480).\n\nOwner-gated like visibility (`/toggle_public_private`): a sysadmin may change\nit on a published project, anyone else meets the lock. 404 while either\nswitch is off. Enabling needs a public project (409) and the owner's\nacknowledgement of the preview (422), and queues a build of every dashboard\nof the project at once; sending it again re-queues the stale ones.\nDisabling deletes the bundles.",
+        "operationId": "set_public_offline_download_depictio_api_v1_projects__project_id__public_offline_download_put",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicOfflineDownloadRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -7114,7 +7170,7 @@
           "DeltaTables"
         ],
         "summary": "Get Unique Values",
-        "description": "Return the sorted unique values of ``column`` within a data collection.\n\nSynchronous on purpose: the work is blocking (Mongo, S3, Polars), so FastAPI runs\nit in the thread pool instead of on the event loop, where ~20 option lists\nrequested together used to queue behind each other and stall every other request.\n\nBacks the React viewer's MultiSelect options fetch. Mirrors the code path\nDash uses via ``load_deltatable_lite(..., load_for_options=True)`` so both\nviewers see identical option lists.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column name whose unique values to return.\n    limit: Max values to return (default 1000). Prevents unbounded payloads\n        on high-cardinality columns; MultiSelect's UX caps at 100 anyway.\n    filter_expr: Optional Polars filter expression (string) applied before\n        collecting unique values. Validated through the safe-eval pipeline\n        in ``depictio.models.components.filter_expr``.\n    order_by: Optional companion column giving the order of the values (a\n        ``time_order`` next to a ``time_point``): each value follows the\n        smallest key it carries, numerically when every key is a number. Unset,\n        values that all end in a duration (``30min``, ``2h``) follow it, and\n        the rest sort as strings. See ``depictio.models.components.value_order``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\": str, \"values\": list[str]}`` — strings for MultiSelect UI.\n\nRaises:\n    HTTPException: 404 if DC not found / not accessible, 500 on read error.",
+        "description": "Return the sorted unique values of ``column`` within a data collection.\n\nSynchronous on purpose: the work is blocking (Mongo, S3, Polars), so FastAPI runs\nit in the thread pool instead of on the event loop, where ~20 option lists\nrequested together used to queue behind each other and stall every other request.\n\nBacks the React viewer's MultiSelect options fetch. Mirrors the code path\nDash uses via ``load_deltatable_lite(..., load_for_options=True)`` so both\nviewers see identical option lists.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column name whose unique values to return.\n    limit: Max values to return (default 1000, at most\n        ``UNIQUE_VALUES_MAX_LIMIT``). Prevents unbounded payloads on\n        high-cardinality columns. Past it the values are an arbitrary subset,\n        and ``truncated`` says so: a caller that needs a given value (an entity\n        picker opening on a family) must not take its absence as \"not held\".\n    filter_expr: Optional Polars filter expression (string) applied before\n        collecting unique values. Validated through the safe-eval pipeline\n        in ``depictio.models.components.filter_expr``.\n    order_by: Optional companion column giving the order of the values (a\n        ``time_order`` next to a ``time_point``): each value follows the\n        smallest key it carries, numerically when every key is a number. Unset,\n        values that all end in a duration (``30min``, ``2h``) follow it, and\n        the rest sort as strings. See ``depictio.models.components.value_order``.\n    search: Optional server-side lookup over the option list: a literal\n        (not regex) case-insensitive substring match on the column cast to\n        string, applied after ``filter_expr`` and before the unique / limit.\n        Lets a client reach a value past where ``limit`` cut the list (4,333\n        families, 1,000 listed). Empty or whitespace-only means no search.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\": str, \"values\": list[str], \"truncated\": bool}``: strings for\n    the MultiSelect UI; ``truncated`` when the column holds more than ``limit``\n    matches.\n\nRaises:\n    HTTPException: 404 if DC not found / not accessible, 500 on read error.",
         "operationId": "get_unique_values_depictio_api_v1_deltatables_unique_values__data_collection_id__get",
         "security": [
           {
@@ -7147,6 +7203,8 @@
             "required": false,
             "schema": {
               "type": "integer",
+              "maximum": 100000,
+              "minimum": 1,
               "default": 1000,
               "title": "Limit"
             }
@@ -7181,6 +7239,23 @@
                 }
               ],
               "title": "Order By"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Search"
             }
           }
         ],
@@ -14427,7 +14502,7 @@
           "Dashboards"
         ],
         "summary": "Filter Options Endpoint",
-        "description": "The options an interactive filter offers, at the data version in effect.\n\nA filter's option list read today's data while the tiles beside it showed a\npinned version: a variety select offered values the pinned data does not\nhold, and picking one emptied every chart.\n\nRequest body:\n    {\"dc_id\": str, \"column\": str, \"kind\": \"unique\" | \"range\",\n     \"filter_expr\": str (optional), \"order_by\": str (optional, unique only),\n     \"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null}}\n\nResponse, the shapes ``GET /deltatables/unique_values/{dc}`` and a column's\n``/deltatables/specs/{dc}`` entry give:\n    unique: {\"column\": str, \"values\": [str, ...]}\n    range:  {\"min\": number | null, \"max\": number | null,\n             \"dtype\": str | null, \"unique\": int | null}\n\nViewer permission on the dashboard; ``dc_id`` must belong to its project\n(404 otherwise). The pins resolve exactly as a render's do (``_data_pins``,\nwith the same 400s). Unpinned, the answer comes from the paths the viewer\nused before, cache included.",
+        "description": "The options an interactive filter offers, at the data version in effect.\n\nA filter's option list read today's data while the tiles beside it showed a\npinned version: a variety select offered values the pinned data does not\nhold, and picking one emptied every chart.\n\nRequest body:\n    {\"dc_id\": str, \"column\": str, \"kind\": \"unique\" | \"range\",\n     \"filter_expr\": str (optional), \"order_by\": str (optional, unique only),\n     \"search\": str (optional, unique only: a literal, case-insensitive\n                   substring match, at most 200 characters, empty = none),\n     \"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null}}\n\nResponse, the shapes ``GET /deltatables/unique_values/{dc}`` and a column's\n``/deltatables/specs/{dc}`` entry give:\n    unique: {\"column\": str, \"values\": [str, ...], \"truncated\": bool}\n    range:  {\"min\": number | null, \"max\": number | null,\n             \"dtype\": str | null, \"unique\": int | null}\n\nViewer permission on the dashboard; ``dc_id`` must belong to its project\n(404 otherwise). The pins resolve exactly as a render's do (``_data_pins``,\nwith the same 400s). Unpinned, the answer comes from the paths the viewer\nused before, cache included.",
         "operationId": "filter_options_endpoint_depictio_api_v1_dashboards_filter_options__dashboard_id__post",
         "security": [
           {
@@ -14991,6 +15066,164 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/NotebookExportRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotebookRenderStatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/notebook_export/{dashboard_id}/outline": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Notebook Export Outline",
+        "description": "The report's shape, as the editor page draws it: its tabs, sections and\ntiles in the generator's order, with the cover's defaults.\n\nEvery tile of the family is listed — also the ones the layer left out of\nthe report, whose ``in_report`` says so. Built by the same plan and\nbuilder the export uses, so the outline is exactly what a report of this\ndashboard would hold.",
+        "operationId": "notebook_export_outline_depictio_api_v1_dashboards_notebook_export__dashboard_id__outline_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportOutline"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/notebook_export/preview_files/{token}/{path}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Notebook Export Preview Files",
+        "description": "One file of a preview job's rendered report, by the job's token.\n\nNo sign-in: the token is the capability, minted per job and known only to\nthe editor that queued it, so an unknown token or path is simply a file\nthe store does not have — a 404 either way. The report itself\n(``report.html``) is served with the patch script injected before its\n``</body>``; the patch script is served from the service's own assets.",
+        "operationId": "notebook_export_preview_files_depictio_api_v1_dashboards_notebook_export_preview_files__token___path__get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          },
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/notebook_export/{dashboard_id}/preview": {
+      "post": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Notebook Export Preview",
+        "description": "Render the dashboard's report as the editor's exact preview.\n\nThe render route's own path — the same document, the same worker, the\nsame quotas and gates — into a job whose report the editor polls and\nshows. A finished job of the same user, dashboard and document answers\ninstead of queuing a new one, unless ``force`` asks for a fresh render\n(which also re-executes the cached cells of the preview's workdir).",
+        "operationId": "notebook_export_preview_depictio_api_v1_dashboards_notebook_export__dashboard_id__preview_post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportPreviewRequest"
               }
             }
           }
@@ -16162,6 +16395,116 @@
                   "type": "object",
                   "additionalProperties": true,
                   "title": "Response Put Shared Labels Depictio Api V1 Dashboards Annotations  Dashboard Id  Shared Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/dashboards/report_layer/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Get Report Layer",
+        "description": "The layer as it is stored, or the intro the dashboard's notes suggest.\n\nA dashboard with nothing stored shows its author a draft: its Guide notes\nas the intro, marked ``seeded_from_notes`` and not written anywhere. The\neditor saves it (as any other layer write) or clears it; a reader who\nexports without ever opening the editor is not affected.",
+        "operationId": "get_report_layer_depictio_api_v1_dashboards_report_layer__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Report Layer Depictio Api V1 Dashboards Report Layer  Dashboard Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Put Report Layer",
+        "description": "Replace the report layer (last write wins, against the revision read).\n\nA write against a stale revision is refused with 409 and the stored layer\nwith its author and time, so two editors cannot overwrite each other's\nprose. The first write takes no revision: a dashboard with nothing stored\nis at revision 0.\n\nThe revision check is also the write's filter: a second writer whose write\nlands between this request's read and its write changes the stored\nrevision, the filter matches nothing, and the answer is the same 409\nrather than a silent overwrite.\n\nContent change, so it seeds a baseline and captures a version before and\nafter — as an autosave: the layer is part of the dashboard, but an\neditor's typing is not one timeline step per keystroke.",
+        "operationId": "put_report_layer_depictio_api_v1_dashboards_report_layer__dashboard_id__put",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "objectid",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportLayerPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Put Report Layer Depictio Api V1 Dashboards Report Layer  Dashboard Id  Put"
                 }
               }
             }
@@ -18562,7 +18905,7 @@
           "Serverless"
         ],
         "summary": "Dispatch Export Static",
-        "description": "Enqueue a static-bundle build; poll ``/export-static/status/{job_id}``.\n\nOwner-gated (RFC §8 — a bundle is bulk data exfiltration). Denials return 404\nrather than 403 so the endpoint cannot be used to enumerate dashboards.",
+        "description": "Enqueue a static-bundle build; poll ``/export-static/status/{job_id}``.\n\nOwner-gated (RFC §8 — a bundle is bulk data exfiltration), with one door for\nvisitors: on a public project that offers its copies (#1480), a signed-in\nviewer (a guest account too) exports their view as a public build, limited\nper address as well, and never of pinned data. Denials return 404 rather\nthan 403 so the endpoint cannot be used to enumerate dashboards.\n\nTwo guards run before anything is enqueued. A per-user limit\n(``static_export.build_per_user_max`` per ``build_per_user_window_s``)\nbounds how many builds one owner can start in a burst; it is fail-closed,\nbecause a Redis outage is no reason to let builds through uncounted. An\ninstance-wide cap (``static_export.queue_max_pending``) keeps the queue from\ngrowing past what its workers drain.\n\nAn optional ``{\"state\": AnalysisState}`` body freezes the bundle's tiles on\nthe exported view and makes it open on it; a state the runtime cannot\nreproduce is a 409 with the reason, before anything is enqueued. No body\n(or a ``null`` state) keeps the dashboard's own interactive defaults.",
         "operationId": "dispatch_export_static_depictio_api_v1_serverless_export_static__dashboard_id__post",
         "security": [
           {
@@ -18595,6 +18938,23 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ExportStaticRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -18774,7 +19134,7 @@
           "Serverless"
         ],
         "summary": "Post Report Manifest",
-        "description": "Start building producer A's manifest of the dashboard's family, opening on\n``request.state``; poll ``/report-manifest/job/{job_id}``.\n\nThe manifest a static export would bundle — same producer, same owner gate\n(404 on a denial, as ``/export-static``), same size ceilings (413) — with\n``initial_filters`` set to the state's filters. 409 for a state the\nin-page runtime cannot reproduce (pinned data, selection groups): the\nreport then keeps every tile's own output. As long as a static export's\nbuild (it runs the same computes), so it runs on a worker, like the build.",
+        "description": "Start building producer A's manifest of the dashboard's family, opening on\n``request.state``; poll ``/report-manifest/job/{job_id}``.\n\nThe manifest a static export would bundle — same producer, same owner gate\n(404 on a denial, as ``/export-static``), same size ceilings (413) — with\n``initial_filters`` set to the state's filters. A pinned state ships the\npinned version's data and definitions, named in the manifest's\n``pinned_version``. 409 for a state the in-page runtime cannot reproduce\n(selection groups): the report then keeps every tile's own output. As long\nas a static export's build (it runs the same computes), so it runs on a\nworker, like the build.",
         "operationId": "post_report_manifest_depictio_api_v1_serverless_report_manifest__dashboard_id__post",
         "security": [
           {
@@ -18849,6 +19209,112 @@
             "schema": {
               "type": "string",
               "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/serverless/public-bundle/{dashboard_id}": {
+      "get": {
+        "tags": [
+          "Serverless"
+        ],
+        "summary": "Public Bundle Status",
+        "description": "What a visitor's Download button shows. Mongo reads only.",
+        "operationId": "public_bundle_status_depictio_api_v1_serverless_public_bundle__dashboard_id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Public Bundle Status Depictio Api V1 Serverless Public Bundle  Dashboard Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depictio/api/v1/serverless/public-bundle/{dashboard_id}/download": {
+      "get": {
+        "tags": [
+          "Serverless"
+        ],
+        "summary": "Public Bundle Download",
+        "description": "A pre-built file. Never builds: 404 until a worker has made it.",
+        "operationId": "public_bundle_download_depictio_api_v1_serverless_public_bundle__dashboard_id__download_get",
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dashboard Id"
+            }
+          },
+          {
+            "name": "file",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "dashboard",
+                "report",
+                "pdf"
+              ],
+              "type": "string",
+              "default": "dashboard",
+              "title": "File"
             }
           }
         ],
@@ -21373,6 +21839,55 @@
         ]
       }
     },
+    "/depictio/api/v1/auth/me/admin_credentials": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Set Admin Credentials",
+        "description": "Single-user mode: choose the default admin's email and password.\n\nSingle-user mode signs everyone in as the default admin, seeded as\n``admin@example.com`` with a random password nobody knows. That is fine\nuntil the instance goes public, where the password form is the admin's\nonly way in. This names the credentials that form will accept, on the same\naccount (its id, and so everything it owns, is kept).\n\nThe first claim needs no current password; later changes do.",
+        "operationId": "set_admin_credentials_depictio_api_v1_auth_me_admin_credentials_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestAdminCredentials"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Set Admin Credentials Depictio Api V1 Auth Me Admin Credentials Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/depictio/api/v1/auth/edit_password": {
       "post": {
         "tags": [
@@ -22031,6 +22546,183 @@
         }
       }
     },
+    "/depictio/api/v1/analytics/hit": {
+      "post": {
+        "tags": [
+          "Usage statistics"
+        ],
+        "summary": "Track Hit",
+        "description": "Record one navigation. Idempotent per browser per day; never echoes data.",
+        "operationId": "track_hit_depictio_api_v1_analytics_hit_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsageHit"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/analytics/usage": {
+      "get": {
+        "tags": [
+          "Usage statistics"
+        ],
+        "summary": "Get Usage",
+        "description": "Usage report per period: users, logins, visitors, content, breakdowns.",
+        "operationId": "get_usage_depictio_api_v1_analytics_usage_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "granularity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "day",
+                "week",
+                "month",
+                "year"
+              ],
+              "type": "string",
+              "default": "month",
+              "title": "Granularity"
+            }
+          },
+          {
+            "name": "periods",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 120,
+              "minimum": 1,
+              "default": 12,
+              "title": "Periods"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Custom range start (UTC)",
+              "title": "Start"
+            },
+            "description": "Custom range start (UTC)"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Custom range end (UTC), inclusive of its period",
+              "title": "End"
+            },
+            "description": "Custom range end (UTC), inclusive of its period"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "json",
+                "csv"
+              ],
+              "type": "string",
+              "default": "json",
+              "title": "Format"
+            }
+          },
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Internal API key (alternative to an authenticated admin session)",
+              "title": "X-Api-Key"
+            },
+            "description": "Internal API key (alternative to an authenticated admin session)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsageReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "summary": "Health Check",
@@ -22639,24 +23331,30 @@
             "title": "Label"
           },
           "color": {
-            "type": "string",
-            "enum": [
-              "blue",
-              "cyan",
-              "teal",
-              "green",
-              "lime",
-              "yellow",
-              "orange",
-              "red",
-              "pink",
-              "grape",
-              "violet",
-              "indigo",
-              "gray"
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "blue",
+                  "cyan",
+                  "teal",
+                  "green",
+                  "lime",
+                  "yellow",
+                  "orange",
+                  "red",
+                  "pink",
+                  "grape",
+                  "violet",
+                  "indigo",
+                  "gray"
+                ]
+              },
+              {
+                "type": "null"
+              }
             ],
-            "title": "Color",
-            "default": "yellow"
+            "title": "Color"
           },
           "style": {
             "$ref": "#/components/schemas/AnnotationStyle"
@@ -24421,6 +25119,64 @@
             ],
             "title": "Sequential",
             "description": "Continuous colorscale stops (hex list, light to dark). Unset means 'derive from the primary color'."
+          },
+          "palette": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Palette",
+            "description": "A depictio palette preset (`depictio.models.palettes.palette_ids()`, e.g. 'marque', 'signature'). Fills `colorway`, `sequential` and their dark variants when those are unset; an explicit `colorway` always wins."
+          },
+          "colorway_dark": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Colorway Dark",
+            "description": "Categorical colours for the dark UI theme. Filled from `palette`; unset means 'use `colorway` in both themes'."
+          },
+          "sequential_dark": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sequential Dark",
+            "description": "Colorscale stops for the dark UI theme, from the background end. Filled from `palette`; unset means 'use `sequential`'."
+          },
+          "overflow": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "other",
+                  "shade"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Overflow",
+            "description": "What a value past the palette's last slot gets: the Other grey (`other`) or, first, a lightness-shifted twin of each slot (`shade`, named palettes only). Unset means the depictio default (`other`)."
           }
         },
         "additionalProperties": false,
@@ -26677,7 +27433,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -26858,6 +27614,16 @@
             "type": "array",
             "title": "Shared Labels",
             "default": []
+          },
+          "report_layer": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReportLayer"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "advanced_viz_controls": {
             "type": "string",
@@ -27226,7 +27992,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -27289,7 +28055,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -28025,6 +28791,23 @@
         "title": "ExportFormat",
         "description": "Wire value of the ``format`` query parameter."
       },
+      "ExportStaticRequest": {
+        "properties": {
+          "state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnalysisState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "title": "ExportStaticRequest",
+        "description": "A static-bundle export's optional body: the view the bundle freezes on\nand opens on. An absent body (or a ``None`` state) is the pre-state\ncontract: the dashboard's own interactive defaults."
+      },
       "ExportTemplateRequest": {
         "properties": {
           "template_id": {
@@ -28072,7 +28855,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -28402,7 +29185,8 @@
                 "type": "string",
                 "enum": [
                   "default",
-                  "minimal"
+                  "minimal",
+                  "classic"
                 ]
               },
               {
@@ -28410,7 +29194,7 @@
               }
             ],
             "title": "Figure Style",
-            "description": "The style every figure in this section is drawn in, unless the figure sets its own `figure_style`: `minimal` gives a row of figures the landing-page look (title and icon in the card header, faint grid, legend under the plot). Unset leaves each figure to its own style. Grid sections only."
+            "description": "The style every figure in this section is drawn in, unless the figure sets its own `figure_style`: `default` (overview look), `classic` (drawing left as built) or `minimal`, which gives a row of figures the landing-page look (title and icon in the card header, faint grid, legend under the plot). Unset leaves each figure to its own style. Grid sections only."
           }
         },
         "additionalProperties": false,
@@ -29756,7 +30540,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -33201,7 +33985,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -33502,7 +34286,14 @@
       "NotebookExportRequest": {
         "properties": {
           "state": {
-            "$ref": "#/components/schemas/AnalysisState"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnalysisState"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "theme": {
             "type": "string",
@@ -33558,9 +34349,6 @@
           }
         },
         "type": "object",
-        "required": [
-          "state"
-        ],
         "title": "NotebookExportRequest",
         "description": "The analysis state to export. The export is one Quarto document (``.qmd``)."
       },
@@ -33621,6 +34409,17 @@
               }
             ],
             "title": "Combined Reason"
+          },
+          "render_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Render Reason"
           }
         },
         "type": "object",
@@ -33895,6 +34694,17 @@
               }
             ],
             "title": "Pdf Error"
+          },
+          "preview_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Preview Url"
           }
         },
         "type": "object",
@@ -34304,7 +35114,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -34405,6 +35215,17 @@
             "type": "boolean",
             "title": "Is Public",
             "default": false
+          },
+          "public_offline_download": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Public Offline Download"
           },
           "registration_time": {
             "type": "string",
@@ -35007,6 +35828,25 @@
         "title": "ProvenanceReportGroup",
         "description": "One display group of run-provenance entries (Cutadapt, DADA2, ...)."
       },
+      "PublicOfflineDownloadRequest": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "acknowledged": {
+            "type": "boolean",
+            "title": "Acknowledged",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "title": "PublicOfflineDownloadRequest",
+        "description": "Turn the visitors' offline download of a public project on or off."
+      },
       "PublishedAnnotation": {
         "properties": {
           "thread_id": {
@@ -35088,21 +35928,28 @@
             "title": "Label"
           },
           "color": {
-            "type": "string",
-            "enum": [
-              "blue",
-              "cyan",
-              "teal",
-              "green",
-              "lime",
-              "yellow",
-              "orange",
-              "red",
-              "pink",
-              "grape",
-              "violet",
-              "indigo",
-              "gray"
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "blue",
+                  "cyan",
+                  "teal",
+                  "green",
+                  "lime",
+                  "yellow",
+                  "orange",
+                  "red",
+                  "pink",
+                  "grape",
+                  "violet",
+                  "indigo",
+                  "gray"
+                ]
+              },
+              {
+                "type": "null"
+              }
             ],
             "title": "Color"
           },
@@ -35130,7 +35977,6 @@
           "kind",
           "geometry",
           "label",
-          "color",
           "style"
         ],
         "title": "PublishedAnnotation",
@@ -35654,6 +36500,733 @@
         "type": "object",
         "title": "RenameVersionRequest"
       },
+      "ReportCover": {
+        "properties": {
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "subtitle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtitle"
+          },
+          "authors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Authors"
+          },
+          "date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ReportCover",
+        "description": "The title block. ``None`` values fall back to the export's own defaults\n(dashboard title, project name, the project's owners, the export day)."
+      },
+      "ReportCoverDefaults": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "subtitle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtitle"
+          },
+          "authors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Authors"
+          },
+          "date": {
+            "type": "string",
+            "title": "Date"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "date"
+        ],
+        "title": "ReportCoverDefaults",
+        "description": "The cover's fields as the export fills them, ignoring the layer's cover.\n\nThe dashboard's title, the project's name, the project's owners, the day\nof the export — what the cover shows wherever the layer sets nothing, and\nwhat the editor resets its fields to."
+      },
+      "ReportLayer": {
+        "properties": {
+          "intro": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Intro"
+          },
+          "conclusion": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conclusion"
+          },
+          "cover": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReportCover"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnalysisState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision",
+            "default": 0
+          },
+          "style": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "colour",
+                  "mono"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Style"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/ReportSettings"
+          },
+          "tiles": {
+            "items": {
+              "$ref": "#/components/schemas/ReportTile"
+            },
+            "type": "array",
+            "title": "Tiles"
+          },
+          "tabs": {
+            "items": {
+              "$ref": "#/components/schemas/ReportTab"
+            },
+            "type": "array",
+            "title": "Tabs"
+          },
+          "seeded_from_notes": {
+            "type": "boolean",
+            "title": "Seeded From Notes",
+            "default": false
+          },
+          "updated_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated By"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ReportLayer",
+        "description": "The whole layer, as stored on the main tab."
+      },
+      "ReportLayerPut": {
+        "properties": {
+          "base_revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Base Revision",
+            "default": 0
+          },
+          "layer": {
+            "$ref": "#/components/schemas/ReportLayer"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "layer"
+        ],
+        "title": "ReportLayerPut",
+        "description": "The PUT body: the layer to write, and the revision it was read at.\n\nA ``base_revision`` that is not the stored layer's is refused with 409\n(the stored layer and its author come back with it), so two writers cannot\noverwrite each other's prose."
+      },
+      "ReportOutline": {
+        "properties": {
+          "dashboard_id": {
+            "type": "string",
+            "title": "Dashboard Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision",
+            "default": 0
+          },
+          "tabs": {
+            "items": {
+              "$ref": "#/components/schemas/ReportOutlineTab"
+            },
+            "type": "array",
+            "title": "Tabs"
+          },
+          "cover_defaults": {
+            "$ref": "#/components/schemas/ReportCoverDefaults"
+          },
+          "preview_available": {
+            "type": "boolean",
+            "title": "Preview Available",
+            "default": false
+          },
+          "preview_unavailable_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Preview Unavailable Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dashboard_id",
+          "title",
+          "cover_defaults"
+        ],
+        "title": "ReportOutline",
+        "description": "The report's shape, as the report editor page draws it.\n\n``preview_available`` is whether a preview render can run on this\ndeployment at all; ``preview_unavailable_reason`` is the sentence to show\nwhen it cannot, with the install hint."
+      },
+      "ReportOutlineEntry": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "tab",
+              "section",
+              "component"
+            ],
+            "title": "Kind"
+          },
+          "tab_id": {
+            "type": "string",
+            "title": "Tab Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "level": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Level"
+          },
+          "component_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Component Id"
+          },
+          "component_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Component Type"
+          },
+          "caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Caption"
+          },
+          "in_report": {
+            "type": "boolean",
+            "title": "In Report",
+            "default": true
+          },
+          "in_pdf": {
+            "type": "boolean",
+            "title": "In Pdf",
+            "default": true
+          },
+          "orientation": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "portrait",
+              "landscape"
+            ],
+            "title": "Orientation",
+            "default": "auto"
+          },
+          "section": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section"
+          },
+          "page_break_before": {
+            "type": "boolean",
+            "title": "Page Break Before",
+            "default": false
+          },
+          "full_width": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Full Width"
+          },
+          "order": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order"
+          },
+          "icon": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Icon"
+          },
+          "color": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "tab_id",
+          "title"
+        ],
+        "title": "ReportOutlineEntry",
+        "description": "One line of the report's outline: a tab part, a section, or a tile.\n\nA ``component`` entry carries the tile's own caption as the editor shows\nit, and the *layer's* settings for it — ``in_report`` says whether the\nreport actually holds the tile (the outline lists excluded ones too, with\n``in_report: False``), the rest is how the layer places it."
+      },
+      "ReportOutlineTab": {
+        "properties": {
+          "tab_id": {
+            "type": "string",
+            "title": "Tab Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "placement": {
+            "type": "string",
+            "enum": [
+              "body",
+              "appendix"
+            ],
+            "title": "Placement",
+            "default": "body"
+          },
+          "order": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order"
+          },
+          "icon": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Icon"
+          },
+          "color": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color"
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/ReportOutlineEntry"
+            },
+            "type": "array",
+            "title": "Entries"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tab_id",
+          "title"
+        ],
+        "title": "ReportOutlineTab",
+        "description": "One tab's part of the outline: what the layer says about its place, and\nthe tab's own identity (its sidebar icon and the accent the report tints\nit with, as hex) so the editor draws it as the report does."
+      },
+      "ReportPreviewRequest": {
+        "properties": {
+          "force": {
+            "type": "boolean",
+            "title": "Force",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ReportPreviewRequest",
+        "description": "The body of the preview render: a plain POST, ``force`` to re-render.\n\nThe preview of an unchanged report is served from the finished job of the\nlast identical request; ``force`` queues a new one regardless."
+      },
+      "ReportSettings": {
+        "properties": {
+          "paper": {
+            "type": "string",
+            "enum": [
+              "a4",
+              "letter"
+            ],
+            "title": "Paper",
+            "default": "a4"
+          },
+          "landscape": {
+            "type": "boolean",
+            "title": "Landscape",
+            "default": false
+          },
+          "table_page_break": {
+            "type": "boolean",
+            "title": "Table Page Break",
+            "default": true
+          },
+          "tile_width": {
+            "type": "string",
+            "enum": [
+              "row",
+              "full"
+            ],
+            "title": "Tile Width",
+            "default": "full"
+          },
+          "viz_controls": {
+            "type": "string",
+            "enum": [
+              "popover",
+              "rail",
+              "header"
+            ],
+            "title": "Viz Controls",
+            "default": "popover"
+          },
+          "toc": {
+            "type": "boolean",
+            "title": "Toc",
+            "default": true
+          },
+          "export_details": {
+            "type": "boolean",
+            "title": "Export Details",
+            "default": true
+          },
+          "how_to_run": {
+            "type": "boolean",
+            "title": "How To Run",
+            "default": true
+          },
+          "methods": {
+            "type": "boolean",
+            "title": "Methods",
+            "default": true
+          },
+          "code": {
+            "type": "boolean",
+            "title": "Code",
+            "default": true
+          },
+          "numbering": {
+            "type": "boolean",
+            "title": "Numbering",
+            "default": true
+          },
+          "provenance": {
+            "type": "boolean",
+            "title": "Provenance",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ReportSettings",
+        "description": "The report's own options, for the whole document. A report reads top\nto bottom: by default every tile has the page's width (cards keep their\nstrip) and a large table starts a new PDF page."
+      },
+      "ReportTab": {
+        "properties": {
+          "tab_id": {
+            "type": "string",
+            "title": "Tab Id"
+          },
+          "placement": {
+            "type": "string",
+            "enum": [
+              "body",
+              "appendix"
+            ],
+            "title": "Placement",
+            "default": "body"
+          },
+          "order": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tab_id"
+        ],
+        "title": "ReportTab",
+        "description": "One tab's place in the report: its part's position, and whether the\nbody or the appendix (after the conclusion) carries it."
+      },
+      "ReportTile": {
+        "properties": {
+          "tab_id": {
+            "type": "string",
+            "title": "Tab Id"
+          },
+          "component_id": {
+            "type": "string",
+            "title": "Component Id"
+          },
+          "caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Caption"
+          },
+          "in_report": {
+            "type": "boolean",
+            "title": "In Report",
+            "default": true
+          },
+          "in_pdf": {
+            "type": "boolean",
+            "title": "In Pdf",
+            "default": true
+          },
+          "order": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order"
+          },
+          "orientation": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "portrait",
+              "landscape"
+            ],
+            "title": "Orientation",
+            "default": "auto"
+          },
+          "section": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section"
+          },
+          "page_break_before": {
+            "type": "boolean",
+            "title": "Page Break Before",
+            "default": false
+          },
+          "full_width": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Full Width"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tab_id",
+          "component_id"
+        ],
+        "title": "ReportTile",
+        "description": "One tile's place in the report.\n\n``tab_id`` + ``component_id`` name it (the tile's ``index``). Settings not\ngiven keep the export's defaults, so a dashboard whose layer only asks one\ntile to change still exports every other tile exactly as it did."
+      },
       "RequestAdminCreateUser": {
         "properties": {
           "email": {
@@ -35697,6 +37270,39 @@
         ],
         "title": "RequestAdminCreateUser",
         "description": "An admin creating an account with a password the person will change."
+      },
+      "RequestAdminCredentials": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "new_password": {
+            "type": "string",
+            "minLength": 8,
+            "title": "New Password"
+          },
+          "current_password": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "new_password"
+        ],
+        "title": "RequestAdminCredentials",
+        "description": "Single-user mode: the owner names the default admin's email and password.\n\n``current_password`` is only needed once the credentials were claimed: the\nzero-config admin's password is random, so nobody could supply it."
       },
       "RequestEditPassword": {
         "properties": {
@@ -37811,6 +39417,18 @@
                 "type": "null"
               }
             ]
+          },
+          "data_root": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Root"
           }
         },
         "type": "object",
@@ -38467,7 +40085,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -38596,7 +40214,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -38875,7 +40493,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6b0382317c698e2819159e4c"
+            "default": "6b09d24f81f6a9c4973ff893"
           }
         },
         "type": "object",
@@ -39390,13 +41008,308 @@
         ],
         "title": "UpsertWorkflowRunBatchRequest"
       },
+      "UsageHit": {
+        "properties": {
+          "visitor_id": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F-]{32,36}$",
+            "title": "Visitor Id",
+            "description": "Random per-browser id the viewer keeps in localStorage"
+          },
+          "path_kind": {
+            "type": "string",
+            "maxLength": 32,
+            "pattern": "^[a-z_-]+$",
+            "title": "Path Kind",
+            "description": "Which app was opened (dashboards, viewer, editor, ...)",
+            "default": "other"
+          },
+          "dashboard_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{24}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dashboard Id"
+          },
+          "referrer": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referrer"
+          },
+          "lang": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 35
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lang"
+          }
+        },
+        "type": "object",
+        "required": [
+          "visitor_id"
+        ],
+        "title": "UsageHit",
+        "description": "One SPA navigation, sent by the viewer (``POST /analytics/hit``)."
+      },
+      "UsageKpi": {
+        "properties": {
+          "current": {
+            "type": "number",
+            "title": "Current",
+            "default": 0
+          },
+          "previous": {
+            "type": "number",
+            "title": "Previous",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "UsageKpi",
+        "description": "A range total and the same total over the span just before it."
+      },
+      "UsagePoint": {
+        "properties": {
+          "period_start": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Period Start"
+          },
+          "active_users": {
+            "type": "integer",
+            "title": "Active Users",
+            "default": 0
+          },
+          "new_users": {
+            "type": "integer",
+            "title": "New Users",
+            "default": 0
+          },
+          "returning_users": {
+            "type": "integer",
+            "title": "Returning Users",
+            "default": 0
+          },
+          "logins": {
+            "type": "integer",
+            "title": "Logins",
+            "default": 0
+          },
+          "logins_by_method": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Logins By Method"
+          },
+          "visitors": {
+            "type": "integer",
+            "title": "Visitors",
+            "default": 0
+          },
+          "new_visitors": {
+            "type": "integer",
+            "title": "New Visitors",
+            "default": 0
+          },
+          "returning_visitors": {
+            "type": "integer",
+            "title": "Returning Visitors",
+            "default": 0
+          },
+          "visitors_fp": {
+            "type": "integer",
+            "title": "Visitors Fp",
+            "default": 0
+          },
+          "unique_ips": {
+            "type": "integer",
+            "title": "Unique Ips",
+            "default": 0
+          },
+          "pageviews": {
+            "type": "integer",
+            "title": "Pageviews",
+            "default": 0
+          },
+          "dashboard_views": {
+            "type": "integer",
+            "title": "Dashboard Views",
+            "default": 0
+          },
+          "downloads": {
+            "type": "integer",
+            "title": "Downloads",
+            "default": 0
+          },
+          "temporary_users": {
+            "type": "integer",
+            "title": "Temporary Users",
+            "default": 0
+          },
+          "signups": {
+            "type": "integer",
+            "title": "Signups",
+            "default": 0
+          },
+          "new_projects": {
+            "type": "integer",
+            "title": "New Projects",
+            "default": 0
+          },
+          "new_dashboards": {
+            "type": "integer",
+            "title": "New Dashboards",
+            "default": 0
+          },
+          "ingestions": {
+            "type": "integer",
+            "title": "Ingestions",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "period_start"
+        ],
+        "title": "UsagePoint",
+        "description": "One period of the time series."
+      },
+      "UsageReport": {
+        "properties": {
+          "granularity": {
+            "type": "string",
+            "enum": [
+              "day",
+              "week",
+              "month",
+              "year"
+            ],
+            "title": "Granularity"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Start"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time",
+            "title": "End"
+          },
+          "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Generated At"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "single_user",
+              "public",
+              "multi_user"
+            ],
+            "title": "Mode"
+          },
+          "geoip_available": {
+            "type": "boolean",
+            "title": "Geoip Available"
+          },
+          "archived_periods": {
+            "type": "integer",
+            "title": "Archived Periods",
+            "description": "Periods read from the anonymous archive (older than retention)",
+            "default": 0
+          },
+          "timezone": {
+            "type": "string",
+            "title": "Timezone",
+            "default": "UTC"
+          },
+          "totals": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Totals"
+          },
+          "kpis": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/UsageKpi"
+            },
+            "type": "object",
+            "title": "Kpis"
+          },
+          "series": {
+            "items": {
+              "$ref": "#/components/schemas/UsagePoint"
+            },
+            "type": "array",
+            "title": "Series"
+          },
+          "breakdowns": {
+            "additionalProperties": {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Breakdowns"
+          },
+          "hours_heatmap": {
+            "items": {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Hours Heatmap",
+            "description": "7 rows (Mon..Sun) x 24 hours (UTC), pageviews"
+          }
+        },
+        "type": "object",
+        "required": [
+          "granularity",
+          "start",
+          "end",
+          "generated_at",
+          "mode",
+          "geoip_available",
+          "totals",
+          "kpis",
+          "series",
+          "breakdowns"
+        ],
+        "title": "UsageReport",
+        "description": "Everything the Usage pane shows, in one response (also the agent API)."
+      },
       "User": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -39545,6 +41458,11 @@
             "title": "Must Change Password",
             "default": false
           },
+          "credentials_claimed": {
+            "type": "boolean",
+            "title": "Credentials Claimed",
+            "default": false
+          },
           "password": {
             "type": "string",
             "title": "Password"
@@ -39564,7 +41482,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -39646,7 +41564,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -39731,7 +41649,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -39878,6 +41796,11 @@
           "must_change_password": {
             "type": "boolean",
             "title": "Must Change Password",
+            "default": false
+          },
+          "credentials_claimed": {
+            "type": "boolean",
+            "title": "Credentials Claimed",
             "default": false
           }
         },
@@ -40018,7 +41941,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -40193,7 +42116,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -40310,7 +42233,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -40586,7 +42509,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b09d24e81f6a9c4973ff892"
           },
           "description": {
             "anyOf": [
@@ -41139,12 +43062,8 @@
       "description": "Admin-only 'Log & Task' monitoring: Celery task history, CLI ingestion runs, recent application logs, and worker health. Feature-gated by DEPICTIO_MONITORING_ENABLED; hidden in public/demo mode."
     },
     {
-      "name": "Analytics",
-      "description": "Admin/ops: usage analytics. Feature-gated by DEPICTIO_ANALYTICS_ENABLED and has no frontend client yet (kept pending a product decision)."
-    },
-    {
-      "name": "Analytics Data",
-      "description": "Admin/ops: analytics data maintenance. Feature-gated by DEPICTIO_ANALYTICS_ENABLED."
+      "name": "Usage statistics",
+      "description": "Internal usage stats (logins, visitors, content) per week/month/year. GET /analytics/usage takes an admin token or X-Api-Key. DEPICTIO_USAGE_STATS_ENABLED (on by default)."
     },
     {
       "name": "Real-time Events",
