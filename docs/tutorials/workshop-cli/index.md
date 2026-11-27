@@ -62,6 +62,23 @@ glightbox: true
 
 </div>
 
+## Timetable { #timetable }
+
+16 December, 10:00 to 12:00, in the browser and in the terminal. Each episode ends with a hands-on; the times include it.
+
+| Time | Block | Min | Hands-on |
+|---|---|---|---|
+| 10:00 | Welcome | 5 | |
+| 10:05 | [1 · Your own tables, no template](project-builder.md) | 20 | 10 min |
+| 10:25 | The command line: [your CLI.yaml](setup.md) | 10 | |
+| 10:35 | [2 · An nf-core run from the terminal](nf-core-run.md) | 25 | 15 min |
+| 11:00 | Break | 10 | |
+| 11:10 | [3 · Collaborate and export](collaborate-and-export.md) | 25 | 15 min |
+| 11:35 | Wrap-up | 10 | |
+| 11:45 | Your questions | 15 | |
+
+Install the command line before the day: [Setup](setup.md).
+
 ## Two datasets
 
 <div class="grid cards ws-data" markdown>

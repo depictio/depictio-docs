@@ -97,11 +97,6 @@ Click **Save** in the bottom toolbar. Every save is kept as a version of your da
 
             Any column of `ancombc_results` works in `color`; the figure is drawn again with it.
 
-<span id="without-a-server"></span>
-
-??? note "Bonus · Annotations, versions and exports: now on Day 2"
-    Drawing an annotation on a figure, going back to an earlier version of a dashboard or of one component, and exporting a dashboard as a file that opens without a server (*Without a server*) moved to Day 2: [Collaborate and export](../workshop-cli/collaborate-and-export.md). The export part is [here](../workshop-cli/collaborate-and-export.md#export).
-
 
 <div class="ws-next" markdown>
 [<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#episode-2){ .ws-help }

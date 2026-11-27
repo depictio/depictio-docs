@@ -241,95 +241,13 @@ The first step of the dialog, **Your data**, has two halves: **Upload** on the l
         More in [Pipeline templates](../../pipeline-templates/nf-core/ampliseq.md) and the [Tools catalog](../../catalog/index.md). To contribute: [a template](../../developer/contributing-templates.md), [a tool](../../developer/contributing-a-tool.md).
 
 ??? note "Bonus · Several MultiQC reports in one collection"
-    A **MultiQC** data collection can hold one report per run. When the runs are ingested together, their reports share **one collection**. Filters, and a link from a sample table, then work across the runs: you compare the QC of several sequencing runs in one dashboard.
+    Your run today has **one** MultiQC report. A MultiQC data collection can hold **several**, for example one per sequencing run or per batch:
 
-    The example was tested in November 2026: three nf-core/seqinspector runs, `seqrun_1` to `seqrun_3`, with 4 samples each, in one folder. One project holds:
+    - Depictio merges them into **one collection**, and checks that they match: the same modules and the same MultiQC version. If one report differs, it says which one.
+    - **Linked to the sample sheet** on the sample name, the collection follows the filters of the sheet: a filter on a column of the sheet keeps only those samples in every MultiQC plot, across the reports.
+    - With a template, nothing changes for you: when the data root holds several run folders, each with its MultiQC report, the template builds one collection from all of them.
 
-    - a MultiQC collection, `multiqc_data`, with the three reports;
-    - a table, `samples`, from the `samples.csv` of each run: the columns `sample`, `condition`, `replicate`, `sequencing_run` and `lane`, 12 rows aggregated;
-    - a link from `samples` to `multiqc_data`: `sample` in the table matches `sample_name` in the reports (the resolver `sample_mapping`).
-
-    ```console
-    qc-runs/                                 the folder to ingest (the absolute path goes in the project file)
-    ├── seqrun_1/                            one run: a subfolder whose name matches runs_regex
-    │   ├── multiqc/multiqc_data/multiqc.parquet    the run's MultiQC report
-    │   └── samples.csv                      4 samples of this run
-    ├── seqrun_2/                            same layout
-    └── seqrun_3/                            same layout
-    ```
-
-
-    The project file. Replace `/path/to/qc-runs` with the absolute path of your folder:
-
-    ```yaml
-    name: "QC across runs"                     # the project's name [[1]]
-    workflows:                                 # where the data comes from [[2]]
-      - name: "seqinspector"                   # the pipeline that made the runs [[2]]
-        version: "1.1.2"                       # its version [[2]]
-        engine:                                # what ran it [[2]]
-          name: "nextflow"                     # [[2]]
-        catalog:                               # where the pipeline is listed [[2]]
-          name: "nf-core"                      # [[2]]
-          url: "https://nf-co.re"              # [[2]]
-        data_location:                         # where the runs are [[3]]
-          structure: "sequencing-runs"         # one folder holds one subfolder per run [[3]]
-          runs_regex: "seqrun_.*"              # which subfolders are runs [[3]]
-          locations:                           # [[3]]
-            - "/path/to/qc-runs"               # the folder that holds seqrun_1 to seqrun_3 [[3]]
-        data_collections:
-          - data_collection_tag: "multiqc_data"  # one collection for the reports of all runs [[4]]
-            config:                            # [[4]]
-              type: "MultiQC"                  # [[4]]
-              scan:                            # [[4]]
-                mode: "recursive"              # look in each run folder and its subfolders [[4]]
-                scan_parameters:               # [[4]]
-                  regex_config:                # [[4]]
-                    pattern: "multiqc/multiqc_data/multiqc.parquet"  # one report per run [[4]]
-          - data_collection_tag: "samples"     # the sample table [[5]]
-            config:                            # [[5]]
-              type: "Table"                    # [[5]]
-              metatype: "Aggregate"            # the rows of every run add up in one table [[5]]
-              scan:                            # [[5]]
-                mode: "recursive"              # [[5]]
-                scan_parameters:               # [[5]]
-                  regex_config:                # [[5]]
-                    pattern: "samples.csv"     # the file that makes the table [[5]]
-              dc_specific_properties:          # [[5]]
-                format: "CSV"                  # how to read it [[5]]
-    links:
-      - source_dc_tag: "samples"               # the link starts from the sample table [[6]]
-        source_column: "sample"                # its column of sample names [[6]]
-        target_dc_tag: "multiqc_data"          # and filters the MultiQC collection [[6]]
-        target_type: "multiqc"                 # [[6]]
-        link_config:                           # [[6]]
-          resolver: "sample_mapping"           # match sample names, across the runs [[6]]
-          target_field: "sample_name"          # the sample name in the MultiQC reports [[6]]
-    ```
-
-    1. **The project**: its name. `--project` gives it your own name on the server.
-    2. **The workflow**: the pipeline, its version and its engine, as in the other project files of Day 2.
-    3. **Where the runs are**: `sequencing-runs` means one folder with a subfolder per run, and `runs_regex` picks the subfolders that are runs.
-    4. **The MultiQC collection**: type `MultiQC`, with the pattern that finds the report in each run. All the reports go in this one collection.
-    5. **The sample table**: `Aggregate` stacks the `samples.csv` of the three runs into one table of 12 rows.
-    6. **The link**: a filter on `samples` reaches the MultiQC reports whose sample names match, in every run.
-
-    Check it, then ingest it, from the folder that holds the file:
-
-    ```bash
-    # Dry run: reads the file and the folders, sends nothing. Read the counts.
-    depictio ingest --project-config-path qc-runs.yaml --project yourname-qc-runs --dry-run
-
-    # The same command without --dry-run creates the project.
-    depictio ingest --project-config-path qc-runs.yaml --project yourname-qc-runs
-    ```
-
-    The CLI says *Processed 3 MultiQC files and created 3 individual reports*: three reports, one collection. In a dashboard built on this project, a filter on the `condition` of the `samples` table keeps only the matching samples in the MultiQC plots, in every run.
-
-    !!! challenge "Challenge: one run among three"
-        In the MultiQC plots, how would you show only the samples of `seqrun_2`? Which column of which table would you filter?
-
-        ??? solution "Solution"
-            The column `sequencing_run` of the `samples` table: the link carries the filter to the reports, so only the samples of `seqrun_2` stay in the MultiQC plots.
+    Where to read more: [MultiQC in Depictio](../../features/multiqc.md), with [adding reports](../../features/multiqc.md#add-reports), [the link to sample metadata](../../features/multiqc.md#link-to-sample-metadata) and [comparing runs](../../features/multiqc.md#compare-runs).
 
 
 <div class="ws-next" markdown>

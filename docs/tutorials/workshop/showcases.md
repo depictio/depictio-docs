@@ -28,10 +28,14 @@ In episode 3 you built the dashboard of one pipeline, nf-core/ampliseq, from its
 
 ## :material-view-gallery-outline: Hands-on 4 · Find your pipeline { #showcases }
 
-1. Open the showcases: [showcases.depictio.embl.org/dashboards](https://showcases.depictio.embl.org/dashboards){target=_blank}. It is the **Dashboards** page you know, in the **Thumbnails** view.
-2. Click the search box and type the name of your pipeline, for example `rnaseq`, `sarek` or `ampliseq`.
-3. Open its dashboard.
-4. Try one filter, as in episode 1: open the **Filters** panel, pick a value, and watch the cards and figures follow.
+**Your task, 5 minutes:** find the dashboard of a pipeline you use, and pick the one figure you would show your team. Then post the pipeline and the figure in the Zoom chat.
+
+1. Open the showcases in a new tab: [showcases.depictio.embl.org/dashboards](https://showcases.depictio.embl.org/dashboards){target=_blank}. It is the **Dashboards** page you know, in the **Thumbnails** view: one card per pipeline.
+2. In the search box, type the name of your pipeline, for example `rnaseq`, `sarek` or `chipseq`. No pipeline of your own, or not in the list? Take `rnaseq`.
+3. Open its dashboard and go through the **tabs**, left to right: they follow the steps of the pipeline, from the quality of the run to its results.
+4. Open the **MultiQC** tab: it is the report of the pipeline, read the same way as in episode 1.
+5. Try one **filter**, as in episode 1, and watch the cards and the figures follow.
+6. Pick the one figure you would show your team, and post it in the Zoom chat, for example *rnaseq: the General Stats table of the MultiQC tab*.
 
 ![The Dashboards page of the showcases server in the Thumbnails view: one card per nf-core pipeline, with a preview of its dashboard](../../images/tutorials/workshop/showcases_thumbs.jpg){ .ws-shot }
 
