@@ -1,7 +1,7 @@
 ---
 glightbox: true
 title: "3. Work on your dashboard, together"
-description: "Hands-on 3: on your own nf-core/viralrecon dashboard, label the samples, comment and annotate a figure, save a version and compare it with the previous one, share the project, and export the dashboard as one HTML file that opens without a server."
+description: "Hands-on 3: on your own nf-core/viralrecon dashboard, comment and annotate a figure, save a version and compare it with the previous one, share the project, and export the dashboard as one HTML file that opens without a server."
 ---
 
 # 3. Work on your dashboard, together
@@ -17,50 +17,19 @@ description: "Hands-on 3: on your own nf-core/viralrecon dashboard, label the sa
 !!! overview "Overview"
     **Questions**
 
-    - How do I group samples my own way, without changing the data?
     - How do I talk about a figure with a colleague?
     - How do I keep a safe copy of my work, share it, or send it to someone with no server?
 
     **Objectives**
 
-    - Add a label column in **Metadata** mode and colour the figures by it.
     - Comment on a figure and annotate it.
     - Save a version, then compare a component with the previous one.
     - Share the project with a colleague.
     - Export the dashboard as one HTML file.
 
-You own the **nf-core/viralrecon** dashboard that episode 2 created: you can edit it, share it and export it. Work through the five steps in order. Open your project from the **Projects** page, and the dashboard from the project.
+You own the **nf-core/viralrecon** dashboard that episode 2 created: you can edit it, share it and export it. Work through the four steps in order. Open your project from the **Projects** page, and the dashboard from the project.
 
-## :material-tag-outline: Hands-on 3 · Step 1: group the samples in Metadata mode { #label }
-
-You have three samples: `SAMPLE1_PE`, `SAMPLE2_PE` and `SAMPLE3_SE`. Say they were sequenced in two runs: the first two in `run1`, the third in `run2`. The data does not say so. You add it as a column of your own, and each label becomes a group.
-
-The **Metadata** panel needs a small table of samples, linked to the run's tables. The run has none, so you add one first, on the project page.
-
-1. Download [`samplesheet.csv`](samplesheet.csv). It has one row per sample, and a `layout` column.
-2. Open your project. Click **Add data** and drop the file on **Drop files or folders here**. Click **Add 1 table**.
-3. Still on the project page, scroll down to **Cross-DC links** and click **Add link**. Fill in: **Source data collection** `samplesheet · table`, **Source column** `sample`, **Target data collection** `summary_metrics · table`. Click **Create link**.
-
-![The Create Cross-DC Link dialog, filled in: samplesheet · table, column sample, target summary_metrics · table](../../images/tutorials/workshop-cli/ep3vr_1_link.jpg){ .ws-shot }
-
-Now open the dashboard.
-
-4. Click **Metadata** in the dock, at the bottom. The panel opens on the right, with the `samplesheet` table.
-5. Click the green **+** next to **Columns**, name the column `batch`, and click **Add**. Double-click a cell of the new column, type a label, press Enter. Do the three rows: `run1`, `run1`, `run2`.
-6. Look at the header of the `batch` column: the chart icon turns the labels into groups. When it is on, **Analysis** shows **2 groups**. If not, press the icon.
-
-![The Metadata panel: the samplesheet table with the batch column holding run1, run1 and run2](../../images/tutorials/workshop-cli/ep3vr_1_metadata.jpg){ .ws-shot }
-
-7. Open **Analysis** in the dock. Under **Color figures by**, click **A column**, open **Pick a column…** and pick `batch`. The panel switches to **My groups**, with `batch` as the label column.
-8. Open the **Coverage & Depth** tab. The lanes of **Depth along the genome** are now coloured by `run1` and `run2`.
-
-![Analysis with batch as the label column and the groups run1 and run2; the Coverage & Depth tab coloured by them](../../images/tutorials/workshop-cli/ep3vr_1_analysis.jpg){ .ws-shot }
-
-Only some figures take the groups: on this dashboard, the two depth plots of **Coverage & Depth**. On **Sample QC** and **Overview** the panel says that none of the components can receive them.
-
-The real tables do not change. Your labels live on your account, so you find them again from any computer, and a colleague does not see them.
-
-## :material-comment-text-outline: Step 2: comment and annotate { #comment-and-annotate }
+## :material-comment-text-outline: Hands-on 3 · Step 1: comment and annotate { #comment-and-annotate }
 
 Open the **Sample QC** tab and find **Genome covered per sample, at 1x and at 10x**, a bar chart.
 
@@ -71,7 +40,7 @@ Open the **Sample QC** tab and find **Genome covered per sample, at 1x and at 10
 
 Use a bar chart for the note. On a figure with a log axis, the note is saved but not drawn.
 
-## :material-history: Step 3: edit a component, save, compare { #versions }
+## :material-history: Step 2: edit a component, save, compare { #versions }
 
 You cannot break anything for good: every save records a version, and each component keeps its own history.
 
@@ -84,7 +53,7 @@ You cannot break anything for good: every save records a version, and each compo
 
 **Restore this component** brings the old one back. The rest of the dashboard stays as it is.
 
-## :material-account-multiple-outline: Step 4: share the project { #share }
+## :material-account-multiple-outline: Step 3: share the project { #share }
 
 A dashboard belongs to a project, and the project decides who sees it.
 
@@ -96,7 +65,7 @@ A dashboard belongs to a project, and the project decides who sees it.
 
 Leave the **Public** switch as it is.
 
-## :material-file-export-outline: Step 5: export it for offline use { #export }
+## :material-file-export-outline: Step 4: export it for offline use { #export }
 
 A dashboard does not have to stay on the server.
 
@@ -114,10 +83,10 @@ A dashboard does not have to stay on the server.
     The dialog says it: *Anyone you send it to can read this data, with no sign-in.* Check the tables it lists before you send it.
 
 !!! question "Check your understanding"
-    A colleague opens the same dashboard, after you labelled the samples in step 1. Do they see the groups `run1` and `run2`? Where do your labels live?
+    You added the person next to you as a **Viewer** in step 3. Can they read your comment? Can they change the title you edited in step 2?
 
     ??? solution "Answer"
-        No. The labels are yours: they are kept on your account, not in the project, and the tables are not changed. The groups, the colours and the comparison in the cards are a temporary view too: they stay in your browser.
+        They can read the comment, and answer it: this server lets readers comment. They cannot change the title: a viewer can only look, editing needs the **Editor** role. Your note from step 1 shows to them only once **Visible to viewers** is on.
 
 !!! challenge "Challenge: what stays interactive"
     Open **Export dashboard…** again, and read the dialog without exporting. How many tiles stay interactive, how many do not, and how large can the file be at most?
@@ -128,17 +97,26 @@ A dashboard does not have to stay on the server.
         ![The export dialog: 122 of 126 tiles stay interactive, Live 122, Frozen 3, Omitted 1, and the list of tables the file carries](../../images/tutorials/workshop-cli/ep3vr_5_dialog.jpg){ .ws-shot }
 
 !!! keypoints "Key points"
-    - **Metadata** mode adds your own label column beside the samples, without changing the table. Each label is a group that can colour the figures that carry the sample.
     - A comment and a note stay on the figure they were written on.
     - Every save is a version. The history of a component compares it with an earlier one, and restores just that component.
     - **Permissions** lists who sees the project, and with which role: owner, editor or viewer.
     - **Dashboard only (serverless)** exports one HTML file with the filters you have at that moment. Anyone who gets it can read its data.
 
-??? note "Bonus · Compare the groups in the cards"
-    Open the **Sample QC** tab and **Analysis**. With `batch` as your label column, switch on **Compare groups in cards**. Each card now shows its number for all the samples and for each group. Read the **Median depth** card: which run has the deeper samples, and by how much?
+??? note "Bonus · Label samples in Metadata mode, on your ampliseq copy"
+    nf-core/ampliseq publishes its sample metadata in `input/`, so your project has a sample table you can label; viralrecon publishes none. Here you label four samples, then colour the ampliseq figures by your labels.
 
-    ??? solution "Solution"
-        `run2`, by 50. The card shows **286** for all three samples, **236** for `run1` (two samples) and **286** for `run2` (one sample).
+    1. On your **nf-core/ampliseq (copy)** dashboard, click **Metadata** in the dock at the bottom. A panel opens on the right. It shows the table **metadata**, with **key: ID**: one row per sample.
+    2. Next to **Columns**, click the green **+**. Type `my_group` and click **Add**. A new teal column appears.
+    3. Double-click the `my_group` cell of a row, type a label, and press Enter. Do it for four samples: `water` for `SRR10070130` (Riverwater) and `SRR10070132` (Groundwater), `solid` for `SRR10070149` (Sediment) and `SRR10102392` (Soil).
+    4. In the header of `my_group`, click the chart icon. The **Analysis** button in the dock now shows **2** (your two groups, `solid` and `water`).
+    5. Click **Analysis**. Under **Color figures by**, click **A column**, then **Pick a column…**, and choose `my_group` (it is at the end of the list). The panel switches to **My groups**. On the Overview tab it says that no component can receive the groups: that is expected.
+    6. In the icon bar on the left, click the scatter-plot icon, the fourth from the top. This is the **Ordination & Clustering** tab. In **Sample ordination (PCoA, Bray-Curtis)** the legend now reads **solid**, **water**, **Other**: the grey **Other** is every sample you did not label. The heatmap beside it shows the same groups.
+
+    ![The Metadata panel of the ampliseq copy: the table metadata, key ID, and the new my_group column with water on two rows and solid on two rows](../../images/tutorials/workshop-cli/ep3_bonus_metadata.jpg){ .ws-shot }
+
+    ![The Ordination and Clustering tab after the colouring: the PCoA legend shows solid, water and Other, and the Bray-Curtis heatmap has a Group legend with solid and water](../../images/tutorials/workshop-cli/ep3_bonus_metadata_ordination.jpg){ .ws-shot }
+
+    The labels stay on your dashboard. The colouring is a temporary view: the Analysis panel says it stays in this browser and nobody else sees it. The **Alpha Diversity** tab also takes the groups (in **Rarefaction curves**); the taxon bar charts of **Community & Diversity** do not.
 
 ??? note "Bonus · Fix your comment"
     Open the comments of the bar chart again. Hover your comment and click the pencil. Change the text so that it also quotes the depth of the sample, and save it.

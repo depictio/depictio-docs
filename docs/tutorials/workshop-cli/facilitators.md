@@ -19,7 +19,7 @@ description: "Prepare a throwaway Depictio server for Day 2 of the hands-on work
 | 10:25 | The command line (10 min) | `CLI.yaml`, `depictio config check`, `depictio ingest` | [0. Setup](setup.md) |
 | 10:35 | Episode 2: an nf-core run from the terminal, **Hands-on 2** (15 min) | `depictio catalog info`, then `depictio ingest` on a viralrecon run, dry run first | [2. An nf-core run from the terminal](nf-core-run.md) |
 | 11:00 | Break | 10 min | |
-| 11:10 | Episode 3: work on your dashboard, together (browser), **Hands-on 3** (15 min) | On the learner's own nf-core/viralrecon dashboard from episode 2: a sample sheet and a label column in Metadata mode, comment and annotate, edit and compare versions, share the project, export **Dashboard only** | [3. Work on your dashboard, together](collaborate-and-export.md) |
+| 11:10 | Episode 3: work on your dashboard, together (browser), **Hands-on 3** (15 min) | On the learner's own nf-core/viralrecon dashboard from episode 2: comment and annotate, edit and compare versions, share the project, export **Dashboard only**. Bonus: Metadata mode on their Day 1 ampliseq copy | [3. Work on your dashboard, together](collaborate-and-export.md) |
 | 11:35 | Wrap-up | The Nextflow end-of-run demo | [Going further](going-further.md) |
 | 11:45 | Questions | 15 min | |
 
@@ -61,7 +61,6 @@ All are linked from the episode pages:
 |---|---|
 | Going further, and episode 1 as a local copy | [`penguins-workshop.zip`](penguins-workshop.zip), 6 KB: `penguins-1.yaml` (a project file by hand), `penguins.yaml` (a new season), `starter.yaml`, `seasons/season_2007/`, `seasons/season_2008/` |
 | 2 | [`viralrecon.zip`](viralrecon.zip), 1.3 MB: the part of an nf-core/viralrecon 3.0.0 run (test profile, 3 samples) that the template reads, in `viralrecon/run_1/` |
-| 3 | [`samplesheet.csv`](samplesheet.csv): the sample sheet learners upload and link to label samples in Metadata mode |
 
 ## :material-alert-outline: Known behaviours
 
