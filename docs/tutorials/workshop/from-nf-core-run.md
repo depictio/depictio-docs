@@ -1,13 +1,13 @@
 ---
 title: "3. Create a project from an nf-core run"
-description: "Hands-on 3: create a project from an nf-core/ampliseq run on S3 in three steps (name it, point at the run, check and create), then open its dashboard. Sample table, URL, Project Builder and several MultiQC reports are Bonus."
+description: "Hands-on 3: create a project from an nf-core/ampliseq run on S3 in three steps (name it, point at the run, check and create), then open its dashboard. Two Bonus exercises (your own sample table, one table from a URL) and a Going further list follow."
 glightbox: true
 ---
 
 # 3. Create a project from an nf-core run
 
 <div class="ws-strip" markdown>
-[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 .ws-here } [**4** Showcases](showcases.md){ .ws-ep6 } [**+** From files](from-a-file.md){ .ws-ep4 } [**+** New run](new-run-and-versions.md){ .ws-ep5 }
+[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 .ws-here } [**4** Showcases](showcases.md){ .ws-ep6 } [**+** From files](from-a-file.md){ .ws-ep4 }
 </div>
 
 <div class="ws-meta ws-ep3" markdown>
@@ -15,13 +15,19 @@ glightbox: true
 </div>
 
 !!! overview "Overview"
-    **Objective**: turn the results folder of an nf-core run, left in its bucket on S3, into a project and a dashboard, without uploading anything.
+    **Questions**
 
-    The core of this page takes about 5 minutes to read. The rest is in the **Bonus** blocks at the end.
+    - How do I turn the results of an nf-core run into a dashboard?
+    - Do I have to upload the files?
+
+    **Objectives**
+
+    - Name a project and point it at a run folder on S3.
+    - Check what the template finds, create the project and open its dashboard.
 
 A **run** is one execution of a pipeline. Here, nf-core/ampliseq 2.18.0 ran once and wrote its results in one folder on S3: you point Depictio at that folder, and it builds the project and its dashboard from it.
 
-You rebuild the project you read in episode 1, from its run. In a Bonus at the end, you add what the pipeline does not know: where and when each sample was taken.
+You rebuild the project you read in episode 1, from its run. In a Bonus at the end, you can add what the pipeline does not know: where and when each sample was taken.
 
 **The run location** is an address starting with `s3://`. Paste it as given, with no `/` added at the end:
 
@@ -73,40 +79,14 @@ The first step of the dialog, **Your data**, has two halves: **Upload** on the l
     ??? solution "Solution"
         23 data collections (22 if **Group column** was left on `name`), the ones of the template, and 7 tabs. The links are the 19 of the template. They mostly start from the sample metadata (`metadata`), which is why one filter on Habitat reached every tab in episode 1. If you also did the Bonus with your own table, add `sampling_sites` and one link for each link you made.
 
+!!! callout "Your project is private"
+    Only you can open it until you share it, under **Permissions** on the project page, as in the optional [Create a project from files](from-a-file.md#share-it-your-group-then-everyone) (Optional A).
+
 !!! keypoints "Key points"
     - A run is one batch of results; here one execution of a pipeline, whose results folder stays where it is, on S3.
     - Depictio reads `pipeline_info/`, finds the pipeline and its version, and builds data collections, links and a dashboard from the template.
     - Read in place keeps the run in its bucket; upload copies your files.
     - Nothing is created before you confirm.
-
-??? note "Bonus · Good to know: the screenshot, and who can open your project"
-    The screenshot of **What Depictio found** was taken with **Group column** empty, so **COLLECTIONS** reads 22 found. With `habitat` you get 23.
-
-    !!! callout "Your project is private"
-        Only you can open it until you share it, under **Permissions** on the project page, as in the optional [Create a project from files](from-a-file.md#share-it-your-group-then-everyone) (Optional A).
-
-??? note "Bonus · How it works: template, collections, links"
-    ### :material-sitemap-outline: How it works
-
-    1. **Depictio reads `pipeline_info/`.** Every nf-core run writes its own records there. They tell Depictio which pipeline ran, in which version, and how its tasks ended.
-    2. **It picks the template written for that version.** A **template** is a file that describes the project for one pipeline version. Here it is the template of nf-core/ampliseq 2.18.0. The match is exact, and the checks say so.
-    3. **The template lists what the project holds.**
-        - The **data collections**: for each one, which files of the run it reads. Some are **recipes**: Depictio computes them from several files with a script shipped with the template.
-        - The **links** between data collections.
-        - The **dashboard**.
-    4. **Depictio reads the files and builds the project.** Nothing is created before you confirm.
-
-    There are two ways to bring the data in:
-
-    - **Read in place**: the run stays in its bucket. Depictio stores the tables it builds from it, not the run itself. This is what you do for the run.
-    - **Upload**: the files are copied into Depictio, and each becomes a data collection. This is what you do for `sampling_sites.tsv`.
-
-    You can use both in the same step.
-
-    ![Read in place: Depictio reads the run folder on S3 and applies the template. Upload: the files are copied, one data collection each](../../images/tutorials/workshop/diagrams/two-ways-in_light.png#only-light){ .ws-diagram }
-    ![Read in place: Depictio reads the run folder on S3 and applies the template. Upload: the files are copied, one data collection each](../../images/tutorials/workshop/diagrams/two-ways-in_dark.png#only-dark){ .ws-diagram }
-
-    How Depictio reads remote folders: [Remote data](../../usage/projects/remote-data.md).
 
 ??? note "Bonus · Your own sample table, linked to the run"
     Add a table of your own to the project: where and when each sample was taken.
@@ -141,6 +121,8 @@ The first step of the dialog, **Your data**, has two halves: **Upload** on the l
         ??? solution "Solution"
             24 data collections: the 23 of the template, plus `sampling_sites` (23 if **Group column** was left on `name`), and 25 if you also added `ena_runs` from its URL. 7 tabs. The links are the 19 of the template, plus one for each link you added. The template's links mostly start from the sample metadata (`metadata`), which is why one filter on Habitat reached every tab in episode 1.
 
+            ![The page of a project with the template's 23 data collections plus sampling_sites and ena_runs: 25 data collections, and its dashboard with 7 tabs](../../images/tutorials/workshop/ep3_bonus_project.webp){ .ws-shot }
+
 ??? note "Bonus · One table from a URL"
     ### :material-web: One table from a URL
 
@@ -170,161 +152,14 @@ The first step of the dialog, **Your data**, has two halves: **Upload** on the l
         ??? solution "Solution"
             `run_accession` in `ena_runs` holds the same values as `ID` in `sampling_sites` and `metadata`: the ENA run accessions, such as `SRR10070130`. A link needs a column with the same values on both sides, and this is the one. The link goes one way: choose which of the two should be filtered by the other. `ena_runs` has 24 rows, `sampling_sites` 12. The study has 24 runs in ENA, and this run of the pipeline used 12 of them. All 12 `ID` values are among the 24 `run_accession` values. To count the rows yourself, run `curl -s '<the ENA address>' | tail -n +2 | wc -l`: the header line is skipped.
 
-??? note "Bonus · Where data can come from"
-    ### :material-database-import-outline: Where data can come from
+            ![How Depictio checks a link: the values of the column ID of sampling_sites, matched to the other data collection, 12 of 12 found. The column run_accession of ena_runs would be matched the same way](../../images/tutorials/workshop/ep3_v124_created_links.webp){ .ws-shot }
 
-    !!! note "Optional"
-        This part is not part of the live session: read it if you have time, or afterwards.
-
-    You used three ways in this episode: a public S3 bucket, an uploaded file and one file by URL. Depictio reads more. The browser and the command line read the same sources: the command line is another interface, not another source (Day 2). The table groups them by where the data is.
-
-    | Where the data is | In the browser | From the command line | On the workshop server |
-    |---|---|---|---|
-    | **S3 buckets** | | | |
-    | A public bucket | **Read in place**, **Folder or bucket**: paste the `s3://` location | `depictio ingest s3://bucket/run42` | Used in this episode: the server is set to read this public bucket |
-    | A private bucket, with credentials | **Use my own credentials**: access key and secret for that bucket | `depictio ingest`, with the S3 endpoint and keys of the CLI configuration | Not used |
-    | Another S3-compatible service | Same, with its **Endpoint** | Same, with `endpoint_url` in the CLI configuration | Not used |
-    | Google Cloud Storage | In progress | In progress | Not used |
-    | **HTTP** | | | |
-    | One file, by URL | **Read in place**, **One file URL** | `--bind tag=https://host/data.csv` | Used in this episode |
-    | Many files, listed in a manifest | **From Manifest** | `--manifest <url or path>` | Not used |
-    | **Your computer** | | | |
-    | Files or whole folders | **Upload**: drop them, up to 50 MB each | `depictio ingest <folder>` | Used in this episode |
-    | **Command line and pipelines** | | | |
-    | A results folder, the end of a Nextflow run, or a folder watched for changes | | `depictio ingest`, the Nextflow trigger, `depictio watch` | Day 2 |
-
-    !!! note "A folder on the server's own disk"
-        Depictio can read a folder on the machine it runs on only when it runs on that machine: `depictio local`, Docker with the disks mounted, or the Python bundle. The workshop server cannot read a folder on its own disk. Use **Upload**, or a bucket.
-
-    Details of each case: [Remote data](../../usage/projects/remote-data.md#which-way-to-use).
-
-??? note "Bonus · The Project Builder, for a pipeline with no template"
-    Day 2 does this hands-on: [Your own tables, no template](../workshop-cli/project-builder.md).
-
-    !!! further "A project from scratch: the Project Builder"
-        Some pipelines have no template. Then you define the data collections yourself, in the **Project Builder**. The instructor shows it on the shared screen. It is not a step for you.
-
-        1. **Choose how to read the folder.** In **Add data**, under **How should Depictio read this folder?**, pick **Custom workflows**, then click **Open the Project Builder**. A custom workflow has no dashboard to start with.
-
-            ![Add data with Custom workflows selected and the button Open the Project Builder](../../images/tutorials/workshop/ep3_builder_1_choice.webp){ .ws-shot }
-
-        2. **Source & project.** Give the data root: an `s3://` location, with a switch for a bucket that needs credentials. Depictio counts the folders at the top. If it recognises the pipeline, it offers **Start from Ampliseq Microbial Community Analysis**, to keep the template's collections, recipes and dashboards and change only what you need. **Keep building from scratch** ignores the template.
-
-            ![Project Builder, step 1: the data root, the recognised nf-core/ampliseq 2.18.0 and the two buttons](../../images/tutorials/workshop/ep3_builder_2_source.webp){ .ws-shot }
-
-        3. **Define a data collection.** The file tree is on the left, the workflows on the right. Click a file, such as `input/Metadata_full.tsv`: its first rows and column types show. Fill in the tag, the workflow and the format, then click **Add to main**. Tick a file's siblings to cover every sample in one scan.
-
-            ![Project Builder, step 2: the file tree, the first rows of Metadata_full.tsv and the form of a new data collection](../../images/tutorials/workshop/ep3_builder_3_collection.webp){ .ws-shot }
-
-        4. **Review and create.** The page lists the data collections per workflow and the links. **Preview the ingestion** is a dry run: nothing is created. **Create project** is available after it. On the right, the project definition as YAML: **Download YAML** saves it, and `depictio ingest <folder or s3://prefix> --template <this file>` reuses it on the next runs. Dashboards are built afterwards, in the editor.
-
-            ![Project Builder, step 3: the data collections of the main workflow, Preview the ingestion, Create project and the YAML definition](../../images/tutorials/workshop/ep3_builder_4_review.webp){ .ws-shot }
-
-        An AI assistant to draft these definitions is planned.
-
-??? note "Bonus · Where your project comes from"
-    !!! further "Going further: where your project comes from"
-        The instructor shows where the **Differential Abundance** tab comes from, on the shared screen. Nothing to do on your side.
-
-        | | Where | What it holds |
-        |---|---|---|
-        | Template | [`nf-core/ampliseq/2.18.0/template.yaml`](https://github.com/depictio/depictio/blob/main/depictio/projects/nf-core/ampliseq/2.18.0/template.yaml){target=_blank} | The collection `ancombc_results`: which files of the run it reads, and the recipe that reshapes them |
-        | Tools catalog | [`catalog/qiime2/ancombc.yaml`](https://github.com/depictio/depictio/blob/main/depictio/catalog/qiime2/ancombc.yaml){target=_blank} | The same output, described once for every pipeline that runs ANCOM-BC: the same recipe, and what it renders as |
-        | Tool Studio | [Tool Studio](../../developer/tool-studio.md) | Where a tool is added to the catalog, in the browser |
-
-        More in [Pipeline templates](../../pipeline-templates/nf-core/ampliseq.md) and the [Tools catalog](../../catalog/index.md). To contribute: [a template](../../developer/contributing-templates.md), [a tool](../../developer/contributing-a-tool.md).
-
-??? note "Bonus · Several MultiQC reports in one collection"
-    A **MultiQC** data collection can hold one report per run. When the runs are ingested together, their reports share **one collection**. Filters, and a link from a sample table, then work across the runs: you compare the QC of several sequencing runs in one dashboard.
-
-    The example was tested in November 2026: three nf-core/seqinspector runs, `seqrun_1` to `seqrun_3`, with 4 samples each, in one folder. One project holds:
-
-    - a MultiQC collection, `multiqc_data`, with the three reports;
-    - a table, `samples`, from the `samples.csv` of each run: the columns `sample`, `condition`, `replicate`, `sequencing_run` and `lane`, 12 rows aggregated;
-    - a link from `samples` to `multiqc_data`: `sample` in the table matches `sample_name` in the reports (the resolver `sample_mapping`).
-
-    ```console
-    qc-runs/                                 the folder to ingest (the absolute path goes in the project file)
-    ├── seqrun_1/                            one run: a subfolder whose name matches runs_regex
-    │   ├── multiqc/multiqc_data/multiqc.parquet    the run's MultiQC report
-    │   └── samples.csv                      4 samples of this run
-    ├── seqrun_2/                            same layout
-    └── seqrun_3/                            same layout
-    ```
-
-
-    The project file. Replace `/path/to/qc-runs` with the absolute path of your folder:
-
-    ```yaml
-    name: "QC across runs"                     # the project's name [[1]]
-    workflows:                                 # where the data comes from [[2]]
-      - name: "seqinspector"                   # the pipeline that made the runs [[2]]
-        version: "1.1.2"                       # its version [[2]]
-        engine:                                # what ran it [[2]]
-          name: "nextflow"                     # [[2]]
-        catalog:                               # where the pipeline is listed [[2]]
-          name: "nf-core"                      # [[2]]
-          url: "https://nf-co.re"              # [[2]]
-        data_location:                         # where the runs are [[3]]
-          structure: "sequencing-runs"         # one folder holds one subfolder per run [[3]]
-          runs_regex: "seqrun_.*"              # which subfolders are runs [[3]]
-          locations:                           # [[3]]
-            - "/path/to/qc-runs"               # the folder that holds seqrun_1 to seqrun_3 [[3]]
-        data_collections:
-          - data_collection_tag: "multiqc_data"  # one collection for the reports of all runs [[4]]
-            config:                            # [[4]]
-              type: "MultiQC"                  # [[4]]
-              scan:                            # [[4]]
-                mode: "recursive"              # look in each run folder and its subfolders [[4]]
-                scan_parameters:               # [[4]]
-                  regex_config:                # [[4]]
-                    pattern: "multiqc/multiqc_data/multiqc.parquet"  # one report per run [[4]]
-          - data_collection_tag: "samples"     # the sample table [[5]]
-            config:                            # [[5]]
-              type: "Table"                    # [[5]]
-              metatype: "Aggregate"            # the rows of every run add up in one table [[5]]
-              scan:                            # [[5]]
-                mode: "recursive"              # [[5]]
-                scan_parameters:               # [[5]]
-                  regex_config:                # [[5]]
-                    pattern: "samples.csv"     # the file that makes the table [[5]]
-              dc_specific_properties:          # [[5]]
-                format: "CSV"                  # how to read it [[5]]
-    links:
-      - source_dc_tag: "samples"               # the link starts from the sample table [[6]]
-        source_column: "sample"                # its column of sample names [[6]]
-        target_dc_tag: "multiqc_data"          # and filters the MultiQC collection [[6]]
-        target_type: "multiqc"                 # [[6]]
-        link_config:                           # [[6]]
-          resolver: "sample_mapping"           # match sample names, across the runs [[6]]
-          target_field: "sample_name"          # the sample name in the MultiQC reports [[6]]
-    ```
-
-    1. **The project**: its name. `--project` gives it your own name on the server.
-    2. **The workflow**: the pipeline, its version and its engine, as in the other project files of Day 2.
-    3. **Where the runs are**: `sequencing-runs` means one folder with a subfolder per run, and `runs_regex` picks the subfolders that are runs.
-    4. **The MultiQC collection**: type `MultiQC`, with the pattern that finds the report in each run. All the reports go in this one collection.
-    5. **The sample table**: `Aggregate` stacks the `samples.csv` of the three runs into one table of 12 rows.
-    6. **The link**: a filter on `samples` reaches the MultiQC reports whose sample names match, in every run.
-
-    Check it, then ingest it, from the folder that holds the file:
-
-    ```bash
-    # Dry run: reads the file and the folders, sends nothing. Read the counts.
-    depictio ingest --project-config-path qc-runs.yaml --project yourname-qc-runs --dry-run
-
-    # The same command without --dry-run creates the project.
-    depictio ingest --project-config-path qc-runs.yaml --project yourname-qc-runs
-    ```
-
-    The CLI says *Processed 3 MultiQC files and created 3 individual reports*: three reports, one collection. In a dashboard built on this project, a filter on the `condition` of the `samples` table keeps only the matching samples in the MultiQC plots, in every run.
-
-    !!! challenge "Challenge: one run among three"
-        In the MultiQC plots, how would you show only the samples of `seqrun_2`? Which column of which table would you filter?
-
-        ??? solution "Solution"
-            The column `sequencing_run` of the `samples` table: the link carries the filter to the reports, so only the samples of `seqrun_2` stay in the MultiQC plots.
-
+!!! further "Going further"
+    - How a template, the data collections and the links build a project, and the two ways in: [How it works](reference.md#how-it-works).
+    - Every place data can come from, in the browser and on the command line: [Where data can come from](reference.md#where-data-can-come-from).
+    - A project for a pipeline with no template (hands-on on Day 2): [The Project Builder](reference.md#project-builder).
+    - Where the **Differential Abundance** tab comes from: [Template, catalog and Tool Studio](reference.md#where-project-comes-from).
+    - Several MultiQC reports in one collection: [Several MultiQC reports](reference.md#several-multiqc).
 
 <div class="ws-next" markdown>
 [<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#episode-3){ .ws-help }

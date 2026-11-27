@@ -7,7 +7,7 @@ glightbox: true
 # 2. Make your own copy and edit it
 
 <div class="ws-strip" markdown>
-[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 .ws-here } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 } [**+** From files](from-a-file.md){ .ws-ep4 } [**+** New run](new-run-and-versions.md){ .ws-ep5 }
+[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 .ws-here } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 } [**+** From files](from-a-file.md){ .ws-ep4 }
 </div>
 
 <div class="ws-meta ws-ep2" markdown>
@@ -15,9 +15,16 @@ glightbox: true
 </div>
 
 !!! overview "Overview"
-    **Objective**: change a dashboard that someone shared with you, in your own copy: duplicate it, add a figure and save.
+    **Questions**
 
-    The core of this page takes about 5 minutes to read. The rest is in the **Bonus** blocks at the end.
+    - Can I change a dashboard someone shared with me?
+    - How do I add a figure, and keep it?
+
+    **Objectives**
+
+    - Duplicate a dashboard into a copy of your own.
+    - Open your copy in **Edit** mode and add a figure.
+    - Save it.
 
 The shared dashboard almost suits you. You cannot change it, since others use it as it is. You make a **copy**: the copy belongs to you, and you are its **owner**. As a **designer**, you change the dashboard, never the data.
 
@@ -89,11 +96,6 @@ Click **Save** in the bottom toolbar. Every save is kept as a version of your da
             ```
 
             Any column of `ancombc_results` works in `color`; the figure is drawn again with it.
-
-<span id="without-a-server"></span>
-
-??? note "Bonus · Annotations, versions and exports: now on Day 2"
-    Drawing an annotation on a figure, going back to an earlier version of a dashboard or of one component, and exporting a dashboard as a file that opens without a server (*Without a server*) moved to Day 2: [Collaborate and export](../workshop-cli/collaborate-and-export.md). The export part is [here](../workshop-cli/collaborate-and-export.md#export).
 
 
 <div class="ws-next" markdown>

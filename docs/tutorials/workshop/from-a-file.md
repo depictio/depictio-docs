@@ -1,13 +1,13 @@
 ---
-title: "Optional A · Create a project from files"
+title: "Optional · Create a project from files"
 description: "Drop two CSV files in the project builder, join them into a new table, plot species against the measurements on a dashboard, then share the project with your group and with everyone."
 glightbox: true
 ---
 
-# Optional A · Create a project from files
+# Optional · Create a project from files
 
 <div class="ws-strip" markdown>
-[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 } [**+** From files](from-a-file.md){ .ws-ep4 .ws-here } [**+** New run](new-run-and-versions.md){ .ws-ep5 }
+[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 } [**+** From files](from-a-file.md){ .ws-ep4 .ws-here }
 </div>
 
 !!! note "Optional"
@@ -40,8 +40,6 @@ Download the two files:
 | [`demographic_data.csv`](demographic_data.csv) | `individual_id`, `island`, `sex`, `year`, `species` | 223 |
 | [`physical_features.csv`](physical_features.csv) | `individual_id`, `bill_length_mm`, `bill_depth_mm`, `flipper_length_mm`, `body_mass_g` | 223 |
 
-You keep this project and its dashboard for [Optional B](new-run-and-versions.md), where the 2009 season arrives.
-
 ## :material-upload-outline: Hands-on A1 · Create the project { #create-the-project }
 
 1. **Projects**, then **New project**. If you cannot see **Next** later in the dialog, close the **Welcome** card at the bottom right: on a smaller screen it covers the button. Give it your own name, then **Add data**.
@@ -54,7 +52,7 @@ You keep this project and its dashboard for [Optional B](new-run-and-versions.md
 Each file became a **data collection**, here two tables. Each stays as it is: nothing ties them yet.
 
 !!! callout "RUNS 2"
-    The project header counts **2 runs**: each upload is recorded as a **run** of the project, one batch of results. [Optional B](new-run-and-versions.md) adds a season without a new run.
+    The project header counts **2 runs**: each upload is recorded as a **run** of the project, one batch of results.
 
 ## :material-set-center: Join the two tables: watch the demo, then do it { #join }
 
@@ -97,8 +95,6 @@ The project now has three data collections. `joined_penguins` carries a **joined
     ??? solution "Solution"
         80 points, one per Gentoo penguin of the 2007 and 2008 seasons. Adelie gives 99 and Chinstrap 44: 223 in all, as many as the census, since a left join keeps every row of `demographic_data`.
 
-Keep this project and its dashboard: [Optional B](new-run-and-versions.md) adds the 2009 season to them.
-
 ## :material-account-group-outline: Hands-on A2 · Share it: your group, then everyone { #share-it-your-group-then-everyone }
 
 So far, only you see this project. Sharing is set per **project**: whoever you share it with sees all of its dashboards. The server has two user groups, *Tea lovers* and *Coffee lovers*; the list of who is in which is in the chat.
@@ -120,7 +116,7 @@ So far, only you see this project. Sharing is set per **project**: whoever you s
     Only an **owner** can share a project. Added as **Editor**, a person or a group can change the project's content; as **Viewer**, they can open it and comment. A user group is created by an administrator; you choose which projects to share with it.
 
 !!! further "Going further: add columns to one table in place"
-    A join makes a new table. To add columns to an existing table instead, open **demographic_data** on the project page and switch **Unlock cell edits** (**Read-only** becomes **Editable**). **Update from file**, pick `physical_features.csv`, tab **Add columns**, **Match on individual_id (223 rows)**, **Apply**. The four measurement columns are copied onto the census, as a new version of the same table; no row is added. This works for the project's owners and editors, on uploaded tables, up to 10,000 rows, and not on a published project. Do not do it on the project you keep for Optional B.
+    A join makes a new table. To add columns to an existing table instead, open **demographic_data** on the project page and switch **Unlock cell edits** (**Read-only** becomes **Editable**). **Update from file**, pick `physical_features.csv`, tab **Add columns**, **Match on individual_id (223 rows)**, **Apply**. The four measurement columns are copied onto the census, as a new version of the same table; no row is added. This works for the project's owners and editors, on uploaded tables, up to 10,000 rows, and not on a published project.
 
 !!! further "Going further: edit a cell"
     With **Unlock cell edits** on, give **adelie_8** a sex in `demographic_data`: its cell is empty, like six others. **Save changes**, then open **Version history**: the version before your edit is still there, and `joined_penguins` is rebuilt with the new value.
@@ -133,5 +129,5 @@ So far, only you see this project. Sharing is set per **project**: whoever you s
 
 <div class="ws-next" markdown>
 [<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#optional-a){ .ws-help }
-[<span class="ws-k">Next episode</span><span class="ws-t">Optional B · Follow a new run</span>](new-run-and-versions.md){ .ws-go .ws-ep5 }
+[<span class="ws-k">Back to</span><span class="ws-t">Depictio in the browser</span>](index.md){ .ws-go .ws-ep4 }
 </div>

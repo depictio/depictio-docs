@@ -7,7 +7,7 @@ glightbox: true
 # 4. Showcases
 
 <div class="ws-strip" markdown>
-[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 .ws-here } [**+** From files](from-a-file.md){ .ws-ep4 } [**+** New run](new-run-and-versions.md){ .ws-ep5 }
+[**0** Setup](get-started.md){ .ws-ep0 } [**1** Read](view.md){ .ws-ep1 } [**2** Edit](edit-your-copy.md){ .ws-ep2 } [**3** From a run](from-nf-core-run.md){ .ws-ep3 } [**4** Showcases](showcases.md){ .ws-ep6 .ws-here } [**+** From files](from-a-file.md){ .ws-ep4 }
 </div>
 
 <div class="ws-meta ws-ep6" markdown>
@@ -15,16 +15,27 @@ glightbox: true
 </div>
 
 !!! overview "Overview"
-    **Objective**: find the dashboard of the nf-core pipeline you use, and read it as you read ampliseq in episode 1.
+    **Questions**
+
+    - Is there a dashboard for the pipeline I use?
+
+    **Objectives**
+
+    - Find the showcase dashboard of your nf-core pipeline.
+    - Read it as you read ampliseq in episode 1.
 
 In episode 3 you built the dashboard of one pipeline, nf-core/ampliseq, from its template. Depictio has a template for **42 nf-core pipelines**, and the **showcases** server shows what each one gives you: a dashboard per pipeline template, built on a test run. The instructor gives a short tour first, then you look for your own pipeline.
 
 ## :material-view-gallery-outline: Hands-on 4 · Find your pipeline { #showcases }
 
-1. Open the showcases: [showcases.depictio.embl.org/dashboards](https://showcases.depictio.embl.org/dashboards){target=_blank}. It is the **Dashboards** page you know, in the **Thumbnails** view.
-2. Click the search box and type the name of your pipeline, for example `rnaseq`, `sarek` or `ampliseq`.
-3. Open its dashboard.
-4. Try one filter, as in episode 1: open the **Filters** panel, pick a value, and watch the cards and figures follow.
+**Your task, 5 minutes:** find the dashboard of a pipeline you use, and pick the one figure you would show your team. Then post the pipeline and the figure in the Zoom chat.
+
+1. Open the showcases in a new tab: [showcases.depictio.embl.org/dashboards](https://showcases.depictio.embl.org/dashboards){target=_blank}. It is the **Dashboards** page you know, in the **Thumbnails** view: one card per pipeline.
+2. In the search box, type the name of your pipeline, for example `rnaseq`, `sarek` or `chipseq`. No pipeline of your own, or not in the list? Take `rnaseq`.
+3. Open its dashboard and go through the **tabs**, left to right: they follow the steps of the pipeline, from the quality of the run to its results.
+4. Open the **MultiQC** tab: it is the report of the pipeline, read the same way as in episode 1.
+5. Try one **filter**, as in episode 1, and watch the cards and the figures follow.
+6. Pick the one figure you would show your team, and post it in the Zoom chat, for example *rnaseq: the General Stats table of the MultiQC tab*.
 
 ![The Dashboards page of the showcases server in the Thumbnails view: one card per nf-core pipeline, with a preview of its dashboard](../../images/tutorials/workshop/showcases_thumbs.jpg){ .ws-shot }
 
@@ -54,5 +65,5 @@ In episode 3 you built the dashboard of one pipeline, nf-core/ampliseq, from its
 
 <div class="ws-next" markdown>
 [<span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span>](troubleshooting.md#episode-4){ .ws-help }
-[<span class="ws-k">Optional A</span><span class="ws-t">Create a project from files</span>](from-a-file.md){ .ws-go .ws-ep4 }
+[<span class="ws-k">Optional</span><span class="ws-t">Create a project from files</span>](from-a-file.md){ .ws-go .ws-ep4 }
 </div>

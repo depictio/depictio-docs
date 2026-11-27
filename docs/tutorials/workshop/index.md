@@ -19,7 +19,7 @@ glightbox: true
 
 <div class="grid cards ws-episodes" markdown>
 
--   <span class="ws-num">0</span> **[Setup](get-started.md)**
+-   <span class="ws-num ws-ep0">0</span> **[Setup](get-started.md)**
 
     ---
 
@@ -27,7 +27,7 @@ glightbox: true
 
     How do I sign in, and where is everything?
 
--   <span class="ws-num">1</span> **[Read a shared dashboard](view.md)**
+-   <span class="ws-num ws-ep1">1</span> **[Read a shared dashboard](view.md)**
 
     ---
 
@@ -35,7 +35,7 @@ glightbox: true
 
     How do I filter, select and compare samples on a dashboard I did not make?
 
--   <span class="ws-num">2</span> **[Make your own copy and edit it](edit-your-copy.md)**
+-   <span class="ws-num ws-ep2">2</span> **[Make your own copy and edit it](edit-your-copy.md)**
 
     ---
 
@@ -43,7 +43,7 @@ glightbox: true
 
     How do I change a dashboard without changing it for others?
 
--   <span class="ws-num">3</span> **[Create a project from an nf-core run](from-nf-core-run.md)**
+-   <span class="ws-num ws-ep3">3</span> **[Create a project from an nf-core run](from-nf-core-run.md)**
 
     ---
 
@@ -51,7 +51,7 @@ glightbox: true
 
     How do I turn a pipeline's results folder into a project and a dashboard?
 
--   <span class="ws-num">4</span> **[Showcases](showcases.md)**
+-   <span class="ws-num ws-ep6">4</span> **[Showcases](showcases.md)**
 
     ---
 
@@ -59,7 +59,7 @@ glightbox: true
 
     What does a dashboard look like for the pipeline I use?
 
--   <span class="ws-num">+</span> **[Optional A · Create a project from files](from-a-file.md)**
+-   <span class="ws-num ws-ep4">+</span> **[Optional · Create a project from files](from-a-file.md)**
 
     ---
 
@@ -67,15 +67,26 @@ glightbox: true
 
     How do I start from my own tables, join them, and share them?
 
--   <span class="ws-num">+</span> **[Optional B · Follow a new run](new-run-and-versions.md)**
-
-    ---
-
-    <span class="ws-role">Creator · the 2009 season · optional, after the workshop</span>
-
-    I added a season: what changed since I last looked, and how do I go back?
 
 </div>
+
+## Timetable { #timetable }
+
+15 December, 10:00 to 12:00, in the browser. Each episode ends with a hands-on; the times include it.
+
+| Time | Block | Min | Hands-on |
+|---|---|---|---|
+| 10:00 | Welcome, sign in | 5 | |
+| 10:05 | Introducing Depictio | 15 | |
+| 10:20 | [1 · Read a shared dashboard](view.md) | 20 | 10 min |
+| 10:40 | [2 · Make your own copy and edit it](edit-your-copy.md) | 20 | 10 min |
+| 11:00 | Break | 10 | |
+| 11:10 | [3 · Create a project from an nf-core run](from-nf-core-run.md) | 20 | 10 min |
+| 11:30 | [4 · Showcases](showcases.md) | 10 | 5 min |
+| 11:40 | Wrap-up | 5 | |
+| 11:45 | Your questions | 15 | |
+
+The optional episode is for after the workshop.
 
 ## Three roles
 
