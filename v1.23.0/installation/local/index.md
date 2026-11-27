@@ -14,7 +14,7 @@ No machine at hand?
 
 [Open in Codespaces](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/try/devcontainer.json&quickstart=1) runs these steps in a GitHub cloud workspace. Its image already holds `depictio[local]`, the services and the examples, so it only starts `depictio local up`, in a terminal of the editor, and opens the viewer. Drag a results folder onto its Explorer, then run `depictio ingest` in its terminal. While the codespace is being created, **View logs** on its loading page, or **Codespaces: View Creation Log** in the command palette, shows what it is doing.
 
-**Hands-on workshop** (v1.21.0+): [Open the workshop codespace](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/workshop/devcontainer.json&quickstart=1). It opens a single-user instance with an nf-core/ampliseq 2.18.0 run already ingested.
+**Depictio in the browser**, the hands-on course (v1.21.0+): [Open the workshop codespace](https://codespaces.new/depictio/depictio?devcontainer_path=.devcontainer/workshop/devcontainer.json&quickstart=1). It opens a single-user instance with an nf-core/ampliseq 2.18.0 run already ingested.
 
 **Prerequisites**: Linux, or macOS on Apple silicon (see [Platforms](#platforms)), with [uv](https://docs.astral.sh/uv/getting-started/installation/), or pip and Python 3.11 to 3.14.
 

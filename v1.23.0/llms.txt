@@ -9,7 +9,7 @@ Depictio turns bioinformatics pipeline results into interactive, shareable dashb
 
 - [Home](https://depictio.github.io/depictio-docs/latest/index.md): What depictio is, with the main features
 - [Getting Started](https://depictio.github.io/depictio-docs/latest/usage/get_started/index.md): First steps, from install to a first dashboard
-- [Tutorials](https://depictio.github.io/depictio-docs/latest/tutorials/index.md): Tutorials
+- [Overview](https://depictio.github.io/depictio-docs/latest/tutorials/index.md): Tutorials
 
 ## Installation
 
