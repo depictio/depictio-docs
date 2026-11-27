@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Hands-on 2: duplicate the shared nf-core/ampliseq dashboard, edit your copy, add a figure and save. Tables, MultiQC and code are in Bonus blocks.">
+        <meta name="description" content="Hands-on 2: duplicate the shared nf-core/ampliseq dashboard, edit your copy, add a figure and save. More component types and figures as code are in Bonus blocks.">
       
       
       
@@ -3533,10 +3533,65 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#table-and-multiqc" class="md-nav__link">
+  <a href="#1-a-table" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Table and MultiQC
+        1. A table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-two-kinds-of-multiqc-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Two kinds of MultiQC component
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-a-card-with-several-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. A card with several numbers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-an-advanced-figure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. An advanced figure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-richer-figure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A richer figure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-it-as-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read it as code
       
     </span>
   </a>
@@ -8240,10 +8295,65 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#table-and-multiqc" class="md-nav__link">
+  <a href="#1-a-table" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Table and MultiQC
+        1. A table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-two-kinds-of-multiqc-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Two kinds of MultiQC component
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-a-card-with-several-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. A card with several numbers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-an-advanced-figure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. An advanced figure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-richer-figure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A richer figure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-it-as-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read it as code
       
     </span>
   </a>
@@ -8343,29 +8453,105 @@
 </ul>
 </div>
 <details class="note">
-<summary>Bonus · A table and a MultiQC plot</summary>
-<h3 id="table-and-multiqc"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> Table and <img alt="MultiQC" class="ws-logo ws-logo-mono off-glb" src="../../../images/tutorials/workshop/multiqc-icon.svg"> MultiQC<a class="headerlink" href="#table-and-multiqc" title="Permanent link">¶</a></h3>
+<summary>Bonus · More component types</summary>
+<p><strong>Goal:</strong> add a table, two kinds of MultiQC plot, a card with several numbers and an advanced figure to your copy. Each one starts the same way: click <strong>+</strong>, then <strong>Component</strong>, then <strong>New component</strong>. Click the type you want: the page moves on to <strong>Data Source</strong>. Pick the data collection and click <strong>Next Step</strong>, then design the component and click <strong>Create component</strong>. The new component lands on the tab you are on: scroll to find it.</p>
+<p>The list has ten types: <strong>Figure</strong>, <strong>Card</strong>, <strong>Interactive</strong> (filters), <strong>Table</strong>, <strong>MultiQC</strong>, <strong>Image</strong>, <strong>Map</strong>, <strong>Genome browser</strong>, <strong>Text</strong> (a heading or a note) and <strong>Advanced viz</strong>.</p>
+<h3 id="1-a-table"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8zm8 0v4h6V8zm-8 6v4h6v-4zm8 0v4h6v-4z"></path></svg></span> 1. A table<a class="headerlink" href="#1-a-table" title="Permanent link">¶</a></h3>
 <ol>
-<li>Add a <strong>Table</strong> from a data collection of your choice: <strong>Next Step</strong>, then <strong>Create component</strong>.</li>
-<li>Add a <img alt="MultiQC" class="ws-logo ws-logo-mono off-glb" src="../../../images/tutorials/workshop/multiqc-icon.svg"> <strong>MultiQC</strong> component: pick a module, then a plot, then <strong>Create component</strong>. The <em>General Stats Table</em> module needs no plot.</li>
-<li>Click <strong>Save</strong>.</li>
+<li>Click <strong>Table</strong>, pick the data collection <code>read_tracking</code> (the reads kept at each step, one row per sample), then <strong>Next Step</strong>.</li>
+<li>Open <strong>Display options</strong>: <strong>Striped rows</strong> and <strong>CSV export</strong> are on. Switch <strong>Compact rows</strong> on.</li>
+<li>Open <strong>Columns visibility</strong> and untick <code>depictio_run_id</code>.</li>
+<li>Click <strong>Create component</strong>.</li>
 </ol>
-<div class="admonition further">
-<p class="admonition-title">Going further</p>
-<p>Add a <strong>Card</strong> with a summary value, an interactive <strong>Filter</strong>, a <strong>Map</strong> of the sampling sites, or a <strong>Text</strong> to document your tab.</p>
-</div>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep2_bonus_table.webp" data-desc-position="bottom"><img alt="The Table builder: display options and columns visibility on the left, the read_tracking table on the right" class="ws-shot" src="../../../images/tutorials/workshop/ep2_bonus_table.webp"></a></p>
+<h3 id="2-two-kinds-of-multiqc-component"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> 2. Two kinds of <img alt="MultiQC" class="ws-logo ws-logo-mono off-glb" src="../../../images/tutorials/workshop/multiqc-icon.svg"> MultiQC component<a class="headerlink" href="#2-two-kinds-of-multiqc-component" title="Permanent link">¶</a></h3>
+<p>Click <strong>MultiQC</strong>, pick the data collection <code>multiqc_data</code>, then <strong>Next Step</strong>. The <strong>Module</strong> list has <strong>General Stats Table</strong>, <code>cutadapt</code>, <code>fastqc</code>, <code>nf-core-ampliseq-methods-description</code> and <code>nf-core-ampliseq-summary</code>.</p>
+<ol>
+<li>
+<p><strong>A summary of all samples.</strong> In <strong>Module</strong>, pick <strong>General Stats Table</strong>. There is no plot to choose: the tile shows <em>General Statistics</em>, one row per metric (trimmed bases, duplicates, GC, number of reads...) with one dot per sample. Click <strong>Create component</strong>.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep2_bonus_multiqc_general.webp" data-desc-position="bottom"><img alt="The MultiQC builder with the module General Stats Table and its General Statistics preview" class="ws-shot" src="../../../images/tutorials/workshop/ep2_bonus_multiqc_general.webp"></a></p>
+</li>
+<li>
+<p><strong>One plot of one module.</strong> Add a second <strong>MultiQC</strong> component. In <strong>Module</strong>, pick <code>fastqc</code>. Then in <strong>Plot</strong>, pick <strong>Per Sequence GC Content</strong>, and in <strong>Dataset</strong>, pick <strong>Percentages</strong>. One line per sample: the GC share of the reads. Click <strong>Create component</strong>.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep2_bonus_multiqc_gc.webp" data-desc-position="bottom"><img alt="The MultiQC builder with fastqc, Per Sequence GC Content and Percentages, and the plot" class="ws-shot" src="../../../images/tutorials/workshop/ep2_bonus_multiqc_gc.webp"></a></p>
+</li>
+</ol>
+<p>The <strong>Plot</strong> list of <code>fastqc</code> has eleven plots, for example <strong>Sequence Quality Histograms</strong>, <strong>Adapter Content</strong> and <strong>Status Checks</strong>.</p>
+<h3 id="3-a-card-with-several-numbers"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 15v-1.5a1.5 1.5 0 0 0-1.5-1.5 1.5 1.5 0 0 0 1.5-1.5V9a2 2 0 0 0-2-2H9v2h4v2h-2v2h2v2H9v2h4a2 2 0 0 0 2-2m4 4H5V5h14m0-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2"></path></svg></span> 3. A card with several numbers<a class="headerlink" href="#3-a-card-with-several-numbers" title="Permanent link">¶</a></h3>
+<p>A card shows one value. A <em>breakdown</em> adds a strip with more numbers under it.</p>
+<ol>
+<li>Click <strong>Card</strong>, pick the data collection <code>read_tracking</code>, then <strong>Next Step</strong>.</li>
+<li>Under <strong>Value</strong>, write the <strong>Card title</strong> <code>Reads kept, median and range</code>. In <strong>Select your column</strong>, pick <code>kept_percent</code>. In <strong>Select your aggregation method</strong>, pick <strong>Median</strong>.</li>
+<li>Open <strong>Breakdown</strong>. In <strong>Multi-metric style</strong>, pick <strong>Vertical list (median / min / max)</strong>.</li>
+<li>Open <strong>Display</strong>. For <strong>Style</strong>, click <strong>Accent</strong>. In <strong>Caption</strong>, write <code>over the 12 samples</code>. In <strong>Decimals</strong>, write <code>1</code>.</li>
+<li>Click <strong>Create component</strong>.</li>
+</ol>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep2_bonus_card.webp" data-desc-position="bottom"><img alt="The Card builder: the title, the column, Median, the vertical list and the Accent style, and the card on the right with 61.5 and its median, min and max" class="ws-shot" src="../../../images/tutorials/workshop/ep2_bonus_card.webp"></a></p>
+<p>The big number shows 61.5 because of <strong>Decimals</strong>; the list keeps its own digits. Other choices you can try:</p>
+<ul>
+<li><strong>Aggregation</strong>: Count, Distinct count, Sum, Average, Median, Min, Max, Range, Variance, Std deviation, Percentile, Skewness and Kurtosis.</li>
+<li><strong>Multi-metric style</strong>: lists, a box plot, a histogram, a threshold, a gauge, a trend line, top-N bars, a donut and more.</li>
+<li><strong>Style</strong>: Default, Headline, Compact, Minimal, Accent and Split.</li>
+<li><strong>Link &amp; help</strong>: <strong>Link to a tab</strong> makes the card open that tab when you click it.</li>
+<li><strong>Colours &amp; icon</strong>: background, title colour, icon and title size.</li>
+</ul>
+<h3 id="4-an-advanced-figure"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1c0-.21-.07-.41-.18-.57L13 8.35V4h-2v4.35L5.18 18.43c-.11.16-.18.36-.18.57m1 3a3 3 0 0 1-3-3c0-.6.18-1.16.5-1.63L9 7.81V6a1 1 0 0 1-1-1V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v1.81l5.5 9.56c.32.47.5 1.03.5 1.63a3 3 0 0 1-3 3zm7-6 1.34-1.34L16.27 18H7.73l2.66-4.61zm-.5-4a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5"></path></svg></span> 4. An advanced figure<a class="headerlink" href="#4-an-advanced-figure" title="Permanent link">¶</a></h3>
+<p><strong>Advanced viz</strong> holds ready-made figures for a type of result, such as a volcano plot. Depictio ranks them by how well they fit your data collection.</p>
+<ol>
+<li>Click <strong>Advanced viz</strong>, pick the data collection <code>ancombc_results</code>, then <strong>Next Step</strong>.</li>
+<li>Under <strong>Recommended for this data collection</strong> you see <strong>Differential-abundance bars (tool)</strong>, <strong>Volcano plot</strong>, <strong>Parallel coordinates</strong> and <strong>Scatter (X/Y)</strong>. <strong>Other visualisations</strong> has 45 more kinds. Click <strong>Volcano plot</strong>.</li>
+<li>Under <strong>Column bindings</strong>, the three required roles are already filled: <code>feature_id</code> is <code>id</code>, <code>effect_size</code> is <code>lfc</code> and <code>significance</code> is <code>q_val</code>. The optional roles are <code>label</code>, <code>category</code>, <code>p_value</code> and <code>avg_log_intensity</code>: leave them empty.</li>
+<li>Click <strong>Create component</strong>.</li>
+</ol>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep2_bonus_advviz_kinds.webp" data-desc-position="bottom"><img alt="The Advanced viz step: the four recommended kinds for ancombc_results, Volcano plot among them" class="ws-shot" src="../../../images/tutorials/workshop/ep2_bonus_advviz_kinds.webp"></a></p>
+<p>The volcano plot counts the taxa that go up (UP: 54), go down (DN: 43) or do not change (NS: 80), and draws the labels of the strongest ones. On the dashboard, the <strong>Controls</strong> panel on its right sets the thresholds: <strong>p / padj</strong> (0.05) and <strong>|effect|</strong> (1).</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep2_bonus_advviz_volcano.webp" data-desc-position="bottom"><img alt="The volcano plot on the dashboard: 177 rows, UP 54, DN 43, NS 80, the labelled taxa and the Controls panel with the thresholds" class="ws-shot" src="../../../images/tutorials/workshop/ep2_bonus_advviz_volcano.webp"></a></p>
+<p>Click <strong>Save</strong> to keep your new components.</p>
 </details>
 <details class="note">
 <summary>Bonus · The same figure as code (Python, optional)</summary>
+<p><strong>Goal:</strong> build a richer figure with clicks, then read it as one call of Plotly Express.</p>
+<h3 id="a-richer-figure"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2h2v18h18v2H2zm7 8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m4-8a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5 10a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3"></path></svg></span> A richer figure<a class="headerlink" href="#a-richer-figure" title="Permanent link">¶</a></h3>
+<ol>
+<li>Click <strong>+</strong>, <strong>Component</strong>, <strong>New component</strong> and <strong>Figure</strong>. Pick <code>ancombc_results</code>, then <strong>Next Step</strong>.</li>
+<li>Set <strong>X axis</strong> to <code>lfc</code>, <strong>Y axis</strong> to <code>neg_log10_qval</code> and <strong>Color by</strong> to <code>contrast</code>. Stay in <strong>UI Mode</strong>.</li>
+<li>Open <strong>Styling &amp; Layout</strong>. Set <strong>Hover title</strong> to <code>Phylum</code>. In <strong>Hover fields</strong>, pick <code>q_val</code> and <code>Kingdom</code>.</li>
+<li>Open <strong>Advanced Options</strong>. Set <strong>Facet columns by</strong> to <code>contrast</code>.</li>
+<li>Open <strong>Scatter Plot Options</strong>. Set <strong>Size by</strong> to <code>se</code> (the standard error of the log fold change).</li>
+</ol>
+<p>You get one panel per contrast, and a bigger dot where the estimate is less sure. Point at a dot: the tooltip shows the phylum, then <code>contrast</code>, <code>lfc</code>, <code>neg_log10_qval</code>, <code>se</code>, <code>q_val</code> and <code>Kingdom</code>.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep2_bonus_code_result.webp" data-desc-position="bottom"><img alt="The figure in three panels, one per contrast, with dots sized by se and a tooltip on a dot: the phylum Bdellovibrionota_B and its values" class="ws-shot" src="../../../images/tutorials/workshop/ep2_bonus_code_result.webp"></a></p>
+<h3 id="read-it-as-code"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 3a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2H3v2h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h2v-2H8v-5a2 2 0 0 0-2-2 2 2 0 0 0 2-2V5h2V3m6 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3z"></path></svg></span> Read it as code<a class="headerlink" href="#read-it-as-code" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<p>Above the form, click <strong>Code Mode</strong>. Depictio wrote your settings as Python:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">"lfc"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">"neg_log10_qval"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"contrast"</span><span class="p">,</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                 <span class="n">hover_name</span><span class="o">=</span><span class="s2">"Phylum"</span><span class="p">,</span> <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="s2">"q_val"</span><span class="p">,</span> <span class="s2">"Kingdom"</span><span class="p">],</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                 <span class="n">facet_col</span><span class="o">=</span><span class="s2">"contrast"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">"se"</span><span class="p">)</span>
+</code></pre></div>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep2_bonus_code_editor.webp" data-desc-position="bottom"><img alt="Code Mode with the figure written as one px.scatter call" class="ws-shot" src="../../../images/tutorials/workshop/ep2_bonus_code_editor.webp"></a></p>
+</li>
+<li>
+<p>Read it. <code>px.scatter</code> draws the dots, and <code>df</code> is your data collection. <strong>Hover title</strong> became <code>hover_name</code>, <strong>Hover fields</strong> became <code>hover_data</code>, <strong>Facet columns by</strong> became <code>facet_col</code> and <strong>Size by</strong> became <code>size</code>.</p>
+</li>
+<li>
+<p>Click <strong>Execute Code</strong> to run it. Code runs on the server, and only for <strong>editors</strong> of the project. If you are a viewer, you see this message instead, and your UI Mode figure is not affected:</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep2_bonus_code_error.webp" data-desc-position="bottom"><img alt="Execute Code as a viewer: Running figure code requires editor rights on this project" class="ws-shot" src="../../../images/tutorials/workshop/ep2_bonus_code_error.webp"></a></p>
+</li>
+</ol>
+<p><strong>Good to know:</strong> Depictio writes the code the first time you open <strong>Code Mode</strong> on a figure. Set the options first, then switch. A later change in <strong>UI Mode</strong> does not rewrite code you already have.</p>
 <div class="admonition challenge">
-<p class="admonition-title">Challenge (optional, Python): the same figure as code</p>
-<p>Edit your figure and switch to <strong>Code Mode</strong>: Depictio wrote the figure as one line of Plotly Express. Change <code>color</code> to another column and click <strong>Execute Code</strong>.</p>
+<p class="admonition-title">Challenge (optional): two more arguments</p>
+<p>Make a new figure with <code>lfc</code>, <code>neg_log10_qval</code> and <code>contrast</code> like above. In <strong>Styling &amp; Layout</strong>, write a <strong>Title</strong> and set an <strong>Opacity</strong> of 0.6, then open <strong>Code Mode</strong>. Which two arguments did Depictio add?</p>
 <details class="solution">
 <summary>Solution</summary>
-<p>The line Depictio wrote:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">"lfc"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">"neg_log10_qval"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"contrast"</span><span class="p">)</span>
+<p><code>title</code> and <code>opacity</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">"lfc"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">"neg_log10_qval"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"contrast"</span><span class="p">,</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                 <span class="n">title</span><span class="o">=</span><span class="s2">"Differential abundance by habitat"</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 </code></pre></div>
-<p>Any column of <code>ancombc_results</code> works in <code>color</code>; the figure is drawn again with it.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep2_bonus_code_chal_code.webp" data-desc-position="bottom"><img alt="Code Mode with title and opacity added to the px.scatter call" class="ws-shot" src="../../../images/tutorials/workshop/ep2_bonus_code_chal_code.webp"></a></p>
+<p>The figure has a heading, and the dots are a little see-through where they overlap:</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/ep2_bonus_code_chal_result.webp" data-desc-position="bottom"><img alt="The figure with the title Differential abundance by habitat and see-through dots" class="ws-shot" src="../../../images/tutorials/workshop/ep2_bonus_code_chal_result.webp"></a></p>
 </details>
 </div>
 </details>

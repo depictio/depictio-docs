@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Hands-on 4: open the public showcases server, find the dashboard of your own nf-core pipeline, and try a filter. There is a dashboard for each of the 42 nf-core pipeline templates.">
+        <meta name="description" content="Hands-on 4: open the public showcases server, explore the nf-core/viralrecon dashboard (or the one of your own pipeline), and spot the advanced components: genome browser, 3D structure, map. There is a dashboard for each of the 42 nf-core pipeline templates.">
       
       
       
@@ -3547,7 +3547,7 @@
   <a href="#showcases" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Hands-on 4 · Find your pipeline
+        Hands-on 4 · Explore a showcase
       
     </span>
   </a>
@@ -8148,7 +8148,7 @@
   <a href="#showcases" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Hands-on 4 · Find your pipeline
+        Hands-on 4 · Explore a showcase
       
     </span>
   </a>
@@ -8187,57 +8187,122 @@
 <p><strong>Questions</strong></p>
 <ul>
 <li>Is there a dashboard for the pipeline I use?</li>
+<li>What can a dashboard show beyond bar charts and tables?</li>
 </ul>
 <p><strong>Objectives</strong></p>
 <ul>
-<li>Find the showcase dashboard of your nf-core pipeline.</li>
-<li>Read it as you read ampliseq in episode 1.</li>
+<li>Find a showcase dashboard and explore its tabs.</li>
+<li>Spot the advanced components: genome browser, 3D structure, map.</li>
 </ul>
 </div>
-<p>In episode 3 you built the dashboard of one pipeline, nf-core/ampliseq, from its template. Depictio has a template for <strong>42 nf-core pipelines</strong>, and the <strong>showcases</strong> server shows what each one gives you: a dashboard per pipeline template, built on a test run. The instructor gives a short tour first, then you look for your own pipeline.</p>
-<h2 id="showcases"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1 3v18h22V3zm20 2v9H3V5zM11 16v3H8v-3zm-8 0h3v3H3zm10 3v-3h3v3zm5 0v-3h3v3z"></path></svg></span> Hands-on 4 · Find your pipeline<a class="headerlink" href="#showcases" title="Permanent link">¶</a></h2>
-<p><strong>Your task, 5 minutes:</strong> find the dashboard of a pipeline you use, and pick the one figure you would show your team. Then post the pipeline and the figure in the Zoom chat.</p>
+<p>In episode 3 you built the dashboard of one pipeline, nf-core/ampliseq, from its template. Depictio has a template for <strong>42 nf-core pipelines</strong>, and the <strong>showcases</strong> server shows what each one gives you: a dashboard per pipeline, built on a test run. The instructor gives a short tour first, then you explore on your own.</p>
+<h2 id="showcases"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1 3v18h22V3zm20 2v9H3V5zM11 16v3H8v-3zm-8 0h3v3H3zm10 3v-3h3v3zm5 0v-3h3v3z"></path></svg></span> Hands-on 4 · Explore a showcase<a class="headerlink" href="#showcases" title="Permanent link">¶</a></h2>
+<p><strong>Your task, 5 minutes:</strong> pick a pipeline you have already worked with, for example <code>rnaseq</code>, <code>sarek</code> or <code>chipseq</code>, and explore its showcase. None, or not in the list? Take <strong>nf-core/viralrecon</strong>: the steps below use it. There is no fixed path: open the tabs you like, in the order you like.</p>
 <ol>
-<li>Open the showcases in a new tab: <a href="https://showcases.depictio.embl.org/dashboards" target="_blank">showcases.depictio.embl.org/dashboards</a>. It is the <strong>Dashboards</strong> page you know, in the <strong>Thumbnails</strong> view: one card per pipeline.</li>
-<li>In the search box, type the name of your pipeline, for example <code>rnaseq</code>, <code>sarek</code> or <code>chipseq</code>. No pipeline of your own, or not in the list? Take <code>rnaseq</code>.</li>
-<li>Open its dashboard and go through the <strong>tabs</strong>, left to right: they follow the steps of the pipeline, from the quality of the run to its results.</li>
-<li>Open the <strong>MultiQC</strong> tab: it is the report of the pipeline, read the same way as in episode 1.</li>
-<li>Try one <strong>filter</strong>, as in episode 1, and watch the cards and the figures follow.</li>
-<li>Pick the one figure you would show your team, and post it in the Zoom chat, for example <em>rnaseq: the General Stats table of the MultiQC tab</em>.</li>
+<li>Open <a href="https://showcases.depictio.embl.org/dashboards" target="_blank">showcases.depictio.embl.org/dashboards</a> in a new tab. Close the welcome note (<strong>I'll explore on my own</strong>). No sign-in is needed: the server is read-only. At the right of the search box, click the view button and pick <strong>Thumbnails</strong>: one card per dashboard.</li>
+<li>In the search box, type the name of your pipeline, or <code>viralrecon</code>. For viralrecon, open the card of the project <strong>viralrecon-3.0.0-test</strong> (8 tabs).</li>
+<li>Read the <strong>Overview</strong> tab first: it says what each tab answers. Then open any tab from the left panel. They follow the steps of the pipeline, from quality to results.</li>
+<li>In each tab, scroll down and play: hover a point, click a row of a table, open the <strong>Filters</strong> panel and try one filter, as in episode 1.</li>
+<li>Look for what you have not seen in the earlier episodes, and post one in the Zoom chat: the tab and the title of the component.</li>
 </ol>
-<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/showcases_thumbs.jpg" data-desc-position="bottom"><img alt="The Dashboards page of the showcases server in the Thumbnails view: one card per nf-core pipeline, with a preview of its dashboard" class="ws-shot" src="../../../images/tutorials/workshop/showcases_thumbs.jpg"></a></p>
-<div class="admonition question">
-<p class="admonition-title">Check your understanding</p>
-<p>The dashboards of two different pipelines have the same kinds of components, the same search and the same filters. Why?</p>
-<details class="solution">
-<summary>Answer</summary>
-<p>Each dashboard is built from the <strong>template</strong> of a pipeline version: the template lists the data collections, the links between them and the components. Every template uses the same Depictio components, so the interface works the same way for every pipeline.</p>
-</details>
-</div>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/showcases_search.jpg" data-desc-position="bottom"><img alt="The Dashboards page in the Thumbnails view, searched for viralrecon: three cards, the middle one is the project viralrecon-3.0.0-test with 8 tabs" class="ws-shot" src="../../../images/tutorials/workshop/showcases_search.jpg"></a></p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/showcases_viralrecon.jpg" data-desc-position="bottom"><img alt="The Overview tab of the viralrecon dashboard: the left panel lists the 8 tabs, from MultiQC and Sample QC to Variants, Gene, Sample and Lineage &amp; Clustering" class="ws-shot" src="../../../images/tutorials/workshop/showcases_viralrecon.jpg"></a></p>
 <div class="admonition challenge">
-<p class="admonition-title">Challenge: two MultiQC tabs</p>
-<p>Open the dashboards of two pipelines. In each, open the <strong>MultiQC</strong> tab. What is the same, and what is different?</p>
+<p class="admonition-title">Challenge: what did you notice?</p>
+<p>Some components do more than a bar chart or a table. Which ones did you find? In which pipeline and which tab?</p>
 <details class="solution">
 <summary>Solution</summary>
-<p>The tab is the same Depictio component, with the same search (<strong>Ctrl+K</strong>) and the same filters. What differs is the content: each pipeline's MultiQC report holds the modules of the tools it ran, so the sections and plots are not the same.</p>
+<p>The most advanced ones are a <strong>genome browser</strong>, a <strong>3D structure</strong> and a <strong>map</strong>. Four of them, from the showcases:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/showcases_genomebrowser.jpg" data-desc-position="bottom"><img alt="The Variants tab of viralrecon: the allele frequency along the genome, and a genome browser with gene, primer, clade and per-sample variant tracks" class="ws-shot" src="../../../images/tutorials/workshop/showcases_genomebrowser.jpg"></a></td>
+<td><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/showcases_3d.jpg" data-desc-position="bottom"><img alt="The Structure tab of proteinfold: a 3D structure coloured by pLDDT, next to the sequence with its pLDDT lane and the pLDDT profile of each engine" class="ws-shot" src="../../../images/tutorials/workshop/showcases_3d.jpg"></a></td>
+</tr>
+<tr>
+<td><strong>Genome browser.</strong> nf-core/viralrecon, tab <strong>Variants</strong>: click a dot of the plot, or a row of the table, and the browser opens that position, with the primers and the variants of each sample.</td>
+<td><strong>3D structure.</strong> nf-core/proteinfold, tab <strong>Structure</strong>: click a row of the table and the structure opens in 3D, coloured by confidence.</td>
+</tr>
+<tr>
+<td><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/showcases_map.jpg" data-desc-position="bottom"><img alt="The Sampling Campaign tab of nf-core/ampliseq (copy): a map of the sampling sites coloured by habitat, next to the visit order" class="ws-shot" src="../../../images/tutorials/workshop/showcases_map.jpg"></a></td>
+<td><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/showcases_chord.jpg" data-desc-position="bottom"><img alt="The Structural variants tab of oncoanalyser: a chord diagram of the rearrangements between chromosomes" class="ws-shot" src="../../../images/tutorials/workshop/showcases_chord.jpg"></a></td>
+</tr>
+<tr>
+<td><strong>Map.</strong> nf-core/ampliseq (copy), tab <strong>Sampling Campaign</strong>: one marker per sample, and a click on a marker filters the dashboard to that sample.</td>
+<td><strong>Chord diagram.</strong> nf-core/oncoanalyser, tab <strong>Structural variants</strong>: each line joins the two ends of a rearrangement.</td>
+</tr>
+</tbody>
+</table>
+<p>More of them, by pipeline and tab:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Pipeline · tab</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Genome browser</td>
+<td>viralrecon · Variants. sarek, atacseq, chipseq, cutandrun, drop · Locus. rnavar · Genome. rnaseq · Gene Explorer. oncoanalyser · Small variants</td>
+</tr>
+<tr>
+<td>3D</td>
+<td>proteinfold · Structure, Predicted error. viralrecon · Lineage &amp; Clustering (the PCA: see the Bonus)</td>
+</tr>
+<tr>
+<td>Map</td>
+<td>ampliseq (copy) · Sampling Campaign</td>
+</tr>
+<tr>
+<td>Phylogenetic tree</td>
+<td>ampliseq · Phylogeny</td>
+</tr>
+<tr>
+<td>Sankey diagram</td>
+<td>viralrecon · Lineage &amp; Clustering. mag · Taxonomy</td>
+</tr>
+<tr>
+<td>Sunburst</td>
+<td>mag · Taxonomy. ampliseq · Community &amp; Diversity</td>
+</tr>
+<tr>
+<td>Lollipop plot</td>
+<td>viralrecon · Gene. sarek · Protein</td>
+</tr>
+<tr>
+<td>UMAP, with lasso</td>
+<td>scrnaseq · Embeddings</td>
+</tr>
+</tbody>
+</table>
+<p>The server also has a dashboard called <strong>Advanced Visualisations</strong>: a gallery of 29 figure types, one per tab, such as Volcano, Manhattan, Oncoplot, ComplexHeatmap, UpSet and Coverage track.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/showcases_oncoplot.jpg" data-desc-position="bottom"><img alt="The Oncoplot tab of the Advanced Visualisations dashboard: a matrix of genes against samples, coloured by mutation class" class="ws-shot" src="../../../images/tutorials/workshop/showcases_oncoplot.jpg"></a></p>
+<p>We did not find a network graph on the showcases.</p>
 </details>
 </div>
 <div class="admonition keypoints">
 <p class="admonition-title">Key points</p>
 <ul>
 <li>The showcases server has a dashboard for each of the 42 nf-core pipeline templates.</li>
-<li>A dashboard comes from a template: the same components, filled with the data of one pipeline.</li>
-<li>You read a showcase as you read ampliseq: search, filters, tabs.</li>
+<li>A dashboard comes from a template: the same interface (tabs, filters, search), filled with the data of one pipeline.</li>
+<li>Beyond charts and tables, a dashboard can hold a genome browser, a 3D structure or a map, and they follow the filters like any other card.</li>
 </ul>
 </div>
 <details class="note">
-<summary>Bonus · Where the templates come from</summary>
-<p>A template is a file that describes the project of one pipeline version: its data collections, its links and its dashboard. Episode 3 uses the template of nf-core/ampliseq 2.18.0. The showcases use the same mechanism for the other pipelines.</p>
-<ul>
-<li>The template of ampliseq: <a href="../../../pipeline-templates/nf-core/ampliseq/">Pipeline templates</a>.</li>
-<li>The outputs of 136 tools that Depictio knows, for pipelines with no template: the <a href="../../../catalog/">Tools catalog</a>.</li>
-<li>To contribute a template: <a href="../../../developer/contributing-templates/">Contributing a template</a>.</li>
-</ul>
+<summary>Bonus · Make a plot 3D</summary>
+<p>In the <strong>Lineage &amp; Clustering</strong> tab of viralrecon, scroll down to <strong>Samples by shared mutations (PCA)</strong>. In its controls, at the right, switch <strong>View</strong> from <strong>2D</strong> to <strong>3D</strong>. Then drag the plot.</p>
+<details class="solution">
+<summary>Solution</summary>
+<p>The same samples are now placed on three axes, PC1, PC2 and PC3, and you can rotate them.</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../images/tutorials/workshop/showcases_pca3d.jpg" data-desc-position="bottom"><img alt="The PCA of viralrecon in 3D: three samples on the axes PC1, PC2 and PC3, with the View control set to 3D" class="ws-shot" src="../../../images/tutorials/workshop/showcases_pca3d.jpg"></a></p>
+</details>
 </details>
 <div class="ws-next">
 <p><a class="ws-help" href="../troubleshooting/#episode-4"><span class="ws-k">Stuck?</span><span class="ws-t">Troubleshooting</span></a>
