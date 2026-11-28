@@ -718,6 +718,10 @@ Filter by selecting multiple values:
 | Default | Initially selected values |
 | Placeholder | Hint text when empty |
 
+#### Long option lists
+
+<span class="ver-badge">v1.23.1+</span> A column with more than 1,000 distinct values lists the first 1,000. Type in the box: what you type is searched over every value of the column on the server, closest matches first, and the matches join the list. Values you picked stay listed.
+
 ### TextInput <small>(v1.21.0+)</small> { #text-input }
 
 Keeps the rows of a string column whose text matches what is typed, read as a **regular
