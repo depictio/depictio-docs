@@ -235,6 +235,8 @@ For a folder no shipped template fits, the Project Builder lets you define the c
     [![Project Builder, Review & create step: the links, the generated YAML and the Create button](../../images/guides/project-creation/builder_review_light.webp#only-light)](../../images/guides/project-creation/builder_review_light.webp){target=_blank}
     [![Project Builder, Review & create step: the links, the generated YAML and the Create button](../../images/guides/project-creation/builder_review_dark.webp#only-dark)](../../images/guides/project-creation/builder_review_dark.webp){target=_blank}
 
+    <span class="ver-badge">v1.24.1+</span> The review shows the **Project file**, for `depictio ingest --project-config-path`, and **Download YAML** saves it as `<name>.yaml`. The **Template (any folder)** switch shows it as a template instead (`<name>.template.yaml`, for `depictio ingest <folder> --template`). Neither writes `project_type`. Joins are added on the project page, not in the YAML.
+
 === "Without a server"
 
     On a machine with no Depictio server, such as an HPC login node, the builder reads only the folder you give it:
