@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Depictio API",
-    "version": "1.23.0",
-    "x-generated-at": "2026-11-23T00:00:58Z",
-    "x-depictio-version": "v1.23.0"
+    "version": "1.23.1",
+    "x-generated-at": "2026-11-24T14:01:26Z",
+    "x-depictio-version": "v1.23.1"
   },
   "paths": {
     "/depictio/api/v1/projects/builder/capabilities": {
@@ -7114,7 +7114,7 @@
           "DeltaTables"
         ],
         "summary": "Get Unique Values",
-        "description": "Return the sorted unique values of ``column`` within a data collection.\n\nSynchronous on purpose: the work is blocking (Mongo, S3, Polars), so FastAPI runs\nit in the thread pool instead of on the event loop, where ~20 option lists\nrequested together used to queue behind each other and stall every other request.\n\nBacks the React viewer's MultiSelect options fetch. Mirrors the code path\nDash uses via ``load_deltatable_lite(..., load_for_options=True)`` so both\nviewers see identical option lists.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column name whose unique values to return.\n    limit: Max values to return (default 1000). Prevents unbounded payloads\n        on high-cardinality columns; MultiSelect's UX caps at 100 anyway.\n    filter_expr: Optional Polars filter expression (string) applied before\n        collecting unique values. Validated through the safe-eval pipeline\n        in ``depictio.models.components.filter_expr``.\n    order_by: Optional companion column giving the order of the values (a\n        ``time_order`` next to a ``time_point``): each value follows the\n        smallest key it carries, numerically when every key is a number. Unset,\n        values that all end in a duration (``30min``, ``2h``) follow it, and\n        the rest sort as strings. See ``depictio.models.components.value_order``.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\": str, \"values\": list[str]}`` — strings for MultiSelect UI.\n\nRaises:\n    HTTPException: 404 if DC not found / not accessible, 500 on read error.",
+        "description": "Return the sorted unique values of ``column`` within a data collection.\n\nSynchronous on purpose: the work is blocking (Mongo, S3, Polars), so FastAPI runs\nit in the thread pool instead of on the event loop, where ~20 option lists\nrequested together used to queue behind each other and stall every other request.\n\nBacks the React viewer's MultiSelect options fetch. Mirrors the code path\nDash uses via ``load_deltatable_lite(..., load_for_options=True)`` so both\nviewers see identical option lists.\n\nArgs:\n    data_collection_id: Target data collection.\n    column: Column name whose unique values to return.\n    limit: Max values to return (default 1000, at most\n        ``UNIQUE_VALUES_MAX_LIMIT``). Prevents unbounded payloads on\n        high-cardinality columns. Past it the values are an arbitrary subset,\n        and ``truncated`` says so: a caller that needs a given value (an entity\n        picker opening on a family) must not take its absence as \"not held\".\n    filter_expr: Optional Polars filter expression (string) applied before\n        collecting unique values. Validated through the safe-eval pipeline\n        in ``depictio.models.components.filter_expr``.\n    order_by: Optional companion column giving the order of the values (a\n        ``time_order`` next to a ``time_point``): each value follows the\n        smallest key it carries, numerically when every key is a number. Unset,\n        values that all end in a duration (``30min``, ``2h``) follow it, and\n        the rest sort as strings. See ``depictio.models.components.value_order``.\n    search: Optional server-side lookup over the option list: a literal\n        (not regex) case-insensitive substring match on the column cast to\n        string, applied after ``filter_expr`` and before the unique / limit.\n        Lets a client reach a value past where ``limit`` cut the list (4,333\n        families, 1,000 listed). Empty or whitespace-only means no search.\n    current_user: Authenticated or anonymous user (permission-checked).\n\nReturns:\n    ``{\"column\": str, \"values\": list[str], \"truncated\": bool}``: strings for\n    the MultiSelect UI; ``truncated`` when the column holds more than ``limit``\n    matches.\n\nRaises:\n    HTTPException: 404 if DC not found / not accessible, 500 on read error.",
         "operationId": "get_unique_values_depictio_api_v1_deltatables_unique_values__data_collection_id__get",
         "security": [
           {
@@ -7147,6 +7147,8 @@
             "required": false,
             "schema": {
               "type": "integer",
+              "maximum": 100000,
+              "minimum": 1,
               "default": 1000,
               "title": "Limit"
             }
@@ -7181,6 +7183,23 @@
                 }
               ],
               "title": "Order By"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Search"
             }
           }
         ],
@@ -14427,7 +14446,7 @@
           "Dashboards"
         ],
         "summary": "Filter Options Endpoint",
-        "description": "The options an interactive filter offers, at the data version in effect.\n\nA filter's option list read today's data while the tiles beside it showed a\npinned version: a variety select offered values the pinned data does not\nhold, and picking one emptied every chart.\n\nRequest body:\n    {\"dc_id\": str, \"column\": str, \"kind\": \"unique\" | \"range\",\n     \"filter_expr\": str (optional), \"order_by\": str (optional, unique only),\n     \"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null}}\n\nResponse, the shapes ``GET /deltatables/unique_values/{dc}`` and a column's\n``/deltatables/specs/{dc}`` entry give:\n    unique: {\"column\": str, \"values\": [str, ...]}\n    range:  {\"min\": number | null, \"max\": number | null,\n             \"dtype\": str | null, \"unique\": int | null}\n\nViewer permission on the dashboard; ``dc_id`` must belong to its project\n(404 otherwise). The pins resolve exactly as a render's do (``_data_pins``,\nwith the same 400s). Unpinned, the answer comes from the paths the viewer\nused before, cache included.",
+        "description": "The options an interactive filter offers, at the data version in effect.\n\nA filter's option list read today's data while the tiles beside it showed a\npinned version: a variety select offered values the pinned data does not\nhold, and picking one emptied every chart.\n\nRequest body:\n    {\"dc_id\": str, \"column\": str, \"kind\": \"unique\" | \"range\",\n     \"filter_expr\": str (optional), \"order_by\": str (optional, unique only),\n     \"search\": str (optional, unique only: a literal, case-insensitive\n                   substring match, at most 200 characters, empty = none),\n     \"as_of_version\": str, \"data_versions\": {\"<dc_id>\": int | null}}\n\nResponse, the shapes ``GET /deltatables/unique_values/{dc}`` and a column's\n``/deltatables/specs/{dc}`` entry give:\n    unique: {\"column\": str, \"values\": [str, ...], \"truncated\": bool}\n    range:  {\"min\": number | null, \"max\": number | null,\n             \"dtype\": str | null, \"unique\": int | null}\n\nViewer permission on the dashboard; ``dc_id`` must belong to its project\n(404 otherwise). The pins resolve exactly as a render's do (``_data_pins``,\nwith the same 400s). Unpinned, the answer comes from the paths the viewer\nused before, cache included.",
         "operationId": "filter_options_endpoint_depictio_api_v1_dashboards_filter_options__dashboard_id__post",
         "security": [
           {
@@ -22031,6 +22050,183 @@
         }
       }
     },
+    "/depictio/api/v1/analytics/hit": {
+      "post": {
+        "tags": [
+          "Usage statistics"
+        ],
+        "summary": "Track Hit",
+        "description": "Record one navigation. Idempotent per browser per day; never echoes data.",
+        "operationId": "track_hit_depictio_api_v1_analytics_hit_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsageHit"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/depictio/api/v1/analytics/usage": {
+      "get": {
+        "tags": [
+          "Usage statistics"
+        ],
+        "summary": "Get Usage",
+        "description": "Usage report per period: users, logins, visitors, content, breakdowns.",
+        "operationId": "get_usage_depictio_api_v1_analytics_usage_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "granularity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "day",
+                "week",
+                "month",
+                "year"
+              ],
+              "type": "string",
+              "default": "month",
+              "title": "Granularity"
+            }
+          },
+          {
+            "name": "periods",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 120,
+              "minimum": 1,
+              "default": 12,
+              "title": "Periods"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Custom range start (UTC)",
+              "title": "Start"
+            },
+            "description": "Custom range start (UTC)"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Custom range end (UTC), inclusive of its period",
+              "title": "End"
+            },
+            "description": "Custom range end (UTC), inclusive of its period"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "json",
+                "csv"
+              ],
+              "type": "string",
+              "default": "json",
+              "title": "Format"
+            }
+          },
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Internal API key (alternative to an authenticated admin session)",
+              "title": "X-Api-Key"
+            },
+            "description": "Internal API key (alternative to an authenticated admin session)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsageReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "summary": "Health Check",
@@ -26677,7 +26873,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -27226,7 +27422,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -27289,7 +27485,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -28072,7 +28268,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -29756,7 +29952,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -33201,7 +33397,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -34304,7 +34500,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -38467,7 +38663,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -38596,7 +38792,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -38875,7 +39071,7 @@
             "format": "objectid",
             "title": "Sub",
             "description": "Subject of the token, typically the user ID",
-            "default": "6b0382317c698e2819159e4c"
+            "default": "6b0598ad56d68d413e04275c"
           }
         },
         "type": "object",
@@ -39390,13 +39586,303 @@
         ],
         "title": "UpsertWorkflowRunBatchRequest"
       },
+      "UsageHit": {
+        "properties": {
+          "visitor_id": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F-]{32,36}$",
+            "title": "Visitor Id",
+            "description": "Random per-browser id the viewer keeps in localStorage"
+          },
+          "path_kind": {
+            "type": "string",
+            "maxLength": 32,
+            "pattern": "^[a-z_-]+$",
+            "title": "Path Kind",
+            "description": "Which app was opened (dashboards, viewer, editor, ...)",
+            "default": "other"
+          },
+          "dashboard_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{24}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dashboard Id"
+          },
+          "referrer": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referrer"
+          },
+          "lang": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 35
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lang"
+          }
+        },
+        "type": "object",
+        "required": [
+          "visitor_id"
+        ],
+        "title": "UsageHit",
+        "description": "One SPA navigation, sent by the viewer (``POST /analytics/hit``)."
+      },
+      "UsageKpi": {
+        "properties": {
+          "current": {
+            "type": "number",
+            "title": "Current",
+            "default": 0
+          },
+          "previous": {
+            "type": "number",
+            "title": "Previous",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "UsageKpi",
+        "description": "A range total and the same total over the span just before it."
+      },
+      "UsagePoint": {
+        "properties": {
+          "period_start": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Period Start"
+          },
+          "active_users": {
+            "type": "integer",
+            "title": "Active Users",
+            "default": 0
+          },
+          "new_users": {
+            "type": "integer",
+            "title": "New Users",
+            "default": 0
+          },
+          "returning_users": {
+            "type": "integer",
+            "title": "Returning Users",
+            "default": 0
+          },
+          "logins": {
+            "type": "integer",
+            "title": "Logins",
+            "default": 0
+          },
+          "logins_by_method": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Logins By Method"
+          },
+          "visitors": {
+            "type": "integer",
+            "title": "Visitors",
+            "default": 0
+          },
+          "new_visitors": {
+            "type": "integer",
+            "title": "New Visitors",
+            "default": 0
+          },
+          "returning_visitors": {
+            "type": "integer",
+            "title": "Returning Visitors",
+            "default": 0
+          },
+          "visitors_fp": {
+            "type": "integer",
+            "title": "Visitors Fp",
+            "default": 0
+          },
+          "unique_ips": {
+            "type": "integer",
+            "title": "Unique Ips",
+            "default": 0
+          },
+          "pageviews": {
+            "type": "integer",
+            "title": "Pageviews",
+            "default": 0
+          },
+          "dashboard_views": {
+            "type": "integer",
+            "title": "Dashboard Views",
+            "default": 0
+          },
+          "temporary_users": {
+            "type": "integer",
+            "title": "Temporary Users",
+            "default": 0
+          },
+          "signups": {
+            "type": "integer",
+            "title": "Signups",
+            "default": 0
+          },
+          "new_projects": {
+            "type": "integer",
+            "title": "New Projects",
+            "default": 0
+          },
+          "new_dashboards": {
+            "type": "integer",
+            "title": "New Dashboards",
+            "default": 0
+          },
+          "ingestions": {
+            "type": "integer",
+            "title": "Ingestions",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "period_start"
+        ],
+        "title": "UsagePoint",
+        "description": "One period of the time series."
+      },
+      "UsageReport": {
+        "properties": {
+          "granularity": {
+            "type": "string",
+            "enum": [
+              "day",
+              "week",
+              "month",
+              "year"
+            ],
+            "title": "Granularity"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Start"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time",
+            "title": "End"
+          },
+          "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Generated At"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "single_user",
+              "public",
+              "multi_user"
+            ],
+            "title": "Mode"
+          },
+          "geoip_available": {
+            "type": "boolean",
+            "title": "Geoip Available"
+          },
+          "archived_periods": {
+            "type": "integer",
+            "title": "Archived Periods",
+            "description": "Periods read from the anonymous archive (older than retention)",
+            "default": 0
+          },
+          "timezone": {
+            "type": "string",
+            "title": "Timezone",
+            "default": "UTC"
+          },
+          "totals": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Totals"
+          },
+          "kpis": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/UsageKpi"
+            },
+            "type": "object",
+            "title": "Kpis"
+          },
+          "series": {
+            "items": {
+              "$ref": "#/components/schemas/UsagePoint"
+            },
+            "type": "array",
+            "title": "Series"
+          },
+          "breakdowns": {
+            "additionalProperties": {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Breakdowns"
+          },
+          "hours_heatmap": {
+            "items": {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Hours Heatmap",
+            "description": "7 rows (Mon..Sun) x 24 hours (UTC), pageviews"
+          }
+        },
+        "type": "object",
+        "required": [
+          "granularity",
+          "start",
+          "end",
+          "generated_at",
+          "mode",
+          "geoip_available",
+          "totals",
+          "kpis",
+          "series",
+          "breakdowns"
+        ],
+        "title": "UsageReport",
+        "description": "Everything the Usage pane shows, in one response (also the agent API)."
+      },
       "User": {
         "properties": {
           "id": {
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -39564,7 +40050,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -39646,7 +40132,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -39731,7 +40217,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -40018,7 +40504,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -40193,7 +40679,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -40310,7 +40796,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -40586,7 +41072,7 @@
             "type": "string",
             "format": "objectid",
             "title": "Id",
-            "default": "6b0382307c698e2819159e4b"
+            "default": "6b0598ad56d68d413e04275b"
           },
           "description": {
             "anyOf": [
@@ -41139,12 +41625,8 @@
       "description": "Admin-only 'Log & Task' monitoring: Celery task history, CLI ingestion runs, recent application logs, and worker health. Feature-gated by DEPICTIO_MONITORING_ENABLED; hidden in public/demo mode."
     },
     {
-      "name": "Analytics",
-      "description": "Admin/ops: usage analytics. Feature-gated by DEPICTIO_ANALYTICS_ENABLED and has no frontend client yet (kept pending a product decision)."
-    },
-    {
-      "name": "Analytics Data",
-      "description": "Admin/ops: analytics data maintenance. Feature-gated by DEPICTIO_ANALYTICS_ENABLED."
+      "name": "Usage statistics",
+      "description": "Internal usage stats (logins, visitors, content) per week/month/year. GET /analytics/usage takes an admin token or X-Api-Key. DEPICTIO_USAGE_STATS_ENABLED (on by default)."
     },
     {
       "name": "Real-time Events",
