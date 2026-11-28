@@ -252,45 +252,39 @@ one, and a saved dashboard keeps the stable unsigned URL.
 - An unverified requester email no longer takes ownership of an imported project.
 - Backup files and their checksum sidecars are written owner-only (0600).
 
-### Offline copies for visitors <small>(v1.25.0+)</small> { #public-offline-download }
+### Offline copies for visitors <span class="ver-badge">v1.24.1+</span> { #public-offline-download }
 
-The data of a **public** project are public already: every figure a visitor sees carries
-them. So an instance can let visitors take a project's dashboards away as offline files.
-It is off unless the instance sets both `DEPICTIO_STATIC_EXPORT_ENABLED` and
-`DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_ENABLED`. Then every public project offers its
-files, unless its owner turns that off in Project › Permissions, or the instance sets
-`DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_DEFAULT=false`. In that case, each owner turns
-it on.
+A **public** project's data are public already: every figure a visitor sees carries them. So
+an instance can let visitors take its dashboards away as offline files, from **Settings ›
+Export** (**Ready copy** | **My view**). It is off unless the instance sets both
+`DEPICTIO_STATIC_EXPORT_ENABLED` and `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_ENABLED`. Then
+every public project offers its files until its owner turns that off in **Project ›
+Permissions**; with `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_DEFAULT=false`, each owner turns
+it on instead.
 
-- **Ready copies.** The server keeps a copy of each dashboard at its default view (the
-  dashboard alone, and where reports render, the report + dashboard file and its PDF).
-  The download route reads that file and starts no job.
-- **A visitor's own view.** A signed-in visitor (a guest account too) may also export
-  the dashboard at the filters they set: the dashboard alone, the report, or the
-  combined report and dashboard file. It is built like the ready copy, from the same live data, never from
-  a past version. These exports and renders are limited per user and per address, and
-  refused when the limiter cannot count. Anonymous visitors only get the ready copies.
-- **The owner can see what leaves.** Project › Permissions shows, per dashboard, the data
-  collections the file carries, their columns and row counts, and which tables ship
-  whole. Once downloaded, no access control follows the file.
-- **A public file names no one.** It has no email address. Figures written in code
-  mode keep a closed list of data operations the file replays when a filter changes,
-  and their Python source is left out. The ready copies carry no Python runtime. A
-  visitor's own export may carry it (the option is checked when some figure needs it):
-  the figures it keeps live then carry their code, which any visitor of the live
-  dashboard can already read.
-- **Reports with code figures.** The server never runs that code in a report: the
-  figures come from the same sandbox that draws them on the live dashboard. A report
-  renders for any signed-in reader when the code is the project's own, meaning every
-  owner of the dashboard is a project owner or editor. A viewer's own copy, where they
-  may have written code themselves, renders for the project's owners and editors only,
-  and the export window says so before anyone clicks.
+- **Ready copies.** The server keeps each dashboard at its default view (the dashboard
+  alone and, where reports render, the report + dashboard file and its PDF). Downloading
+  one starts no job. Anonymous visitors get these only.
+- **A visitor's own view.** A signed-in visitor (a guest account too) may export the
+  dashboard at their filters, built from the same live data, never from a past version.
+  These exports and report renders are limited per user and per address.
+- **The owner sees what leaves.** Project › Permissions lists, per dashboard, the
+  collections the file carries, their columns and row counts. Once downloaded, no access
+  control follows the file.
+- **A public file names no one**: no email address. Code-mode figures ship a closed list
+  of data operations, not their Python source; the ready copies carry no Python runtime.
+  A visitor's own export may carry it (checked when a figure needs it), and then the
+  code, which any visitor of the live dashboard can read already.
+- **Reports with code figures** are drawn by the same sandbox as the live dashboard. They
+  render for any signed-in reader when every owner of the dashboard is a project owner or
+  editor; a viewer's own copy renders for owners and editors only, and the export window
+  says so.
 - **It follows the project.** A copy is rebuilt after a save or an ingestion. Making the
   project private, turning the option off, or deleting the dashboard or project deletes
-  the copies.
-- **Downloads are rate-limited per address** (10 a minute by default). When the limiter
-  cannot count (Redis unreachable), downloads are refused with a 503 rather than let
-  through. Every export also counts towards a cap on the export queue.
+  its copies.
+- **Fail closed.** Downloads are limited to 10 a minute per address by default; with Redis
+  unreachable, they are refused (503). Every export counts towards a cap on the export
+  queue.
 
 ---
 

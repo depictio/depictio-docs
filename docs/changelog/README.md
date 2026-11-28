@@ -13,13 +13,32 @@ hide:
     Every release publishes four images, tagged with the version without its `v`:
 
     ```bash
-    ghcr.io/depictio/depictio-api:1.23.0
-    ghcr.io/depictio/depictio-viewer:1.23.0
-    ghcr.io/depictio/depictio-worker:1.23.0
-    ghcr.io/depictio/depictio-cli:1.23.0     # from v1.10.0
+    ghcr.io/depictio/depictio-api:1.24.1
+    ghcr.io/depictio/depictio-viewer:1.24.1
+    ghcr.io/depictio/depictio-worker:1.24.1
+    ghcr.io/depictio/depictio-cli:1.24.1     # from v1.10.0
     ```
 
     Before v1.0.0, a single `ghcr.io/depictio/depictio:<version>` image shipped, with `latest`, `stable` and `edge` tags.
+
+---
+
+## **[v1.24.1](https://github.com/depictio/depictio/releases/tag/v1.24.1)** (November 27, 2026)
+
+!!! success "Patch: offline copies for a public project's visitors, a citation file, and the Project Builder downloads the project file"
+
+### **✨ New Features**
+
+* **Offline copies for visitors of a public project**: ready copies at the default view, or an export of their own filters. [Security](../features/security.md#public-offline-download) ([#1487](https://github.com/depictio/depictio/pull/1487))
+* **Cite Depictio**: a `CITATION.cff` behind GitHub's **Cite this repository** button. [Citing Depictio](../more/citing.md) ([#1484](https://github.com/depictio/depictio/pull/1484))
+
+### **🚀 Improvements**
+
+* **The Project Builder downloads the project file**, the template one switch away, with no `project_type`. [Project Builder](../usage/projects/guide.md#project-builder) ([242de4a](https://github.com/depictio/depictio/commit/242de4abb), [b8121be](https://github.com/depictio/depictio/commit/b8121be79))
+
+### **🐛 Bug Fixes**
+
+* **A project file on an `s3://` root ingests**, and a root's trailing slash no longer gives `//` in paths. ([aac1973](https://github.com/depictio/depictio/commit/aac1973a4))
 
 ---
 
