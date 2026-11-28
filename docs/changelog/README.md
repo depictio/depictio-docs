@@ -31,7 +31,7 @@ hide:
 
 * **An unset advanced viz control falls back to its default** (a stored `point_size: null` failed the figure). [Advanced visualizations](../features/advanced-visualizations.md) ([afa41cb](https://github.com/depictio/depictio/commit/afa41cbf8))
 * **A public build whose worker dies is queued again**, instead of staying "being prepared". ([00ebb95](https://github.com/depictio/depictio/commit/00ebb959b))
-* **The Export section offers the ready copy first**, your own view folded below. [Offline copies](../features/security.md#public-offline-download) ([50cfc31](https://github.com/depictio/depictio/commit/50cfc31ba))
+* **The Export section offers the ready copy first**, your own view folded below. [Offline exports](../features/offline-exports.md#public-visitors) ([50cfc31](https://github.com/depictio/depictio/commit/50cfc31ba))
 
 ---
 
