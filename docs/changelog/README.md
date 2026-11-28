@@ -13,13 +13,37 @@ hide:
     Every release publishes four images, tagged with the version without its `v`:
 
     ```bash
-    ghcr.io/depictio/depictio-api:1.23.0
-    ghcr.io/depictio/depictio-viewer:1.23.0
-    ghcr.io/depictio/depictio-worker:1.23.0
-    ghcr.io/depictio/depictio-cli:1.23.0     # from v1.10.0
+    ghcr.io/depictio/depictio-api:1.23.1
+    ghcr.io/depictio/depictio-viewer:1.23.1
+    ghcr.io/depictio/depictio-worker:1.23.1
+    ghcr.io/depictio/depictio-cli:1.23.1     # from v1.10.0
     ```
 
     Before v1.0.0, a single `ghcr.io/depictio/depictio:<version>` image shipped, with `latest`, `stable` and `edge` tags.
+
+---
+
+## **[v1.23.1](https://github.com/depictio/depictio/releases/tag/v1.23.1)** (November 24, 2026)
+
+!!! success "Patch: self-hosted usage statistics, and filters that reach every value of a long column"
+
+### **♻️ Migration**
+
+* **`DEPICTIO_ANALYTICS_*` removed**: its variables are ignored, and its `user_sessions` and `user_activities` collections are left for you to drop. [Usage statistics](../usage/administration/usage-stats.md) ([#1466](https://github.com/depictio/depictio/pull/1466))
+
+### **✨ New Features**
+
+* **Usage statistics** in **Admin › Activity › Usage**: visitors, logins and top dashboards, kept in your own database, on by default, also served by `GET /analytics/usage`. [Usage statistics](../usage/administration/usage-stats.md) ([#1466](https://github.com/depictio/depictio/pull/1466))
+
+### **🚀 Improvements**
+
+* **Any value of a long column can be picked**: past 1,000 values, a filter searches what you type on the server. [Long option lists](../features/components.md#long-option-lists) ([#1418](https://github.com/depictio/depictio/issues/1418))
+
+### **🐛 Bug Fixes**
+
+* **A funnel set cut at its limit narrows nothing**, instead of greying out the values past the cut. ([#1418](https://github.com/depictio/depictio/issues/1418))
+* **A `--data-collection-tag` ingest no longer breaks the next full ingest**, and leaves the dashboards to it. ([#1418](https://github.com/depictio/depictio/issues/1418))
+* **The protein logo opens on the picked family** past 1,000 families. ([#1418](https://github.com/depictio/depictio/issues/1418))
 
 ---
 
