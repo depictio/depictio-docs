@@ -13,13 +13,25 @@ hide:
     Every release publishes four images, tagged with the version without its `v`:
 
     ```bash
-    ghcr.io/depictio/depictio-api:1.23.0
-    ghcr.io/depictio/depictio-viewer:1.23.0
-    ghcr.io/depictio/depictio-worker:1.23.0
-    ghcr.io/depictio/depictio-cli:1.23.0     # from v1.10.0
+    ghcr.io/depictio/depictio-api:1.24.2
+    ghcr.io/depictio/depictio-viewer:1.24.2
+    ghcr.io/depictio/depictio-worker:1.24.2
+    ghcr.io/depictio/depictio-cli:1.24.2     # from v1.10.0
     ```
 
     Before v1.0.0, a single `ghcr.io/depictio/depictio:<version>` image shipped, with `latest`, `stable` and `edge` tags.
+
+---
+
+## **[v1.24.2](https://github.com/depictio/depictio/releases/tag/v1.24.2)** (November 27, 2026)
+
+!!! success "Patch: advanced viz controls left unset, public builds after a worker dies, the ready copy first in Export"
+
+### **🐛 Bug Fixes**
+
+* **An unset advanced viz control falls back to its default**: a stored `point_size: null` no longer fails the embedding figure. [Advanced visualizations](../features/advanced-visualizations.md) ([afa41cb](https://github.com/depictio/depictio/commit/afa41cbf8))
+* **A public build whose worker dies is queued again**, and given up as failed after repeated interruptions, so its report no longer stays "being prepared" forever. ([00ebb95](https://github.com/depictio/depictio/commit/00ebb959b))
+* **The Export section offers the ready copy first**: where a public project keeps one, its report, PDF and dashboard are plain download links; building your own view is folded below. ([50cfc31](https://github.com/depictio/depictio/commit/50cfc31ba))
 
 ---
 
