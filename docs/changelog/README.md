@@ -43,7 +43,7 @@ hide:
 
 * **An unset advanced viz control falls back to its default** (a stored `point_size: null` failed the figure). [Advanced visualizations](../features/advanced-visualizations.md) ([afa41cb](https://github.com/depictio/depictio/commit/afa41cbf8))
 * **A public build whose worker dies is queued again**, instead of staying "being prepared". ([00ebb95](https://github.com/depictio/depictio/commit/00ebb959b))
-* **The Export section offers the ready copy first**, your own view folded below. [Offline copies](../features/security.md#public-offline-download) ([50cfc31](https://github.com/depictio/depictio/commit/50cfc31ba))
+* **The Export section offers the ready copy first**, your own view folded below. [Offline exports](../features/offline-exports.md#public-visitors) ([50cfc31](https://github.com/depictio/depictio/commit/50cfc31ba))
 
 ---
 
@@ -53,7 +53,7 @@ hide:
 
 ### **✨ New Features**
 
-* **Offline copies for visitors of a public project**: ready copies at the default view, or an export of their own filters. [Security](../features/security.md#public-offline-download) ([#1487](https://github.com/depictio/depictio/pull/1487))
+* **Offline copies for visitors of a public project**: ready copies at the default view, or an export of their own filters. [Offline exports](../features/offline-exports.md), [Security](../features/security.md#public-offline-download) ([#1487](https://github.com/depictio/depictio/pull/1487))
 * **Cite Depictio**: a `CITATION.cff` behind GitHub's **Cite this repository** button. [Citing Depictio](../more/citing.md) ([#1484](https://github.com/depictio/depictio/pull/1484))
 
 ### **🚀 Improvements**
@@ -80,11 +80,11 @@ hide:
 * **Shared depictio palette**: six palettes checked for colour-blind vision, for every figure, card and advanced viz, picked with `plots.palette`. [Plot palettes](../usage/administration/branding.md#plot-palettes) ([#1474](https://github.com/depictio/depictio/pull/1474))
 * **Automatic figure marks**: bar labels, group n, heatmap cell values and a note on folded categories, set with `annotations`. [Figure marks](../features/components.md#figure-marks) ([#1474](https://github.com/depictio/depictio/pull/1474))
 * **Claim the single-user admin**: choose its email and password in Account settings or with `depictio config set-admin-credentials`. [Admin email and password](../usage/guides/authentication-modes.md#admin-credentials) ([#1469](https://github.com/depictio/depictio/pull/1469))
-* **Report editor** (off, behind `DEPICTIO_REPORT_EDITOR_ENABLED` and the notebook export): cover, intro, captions and tile order beside a live Quarto preview. ([#1472](https://github.com/depictio/depictio/pull/1472))
+* **Report editor** (off, behind `DEPICTIO_REPORT_EDITOR_ENABLED` and the notebook export): cover, intro, captions and tile order beside a live Quarto preview. [Offline exports](../features/offline-exports.md) ([#1472](https://github.com/depictio/depictio/pull/1472))
 
 ### **🚀 Improvements**
 
-* **Offline export round two** (behind both export switches): the state on screen, pinned versions, selection groups and live Sankey tiles; wide PDF content on landscape pages. ([#1472](https://github.com/depictio/depictio/pull/1472))
+* **Offline export round two** (behind both export switches): the state on screen, pinned versions, selection groups and live Sankey tiles; wide PDF content on landscape pages. [Offline exports](../features/offline-exports.md) ([#1472](https://github.com/depictio/depictio/pull/1472))
 * **Catalog previews draw what a tile draws**: the dashboard's own aggregation, fuller fixtures, renders grouped by kind. [Tools Catalog](https://depictio.github.io/depictio-catalog/latest/) ([#1474](https://github.com/depictio/depictio/pull/1474))
 
 ### **🔒 Security**
@@ -135,7 +135,7 @@ hide:
 
 * **Table joins from the web interface**: preview, then a `joined_<name>` table rebuilt when a source changes. [Join two tables](../usage/projects/guide.md#join-two-tables) ([#1462](https://github.com/depictio/depictio/pull/1462))
 * **Tool Studio redesign**: recipes run in the browser, several outputs per tool, checks at parity with the CLI. [Tool Studio](../developer/tool-studio.md) ([#1441](https://github.com/depictio/depictio/pull/1441))
-* **Offline engine** (behind both export switches): a dashboard as one HTML file, sharing its runtime with Quarto reports. ([#963](https://github.com/depictio/depictio/pull/963), [#1409](https://github.com/depictio/depictio/pull/1409))
+* **Offline engine** (behind both export switches): a dashboard as one HTML file, sharing its runtime with Quarto reports. [Offline exports](../features/offline-exports.md) ([#963](https://github.com/depictio/depictio/pull/963), [#1409](https://github.com/depictio/depictio/pull/1409))
 * **Tools Catalog front page** with a tool grid and 16 categories. [Tools Catalog](https://depictio.github.io/depictio-catalog/latest/) ([#1461](https://github.com/depictio/depictio/pull/1461))
 
 ### **🔒 Security**

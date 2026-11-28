@@ -32,6 +32,7 @@ the description says so. With Docker Compose they go in `.env`; with Helm, in `b
 | `DEPICTIO_PERFORMANCE_` | [Performance & Timeouts](#performance-timeouts) |
 | `DEPICTIO_BACKUP_` | [Backup & Restore](#backup-restore) |
 | `DEPICTIO_MIGRATION_` | [Project Migration](#project-migration) |
+| `DEPICTIO_STATIC_EXPORT_`, `DEPICTIO_NOTEBOOK_EXPORT_` | [Offline exports](#offline-exports) |
 | `DEPICTIO_USAGE_STATS_`, `DEPICTIO_GOOGLE_ANALYTICS_` | [Usage Statistics](#usage-statistics), [Google Analytics](#google-analytics) |
 | `DEPICTIO_LOGGING_`, `DEPICTIO_MONITORING_` | [Logging](#logging), [Monitoring](#monitoring) |
 | `DEPICTIO_DASHBOARD_VERSIONS_`, `DEPICTIO_COMMENTS_` | [Dashboard Versions](#dashboard-versions), [Comments](#comments) |
@@ -547,6 +548,51 @@ pairing keys and do not belong in `backend.env`: pass them through a Secret. See
 | `DEPICTIO_MIGRATION_SPOOL_DIR` | - | Local folder a bundle is built in. Unset: the system temporary folder |
 | `DEPICTIO_MIGRATION_HTTP_TIMEOUT_S` | `60.0` | Timeout of a call to the other instance |
 | `DEPICTIO_MIGRATION_UPLOAD_TIMEOUT_S` | `1800.0` | How long the sender waits for the answer after sending a bundle |
+
+---
+
+## Offline exports <small>(v1.23.0+)</small> { #offline-exports }
+
+**Config Classes:** `StaticExportConfig`, `NotebookExportConfig`
+**Environment Prefixes:** `DEPICTIO_STATIC_EXPORT_`, `DEPICTIO_NOTEBOOK_EXPORT_`
+
+The serverless dashboard file, the Quarto document and rendered report, the report editor and
+the files offered to visitors of public projects. All off by default. Set them on the API and
+the worker. See [Offline exports](../features/offline-exports.md).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_STATIC_EXPORT_ENABLED` | `false` | Serve the serverless dashboard export and the runtime a report embeds. Off, the routes answer `404` and the viewer hides the export. The CLI commands do not read it |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_ENABLED` | `false` | Offer offline files to visitors of public projects. Needs `DEPICTIO_STATIC_EXPORT_ENABLED` (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_DEFAULT` | `true` | A public project offers them until its owner decides. `false`: each owner turns it on (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_PER_IP_PER_MINUTE` | `10` | Ready-copy downloads per address per minute. Refused (503) with Redis unreachable (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_REBUILD_DELAY_S` | `120` | Seconds between the change that makes a ready copy stale and its rebuild (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_EXPORT_PER_IP_MAX` | `10` | Own-view exports a visitor may start from one address per window (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_EXPORT_WINDOW_S` | `600` | That window, in seconds (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_BUILD_PER_USER_MAX` | `5` | Builds one user may start per window (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_BUILD_PER_USER_WINDOW_S` | `600` | That window, in seconds (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_QUEUE_MAX_PENDING` | `20` | Builds waiting or running on the instance; one more answers `429` (v1.24.1+) |
+| `DEPICTIO_NOTEBOOK_EXPORT_ENABLED` | `false` | Serve the Quarto document, the rendered report, component embeds and the Parquet data endpoint notebooks read. Off, the routes answer `404` |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_ENABLED` | `true` | Offer the rendered report (and report + dashboard, which also needs the static export). Turn off for a worker built without Quarto (`WITH_QUARTO=false`) |
+| `DEPICTIO_REPORT_EDITOR_ENABLED` | `false` | The report editor. Needs `DEPICTIO_NOTEBOOK_EXPORT_ENABLED`. Also read as `DEPICTIO_NOTEBOOK_EXPORT_REPORT_EDITOR` (v1.24.0+) |
+| `DEPICTIO_NOTEBOOK_EXPORT_PREVIEW_CACHE_DIR` | - | Where the editor's preview keeps its executed cells. Unset: the system temporary folder (v1.24.0+) |
+| `DEPICTIO_NOTEBOOK_EXPORT_MAX_ROWS` | `1000000` | Largest table the Parquet data endpoint serves; bigger answers `413` |
+| `DEPICTIO_NOTEBOOK_EXPORT_EXTRACT_TIMEOUT_S` | `90` | Seconds for the headless render that extracts one figure |
+| `DEPICTIO_NOTEBOOK_EXPORT_EXTRACT_MAX_ACTIVE_PER_USER` | `4` | Figure extractions one user may have pending |
+| `DEPICTIO_NOTEBOOK_EXPORT_EXTRACT_MAX_PER_HOUR` | `600` | Figure extractions one user may start in an hour |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_TIMEOUT_S` | `900` | Seconds for one `quarto render` |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_PREFIX` | `notebook_reports` | S3 prefix the rendered reports are written to |
+| `DEPICTIO_NOTEBOOK_EXPORT_REPORT_RETENTION_HOURS` | `72` | Hours a rendered report (HTML, PDF) is kept for download |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_MAX_ACTIVE_PER_USER` | `2` | Renders one user may have queued or running |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_MAX_PER_HOUR` | `20` | Renders one user may start in an hour |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_PER_IP_MAX` | `6` | Renders a reader who is not a project editor may start from one address per window (v1.24.1+) |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_WINDOW_S` | `3600` | That window, in seconds (v1.24.1+) |
+| `DEPICTIO_NOTEBOOK_EXPORT_REPORT_CONCURRENCY` | `1` | Reports rendering at once on the deployment. Keep it below the worker slots of the report queue |
+| `DEPICTIO_PERFORMANCE_STATIC_BUNDLE_WARN_MB` | `25` | File size above which the export warns but still builds. `0` disables |
+| `DEPICTIO_PERFORMANCE_STATIC_BUNDLE_MAX_MB` | `100` | File size above which the export is refused. `0` disables |
+| `DEPICTIO_PERFORMANCE_STATIC_EXPORT_RETENTION_DAYS` | `7` | Days a built file is kept. `0` keeps it forever |
+| `DEPICTIO_PYODIDE_CACHE` | `~/.cache/depictio/pyodide` | Where the optional Python runtime's files are cached (per version) after their first download |
+| `DEPICTIO_PYODIDE_DIR` | - | Air-gapped instances: a folder holding those files, read only |
 
 ---
 

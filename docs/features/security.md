@@ -265,19 +265,14 @@ one, and a saved dashboard keeps the stable unsigned URL.
 ### Offline copies for visitors <span class="ver-badge">v1.24.1+</span> { #public-offline-download }
 
 A **public** project's data are public already: every figure a visitor sees carries them. So
-an instance can let visitors take its dashboards away as offline files, from **Settings ›
-Export** (**Ready copy** | **My view**). It is off unless the instance sets both
-`DEPICTIO_STATIC_EXPORT_ENABLED` and `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_ENABLED`. Then
-every public project offers its files until its owner turns that off in **Project ›
-Permissions**; with `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_DEFAULT=false`, each owner turns
-it on instead.
+an instance can let visitors take its dashboards away as
+[offline files](offline-exports.md#public-visitors). It is off unless the instance sets both
+`DEPICTIO_STATIC_EXPORT_ENABLED` and `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_ENABLED`, and
+each project owner can turn it off in **Project › Permissions**.
 
-- **Ready copies.** The server keeps each dashboard at its default view (the dashboard
-  alone and, where reports render, the report + dashboard file and its PDF). Downloading
-  one starts no job. Anonymous visitors get these only.
-- **A visitor's own view.** A signed-in visitor (a guest account too) may export the
-  dashboard at their filters, built from the same live data, never from a past version.
-  These exports and report renders are limited per user and per address.
+- **Who builds what.** Anonymous visitors download the ready copies only, built by the
+  server at the default view. A signed-in visitor (a guest account too) may export their
+  own view, from the same live data, never from a past version.
 - **The owner sees what leaves.** Project › Permissions lists, per dashboard, the
   collections the file carries, their columns and row counts. Once downloaded, no access
   control follows the file.
@@ -287,14 +282,12 @@ it on instead.
   code, which any visitor of the live dashboard can read already.
 - **Reports with code figures** are drawn by the same sandbox as the live dashboard. They
   render for any signed-in reader when every owner of the dashboard is a project owner or
-  editor; a viewer's own copy renders for owners and editors only, and the export window
-  says so.
-- **It follows the project.** A copy is rebuilt after a save or an ingestion. Making the
-  project private, turning the option off, or deleting the dashboard or project deletes
-  its copies.
-- **Fail closed.** Downloads are limited to 10 a minute per address by default; with Redis
-  unreachable, they are refused (503). Every export counts towards a cap on the export
-  queue.
+  editor; a viewer's own copy renders for owners and editors only.
+- **It follows the project.** Making the project private, turning the option off, or
+  deleting the dashboard or project deletes its copies.
+- **Fail closed.** Downloads are limited to 10 a minute per address by default, visitors'
+  exports and renders per user and per address; with Redis unreachable, they are refused
+  (503). Every export counts towards a cap on the export queue.
 
 ---
 
