@@ -318,7 +318,7 @@ components:
 | `exclude_tabs` | list[str] | `null`  | Tabs a persistent section is not shown on, by displayed name (the main tab by its `main_tab_name`, the owning tab included). Ignored unless `persistent` <small>(v1.14.0+)</small> |
 | `appearance`  | str    | `box`      | `box`, or `plain`: a heading over the tiles, no frame, never folded. Grid sections only <small>(v1.14.0+)</small> |
 | `card_variant` | str   | `null`     | `default`, `headline`, `compact`, `minimal`, `accent` or `split`: style of every card in the section that sets no `variant` of its own. Grid sections only <small>(v1.14.0+)</small> |
-| `figure_style` | str   | `null`     | `default` or `minimal`: style of every figure and advanced visualization in the section that sets no `figure_style` of its own. Grid sections only <small>(v1.14.0+)</small> |
+| `figure_style` | str   | `null`     | `default`, `minimal` or `classic` (v1.24.0+): style of every figure and advanced visualization in the section that sets no `figure_style` of its own. Grid sections only <small>(v1.14.0+)</small> |
 | `display`     | str    | `null`     | `grid` (same as unset): one tile per member; `strip`: the section is a filter bar that filters the whole tab; `linked` <small>(v1.19.1+)</small>: the section's tiles share one screen height, as [linked views](dashboards.md#linked-view). Grid sections only <small>(v1.14.0+)</small> |
 | `filter_bar`  | bool   | `null`     | A filter bar under the section's heading that narrows only its own tiles. Ignored with `display: strip` <small>(v1.14.0+)</small> |
 | `visible_filters` | int (≥1) | `null` | Controls a bar shows before **More filters**. Unset: 2 on a `filter_bar`, all on a `display: strip` bar <small>(v1.14.0+)</small> |

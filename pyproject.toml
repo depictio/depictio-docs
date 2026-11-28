@@ -19,7 +19,7 @@ dependencies = [
     "mkdocs-llmstxt>=0.5.1",
     "mkdocs-redirects>=1.2.3",
 ]
-version = "1.23.0"
+version = "1.24.0"
 name = "depictio-docs"
 
 # Only needed to regenerate the figures in dev/diagrams/. The PNGs are
