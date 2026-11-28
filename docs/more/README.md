@@ -18,6 +18,14 @@ Answers, the project behind Depictio, and how to reach the people who make it.
 
     [:octicons-arrow-right-24: FAQ](../FAQ/README.md)
 
+-   :material-format-quote-close:{ .lg .middle .dp-green } **Citing Depictio**
+
+    ---
+
+    How to cite Depictio in a publication, with a BibTeX entry.
+
+    [:octicons-arrow-right-24: Citing Depictio](citing.md)
+
 -   :material-hand-coin-outline:{ .lg .middle .dp-yellow } **Funding**
 
     ---

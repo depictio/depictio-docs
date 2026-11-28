@@ -32,7 +32,8 @@ the description says so. With Docker Compose they go in `.env`; with Helm, in `b
 | `DEPICTIO_PERFORMANCE_` | [Performance & Timeouts](#performance-timeouts) |
 | `DEPICTIO_BACKUP_` | [Backup & Restore](#backup-restore) |
 | `DEPICTIO_MIGRATION_` | [Project Migration](#project-migration) |
-| `DEPICTIO_ANALYTICS_`, `DEPICTIO_GOOGLE_ANALYTICS_` | [Internal Analytics](#internal-analytics), [Google Analytics](#google-analytics) |
+| `DEPICTIO_STATIC_EXPORT_`, `DEPICTIO_NOTEBOOK_EXPORT_` | [Offline exports](#offline-exports) |
+| `DEPICTIO_USAGE_STATS_`, `DEPICTIO_GOOGLE_ANALYTICS_` | [Usage Statistics](#usage-statistics), [Google Analytics](#google-analytics) |
 | `DEPICTIO_LOGGING_`, `DEPICTIO_MONITORING_` | [Logging](#logging), [Monitoring](#monitoring) |
 | `DEPICTIO_DASHBOARD_VERSIONS_`, `DEPICTIO_COMMENTS_` | [Dashboard Versions](#dashboard-versions), [Comments](#comments) |
 | `DEPICTIO_INGESTION_`, `DEPICTIO_JOBS_` | [Ingestion](#ingestion), [Jobs](#jobs) |
@@ -293,6 +294,7 @@ Keys, sign-in modes and OpenID Connect single sign-on. The modes are compared in
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET` | - | **Deprecated**: use `DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET` |
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI` | - | **Deprecated**: the `redirect_uri` of the `google` provider |
 | `DEPICTIO_AUTH_REGISTRATION_DISABLED` | `false` | Block self-service registration: `/register` returns 403 and the Register UI is hidden, so only pre-provisioned accounts can log in. Independent of public/single-user mode |
+| `DEPICTIO_AUTH_PUBLIC_ADMIN_SIGN_IN` | `true` | Show an **Admin sign-in** link to guests of a public instance with no identity provider. Hides the link only: password sign-in there is for admins whatever its value. See [Admin sign-in](../usage/guides/authentication-modes.md#admin-sign-in) (v1.24.0+) |
 | `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED` | `false` | Close email and password sign-in so SSO is the only way in. Ignored unless at least one OIDC provider is enabled and configured. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) |
 | `DEPICTIO_AUTH_PROVISIONING_API_KEY` | - | Shared secret for pipeline-side user provisioning (`POST /auth/provision_user`). Scoped to provisioning only, kept separate from the internal API key. Also accepted as `DEPICTIO_AUTH_PROVISIONING_API_KEY_ENV`. **The provisioning endpoints are disabled while this is unset.** See [Pipeline provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113) |
 | `DEPICTIO_AUTH_MAGIC_LINK_EXPIRY_MINUTES` | `15` | Lifetime of a single-use magic-link login ticket |
@@ -310,14 +312,16 @@ Keys, sign-in modes and OpenID Connect single sign-on. The modes are compared in
 **Environment Prefix:** `DEPICTIO_BOOTSTRAP_`
 
 First-boot admin seeding. Idempotent: the admin is created only when MongoDB holds none, so a
-password changed in the UI survives restarts and Helm wipe jobs. Single-user mode seeds its own
-local admin and needs neither. With Helm, set `secrets.bootstrapAdminEmail` and
+password changed in the UI survives restarts and Helm wipe jobs. Single-user and public mode
+seed a default local admin (`admin@example.com`, random password) when these are unset; public
+mode since v1.24.0. See [Admin email and password](../usage/guides/authentication-modes.md#admin-credentials). With Helm, set `secrets.bootstrapAdminEmail` and
 `secrets.bootstrapAdminPassword`.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | _(empty)_ | Email of the first admin. When MongoDB holds no admin and this or the password is unset, the server stops at startup |
+| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | _(empty)_ | Email of the first admin. In multi-user mode, when MongoDB holds no admin and this or the password is unset, the server stops at startup |
 | `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | _(empty)_ | Password of the first admin: at least 8 characters, and not a well-known default such as `admin` or `password`. Not needed with `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED`, where the email alone names the SSO account that owns the instance |
+| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD_GENERATED` | `false` | The password was made up by a tool, not chosen by a person (`depictio local up` and `local export` set it), so a single-user admin can still be claimed without it (v1.24.0+) |
 | `DEPICTIO_BOOTSTRAP_SEED_TEST_USER` | `false` | Seed a non-admin test user for CI/Cypress fixtures. Leave `false` in production. |
 | `DEPICTIO_BOOTSTRAP_TEST_USER_EMAIL` | `test_user@example.com` | Email for the CI test user (only when `seed_test_user=true`). |
 | `DEPICTIO_BOOTSTRAP_TEST_USER_PASSWORD` | `test_pwd` | Password for the CI test user (only when `seed_test_user=true`). |
@@ -547,21 +551,65 @@ pairing keys and do not belong in `backend.env`: pass them through a Secret. See
 
 ---
 
-## Internal Analytics
+## Offline exports <small>(v1.23.0+)</small> { #offline-exports }
 
-**Config Class:** `AnalyticsConfig`
-**Environment Prefix:** `DEPICTIO_ANALYTICS_`
+**Config Classes:** `StaticExportConfig`, `NotebookExportConfig`
+**Environment Prefixes:** `DEPICTIO_STATIC_EXPORT_`, `DEPICTIO_NOTEBOOK_EXPORT_`
 
-Per-user session tracking, stored in your own MongoDB and served by the admin analytics API. Off by
-default, with no page in the UI yet. Separate from [Telemetry](#telemetry).
+The serverless dashboard file, the Quarto document and rendered report, the report editor and
+the files offered to visitors of public projects. All off by default. Set them on the API and
+the worker. See [Offline exports](../features/offline-exports.md).
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_ANALYTICS_ENABLED` | `false` | Record sessions and serve the analytics endpoints |
-| `DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES` | `30` | Session timeout in minutes |
-| `DEPICTIO_ANALYTICS_CLEANUP_DAYS` | `90` | Days analytics records are kept |
-| `DEPICTIO_ANALYTICS_TRACK_ANONYMOUS_USERS` | `true` | Track anonymous sessions too |
-| `DEPICTIO_ANALYTICS_CLEANUP_ENABLED` | `true` | Delete records older than `CLEANUP_DAYS` |
+| `DEPICTIO_STATIC_EXPORT_ENABLED` | `false` | Serve the serverless dashboard export and the runtime a report embeds. Off, the routes answer `404` and the viewer hides the export. The CLI commands do not read it |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_ENABLED` | `false` | Offer offline files to visitors of public projects. Needs `DEPICTIO_STATIC_EXPORT_ENABLED` (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_DEFAULT` | `true` | A public project offers them until its owner decides. `false`: each owner turns it on (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_PER_IP_PER_MINUTE` | `10` | Ready-copy downloads per address per minute. Refused (503) with Redis unreachable (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_REBUILD_DELAY_S` | `120` | Seconds between the change that makes a ready copy stale and its rebuild (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_EXPORT_PER_IP_MAX` | `10` | Own-view exports a visitor may start from one address per window (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_PUBLIC_EXPORT_WINDOW_S` | `600` | That window, in seconds (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_BUILD_PER_USER_MAX` | `5` | Builds one user may start per window (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_BUILD_PER_USER_WINDOW_S` | `600` | That window, in seconds (v1.24.1+) |
+| `DEPICTIO_STATIC_EXPORT_QUEUE_MAX_PENDING` | `20` | Builds waiting or running on the instance; one more answers `429` (v1.24.1+) |
+| `DEPICTIO_NOTEBOOK_EXPORT_ENABLED` | `false` | Serve the Quarto document, the rendered report, component embeds and the Parquet data endpoint notebooks read. Off, the routes answer `404` |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_ENABLED` | `true` | Offer the rendered report (and report + dashboard, which also needs the static export). Turn off for a worker built without Quarto (`WITH_QUARTO=false`) |
+| `DEPICTIO_REPORT_EDITOR_ENABLED` | `false` | The report editor. Needs `DEPICTIO_NOTEBOOK_EXPORT_ENABLED`. Also read as `DEPICTIO_NOTEBOOK_EXPORT_REPORT_EDITOR` (v1.24.0+) |
+| `DEPICTIO_NOTEBOOK_EXPORT_PREVIEW_CACHE_DIR` | - | Where the editor's preview keeps its executed cells. Unset: the system temporary folder (v1.24.0+) |
+| `DEPICTIO_NOTEBOOK_EXPORT_MAX_ROWS` | `1000000` | Largest table the Parquet data endpoint serves; bigger answers `413` |
+| `DEPICTIO_NOTEBOOK_EXPORT_EXTRACT_TIMEOUT_S` | `90` | Seconds for the headless render that extracts one figure |
+| `DEPICTIO_NOTEBOOK_EXPORT_EXTRACT_MAX_ACTIVE_PER_USER` | `4` | Figure extractions one user may have pending |
+| `DEPICTIO_NOTEBOOK_EXPORT_EXTRACT_MAX_PER_HOUR` | `600` | Figure extractions one user may start in an hour |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_TIMEOUT_S` | `900` | Seconds for one `quarto render` |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_PREFIX` | `notebook_reports` | S3 prefix the rendered reports are written to |
+| `DEPICTIO_NOTEBOOK_EXPORT_REPORT_RETENTION_HOURS` | `72` | Hours a rendered report (HTML, PDF) is kept for download |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_MAX_ACTIVE_PER_USER` | `2` | Renders one user may have queued or running |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_MAX_PER_HOUR` | `20` | Renders one user may start in an hour |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_PER_IP_MAX` | `6` | Renders a reader who is not a project editor may start from one address per window (v1.24.1+) |
+| `DEPICTIO_NOTEBOOK_EXPORT_RENDER_WINDOW_S` | `3600` | That window, in seconds (v1.24.1+) |
+| `DEPICTIO_NOTEBOOK_EXPORT_REPORT_CONCURRENCY` | `1` | Reports rendering at once on the deployment. Keep it below the worker slots of the report queue |
+| `DEPICTIO_PERFORMANCE_STATIC_BUNDLE_WARN_MB` | `25` | File size above which the export warns but still builds. `0` disables |
+| `DEPICTIO_PERFORMANCE_STATIC_BUNDLE_MAX_MB` | `100` | File size above which the export is refused. `0` disables |
+| `DEPICTIO_PERFORMANCE_STATIC_EXPORT_RETENTION_DAYS` | `7` | Days a built file is kept. `0` keeps it forever |
+| `DEPICTIO_PYODIDE_CACHE` | `~/.cache/depictio/pyodide` | Where the optional Python runtime's files are cached (per version) after their first download |
+| `DEPICTIO_PYODIDE_DIR` | - | Air-gapped instances: a folder holding those files, read only |
+
+---
+
+## Usage Statistics <small>(v1.23.1+)</small> { #usage-statistics }
+
+**Config Class:** `UsageStatsConfig`
+**Environment Prefix:** `DEPICTIO_USAGE_STATS_`
+
+Self-hosted usage statistics, stored in your own MongoDB and shown in [Admin › Activity › Usage](../usage/administration/usage-stats.md). On by
+default. Separate from [Telemetry](#telemetry). They replace the `DEPICTIO_ANALYTICS_*` variables, which are now ignored.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEPICTIO_USAGE_STATS_ENABLED` | `true` | Record and serve usage statistics. Off, the routes answer 404 |
+| `DEPICTIO_USAGE_STATS_RETENTION_DAYS` | `395` | Days the daily rows are kept (13 months), from 30 to 760. Closed months and years are kept as anonymous totals |
+| `DEPICTIO_USAGE_STATS_MAX_DAILY_VISITORS` | `50000` | New browsers recorded per day, instance-wide (flood guard). At least 100 |
+| `DEPICTIO_USAGE_STATS_GEOIP_DB_PATH` | - | City `.mmdb` file (DB-IP Lite or MaxMind GeoLite2) for countries and cities. Unset: no geo panels |
 
 ---
 

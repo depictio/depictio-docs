@@ -13,13 +13,87 @@ hide:
     Every release publishes four images, tagged with the version without its `v`:
 
     ```bash
-    ghcr.io/depictio/depictio-api:1.23.0
-    ghcr.io/depictio/depictio-viewer:1.23.0
-    ghcr.io/depictio/depictio-worker:1.23.0
-    ghcr.io/depictio/depictio-cli:1.23.0     # from v1.10.0
+    ghcr.io/depictio/depictio-api:1.24.1
+    ghcr.io/depictio/depictio-viewer:1.24.1
+    ghcr.io/depictio/depictio-worker:1.24.1
+    ghcr.io/depictio/depictio-cli:1.24.1     # from v1.10.0
     ```
 
     Before v1.0.0, a single `ghcr.io/depictio/depictio:<version>` image shipped, with `latest`, `stable` and `edge` tags.
+
+---
+
+## **[v1.24.1](https://github.com/depictio/depictio/releases/tag/v1.24.1)** (November 27, 2026)
+
+!!! success "Patch: offline copies for a public project's visitors, a citation file, and the Project Builder downloads the project file"
+
+### **✨ New Features**
+
+* **Offline copies for visitors of a public project**: ready copies at the default view, or an export of their own filters. [Offline exports](../features/offline-exports.md), [Security](../features/security.md#public-offline-download) ([#1487](https://github.com/depictio/depictio/pull/1487))
+* **Cite Depictio**: a `CITATION.cff` behind GitHub's **Cite this repository** button. [Citing Depictio](../more/citing.md) ([#1484](https://github.com/depictio/depictio/pull/1484))
+
+### **🚀 Improvements**
+
+* **The Project Builder downloads the project file**, the template one switch away, with no `project_type`. [Project Builder](../usage/projects/guide.md#project-builder) ([242de4a](https://github.com/depictio/depictio/commit/242de4abb), [b8121be](https://github.com/depictio/depictio/commit/b8121be79))
+
+### **🐛 Bug Fixes**
+
+* **A project file on an `s3://` root ingests**, and a root's trailing slash no longer gives `//` in paths. ([aac1973](https://github.com/depictio/depictio/commit/aac1973a4))
+
+---
+
+## **[v1.24.0](https://github.com/depictio/depictio/releases/tag/v1.24.0)** (November 25, 2026)
+
+!!! success "Minor: one shared figure palette with automatic marks, a claimable single-user admin, admin sign-in in public mode"
+
+### **♻️ Migration**
+
+* **Figures take the overview look by default**: bars sorted, Other and NA last in grey, past 8 colours folded into Other; `figure_style: classic` draws a figure as built. [Figure style](../features/components.md#figure-style) ([#1474](https://github.com/depictio/depictio/pull/1474))
+* **Public and demo mode: only admins sign in with a password**; SSO is unchanged. [Admin sign-in](../usage/guides/authentication-modes.md#admin-sign-in) ([#1469](https://github.com/depictio/depictio/pull/1469))
+
+### **✨ New Features**
+
+* **Shared depictio palette**: six palettes checked for colour-blind vision, for every figure, card and advanced viz, picked with `plots.palette`. [Plot palettes](../usage/administration/branding.md#plot-palettes) ([#1474](https://github.com/depictio/depictio/pull/1474))
+* **Automatic figure marks**: bar labels, group n, heatmap cell values and a note on folded categories, set with `annotations`. [Figure marks](../features/components.md#figure-marks) ([#1474](https://github.com/depictio/depictio/pull/1474))
+* **Claim the single-user admin**: choose its email and password in Account settings or with `depictio config set-admin-credentials`. [Admin email and password](../usage/guides/authentication-modes.md#admin-credentials) ([#1469](https://github.com/depictio/depictio/pull/1469))
+* **Report editor** (off, behind `DEPICTIO_REPORT_EDITOR_ENABLED` and the notebook export): cover, intro, captions and tile order beside a live Quarto preview. [Offline exports](../features/offline-exports.md) ([#1472](https://github.com/depictio/depictio/pull/1472))
+
+### **🚀 Improvements**
+
+* **Offline export round two** (behind both export switches): the state on screen, pinned versions, selection groups and live Sankey tiles; wide PDF content on landscape pages. [Offline exports](../features/offline-exports.md) ([#1472](https://github.com/depictio/depictio/pull/1472))
+* **Catalog previews draw what a tile draws**: the dashboard's own aggregation, fuller fixtures, renders grouped by kind. [Tools Catalog](https://depictio.github.io/depictio-catalog/latest/) ([#1474](https://github.com/depictio/depictio/pull/1474))
+
+### **🔒 Security**
+
+* **Public-mode password sign-in** fails closed (503) without Redis and locks an account after 5 wrong passwords in 15 minutes. [Security](../features/security.md#public-password-sign-in) ([#1469](https://github.com/depictio/depictio/pull/1469))
+
+### **🐛 Bug Fixes**
+
+* **A public app on an empty database starts**: public mode seeds the default admin too. [SciLifeLab Serve](../installation/kubernetes.md#scilifelab-serve) ([#1435](https://github.com/depictio/depictio/pull/1435))
+
+---
+
+## **[v1.23.1](https://github.com/depictio/depictio/releases/tag/v1.23.1)** (November 24, 2026)
+
+!!! success "Patch: self-hosted usage statistics, and filters that reach every value of a long column"
+
+### **♻️ Migration**
+
+* **`DEPICTIO_ANALYTICS_*` removed**: its variables are ignored, and its `user_sessions` and `user_activities` collections are left for you to drop. [Usage statistics](../usage/administration/usage-stats.md) ([#1466](https://github.com/depictio/depictio/pull/1466))
+
+### **✨ New Features**
+
+* **Usage statistics** in **Admin › Activity › Usage**: visitors, logins and top dashboards, kept in your own database, on by default, also served by `GET /analytics/usage`. [Usage statistics](../usage/administration/usage-stats.md) ([#1466](https://github.com/depictio/depictio/pull/1466))
+
+### **🚀 Improvements**
+
+* **Any value of a long column can be picked**: past 1,000 values, a filter searches what you type on the server. [Long option lists](../features/components.md#long-option-lists) ([#1418](https://github.com/depictio/depictio/issues/1418))
+
+### **🐛 Bug Fixes**
+
+* **A funnel set cut at its limit narrows nothing**, instead of greying out the values past the cut. ([#1418](https://github.com/depictio/depictio/issues/1418))
+* **A `--data-collection-tag` ingest no longer breaks the next full ingest**, and leaves the dashboards to it. ([#1418](https://github.com/depictio/depictio/issues/1418))
+* **The protein logo opens on the picked family** past 1,000 families. ([#1418](https://github.com/depictio/depictio/issues/1418))
 
 ---
 
@@ -37,7 +111,7 @@ hide:
 
 * **Table joins from the web interface**: preview, then a `joined_<name>` table rebuilt when a source changes. [Join two tables](../usage/projects/guide.md#join-two-tables) ([#1462](https://github.com/depictio/depictio/pull/1462))
 * **Tool Studio redesign**: recipes run in the browser, several outputs per tool, checks at parity with the CLI. [Tool Studio](../developer/tool-studio.md) ([#1441](https://github.com/depictio/depictio/pull/1441))
-* **Offline engine** (behind both export switches): a dashboard as one HTML file, sharing its runtime with Quarto reports. ([#963](https://github.com/depictio/depictio/pull/963), [#1409](https://github.com/depictio/depictio/pull/1409))
+* **Offline engine** (behind both export switches): a dashboard as one HTML file, sharing its runtime with Quarto reports. [Offline exports](../features/offline-exports.md) ([#963](https://github.com/depictio/depictio/pull/963), [#1409](https://github.com/depictio/depictio/pull/1409))
 * **Tools Catalog front page** with a tool grid and 16 categories. [Tools Catalog](https://depictio.github.io/depictio-catalog/latest/) ([#1461](https://github.com/depictio/depictio/pull/1461))
 
 ### **🔒 Security**
