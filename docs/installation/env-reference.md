@@ -32,7 +32,7 @@ the description says so. With Docker Compose they go in `.env`; with Helm, in `b
 | `DEPICTIO_PERFORMANCE_` | [Performance & Timeouts](#performance-timeouts) |
 | `DEPICTIO_BACKUP_` | [Backup & Restore](#backup-restore) |
 | `DEPICTIO_MIGRATION_` | [Project Migration](#project-migration) |
-| `DEPICTIO_ANALYTICS_`, `DEPICTIO_GOOGLE_ANALYTICS_` | [Internal Analytics](#internal-analytics), [Google Analytics](#google-analytics) |
+| `DEPICTIO_USAGE_STATS_`, `DEPICTIO_GOOGLE_ANALYTICS_` | [Usage Statistics](#usage-statistics), [Google Analytics](#google-analytics) |
 | `DEPICTIO_LOGGING_`, `DEPICTIO_MONITORING_` | [Logging](#logging), [Monitoring](#monitoring) |
 | `DEPICTIO_DASHBOARD_VERSIONS_`, `DEPICTIO_COMMENTS_` | [Dashboard Versions](#dashboard-versions), [Comments](#comments) |
 | `DEPICTIO_INGESTION_`, `DEPICTIO_JOBS_` | [Ingestion](#ingestion), [Jobs](#jobs) |
@@ -550,21 +550,20 @@ pairing keys and do not belong in `backend.env`: pass them through a Secret. See
 
 ---
 
-## Internal Analytics
+## Usage Statistics <small>(v1.23.1+)</small> { #usage-statistics }
 
-**Config Class:** `AnalyticsConfig`
-**Environment Prefix:** `DEPICTIO_ANALYTICS_`
+**Config Class:** `UsageStatsConfig`
+**Environment Prefix:** `DEPICTIO_USAGE_STATS_`
 
-Per-user session tracking, stored in your own MongoDB and served by the admin analytics API. Off by
-default, with no page in the UI yet. Separate from [Telemetry](#telemetry).
+Self-hosted usage statistics, stored in your own MongoDB and shown in [Admin › Activity › Usage](../usage/administration/usage-stats.md). On by
+default. Separate from [Telemetry](#telemetry). They replace the `DEPICTIO_ANALYTICS_*` variables, which are now ignored.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_ANALYTICS_ENABLED` | `false` | Record sessions and serve the analytics endpoints |
-| `DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES` | `30` | Session timeout in minutes |
-| `DEPICTIO_ANALYTICS_CLEANUP_DAYS` | `90` | Days analytics records are kept |
-| `DEPICTIO_ANALYTICS_TRACK_ANONYMOUS_USERS` | `true` | Track anonymous sessions too |
-| `DEPICTIO_ANALYTICS_CLEANUP_ENABLED` | `true` | Delete records older than `CLEANUP_DAYS` |
+| `DEPICTIO_USAGE_STATS_ENABLED` | `true` | Record and serve usage statistics. Off, the routes answer 404 |
+| `DEPICTIO_USAGE_STATS_RETENTION_DAYS` | `395` | Days the daily rows are kept (13 months), from 30 to 760. Closed months and years are kept as anonymous totals |
+| `DEPICTIO_USAGE_STATS_MAX_DAILY_VISITORS` | `50000` | New browsers recorded per day, instance-wide (flood guard). At least 100 |
+| `DEPICTIO_USAGE_STATS_GEOIP_DB_PATH` | - | City `.mmdb` file (DB-IP Lite or MaxMind GeoLite2) for countries and cities. Unset: no geo panels |
 
 ---
 
