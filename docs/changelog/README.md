@@ -13,13 +13,25 @@ hide:
     Every release publishes four images, tagged with the version without its `v`:
 
     ```bash
-    ghcr.io/depictio/depictio-api:1.23.0
-    ghcr.io/depictio/depictio-viewer:1.23.0
-    ghcr.io/depictio/depictio-worker:1.23.0
-    ghcr.io/depictio/depictio-cli:1.23.0     # from v1.10.0
+    ghcr.io/depictio/depictio-api:1.24.3
+    ghcr.io/depictio/depictio-viewer:1.24.3
+    ghcr.io/depictio/depictio-worker:1.24.3
+    ghcr.io/depictio/depictio-cli:1.24.3     # from v1.10.0
     ```
 
     Before v1.0.0, a single `ghcr.io/depictio/depictio:<version>` image shipped, with `latest`, `stable` and `edge` tags.
+
+---
+
+## **[v1.24.3](https://github.com/depictio/depictio/releases/tag/v1.24.3)** (November 27, 2026)
+
+!!! success "Patch: dashboard settings open on About for readers, quieter API and worker logs"
+
+### **🐛 Bug Fixes**
+
+* **Dashboard settings always open on About for a reader**, instead of the last section used (Export after one download). ([905707f](https://github.com/depictio/depictio/commit/905707f4b))
+* **A filter aimed at another table is skipped quietly**: one debug line instead of three warnings per figure per render. ([7396247](https://github.com/depictio/depictio/commit/73962470e))
+* **A failed public report logs the end of its render's log** in the worker, so the failing cell shows; owners still read the short error. ([a102006](https://github.com/depictio/depictio/commit/a10200645))
 
 ---
 
