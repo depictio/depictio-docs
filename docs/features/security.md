@@ -72,6 +72,16 @@ A public instance behind an access code is only as safe as the code is hard to g
 - A request without a token no longer gets the anonymous identity unless it carries the
   code.
 
+### Public-mode password sign-in <span class="ver-badge">v1.24.0+</span> { #public-password-sign-in }
+
+On a public instance, `/auth/login` is the admins' door, whether the
+[Admin sign-in](../usage/guides/authentication-modes.md#admin-sign-in) link is shown or not.
+
+- Admins only: a non-admin gets the 401 of a wrong password, checked after the password hash.
+- The rate limiter fails closed: without Redis, password sign-in answers 503.
+- 5 wrong passwords in 15 minutes block that account's password sign-in for the rest of the
+  window. Anyone can lock an admin out for one window this way; SSO is not affected.
+
 ---
 
 ## Role-Based Access Control (RBAC)

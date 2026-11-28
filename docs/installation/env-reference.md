@@ -32,7 +32,7 @@ the description says so. With Docker Compose they go in `.env`; with Helm, in `b
 | `DEPICTIO_PERFORMANCE_` | [Performance & Timeouts](#performance-timeouts) |
 | `DEPICTIO_BACKUP_` | [Backup & Restore](#backup-restore) |
 | `DEPICTIO_MIGRATION_` | [Project Migration](#project-migration) |
-| `DEPICTIO_ANALYTICS_`, `DEPICTIO_GOOGLE_ANALYTICS_` | [Internal Analytics](#internal-analytics), [Google Analytics](#google-analytics) |
+| `DEPICTIO_USAGE_STATS_`, `DEPICTIO_GOOGLE_ANALYTICS_` | [Usage Statistics](#usage-statistics), [Google Analytics](#google-analytics) |
 | `DEPICTIO_LOGGING_`, `DEPICTIO_MONITORING_` | [Logging](#logging), [Monitoring](#monitoring) |
 | `DEPICTIO_DASHBOARD_VERSIONS_`, `DEPICTIO_COMMENTS_` | [Dashboard Versions](#dashboard-versions), [Comments](#comments) |
 | `DEPICTIO_INGESTION_`, `DEPICTIO_JOBS_` | [Ingestion](#ingestion), [Jobs](#jobs) |
@@ -293,6 +293,7 @@ Keys, sign-in modes and OpenID Connect single sign-on. The modes are compared in
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET` | - | **Deprecated**: use `DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET` |
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI` | - | **Deprecated**: the `redirect_uri` of the `google` provider |
 | `DEPICTIO_AUTH_REGISTRATION_DISABLED` | `false` | Block self-service registration: `/register` returns 403 and the Register UI is hidden, so only pre-provisioned accounts can log in. Independent of public/single-user mode |
+| `DEPICTIO_AUTH_PUBLIC_ADMIN_SIGN_IN` | `true` | Show an **Admin sign-in** link to guests of a public instance with no identity provider. Hides the link only: password sign-in there is for admins whatever its value. See [Admin sign-in](../usage/guides/authentication-modes.md#admin-sign-in) (v1.24.0+) |
 | `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED` | `false` | Close email and password sign-in so SSO is the only way in. Ignored unless at least one OIDC provider is enabled and configured. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) |
 | `DEPICTIO_AUTH_PROVISIONING_API_KEY` | - | Shared secret for pipeline-side user provisioning (`POST /auth/provision_user`). Scoped to provisioning only, kept separate from the internal API key. Also accepted as `DEPICTIO_AUTH_PROVISIONING_API_KEY_ENV`. **The provisioning endpoints are disabled while this is unset.** See [Pipeline provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113) |
 | `DEPICTIO_AUTH_MAGIC_LINK_EXPIRY_MINUTES` | `15` | Lifetime of a single-use magic-link login ticket |
@@ -310,14 +311,16 @@ Keys, sign-in modes and OpenID Connect single sign-on. The modes are compared in
 **Environment Prefix:** `DEPICTIO_BOOTSTRAP_`
 
 First-boot admin seeding. Idempotent: the admin is created only when MongoDB holds none, so a
-password changed in the UI survives restarts and Helm wipe jobs. Single-user mode seeds its own
-local admin and needs neither. With Helm, set `secrets.bootstrapAdminEmail` and
+password changed in the UI survives restarts and Helm wipe jobs. Single-user and public mode
+seed a default local admin (`admin@example.com`, random password) when these are unset; public
+mode since v1.24.0. See [Admin email and password](../usage/guides/authentication-modes.md#admin-credentials). With Helm, set `secrets.bootstrapAdminEmail` and
 `secrets.bootstrapAdminPassword`.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | _(empty)_ | Email of the first admin. When MongoDB holds no admin and this or the password is unset, the server stops at startup |
+| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | _(empty)_ | Email of the first admin. In multi-user mode, when MongoDB holds no admin and this or the password is unset, the server stops at startup |
 | `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | _(empty)_ | Password of the first admin: at least 8 characters, and not a well-known default such as `admin` or `password`. Not needed with `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED`, where the email alone names the SSO account that owns the instance |
+| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD_GENERATED` | `false` | The password was made up by a tool, not chosen by a person (`depictio local up` and `local export` set it), so a single-user admin can still be claimed without it (v1.24.0+) |
 | `DEPICTIO_BOOTSTRAP_SEED_TEST_USER` | `false` | Seed a non-admin test user for CI/Cypress fixtures. Leave `false` in production. |
 | `DEPICTIO_BOOTSTRAP_TEST_USER_EMAIL` | `test_user@example.com` | Email for the CI test user (only when `seed_test_user=true`). |
 | `DEPICTIO_BOOTSTRAP_TEST_USER_PASSWORD` | `test_pwd` | Password for the CI test user (only when `seed_test_user=true`). |
@@ -547,21 +550,20 @@ pairing keys and do not belong in `backend.env`: pass them through a Secret. See
 
 ---
 
-## Internal Analytics
+## Usage Statistics <small>(v1.23.1+)</small> { #usage-statistics }
 
-**Config Class:** `AnalyticsConfig`
-**Environment Prefix:** `DEPICTIO_ANALYTICS_`
+**Config Class:** `UsageStatsConfig`
+**Environment Prefix:** `DEPICTIO_USAGE_STATS_`
 
-Per-user session tracking, stored in your own MongoDB and served by the admin analytics API. Off by
-default, with no page in the UI yet. Separate from [Telemetry](#telemetry).
+Self-hosted usage statistics, stored in your own MongoDB and shown in [Admin › Activity › Usage](../usage/administration/usage-stats.md). On by
+default. Separate from [Telemetry](#telemetry). They replace the `DEPICTIO_ANALYTICS_*` variables, which are now ignored.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_ANALYTICS_ENABLED` | `false` | Record sessions and serve the analytics endpoints |
-| `DEPICTIO_ANALYTICS_SESSION_TIMEOUT_MINUTES` | `30` | Session timeout in minutes |
-| `DEPICTIO_ANALYTICS_CLEANUP_DAYS` | `90` | Days analytics records are kept |
-| `DEPICTIO_ANALYTICS_TRACK_ANONYMOUS_USERS` | `true` | Track anonymous sessions too |
-| `DEPICTIO_ANALYTICS_CLEANUP_ENABLED` | `true` | Delete records older than `CLEANUP_DAYS` |
+| `DEPICTIO_USAGE_STATS_ENABLED` | `true` | Record and serve usage statistics. Off, the routes answer 404 |
+| `DEPICTIO_USAGE_STATS_RETENTION_DAYS` | `395` | Days the daily rows are kept (13 months), from 30 to 760. Closed months and years are kept as anonymous totals |
+| `DEPICTIO_USAGE_STATS_MAX_DAILY_VISITORS` | `50000` | New browsers recorded per day, instance-wide (flood guard). At least 100 |
+| `DEPICTIO_USAGE_STATS_GEOIP_DB_PATH` | - | City `.mmdb` file (DB-IP Lite or MaxMind GeoLite2) for countries and cities. Unset: no geo panels |
 
 ---
 

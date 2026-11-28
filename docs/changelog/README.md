@@ -42,6 +42,61 @@ hide:
 
 ---
 
+## **[v1.24.0](https://github.com/depictio/depictio/releases/tag/v1.24.0)** (November 25, 2026)
+
+!!! success "Minor: one shared figure palette with automatic marks, a claimable single-user admin, admin sign-in in public mode"
+
+### **♻️ Migration**
+
+* **Figures take the overview look by default**: bars sorted, Other and NA last in grey, past 8 colours folded into Other; `figure_style: classic` draws a figure as built. [Figure style](../features/components.md#figure-style) ([#1474](https://github.com/depictio/depictio/pull/1474))
+* **Public and demo mode: only admins sign in with a password**; SSO is unchanged. [Admin sign-in](../usage/guides/authentication-modes.md#admin-sign-in) ([#1469](https://github.com/depictio/depictio/pull/1469))
+
+### **✨ New Features**
+
+* **Shared depictio palette**: six palettes checked for colour-blind vision, for every figure, card and advanced viz, picked with `plots.palette`. [Plot palettes](../usage/administration/branding.md#plot-palettes) ([#1474](https://github.com/depictio/depictio/pull/1474))
+* **Automatic figure marks**: bar labels, group n, heatmap cell values and a note on folded categories, set with `annotations`. [Figure marks](../features/components.md#figure-marks) ([#1474](https://github.com/depictio/depictio/pull/1474))
+* **Claim the single-user admin**: choose its email and password in Account settings or with `depictio config set-admin-credentials`. [Admin email and password](../usage/guides/authentication-modes.md#admin-credentials) ([#1469](https://github.com/depictio/depictio/pull/1469))
+* **Report editor** (off, behind `DEPICTIO_REPORT_EDITOR_ENABLED` and the notebook export): cover, intro, captions and tile order beside a live Quarto preview. ([#1472](https://github.com/depictio/depictio/pull/1472))
+
+### **🚀 Improvements**
+
+* **Offline export round two** (behind both export switches): the state on screen, pinned versions, selection groups and live Sankey tiles; wide PDF content on landscape pages. ([#1472](https://github.com/depictio/depictio/pull/1472))
+* **Catalog previews draw what a tile draws**: the dashboard's own aggregation, fuller fixtures, renders grouped by kind. [Tools Catalog](https://depictio.github.io/depictio-catalog/latest/) ([#1474](https://github.com/depictio/depictio/pull/1474))
+
+### **🔒 Security**
+
+* **Public-mode password sign-in** fails closed (503) without Redis and locks an account after 5 wrong passwords in 15 minutes. [Security](../features/security.md#public-password-sign-in) ([#1469](https://github.com/depictio/depictio/pull/1469))
+
+### **🐛 Bug Fixes**
+
+* **A public app on an empty database starts**: public mode seeds the default admin too. [SciLifeLab Serve](../installation/kubernetes.md#scilifelab-serve) ([#1435](https://github.com/depictio/depictio/pull/1435))
+
+---
+
+## **[v1.23.1](https://github.com/depictio/depictio/releases/tag/v1.23.1)** (November 24, 2026)
+
+!!! success "Patch: self-hosted usage statistics, and filters that reach every value of a long column"
+
+### **♻️ Migration**
+
+* **`DEPICTIO_ANALYTICS_*` removed**: its variables are ignored, and its `user_sessions` and `user_activities` collections are left for you to drop. [Usage statistics](../usage/administration/usage-stats.md) ([#1466](https://github.com/depictio/depictio/pull/1466))
+
+### **✨ New Features**
+
+* **Usage statistics** in **Admin › Activity › Usage**: visitors, logins and top dashboards, kept in your own database, on by default, also served by `GET /analytics/usage`. [Usage statistics](../usage/administration/usage-stats.md) ([#1466](https://github.com/depictio/depictio/pull/1466))
+
+### **🚀 Improvements**
+
+* **Any value of a long column can be picked**: past 1,000 values, a filter searches what you type on the server. [Long option lists](../features/components.md#long-option-lists) ([#1418](https://github.com/depictio/depictio/issues/1418))
+
+### **🐛 Bug Fixes**
+
+* **A funnel set cut at its limit narrows nothing**, instead of greying out the values past the cut. ([#1418](https://github.com/depictio/depictio/issues/1418))
+* **A `--data-collection-tag` ingest no longer breaks the next full ingest**, and leaves the dashboards to it. ([#1418](https://github.com/depictio/depictio/issues/1418))
+* **The protein logo opens on the picked family** past 1,000 families. ([#1418](https://github.com/depictio/depictio/issues/1418))
+
+---
+
 ## **[v1.23.0](https://github.com/depictio/depictio/releases/tag/v1.23.0)** (November 22, 2026)
 
 !!! success "Minor: table joins from the web interface, a redesigned Tool Studio and a security review"

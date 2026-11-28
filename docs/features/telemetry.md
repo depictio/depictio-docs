@@ -88,5 +88,5 @@ PostHog Cloud's **EU** region, so event data stays inside the EEA. Every event i
 !!! warning "Three similarly-named systems, only the first sends anything to us"
 
     1. **`DEPICTIO_TELEMETRY_*`**: this page. Anonymous installation counting. **Enabled** by default.
-    2. **`DEPICTIO_ANALYTICS_*`**: per-user session tracking stored in *your* MongoDB and shown in *your* admin UI. Never transmitted. Disabled by default.
+    2. **`DEPICTIO_USAGE_STATS_*`**: [usage statistics](../usage/administration/usage-stats.md) (logins, visitors, dashboard views) stored in *your* MongoDB and shown in *your* admin UI. Never transmitted. **Enabled** by default since v1.23.1, replacing `DEPICTIO_ANALYTICS_*`.
     3. **`DEPICTIO_GOOGLE_ANALYTICS_*`**: optional GA4 tracking in the frontend. Data goes to *your* GA4 property. Disabled by default.
