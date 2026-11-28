@@ -96,6 +96,11 @@ get its dashboards as files from the same **Settings › Export**. Each format o
   job. Anonymous visitors get these only.
 - **My view**: a signed-in visitor (a guest account too) builds a file at their own filters.
 
+<span class="ver-badge">v1.24.2+</span> The Export section opens on the ready copy: the report +
+dashboard file, its PDF and the dashboard alone as plain download links, with *Your own view*
+folded below. While the report is still being prepared the card says so and checks again every
+30 s. Owners see the same card, so they see what visitors get.
+
 The owner controls it in **Project › Permissions › Offline copy for visitors**. It is on
 for every public project unless the owner turns it off
 (`DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_DEFAULT=false` makes each owner turn it on instead).
