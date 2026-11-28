@@ -418,6 +418,7 @@ nav:
           - Comments and annotations: features/comments-annotations.md
           - Versions and history: features/versioning.md
           - Dashboards as YAML: features/yaml-sync.md
+          - Offline exports: features/offline-exports.md
       - Components:
           - Component types: features/components.md
           - Advanced visualizations: features/advanced-visualizations.md
