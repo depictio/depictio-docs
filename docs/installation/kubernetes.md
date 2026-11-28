@@ -134,9 +134,11 @@ Create the app **private first**, then switch it to public:
 
 !!! warning "An app created public has no usable admin"
     A public app started on an empty database seeds an admin with a random password that
-    nobody knows, so nobody can sign in to manage it. Before v1.22.1 it did not start at all
-    (every API call answered 504). Switch it back to private to work on it, then to public
-    again.
+    nobody knows. Before v1.24.0 it did not start at all (every API call answered 504).
+    Switch it to private once, [set the admin's email and password](../usage/guides/authentication-modes.md#admin-credentials),
+    then switch it back: the [Admin sign-in](../usage/guides/authentication-modes.md#admin-sign-in)
+    link takes those credentials. Or pass `secrets.bootstrapAdminEmail` and
+    `secrets.bootstrapAdminPassword`.
 
 ### S3 credentials
 

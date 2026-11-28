@@ -174,6 +174,12 @@ none while no analysis group is active.
 
 ### Figure style <small>(v1.14.0+)</small> { #figure-style }
 
+<span class="ver-badge">v1.24.0+</span> `default` is the overview look: one hue where colour
+only repeats the axis, bars sorted biggest first, *Other*, *Unclassified* and *NA* last and in
+grey, more than 8 colours folded into a grey *Other* (colour only, no row dropped), long
+category ticks cut at 28 characters, a light grid. `figure_style: classic` draws the figure
+exactly as built, the look of earlier releases.
+
 `figure_style: minimal` gives a figure the landing-page look: the title in the card
 header beside an icon badge with the subtitle inline, a transparent plot with faint
 dashed grid lines and no axis lines, the legend in one line under the plot, large
@@ -181,12 +187,12 @@ unoutlined markers, tight margins and the toolbar only on hover. Bars end in a s
 round, stacked segments are parted by a hairline, and grouped bars get a coloured
 underline naming each group instead of facet titles. Plots in this style are set in Inter
 unless the figure or the brand sets a font. Unset, a figure takes the `figure_style` of
-its [grid section](dashboards.md#landing-tabs), else `default`. In the builder these keys
-are the **Card header & style** section.
+its [grid section](dashboards.md#landing-tabs), else `default`. `minimal` sits on top of the
+overview look. In the builder these keys are the **Card header & style** section.
 
 | Option | Description |
 |--------|-------------|
-| `figure_style` | `default` or `minimal` |
+| `figure_style` | `default`, `minimal` or `classic` (v1.24.0+) |
 | `subtitle` | A few dimmed words after the title (`minimal`) |
 | `icon_name` / `icon_color` | Iconify id and colour of the header badge (`minimal`). The colour defaults to the brand's primary |
 | `hide_legend` | Draw the figure without its legend, for a small tile |
@@ -212,6 +218,24 @@ and `link` shows in that header alone. `hide_legend` is honoured by the
   link: "tab:Ordination & Clustering"
   # workflow_tag, data_collection_tag, dict_kwargs...
 ```
+
+### Figure marks <span class="ver-badge">v1.24.0+</span> { #figure-marks }
+
+A UI-mode figure marks itself by type: values on up to 12 unstacked bars, the `n` of each
+box or violin, values in heatmap cells up to 400 cells, and a note when categories are
+folded. An `annotations` block lists the marks to draw instead; a mark left out is off, and
+`annotations: {}` draws none.
+
+```yaml
+annotations:
+  bar_labels: percent   # or value
+  group_n: true
+  cell_values: false
+  hidden_note: true
+```
+
+A reference line computed from the data names its column (`median completeness`); a fixed
+one can carry a `source` (a tool's default, a paper), shown in its label and hover.
 
 !!! tip "Clustered heatmaps moved"
     The ComplexHeatmap viz is now the [Hierarchical heatmap](advanced-visualizations.md#hierarchical-heatmap) advanced visualization.
@@ -717,6 +741,10 @@ Filter by selecting multiple values:
 | Options | Available values (auto-populated) |
 | Default | Initially selected values |
 | Placeholder | Hint text when empty |
+
+#### Long option lists
+
+<span class="ver-badge">v1.23.1+</span> A column with more than 1,000 distinct values lists the first 1,000. Type in the box: what you type is searched over every value of the column on the server, closest matches first, and the matches join the list. Values you picked stay listed.
 
 ### TextInput <small>(v1.21.0+)</small> { #text-input }
 

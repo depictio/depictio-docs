@@ -42,7 +42,7 @@ The admin form groups them as below, and a dashboard override offers the same se
 | Reach | `tint_mode`: `accent` (the default) re-tints the primary accent only, `full` carries all three brand colours into buttons, tabs, badges and section accents. `gray`, `red`, `green` and `yellow` are never remapped in either mode |
 | Surfaces | `surfaces_light` and `surfaces_dark`, each holding `app_bg` (page), `section_bg` (cards and panels), `nav_bg` (header and sidebar) and `heading` (title text). Hex only, since these become raw CSS values |
 | Typography and shape | `font_family`, `headings_font_family`, `default_radius` (a Mantine token, `xs` to `xl`) |
-| Figures | `plots.template` for figures whose component picks none, unset meaning *follow the UI colour scheme*; `plots.colorway` and `plots.sequential` for the categorical and continuous palettes |
+| Figures | `plots.template` for figures whose component picks none, unset meaning *follow the UI colour scheme*; `plots.colorway` and `plots.sequential` for the categorical and continuous palettes; `plots.palette` and `plots.overflow` for a [plot palette](#plot-palettes) (v1.24.0+) |
 
 !!! warning "Fonts are not fetched for you"
     A named font has to be installed on the viewer's machine or served by the deployment. An unavailable font fails silently, so the admin form renders a live sample of what you typed.
@@ -55,6 +55,29 @@ A hex brand colour is expanded into a 10-shade tuple with **your colour on shade
 
 !!! note "`palettes` is output, not input"
     The resolved theme carries a `palettes` object holding the derived tuples, keyed by role. The server fills it in and authors never set it, in the environment, in the admin panel or in YAML.
+
+## Plot palettes <span class="ver-badge">v1.24.0+</span> { #plot-palettes }
+
+Every figure, card and advanced visualization draws from one shared depictio palette. Six
+are named, each checked for colour-blind vision in light and dark: `marque` (the default),
+`signature`, `douce`, `joaillerie`, `terre` and `froide`. Reserved values (*Other*,
+*Unclassified*, *NA*) are grey, and up and down in differential results keep their own
+colours.
+
+```yaml
+brand_theme:
+  plots:
+    palette: signature
+    overflow: shade   # past the last slot: a shade of each colour, then grey Other
+```
+
+The same at instance level: `DEPICTIO_BRANDING_THEME='{"plots": {"palette": "signature"}}'`.
+A figure's colours come from, first to last: a pin in
+[`category_colors`](../../features/dashboards.md#category-colors), an explicit
+`plots.colorway`, `plots.palette`, colours derived from the brand hues, then `marque`. A
+palette also fills the sequential ramp and the dark variants. Two columns drawn together
+never get the same colour. The palettes and their measurements are in
+[`docs/design/palettes.md`](https://github.com/depictio/depictio/blob/v1.24.0/docs/design/palettes.md).
 
 ## Presets, import and export
 

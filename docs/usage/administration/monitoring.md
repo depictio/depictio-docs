@@ -10,6 +10,8 @@ Admin-only panel (**Administration → Log & Task**, `/admin`) exposing a durabl
 !!! info "Availability"
     Admin-only. Shown in single- and multi-user mode, hidden in demo mode; non-admins get *Forbidden*. On a public instance it is offered to a signed-in administrator since v1.18.0, never to a guest, and **Backups** stays hidden there.
 
+The **Usage** pane <small>(v1.23.1+)</small> has its own page: [Usage statistics](usage-stats.md).
+
 Each pane polls every 8 s; toggle **Auto** to pause. With live updates on, a green **Live** badge appears and the active pane refreshes on each event. The Tasks, Ingestion and Logs panes each have a free-text search box next to their filters.
 
 ## Tasks
