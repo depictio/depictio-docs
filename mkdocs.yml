@@ -517,6 +517,7 @@ nav:
       - FAQ:
           - Overview: FAQ/README.md
           - General: FAQ/general.md
+      - Citing Depictio: more/citing.md
       - Funding: more/funding.md
       - Color Palette: more/palette.md
       - Animated Logo: animated-logo.md
