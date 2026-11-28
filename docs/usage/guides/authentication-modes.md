@@ -127,12 +127,33 @@ the admin.
 
 **Behavior:**
 
-- The session is the bootstrap admin's (`DEPICTIO_BOOTSTRAP_ADMIN_EMAIL`): whoever reaches
-  the URL can do anything, so keep the instance on your machine or a private network
+- The session is the bootstrap admin's (`DEPICTIO_BOOTSTRAP_ADMIN_EMAIL`), else a default
+  `admin@example.com`: whoever reaches the URL can do anything, so keep the instance on your
+  machine or a private network
 - Projects, dashboards and every admin page are available at once
 - The sidebar shows *Single user mode*
 - Provisioning and magic links are refused (403)
 - Set together with public mode, single-user mode wins
+
+### Admin email and password <span class="ver-badge">v1.24.0+</span> { #admin-credentials }
+
+The default admin starts with a random password nobody knows. Choose its email and password
+before the instance is ever switched to [public mode](#public-mode), where the sign-in form
+is the admin's only way in:
+
+- **Account settings** > **Admin email and password**. While they are unset, the dashboards
+  and projects lists show a dismissible *Set your admin email and password* reminder.
+- From the CLI, which asks for the password:
+
+    ```bash
+    depictio config set-admin-credentials --email you@example.org
+    ```
+
+The account keeps its id and everything it owns, and the owner emails on its projects and
+dashboards follow. The first time no current password is asked; after that, pass
+[`--ask-current`](../../depictio-cli/usage.md#config-set-admin-credentials). An admin seeded
+from `DEPICTIO_BOOTSTRAP_ADMIN_*` is already claimed, except when a tool made the password up
+(`depictio local up`).
 
 ## :material-earth: Public mode { #public-mode }
 
@@ -188,6 +209,18 @@ the profile page, the tour's welcome card and, when
 comments buttons, which open a *Sign in to comment* prompt. `/auth/login` shows the
 sign-in form with **Continue as guest**, and a sign-in returns to the page it started
 from. A public instance with password sign-in only behaves as before.
+
+### Admin sign-in <span class="ver-badge">v1.24.0+</span> { #admin-sign-in }
+
+On a public instance, only admins sign in with a password: anyone else gets the same answer
+as a wrong password. With no identity provider configured, the avatar menu and the sidebar's
+mode line offer an **Admin sign-in** link to the form. `DEPICTIO_AUTH_PUBLIC_ADMIN_SIGN_IN=false`
+hides the link, not the form. Guests still sign in through SSO only.
+
+An instance switched from single-user mode signs in with the
+[credentials claimed there](#admin-credentials). One created public gets them by being
+switched to single-user mode once, or from `DEPICTIO_BOOTSTRAP_ADMIN_*`. Wrong passwords
+lock the account for a while: see [Security](../../features/security.md#public-password-sign-in).
 
 A public showcase where signed-in readers comment combines `DEPICTIO_AUTH_PUBLIC_MODE`,
 an identity provider and `DEPICTIO_COMMENTS_VIEWERS_CAN_COMMENT`. Keep

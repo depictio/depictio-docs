@@ -220,7 +220,7 @@ keeps it.
 | What | Default | Set |
 |------|---------|-----|
 | Anonymous installation [telemetry](../features/telemetry.md), once a day | On | `DEPICTIO_TELEMETRY_ENABLED=false` or `DO_NOT_TRACK=1` to stop it |
-| [Internal analytics](env-reference.md#internal-analytics): sessions stored in your MongoDB | Off | `DEPICTIO_ANALYTICS_ENABLED=true` |
+| [Usage statistics](../usage/administration/usage-stats.md): logins, visitors and dashboard views stored in your MongoDB <small>(v1.23.1+)</small> | On | `DEPICTIO_USAGE_STATS_ENABLED=false` to stop it |
 | Google Analytics 4 | Off | `DEPICTIO_GOOGLE_ANALYTICS_ENABLED=true` and `DEPICTIO_GOOGLE_ANALYTICS_TRACKING_ID=G-...` |
 
 All three are set on the backend. The viewer reads them from the API at boot, so with Helm they

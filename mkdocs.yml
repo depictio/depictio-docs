@@ -370,6 +370,7 @@ nav:
           - Project Migration: usage/administration/migrate.md
           - Backup & Restore: usage/administration/backup.md
           - Monitoring (Log & Task): usage/administration/monitoring.md
+          - Usage statistics: usage/administration/usage-stats.md
           - Branding: usage/administration/branding.md
           - Groups: usage/administration/groups.md
       - Special Modes:
@@ -517,6 +518,7 @@ nav:
       - FAQ:
           - Overview: FAQ/README.md
           - General: FAQ/general.md
+      - Citing Depictio: more/citing.md
       - Funding: more/funding.md
       - Color Palette: more/palette.md
       - Animated Logo: animated-logo.md

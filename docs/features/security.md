@@ -72,6 +72,16 @@ A public instance behind an access code is only as safe as the code is hard to g
 - A request without a token no longer gets the anonymous identity unless it carries the
   code.
 
+### Public-mode password sign-in <span class="ver-badge">v1.24.0+</span> { #public-password-sign-in }
+
+On a public instance, `/auth/login` is the admins' door, whether the
+[Admin sign-in](../usage/guides/authentication-modes.md#admin-sign-in) link is shown or not.
+
+- Admins only: a non-admin gets the 401 of a wrong password, checked after the password hash.
+- The rate limiter fails closed: without Redis, password sign-in answers 503.
+- 5 wrong passwords in 15 minutes block that account's password sign-in for the rest of the
+  window. Anyone can lock an admin out for one window this way; SSO is not affected.
+
 ---
 
 ## Role-Based Access Control (RBAC)
@@ -251,6 +261,40 @@ one, and a saved dashboard keeps the stable unsigned URL.
   in use. The JSON import body is capped at 50 MB.
 - An unverified requester email no longer takes ownership of an imported project.
 - Backup files and their checksum sidecars are written owner-only (0600).
+
+### Offline copies for visitors <span class="ver-badge">v1.24.1+</span> { #public-offline-download }
+
+A **public** project's data are public already: every figure a visitor sees carries them. So
+an instance can let visitors take its dashboards away as offline files, from **Settings ›
+Export** (**Ready copy** | **My view**). It is off unless the instance sets both
+`DEPICTIO_STATIC_EXPORT_ENABLED` and `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_ENABLED`. Then
+every public project offers its files until its owner turns that off in **Project ›
+Permissions**; with `DEPICTIO_STATIC_EXPORT_PUBLIC_DOWNLOAD_DEFAULT=false`, each owner turns
+it on instead.
+
+- **Ready copies.** The server keeps each dashboard at its default view (the dashboard
+  alone and, where reports render, the report + dashboard file and its PDF). Downloading
+  one starts no job. Anonymous visitors get these only.
+- **A visitor's own view.** A signed-in visitor (a guest account too) may export the
+  dashboard at their filters, built from the same live data, never from a past version.
+  These exports and report renders are limited per user and per address.
+- **The owner sees what leaves.** Project › Permissions lists, per dashboard, the
+  collections the file carries, their columns and row counts. Once downloaded, no access
+  control follows the file.
+- **A public file names no one**: no email address. Code-mode figures ship a closed list
+  of data operations, not their Python source; the ready copies carry no Python runtime.
+  A visitor's own export may carry it (checked when a figure needs it), and then the
+  code, which any visitor of the live dashboard can read already.
+- **Reports with code figures** are drawn by the same sandbox as the live dashboard. They
+  render for any signed-in reader when every owner of the dashboard is a project owner or
+  editor; a viewer's own copy renders for owners and editors only, and the export window
+  says so.
+- **It follows the project.** A copy is rebuilt after a save or an ingestion. Making the
+  project private, turning the option off, or deleting the dashboard or project deletes
+  its copies.
+- **Fail closed.** Downloads are limited to 10 a minute per address by default; with Redis
+  unreachable, they are refused (503). Every export counts towards a cap on the export
+  queue.
 
 ---
 
