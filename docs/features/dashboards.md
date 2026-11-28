@@ -174,7 +174,7 @@ find out.
     In this first version the live availability sets cover **categorical controls**
     (multi-select, select, segmented control); sliders and date pickers are untouched. The
     overview counts delta-backed data collections, so MultiQC collections, which have no
-    row table, do not appear. Caps: 32 controls, 12 stages, 1000 values per control.
+    row table, do not appear. Caps: 32 controls, 12 stages, 1000 values per control. Since v1.23.1 a control whose set is cut at that cap narrows nothing.
 
 ### :material-chart-box: Right Panel (Visualizations) { #right-panel }
 

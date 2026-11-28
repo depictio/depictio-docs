@@ -363,7 +363,6 @@ something up.
 
 | Idea | What it would give you | Link |
 | ---- | ---------------------- | ---- |
-| :material-chart-timeline-variant: **Admin usage panel** | Visitors, sessions and top dashboards, from the opt-in analytics | [#1293](https://github.com/depictio/depictio/issues/1293) |
 | :material-tag-multiple-outline: **Tags** | Tags on projects and on dashboards | [#857](https://github.com/depictio/depictio/issues/857) |
 | :material-view-grid-plus-outline: **Component groups** | Group components and give a data collection a view shared by the group | [#308](https://github.com/depictio/depictio/issues/308) |
 

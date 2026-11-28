@@ -1,7 +1,7 @@
 ---
 title: Administration
 icon: material/shield-account
-description: Migration, backups, monitoring, branding, groups, admin tables and the Activity page.
+description: Migration, backups, monitoring, usage statistics, branding, groups, admin tables and the Activity page.
 glightbox: true
 ---
 
@@ -34,6 +34,14 @@ Running a Depictio deployment: moving and protecting its data, watching its work
     Celery tasks, ingestion runs, watchers, logs and worker health.
 
     [:octicons-arrow-right-24: Log and Task](monitoring.md)
+
+-   :material-chart-bar:{ .lg .middle .dp-teal } **Usage statistics**
+
+    ---
+
+    Who uses the instance and what they open, kept in your own database.
+
+    [:octicons-arrow-right-24: Usage](usage-stats.md)
 
 -   :material-palette-outline:{ .lg .middle .dp-purple } **Branding**
 
