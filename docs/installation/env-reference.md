@@ -293,6 +293,7 @@ Keys, sign-in modes and OpenID Connect single sign-on. The modes are compared in
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_CLIENT_SECRET` | - | **Deprecated**: use `DEPICTIO_AUTH_OIDC_GOOGLE_CLIENT_SECRET` |
 | `DEPICTIO_AUTH_GOOGLE_OAUTH_REDIRECT_URI` | - | **Deprecated**: the `redirect_uri` of the `google` provider |
 | `DEPICTIO_AUTH_REGISTRATION_DISABLED` | `false` | Block self-service registration: `/register` returns 403 and the Register UI is hidden, so only pre-provisioned accounts can log in. Independent of public/single-user mode |
+| `DEPICTIO_AUTH_PUBLIC_ADMIN_SIGN_IN` | `true` | Show an **Admin sign-in** link to guests of a public instance with no identity provider. Hides the link only: password sign-in there is for admins whatever its value. See [Admin sign-in](../usage/guides/authentication-modes.md#admin-sign-in) (v1.24.0+) |
 | `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED` | `false` | Close email and password sign-in so SSO is the only way in. Ignored unless at least one OIDC provider is enabled and configured. See [Password sign-in](../usage/guides/authentication-modes.md#password-login) |
 | `DEPICTIO_AUTH_PROVISIONING_API_KEY` | - | Shared secret for pipeline-side user provisioning (`POST /auth/provision_user`). Scoped to provisioning only, kept separate from the internal API key. Also accepted as `DEPICTIO_AUTH_PROVISIONING_API_KEY_ENV`. **The provisioning endpoints are disabled while this is unset.** See [Pipeline provisioning](../usage/guides/authentication-modes.md#pipeline-provisioning-and-magic-links-v113) |
 | `DEPICTIO_AUTH_MAGIC_LINK_EXPIRY_MINUTES` | `15` | Lifetime of a single-use magic-link login ticket |
@@ -310,14 +311,16 @@ Keys, sign-in modes and OpenID Connect single sign-on. The modes are compared in
 **Environment Prefix:** `DEPICTIO_BOOTSTRAP_`
 
 First-boot admin seeding. Idempotent: the admin is created only when MongoDB holds none, so a
-password changed in the UI survives restarts and Helm wipe jobs. Single-user mode seeds its own
-local admin and needs neither. With Helm, set `secrets.bootstrapAdminEmail` and
+password changed in the UI survives restarts and Helm wipe jobs. Single-user and public mode
+seed a default local admin (`admin@example.com`, random password) when these are unset; public
+mode since v1.24.0. See [Admin email and password](../usage/guides/authentication-modes.md#admin-credentials). With Helm, set `secrets.bootstrapAdminEmail` and
 `secrets.bootstrapAdminPassword`.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | _(empty)_ | Email of the first admin. When MongoDB holds no admin and this or the password is unset, the server stops at startup |
+| `DEPICTIO_BOOTSTRAP_ADMIN_EMAIL` | _(empty)_ | Email of the first admin. In multi-user mode, when MongoDB holds no admin and this or the password is unset, the server stops at startup |
 | `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD` | _(empty)_ | Password of the first admin: at least 8 characters, and not a well-known default such as `admin` or `password`. Not needed with `DEPICTIO_AUTH_PASSWORD_LOGIN_DISABLED`, where the email alone names the SSO account that owns the instance |
+| `DEPICTIO_BOOTSTRAP_ADMIN_PASSWORD_GENERATED` | `false` | The password was made up by a tool, not chosen by a person (`depictio local up` and `local export` set it), so a single-user admin can still be claimed without it (v1.24.0+) |
 | `DEPICTIO_BOOTSTRAP_SEED_TEST_USER` | `false` | Seed a non-admin test user for CI/Cypress fixtures. Leave `false` in production. |
 | `DEPICTIO_BOOTSTRAP_TEST_USER_EMAIL` | `test_user@example.com` | Email for the CI test user (only when `seed_test_user=true`). |
 | `DEPICTIO_BOOTSTRAP_TEST_USER_PASSWORD` | `test_pwd` | Password for the CI test user (only when `seed_test_user=true`). |
